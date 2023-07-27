@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of RestorePointListResult. </summary>
         internal RestorePointListResult()
         {
-            Value = new ChangeTrackingList<RestorePointData>();
+            Value = new ChangeTrackingList<SqlServerDatabaseRestorePointData>();
         }
 
         /// <summary> Initializes a new instance of RestorePointListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal RestorePointListResult(IReadOnlyList<RestorePointData> value, string nextLink)
+        internal RestorePointListResult(IReadOnlyList<SqlServerDatabaseRestorePointData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<RestorePointData> Value { get; }
+        public IReadOnlyList<SqlServerDatabaseRestorePointData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

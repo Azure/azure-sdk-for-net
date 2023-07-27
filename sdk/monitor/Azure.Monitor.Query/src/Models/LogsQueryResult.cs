@@ -12,13 +12,13 @@ namespace Azure.Monitor.Query.Models
     [CodeGenModel("queryResults")]
     public partial class LogsQueryResult
     {
-        [CodeGenMember("error")]
+        [CodeGenMember("Error")]
         private readonly JsonElement _error;
 
         [CodeGenMember("Statistics")]
         private readonly JsonElement _statistics;
 
-        [CodeGenMember("render")]
+        [CodeGenMember("Render")]
         private readonly JsonElement _visualization;
 
         /// <summary>

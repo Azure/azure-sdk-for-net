@@ -56,8 +56,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestRg/providers/Microsoft.RecoveryServices/vaults/SDKTestRsVault?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3RSc1ZhdWx0P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestRg/providers/Microsoft.RecoveryServices/vaults/SDKTestRsVault?api-version=2022-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3RSc1ZhdWx0P2FwaS12ZXJzaW9uPTIwMjItMTAtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {},\r\n  \"sku\": {\r\n    \"name\": \"Standard\"\r\n  },\r\n  \"location\": \"westus\"\r\n}",
       "RequestHeaders": {
@@ -126,8 +126,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestRg/providers/Microsoft.RecoveryServices/vaults/SDKTestRsVault?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3RSc1ZhdWx0P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestRg/providers/Microsoft.RecoveryServices/vaults/SDKTestRsVault?api-version=2022-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3RSc1ZhdWx0P2FwaS12ZXJzaW9uPTIwMjItMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -326,8 +326,8 @@
       "StatusCode": 400
     },
     {
-      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestRg/providers/Microsoft.RecoveryServices/vaults?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzP2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestRg/providers/Microsoft.RecoveryServices/vaults?api-version=2022-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzP2FwaS12ZXJzaW9uPTIwMjItMTAtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -390,8 +390,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestRg/providers/Microsoft.RecoveryServices/vaults/SDKTestRsVault?api-version=2021-06-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3RSc1ZhdWx0P2FwaS12ZXJzaW9uPTIwMjEtMDYtMDE=",
+      "RequestUri": "/subscriptions/f7424430-103b-4ba3-bd9e-b6f0986f848a/resourceGroups/SDKTestRg/providers/Microsoft.RecoveryServices/vaults/SDKTestRsVault?api-version=2022-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZjc0MjQ0MzAtMTAzYi00YmEzLWJkOWUtYjZmMDk4NmY4NDhhL3Jlc291cmNlR3JvdXBzL1NES1Rlc3RSZy9wcm92aWRlcnMvTWljcm9zb2Z0LlJlY292ZXJ5U2VydmljZXMvdmF1bHRzL1NES1Rlc3RSc1ZhdWx0P2FwaS12ZXJzaW9uPTIwMjItMTAtMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {

@@ -18,19 +18,22 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("profiles");
+            writer.WritePropertyName("profiles"u8);
             writer.WriteStartArray();
             foreach (var item in Profiles)
             {
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Monitor
             {
                 if (Notifications != null)
                 {
-                    writer.WritePropertyName("notifications");
+                    writer.WritePropertyName("notifications"u8);
                     writer.WriteStartArray();
                     foreach (var item in Notifications)
                     {
@@ -54,25 +57,37 @@ namespace Azure.ResourceManager.Monitor
                     writer.WriteNull("notifications");
                 }
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
-                writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (Optional.IsDefined(NamePropertiesName))
+            if (Optional.IsDefined(PredictiveAutoscalePolicy))
             {
-                writer.WritePropertyName("name");
-                writer.WriteStringValue(NamePropertiesName);
+                if (PredictiveAutoscalePolicy != null)
+                {
+                    writer.WritePropertyName("predictiveAutoscalePolicy"u8);
+                    writer.WriteObjectValue(PredictiveAutoscalePolicy);
+                }
+                else
+                {
+                    writer.WriteNull("predictiveAutoscalePolicy");
+                }
+            }
+            if (Optional.IsDefined(AutoscaleSettingName))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(AutoscaleSettingName);
             }
             if (Optional.IsDefined(TargetResourceId))
             {
-                writer.WritePropertyName("targetResourceUri");
+                writer.WritePropertyName("targetResourceUri"u8);
                 writer.WriteStringValue(TargetResourceId);
             }
             if (Optional.IsDefined(TargetResourceLocation))
             {
-                writer.WritePropertyName("targetResourceLocation");
-                writer.WriteStringValue(TargetResourceLocation);
+                writer.WritePropertyName("targetResourceLocation"u8);
+                writer.WriteStringValue(TargetResourceLocation.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -80,22 +95,31 @@ namespace Azure.ResourceManager.Monitor
 
         internal static AutoscaleSettingData DeserializeAutoscaleSettingData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             IList<AutoscaleProfile> profiles = default;
             Optional<IList<AutoscaleNotification>> notifications = default;
             Optional<bool> enabled = default;
+            Optional<PredictiveAutoscalePolicy> predictiveAutoscalePolicy = default;
             Optional<string> name0 = default;
-            Optional<string> targetResourceUri = default;
-            Optional<string> targetResourceLocation = default;
+            Optional<ResourceIdentifier> targetResourceUri = default;
+            Optional<AzureLocation> targetResourceLocation = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -104,32 +128,36 @@ namespace Azure.ResourceManager.Monitor
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,7 +166,7 @@ namespace Azure.ResourceManager.Monitor
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("profiles"))
+                        if (property0.NameEquals("profiles"u8))
                         {
                             List<AutoscaleProfile> array = new List<AutoscaleProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
@@ -148,7 +176,7 @@ namespace Azure.ResourceManager.Monitor
                             profiles = array;
                             continue;
                         }
-                        if (property0.NameEquals("notifications"))
+                        if (property0.NameEquals("notifications"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -163,36 +191,53 @@ namespace Azure.ResourceManager.Monitor
                             notifications = array;
                             continue;
                         }
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("name"))
+                        if (property0.NameEquals("predictiveAutoscalePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                predictiveAutoscalePolicy = null;
+                                continue;
+                            }
+                            predictiveAutoscalePolicy = PredictiveAutoscalePolicy.DeserializePredictiveAutoscalePolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("name"u8))
                         {
                             name0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetResourceUri"))
+                        if (property0.NameEquals("targetResourceUri"u8))
                         {
-                            targetResourceUri = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            targetResourceUri = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("targetResourceLocation"))
+                        if (property0.NameEquals("targetResourceLocation"u8))
                         {
-                            targetResourceLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            targetResourceLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AutoscaleSettingData(id, name, type, systemData, tags, location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), name0.Value, targetResourceUri.Value, targetResourceLocation.Value);
+            return new AutoscaleSettingData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, profiles, Optional.ToList(notifications), Optional.ToNullable(enabled), predictiveAutoscalePolicy.Value, name0.Value, targetResourceUri.Value, Optional.ToNullable(targetResourceLocation));
         }
     }
 }

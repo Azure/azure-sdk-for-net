@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Upstream auth settings. </summary>
+    /// <summary> Upstream auth settings. If not set, no auth is used for upstream messages. </summary>
     public partial class UpstreamAuthSettings
     {
         /// <summary> Initializes a new instance of UpstreamAuthSettings. </summary>
@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of UpstreamAuthSettings. </summary>
-        /// <param name="upstreamAuthType"> Gets or sets the type of auth. None or ManagedIdentity is supported now. </param>
-        /// <param name="managedIdentity"> Gets or sets the managed identity settings. It&apos;s required if the auth type is set to ManagedIdentity. </param>
-        internal UpstreamAuthSettings(UpstreamAuthType? upstreamAuthType, ManagedIdentitySettings managedIdentity)
+        /// <param name="authType"> Upstream auth type enum. </param>
+        /// <param name="managedIdentity"> Managed identity settings for upstream. </param>
+        internal UpstreamAuthSettings(UpstreamAuthType? authType, ManagedIdentitySettings managedIdentity)
         {
-            UpstreamAuthType = upstreamAuthType;
+            AuthType = authType;
             ManagedIdentity = managedIdentity;
         }
 
-        /// <summary> Gets or sets the type of auth. None or ManagedIdentity is supported now. </summary>
-        public UpstreamAuthType? UpstreamAuthType { get; set; }
-        /// <summary> Gets or sets the managed identity settings. It&apos;s required if the auth type is set to ManagedIdentity. </summary>
+        /// <summary> Upstream auth type enum. </summary>
+        public UpstreamAuthType? AuthType { get; set; }
+        /// <summary> Managed identity settings for upstream. </summary>
         internal ManagedIdentitySettings ManagedIdentity { get; set; }
         /// <summary>
         /// The Resource indicating the App ID URI of the target resource.

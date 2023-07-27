@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Resources.Tests
                     Assert.NotNull(getResult.Data.Properties.ErrorDeployment);
                     Assert.AreEqual(model.Data.Properties.ErrorDeployment.DeploymentName, getResult.Data.Properties.ErrorDeployment.DeploymentName);
                     Assert.AreEqual(model.Data.Properties.ErrorDeployment.ProvisioningState, getResult.Data.Properties.ErrorDeployment.ProvisioningState);
-                    Assert.AreEqual(model.Data.Properties.ErrorDeployment.ErrorDeploymentType, getResult.Data.Properties.ErrorDeployment.ErrorDeploymentType);
+                    Assert.AreEqual(model.Data.Properties.ErrorDeployment.DeploymentType, getResult.Data.Properties.ErrorDeployment.DeploymentType);
                 }
                 Assert.AreEqual(model.Data.Properties.TemplateHash, getResult.Data.Properties.TemplateHash);
                 if (model.Data.Properties.OutputResources != null || getResult.Data.Properties.OutputResources != null)

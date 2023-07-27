@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -16,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>
         public LoadBalancerBackendAddress()
         {
+            InboundNatRulesPortMapping = new ChangeTrackingList<NatRulePortMapping>();
         }
 
         /// <summary> Initializes a new instance of LoadBalancerBackendAddress. </summary>
@@ -25,7 +27,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipAddress"> IP Address belonging to the referenced virtual network. </param>
         /// <param name="networkInterfaceIPConfiguration"> Reference to IP address defined in network interfaces. </param>
         /// <param name="loadBalancerFrontendIPConfiguration"> Reference to the frontend ip address configuration defined in regional loadbalancer. </param>
-        internal LoadBalancerBackendAddress(string name, WritableSubResource virtualNetwork, WritableSubResource subnet, string ipAddress, WritableSubResource networkInterfaceIPConfiguration, WritableSubResource loadBalancerFrontendIPConfiguration)
+        /// <param name="inboundNatRulesPortMapping"> Collection of inbound NAT rule port mappings. </param>
+        /// <param name="adminState"> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </param>
+        internal LoadBalancerBackendAddress(string name, WritableSubResource virtualNetwork, WritableSubResource subnet, string ipAddress, WritableSubResource networkInterfaceIPConfiguration, WritableSubResource loadBalancerFrontendIPConfiguration, IReadOnlyList<NatRulePortMapping> inboundNatRulesPortMapping, LoadBalancerBackendAddressAdminState? adminState)
         {
             Name = name;
             VirtualNetwork = virtualNetwork;
@@ -33,6 +37,8 @@ namespace Azure.ResourceManager.Network.Models
             IPAddress = ipAddress;
             NetworkInterfaceIPConfiguration = networkInterfaceIPConfiguration;
             LoadBalancerFrontendIPConfiguration = loadBalancerFrontendIPConfiguration;
+            InboundNatRulesPortMapping = inboundNatRulesPortMapping;
+            AdminState = adminState;
         }
 
         /// <summary> Name of the backend address. </summary>
@@ -72,8 +78,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier NetworkInterfaceIPConfigurationId
         {
-            get => NetworkInterfaceIPConfiguration.Id;
-            set => NetworkInterfaceIPConfiguration.Id = value;
+            get => NetworkInterfaceIPConfiguration?.Id;
         }
 
         /// <summary> Reference to the frontend ip address configuration defined in regional loadbalancer. </summary>
@@ -89,5 +94,10 @@ namespace Azure.ResourceManager.Network.Models
                 LoadBalancerFrontendIPConfiguration.Id = value;
             }
         }
+
+        /// <summary> Collection of inbound NAT rule port mappings. </summary>
+        public IReadOnlyList<NatRulePortMapping> InboundNatRulesPortMapping { get; }
+        /// <summary> A list of administrative states which once set can override health probe so that Load Balancer will always forward new connections to backend, or deny new connections and reset existing connections. </summary>
+        public LoadBalancerBackendAddressAdminState? AdminState { get; set; }
     }
 }

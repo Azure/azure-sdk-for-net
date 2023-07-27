@@ -16,85 +16,88 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("rateLimitThreshold");
+            writer.WritePropertyName("rateLimitThreshold"u8);
             writer.WriteNumberValue(RateLimitThreshold);
-            writer.WritePropertyName("rateLimitDurationInMinutes");
+            writer.WritePropertyName("rateLimitDurationInMinutes"u8);
             writer.WriteNumberValue(RateLimitDurationInMinutes);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(EnabledState))
             {
-                writer.WritePropertyName("enabledState");
+                writer.WritePropertyName("enabledState"u8);
                 writer.WriteStringValue(EnabledState.Value.ToString());
             }
-            writer.WritePropertyName("priority");
+            writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
-            writer.WritePropertyName("matchConditions");
+            writer.WritePropertyName("matchConditions"u8);
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("action");
+            writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
             writer.WriteEndObject();
         }
 
         internal static RateLimitRule DeserializeRateLimitRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int rateLimitThreshold = default;
             int rateLimitDurationInMinutes = default;
             string name = default;
             Optional<CustomRuleEnabledState> enabledState = default;
             int priority = default;
-            IList<MatchCondition> matchConditions = default;
-            ActionType action = default;
+            IList<CustomRuleMatchCondition> matchConditions = default;
+            OverrideActionType action = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rateLimitThreshold"))
+                if (property.NameEquals("rateLimitThreshold"u8))
                 {
                     rateLimitThreshold = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rateLimitDurationInMinutes"))
+                if (property.NameEquals("rateLimitDurationInMinutes"u8))
                 {
                     rateLimitDurationInMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("enabledState"))
+                if (property.NameEquals("enabledState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledState = new CustomRuleEnabledState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("priority"))
+                if (property.NameEquals("priority"u8))
                 {
                     priority = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("matchConditions"))
+                if (property.NameEquals("matchConditions"u8))
                 {
-                    List<MatchCondition> array = new List<MatchCondition>();
+                    List<CustomRuleMatchCondition> array = new List<CustomRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchCondition.DeserializeMatchCondition(item));
+                        array.Add(CustomRuleMatchCondition.DeserializeCustomRuleMatchCondition(item));
                     }
                     matchConditions = array;
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
-                    action = new ActionType(property.Value.GetString());
+                    action = new OverrideActionType(property.Value.GetString());
                     continue;
                 }
             }

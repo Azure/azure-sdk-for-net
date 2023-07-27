@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -15,37 +16,38 @@ namespace Azure.ResourceManager.Storage.Models
     public partial class BlobInventoryPolicySchema
     {
         /// <summary> Initializes a new instance of BlobInventoryPolicySchema. </summary>
-        /// <param name="enabled"> Policy is enabled if set to true. </param>
-        /// <param name="inventoryRuleType"> The valid value is Inventory. </param>
+        /// <param name="isEnabled"> Policy is enabled if set to true. </param>
+        /// <param name="ruleType"> The valid value is Inventory. </param>
         /// <param name="rules"> The storage account blob inventory policy rules. The rule is applied when it is enabled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
-        public BlobInventoryPolicySchema(bool enabled, InventoryRuleType inventoryRuleType, IEnumerable<BlobInventoryPolicyRule> rules)
+        public BlobInventoryPolicySchema(bool isEnabled, BlobInventoryRuleType ruleType, IEnumerable<BlobInventoryPolicyRule> rules)
         {
-            if (rules == null)
-            {
-                throw new ArgumentNullException(nameof(rules));
-            }
+            Argument.AssertNotNull(rules, nameof(rules));
 
-            Enabled = enabled;
-            InventoryRuleType = inventoryRuleType;
+            IsEnabled = isEnabled;
+            RuleType = ruleType;
             Rules = rules.ToList();
         }
 
         /// <summary> Initializes a new instance of BlobInventoryPolicySchema. </summary>
-        /// <param name="enabled"> Policy is enabled if set to true. </param>
-        /// <param name="inventoryRuleType"> The valid value is Inventory. </param>
+        /// <param name="isEnabled"> Policy is enabled if set to true. </param>
+        /// <param name="destination"> Deprecated Property from API version 2021-04-01 onwards, the required destination container name must be specified at the rule level 'policy.rule.destination'. </param>
+        /// <param name="ruleType"> The valid value is Inventory. </param>
         /// <param name="rules"> The storage account blob inventory policy rules. The rule is applied when it is enabled. </param>
-        internal BlobInventoryPolicySchema(bool enabled, InventoryRuleType inventoryRuleType, IList<BlobInventoryPolicyRule> rules)
+        internal BlobInventoryPolicySchema(bool isEnabled, string destination, BlobInventoryRuleType ruleType, IList<BlobInventoryPolicyRule> rules)
         {
-            Enabled = enabled;
-            InventoryRuleType = inventoryRuleType;
+            IsEnabled = isEnabled;
+            Destination = destination;
+            RuleType = ruleType;
             Rules = rules;
         }
 
         /// <summary> Policy is enabled if set to true. </summary>
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
+        /// <summary> Deprecated Property from API version 2021-04-01 onwards, the required destination container name must be specified at the rule level 'policy.rule.destination'. </summary>
+        public string Destination { get; }
         /// <summary> The valid value is Inventory. </summary>
-        public InventoryRuleType InventoryRuleType { get; set; }
+        public BlobInventoryRuleType RuleType { get; set; }
         /// <summary> The storage account blob inventory policy rules. The rule is applied when it is enabled. </summary>
         public IList<BlobInventoryPolicyRule> Rules { get; }
     }

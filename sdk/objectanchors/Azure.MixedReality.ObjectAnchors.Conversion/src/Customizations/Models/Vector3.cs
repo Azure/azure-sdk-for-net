@@ -75,7 +75,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
             return data.IsNormalized();
         }
 
-        public static implicit operator System.Numerics.Vector3(Vector3 v) => v.data;
-        public static implicit operator Vector3(System.Numerics.Vector3 v) => new Vector3(v);
+        public static explicit operator System.Numerics.Vector3(Vector3 v) => v.data;
+        public static explicit operator Vector3(System.Numerics.Vector3 v) => new Vector3(v);
     }
 }

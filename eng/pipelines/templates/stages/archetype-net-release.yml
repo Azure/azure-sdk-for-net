@@ -4,7 +4,9 @@ parameters:
   ArtifactName: 'not-specified'
   # Publish to https://dev.azure.com/azure-sdk/public/_packaging?_a=feed&feed=azure-sdk-for-net
   DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
-
+  TargetDocRepoOwner: 'not-specified'
+  TargetDocRepoName: 'not-specified'
+  Environment: nuget
 stages:
   - stage: Signing
     dependsOn: ${{parameters.DependsOn}}
@@ -12,8 +14,8 @@ stages:
       - deployment: SignPackage
         environment: esrp
         pool:
-          name: azsdk-pool-mms-win-2019-general
-          vmImage: MMS2019
+          name: azsdk-pool-mms-win-2022-general
+          vmImage: windows-2022
 
         strategy:
           runOnce:
@@ -38,212 +40,212 @@ stages:
 
   - ${{if and(in(variables['Build.Reason'], 'Manual', ''), eq(variables['System.TeamProject'], 'internal'))}}:
     - ${{ each artifact in parameters.Artifacts }}:
-      - stage:
-        displayName: 'Release: ${{artifact.name}}'
-        dependsOn: Signing
-        condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
-        jobs:
-          - ${{if ne(artifact.skipTagRepository, 'true')}}:
-            - deployment: TagRepository
-              displayName: "Create release tag"
-              condition: ne(variables['Skip.TagRepository'], 'true')
-              environment: github
-  
-              pool:
-                name: azsdk-pool-mms-win-2019-general
-                vmImage: MMS2019
-  
-              strategy:
-                runOnce:
-                  deploy:
-                    steps:
-                      - checkout: self
-                      - download: current
-                        artifact: ${{parameters.ArtifactName}}-signed
-                      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-                        parameters:
-                          EnableNuGetCache: false
-                      - template: /eng/common/pipelines/templates/steps/retain-run.yml
-                      - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
-                        parameters:
-                          PackageName: "Azure.Template"
-                          ServiceDirectory: "template"
-                          TestPipeline: ${{ parameters.TestPipeline }}
-                      - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
-                        parameters:
-                          PackageName: ${{artifact.name}}
-                          ServiceName: ${{parameters.ServiceDirectory}}
-                          ForRelease: true
-                      - task: PowerShell@2
-                        inputs:
-                          filePath: $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1
-                          pwsh: true
-                          arguments: >
-                            -ArtifactsDirectory "$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed"
-                            -Artifact ${{artifact.name}}
-                        condition: and(succeeded(),ne('${{ artifact.skipPublishPackage }}', 'true'))
-                        displayName: Verify Package Installation
-                      - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
-                        parameters:
-                          ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-                          PackageRepository: Nuget
-                          ReleaseSha: $(Build.SourceVersion)
-                          RepoId: Azure/azure-sdk-for-net
+      - ${{if ne(artifact.skipReleaseStage, 'true')}}:
+        - stage:
+          displayName: 'Release: ${{artifact.name}}'
+          dependsOn: Signing
+          condition: and(succeeded(), ne(variables['SetDevVersion'], 'true'), ne(variables['Skip.Release'], 'true'), ne(variables['Build.Repository.Name'], 'Azure/azure-sdk-for-net-pr'))
+          jobs:
+            - ${{if ne(artifact.skipTagRepository, 'true')}}:
+              - deployment: TagRepository
+                displayName: "Create release tag"
+                condition: ne(variables['Skip.TagRepository'], 'true')
+                environment: ${{parameters.Environment}}
 
-          - ${{if ne(artifact.skipPublishPackage, 'true')}}:
-            - deployment: PublishPackage
-              displayName: Publish package to Nuget.org and DevOps Feed
-              condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
-              environment: nuget
-              dependsOn: TagRepository
+                pool:
+                  name: azsdk-pool-mms-win-2022-general
+                  vmImage: windows-2022
 
-              pool:
-                name: azsdk-pool-mms-ubuntu-2004-general
-                vmImage: MMSUbuntu20.04
+                strategy:
+                  runOnce:
+                    deploy:
+                      steps:
+                        - checkout: self
+                        - download: current
+                          artifact: ${{parameters.ArtifactName}}-signed
+                        - template: /eng/pipelines/templates/steps/install-dotnet.yml
+                          parameters:
+                            EnableNuGetCache: false
+                        - template: /eng/common/pipelines/templates/steps/retain-run.yml
+                        - template: /eng/common/pipelines/templates/steps/set-test-pipeline-version.yml
+                          parameters:
+                            PackageName: "Azure.Template"
+                            ServiceDirectory: "template"
+                            TestPipeline: ${{ parameters.TestPipeline }}
+                        - template: /eng/common/pipelines/templates/steps/verify-changelog.yml
+                          parameters:
+                            PackageName: ${{artifact.name}}
+                            ServiceName: ${{parameters.ServiceDirectory}}
+                            ForRelease: true
+                        - task: PowerShell@2
+                          inputs:
+                            filePath: $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1
+                            pwsh: true
+                            arguments: >
+                              -ArtifactsDirectory "$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed"
+                              -Artifact ${{artifact.name}}
+                          condition: and(succeeded(),ne('${{ artifact.skipPublishPackage }}', 'true'))
+                          displayName: Verify Package Installation
+                        - template: /eng/common/pipelines/templates/steps/create-tags-and-git-release.yml
+                          parameters:
+                            ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
+                            PackageRepository: Nuget
+                            ReleaseSha: $(Build.SourceVersion)
+                            RepoId: Azure/azure-sdk-for-net
 
-              strategy:
-                runOnce:
-                  deploy:
-                    steps:
-                      - checkout: none
-                      - task: NuGetCommand@2
-                        displayName: 'Publish ${{artifact.name}} package to NuGet.org'
-                        inputs:
-                          command: push
-                          packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                          nuGetFeedType: external
-                          publishFeedCredentials: Nuget.org
-                      - task: NuGetCommand@2
-                        displayName: 'Publish to DevOps Feed'
-                        inputs:
-                          command: push
-                          packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
-                          publishVstsFeed: ${{ parameters.DevOpsFeedID }}
+            - ${{if ne(artifact.skipPublishPackage, 'true')}}:
+              - deployment: PublishPackage
+                displayName: Publish package to Nuget.org and DevOps Feed
+                condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
+                environment: ${{parameters.Environment}}
+                dependsOn: TagRepository
 
-          - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
-            - deployment: UploadSymbols
-              displayName: Upload Symbols to Symbols Server
-              condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
-              environment: nuget
-              dependsOn: PublishPackage
+                pool:
+                  name: azsdk-pool-mms-ubuntu-2004-general
+                  vmImage: MMSUbuntu20.04
 
-              pool:
-                name: azsdk-pool-mms-win-2019-general
-                vmImage: MMS2019
+                strategy:
+                  runOnce:
+                    deploy:
+                      steps:
+                        - checkout: none
+                        - task: NuGetCommand@2
+                          displayName: 'Publish ${{artifact.name}} package to NuGet.org'
+                          inputs:
+                            command: push
+                            packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+                            nuGetFeedType: external
+                            publishFeedCredentials: Nuget.org
+                        - task: NuGetCommand@2
+                          displayName: 'Publish to DevOps Feed'
+                          inputs:
+                            command: push
+                            packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
+                            publishVstsFeed: ${{ parameters.DevOpsFeedID }}
 
-              strategy:
-                runOnce:
-                  deploy:
-                    steps:
-                      - checkout: none
-                      - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
-                      - task: MSBuild@1
-                        displayName: 'Upload Symbols for ${{artifact.name}}'
-                        inputs:
-                          solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
-                          msbuildArguments: >-
-                            /p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
-                            /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
-                            /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
-                            /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
+            - ${{if ne(artifact.skipSymbolsUpload, 'true')}}:
+              - deployment: UploadSymbols
+                displayName: Upload Symbols to Symbols Server
+                condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
+                environment: ${{parameters.Environment}}
+                dependsOn: PublishPackage
 
-          - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
-            - deployment: PublicDocsMS
-              displayName: Publish to Docs.MS
-              condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
-              environment: githubio
-              dependsOn: PublishPackage
+                pool:
+                  name: azsdk-pool-mms-win-2022-general
+                  vmImage: windows-2022
 
-              pool:
-                name: azsdk-pool-mms-ubuntu-2004-general
-                vmImage: MMSUbuntu20.04
+                strategy:
+                  runOnce:
+                    deploy:
+                      steps:
+                        - checkout: none
+                        - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
+                        - task: MSBuild@1
+                          displayName: 'Upload Symbols for ${{artifact.name}}'
+                          inputs:
+                            solution: '$(AzureSDKBuildToolsPath)/tools/symboltool/SymbolUploader.proj'
+                            msbuildArguments: >-
+                              /p:PackagesPath=$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}
+                              /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
+                              /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
+                              /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
 
-              strategy:
-                runOnce:
-                  deploy:
-                    steps:
-                      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-                        parameters:
-                          SkipDefaultCheckout: true
-                          Paths:
-                            - sdk/**/*.md
-                            - .github/CODEOWNERS
-                      - download: current
-                      - template: /eng/common/pipelines/templates/steps/update-docsms-metadata.yml
-                        parameters:
-                          PackageInfoLocations:
-                            - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
-                          WorkingDirectory: $(System.DefaultWorkingDirectory)
-                          TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
-                          TargetDocRepoName: ${{parameters.TargetDocRepoName}}
-                          Language: 'dotnet'
-                          SparseCheckoutPaths:
-                            - api/overview/azure/
-                            - metadata/
+            - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
+              - deployment: PublicDocsMS
+                displayName: Publish to Docs.MS
+                condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+                environment: ${{parameters.Environment}}
+                dependsOn: PublishPackage
 
-          - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
-            - deployment: PublishDocs
-              displayName: Publish Docs to GitHub pages
-              condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
-              environment: githubio
-              dependsOn: PublishPackage
+                pool:
+                  name: azsdk-pool-mms-ubuntu-2004-general
+                  vmImage: MMSUbuntu20.04
 
-              pool:
-                name: azsdk-pool-mms-win-2019-general
-                vmImage: MMS2019
+                strategy:
+                  runOnce:
+                    deploy:
+                      steps:
+                        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                          parameters:
+                            Paths:
+                              - sdk/**/*.md
+                              - .github/CODEOWNERS
+                        - download: current
+                        - template: /eng/common/pipelines/templates/steps/update-docsms-metadata.yml
+                          parameters:
+                            PackageInfoLocations:
+                              - $(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json
+                            WorkingDirectory: $(System.DefaultWorkingDirectory)
+                            TargetDocRepoOwner: ${{parameters.TargetDocRepoOwner}}
+                            TargetDocRepoName: ${{parameters.TargetDocRepoName}}
+                            Language: 'dotnet'
+                            SparseCheckoutPaths:
+                              - /api/overview/azure/
+                              - /metadata/
 
-              strategy:
-                runOnce:
-                  deploy:
-                    steps:
-                      - checkout: self
-                      - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
-                        parameters:
-                          FolderForUpload: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
-                          BlobSASKey: '$(azure-sdk-docs-prod-sas)'
-                          BlobName: '$(azure-sdk-docs-prod-blob-name)'
-                          TargetLanguage: 'dotnet'
-                          ArtifactLocation: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
-                          # we override the regular script path because we have cloned the build tools repo as a separate artifact.
-                          ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
+            - ${{if ne(artifact.skipPublishDocGithubIo, 'true')}}:
+              - deployment: PublishDocs
+                displayName: Publish Docs to GitHub pages
+                condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
+                environment: ${{parameters.Environment}}
+                dependsOn: PublishPackage
 
-          - ${{if ne(artifact.skipUpdatePackageVersion, 'true')}}:
-            - deployment: UpdatePackageVersion
-              displayName: "Update Package Version"
-              condition: and(succeeded(), ne(variables['Skip.UpdatePackageVersion'], 'true'))
-              environment: github
-              dependsOn: PublishPackage
+                pool:
+                  name: azsdk-pool-mms-win-2022-general
+                  vmImage: windows-2022
 
-              pool:
-                name: azsdk-pool-mms-win-2019-general
-                vmImage: MMS2019
+                strategy:
+                  runOnce:
+                    deploy:
+                      steps:
+                        - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+                        - template: /eng/common/pipelines/templates/steps/publish-blobs.yml
+                          parameters:
+                            FolderForUpload: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
+                            BlobSASKey: '$(azure-sdk-docs-prod-sas)'
+                            BlobName: '$(azure-sdk-docs-prod-blob-name)'
+                            TargetLanguage: 'dotnet'
+                            ArtifactLocation: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/${{artifact.name}}'
+                            # we override the regular script path because we have cloned the build tools repo as a separate artifact.
+                            ScriptPath: 'eng/common/scripts/copy-docs-to-blobstorage.ps1'
 
-              strategy:
-                runOnce:
-                  deploy:
-                    steps:
-                      - checkout: self
-                      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-                        parameters:
-                          EnableNuGetCache: false
-                      - pwsh: |
-                          eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}'
-                        displayName: Increment package version
-                      - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
-                        parameters:
-                          RepoName: azure-sdk-for-net
-                          PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
-                          CommitMsg: "Increment package version after release of ${{ artifact.name }}"
-                          PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
-                          PRLabels: "auto-merge"
-                          CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
+            - ${{if ne(artifact.skipUpdatePackageVersion, 'true')}}:
+              - deployment: UpdatePackageVersion
+                displayName: "Update Package Version"
+                condition: and(succeeded(), ne(variables['Skip.UpdatePackageVersion'], 'true'))
+                environment: ${{parameters.Environment}}
+                dependsOn: PublishPackage
 
-          - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
-            - template: /eng/pipelines/templates/jobs/smoke.tests.yml
-              parameters:
-                Daily: false
-                Artifact: ${{ artifact }}
-                ArtifactName: ${{ parameters.ArtifactName }}
+                pool:
+                  name: azsdk-pool-mms-win-2022-general
+                  vmImage: windows-2022
+
+                strategy:
+                  runOnce:
+                    deploy:
+                      steps:
+                        - checkout: self
+                        - template: /eng/pipelines/templates/steps/install-dotnet.yml
+                          parameters:
+                            EnableNuGetCache: false
+                        - pwsh: |
+                            eng/scripts/Update-PkgVersion.ps1 -ServiceDirectory '${{parameters.ServiceDirectory}}' -PackageName '${{artifact.name}}'
+                          displayName: Increment package version
+                        - template: /eng/common/pipelines/templates/steps/create-pull-request.yml
+                          parameters:
+                            RepoName: azure-sdk-for-net
+                            PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
+                            CommitMsg: "Increment package version after release of ${{ artifact.name }}"
+                            PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
+                            CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
+
+            - ${{if ne(artifact.skipSmokeTests, 'true')}}:
+              - ${{if and(eq(variables['Build.Reason'], 'Manual'), eq(variables['System.TeamProject'], 'internal'))}}:
+                - template: /eng/pipelines/templates/jobs/smoke.tests.yml
+                  parameters:
+                    Daily: false
+                    Artifact: ${{ artifact }}
+                    ArtifactName: ${{ parameters.ArtifactName }}
 
   - stage: Integration
     dependsOn: Signing
@@ -252,8 +254,8 @@ stages:
       condition: or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal')))
       displayName: Publish package to daily feed
       pool:
-        name: azsdk-pool-mms-win-2019-general
-        vmImage: MMS2019
+        name: azsdk-pool-mms-win-2022-general
+        vmImage: windows-2022
       steps:
       - checkout: none
       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools
@@ -287,7 +289,6 @@ stages:
       steps:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
-            SkipDefaultCheckout: true
             Paths:
               - sdk/**/*.md
               - .github/CODEOWNERS
@@ -306,5 +307,5 @@ stages:
             Language: 'dotnet'
             DailyDocsBuild: true
             SparseCheckoutPaths:
-              - api/overview/azure/
-              - metadata/
+              - /api/overview/azure/
+              - /metadata/

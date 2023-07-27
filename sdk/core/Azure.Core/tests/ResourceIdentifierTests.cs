@@ -20,12 +20,23 @@ namespace Azure.Core.Tests
         private const string LocationBaseResourceId = "/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/locations/westus2";
         private const string LocationInDifferentNamespace = "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute/locations/westus2";
 
+        private ResourceIdentifier GetResourceIdentifier(string id)
+        {
+            var fromCtor = new ResourceIdentifier(id);
+            var fromParse = ResourceIdentifier.Parse(id);
+            ResourceIdentifier fromTryParse;
+            Assert.IsTrue(ResourceIdentifier.TryParse(id, out fromTryParse));
+            Assert.AreEqual(fromCtor, fromParse);
+            Assert.AreEqual(fromParse, fromTryParse);
+            return fromCtor;
+        }
+
         #region LocationResouceIdentifier
         [Test]
         public void LocationFromDiffNamespaceWithChildResouce()
         {
             string resourceId = $"{LocationInDifferentNamespace}/publishers/128technology";
-            var id = new ResourceIdentifier(resourceId);
+            var id = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
             Assert.AreEqual("westus2", id.Location?.ToString());
             Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", id.SubscriptionId);
@@ -40,7 +51,7 @@ namespace Azure.Core.Tests
         public void LocationWithChildResouce()
         {
             string resourceId = $"{LocationBaseResourceId}/myResourceType/myResourceName";
-            var id = new ResourceIdentifier(resourceId);
+            var id = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
             Assert.AreEqual("westus2", id.Location?.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
@@ -55,7 +66,7 @@ namespace Azure.Core.Tests
         public void LocationWithChildSingleton()
         {
             string resourceId = $"{LocationBaseResourceId}/myResourceType/myResourceName/mySingletonResource";
-            var id = new ResourceIdentifier(resourceId);
+            var id = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
             Assert.AreEqual("westus2", id.Location?.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
@@ -80,7 +91,7 @@ namespace Azure.Core.Tests
         public void LocationWithProviderResource()
         {
             string resourceId = $"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName";
-            var id = new ResourceIdentifier(resourceId);
+            var id = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
             Assert.AreEqual("westus2", id.Location?.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
@@ -96,7 +107,7 @@ namespace Azure.Core.Tests
         public void LocationWithProviderResourceWithChild()
         {
             string resourceId = $"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName/myChildResource/myChildResourceName";
-            var id = new ResourceIdentifier(resourceId);
+            var id = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
             Assert.AreEqual("westus2", id.Location?.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
@@ -121,7 +132,7 @@ namespace Azure.Core.Tests
         public void LocationWithExtensionResource()
         {
             string resourceId = $"{LocationBaseResourceId}/providers/myProvider/myResourceType/myResourceName/providers/mySecondNamespace/myChildResource/myChildResourceName";
-            var id = new ResourceIdentifier(resourceId);
+            var id = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
             Assert.AreEqual("westus2", id.Location?.ToString());
             Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", id.SubscriptionId);
@@ -145,13 +156,13 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertiesForLocationResource()
         {
-            ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2/providers/Contoso.Widgets/widgets/myWidget");
+            ResourceIdentifier id1 = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2/providers/Contoso.Widgets/widgets/myWidget");
             Assert.NotNull(id1.SubscriptionId);
             Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", id1.SubscriptionId);
             Assert.IsTrue(id1.Location.HasValue);
             Assert.AreEqual(AzureLocation.WestUS2, id1.Location);
             Assert.Null(id1.ResourceGroupName);
-            ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
+            ResourceIdentifier expectedId = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2");
             Assert.NotNull(id1.Parent);
             Assert.IsTrue(expectedId.Equals(id1.Parent));
         }
@@ -169,7 +180,7 @@ namespace Azure.Core.Tests
 
         public void TestAppendLocationProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
         {
-            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            ResourceIdentifier resource = GetResourceIdentifier(resourceId);
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
@@ -192,7 +203,7 @@ namespace Azure.Core.Tests
         [TestCase(LocationResourceId, "wheels", "wheel1/wheel2")]
         public void TestAppendLocationChildResource(string resourceId, string childTypeName, string childResourceName)
         {
-            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            ResourceIdentifier resource = GetResourceIdentifier(resourceId);
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
@@ -214,7 +225,7 @@ namespace Azure.Core.Tests
         public void CanParseRPIds(string subscription, string resourceGroup, string provider, string type, string name)
         {
             var resourceId = $"/subscriptions/{subscription}/resourceGroups/{Uri.EscapeDataString(resourceGroup)}/providers/{provider}/{type}/{Uri.EscapeDataString(name)}";
-            ResourceIdentifier subject = new ResourceIdentifier(resourceId);
+            ResourceIdentifier subject = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, subject.ToString());
             Assert.AreEqual(subscription, subject.SubscriptionId);
             Assert.AreEqual(resourceGroup, Uri.UnescapeDataString(subject.ResourceGroupName));
@@ -227,7 +238,7 @@ namespace Azure.Core.Tests
         public void CanParseProxyResource(string subscription, string rg, string resourceNamespace, string resource, string type)
         {
             string id = $"/subscriptions/{subscription}/resourceGroups/{rg}/providers/{resourceNamespace}/{resource}";
-            ResourceIdentifier subject = new ResourceIdentifier(id);
+            ResourceIdentifier subject = GetResourceIdentifier(id);
             Assert.AreEqual(id, subject.ToString());
             Assert.AreEqual(subscription, subject.SubscriptionId);
             Assert.AreEqual(resourceNamespace, subject.ResourceType.Namespace);
@@ -237,7 +248,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanParseResourceGroups()
         {
-            ResourceIdentifier subject = new ResourceIdentifier("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg");
+            ResourceIdentifier subject = GetResourceIdentifier("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg");
             Assert.AreEqual("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg", subject.ToString());
             Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.SubscriptionId);
             Assert.AreEqual("myRg", subject.ResourceGroupName);
@@ -251,7 +262,7 @@ namespace Azure.Core.Tests
         public void CanParseChildResources(string parentName, string name)
         {
             var resourceId = $"/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/virtualNetworks/{Uri.EscapeDataString(parentName)}/subnets/{Uri.EscapeDataString(name)}";
-            ResourceIdentifier subject = new ResourceIdentifier(resourceId);
+            ResourceIdentifier subject = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, subject.ToString());
             Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.SubscriptionId);
             Assert.AreEqual("myRg", Uri.UnescapeDataString(subject.ResourceGroupName));
@@ -261,7 +272,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(name, Uri.UnescapeDataString(subject.Name));
 
             // check parent type parsing
-            ResourceIdentifier parentResource = new ResourceIdentifier($"/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/virtualNetworks/{Uri.EscapeDataString(parentName)}");
+            ResourceIdentifier parentResource = GetResourceIdentifier($"/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575/resourceGroups/myRg/providers/Microsoft.Network/virtualNetworks/{Uri.EscapeDataString(parentName)}");
             Assert.AreEqual(parentResource, subject.Parent);
             Assert.AreEqual(parentResource.ToString(), subject.Parent.ToString());
             Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", ((ResourceIdentifier)subject.Parent).SubscriptionId);
@@ -276,8 +287,8 @@ namespace Azure.Core.Tests
         [TestCase(false, "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test/providers/Microsoft.Web/sites/autoreport", "/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/nbhatia_test")]
         public void CheckHashCode(bool expected, string resourceId1, string resourceId2)
         {
-            ResourceIdentifier resourceIdentifier1 = new ResourceIdentifier(resourceId1);
-            ResourceIdentifier resourceIdentifier2 = new ResourceIdentifier(resourceId2);
+            ResourceIdentifier resourceIdentifier1 = GetResourceIdentifier(resourceId1);
+            ResourceIdentifier resourceIdentifier2 = GetResourceIdentifier(resourceId2);
             Assert.AreEqual(expected, resourceIdentifier1.GetHashCode() == resourceIdentifier2.GetHashCode());
         }
 
@@ -285,7 +296,7 @@ namespace Azure.Core.Tests
         public void EqualsObj()
         {
             object input = TrackedResourceId;
-            ResourceIdentifier resource = new ResourceIdentifier(TrackedResourceId);
+            ResourceIdentifier resource = GetResourceIdentifier(TrackedResourceId);
             Assert.AreEqual(true, resource.Equals(input));
             Assert.IsFalse(resource.Equals(new object()));
         }
@@ -293,13 +304,13 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertiesForResourceGroupResource()
         {
-            ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget");
+            ResourceIdentifier id1 = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg/providers/Contoso.Widgets/widgets/myWidget");
             Assert.NotNull(id1.SubscriptionId);
             Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", id1.SubscriptionId);
             Assert.IsFalse(id1.Location.HasValue);
             Assert.NotNull(id1.ResourceGroupName);
             Assert.AreEqual("myRg", id1.ResourceGroupName);
-            ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
+            ResourceIdentifier expectedId = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg");
             Assert.NotNull(id1.Parent);
             Assert.IsTrue(expectedId.Equals(id1.Parent));
         }
@@ -317,7 +328,7 @@ namespace Azure.Core.Tests
 
         public void TestAppendResourceGroupProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
         {
-            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            ResourceIdentifier resource = GetResourceIdentifier(resourceId);
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
@@ -341,7 +352,7 @@ namespace Azure.Core.Tests
         [TestCase(ResourceGroupResourceId, "wheels", "wheel1/wheel2")]
         public void TestAppendResourceGroupChildResource(string resourceId, string childTypeName, string childResourceName)
         {
-            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            ResourceIdentifier resource = GetResourceIdentifier(resourceId);
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
@@ -362,19 +373,19 @@ namespace Azure.Core.Tests
         [TestCase("/providers/Contoso.Widgets/widgets/myWidget/flanges/myFlange", Description = "Child of a subscription resource")]
         public void CanParseValidTenantResource(string resourceId)
         {
-            ResourceIdentifier tenant = new ResourceIdentifier(resourceId);
+            ResourceIdentifier tenant = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, tenant.ToString());
         }
 
         [Test]
         public void TryGetPropertiesForTenantResource()
         {
-            ResourceIdentifier id1 = new ResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget");
+            ResourceIdentifier id1 = GetResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget");
             Assert.Null(id1.SubscriptionId);
             Assert.Null(id1.Location);
             Assert.Null(id1.ResourceGroupName);
             Assert.NotNull(id1.Parent);
-            ResourceIdentifier id2 = new ResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget/flages/myFlange");
+            ResourceIdentifier id2 = GetResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget/flages/myFlange");
             Assert.NotNull(id2.Parent);
             Assert.AreEqual(true, id1.Equals(id2.Parent));
         }
@@ -392,7 +403,7 @@ namespace Azure.Core.Tests
         [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "Microsoft.Authorization", "roleAssignments", "MyRole/Assignemnt")]
         public void TestAppendTenantProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
         {
-            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            ResourceIdentifier resource = GetResourceIdentifier(resourceId);
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
@@ -416,7 +427,7 @@ namespace Azure.Core.Tests
         [TestCase("/providers/Microsoft.Widgets/widgets/MyWidget/things/MyThing", "wheels", "wheel1/wheel2")]
         public void TestAppendTenantChildResource(string resourceId, string childTypeName, string childResourceName)
         {
-            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            ResourceIdentifier resource = GetResourceIdentifier(resourceId);
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
@@ -437,7 +448,7 @@ namespace Azure.Core.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = new ResourceIdentifier(x);
+            ResourceIdentifier z = GetResourceIdentifier(x);
             y = z;
 
             Assert.IsNotNull(z.Parent);
@@ -462,7 +473,7 @@ namespace Azure.Core.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = new ResourceIdentifier(x);
+            ResourceIdentifier z = GetResourceIdentifier(x);
             y = z;
 
             Assert.AreEqual("myVmName", z.Name);
@@ -488,7 +499,7 @@ namespace Azure.Core.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = new ResourceIdentifier(x);
+            ResourceIdentifier z = GetResourceIdentifier(x);
             y = z;
 
             Assert.AreEqual("testsubnet", z.Name);
@@ -518,7 +529,7 @@ namespace Azure.Core.Tests
         [Test]
         public void CanParseSubscriptions()
         {
-            ResourceIdentifier subject = new ResourceIdentifier("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575");
+            ResourceIdentifier subject = GetResourceIdentifier("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575");
             Assert.AreEqual("/subscriptions/0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.ToString());
             Assert.AreEqual("0c2f6471-1bf0-4dda-aec3-cb9272f09575", subject.SubscriptionId);
             Assert.AreEqual("Microsoft.Resources", subject.ResourceType.Namespace);
@@ -528,28 +539,70 @@ namespace Azure.Core.Tests
         [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets/myWidget/configuration", Description = "singleton homed in a subscription resource")]
         [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets/myWidget/providers/Contoso.Extensions/extensions/myExtension", Description = "Extension over a subscription resource")]
         [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets/myWidget/flanges/myFlange", Description = "Child of a subscription resource")]
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Microsoft.CognitiveServices/locations/westus/resourceGroups/myResourceGroup/deletedAccounts/myDeletedAccount", Description = "Location before ResourceGroup")]
         public void CanParseValidSubscriptionResource(string resourceId)
         {
-            ResourceIdentifier subscription = new ResourceIdentifier(resourceId);
+            ResourceIdentifier subscription = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, subscription.ToString());
+        }
+
+        [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Microsoft.CognitiveServices/locations/westus/resourceGroups/myResourceGroup/deletedAccounts/myDeletedAccount", "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts")]
+        public void CanCalculateResourceType(string id, string resourceType)
+        {
+            ResourceIdentifier resourceId = GetResourceIdentifier(id);
+            Assert.AreEqual(resourceType, resourceId.ResourceType.ToString());
+            Assert.AreEqual("myResourceGroup", resourceId.ResourceGroupName);
+            Assert.AreEqual(AzureLocation.WestUS, resourceId.Location);
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", resourceId.SubscriptionId);
+            Assert.AreEqual("myDeletedAccount", resourceId.Name);
+
+            resourceId = resourceId.Parent;
+            Assert.AreEqual("Microsoft.CognitiveServices/locations/resourceGroups", resourceId.ResourceType.ToString());
+            Assert.AreEqual("myResourceGroup", resourceId.ResourceGroupName);
+            Assert.AreEqual(AzureLocation.WestUS, resourceId.Location);
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", resourceId.SubscriptionId);
+            Assert.AreEqual("myResourceGroup", resourceId.Name);
+
+            resourceId = resourceId.Parent;
+            Assert.AreEqual("Microsoft.CognitiveServices/locations", resourceId.ResourceType.ToString());
+            Assert.IsNull(resourceId.ResourceGroupName);
+            Assert.AreEqual(AzureLocation.WestUS, resourceId.Location);
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", resourceId.SubscriptionId);
+            Assert.AreEqual("westus", resourceId.Name);
+
+            resourceId = resourceId.Parent;
+            Assert.AreEqual("Microsoft.Resources/subscriptions", resourceId.ResourceType.ToString());
+            Assert.IsNull(resourceId.ResourceGroupName);
+            Assert.IsNull(resourceId.Location);
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", resourceId.SubscriptionId);
+            Assert.AreEqual("17fecd63-33d8-4e43-ac6f-0aafa111b38d", resourceId.Name);
+
+            resourceId = resourceId.Parent;
+            Assert.AreEqual("Microsoft.Resources/tenants", resourceId.ResourceType.ToString());
+            Assert.IsNull(resourceId.ResourceGroupName);
+            Assert.IsNull(resourceId.Location);
+            Assert.IsNull(resourceId.SubscriptionId);
+            Assert.AreEqual("", resourceId.Name);
+
+            Assert.IsNull(resourceId.Parent);
         }
 
         [TestCase("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/tagNames/azsecpack", Description = "No provider tagname")]
         public void CanParseValidNoProviderResource(string resourceId)
         {
-            ResourceIdentifier subscription = new ResourceIdentifier(resourceId);
+            ResourceIdentifier subscription = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, subscription.ToString());
         }
 
         [Test]
         public void TryGetPropertiesForSubscriptionResource()
         {
-            ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/providers/Contoso.Widgets/widgets/myWidget");
+            ResourceIdentifier id1 = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/providers/Contoso.Widgets/widgets/myWidget");
             Assert.NotNull(id1.SubscriptionId);
             Assert.AreEqual("6b085460-5f21-477e-ba44-1035046e9101", id1.SubscriptionId);
             Assert.Null(id1.Location);
             Assert.Null(id1.ResourceGroupName);
-            ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
+            ResourceIdentifier expectedId = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101");
             Assert.NotNull(id1.Parent);
             Assert.IsTrue(expectedId.Equals(id1.Parent));
         }
@@ -557,12 +610,12 @@ namespace Azure.Core.Tests
         [Test]
         public void TryGetPropertiesForSubscriptionProvider()
         {
-            ResourceIdentifier id1 = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute");
+            ResourceIdentifier id1 = GetResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.Compute");
             Assert.NotNull(id1.SubscriptionId);
             Assert.AreEqual("db1ab6f0-4769-4b27-930e-01e2ef9c123c", id1.SubscriptionId);
             Assert.Null(id1.Location);
             Assert.Null(id1.ResourceGroupName);
-            ResourceIdentifier expectedId = new ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c");
+            ResourceIdentifier expectedId = GetResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c");
             Assert.NotNull(id1.Parent);
             Assert.IsTrue(expectedId.Equals(id1.Parent));
         }
@@ -580,7 +633,7 @@ namespace Azure.Core.Tests
 
         public void TestAppendSubscriptionProviderResource(string resourceId, string providerNamespace, string resourceTypeName, string resourceName)
         {
-            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            ResourceIdentifier resource = GetResourceIdentifier(resourceId);
             if (providerNamespace is null || resourceTypeName is null || resourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendProviderResource(providerNamespace, resourceTypeName, resourceName));
             else if (string.IsNullOrWhiteSpace(providerNamespace) || string.IsNullOrWhiteSpace(resourceTypeName) || string.IsNullOrWhiteSpace(resourceName))
@@ -603,7 +656,7 @@ namespace Azure.Core.Tests
         [TestCase(SubscriptionResourceId, "wheels", "wheel1/wheel2")]
         public void TestAppendSubscriptionChildResource(string resourceId, string childTypeName, string childResourceName)
         {
-            ResourceIdentifier resource = new ResourceIdentifier(resourceId);
+            ResourceIdentifier resource = GetResourceIdentifier(resourceId);
             if (childTypeName is null || childResourceName is null)
                 Assert.Throws(typeof(ArgumentNullException), () => resource.AppendChildResource(childTypeName, childResourceName));
             else if (string.IsNullOrWhiteSpace(childTypeName) || string.IsNullOrWhiteSpace(childResourceName))
@@ -624,7 +677,7 @@ namespace Azure.Core.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = new ResourceIdentifier(x);
+            ResourceIdentifier z = GetResourceIdentifier(x);
             y = z;
 
             Assert.AreEqual("Microsoft.Insights", z.Provider);
@@ -649,7 +702,7 @@ namespace Azure.Core.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = new ResourceIdentifier(x);
+            ResourceIdentifier z = GetResourceIdentifier(x);
             y = z;
 
             Assert.AreEqual("Microsoft.Insights", z.Provider);
@@ -680,7 +733,7 @@ namespace Azure.Core.Tests
         {
             string x = resourceProviderID;
             string y;
-            ResourceIdentifier z = new ResourceIdentifier(x);
+            ResourceIdentifier z = GetResourceIdentifier(x);
             y = z;
 
             Assert.AreEqual("Microsoft.Insights", z.Provider);
@@ -711,14 +764,14 @@ namespace Azure.Core.Tests
         public void ThrowOnMistypedResource()
         {
             ResourceIdentifier tenant;
-            Assert.DoesNotThrow(() => tenant = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101"));
-            Assert.DoesNotThrow(() => tenant = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2"));
-            Assert.DoesNotThrow(() => tenant = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
+            Assert.DoesNotThrow(() => tenant = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101"));
+            Assert.DoesNotThrow(() => tenant = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2"));
+            Assert.DoesNotThrow(() => tenant = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
 
-            ResourceIdentifier subscription = new ResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget");
+            ResourceIdentifier subscription = GetResourceIdentifier("/providers/Contoso.Widgets/widgets/myWidget");
             Assert.IsNotNull(subscription);
-            Assert.DoesNotThrow(() => subscription = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2"));
-            Assert.DoesNotThrow(() => subscription = new ResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
+            Assert.DoesNotThrow(() => subscription = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/locations/westus2"));
+            Assert.DoesNotThrow(() => subscription = GetResourceIdentifier("/subscriptions/6b085460-5f21-477e-ba44-1035046e9101/resourceGroups/myRg"));
         }
 
         [Test]
@@ -734,7 +787,7 @@ namespace Azure.Core.Tests
         public void Sort()
         {
             List<ResourceIdentifier> list = new List<ResourceIdentifier>();
-            ResourceIdentifier id = new ResourceIdentifier(TrackedResourceId);
+            ResourceIdentifier id = GetResourceIdentifier(TrackedResourceId);
             ResourceIdentifier childId = id.AppendChildResource("myChild", "myChildName");
             list.Add(childId);
             list.Add(id);
@@ -746,7 +799,7 @@ namespace Azure.Core.Tests
         [TestCase(TenantResourceId)]
         public void CanParseTenant(string id)
         {
-            ResourceIdentifier asIdentifier = new ResourceIdentifier(id);
+            ResourceIdentifier asIdentifier = GetResourceIdentifier(id);
             Assert.AreEqual(asIdentifier.ResourceType.Namespace, "Microsoft.Billing");
             Assert.AreEqual(asIdentifier.ResourceType.Type, "billingAccounts");
             Assert.AreEqual(asIdentifier.Name, "3984c6f4-2d2a-4b04-93ce-43cf4824b698%3Ae2f1492a-a492-468d-909f-bf7fe6662c01_2019-05-31");
@@ -760,6 +813,8 @@ namespace Azure.Core.Tests
         public void InvalidTenantID(string id)
         {
             Assert.Throws<FormatException>(() => { _ = new ResourceIdentifier(id).Name; });
+            Assert.Throws<FormatException>(() => ResourceIdentifier.Parse(id));
+            Assert.IsFalse(ResourceIdentifier.TryParse(id, out var result));
         }
 
         [TestCase("")]
@@ -774,10 +829,14 @@ namespace Azure.Core.Tests
             if (invalidID == String.Empty)
             {
                 Assert.Throws<ArgumentException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
+                Assert.Throws<ArgumentException>(() => ResourceIdentifier.Parse(invalidID));
+                Assert.IsFalse(ResourceIdentifier.TryParse(invalidID, out var result));
             }
             else
             {
                 Assert.Throws<FormatException>(() => { _ = new ResourceIdentifier(invalidID).Name; });
+                Assert.Throws<FormatException>(() => ResourceIdentifier.Parse(invalidID));
+                Assert.IsFalse(ResourceIdentifier.TryParse(invalidID, out var result));
             }
         }
 
@@ -793,7 +852,7 @@ namespace Azure.Core.Tests
             string y;
             ResourceIdentifier z;
 
-            z = new ResourceIdentifier(x);
+            z = GetResourceIdentifier(x);
             y = z;
 
             if (resourceProviderID is null)
@@ -818,10 +877,12 @@ namespace Azure.Core.Tests
             if (resourceProviderID is null)
             {
                 Assert.Throws<ArgumentNullException>(() => { ResourceIdentifier myResource = new ResourceIdentifier(resourceProviderID); });
+                Assert.Throws<ArgumentNullException>(() => ResourceIdentifier.Parse(resourceProviderID));
+                Assert.IsFalse(ResourceIdentifier.TryParse(resourceProviderID, out var result));
             }
             else
             {
-                ResourceIdentifier myResource = new ResourceIdentifier(resourceProviderID);
+                ResourceIdentifier myResource = GetResourceIdentifier(resourceProviderID);
                 Assert.AreEqual(myResource.ToString(), resourceProviderID);
             }
         }
@@ -829,8 +890,8 @@ namespace Azure.Core.Tests
         [TestCase(LocationResourceId, "Microsoft.Authorization", "roleAssignments", "myRa")]
         public void CanParseExtensionResourceIds(string baseId, string extensionNamespace, string extensionType, string extensionName)
         {
-            ResourceIdentifier targetResourceId = new ResourceIdentifier(baseId);
-            ResourceIdentifier subject = new ResourceIdentifier($"{baseId}/providers/{extensionNamespace}/{extensionType}/{extensionName}");
+            ResourceIdentifier targetResourceId = GetResourceIdentifier(baseId);
+            ResourceIdentifier subject = GetResourceIdentifier($"{baseId}/providers/{extensionNamespace}/{extensionType}/{extensionName}");
             ResourceType expectedType = $"{extensionNamespace}/{extensionType}";
             Assert.AreNotEqual(targetResourceId.ResourceType, subject.ResourceType);
             Assert.AreEqual(expectedType, subject.ResourceType);
@@ -844,13 +905,14 @@ namespace Azure.Core.Tests
             Description = "From ServiceBus")]
         public void CanParseResourceIdsWithSubscriptionsOfOtherResourceTypes(string resourceId, string expectedResourcetype)
         {
-            ResourceIdentifier subject = new ResourceIdentifier(resourceId);
+            ResourceIdentifier subject = GetResourceIdentifier(resourceId);
             Assert.AreEqual(expectedResourcetype, subject.ResourceType.ToString());
         }
 
         [TestCase("UnformattedString", Description = "Too Few Elements")]
         [TestCase("/subs/sub1/rgs/rg1/", Description = "No known parts")]
         [TestCase("/subscriptions/sub1/rgs/rg1/", Description = "Subscription not a Guid")]
+        [TestCase("/subscriptions/sub1", Description = "Subscription not a Guid")]
         [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups", Description = "Too few parts")]
         [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/providers/Contoso.Widgets/widgets", Description = "Subscription resource with too few parts")]
         [TestCase("/subscriptions/17fecd63-33d8-4e43-ac6f-0aafa111b38d/resourceGroups/myRg/widgets", Description = "ResourceGroup ID with Too few parts")]
@@ -863,6 +925,8 @@ namespace Azure.Core.Tests
         public void ThrowsOnInvalidUri(string resourceId)
         {
             Assert.Throws<FormatException>(() => _ = new ResourceIdentifier(resourceId).Name);
+            Assert.Throws<FormatException>(() => ResourceIdentifier.Parse(resourceId));
+            Assert.IsFalse(ResourceIdentifier.TryParse(resourceId, out var result));
         }
 
         protected void ValidateLocationBaseResource(ResourceIdentifier locationResource, string expectedId, bool expectedChild, string expectedResourcetype, string expectedSubGuid)
@@ -909,8 +973,8 @@ namespace Azure.Core.Tests
         [TestCase(null, TrackedResourceId, false)]
         public void EqualsToResourceIdentifier(string resourceProviderID1, string resourceProviderID2, bool expected)
         {
-            ResourceIdentifier a = resourceProviderID1 == null ? null : new ResourceIdentifier(resourceProviderID1);
-            ResourceIdentifier b = resourceProviderID2 == null ? null : new ResourceIdentifier(resourceProviderID2);
+            ResourceIdentifier a = resourceProviderID1 == null ? null : GetResourceIdentifier(resourceProviderID1);
+            ResourceIdentifier b = resourceProviderID2 == null ? null : GetResourceIdentifier(resourceProviderID2);
             if (a != null)
                 Assert.AreEqual(expected, a.Equals(b));
 
@@ -926,7 +990,7 @@ namespace Azure.Core.Tests
         [TestCase(null, TrackedResourceId, false)]
         public void EqualsToString(string resourceProviderID1, string resourceProviderID2, bool expected)
         {
-            ResourceIdentifier a = resourceProviderID1 == null ? null : new ResourceIdentifier(resourceProviderID1);
+            ResourceIdentifier a = resourceProviderID1 == null ? null : GetResourceIdentifier(resourceProviderID1);
             if (a != null)
                 Assert.AreEqual(expected, a.Equals(resourceProviderID2));
 
@@ -944,7 +1008,7 @@ namespace Azure.Core.Tests
             Description = "ResourceGroupResourceIdentifier")]
         public void TryGetPropertiesForGenericResource(string resourceId, string subscription, string location, string resourceGroup, string parent)
         {
-            ResourceIdentifier id1 = new ResourceIdentifier(resourceId);
+            ResourceIdentifier id1 = GetResourceIdentifier(resourceId);
             Assert.AreEqual(subscription is null, id1.SubscriptionId is null);
             if (!(subscription is null))
                 Assert.AreEqual(subscription, id1.SubscriptionId);
@@ -968,7 +1032,7 @@ namespace Azure.Core.Tests
             Description = "ResourceGroupResourceIdentifier")]
         public void ResourceIdRetainsOriginalInput(string resourceId)
         {
-            ResourceIdentifier id = new ResourceIdentifier(resourceId);
+            ResourceIdentifier id = GetResourceIdentifier(resourceId);
             Assert.AreEqual(resourceId, id.ToString());
         }
 
@@ -978,8 +1042,8 @@ namespace Azure.Core.Tests
         [TestCase(TrackedResourceId, null, 1)]
         public void CompareToResourceProvider(string resourceProviderID1, string resourceProviderID2, int expected)
         {
-            ResourceIdentifier a = new ResourceIdentifier(resourceProviderID1);
-            ResourceIdentifier b = resourceProviderID2 == null ? null : new ResourceIdentifier(resourceProviderID2);
+            ResourceIdentifier a = GetResourceIdentifier(resourceProviderID1);
+            ResourceIdentifier b = resourceProviderID2 == null ? null : GetResourceIdentifier(resourceProviderID2);
             if (a != null)
             {
                 int actual = a.CompareTo(b);
@@ -995,8 +1059,8 @@ namespace Azure.Core.Tests
         [TestCase(TrackedResourceId, null, 1)]
         public void CompareToString(string resourceProviderID1, string resourceProviderID2, int expected)
         {
-            ResourceIdentifier a = new ResourceIdentifier(resourceProviderID1);
-            ResourceIdentifier b = resourceProviderID2 == null ? null : new ResourceIdentifier(resourceProviderID2);
+            ResourceIdentifier a = GetResourceIdentifier(resourceProviderID1);
+            ResourceIdentifier b = resourceProviderID2 == null ? null : GetResourceIdentifier(resourceProviderID2);
             if (a != null)
             {
                 int actual = a.CompareTo(b);
@@ -1022,10 +1086,10 @@ namespace Azure.Core.Tests
         [TestCase(null, TrackedResourceId, false, "string")]
         public void EqualsOperator(string resourceProviderID1, string resourceProviderID2, bool expected, string comparisonType)
         {
-            ResourceIdentifier a = resourceProviderID1 == null ? null : new ResourceIdentifier(resourceProviderID1);
+            ResourceIdentifier a = resourceProviderID1 == null ? null : GetResourceIdentifier(resourceProviderID1);
             if (comparisonType == "object")
             {
-                ResourceIdentifier b = resourceProviderID2 == null ? null : new ResourceIdentifier(resourceProviderID2);
+                ResourceIdentifier b = resourceProviderID2 == null ? null : GetResourceIdentifier(resourceProviderID2);
                 Assert.AreEqual(expected, a == b);
             }
             else
@@ -1050,10 +1114,10 @@ namespace Azure.Core.Tests
         [TestCase(null, TrackedResourceId, true, "string")]
         public void NotEqualsOperator(string resourceProviderID1, string resourceProviderID2, bool expected, string comparisonType)
         {
-            ResourceIdentifier a = resourceProviderID1 == null ? null : new ResourceIdentifier(resourceProviderID1);
+            ResourceIdentifier a = resourceProviderID1 == null ? null : GetResourceIdentifier(resourceProviderID1);
             if (comparisonType == "object")
             {
-                ResourceIdentifier b = resourceProviderID2 == null ? null : new ResourceIdentifier(resourceProviderID2);
+                ResourceIdentifier b = resourceProviderID2 == null ? null : GetResourceIdentifier(resourceProviderID2);
                 Assert.AreEqual(expected, a != b);
             }
             else
@@ -1067,8 +1131,8 @@ namespace Azure.Core.Tests
         [TestCase(false, ChildResourceId, TrackedResourceId)]
         public void LessThanOperator(bool expected, string string1, string string2)
         {
-            ResourceIdentifier id1 = new ResourceIdentifier(string1);
-            ResourceIdentifier id2 = new ResourceIdentifier(string2);
+            ResourceIdentifier id1 = GetResourceIdentifier(string1);
+            ResourceIdentifier id2 = GetResourceIdentifier(string2);
             Assert.AreEqual(expected, id1 < id2);
         }
 
@@ -1077,8 +1141,8 @@ namespace Azure.Core.Tests
         [TestCase(false, ChildResourceId, TrackedResourceId)]
         public void LessThanOrEqualOperator(bool expected, string string1, string string2)
         {
-            ResourceIdentifier id1 = new ResourceIdentifier(string1);
-            ResourceIdentifier id2 = new ResourceIdentifier(string2);
+            ResourceIdentifier id1 = GetResourceIdentifier(string1);
+            ResourceIdentifier id2 = GetResourceIdentifier(string2);
             Assert.AreEqual(expected, id1 <= id2);
         }
 
@@ -1087,8 +1151,8 @@ namespace Azure.Core.Tests
         [TestCase(true, ChildResourceId, TrackedResourceId)]
         public void GreaterThanOperator(bool expected, string string1, string string2)
         {
-            ResourceIdentifier id1 = new ResourceIdentifier(string1);
-            ResourceIdentifier id2 = new ResourceIdentifier(string2);
+            ResourceIdentifier id1 = GetResourceIdentifier(string1);
+            ResourceIdentifier id2 = GetResourceIdentifier(string2);
             Assert.AreEqual(expected, id1 > id2);
         }
 
@@ -1097,15 +1161,15 @@ namespace Azure.Core.Tests
         [TestCase(true, ChildResourceId, TrackedResourceId)]
         public void GreaterThanOrEqualOperator(bool expected, string string1, string string2)
         {
-            ResourceIdentifier id1 = new ResourceIdentifier(string1);
-            ResourceIdentifier id2 = new ResourceIdentifier(string2);
+            ResourceIdentifier id1 = GetResourceIdentifier(string1);
+            ResourceIdentifier id2 = GetResourceIdentifier(string2);
             Assert.AreEqual(expected, id1 >= id2);
         }
 
         [Test]
         public void LessThanNull()
         {
-            ResourceIdentifier id = new ResourceIdentifier(TrackedResourceId);
+            ResourceIdentifier id = GetResourceIdentifier(TrackedResourceId);
             Assert.IsTrue(null < id);
             Assert.IsFalse(id < null);
         }
@@ -1113,7 +1177,7 @@ namespace Azure.Core.Tests
         [Test]
         public void LessThanOrEqualNull()
         {
-            ResourceIdentifier id = new ResourceIdentifier(TrackedResourceId);
+            ResourceIdentifier id = GetResourceIdentifier(TrackedResourceId);
             Assert.IsTrue(null <= id);
             Assert.IsFalse(id <= null);
         }
@@ -1121,7 +1185,7 @@ namespace Azure.Core.Tests
         [Test]
         public void GreaterThanNull()
         {
-            ResourceIdentifier id = new ResourceIdentifier(TrackedResourceId);
+            ResourceIdentifier id = GetResourceIdentifier(TrackedResourceId);
             Assert.IsFalse(null > id);
             Assert.IsTrue(id > null);
         }
@@ -1129,7 +1193,7 @@ namespace Azure.Core.Tests
         [Test]
         public void GreaterThanOrEqualNull()
         {
-            ResourceIdentifier id = new ResourceIdentifier(TrackedResourceId);
+            ResourceIdentifier id = GetResourceIdentifier(TrackedResourceId);
             Assert.IsFalse(null >= id);
             Assert.IsTrue(id >= null);
         }

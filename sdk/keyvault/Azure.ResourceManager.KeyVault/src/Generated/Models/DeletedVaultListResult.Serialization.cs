@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static DeletedVaultListResult DeserializeDeletedVaultListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DeletedVaultData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<DeletedKeyVaultData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeletedVaultData> array = new List<DeletedVaultData>();
+                    List<DeletedKeyVaultData> array = new List<DeletedKeyVaultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedVaultData.DeserializeDeletedVaultData(item));
+                        array.Add(DeletedKeyVaultData.DeserializeDeletedKeyVaultData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

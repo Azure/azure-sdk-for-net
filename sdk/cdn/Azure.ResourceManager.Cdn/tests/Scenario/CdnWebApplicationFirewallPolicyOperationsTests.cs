@@ -32,10 +32,12 @@ namespace Azure.ResourceManager.Cdn.Tests
             Assert.AreEqual(404, ex.Status);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task Update()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task Update(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string policyName = Recording.GenerateAssetName("Policy");

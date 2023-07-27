@@ -1,6 +1,6 @@
 # Release History
 
-## 15.4.0-beta.1 (Unreleased)
+## 16.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,41 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 16.0.0 (2023-05-01)
+
+### Features Added
+
+- Added boolean property `enableAcceleratedNetworking` to `NetworkConfiguration`. 
+    -  This property determines whether this pool should enable accelerated networking, with default value as False. 
+    - Whether this feature can be enabled is also related to whether an operating system/VM instance is supported, which should align with AcceleratedNetworking Policy ([AcceleratedNetworking Limitations and constraints](https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview?tabs=redhat#limitations-and-constraints)). 
+- Added boolean property `enableAutomaticUpgrade` to `VMExtension`. 
+    - This property determines whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.
+- Added new property `Type` to `ContainerConfiguration`, which now supports two values: `DockerCompatible` and `CriCompatible`.
+
+### Breaking Changes
+
+- Removed lifetime statistics operations. The lifetime statistics APIs are no longer supported.
+    - Removed GetAllLifetimeStatistics in JobOperation.
+    - Removed GetAllLifetimeStatistics in PoolOperation.
+
+### Other Changes
+
+- Added deprecation warning to certificate operations.
+
+## 15.4.0 (2022-10-01)
+
+### Features Added
+
+- Added new custom enum type `NodeCommunicationMode`.
+  - This property determines how a pool communicates with the Batch service.
+  - Possible values: Default, Classic, Simplified.
+- Added properties `CurrentNodeCommunicationMode` and `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `CloudPool`.
+- Added property `TargetNodeCommunicationMode` of type `NodeCommunicationMode` to `PoolSpecification`, `PoolAddParameter`, `PoolPatchParameter`, and `PoolUpdatePropertiesParameter`.
+
+### Other Changes
+
+- Modified descriptions of `ApplicationId`, `UploadHeaders`, and `Name` (UserAccount) properties.
 
 ## 15.3.0 (2022-01-07)
 
@@ -28,7 +63,7 @@
 
 - Fixed OutputFileBlobContainerDestination constructor null reference exception.
 
-## Features Added
+### Features Added
 
 ## 15.1.0 (2021-08-10)
 

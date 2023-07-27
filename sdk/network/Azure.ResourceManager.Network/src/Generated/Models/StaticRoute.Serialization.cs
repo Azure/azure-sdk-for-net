@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(AddressPrefixes))
             {
-                writer.WritePropertyName("addressPrefixes");
+                writer.WritePropertyName("addressPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in AddressPrefixes)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(NextHopIPAddress))
             {
-                writer.WritePropertyName("nextHopIpAddress");
+                writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
             }
             writer.WriteEndObject();
@@ -41,21 +41,24 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static StaticRoute DeserializeStaticRoute(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<string>> addressPrefixes = default;
-            Optional<string> nextHopIpAddress = default;
+            Optional<string> nextHopIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("addressPrefixes"))
+                if (property.NameEquals("addressPrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -66,13 +69,13 @@ namespace Azure.ResourceManager.Network.Models
                     addressPrefixes = array;
                     continue;
                 }
-                if (property.NameEquals("nextHopIpAddress"))
+                if (property.NameEquals("nextHopIpAddress"u8))
                 {
-                    nextHopIpAddress = property.Value.GetString();
+                    nextHopIPAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new StaticRoute(name.Value, Optional.ToList(addressPrefixes), nextHopIpAddress.Value);
+            return new StaticRoute(name.Value, Optional.ToList(addressPrefixes), nextHopIPAddress.Value);
         }
     }
 }

@@ -18,61 +18,61 @@ namespace Azure.ResourceManager.ServiceBus
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultMessageTimeToLive))
             {
-                writer.WritePropertyName("defaultMessageTimeToLive");
+                writer.WritePropertyName("defaultMessageTimeToLive"u8);
                 writer.WriteStringValue(DefaultMessageTimeToLive.Value, "P");
             }
             if (Optional.IsDefined(MaxSizeInMegabytes))
             {
-                writer.WritePropertyName("maxSizeInMegabytes");
+                writer.WritePropertyName("maxSizeInMegabytes"u8);
                 writer.WriteNumberValue(MaxSizeInMegabytes.Value);
             }
             if (Optional.IsDefined(MaxMessageSizeInKilobytes))
             {
-                writer.WritePropertyName("maxMessageSizeInKilobytes");
+                writer.WritePropertyName("maxMessageSizeInKilobytes"u8);
                 writer.WriteNumberValue(MaxMessageSizeInKilobytes.Value);
             }
             if (Optional.IsDefined(RequiresDuplicateDetection))
             {
-                writer.WritePropertyName("requiresDuplicateDetection");
+                writer.WritePropertyName("requiresDuplicateDetection"u8);
                 writer.WriteBooleanValue(RequiresDuplicateDetection.Value);
             }
             if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
             {
-                writer.WritePropertyName("duplicateDetectionHistoryTimeWindow");
+                writer.WritePropertyName("duplicateDetectionHistoryTimeWindow"u8);
                 writer.WriteStringValue(DuplicateDetectionHistoryTimeWindow.Value, "P");
             }
             if (Optional.IsDefined(EnableBatchedOperations))
             {
-                writer.WritePropertyName("enableBatchedOperations");
+                writer.WritePropertyName("enableBatchedOperations"u8);
                 writer.WriteBooleanValue(EnableBatchedOperations.Value);
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
             if (Optional.IsDefined(SupportOrdering))
             {
-                writer.WritePropertyName("supportOrdering");
+                writer.WritePropertyName("supportOrdering"u8);
                 writer.WriteBooleanValue(SupportOrdering.Value);
             }
             if (Optional.IsDefined(AutoDeleteOnIdle))
             {
-                writer.WritePropertyName("autoDeleteOnIdle");
+                writer.WritePropertyName("autoDeleteOnIdle"u8);
                 writer.WriteStringValue(AutoDeleteOnIdle.Value, "P");
             }
             if (Optional.IsDefined(EnablePartitioning))
             {
-                writer.WritePropertyName("enablePartitioning");
+                writer.WritePropertyName("enablePartitioning"u8);
                 writer.WriteBooleanValue(EnablePartitioning.Value);
             }
             if (Optional.IsDefined(EnableExpress))
             {
-                writer.WritePropertyName("enableExpress");
+                writer.WritePropertyName("enableExpress"u8);
                 writer.WriteBooleanValue(EnableExpress.Value);
             }
             writer.WriteEndObject();
@@ -81,10 +81,15 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusTopicData DeserializeServiceBusTopicData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<long> sizeInBytes = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<DateTimeOffset> updatedAt = default;
@@ -97,34 +102,47 @@ namespace Azure.ResourceManager.ServiceBus
             Optional<bool> requiresDuplicateDetection = default;
             Optional<TimeSpan> duplicateDetectionHistoryTimeWindow = default;
             Optional<bool> enableBatchedOperations = default;
-            Optional<EntityStatus> status = default;
+            Optional<ServiceBusMessagingEntityStatus> status = default;
             Optional<bool> supportOrdering = default;
             Optional<TimeSpan> autoDeleteOnIdle = default;
             Optional<bool> enablePartitioning = default;
             Optional<bool> enableExpress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -133,171 +151,154 @@ namespace Azure.ResourceManager.ServiceBus
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sizeInBytes"))
+                        if (property0.NameEquals("sizeInBytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sizeInBytes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("createdAt"))
+                        if (property0.NameEquals("createdAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("updatedAt"))
+                        if (property0.NameEquals("updatedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("accessedAt"))
+                        if (property0.NameEquals("accessedAt"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("subscriptionCount"))
+                        if (property0.NameEquals("subscriptionCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             subscriptionCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("countDetails"))
+                        if (property0.NameEquals("countDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             countDetails = MessageCountDetails.DeserializeMessageCountDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("defaultMessageTimeToLive"))
+                        if (property0.NameEquals("defaultMessageTimeToLive"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultMessageTimeToLive = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("maxSizeInMegabytes"))
+                        if (property0.NameEquals("maxSizeInMegabytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxSizeInMegabytes = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("maxMessageSizeInKilobytes"))
+                        if (property0.NameEquals("maxMessageSizeInKilobytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxMessageSizeInKilobytes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("requiresDuplicateDetection"))
+                        if (property0.NameEquals("requiresDuplicateDetection"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requiresDuplicateDetection = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("duplicateDetectionHistoryTimeWindow"))
+                        if (property0.NameEquals("duplicateDetectionHistoryTimeWindow"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             duplicateDetectionHistoryTimeWindow = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("enableBatchedOperations"))
+                        if (property0.NameEquals("enableBatchedOperations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableBatchedOperations = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = property0.Value.GetString().ToEntityStatus();
+                            status = property0.Value.GetString().ToServiceBusMessagingEntityStatus();
                             continue;
                         }
-                        if (property0.NameEquals("supportOrdering"))
+                        if (property0.NameEquals("supportOrdering"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             supportOrdering = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("autoDeleteOnIdle"))
+                        if (property0.NameEquals("autoDeleteOnIdle"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoDeleteOnIdle = property0.Value.GetTimeSpan("P");
                             continue;
                         }
-                        if (property0.NameEquals("enablePartitioning"))
+                        if (property0.NameEquals("enablePartitioning"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enablePartitioning = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableExpress"))
+                        if (property0.NameEquals("enableExpress"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableExpress = property0.Value.GetBoolean();
@@ -307,7 +308,7 @@ namespace Azure.ResourceManager.ServiceBus
                     continue;
                 }
             }
-            return new ServiceBusTopicData(id, name, type, systemData, Optional.ToNullable(sizeInBytes), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(accessedAt), Optional.ToNullable(subscriptionCount), countDetails.Value, Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(maxSizeInMegabytes), Optional.ToNullable(maxMessageSizeInKilobytes), Optional.ToNullable(requiresDuplicateDetection), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(status), Optional.ToNullable(supportOrdering), Optional.ToNullable(autoDeleteOnIdle), Optional.ToNullable(enablePartitioning), Optional.ToNullable(enableExpress));
+            return new ServiceBusTopicData(id, name, type, systemData.Value, Optional.ToNullable(sizeInBytes), Optional.ToNullable(createdAt), Optional.ToNullable(updatedAt), Optional.ToNullable(accessedAt), Optional.ToNullable(subscriptionCount), countDetails.Value, Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(maxSizeInMegabytes), Optional.ToNullable(maxMessageSizeInKilobytes), Optional.ToNullable(requiresDuplicateDetection), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(status), Optional.ToNullable(supportOrdering), Optional.ToNullable(autoDeleteOnIdle), Optional.ToNullable(enablePartitioning), Optional.ToNullable(enableExpress), Optional.ToNullable(location));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -13,14 +14,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class DataFlowResource : SubResource
     {
         /// <summary> Initializes a new instance of DataFlowResource. </summary>
-        /// <param name="properties"> Data flow properties. </param>
+        /// <param name="properties">
+        /// Data flow properties.
+        /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Flowlet"/> and <see cref="MappingDataFlow"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DataFlowResource(DataFlow properties)
         {
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
@@ -28,15 +30,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of DataFlowResource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="etag"> Resource Etag. </param>
-        /// <param name="properties"> Data flow properties. </param>
+        /// <param name="properties">
+        /// Data flow properties.
+        /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Flowlet"/> and <see cref="MappingDataFlow"/>.
+        /// </param>
         internal DataFlowResource(string id, string name, string type, string etag, DataFlow properties) : base(id, name, type, etag)
         {
             Properties = properties;
         }
 
-        /// <summary> Data flow properties. </summary>
+        /// <summary>
+        /// Data flow properties.
+        /// Please note <see cref="DataFlow"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Flowlet"/> and <see cref="MappingDataFlow"/>.
+        /// </summary>
         public DataFlow Properties { get; set; }
     }
 }

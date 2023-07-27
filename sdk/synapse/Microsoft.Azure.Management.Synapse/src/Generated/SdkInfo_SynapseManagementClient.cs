@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Synapse
   internal static partial class SdkInfo
   {
       public static IEnumerable<Tuple<string, string, string>> ApiInfo_SynapseManagementClient
-        {
+      {
           get
           {
               return new Tuple<string, string, string>[]
@@ -83,6 +83,7 @@ namespace Microsoft.Azure.Management.Synapse
                 new Tuple<string, string, string>("Synapse", "WorkspaceAadAdmins", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedIdentitySqlControlSettings", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerBlobAuditingPolicies", "2021-06-01"),
+                new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerEncryptionProtector", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerExtendedBlobAuditingPolicies", "2021-06-01"),
                 new Tuple<string, string, string>("Synapse", "WorkspaceManagedSqlServerRecoverableSqlPools", "2021-06-01"),
@@ -100,7 +101,7 @@ namespace Microsoft.Azure.Management.Synapse
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/synapse/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\code\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "e1b38934a6e3bd0fcb22a7c8e0a8522957aa1d9b";
+      public static readonly String GithubCommidId = "74ca59fc8cb6563d5a9d66fb533b8622522143eb";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

@@ -15,21 +15,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraClusterPublicStatusDataCentersItem DeserializeCassandraClusterPublicStatusDataCentersItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> seedNodes = default;
-            Optional<IReadOnlyList<ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems>> nodes = default;
+            Optional<IReadOnlyList<CassandraClusterDataCenterNodeItem>> nodes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("seedNodes"))
+                if (property.NameEquals("seedNodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -40,17 +43,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     seedNodes = array;
                     continue;
                 }
-                if (property.NameEquals("nodes"))
+                if (property.NameEquals("nodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems> array = new List<ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems>();
+                    List<CassandraClusterDataCenterNodeItem> array = new List<CassandraClusterDataCenterNodeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems.DeserializeComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems(item));
+                        array.Add(CassandraClusterDataCenterNodeItem.DeserializeCassandraClusterDataCenterNodeItem(item));
                     }
                     nodes = array;
                     continue;

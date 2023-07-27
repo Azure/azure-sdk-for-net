@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Provisioning status of Custom Https of the custom domain. </summary>
+    /// <summary> Provisioning status of the custom domain. </summary>
     public readonly partial struct CustomHttpsProvisioningState : IEquatable<CustomHttpsProvisioningState>
     {
         private readonly string _value;

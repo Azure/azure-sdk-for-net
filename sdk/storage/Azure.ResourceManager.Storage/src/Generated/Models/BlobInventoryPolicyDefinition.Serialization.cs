@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Filters))
             {
-                writer.WritePropertyName("filters");
+                writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters);
             }
-            writer.WritePropertyName("format");
+            writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
-            writer.WritePropertyName("schedule");
+            writer.WritePropertyName("schedule"u8);
             writer.WriteStringValue(Schedule.ToString());
-            writer.WritePropertyName("objectType");
+            writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType.ToString());
-            writer.WritePropertyName("schemaFields");
+            writer.WritePropertyName("schemaFields"u8);
             writer.WriteStartArray();
             foreach (var item in SchemaFields)
             {
@@ -39,39 +39,42 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static BlobInventoryPolicyDefinition DeserializeBlobInventoryPolicyDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BlobInventoryPolicyFilter> filters = default;
-            Format format = default;
-            Schedule schedule = default;
-            ObjectType objectType = default;
+            BlobInventoryPolicyFormat format = default;
+            BlobInventoryPolicySchedule schedule = default;
+            BlobInventoryPolicyObjectType objectType = default;
             IList<string> schemaFields = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("filters"))
+                if (property.NameEquals("filters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filters = BlobInventoryPolicyFilter.DeserializeBlobInventoryPolicyFilter(property.Value);
                     continue;
                 }
-                if (property.NameEquals("format"))
+                if (property.NameEquals("format"u8))
                 {
-                    format = new Format(property.Value.GetString());
+                    format = new BlobInventoryPolicyFormat(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("schedule"))
+                if (property.NameEquals("schedule"u8))
                 {
-                    schedule = new Schedule(property.Value.GetString());
+                    schedule = new BlobInventoryPolicySchedule(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("objectType"))
+                if (property.NameEquals("objectType"u8))
                 {
-                    objectType = new ObjectType(property.Value.GetString());
+                    objectType = new BlobInventoryPolicyObjectType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("schemaFields"))
+                if (property.NameEquals("schemaFields"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

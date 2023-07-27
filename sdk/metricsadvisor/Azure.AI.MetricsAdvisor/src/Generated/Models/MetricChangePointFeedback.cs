@@ -7,13 +7,13 @@
 
 using System;
 using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor
 {
     /// <summary> The ChangePointFeedback. </summary>
     public partial class MetricChangePointFeedback : MetricFeedback
     {
-
         /// <summary> Initializes a new instance of MetricChangePointFeedback. </summary>
         /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>

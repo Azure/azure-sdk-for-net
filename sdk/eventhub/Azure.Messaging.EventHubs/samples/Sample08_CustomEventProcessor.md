@@ -2,6 +2,17 @@
 
 This sample demonstrates using `PluggableCheckpointStoreEventProcessor<TPartition>` to build a custom event processor which uses an existing `CheckpointStore` implementation to manage load balancing and checkpoint state.  This is commonly used when an application's processing needs are biased towards batches of events.  For the majority of scenarios, we recommend using the [EventProcessorClient](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples) from the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor) package over implementing your own processor.
 
+## Table of contents
+
+- [Reading events](#reading-events)
+- [What does a processor do?](#what-does-a-processor-do)
+- [Building the custom event processor](#building-the-custom-event-processor)
+- [Using the custom processor](#using-the-custom-processor)
+- [Useful customizations](#useful-customizations)
+    - [Overriding checkpoints](#overriding-checkpoints)
+    - [Static partition assignment](#static-partition-assignment)
+- [Extending EventProcessor&lt;TPartition&gt;](#extending-eventprocessortpartition)
+
 ## Reading events
 
 When reading events, a consumer is tied to a specific partition of an Event Hub and reads the events in order from that partition.  This means, to read all events from an Event Hub, you'll need one consumer per partition reading events.  For some workloads where the processing can be intensive, you may want these consumers spread out across multiple machines or to dynamically add and remove consumers as the rate of incoming events increases or decreases.  We call this process *load balancing*.  In addition, you'll want to make sure that if one of your consumers has a problem (such as the machine it is running on crashes) you're able to resume your processing at a later time, picking up where you left off.  We call this process *checkpointing*.
@@ -249,11 +260,11 @@ This should look familiar if you've used `EventProcessorClient` before, but ther
 
 - The processor works in batches, so when you construct it you need to specify the maximum number of events you'll want to process at once, using the `eventBatchMaximumCount` parameter.  The `IEnumerable<EventData>` that is passed `OnProcessingEventBatchAsync` to will never contain more items than this maximum count, but may contain fewer.
 
-- If `MaximumWaitTime` is set to a value other than `null`, the processor will ensure that `OnProcessingEventBatchAsync` is invoked within that interval whether events were available or not.  This can be useful when you want to be sure that your `OnProcessingEventBatchAsync` method is invoked on a regular cadence, such as for sending heartbeats to a health check.  When events are read, `OnProcessingEventBatchAsync` will be invkoed immediately.  When no events were available, the `IEnumerable<EventData>` will contain zero events.   If `MaximumWaitTime` is set to `null`, the processor will only invoke `OnProcessingEventBatchAsync` when events have been read.
+- If `MaximumWaitTime` is set to a value other than `null`, the processor will ensure that `OnProcessingEventBatchAsync` is invoked within that interval whether events were available or not.  This can be useful when you want to be sure that your `OnProcessingEventBatchAsync` method is invoked on a regular cadence, such as for sending heartbeats to a health check.  When events are read, `OnProcessingEventBatchAsync` will be invoked immediately.  When no events were available, the `IEnumerable<EventData>` will contain zero events.   If `MaximumWaitTime` is set to `null`, the processor will only invoke `OnProcessingEventBatchAsync` when events have been read.
 
-- The partition object passed to `OnProcessingErrorAsync` may be `null`.  This happens when the exception is not tied to a specific partition (for example, if an exception was thrown during load balancing), so implemenattions need to account for that possibility.
+- The partition object passed to `OnProcessingErrorAsync` may be `null`.  This happens when the exception is not tied to a specific partition (for example, if an exception was thrown during load balancing), so implementations need to account for that possibility.
 
-## Useful customizaztions
+## Useful customizations
 
 The customizations in this sample are demonstrated using the `PluggableCheckpointStoreEventProcessor<TPartition>` as a base, but can be used with any processor derrived from `EventProcessor<TPartition>`, including the `EventProcessorClient` from the from the [Azure.Messaging.EventHubs.Processor](https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor) package.
 

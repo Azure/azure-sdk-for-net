@@ -13,7 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The PurviewCollections service client. </summary>
+    // Data plane generated sub-client.
+    /// <summary> The PurviewCollections sub-client. </summary>
     public partial class PurviewCollections
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
@@ -33,134 +34,41 @@ namespace Azure.Analytics.Purview.Catalog
         {
         }
 
+        /// <summary> Initializes a new instance of PurviewCollections. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        internal PurviewCollections(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _apiVersion = apiVersion;
+        }
+
         /// <summary>
-        /// Creates or updates an entity to a collection.
+        /// [Protocol Method] Creates or updates an entity to a collection.
         /// Existing entity is matched using its unique guid if supplied or by its unique attributes eg: qualifiedName.
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="collection"> the collection unique name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
-        ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
-        ///     classifications: [
-        ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string,
-        ///         entityGuid: string,
-        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///         removePropagationsOnEntityDelete: boolean,
-        ///         validityPeriods: [
-        ///           {
-        ///             endTime: string,
-        ///             startTime: string,
-        ///             timeZone: string
-        ///           }
-        ///         ],
-        ///         source: string,
-        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///       }
-        ///     ],
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     guid: string,
-        ///     homeId: string,
-        ///     meanings: [
-        ///       {
-        ///         confidence: number,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         displayText: string,
-        ///         expression: string,
-        ///         relationGuid: string,
-        ///         source: string,
-        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///         steward: string,
-        ///         termGuid: string
-        ///       }
-        ///     ],
-        ///     provenanceType: number,
-        ///     proxy: boolean,
-        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number,
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
-        ///   partialUpdatedEntities: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
-        ///       classifications: [
-        ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
-        ///           validityPeriods: [
-        ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
-        ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
-        ///       meanings: [
-        ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
-        ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateEntityAsync(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));
@@ -181,133 +89,25 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// Creates or updates an entity to a collection.
+        /// [Protocol Method] Creates or updates an entity to a collection.
         /// Existing entity is matched using its unique guid if supplied or by its unique attributes eg: qualifiedName.
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="collection"> the collection unique name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
-        ///   entity: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
-        ///     classifications: [
-        ///       {
-        ///         attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///         typeName: string,
-        ///         lastModifiedTS: string,
-        ///         entityGuid: string,
-        ///         entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///         removePropagationsOnEntityDelete: boolean,
-        ///         validityPeriods: [
-        ///           {
-        ///             endTime: string,
-        ///             startTime: string,
-        ///             timeZone: string
-        ///           }
-        ///         ],
-        ///         source: string,
-        ///         sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///       }
-        ///     ],
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     guid: string,
-        ///     homeId: string,
-        ///     meanings: [
-        ///       {
-        ///         confidence: number,
-        ///         createdBy: string,
-        ///         description: string,
-        ///         displayText: string,
-        ///         expression: string,
-        ///         relationGuid: string,
-        ///         source: string,
-        ///         status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///         steward: string,
-        ///         termGuid: string
-        ///       }
-        ///     ],
-        ///     provenanceType: number,
-        ///     proxy: boolean,
-        ///     relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number,
-        ///     source: string,
-        ///     sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///     contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
-        ///   partialUpdatedEntities: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
-        ///       classifications: [
-        ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
-        ///           validityPeriods: [
-        ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
-        ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
-        ///       meanings: [
-        ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
-        ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntity(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateEntity(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));
@@ -328,135 +128,25 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// Creates or updates entities in bulk to a collection.
+        /// [Protocol Method] Creates or updates entities in bulk to a collection.
         /// Existing entity is matched using its unique guid if supplied or by its unique attributes eg: qualifiedName.
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="collection"> the collection unique name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
-        ///   entities: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classifications: [
-        ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
-        ///           validityPeriods: [
-        ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
-        ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///         }
-        ///       ],
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       guid: string,
-        ///       homeId: string,
-        ///       meanings: [
-        ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
-        ///         }
-        ///       ],
-        ///       provenanceType: number,
-        ///       proxy: boolean,
-        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
-        ///   partialUpdatedEntities: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
-        ///       classifications: [
-        ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
-        ///           validityPeriods: [
-        ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
-        ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
-        ///       meanings: [
-        ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
-        ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityInBulkAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateOrUpdateEntityInBulkAsync(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));
@@ -477,135 +167,25 @@ namespace Azure.Analytics.Purview.Catalog
         }
 
         /// <summary>
-        /// Creates or updates entities in bulk to a collection.
+        /// [Protocol Method] Creates or updates entities in bulk to a collection.
         /// Existing entity is matched using its unique guid if supplied or by its unique attributes eg: qualifiedName.
         /// Map and array of collections are not well supported. E.g., array&lt;array&lt;int&gt;&gt;, array&lt;map&lt;string, int&gt;&gt;.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="collection"> the collection unique name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntity&gt;,
-        ///   entities: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classifications: [
-        ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
-        ///           validityPeriods: [
-        ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
-        ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///         }
-        ///       ],
-        ///       createTime: number,
-        ///       createdBy: string,
-        ///       guid: string,
-        ///       homeId: string,
-        ///       meanings: [
-        ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
-        ///         }
-        ///       ],
-        ///       provenanceType: number,
-        ///       proxy: boolean,
-        ///       relationshipAttributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///       updateTime: number,
-        ///       updatedBy: string,
-        ///       version: number,
-        ///       source: string,
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;,
-        ///       contacts: Dictionary&lt;string, ContactBasic[]&gt;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
-        ///   partialUpdatedEntities: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
-        ///       classifications: [
-        ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
-        ///           validityPeriods: [
-        ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
-        ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
-        ///       meanings: [
-        ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
-        ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='CreateOrUpdateEntityInBulk(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateOrUpdateEntityInBulk(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));
@@ -625,78 +205,24 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Move existing entities to the target collection. </summary>
+        /// <summary>
+        /// [Protocol Method] Move existing entities to the target collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collection"> the collection unique name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   entityGuids: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
-        ///   partialUpdatedEntities: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
-        ///       classifications: [
-        ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
-        ///           validityPeriods: [
-        ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
-        ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
-        ///       meanings: [
-        ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
-        ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='MoveEntitiesToCollectionAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> MoveEntitiesToCollectionAsync(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));
@@ -716,78 +242,24 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Move existing entities to the target collection. </summary>
+        /// <summary>
+        /// [Protocol Method] Move existing entities to the target collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="collection"> the collection unique name. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="collection"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   entityGuids: [string]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   guidAssignments: Dictionary&lt;string, string&gt;,
-        ///   mutatedEntities: Dictionary&lt;string, AtlasEntityHeader[]&gt;,
-        ///   partialUpdatedEntities: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///       typeName: string,
-        ///       lastModifiedTS: string,
-        ///       classificationNames: [string],
-        ///       classifications: [
-        ///         {
-        ///           attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///           typeName: string,
-        ///           lastModifiedTS: string,
-        ///           entityGuid: string,
-        ///           entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///           removePropagationsOnEntityDelete: boolean,
-        ///           validityPeriods: [
-        ///             {
-        ///               endTime: string,
-        ///               startTime: string,
-        ///               timeZone: string
-        ///             }
-        ///           ],
-        ///           source: string,
-        ///           sourceDetails: Dictionary&lt;string, AnyObject&gt;
-        ///         }
-        ///       ],
-        ///       displayText: string,
-        ///       guid: string,
-        ///       meaningNames: [string],
-        ///       meanings: [
-        ///         {
-        ///           confidence: number,
-        ///           createdBy: string,
-        ///           description: string,
-        ///           displayText: string,
-        ///           expression: string,
-        ///           relationGuid: string,
-        ///           source: string,
-        ///           status: &quot;DISCOVERED&quot; | &quot;PROPOSED&quot; | &quot;IMPORTED&quot; | &quot;VALIDATED&quot; | &quot;DEPRECATED&quot; | &quot;OBSOLETE&quot; | &quot;OTHER&quot;,
-        ///           steward: string,
-        ///           termGuid: string
-        ///         }
-        ///       ],
-        ///       status: &quot;ACTIVE&quot; | &quot;DELETED&quot;
-        ///     }
-        ///   ]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCollections.xml" path="doc/members/member[@name='MoveEntitiesToCollection(string,RequestContent,RequestContext)']/*" />
         public virtual Response MoveEntitiesToCollection(string collection, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collection, nameof(collection));

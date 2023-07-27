@@ -94,5 +94,10 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// </summary>
         IPrivateEndpointConnectionsOperations PrivateEndpointConnections { get; }
 
+        /// <summary>
+        /// Gets the ITimeSeriesDatabaseConnectionsOperations.
+        /// </summary>
+        ITimeSeriesDatabaseConnectionsOperations TimeSeriesDatabaseConnections { get; }
+
     }
 }

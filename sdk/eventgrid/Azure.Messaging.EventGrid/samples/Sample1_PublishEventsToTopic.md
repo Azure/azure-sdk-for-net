@@ -12,7 +12,7 @@ EventGridPublisherClient client = new EventGridPublisherClient(
     new AzureKeyCredential(topicAccessKey));
 ```
 
-Event Grid also supports authenticating with a shared access signature which allows for providing access to a resource that expires by a certain time without sharing your access key. 
+Event Grid also supports authenticating with a shared access signature which allows for providing access to a resource that expires by a certain time without sharing your access key.
 Generally, the workflow would be that one application would generate the SAS string and hand off the string to another application that would consume the string.
 Generate the SAS:
 ```C# Snippet:GenerateSas
@@ -108,8 +108,3 @@ List<CloudEvent> eventsList = new List<CloudEvent>
 // Send the events
 await client.SendEventsAsync(eventsList);
 ```
-
-## Source
-
-To view the full example source, see:
-- [Sample1_SendEventsToTopicAndDomain.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid/tests/Samples/Sample1_SendEventsToTopicAndDomain.cs)

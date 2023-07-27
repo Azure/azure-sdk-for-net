@@ -1,0 +1,1183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetFilterAsync(RequestContext)">
+<example>
+This sample shows how to call GetFilterAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = await client.GetFilterAsync(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetFilter(RequestContext)">
+<example>
+This sample shows how to call GetFilter with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = client.GetFilter(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdateFilterAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateFilterAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {};
+
+Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateFilterAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {
+    properties = new {
+        excludeUriPrefixes = new[] {
+            "<String>"
+        },
+        includeUriPrefixes = new[] {
+            "<String>"
+        },
+    },
+};
+
+Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdateFilter(RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateFilter and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {};
+
+Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateFilter with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {
+    properties = new {
+        excludeUriPrefixes = new[] {
+            "<String>"
+        },
+        includeUriPrefixes = new[] {
+            "<String>"
+        },
+    },
+};
+
+Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("includeUriPrefixes")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdateAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {
+    kind = "AzureSubscriptionCredential",
+};
+
+Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {
+    properties = new {
+        resourceTypes = new {
+            None = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+                resourceNameFilter = new {
+                    excludePrefixes = new[] {
+                        "<String>"
+                    },
+                    includePrefixes = new[] {
+                        "<String>"
+                    },
+                    resources = new[] {
+                        "<String>"
+                    },
+                },
+                credential = new {
+                    referenceName = "<referenceName>",
+                    credentialType = "AccountKey",
+                },
+            },
+            AzureSubscription = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureResourceGroup = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureSynapseWorkspace = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureSynapse = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AdlsGen1 = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AdlsGen2 = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AmazonAccount = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AmazonS3 = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AmazonSql = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureCosmosDb = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureDataExplorer = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureFileService = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureSqlDatabase = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AmazonPostgreSql = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzurePostgreSql = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            SqlServerDatabase = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureSqlDatabaseManagedInstance = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureSqlDataWarehouse = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureMySql = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureStorage = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            Teradata = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            Oracle = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            SapS4Hana = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            SapEcc = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            PowerBI = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+        },
+        credential = new {
+            referenceName = "<referenceName>",
+            credentialType = "AccountKey",
+        },
+        scanRulesetName = "<scanRulesetName>",
+        scanRulesetType = "Custom",
+        collection = new {
+            referenceName = "<referenceName>",
+        },
+        workers = 1234,
+        connectedVia = new {
+            referenceName = "<referenceName>",
+        },
+    },
+    kind = "AzureSubscriptionCredential",
+};
+
+Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdate(RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {
+    kind = "AzureSubscriptionCredential",
+};
+
+Response response = client.CreateOrUpdate(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {
+    properties = new {
+        resourceTypes = new {
+            None = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+                resourceNameFilter = new {
+                    excludePrefixes = new[] {
+                        "<String>"
+                    },
+                    includePrefixes = new[] {
+                        "<String>"
+                    },
+                    resources = new[] {
+                        "<String>"
+                    },
+                },
+                credential = new {
+                    referenceName = "<referenceName>",
+                    credentialType = "AccountKey",
+                },
+            },
+            AzureSubscription = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureResourceGroup = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureSynapseWorkspace = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureSynapse = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AdlsGen1 = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AdlsGen2 = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AmazonAccount = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AmazonS3 = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AmazonSql = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureCosmosDb = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureDataExplorer = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureFileService = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureSqlDatabase = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AmazonPostgreSql = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzurePostgreSql = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            SqlServerDatabase = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureSqlDatabaseManagedInstance = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureSqlDataWarehouse = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureMySql = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            AzureStorage = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            Teradata = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            Oracle = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            SapS4Hana = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            SapEcc = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+            PowerBI = new {
+                scanRulesetName = "<scanRulesetName>",
+                scanRulesetType = "Custom",
+            },
+        },
+        credential = new {
+            referenceName = "<referenceName>",
+            credentialType = "AccountKey",
+        },
+        scanRulesetName = "<scanRulesetName>",
+        scanRulesetType = "Custom",
+        collection = new {
+            referenceName = "<referenceName>",
+        },
+        workers = 1234,
+        connectedVia = new {
+            referenceName = "<referenceName>",
+        },
+    },
+    kind = "AzureSubscriptionCredential",
+};
+
+Response response = client.CreateOrUpdate(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetPropertiesAsync(RequestContext)">
+<example>
+This sample shows how to call GetPropertiesAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = await client.GetPropertiesAsync(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetProperties(RequestContext)">
+<example>
+This sample shows how to call GetProperties with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = client.GetProperties(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteAsync(RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = await client.DeleteAsync(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="Delete(RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = client.Delete(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("runType").ToString());
+Console.WriteLine(result.GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="RunScanAsync(string,string,RequestContext)">
+<example>
+This sample shows how to call RunScanAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = await client.RunScanAsync("<runId>", "<scanLevel>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("scanResultId").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="RunScan(string,string,RequestContext)">
+<example>
+This sample shows how to call RunScan with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = client.RunScan("<runId>", "<scanLevel>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("scanResultId").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CancelScanAsync(string,RequestContext)">
+<example>
+This sample shows how to call CancelScanAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = await client.CancelScanAsync("<runId>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("scanResultId").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CancelScan(string,RequestContext)">
+<example>
+This sample shows how to call CancelScan with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = client.CancelScan("<runId>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("scanResultId").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetTriggerAsync(RequestContext)">
+<example>
+This sample shows how to call GetTriggerAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = await client.GetTriggerAsync(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetTrigger(RequestContext)">
+<example>
+This sample shows how to call GetTrigger with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = client.GetTrigger(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdateTriggerAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateTriggerAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {};
+
+Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateTriggerAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {
+    properties = new {
+        recurrence = new {
+            frequency = "Week",
+            interval = 1234,
+            startTime = "2022-05-10T18:57:31.2311892Z",
+            endTime = "2022-05-10T18:57:31.2311892Z",
+            schedule = new {
+                additionalProperties = new {
+                    key = new {},
+                },
+                minutes = new[] {
+                    1234
+                },
+                hours = new[] {
+                    1234
+                },
+                weekDays = new[] {
+                    "Sunday"
+                },
+                monthDays = new[] {
+                    1234
+                },
+                monthlyOccurrences = new[] {
+                    new {
+                        additionalProperties = new {
+                            key = new {},
+                        },
+                        day = "Sunday",
+                        occurrence = 1234,
+                    }
+                },
+            },
+            timeZone = "<timeZone>",
+        },
+        recurrenceInterval = "<recurrenceInterval>",
+        scanLevel = "Full",
+        incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
+    },
+};
+
+Response response = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CreateOrUpdateTrigger(RequestContent,RequestContext)">
+<example>
+This sample shows how to call CreateOrUpdateTrigger and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {};
+
+Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateTrigger with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+var data = new {
+    properties = new {
+        recurrence = new {
+            frequency = "Week",
+            interval = 1234,
+            startTime = "2022-05-10T18:57:31.2311892Z",
+            endTime = "2022-05-10T18:57:31.2311892Z",
+            schedule = new {
+                additionalProperties = new {
+                    key = new {},
+                },
+                minutes = new[] {
+                    1234
+                },
+                hours = new[] {
+                    1234
+                },
+                weekDays = new[] {
+                    "Sunday"
+                },
+                monthDays = new[] {
+                    1234
+                },
+                monthlyOccurrences = new[] {
+                    new {
+                        additionalProperties = new {
+                            key = new {},
+                        },
+                        day = "Sunday",
+                        occurrence = 1234,
+                    }
+                },
+            },
+            timeZone = "<timeZone>",
+        },
+        recurrenceInterval = "<recurrenceInterval>",
+        scanLevel = "Full",
+        incrementalScanStartTime = "2022-05-10T18:57:31.2311892Z",
+    },
+};
+
+Response response = client.CreateOrUpdateTrigger(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteTriggerAsync(RequestContext)">
+<example>
+This sample shows how to call DeleteTriggerAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = await client.DeleteTriggerAsync(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteTrigger(RequestContext)">
+<example>
+This sample shows how to call DeleteTrigger with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+Response response = client.DeleteTrigger(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("interval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("minutes")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("hours")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("weekDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthDays")[0].ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("additionalProperties").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("day").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("schedule").GetProperty("monthlyOccurrences")[0].GetProperty("occurrence").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrence").GetProperty("timeZone").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("recurrenceInterval").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("createdAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastModifiedAt").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("lastScheduled").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("scanLevel").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("incrementalScanStartTime").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetRunsAsync(RequestContext)">
+<example>
+This sample shows how to call GetRunsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+await foreach (var item in client.GetRunsAsync(new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("parentId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("resourceId").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("assetsDiscovered").ToString());
+    Console.WriteLine(result.GetProperty("assetsClassified").ToString());
+    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("startTime").ToString());
+    Console.WriteLine(result.GetProperty("queuedTime").ToString());
+    Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
+    Console.WriteLine(result.GetProperty("endTime").ToString());
+    Console.WriteLine(result.GetProperty("scanRulesetVersion").ToString());
+    Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result.GetProperty("scanLevelType").ToString());
+    Console.WriteLine(result.GetProperty("errorMessage").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("runType").ToString());
+    Console.WriteLine(result.GetProperty("dataSourceType").ToString());
+}
+]]></code>
+</example>
+    </member>
+    <member name="GetRuns(RequestContext)">
+<example>
+This sample shows how to call GetRuns with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", credential);
+
+foreach (var item in client.GetRuns(new RequestContext()))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("parentId").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("resourceId").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("assetsDiscovered").ToString());
+    Console.WriteLine(result.GetProperty("assetsClassified").ToString());
+    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("startTime").ToString());
+    Console.WriteLine(result.GetProperty("queuedTime").ToString());
+    Console.WriteLine(result.GetProperty("pipelineStartTime").ToString());
+    Console.WriteLine(result.GetProperty("endTime").ToString());
+    Console.WriteLine(result.GetProperty("scanRulesetVersion").ToString());
+    Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+    Console.WriteLine(result.GetProperty("scanLevelType").ToString());
+    Console.WriteLine(result.GetProperty("errorMessage").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("runType").ToString());
+    Console.WriteLine(result.GetProperty("dataSourceType").ToString());
+}
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

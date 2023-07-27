@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -13,29 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class OriginGroupOverrideAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of OriginGroupOverrideAction. </summary>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public OriginGroupOverrideAction(OriginGroupOverrideActionParameters parameters)
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public OriginGroupOverrideAction(OriginGroupOverrideActionProperties properties)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            Parameters = parameters;
+            Properties = properties;
             Name = DeliveryRuleActionType.OriginGroupOverride;
         }
 
         /// <summary> Initializes a new instance of OriginGroupOverrideAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal OriginGroupOverrideAction(DeliveryRuleActionType name, OriginGroupOverrideActionParameters parameters) : base(name)
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        internal OriginGroupOverrideAction(DeliveryRuleActionType name, OriginGroupOverrideActionProperties properties) : base(name)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public OriginGroupOverrideActionParameters Parameters { get; set; }
+        public OriginGroupOverrideActionProperties Properties { get; set; }
     }
 }

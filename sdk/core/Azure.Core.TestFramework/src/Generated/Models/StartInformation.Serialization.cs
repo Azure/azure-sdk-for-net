@@ -15,8 +15,13 @@ namespace Azure.Core.TestFramework.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("x-recording-file");
+            writer.WritePropertyName("x-recording-file"u8);
             writer.WriteStringValue(XRecordingFile);
+            if (Optional.IsDefined(XRecordingAssetsFile))
+            {
+                writer.WritePropertyName("x-recording-assets-file"u8);
+                writer.WriteStringValue(XRecordingAssetsFile);
+            }
             writer.WriteEndObject();
         }
     }

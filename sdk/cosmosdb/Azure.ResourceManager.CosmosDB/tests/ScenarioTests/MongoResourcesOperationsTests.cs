@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     databaseAccountName,
                     databaseName,
                     new MongoDBDatabaseCreateUpdateParameters(
-                        new MongoDBDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput1, new AutoscaleSettings()))));
+                        new MongoDBDatabaseResource(databaseName), new CosmosDBCreateUpdateConfig(sampleThroughput1, new AutoscaleSettings()))));
             Assert.IsNotNull(mongoDBDatabase1);
             Assert.AreEqual(databaseName, mongoDBDatabase1.Resource.Id);
             ThroughputSettingsData throughputSettings1 =
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     databaseAccountName,
                     databaseName,
                     new MongoDBDatabaseCreateUpdateParameters(
-                        new MongoDBDatabaseResource(databaseName), new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()))));
+                        new MongoDBDatabaseResource(databaseName), new CosmosDBCreateUpdateConfig(sampleThroughput2, new AutoscaleSettings()))));
             Assert.IsNotNull(mongoDBDatabase2);
             Assert.AreEqual(databaseName, mongoDBDatabase2.Resource.Id);
             ThroughputSettingsData throughputSettings2 =
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     databaseName,
                     collectionName,
                     new MongoDBCollectionCreateUpdateParameters(
-                        new MongoDBCollectionResource(collectionName), new CreateUpdateOptions(sampleThroughput1, new AutoscaleSettings()))));
+                        new MongoDBCollectionResource(collectionName), new CosmosDBCreateUpdateConfig(sampleThroughput1, new AutoscaleSettings()))));
             Assert.IsNotNull(mongoDBCollection1);
             Assert.AreEqual(collectionName, mongoDBCollection1.Resource.Id);
             ThroughputSettingsData throughputSettings1 =
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                     databaseName,
                     collectionName,
                     new MongoDBCollectionCreateUpdateParameters(
-                        new MongoDBCollectionResource(collectionName), new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()))));
+                        new MongoDBCollectionResource(collectionName), new CosmosDBCreateUpdateConfig(sampleThroughput2, new AutoscaleSettings()))));
             Assert.IsNotNull(mongoDBCollection2);
             Assert.AreEqual(collectionName, mongoDBCollection2.Resource.Id);
             ThroughputSettingsData throughputSettings2 =
@@ -284,8 +284,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
         }
 
         private void VerifyMongoDBCollections(MongoDBCollectionResource expectedValue, MongoDBCollectionResource actualValue)
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Name, actualValue.Name);
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
         }
     }
 }

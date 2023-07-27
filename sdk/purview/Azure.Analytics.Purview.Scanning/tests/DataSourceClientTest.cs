@@ -37,15 +37,16 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                 }
             };
             //Create
-            Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data));
+            Response createResponse = await client.CreateOrUpdateAsync(RequestContent.Create(data), new());
             Assert.AreEqual(201, createResponse.Status);
             //Get
             Response getResponse = await client.GetPropertiesAsync(new());
             Assert.AreEqual(200, getResponse.Status);
-            JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResponse));
+            JsonElement getBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("datasources/test-datasources3", getBodyJson.GetProperty("id").GetString());
             //Delete
-            Response deleteResponse = await client.DeleteAsync();
+            Response deleteResponse = await client.DeleteAsync(new());
             Assert.AreEqual(200, deleteResponse.Status);
         }
         [RecordedTest]
@@ -54,7 +55,8 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             var client = GetPurviewDataSourceClient("test-datasource1014");
             var fetchResponseList = client.GetScansAsync(new()).GetAsyncEnumerator();
             await fetchResponseList.MoveNextAsync();
-            JsonElement fetchBodyJson = JsonDocument.Parse(fetchResponseList.Current).RootElement;
+            using var jsonDocument = JsonDocument.Parse(fetchResponseList.Current);
+            JsonElement fetchBodyJson = jsonDocument.RootElement;
             await fetchResponseList.DisposeAsync();
             Assert.AreEqual("datasources/test-datasource1014/scans/test-scan1014", fetchBodyJson.GetProperty("id").GetString());
         }

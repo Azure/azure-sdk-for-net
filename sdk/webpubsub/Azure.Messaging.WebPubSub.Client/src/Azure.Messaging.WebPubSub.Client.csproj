@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.0.0-beta.3</Version>
+    <PackageId>Azure.Messaging.WebPubSub.Client</PackageId>
+    <Description>Client for Azure WebPubSub</Description>
+    <PackageTags>azure;webpubsub.client</PackageTags>
+    <NoWarn>$(NoWarn);0067</NoWarn>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Threading.Channels" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared\Azure.Core" />
+  </ItemGroup>
+</Project>

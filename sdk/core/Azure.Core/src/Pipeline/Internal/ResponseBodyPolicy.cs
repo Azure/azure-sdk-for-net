@@ -75,7 +75,9 @@ namespace Azure.Core.Pipeline
 
             if (message.BufferResponse)
             {
-                if (networkTimeout != Timeout.InfiniteTimeSpan)
+                // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
+                // register callback to dispose the stream on cancellation.
+                if (networkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
                 {
                     cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
                 }
@@ -96,19 +98,12 @@ namespace Azure.Core.Pipeline
                     bufferedStream.Position = 0;
                     message.Response.ContentStream = bufferedStream;
                 }
-                // We dispose stream on timeout so catch and check if cancellation token was cancelled
-                catch (ObjectDisposedException ex)
-                {
-                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
-                    throw;
-                }
-                // We dispose stream on timeout so catch and check if cancellation token was cancelled
-                catch (IOException ex)
-                {
-                    ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
-                    throw;
-                }
-                catch (OperationCanceledException ex)
+                // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
+                catch (Exception ex)
+                    when (ex is ObjectDisposedException
+                              or IOException
+                              or OperationCanceledException
+                              or NotSupportedException)
                 {
                     ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, networkTimeout);
                     throw;

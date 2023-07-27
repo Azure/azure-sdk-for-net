@@ -203,8 +203,27 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
             Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
 
-            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromEvents(events, sendOptions?.PartitionKey);
-            await SendAsync(messageFactory, sendOptions?.PartitionKey, cancellationToken).ConfigureAwait(false);
+            var partitionKey = sendOptions?.PartitionKey;
+            var messages = new AmqpMessage[events.Count];
+            var index = 0;
+
+            foreach (var eventData in events)
+            {
+                messages[index] = MessageConverter.CreateMessageFromEvent(eventData, partitionKey);
+                ++index;
+            }
+
+            try
+            {
+                await SendAsync(messages, partitionKey, cancellationToken).ConfigureAwait(false);
+            }
+            finally
+            {
+                foreach (var message in messages)
+                {
+                    message.Dispose();
+                }
+            }
         }
 
         /// <summary>
@@ -228,10 +247,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             Argument.AssertNotClosed(_closed, nameof(AmqpProducer));
             Argument.AssertNotClosed(ConnectionScope.IsDisposed, nameof(EventHubConnection));
 
-            // Make a defensive copy of the messages in the batch.
-
-            AmqpMessage messageFactory() => MessageConverter.CreateBatchFromEvents(eventBatch.AsReadOnlyCollection<EventData>(), eventBatch.SendOptions?.PartitionKey);
-            await SendAsync(messageFactory, eventBatch.SendOptions?.PartitionKey, cancellationToken).ConfigureAwait(false);
+            await SendAsync(eventBatch.AsReadOnlyCollection<AmqpMessage>(), eventBatch.SendOptions?.PartitionKey, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -271,7 +287,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     {
                         if (!SendLink.TryGetOpenedObject(out _))
                         {
-                            await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                            await SendLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                         }
 
                         break;
@@ -350,7 +366,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     if (!SendLink.TryGetOpenedObject(out _))
                     {
-                        await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                        await SendLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                     }
 
                     break;
@@ -433,17 +449,23 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///   maximum size of a single batch, an exception will be triggered and the send will fail.
         /// </summary>
         ///
-        /// <param name="messageFactory">A factory which can be used to produce an AMQP message containing the batch of events to be sent.</param>
+        /// <param name="messages">The set of AMQP messages to packaged in a batch envelope and sent.</param>
         /// <param name="partitionKey">The hashing key to use for influencing the partition to which events should be routed.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
-        protected virtual async Task SendAsync(Func<AmqpMessage> messageFactory,
+        /// <remarks>
+        ///   Callers retain ownership of the <paramref name="messages" /> passed and hold responsibility for
+        ///   ensuring that they are disposed.
+        /// </remarks>
+        ///
+        protected virtual async Task SendAsync(IReadOnlyCollection<AmqpMessage> messages,
                                                string partitionKey,
                                                CancellationToken cancellationToken)
         {
             var failedAttemptCount = 0;
             var logPartition = PartitionId ?? partitionKey;
             var operationId = Guid.NewGuid().ToString("D", CultureInfo.InvariantCulture);
+            var stopWatch = ValueStopwatch.StartNew();
 
             TimeSpan? retryDelay;
             SendingAmqpLink link;
@@ -454,22 +476,16 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    EventHubsEventSource.Log.EventPublishStart(EventHubName, logPartition, operationId);
+
                     try
                     {
-                        using AmqpMessage batchMessage = messageFactory();
-
-                        // Creation of the link happens without explicit knowledge of the cancellation token
-                        // used for this operation; validate the token state before attempting link creation and
-                        // again after the operation completes to provide best efforts in respecting it.
-
-                        EventHubsEventSource.Log.EventPublishStart(EventHubName, logPartition, operationId);
+                        using AmqpMessage batchMessage = MessageConverter.CreateBatchFromMessages(messages, partitionKey);
 
                         if (!SendLink.TryGetOpenedObject(out link))
                         {
-                            link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                            link = await SendLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                         }
-
-                        cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                         // Validate that the batch of messages is not too large to send.  This is done after the link is created to ensure
                         // that the maximum message size is known, as it is dictated by the service using the link.
@@ -538,7 +554,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             finally
             {
-                EventHubsEventSource.Log.EventPublishComplete(EventHubName, logPartition, operationId, failedAttemptCount);
+                EventHubsEventSource.Log.EventPublishComplete(EventHubName, logPartition, operationId, failedAttemptCount, stopWatch.GetElapsedTime().TotalSeconds);
             }
         }
 
@@ -611,17 +627,5 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             return link;
         }
-
-        /// <summary>
-        ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
-        /// </summary>
-        ///
-        /// <param name="firstOption">The first option to consider.</param>
-        /// <param name="secondOption">The second option to consider.</param>
-        ///
-        /// <returns>The smaller of the two specified intervals.</returns>
-        ///
-        private static TimeSpan UseMinimum(TimeSpan firstOption,
-                                           TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
     }
 }

@@ -12,8 +12,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the PublicCertificate data model. </summary>
-    public partial class PublicCertificateData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the PublicCertificate data model.
+    /// Public certificate object
+    /// </summary>
+    public partial class PublicCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of PublicCertificateData. </summary>
         public PublicCertificateData()
@@ -25,15 +28,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="blob"> Public Certificate byte array. </param>
         /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
-        /// <param name="thumbprint"> Certificate Thumbprint. </param>
-        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprint) : base(id, name, resourceType, systemData, kind)
+        /// <param name="thumbprintString"> Certificate Thumbprint. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprintString, string kind) : base(id, name, resourceType, systemData)
         {
             Blob = blob;
             PublicCertificateLocation = publicCertificateLocation;
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
+            Kind = kind;
         }
 
         /// <summary> Public Certificate byte array. </summary>
@@ -41,6 +45,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Public Certificate Location. </summary>
         public PublicCertificateLocation? PublicCertificateLocation { get; set; }
         /// <summary> Certificate Thumbprint. </summary>
-        public string Thumbprint { get; }
+        public string ThumbprintString { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

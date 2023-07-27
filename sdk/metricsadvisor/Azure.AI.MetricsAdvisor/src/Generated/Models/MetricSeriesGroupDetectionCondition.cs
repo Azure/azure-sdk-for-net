@@ -6,17 +6,17 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DimensionGroupConfiguration. </summary>
     public partial class MetricSeriesGroupDetectionCondition : MetricWholeSeriesDetectionCondition
     {
-
         /// <summary> Initializes a new instance of MetricSeriesGroupDetectionCondition. </summary>
         /// <param name="conditionOperator">
         /// condition operator
-        /// 
+        ///
         /// should be specified when combining multiple detection conditions
         /// </param>
         /// <param name="smartDetectionCondition"></param>

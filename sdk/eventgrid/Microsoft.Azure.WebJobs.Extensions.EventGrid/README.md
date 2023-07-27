@@ -78,6 +78,34 @@ public static class CloudEventBindingFunction
 }
 ```
 
+It is also possible to use Azure Identity with the output binding. To do so, set the `Connection` property to the name of your app setting that contains your Event Grid Topic endpoint along with a set of optional Identity information that is described in detail [here](https://learn.microsoft.com/azure/azure-functions/functions-reference?tabs=blob#configure-an-identity-based-connection). When setting the `Connection` property, the `TopicEndpointUri` and `TopicKeySetting` properties should NOT be set.
+
+```C# Snippet:CloudEventBindingFunctionWithIdentity
+public static class CloudEventOutputBindingWithIdentityFunction
+{
+    [FunctionName("CloudEventOutputBindingWithIdentityFunction")]
+    public static async Task<IActionResult> RunAsync(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+        [EventGrid(Connection = "MyConnection")] IAsyncCollector<CloudEvent> eventCollector)
+    {
+        CloudEvent e = new CloudEvent("IncomingRequest", "IncomingRequest", await req.ReadAsStringAsync());
+        await eventCollector.AddAsync(e);
+        return new OkResult();
+    }
+}
+```
+
+For local development, use the `local.settings.json` file to store the connection information:
+```json
+{
+  "Values": {
+    "myConnection__topicEndpointUri": "{topicEndpointUri}"
+  }
+}
+```
+
+When deployed, use the [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to store this information.
+
 You can also output a string or JObject and the extension will attempt to parse into the correct strongly typed event.
 
 ### Functions that uses Event Grid trigger
@@ -109,8 +137,42 @@ public static class CloudEventTriggerFunction
     }
 }
 ```
-Note that creating a subscription of type Azure Function with the CloudEvent schema is not yet supported. Instead, you can select an Endpoint Type of Web Hook and use your function URL as the endpoint. The function URL can be found by going to the Code + Test blade of your function, and clicking the Get function URL button.
 
+It is also possible to bind to an array of events. This is useful if you have [batching enabled](https://learn.microsoft.com/azure/event-grid/delivery-and-retry#output-batching) for your Event Grid Subscription.
+
+```C# Snippet:EventGridEventBatchTriggerFunction
+public static class EventGridEventBatchTriggerFunction
+{
+    [FunctionName("EventGridEventBatchTriggerFunction")]
+    public static void Run(
+        ILogger logger,
+        [EventGridTrigger] EventGridEvent[] events)
+    {
+        foreach (EventGridEvent eventGridEvent in events)
+        {
+            logger.LogInformation("Event received {type} {subject}", eventGridEvent.EventType, eventGridEvent.Subject);
+        }
+    }
+}
+```
+
+Similarly, for subscriptions configured with the CloudEvent schema:
+
+```C# Snippet:CloudEventBatchTriggerFunction
+public static class CloudEventBatchTriggerFunction
+{
+    [FunctionName("CloudEventBatchTriggerFunction")]
+    public static void Run(
+        ILogger logger,
+        [EventGridTrigger] CloudEvent[] events)
+    {
+        foreach (CloudEvent cloudEvent in events)
+        {
+            logger.LogInformation("Event received {type} {subject}", cloudEvent.Type, cloudEvent.Subject);
+        }
+    }
+}
+```
 
 ## Troubleshooting
 

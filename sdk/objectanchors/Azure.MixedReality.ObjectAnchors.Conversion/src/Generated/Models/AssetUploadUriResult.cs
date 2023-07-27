@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
-    /// <summary> The UploadLocation. </summary>
+    /// <summary> Represents an upload location for model ingestion. </summary>
     public partial class AssetUploadUriResult
     {
     }

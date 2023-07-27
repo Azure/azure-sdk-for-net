@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -15,14 +16,11 @@ namespace Azure.MixedReality.RemoteRendering
         /// <summary> Initializes a new instance of RenderingSession. </summary>
         /// <param name="sessionId"> The ID of the session supplied when the session was created. </param>
         /// <param name="size"> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </param>
-        /// <param name="status"> The status of the rendering session. Terminal states are &apos;Error&apos;, &apos;Expired&apos;, and &apos;Stopped&apos;. </param>
+        /// <param name="status"> The status of the rendering session. Terminal states are 'Error', 'Expired', and 'Stopped'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessionId"/> is null. </exception>
         internal RenderingSession(string sessionId, RenderingServerSize size, RenderingSessionStatus status)
         {
-            if (sessionId == null)
-            {
-                throw new ArgumentNullException(nameof(sessionId));
-            }
+            Argument.AssertNotNull(sessionId, nameof(sessionId));
 
             SessionId = sessionId;
             Size = size;
@@ -33,11 +31,11 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="sessionId"> The ID of the session supplied when the session was created. </param>
         /// <param name="arrInspectorPort"> The TCP port at which the Azure Remote Rendering Inspector tool is hosted. </param>
         /// <param name="handshakePort"> The TCP port used for the handshake when establishing a connection. </param>
-        /// <param name="elapsedTimeMinutes"> Amount of time in minutes the session is or was in the &apos;Ready&apos; state. Time is rounded down to a full minute. </param>
+        /// <param name="elapsedTimeMinutes"> Amount of time in minutes the session is or was in the 'Ready' state. Time is rounded down to a full minute. </param>
         /// <param name="host"> The hostname under which the rendering session is reachable. </param>
-        /// <param name="maxLeaseTimeMinutes"> The time in minutes the session will run after reaching the &apos;Ready&apos; state. </param>
+        /// <param name="maxLeaseTimeMinutes"> The time in minutes the session will run after reaching the 'Ready' state. </param>
         /// <param name="size"> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </param>
-        /// <param name="status"> The status of the rendering session. Terminal states are &apos;Error&apos;, &apos;Expired&apos;, and &apos;Stopped&apos;. </param>
+        /// <param name="status"> The status of the rendering session. Terminal states are 'Error', 'Expired', and 'Stopped'. </param>
         /// <param name="teraflops"> The computational power of the rendering session GPU measured in teraflops. </param>
         /// <param name="error"> The error object containing details about the rendering session startup failure. </param>
         /// <param name="createdOn"> The time when the rendering session was created. Date and time in ISO 8601 format. </param>
@@ -59,11 +57,11 @@ namespace Azure.MixedReality.RemoteRendering
         public int? ArrInspectorPort { get; }
         /// <summary> The TCP port used for the handshake when establishing a connection. </summary>
         public int? HandshakePort { get; }
-        /// <summary> Amount of time in minutes the session is or was in the &apos;Ready&apos; state. Time is rounded down to a full minute. </summary>
+        /// <summary> Amount of time in minutes the session is or was in the 'Ready' state. Time is rounded down to a full minute. </summary>
         public int? ElapsedTimeMinutes { get; }
         /// <summary> The size of the server used for the rendering session. The size impacts the number of polygons the server can render. Refer to https://docs.microsoft.com/azure/remote-rendering/reference/vm-sizes for details. </summary>
         public RenderingServerSize Size { get; }
-        /// <summary> The status of the rendering session. Terminal states are &apos;Error&apos;, &apos;Expired&apos;, and &apos;Stopped&apos;. </summary>
+        /// <summary> The status of the rendering session. Terminal states are 'Error', 'Expired', and 'Stopped'. </summary>
         public RenderingSessionStatus Status { get; }
         /// <summary> The computational power of the rendering session GPU measured in teraflops. </summary>
         public float? Teraflops { get; }

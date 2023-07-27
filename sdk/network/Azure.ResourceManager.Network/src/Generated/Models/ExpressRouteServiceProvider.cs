@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A ExpressRouteResourceProvider object. </summary>
-    public partial class ExpressRouteServiceProvider : NetworkResourceData
+    public partial class ExpressRouteServiceProvider : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteServiceProvider. </summary>
         public ExpressRouteServiceProvider()
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="peeringLocations"> A list of peering locations. </param>
         /// <param name="bandwidthsOffered"> A list of bandwidths offered. </param>
         /// <param name="provisioningState"> The provisioning state of the express route service provider resource. </param>
-        internal ExpressRouteServiceProvider(string id, string name, string resourceType, string location, IDictionary<string, string> tags, IList<string> peeringLocations, IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal ExpressRouteServiceProvider(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IList<string> peeringLocations, IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
             PeeringLocations = peeringLocations;
             BandwidthsOffered = bandwidthsOffered;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A list of bandwidths offered. </summary>
         public IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get; }
         /// <summary> The provisioning state of the express route service provider resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

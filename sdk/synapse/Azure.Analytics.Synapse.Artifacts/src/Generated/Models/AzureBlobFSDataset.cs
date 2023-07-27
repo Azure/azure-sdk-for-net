@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureBlobFSDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             Type = "AzureBlobFSFile";
         }
@@ -38,7 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="folderPath"> The path of the Azure Data Lake Storage Gen2 storage. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> The name of the Azure Data Lake Storage Gen2. Type: string (or Expression with resultType string). </param>
-        /// <param name="format"> The format of the Azure Data Lake Storage Gen2 storage. </param>
+        /// <param name="format">
+        /// The format of the Azure Data Lake Storage Gen2 storage.
+        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
+        /// </param>
         /// <param name="compression"> The data compression method used for the blob storage. </param>
         internal AzureBlobFSDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object folderPath, object fileName, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
@@ -53,7 +55,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object FolderPath { get; set; }
         /// <summary> The name of the Azure Data Lake Storage Gen2. Type: string (or Expression with resultType string). </summary>
         public object FileName { get; set; }
-        /// <summary> The format of the Azure Data Lake Storage Gen2 storage. </summary>
+        /// <summary>
+        /// The format of the Azure Data Lake Storage Gen2 storage.
+        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
+        /// </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used for the blob storage. </summary>
         public DatasetCompression Compression { get; set; }

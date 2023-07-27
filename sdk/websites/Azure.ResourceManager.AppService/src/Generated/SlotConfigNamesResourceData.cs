@@ -7,13 +7,15 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SlotConfigNamesResource data model. </summary>
-    public partial class SlotConfigNamesResourceData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the SlotConfigNamesResource data model.
+    /// Slot Config names azure resource.
+    /// </summary>
+    public partial class SlotConfigNamesResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>
         public SlotConfigNamesResourceData()
@@ -28,15 +30,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="connectionStringNames"> List of connection string names. </param>
         /// <param name="appSettingNames"> List of application settings names. </param>
         /// <param name="azureStorageConfigNames"> List of external Azure storage account identifiers. </param>
-        internal SlotConfigNamesResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal SlotConfigNamesResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames, string kind) : base(id, name, resourceType, systemData)
         {
             ConnectionStringNames = connectionStringNames;
             AppSettingNames = appSettingNames;
             AzureStorageConfigNames = azureStorageConfigNames;
+            Kind = kind;
         }
 
         /// <summary> List of connection string names. </summary>
@@ -45,5 +48,7 @@ namespace Azure.ResourceManager.AppService
         public IList<string> AppSettingNames { get; }
         /// <summary> List of external Azure storage account identifiers. </summary>
         public IList<string> AzureStorageConfigNames { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

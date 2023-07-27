@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AppPlatform
     using Newtonsoft.Json;
 
     /// <summary>
-    /// REST API for Azure Spring Cloud
+    /// REST API for Azure Spring Apps
     /// </summary>
     public partial interface IAppPlatformManagementClient : System.IDisposable
     {

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes a connection monitor output destination. </summary>
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorOutput. </summary>
-        /// <param name="outputType"> Connection monitor output destination type. Currently, only &quot;Workspace&quot; is supported. </param>
+        /// <param name="outputType"> Connection monitor output destination type. Currently, only "Workspace" is supported. </param>
         /// <param name="workspaceSettings"> Describes the settings for producing output into a log analytics workspace. </param>
         internal ConnectionMonitorOutput(OutputType? outputType, ConnectionMonitorWorkspaceSettings workspaceSettings)
         {
@@ -24,12 +26,12 @@ namespace Azure.ResourceManager.Network.Models
             WorkspaceSettings = workspaceSettings;
         }
 
-        /// <summary> Connection monitor output destination type. Currently, only &quot;Workspace&quot; is supported. </summary>
+        /// <summary> Connection monitor output destination type. Currently, only "Workspace" is supported. </summary>
         public OutputType? OutputType { get; set; }
         /// <summary> Describes the settings for producing output into a log analytics workspace. </summary>
         internal ConnectionMonitorWorkspaceSettings WorkspaceSettings { get; set; }
         /// <summary> Log analytics workspace resource ID. </summary>
-        public string WorkspaceResourceId
+        public ResourceIdentifier WorkspaceResourceId
         {
             get => WorkspaceSettings is null ? default : WorkspaceSettings.WorkspaceResourceId;
             set

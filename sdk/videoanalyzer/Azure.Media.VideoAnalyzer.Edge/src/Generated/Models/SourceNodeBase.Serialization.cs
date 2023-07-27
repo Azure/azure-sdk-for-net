@@ -15,15 +15,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@type");
+            writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static SourceNodeBase DeserializeSourceNodeBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -32,22 +36,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     case "#Microsoft.VideoAnalyzer.RtspSource": return RtspSource.DeserializeRtspSource(element);
                 }
             }
-            string type = default;
-            string name = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("@type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new SourceNodeBase(type, name);
+            return UnknownSourceNodeBase.DeserializeUnknownSourceNodeBase(element);
         }
     }
 }

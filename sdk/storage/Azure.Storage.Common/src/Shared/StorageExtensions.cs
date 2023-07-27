@@ -2,21 +2,24 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core;
 
 namespace Azure.Storage.Shared
 {
     internal static class StorageExtensions
     {
-        public static string EscapePath(this string path)
+        /// <param name="path">Path to operate on.</param>
+        /// <param name="trimOuterSlashes">Whether to perform backwards-compatible trimming.</param>
+        public static string EscapePath(this string path, bool trimOuterSlashes = true)
         {
             if (path == null)
             {
                 return null;
             }
 
-            path = path.Trim('/');
+            path = trimOuterSlashes ? path.Trim('/') : path;
             string[] split = path.Split('/');
 
             for (int i = 0; i < split.Length; i++)
@@ -27,14 +30,16 @@ namespace Azure.Storage.Shared
             return string.Join("/", split);
         }
 
-        public static string UnescapePath(this string path)
+        /// <param name="path">Path to operate on.</param>
+        /// <param name="trimOuterSlashes">Whether to perform backwards-compatible trimming.</param>
+        public static string UnescapePath(this string path, bool trimOuterSlashes = true)
         {
             if (path == null)
             {
                 return null;
             }
 
-            path = path.Trim('/');
+            path = trimOuterSlashes ? path.Trim('/') : path;
             string[] split = path.Split('/');
 
             for (int i = 0; i < split.Length; i++)
@@ -54,6 +59,18 @@ namespace Azure.Storage.Shared
             byte[] id = new byte[48]; // 48 raw bytes => 64 byte string once Base64 encoded
             BitConverter.GetBytes(offset).CopyTo(id, 0);
             return Convert.ToBase64String(id);
+        }
+
+        public static async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(
+            this TokenCredential tokenCredential,
+            CancellationToken cancellationToken = default)
+        {
+            AccessToken accessToken = await tokenCredential.GetTokenAsync(
+                new TokenRequestContext(Constants.CopyHttpAuthorization.Scopes),
+                cancellationToken).ConfigureAwait(false);
+            return new HttpAuthorization(
+                Constants.CopyHttpAuthorization.BearerScheme,
+                accessToken.Token);
         }
     }
 }

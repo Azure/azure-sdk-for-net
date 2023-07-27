@@ -15,27 +15,27 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetResourceId");
+            writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
-                writer.WritePropertyName("flowAnalyticsConfiguration");
+                writer.WritePropertyName("flowAnalyticsConfiguration"u8);
                 writer.WriteObjectValue(FlowAnalyticsConfiguration);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("storageId");
+            writer.WritePropertyName("storageId"u8);
             writer.WriteStringValue(StorageId);
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
             if (Optional.IsDefined(RetentionPolicy))
             {
-                writer.WritePropertyName("retentionPolicy");
+                writer.WritePropertyName("retentionPolicy"u8);
                 writer.WriteObjectValue(RetentionPolicy);
             }
             if (Optional.IsDefined(Format))
             {
-                writer.WritePropertyName("format");
+                writer.WritePropertyName("format"u8);
                 writer.WriteObjectValue(Format);
             }
             writer.WriteEndObject();
@@ -44,30 +44,33 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FlowLogInformation DeserializeFlowLogInformation(JsonElement element)
         {
-            string targetResourceId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier targetResourceId = default;
             Optional<TrafficAnalyticsProperties> flowAnalyticsConfiguration = default;
-            string storageId = default;
+            ResourceIdentifier storageId = default;
             bool enabled = default;
             Optional<RetentionPolicyParameters> retentionPolicy = default;
-            Optional<FlowLogFormatParameters> format = default;
+            Optional<FlowLogProperties> format = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("targetResourceId"))
+                if (property.NameEquals("targetResourceId"u8))
                 {
-                    targetResourceId = property.Value.GetString();
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("flowAnalyticsConfiguration"))
+                if (property.NameEquals("flowAnalyticsConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     flowAnalyticsConfiguration = TrafficAnalyticsProperties.DeserializeTrafficAnalyticsProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -76,34 +79,32 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageId"))
+                        if (property0.NameEquals("storageId"u8))
                         {
-                            storageId = property0.Value.GetString();
+                            storageId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enabled"))
+                        if (property0.NameEquals("enabled"u8))
                         {
                             enabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("retentionPolicy"))
+                        if (property0.NameEquals("retentionPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             retentionPolicy = RetentionPolicyParameters.DeserializeRetentionPolicyParameters(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("format"))
+                        if (property0.NameEquals("format"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            format = FlowLogFormatParameters.DeserializeFlowLogFormatParameters(property0.Value);
+                            format = FlowLogProperties.DeserializeFlowLogProperties(property0.Value);
                             continue;
                         }
                     }

@@ -113,13 +113,15 @@
                 Models.MetadataItem[] mdiArray = UtilitiesInternal.ConvertToProtocolArray(this.Metadata);
                 Models.ApplicationPackageReference[] applicationPackageArray = UtilitiesInternal.ConvertToProtocolArray(this.ApplicationPackageReferences);
                 Models.StartTask modelStartTask = UtilitiesInternal.CreateObjectWithNullCheck(this.StartTask, item => item.GetTransportObject());
-                
+                Models.NodeCommunicationMode? targetCommunicationMode = UtilitiesInternal.MapNullableEnum<Common.NodeCommunicationMode, Models.NodeCommunicationMode>(this.TargetNodeCommunicationMode);
+
                 asyncTask = this.parentBatchClient.ProtocolLayer.UpdatePool(
                     this.Id,
                     modelStartTask, 
                     certRefArray, 
                     applicationPackageArray,
-                    mdiArray, 
+                    mdiArray,
+                    targetCommunicationMode,
                     bhMgr, 
                     cancellationToken);
             }
@@ -176,6 +178,7 @@
             Models.ApplicationPackageReference[] applicationPackageArray =
                 this.propertyContainer.ApplicationPackageReferencesProperty.GetTransportObjectIfChanged<ApplicationPackageReference, Models.ApplicationPackageReference>();
             Models.StartTask modelStartTask = this.propertyContainer.StartTaskProperty.GetTransportObjectIfChanged<StartTask, Models.StartTask>();
+            Models.NodeCommunicationMode? targetCommunicationMode = UtilitiesInternal.MapNullableEnum<Common.NodeCommunicationMode, Models.NodeCommunicationMode>(this.TargetNodeCommunicationMode);
 
             System.Threading.Tasks.Task asyncTask = this.parentBatchClient.ProtocolLayer.PatchPool(
                     this.Id,
@@ -183,6 +186,7 @@
                     certRefArray,
                     applicationPackageArray,
                     mdiArray,
+                    targetCommunicationMode,
                     bhMgr,
                     cancellationToken);
 

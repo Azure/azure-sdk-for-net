@@ -18,12 +18,13 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Search for available phone numbers to purchase. </summary>
     public partial class SearchAvailablePhoneNumbersOperation : Operation<PhoneNumberSearchResult>, IOperationSource<PhoneNumberSearchResult>
     {
-        private readonly OperationInternals<PhoneNumberSearchResult> _operation;
+        private readonly OperationInternal<PhoneNumberSearchResult> _operation;
 
         /// <summary> Initializes a new instance of SearchAvailablePhoneNumbersOperation for mocking. </summary>
         protected SearchAvailablePhoneNumbersOperation()
         {
         }
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override PhoneNumberSearchResult Value => _operation.Value;
@@ -35,7 +36,7 @@ namespace Azure.Communication.PhoneNumbers
         public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);

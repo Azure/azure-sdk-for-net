@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,33 +16,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         /// <summary> Initializes a new instance of DynamicsAXLinkedService. </summary>
         /// <param name="url"> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </param>
-        /// <param name="servicePrincipalId"> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> Specify the application&apos;s key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey">
+        /// Specify the application's key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="servicePrincipalId"/>, <paramref name="servicePrincipalKey"/>, <paramref name="tenant"/> or <paramref name="aadResourceId"/> is null. </exception>
         public DynamicsAXLinkedService(object url, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object aadResourceId)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (servicePrincipalId == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalId));
-            }
-            if (servicePrincipalKey == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalKey));
-            }
-            if (tenant == null)
-            {
-                throw new ArgumentNullException(nameof(tenant));
-            }
-            if (aadResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(aadResourceId));
-            }
+            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
+            Argument.AssertNotNull(servicePrincipalKey, nameof(servicePrincipalKey));
+            Argument.AssertNotNull(tenant, nameof(tenant));
+            Argument.AssertNotNull(aadResourceId, nameof(aadResourceId));
 
             Url = url;
             ServicePrincipalId = servicePrincipalId;
@@ -59,8 +49,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="url"> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </param>
-        /// <param name="servicePrincipalId"> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> Specify the application&apos;s key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalId"> Specify the application's client ID. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey">
+        /// Specify the application's key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="tenant"> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </param>
         /// <param name="aadResourceId"> Specify the resource you are requesting authorization. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
@@ -77,9 +71,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </summary>
         public object Url { get; set; }
-        /// <summary> Specify the application&apos;s client ID. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Specify the application's client ID. Type: string (or Expression with resultType string). </summary>
         public object ServicePrincipalId { get; set; }
-        /// <summary> Specify the application&apos;s key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// Specify the application's key. Mark this field as a SecureString to store it securely in Data Factory, or reference a secret stored in Azure Key Vault. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> Specify the tenant information (domain name or tenant ID) under which your application resides. Retrieve it by hovering the mouse in the top-right corner of the Azure portal. Type: string (or Expression with resultType string). </summary>
         public object Tenant { get; set; }

@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ElasticPoolDatabaseActivity DeserializeElasticPoolDatabaseActivity(JsonElement element)
         {
-            Optional<string> location = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> databaseName = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<int> errorCode = default;
@@ -52,32 +56,40 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -86,107 +98,101 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("databaseName"))
+                        if (property0.NameEquals("databaseName"u8))
                         {
                             databaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("errorCode"))
+                        if (property0.NameEquals("errorCode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errorCode = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("errorMessage"))
+                        if (property0.NameEquals("errorMessage"u8))
                         {
                             errorMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("errorSeverity"))
+                        if (property0.NameEquals("errorSeverity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errorSeverity = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("operation"))
+                        if (property0.NameEquals("operation"u8))
                         {
                             operation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("operationId"))
+                        if (property0.NameEquals("operationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             operationId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("percentComplete"))
+                        if (property0.NameEquals("percentComplete"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             percentComplete = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("requestedElasticPoolName"))
+                        if (property0.NameEquals("requestedElasticPoolName"u8))
                         {
                             requestedElasticPoolName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("currentElasticPoolName"))
+                        if (property0.NameEquals("currentElasticPoolName"u8))
                         {
                             currentElasticPoolName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("currentServiceObjective"))
+                        if (property0.NameEquals("currentServiceObjective"u8))
                         {
                             currentServiceObjective = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("requestedServiceObjective"))
+                        if (property0.NameEquals("requestedServiceObjective"u8))
                         {
                             requestedServiceObjective = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverName"))
+                        if (property0.NameEquals("serverName"u8))
                         {
                             serverName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             state = property0.Value.GetString();
                             continue;
@@ -195,7 +201,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolDatabaseActivity(id, name, type, systemData, location.Value, databaseName.Value, Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), requestedElasticPoolName.Value, currentElasticPoolName.Value, currentServiceObjective.Value, requestedServiceObjective.Value, serverName.Value, Optional.ToNullable(startTime), state.Value);
+            return new ElasticPoolDatabaseActivity(id, name, type, systemData.Value, Optional.ToNullable(location), databaseName.Value, Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), requestedElasticPoolName.Value, currentElasticPoolName.Value, currentServiceObjective.Value, requestedServiceObjective.Value, serverName.Value, Optional.ToNullable(startTime), state.Value);
         }
     }
 }

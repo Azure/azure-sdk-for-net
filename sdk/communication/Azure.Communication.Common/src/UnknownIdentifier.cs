@@ -11,6 +11,9 @@ namespace Azure.Communication
         /// <summary>The id of the endpoint.</summary>
         public string Id { get; }
 
+        /// <inheritdoc />
+        public override string RawId => Id;
+
         /// <summary>
         /// Initializes a new instance of <see cref="UnknownIdentifier"/>.
         /// </summary>
@@ -31,10 +34,7 @@ namespace Azure.Communication
         public override string ToString() => Id;
 
         /// <inheritdoc />
-        public override int GetHashCode() => Id.GetHashCode();
-
-        /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
-            => other is UnknownIdentifier otherId && otherId.Id == Id;
+            => other is UnknownIdentifier otherId && otherId.RawId == RawId;
     }
 }

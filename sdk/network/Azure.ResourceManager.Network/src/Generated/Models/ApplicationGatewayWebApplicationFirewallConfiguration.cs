@@ -17,19 +17,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayWebApplicationFirewallConfiguration. </summary>
         /// <param name="enabled"> Whether the web application firewall is enabled or not. </param>
         /// <param name="firewallMode"> Web application firewall mode. </param>
-        /// <param name="ruleSetType"> The type of the web application firewall rule set. Possible values are: &apos;OWASP&apos;. </param>
+        /// <param name="ruleSetType"> The type of the web application firewall rule set. Possible values are: 'OWASP'. </param>
         /// <param name="ruleSetVersion"> The version of the rule set type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetType"/> or <paramref name="ruleSetVersion"/> is null. </exception>
         public ApplicationGatewayWebApplicationFirewallConfiguration(bool enabled, ApplicationGatewayFirewallMode firewallMode, string ruleSetType, string ruleSetVersion)
         {
-            if (ruleSetType == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetType));
-            }
-            if (ruleSetVersion == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetVersion));
-            }
+            Argument.AssertNotNull(ruleSetType, nameof(ruleSetType));
+            Argument.AssertNotNull(ruleSetVersion, nameof(ruleSetVersion));
 
             Enabled = enabled;
             FirewallMode = firewallMode;
@@ -42,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ApplicationGatewayWebApplicationFirewallConfiguration. </summary>
         /// <param name="enabled"> Whether the web application firewall is enabled or not. </param>
         /// <param name="firewallMode"> Web application firewall mode. </param>
-        /// <param name="ruleSetType"> The type of the web application firewall rule set. Possible values are: &apos;OWASP&apos;. </param>
+        /// <param name="ruleSetType"> The type of the web application firewall rule set. Possible values are: 'OWASP'. </param>
         /// <param name="ruleSetVersion"> The version of the rule set type. </param>
         /// <param name="disabledRuleGroups"> The disabled rule groups. </param>
         /// <param name="requestBodyCheck"> Whether allow WAF to check request Body. </param>
@@ -68,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
         public bool Enabled { get; set; }
         /// <summary> Web application firewall mode. </summary>
         public ApplicationGatewayFirewallMode FirewallMode { get; set; }
-        /// <summary> The type of the web application firewall rule set. Possible values are: &apos;OWASP&apos;. </summary>
+        /// <summary> The type of the web application firewall rule set. Possible values are: 'OWASP'. </summary>
         public string RuleSetType { get; set; }
         /// <summary> The version of the rule set type. </summary>
         public string RuleSetVersion { get; set; }

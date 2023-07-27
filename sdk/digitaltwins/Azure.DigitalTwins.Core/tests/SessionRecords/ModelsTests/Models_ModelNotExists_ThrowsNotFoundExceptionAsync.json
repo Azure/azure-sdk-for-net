@@ -1,16 +1,14 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Adoesnotexist%3Afakemodel%3B1000?includeModelDefinition=true\u0026api-version=2020-10-31",
+      "RequestUri": "https://fakeHost.api.wus2.digitaltwins.azure.net/models/dtmi%3Adoesnotexist%3Afakemodel%3B1000?includeModelDefinition=true\u0026api-version=2022-05-31",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": [
-          "azsdk-net-DigitalTwins.Core/1.1.0-alpha.20201104.1",
-          "(.NET Core 4.6.29220.03; Microsoft Windows 10.0.19042 )"
-        ],
-        "x-ms-client-request-id": "107fd0c9829eb20163660727f1714ddd",
+        "traceparent": "00-d888f52c131c55419133e8ae13ac063f-32a7347ca81cbf48-00",
+        "User-Agent": "azsdk-net-DigitalTwins.Core/1.4.0-alpha.20220629.1 (.NET Core 3.1.26; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "5573638cd540f0cd06afae6ce13671f5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,8 +16,10 @@
       "ResponseHeaders": {
         "Content-Length": "217",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 05 Nov 2020 07:43:52 GMT",
-        "Strict-Transport-Security": "max-age=2592000"
+        "Date": "Wed, 29 Jun 2022 09:17:46 GMT",
+        "mise-correlation-id": "90ef3b91-c449-42fa-9ce8-02af759f34dd",
+        "Strict-Transport-Security": "max-age=2592000",
+        "traceresponse": "00-d888f52c131c55419133e8ae13ac063f-a4fb89f9dc5a9344-01"
       },
       "ResponseBody": {
         "error": {
@@ -30,7 +30,8 @@
     }
   ],
   "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "DIGITALTWINS_URL": "https://fakeHost.api.wus2.digitaltwins.azure.net",
-    "RandomSeed": "1597854040"
+    "RandomSeed": "778471190"
   }
 }

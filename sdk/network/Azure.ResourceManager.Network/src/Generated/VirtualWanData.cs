@@ -6,14 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VirtualWan data model. </summary>
-    public partial class VirtualWanData : NetworkResourceData
+    /// <summary>
+    /// A class representing the VirtualWan data model.
+    /// VirtualWAN Resource.
+    /// </summary>
+    public partial class VirtualWanData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualWanData. </summary>
         public VirtualWanData()
@@ -36,10 +40,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="allowVnetToVnetTraffic"> True if Vnet to Vnet traffic is allowed. </param>
         /// <param name="office365LocalBreakoutCategory"> The office local breakout category. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual WAN resource. </param>
-        /// <param name="typePropertiesType"> The type of the VirtualWAN. </param>
-        internal VirtualWanData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, ProvisioningState? provisioningState, string typePropertiesType) : base(id, name, resourceType, location, tags)
+        /// <param name="virtualWanType"> The type of the VirtualWAN. </param>
+        internal VirtualWanData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, bool? disableVpnEncryption, IReadOnlyList<WritableSubResource> virtualHubs, IReadOnlyList<WritableSubResource> vpnSites, bool? allowBranchToBranchTraffic, bool? allowVnetToVnetTraffic, OfficeTrafficCategory? office365LocalBreakoutCategory, NetworkProvisioningState? provisioningState, string virtualWanType) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             DisableVpnEncryption = disableVpnEncryption;
             VirtualHubs = virtualHubs;
             VpnSites = vpnSites;
@@ -47,11 +51,11 @@ namespace Azure.ResourceManager.Network
             AllowVnetToVnetTraffic = allowVnetToVnetTraffic;
             Office365LocalBreakoutCategory = office365LocalBreakoutCategory;
             ProvisioningState = provisioningState;
-            TypePropertiesType = typePropertiesType;
+            VirtualWanType = virtualWanType;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Vpn encryption to be disabled or not. </summary>
         public bool? DisableVpnEncryption { get; set; }
         /// <summary> List of VirtualHubs in the VirtualWAN. </summary>
@@ -65,8 +69,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> The office local breakout category. </summary>
         public OfficeTrafficCategory? Office365LocalBreakoutCategory { get; }
         /// <summary> The provisioning state of the virtual WAN resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The type of the VirtualWAN. </summary>
-        public string TypePropertiesType { get; set; }
+        public string VirtualWanType { get; set; }
     }
 }

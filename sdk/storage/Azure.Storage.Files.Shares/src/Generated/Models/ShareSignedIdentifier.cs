@@ -6,13 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Signed identifier. </summary>
     public partial class ShareSignedIdentifier
     {
-
         /// <summary> Initializes a new instance of ShareSignedIdentifier. </summary>
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>

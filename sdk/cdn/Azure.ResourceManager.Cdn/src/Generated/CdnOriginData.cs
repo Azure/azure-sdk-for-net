@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the CdnOrigin data model. </summary>
+    /// <summary>
+    /// A class representing the CdnOrigin data model.
+    /// CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
+    /// </summary>
     public partial class CdnOriginData : ResourceData
     {
         /// <summary> Initializes a new instance of CdnOriginData. </summary>
@@ -31,14 +34,14 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
         /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
         /// <param name="enabled"> Origin is enabled for load balancing or not. </param>
-        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this origin is &apos;Private&apos;. </param>
-        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </param>
-        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </param>
+        /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </param>
+        /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
+        /// <param name="privateLinkLocation"> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </param>
         /// <param name="privateLinkApprovalMessage"> A custom message to be included in the approval request to connect to the Private Link. </param>
         /// <param name="resourceState"> Resource status of the origin. </param>
         /// <param name="provisioningState"> Provisioning status of the origin. </param>
         /// <param name="privateEndpointStatus"> The approval status for the connection to the Private Link. </param>
-        internal CdnOriginData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, string privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, OriginResourceState? resourceState, string provisioningState, PrivateEndpointStatus? privateEndpointStatus) : base(id, name, resourceType, systemData)
+        internal CdnOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, bool? enabled, string privateLinkAlias, ResourceIdentifier privateLinkResourceId, string privateLinkLocation, string privateLinkApprovalMessage, OriginResourceState? resourceState, OriginProvisioningState? provisioningState, PrivateEndpointStatus? privateEndpointStatus) : base(id, name, resourceType, systemData)
         {
             HostName = hostName;
             HttpPort = httpPort;
@@ -70,18 +73,18 @@ namespace Azure.ResourceManager.Cdn
         public int? Weight { get; set; }
         /// <summary> Origin is enabled for load balancing or not. </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this origin is &apos;Private&apos;. </summary>
+        /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </summary>
         public string PrivateLinkAlias { get; set; }
-        /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </summary>
-        public string PrivateLinkResourceId { get; set; }
-        /// <summary> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </summary>
+        /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
+        public ResourceIdentifier PrivateLinkResourceId { get; set; }
+        /// <summary> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </summary>
         public string PrivateLinkLocation { get; set; }
         /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>
         public string PrivateLinkApprovalMessage { get; set; }
         /// <summary> Resource status of the origin. </summary>
         public OriginResourceState? ResourceState { get; }
         /// <summary> Provisioning status of the origin. </summary>
-        public string ProvisioningState { get; }
+        public OriginProvisioningState? ProvisioningState { get; }
         /// <summary> The approval status for the connection to the Private Link. </summary>
         public PrivateEndpointStatus? PrivateEndpointStatus { get; }
     }

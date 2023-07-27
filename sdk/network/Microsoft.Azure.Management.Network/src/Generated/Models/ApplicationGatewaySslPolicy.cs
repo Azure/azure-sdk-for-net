@@ -36,15 +36,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="disabledSslProtocols">Ssl protocols to be disabled on
         /// application gateway.</param>
         /// <param name="policyType">Type of Ssl Policy. Possible values
-        /// include: 'Predefined', 'Custom'</param>
+        /// include: 'Predefined', 'Custom', 'CustomV2'</param>
         /// <param name="policyName">Name of Ssl predefined policy. Possible
         /// values include: 'AppGwSslPolicy20150501', 'AppGwSslPolicy20170401',
-        /// 'AppGwSslPolicy20170401S'</param>
+        /// 'AppGwSslPolicy20170401S', 'AppGwSslPolicy20220101',
+        /// 'AppGwSslPolicy20220101S'</param>
         /// <param name="cipherSuites">Ssl cipher suites to be enabled in the
         /// specified order to application gateway.</param>
         /// <param name="minProtocolVersion">Minimum version of Ssl protocol to
         /// be supported on application gateway. Possible values include:
-        /// 'TLSv1_0', 'TLSv1_1', 'TLSv1_2'</param>
+        /// 'TLSv1_0', 'TLSv1_1', 'TLSv1_2', 'TLSv1_3'</param>
         public ApplicationGatewaySslPolicy(IList<string> disabledSslProtocols = default(IList<string>), string policyType = default(string), string policyName = default(string), IList<string> cipherSuites = default(IList<string>), string minProtocolVersion = default(string))
         {
             DisabledSslProtocols = disabledSslProtocols;
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets type of Ssl Policy. Possible values include:
-        /// 'Predefined', 'Custom'
+        /// 'Predefined', 'Custom', 'CustomV2'
         /// </summary>
         [JsonProperty(PropertyName = "policyType")]
         public string PolicyType { get; set; }
@@ -76,7 +77,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets name of Ssl predefined policy. Possible values
         /// include: 'AppGwSslPolicy20150501', 'AppGwSslPolicy20170401',
-        /// 'AppGwSslPolicy20170401S'
+        /// 'AppGwSslPolicy20170401S', 'AppGwSslPolicy20220101',
+        /// 'AppGwSslPolicy20220101S'
         /// </summary>
         [JsonProperty(PropertyName = "policyName")]
         public string PolicyName { get; set; }
@@ -91,7 +93,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets minimum version of Ssl protocol to be supported on
         /// application gateway. Possible values include: 'TLSv1_0', 'TLSv1_1',
-        /// 'TLSv1_2'
+        /// 'TLSv1_2', 'TLSv1_3'
         /// </summary>
         [JsonProperty(PropertyName = "minProtocolVersion")]
         public string MinProtocolVersion { get; set; }

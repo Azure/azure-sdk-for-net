@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
         /// <summary>
         /// This sample illustrates how to consume a FieldBoundingBox type data that is available across the Form Recognizer library.
@@ -22,7 +21,7 @@ namespace Azure.AI.FormRecognizer.Samples
         /// Units type of a recognized page can be found at <see cref="FormPage.Unit"/>.
         /// For the purpose of the sample, we will use the StartRecognizeContent capability.
         /// </summary>
-        [Test]
+        [RecordedTest]
         public async Task FieldBoundingBoxSample()
         {
             string endpoint = TestEnvironment.Endpoint;

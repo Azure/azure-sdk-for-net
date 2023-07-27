@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2019-10-17-preview";
+            _apiVersion = apiVersion ?? "2021-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="asyncOperationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OperationStatus>> GetAsync(string subscriptionId, string resourceGroupName, string asyncOperationId, CancellationToken cancellationToken = default)
+        public async Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetAsync(string subscriptionId, string resourceGroupName, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        OperationStatus value = default;
+                        MonitorPrivateLinkScopeOperationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = MonitorPrivateLinkScopeOperationStatus.DeserializeMonitorPrivateLinkScopeOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="asyncOperationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OperationStatus> Get(string subscriptionId, string resourceGroupName, string asyncOperationId, CancellationToken cancellationToken = default)
+        public Response<MonitorPrivateLinkScopeOperationStatus> Get(string subscriptionId, string resourceGroupName, string asyncOperationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        OperationStatus value = default;
+                        MonitorPrivateLinkScopeOperationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = MonitorPrivateLinkScopeOperationStatus.DeserializeMonitorPrivateLinkScopeOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

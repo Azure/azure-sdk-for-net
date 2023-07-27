@@ -15,24 +15,27 @@ namespace Azure.ResourceManager.WebPubSub.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ClientCertEnabled))
+            if (Optional.IsDefined(IsClientCertEnabled))
             {
-                writer.WritePropertyName("clientCertEnabled");
-                writer.WriteBooleanValue(ClientCertEnabled.Value);
+                writer.WritePropertyName("clientCertEnabled"u8);
+                writer.WriteBooleanValue(IsClientCertEnabled.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static WebPubSubTlsSettings DeserializeWebPubSubTlsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> clientCertEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("clientCertEnabled"))
+                if (property.NameEquals("clientCertEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clientCertEnabled = property.Value.GetBoolean();

@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.KeyVault
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-10-01";
+            _apiVersion = apiVersion ?? "2023-02-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretCreateOrUpdateParameters parameters)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.KeyVault
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -67,29 +67,29 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="secretName"> Name of the secret. </param>
-        /// <param name="parameters"> Parameters to create or update the secret. </param>
+        /// <param name="secretName"> Name of the secret. The value you provide may be copied globally for the purpose of running the service. The value provided should not include personally identifiable or sensitive information. </param>
+        /// <param name="content"> Parameters to create or update the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecretData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyVaultSecretData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, secretName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, secretName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        SecretData value = default;
+                        KeyVaultSecretData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecretData.DeserializeSecretData(document.RootElement);
+                        value = KeyVaultSecretData.DeserializeKeyVaultSecretData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,29 +101,29 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
-        /// <param name="secretName"> Name of the secret. </param>
-        /// <param name="parameters"> Parameters to create or update the secret. </param>
+        /// <param name="secretName"> Name of the secret. The value you provide may be copied globally for the purpose of running the service. The value provided should not include personally identifiable or sensitive information. </param>
+        /// <param name="content"> Parameters to create or update the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecretData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string secretName, SecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default)
+        public Response<KeyVaultSecretData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, secretName, parameters);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, vaultName, secretName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        SecretData value = default;
+                        KeyVaultSecretData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecretData.DeserializeSecretData(document.RootElement);
+                        value = KeyVaultSecretData.DeserializeKeyVaultSecretData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string secretName, PatchableSecretData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.KeyVault
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -162,28 +162,28 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="secretName"> Name of the secret. </param>
-        /// <param name="data"> Parameters to patch the secret. </param>
+        /// <param name="patch"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecretData>> UpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, PatchableSecretData data, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyVaultSecretData>> UpdateAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vaultName, secretName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vaultName, secretName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        SecretData value = default;
+                        KeyVaultSecretData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecretData.DeserializeSecretData(document.RootElement);
+                        value = KeyVaultSecretData.DeserializeKeyVaultSecretData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -196,28 +196,28 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="resourceGroupName"> The name of the Resource Group to which the vault belongs. </param>
         /// <param name="vaultName"> Name of the vault. </param>
         /// <param name="secretName"> Name of the secret. </param>
-        /// <param name="data"> Parameters to patch the secret. </param>
+        /// <param name="patch"> Parameters to patch the secret. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/>, <paramref name="secretName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecretData> Update(string subscriptionId, string resourceGroupName, string vaultName, string secretName, PatchableSecretData data, CancellationToken cancellationToken = default)
+        public Response<KeyVaultSecretData> Update(string subscriptionId, string resourceGroupName, string vaultName, string secretName, KeyVaultSecretPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vaultName, secretName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, vaultName, secretName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        SecretData value = default;
+                        KeyVaultSecretData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecretData.DeserializeSecretData(document.RootElement);
+                        value = KeyVaultSecretData.DeserializeKeyVaultSecretData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SecretData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, CancellationToken cancellationToken = default)
+        public async Task<Response<KeyVaultSecretData>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -268,13 +268,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case 200:
                     {
-                        SecretData value = default;
+                        KeyVaultSecretData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SecretData.DeserializeSecretData(document.RootElement);
+                        value = KeyVaultSecretData.DeserializeKeyVaultSecretData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecretData)null, message.Response);
+                    return Response.FromValue((KeyVaultSecretData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vaultName"/> or <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SecretData> Get(string subscriptionId, string resourceGroupName, string vaultName, string secretName, CancellationToken cancellationToken = default)
+        public Response<KeyVaultSecretData> Get(string subscriptionId, string resourceGroupName, string vaultName, string secretName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -301,13 +301,13 @@ namespace Azure.ResourceManager.KeyVault
             {
                 case 200:
                     {
-                        SecretData value = default;
+                        KeyVaultSecretData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SecretData.DeserializeSecretData(document.RootElement);
+                        value = KeyVaultSecretData.DeserializeKeyVaultSecretData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SecretData)null, message.Response);
+                    return Response.FromValue((KeyVaultSecretData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

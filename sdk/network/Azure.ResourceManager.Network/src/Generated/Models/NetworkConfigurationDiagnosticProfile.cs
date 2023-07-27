@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,29 +15,17 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Initializes a new instance of NetworkConfigurationDiagnosticProfile. </summary>
         /// <param name="direction"> The direction of the traffic. </param>
-        /// <param name="protocol"> Protocol to be verified on. Accepted values are &apos;*&apos;, TCP, UDP. </param>
-        /// <param name="source"> Traffic source. Accepted values are &apos;*&apos;, IP Address/CIDR, Service Tag. </param>
-        /// <param name="destination"> Traffic destination. Accepted values are: &apos;*&apos;, IP Address/CIDR, Service Tag. </param>
-        /// <param name="destinationPort"> Traffic destination port. Accepted values are &apos;*&apos; and a single port in the range (0 - 65535). </param>
+        /// <param name="protocol"> Protocol to be verified on. Accepted values are '*', TCP, UDP. </param>
+        /// <param name="source"> Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag. </param>
+        /// <param name="destination"> Traffic destination. Accepted values are: '*', IP Address/CIDR, Service Tag. </param>
+        /// <param name="destinationPort"> Traffic destination port. Accepted values are '*' and a single port in the range (0 - 65535). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="protocol"/>, <paramref name="source"/>, <paramref name="destination"/> or <paramref name="destinationPort"/> is null. </exception>
-        public NetworkConfigurationDiagnosticProfile(Direction direction, string protocol, string source, string destination, string destinationPort)
+        public NetworkConfigurationDiagnosticProfile(NetworkTrafficDirection direction, string protocol, string source, string destination, string destinationPort)
         {
-            if (protocol == null)
-            {
-                throw new ArgumentNullException(nameof(protocol));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-            if (destination == null)
-            {
-                throw new ArgumentNullException(nameof(destination));
-            }
-            if (destinationPort == null)
-            {
-                throw new ArgumentNullException(nameof(destinationPort));
-            }
+            Argument.AssertNotNull(protocol, nameof(protocol));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(destination, nameof(destination));
+            Argument.AssertNotNull(destinationPort, nameof(destinationPort));
 
             Direction = direction;
             Protocol = protocol;
@@ -46,14 +35,14 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The direction of the traffic. </summary>
-        public Direction Direction { get; set; }
-        /// <summary> Protocol to be verified on. Accepted values are &apos;*&apos;, TCP, UDP. </summary>
+        public NetworkTrafficDirection Direction { get; set; }
+        /// <summary> Protocol to be verified on. Accepted values are '*', TCP, UDP. </summary>
         public string Protocol { get; set; }
-        /// <summary> Traffic source. Accepted values are &apos;*&apos;, IP Address/CIDR, Service Tag. </summary>
+        /// <summary> Traffic source. Accepted values are '*', IP Address/CIDR, Service Tag. </summary>
         public string Source { get; set; }
-        /// <summary> Traffic destination. Accepted values are: &apos;*&apos;, IP Address/CIDR, Service Tag. </summary>
+        /// <summary> Traffic destination. Accepted values are: '*', IP Address/CIDR, Service Tag. </summary>
         public string Destination { get; set; }
-        /// <summary> Traffic destination port. Accepted values are &apos;*&apos; and a single port in the range (0 - 65535). </summary>
+        /// <summary> Traffic destination port. Accepted values are '*' and a single port in the range (0 - 65535). </summary>
         public string DestinationPort { get; set; }
     }
 }

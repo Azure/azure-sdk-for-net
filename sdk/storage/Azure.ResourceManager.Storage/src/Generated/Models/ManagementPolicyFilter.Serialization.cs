@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PrefixMatch))
             {
-                writer.WritePropertyName("prefixMatch");
+                writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrefixMatch)
                 {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("blobTypes");
+            writer.WritePropertyName("blobTypes"u8);
             writer.WriteStartArray();
             foreach (var item in BlobTypes)
             {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(BlobIndexMatch))
             {
-                writer.WritePropertyName("blobIndexMatch");
+                writer.WritePropertyName("blobIndexMatch"u8);
                 writer.WriteStartArray();
                 foreach (var item in BlobIndexMatch)
                 {
@@ -48,16 +48,19 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyFilter DeserializeManagementPolicyFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> prefixMatch = default;
             IList<string> blobTypes = default;
-            Optional<IList<TagFilter>> blobIndexMatch = default;
+            Optional<IList<ManagementPolicyTagFilter>> blobIndexMatch = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prefixMatch"))
+                if (property.NameEquals("prefixMatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -68,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
                     prefixMatch = array;
                     continue;
                 }
-                if (property.NameEquals("blobTypes"))
+                if (property.NameEquals("blobTypes"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -78,17 +81,16 @@ namespace Azure.ResourceManager.Storage.Models
                     blobTypes = array;
                     continue;
                 }
-                if (property.NameEquals("blobIndexMatch"))
+                if (property.NameEquals("blobIndexMatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TagFilter> array = new List<TagFilter>();
+                    List<ManagementPolicyTagFilter> array = new List<ManagementPolicyTagFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagFilter.DeserializeTagFilter(item));
+                        array.Add(ManagementPolicyTagFilter.DeserializeManagementPolicyTagFilter(item));
                     }
                     blobIndexMatch = array;
                     continue;

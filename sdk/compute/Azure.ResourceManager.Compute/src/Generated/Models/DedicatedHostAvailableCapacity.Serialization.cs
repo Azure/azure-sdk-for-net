@@ -15,14 +15,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DedicatedHostAvailableCapacity DeserializeDedicatedHostAvailableCapacity(JsonElement element)
         {
-            Optional<IReadOnlyList<DedicatedHostAllocatableVm>> allocatableVMs = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<DedicatedHostAllocatableVm>> allocatableVms = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allocatableVMs"))
+                if (property.NameEquals("allocatableVMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DedicatedHostAllocatableVm> array = new List<DedicatedHostAllocatableVm>();
@@ -30,11 +33,11 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         array.Add(DedicatedHostAllocatableVm.DeserializeDedicatedHostAllocatableVm(item));
                     }
-                    allocatableVMs = array;
+                    allocatableVms = array;
                     continue;
                 }
             }
-            return new DedicatedHostAvailableCapacity(Optional.ToList(allocatableVMs));
+            return new DedicatedHostAvailableCapacity(Optional.ToList(allocatableVms));
         }
     }
 }

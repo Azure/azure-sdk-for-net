@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/17d3bc3e-e724-4991-a3e6-21a25f7e6d3c/reservations/e74e266a-9751-465a-b137-86a414840d1a?api-version=2019-04-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMTdkM2JjM2UtZTcyNC00OTkxLWEzZTYtMjFhMjVmN2U2ZDNjL3Jlc2VydmF0aW9ucy9lNzRlMjY2YS05NzUxLTQ2NWEtYjEzNy04NmE0MTQ4NDBkMWE/YXBpLXZlcnNpb249MjAxOS0wNC0wMQ==",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/17d3bc3e-e724-4991-a3e6-21a25f7e6d3c/reservations/e74e266a-9751-465a-b137-86a414840d1a?api-version=2022-03-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMTdkM2JjM2UtZTcyNC00OTkxLWEzZTYtMjFhMjVmN2U2ZDNjL3Jlc2VydmF0aW9ucy9lNzRlMjY2YS05NzUxLTQ2NWEtYjEzNy04NmE0MTQ4NDBkMWE/YXBpLXZlcnNpb249MjAyMi0wMy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

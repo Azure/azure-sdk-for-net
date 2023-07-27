@@ -19,70 +19,74 @@ namespace Azure.ResourceManager.Hci
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudManagementEndpoint))
             {
-                writer.WritePropertyName("cloudManagementEndpoint");
+                writer.WritePropertyName("cloudManagementEndpoint"u8);
                 writer.WriteStringValue(CloudManagementEndpoint);
             }
             if (Optional.IsDefined(AadClientId))
             {
-                writer.WritePropertyName("aadClientId");
+                writer.WritePropertyName("aadClientId"u8);
                 writer.WriteStringValue(AadClientId.Value);
             }
             if (Optional.IsDefined(AadTenantId))
             {
-                writer.WritePropertyName("aadTenantId");
+                writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
+            }
+            if (Optional.IsDefined(AadApplicationObjectId))
+            {
+                writer.WritePropertyName("aadApplicationObjectId"u8);
+                writer.WriteStringValue(AadApplicationObjectId.Value);
+            }
+            if (Optional.IsDefined(AadServicePrincipalObjectId))
+            {
+                writer.WritePropertyName("aadServicePrincipalObjectId"u8);
+                writer.WriteStringValue(AadServicePrincipalObjectId.Value);
+            }
+            if (Optional.IsDefined(SoftwareAssuranceProperties))
+            {
+                writer.WritePropertyName("softwareAssuranceProperties"u8);
+                writer.WriteObjectValue(SoftwareAssuranceProperties);
             }
             if (Optional.IsDefined(DesiredProperties))
             {
-                writer.WritePropertyName("desiredProperties");
+                writer.WritePropertyName("desiredProperties"u8);
                 writer.WriteObjectValue(DesiredProperties);
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("systemData");
+            writer.WritePropertyName("identity"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(CreatedBy))
+            if (Optional.IsDefined(TypeIdentityType))
             {
-                writer.WritePropertyName("createdBy");
-                writer.WriteStringValue(CreatedBy);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(TypeIdentityType.Value.ToString());
             }
-            if (Optional.IsDefined(CreatedByType))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
-                writer.WritePropertyName("createdByType");
-                writer.WriteStringValue(CreatedByType.Value.ToString());
-            }
-            if (Optional.IsDefined(CreatedOn))
-            {
-                writer.WritePropertyName("createdAt");
-                writer.WriteStringValue(CreatedOn.Value, "O");
-            }
-            if (Optional.IsDefined(LastModifiedBy))
-            {
-                writer.WritePropertyName("lastModifiedBy");
-                writer.WriteStringValue(LastModifiedBy);
-            }
-            if (Optional.IsDefined(LastModifiedByType))
-            {
-                writer.WritePropertyName("lastModifiedByType");
-                writer.WriteStringValue(LastModifiedByType.Value.ToString());
-            }
-            if (Optional.IsDefined(LastModifiedOn))
-            {
-                writer.WritePropertyName("lastModifiedAt");
-                writer.WriteStringValue(LastModifiedOn.Value, "O");
+                writer.WritePropertyName("userAssignedIdentities"u8);
+                writer.WriteStartObject();
+                foreach (var item in UserAssignedIdentities)
+                {
+                    writer.WritePropertyName(item.Key);
+                    JsonSerializer.Serialize(writer, item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -90,35 +94,46 @@ namespace Azure.ResourceManager.Hci
 
         internal static HciClusterData DeserializeHciClusterData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<HciProvisioningState> provisioningState = default;
             Optional<HciClusterStatus> status = default;
             Optional<Guid> cloudId = default;
             Optional<string> cloudManagementEndpoint = default;
             Optional<Guid> aadClientId = default;
             Optional<Guid> aadTenantId = default;
-            Optional<ClusterDesiredProperties> desiredProperties = default;
-            Optional<ClusterReportedProperties> reportedProperties = default;
+            Optional<Guid> aadApplicationObjectId = default;
+            Optional<Guid> aadServicePrincipalObjectId = default;
+            Optional<SoftwareAssuranceProperties> softwareAssuranceProperties = default;
+            Optional<HciClusterDesiredProperties> desiredProperties = default;
+            Optional<HciClusterReportedProperties> reportedProperties = default;
             Optional<float> trialDaysRemaining = default;
             Optional<string> billingModel = default;
             Optional<DateTimeOffset> registrationTimestamp = default;
             Optional<DateTimeOffset> lastSyncTimestamp = default;
             Optional<DateTimeOffset> lastBillingTimestamp = default;
-            Optional<string> createdBy = default;
-            Optional<Models.CreatedByType> createdByType = default;
-            Optional<DateTimeOffset> createdAt = default;
-            Optional<string> lastModifiedBy = default;
-            Optional<Models.CreatedByType> lastModifiedByType = default;
-            Optional<DateTimeOffset> lastModifiedAt = default;
+            Optional<string> serviceEndpoint = default;
+            Optional<string> resourceProviderObjectId = default;
+            Optional<Guid> principalId = default;
+            Optional<Guid> tenantId = default;
+            Optional<HciManagedServiceIdentityType> type0 = default;
+            Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -127,32 +142,36 @@ namespace Azure.ResourceManager.Hci
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,130 +180,156 @@ namespace Azure.ResourceManager.Hci
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new HciProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new HciClusterStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("cloudId"))
+                        if (property0.NameEquals("cloudId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cloudId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("cloudManagementEndpoint"))
+                        if (property0.NameEquals("cloudManagementEndpoint"u8))
                         {
                             cloudManagementEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("aadClientId"))
+                        if (property0.NameEquals("aadClientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadClientId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("aadTenantId"))
+                        if (property0.NameEquals("aadTenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             aadTenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("desiredProperties"))
+                        if (property0.NameEquals("aadApplicationObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            desiredProperties = ClusterDesiredProperties.DeserializeClusterDesiredProperties(property0.Value);
+                            aadApplicationObjectId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("reportedProperties"))
+                        if (property0.NameEquals("aadServicePrincipalObjectId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            reportedProperties = ClusterReportedProperties.DeserializeClusterReportedProperties(property0.Value);
+                            aadServicePrincipalObjectId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("trialDaysRemaining"))
+                        if (property0.NameEquals("softwareAssuranceProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("desiredProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("reportedProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("trialDaysRemaining"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             trialDaysRemaining = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("billingModel"))
+                        if (property0.NameEquals("billingModel"u8))
                         {
                             billingModel = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("registrationTimestamp"))
+                        if (property0.NameEquals("registrationTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             registrationTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastSyncTimestamp"))
+                        if (property0.NameEquals("lastSyncTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastSyncTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("lastBillingTimestamp"))
+                        if (property0.NameEquals("lastBillingTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastBillingTimestamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("serviceEndpoint"u8))
+                        {
+                            serviceEndpoint = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceProviderObjectId"u8))
+                        {
+                            resourceProviderObjectId = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -293,61 +338,52 @@ namespace Azure.ResourceManager.Hci
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("createdBy"))
-                        {
-                            createdBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("createdByType"))
+                        if (property0.NameEquals("principalId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdByType = new Models.CreatedByType(property0.Value.GetString());
+                            principalId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("createdAt"))
+                        if (property0.NameEquals("tenantId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createdAt = property0.Value.GetDateTimeOffset("O");
+                            tenantId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedBy"))
-                        {
-                            lastModifiedBy = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("lastModifiedByType"))
+                        if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastModifiedByType = new Models.CreatedByType(property0.Value.GetString());
+                            type0 = new HciManagedServiceIdentityType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedAt"))
+                        if (property0.NameEquals("userAssignedIdentities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastModifiedAt = property0.Value.GetDateTimeOffset("O");
+                            Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property1.Value.GetRawText()));
+                            }
+                            userAssignedIdentities = dictionary;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new HciClusterData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt));
+            return new HciClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(cloudId), cloudManagementEndpoint.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadApplicationObjectId), Optional.ToNullable(aadServicePrincipalObjectId), softwareAssuranceProperties.Value, desiredProperties.Value, reportedProperties.Value, Optional.ToNullable(trialDaysRemaining), billingModel.Value, Optional.ToNullable(registrationTimestamp), Optional.ToNullable(lastSyncTimestamp), Optional.ToNullable(lastBillingTimestamp), serviceEndpoint.Value, resourceProviderObjectId.Value, Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(type0), Optional.ToDictionary(userAssignedIdentities));
         }
     }
 }

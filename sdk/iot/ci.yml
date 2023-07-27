@@ -7,6 +7,9 @@ trigger:
   paths:
     include:
     - sdk/iot/
+    exclude:
+    - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
+    - sdk/iot/ci.mgmt.yml
 
 pr:
   branches:
@@ -15,13 +18,17 @@ pr:
   paths:
     include:
     - sdk/iot/
+    exclude:
+    - sdk/iot/Azure.ResourceManager.IotFirmwareDefense
+    - sdk/iot/ci.mgmt.yml
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: iot
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.IoT.Hub.Service
       safeName: AzureIoTHubService
-      
+

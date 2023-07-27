@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Initializes a new instance of SecurityPolicyListResult. </summary>
         internal SecurityPolicyListResult()
         {
-            Value = new ChangeTrackingList<AfdSecurityPolicyData>();
+            Value = new ChangeTrackingList<FrontDoorSecurityPolicyData>();
         }
 
         /// <summary> Initializes a new instance of SecurityPolicyListResult. </summary>
         /// <param name="value"> List of Security policies within a profile. </param>
         /// <param name="nextLink"> URL to get the next set of security policy objects if there is any. </param>
-        internal SecurityPolicyListResult(IReadOnlyList<AfdSecurityPolicyData> value, string nextLink)
+        internal SecurityPolicyListResult(IReadOnlyList<FrontDoorSecurityPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Security policies within a profile. </summary>
-        public IReadOnlyList<AfdSecurityPolicyData> Value { get; }
+        public IReadOnlyList<FrontDoorSecurityPolicyData> Value { get; }
         /// <summary> URL to get the next set of security policy objects if there is any. </summary>
         public string NextLink { get; }
     }

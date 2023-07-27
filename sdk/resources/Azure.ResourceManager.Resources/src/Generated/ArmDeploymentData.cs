@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the ArmDeployment data model. </summary>
+    /// <summary>
+    /// A class representing the ArmDeployment data model.
+    /// Deployment information.
+    /// </summary>
     public partial class ArmDeploymentData : ResourceData
     {
         /// <summary> Initializes a new instance of ArmDeploymentData. </summary>

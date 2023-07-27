@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Custom domain analysis. </summary>
-    public partial class CustomHostnameAnalysisResult : ProxyOnlyResource
+    public partial class CustomHostnameAnalysisResult : ResourceData
     {
         /// <summary> Initializes a new instance of CustomHostnameAnalysisResult. </summary>
         public CustomHostnameAnalysisResult()
@@ -29,19 +30,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="customDomainVerificationTest"> DNS verification test result. </param>
         /// <param name="customDomainVerificationFailureInfo"> Raw failure information if DNS verification fails. </param>
         /// <param name="hasConflictOnScaleUnit"> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hasConflictAcrossSubscription"> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="conflictingAppResourceId"> Name of the conflicting app on scale unit if it&apos;s within the same subscription. </param>
+        /// <param name="conflictingAppResourceId"> Name of the conflicting app on scale unit if it's within the same subscription. </param>
         /// <param name="cNameRecords"> CName records controller can see for this hostname. </param>
         /// <param name="txtRecords"> TXT records controller can see for this hostname. </param>
         /// <param name="aRecords"> A records controller can see for this hostname. </param>
         /// <param name="alternateCNameRecords"> Alternate CName records controller can see for this hostname. </param>
         /// <param name="alternateTxtRecords"> Alternate TXT records controller can see for this hostname. </param>
-        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ErrorEntity customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal CustomHostnameAnalysisResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isHostnameAlreadyVerified, DnsVerificationTestResult? customDomainVerificationTest, ResponseError customDomainVerificationFailureInfo, bool? hasConflictOnScaleUnit, bool? hasConflictAcrossSubscription, string conflictingAppResourceId, IList<string> cNameRecords, IList<string> txtRecords, IList<string> aRecords, IList<string> alternateCNameRecords, IList<string> alternateTxtRecords, string kind) : base(id, name, resourceType, systemData)
         {
             IsHostnameAlreadyVerified = isHostnameAlreadyVerified;
             CustomDomainVerificationTest = customDomainVerificationTest;
@@ -54,6 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
             ARecords = aRecords;
             AlternateCNameRecords = alternateCNameRecords;
             AlternateTxtRecords = alternateTxtRecords;
+            Kind = kind;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
@@ -61,12 +63,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> DNS verification test result. </summary>
         public DnsVerificationTestResult? CustomDomainVerificationTest { get; }
         /// <summary> Raw failure information if DNS verification fails. </summary>
-        public ErrorEntity CustomDomainVerificationFailureInfo { get; }
+        public ResponseError CustomDomainVerificationFailureInfo { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? HasConflictOnScaleUnit { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? HasConflictAcrossSubscription { get; }
-        /// <summary> Name of the conflicting app on scale unit if it&apos;s within the same subscription. </summary>
+        /// <summary> Name of the conflicting app on scale unit if it's within the same subscription. </summary>
         public string ConflictingAppResourceId { get; }
         /// <summary> CName records controller can see for this hostname. </summary>
         public IList<string> CNameRecords { get; }
@@ -78,5 +80,7 @@ namespace Azure.ResourceManager.AppService.Models
         public IList<string> AlternateCNameRecords { get; }
         /// <summary> Alternate TXT records controller can see for this hostname. </summary>
         public IList<string> AlternateTxtRecords { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Path rule of URL path map of an application gateway. </summary>
-    public partial class ApplicationGatewayPathRule : SubResource
+    public partial class ApplicationGatewayPathRule : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
         public ApplicationGatewayPathRule()
@@ -22,36 +23,32 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayPathRule. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the path rule that is unique within an Application Gateway. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="paths"> Path rules of URL path map. </param>
         /// <param name="backendAddressPool"> Backend address pool resource of URL path map path rule. </param>
         /// <param name="backendHttpSettings"> Backend http settings resource of URL path map path rule. </param>
         /// <param name="redirectConfiguration"> Redirect configuration resource of URL path map path rule. </param>
         /// <param name="rewriteRuleSet"> Rewrite rule set resource of URL path map path rule. </param>
+        /// <param name="loadDistributionPolicy"> Load Distribution Policy resource of URL path map path rule. </param>
         /// <param name="provisioningState"> The provisioning state of the path rule resource. </param>
         /// <param name="firewallPolicy"> Reference to the FirewallPolicy resource. </param>
-        internal ApplicationGatewayPathRule(string id, string name, string etag, string resourceType, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, ProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id)
+        internal ApplicationGatewayPathRule(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<string> paths, WritableSubResource backendAddressPool, WritableSubResource backendHttpSettings, WritableSubResource redirectConfiguration, WritableSubResource rewriteRuleSet, WritableSubResource loadDistributionPolicy, NetworkProvisioningState? provisioningState, WritableSubResource firewallPolicy) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             Paths = paths;
             BackendAddressPool = backendAddressPool;
             BackendHttpSettings = backendHttpSettings;
             RedirectConfiguration = redirectConfiguration;
             RewriteRuleSet = rewriteRuleSet;
+            LoadDistributionPolicy = loadDistributionPolicy;
             ProvisioningState = provisioningState;
             FirewallPolicy = firewallPolicy;
         }
 
-        /// <summary> Name of the path rule that is unique within an Application Gateway. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> Path rules of URL path map. </summary>
         public IList<string> Paths { get; }
         /// <summary> Backend address pool resource of URL path map path rule. </summary>
@@ -110,8 +107,22 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
+        /// <summary> Load Distribution Policy resource of URL path map path rule. </summary>
+        internal WritableSubResource LoadDistributionPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier LoadDistributionPolicyId
+        {
+            get => LoadDistributionPolicy is null ? default : LoadDistributionPolicy.Id;
+            set
+            {
+                if (LoadDistributionPolicy is null)
+                    LoadDistributionPolicy = new WritableSubResource();
+                LoadDistributionPolicy.Id = value;
+            }
+        }
+
         /// <summary> The provisioning state of the path rule resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
         internal WritableSubResource FirewallPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstanceOperation data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstanceOperation data model.
+    /// A managed instance operation.
+    /// </summary>
     public partial class ManagedInstanceOperationData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceOperationData. </summary>
@@ -35,12 +38,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="errorDescription"> The operation error description. </param>
         /// <param name="errorSeverity"> The operation error severity. </param>
         /// <param name="isUserError"> Whether or not the error is a user error. </param>
-        /// <param name="estimatedCompletionOn"> The estimated completion time of the operation. </param>
+        /// <param name="estimatedCompleteOn"> The estimated completion time of the operation. </param>
         /// <param name="description"> The operation description. </param>
         /// <param name="isCancellable"> Whether the operation can be cancelled. </param>
         /// <param name="operationParameters"> The operation parameters. </param>
         /// <param name="operationSteps"> The operation steps. </param>
-        internal ManagedInstanceOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, string operation, string operationFriendlyName, int? percentComplete, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompletionOn, string description, bool? isCancellable, ManagedInstanceOperationParametersPair operationParameters, ManagedInstanceOperationSteps operationSteps) : base(id, name, resourceType, systemData)
+        internal ManagedInstanceOperationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedInstanceName, string operation, string operationFriendlyName, int? percentComplete, DateTimeOffset? startOn, ManagementOperationState? state, int? errorCode, string errorDescription, int? errorSeverity, bool? isUserError, DateTimeOffset? estimatedCompleteOn, string description, bool? isCancellable, ManagedInstanceOperationParametersPair operationParameters, ManagedInstanceOperationSteps operationSteps) : base(id, name, resourceType, systemData)
         {
             ManagedInstanceName = managedInstanceName;
             Operation = operation;
@@ -52,7 +55,7 @@ namespace Azure.ResourceManager.Sql
             ErrorDescription = errorDescription;
             ErrorSeverity = errorSeverity;
             IsUserError = isUserError;
-            EstimatedCompletionOn = estimatedCompletionOn;
+            EstimatedCompleteOn = estimatedCompleteOn;
             Description = description;
             IsCancellable = isCancellable;
             OperationParameters = operationParameters;
@@ -80,7 +83,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Whether or not the error is a user error. </summary>
         public bool? IsUserError { get; }
         /// <summary> The estimated completion time of the operation. </summary>
-        public DateTimeOffset? EstimatedCompletionOn { get; }
+        public DateTimeOffset? EstimatedCompleteOn { get; }
         /// <summary> The operation description. </summary>
         public string Description { get; }
         /// <summary> Whether the operation can be cancelled. </summary>

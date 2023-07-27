@@ -8,7 +8,7 @@ The phone numbers library provides capabilities for short codes administration.
 Install the Azure Communication Server Calling client library for .NET with [NuGet][nuget]:
 
 ```PowerShell
-dotnet add package Azure.Communication.ShortCodes --version 1.0.0-alpha.1
+dotnet add package Azure.Communication.ShortCodes --prerelease
 ```
 
 ### Prerequisites

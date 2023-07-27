@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.AppService.Tests.Helpers;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppService.Tests.TestsCase
@@ -17,10 +18,10 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<CertificateCollection> GetCertificatesCollectionAsync()
+        private async Task<AppCertificateCollection> GetCertificatesCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetCertificates();
+            return resourceGroup.GetAppCertificates();
         }
 
         [TestCase]
@@ -38,6 +39,30 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
 
         [TestCase]
         [RecordedTest]
+        public async Task CreateOrUpdateWithNullKeyVaultId()
+        {
+            // Call CreateOrUpdate on an existing certificate which returns empty string for keyVaultId
+            var name = "aeronline.net-myfirstapp0102-null";
+            var data = new AppCertificateData(DefaultLocation)
+            {
+                ServerFarmId = new Core.ResourceIdentifier("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG-666/providers/Microsoft.Web/serverfarms/ASP-testRG666-b64f"),
+                CanonicalName = "aeronline.net",
+                KeyVaultId = null // Test to see that if service works fine when we set KeyVaultId to null.
+            };
+            var collection = Client.GetResourceGroupResource(ResourceGroupResource.CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", "testRG-666")).GetAppCertificates();
+#if DEBUG
+            Assert.ThrowsAsync<JsonException>(async delegate { await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data); });
+            await Task.CompletedTask;
+#else
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            var certificate = lro.Value;
+            Assert.AreEqual(name, certificate.Data.Name);
+            Assert.IsNull(certificate.Data.KeyVaultId);
+#endif
+        }
+
+        [TestCase]
+        [RecordedTest]
         [Ignore("Service request failed.Status: 500 (Internal Server Error)")]
         public async Task Get()
         {
@@ -45,8 +70,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var certificateName = Recording.GenerateAssetName("testCertificate-");
             var input = ResourceDataHelper.GetBasicCertificateData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, input);
-            CertificateResource certificate1 = lro.Value;
-            CertificateResource certificate2 = await container.GetAsync(certificateName);
+            AppCertificateResource certificate1 = lro.Value;
+            AppCertificateResource certificate2 = await container.GetAsync(certificateName);
             ResourceDataHelper.AssertCertificate(certificate1.Data, certificate2.Data);
         }
 
@@ -76,7 +101,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             var certificateName = Recording.GenerateAssetName("testCertificate-");
             var input = ResourceDataHelper.GetBasicCertificateData(DefaultLocation);
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, input);
-            CertificateResource certificate = lro.Value;
+            AppCertificateResource certificate = lro.Value;
             Assert.IsTrue(await container.ExistsAsync(certificateName));
             Assert.IsFalse(await container.ExistsAsync(certificateName + "1"));
 

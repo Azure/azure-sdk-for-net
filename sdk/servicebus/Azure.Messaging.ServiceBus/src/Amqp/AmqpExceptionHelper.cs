@@ -109,18 +109,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (string.Equals(condition, AmqpErrorCode.NotImplemented.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new NotSupportedException(message);
+                return new NotSupportedException(EnrichMessage(message));
             }
 
             if (string.Equals(condition, AmqpErrorCode.NotAllowed.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new InvalidOperationException(message);
+                return new InvalidOperationException(EnrichMessage(message));
             }
 
             if (string.Equals(condition, AmqpErrorCode.UnauthorizedAccess.Value, StringComparison.InvariantCultureIgnoreCase) ||
                 string.Equals(condition, AmqpClientConstants.AuthorizationFailedError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new UnauthorizedAccessException(message);
+                return new UnauthorizedAccessException(EnrichMessage(message));
             }
 
             if (string.Equals(condition, AmqpClientConstants.ServerBusyError.Value, StringComparison.InvariantCultureIgnoreCase))
@@ -130,12 +130,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             if (string.Equals(condition, AmqpClientConstants.ArgumentError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ArgumentException(message);
+                return new ArgumentException(EnrichMessage(message));
             }
 
             if (string.Equals(condition, AmqpClientConstants.ArgumentOutOfRangeError.Value, StringComparison.InvariantCultureIgnoreCase))
             {
-                return new ArgumentOutOfRangeException(message);
+                return new ArgumentOutOfRangeException(EnrichMessage(message));
             }
 
             if (string.Equals(condition, AmqpClientConstants.EntityDisabledError.Value, StringComparison.InvariantCultureIgnoreCase))
@@ -278,5 +278,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             return innerException == null ? null : TranslateException(innerException, null, null, connectionError);
         }
+
+        private static string EnrichMessage(string message) => $"{message}{Environment.NewLine}{Constants.TroubleshootingMessage}";
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the InstancePool data model. </summary>
+    /// <summary>
+    /// A class representing the InstancePool data model.
+    /// An Azure SQL instance pool.
+    /// </summary>
     public partial class InstancePoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of InstancePoolData. </summary>
@@ -31,8 +34,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="sku"> The name and tier of the SKU. </param>
         /// <param name="subnetId"> Resource ID of the subnet to place this instance pool in. </param>
         /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
-        /// <param name="licenseType"> The license type. Possible values are &apos;LicenseIncluded&apos; (price for SQL license is included) and &apos;BasePrice&apos; (without SQL license price). </param>
-        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string subnetId, int? vCores, InstancePoolLicenseType? licenseType) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </param>
+        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             SubnetId = subnetId;
@@ -43,10 +46,10 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The name and tier of the SKU. </summary>
         public SqlSku Sku { get; set; }
         /// <summary> Resource ID of the subnet to place this instance pool in. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Count of vCores belonging to this instance pool. </summary>
         public int? VCores { get; set; }
-        /// <summary> The license type. Possible values are &apos;LicenseIncluded&apos; (price for SQL license is included) and &apos;BasePrice&apos; (without SQL license price). </summary>
+        /// <summary> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </summary>
         public InstancePoolLicenseType? LicenseType { get; set; }
     }
 }

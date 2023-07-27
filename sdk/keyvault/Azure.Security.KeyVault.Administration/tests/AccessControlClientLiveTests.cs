@@ -13,7 +13,6 @@ using Azure.Security.KeyVault.Keys;
 
 namespace Azure.Security.KeyVault.Administration.Tests
 {
-    [NonParallelizable]
     public class AccessControlClientLiveTests : AccessControlTestBase
     {
         public AccessControlClientLiveTests(bool isAsync, KeyVaultAdministrationClientOptions.ServiceVersion serviceVersion)

@@ -74,54 +74,6 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
-            /// Gets lifetime summary statistics for all of the Pools in the specified
-            /// Account.
-            /// </summary>
-            /// <remarks>
-            /// Statistics are aggregated across all Pools that have ever existed in the
-            /// Account, from Account creation to the last update time of the statistics.
-            /// The statistics may not be immediately available. The Batch service performs
-            /// periodic roll-up of statistics. The typical delay is about 30 minutes.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='poolGetAllLifetimeStatisticsOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            public static PoolStatistics GetAllLifetimeStatistics(this IPoolOperations operations, PoolGetAllLifetimeStatisticsOptions poolGetAllLifetimeStatisticsOptions = default(PoolGetAllLifetimeStatisticsOptions))
-            {
-                return operations.GetAllLifetimeStatisticsAsync(poolGetAllLifetimeStatisticsOptions).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets lifetime summary statistics for all of the Pools in the specified
-            /// Account.
-            /// </summary>
-            /// <remarks>
-            /// Statistics are aggregated across all Pools that have ever existed in the
-            /// Account, from Account creation to the last update time of the statistics.
-            /// The statistics may not be immediately available. The Batch service performs
-            /// periodic roll-up of statistics. The typical delay is about 30 minutes.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='poolGetAllLifetimeStatisticsOptions'>
-            /// Additional parameters for the operation
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<PoolStatistics> GetAllLifetimeStatisticsAsync(this IPoolOperations operations, PoolGetAllLifetimeStatisticsOptions poolGetAllLifetimeStatisticsOptions = default(PoolGetAllLifetimeStatisticsOptions), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetAllLifetimeStatisticsWithHttpMessagesAsync(poolGetAllLifetimeStatisticsOptions, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Adds a Pool to the specified Account.
             /// </summary>
             /// <remarks>

@@ -21,14 +21,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="name"/> is null. </exception>
         public PageViewPerfData(int version, string id, string name) : base(version)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(name, nameof(name));
 
             Id = id;
             Name = name;
@@ -44,15 +38,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         public string Url { get; set; }
         /// <summary> Request duration in format: DD.HH:MM:SS.MMMMMM. For a page view (PageViewData), this is the duration. For a page view with performance information (PageViewPerfData), this is the page load time. Must be less than 1000 days. </summary>
         public string Duration { get; set; }
-        /// <summary> Performance total in TimeSpan &apos;G&apos; (general long) format: d:hh:mm:ss.fffffff. </summary>
+        /// <summary> Performance total in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff. </summary>
         public string PerfTotal { get; set; }
-        /// <summary> Network connection time in TimeSpan &apos;G&apos; (general long) format: d:hh:mm:ss.fffffff. </summary>
+        /// <summary> Network connection time in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff. </summary>
         public string NetworkConnect { get; set; }
-        /// <summary> Sent request time in TimeSpan &apos;G&apos; (general long) format: d:hh:mm:ss.fffffff. </summary>
+        /// <summary> Sent request time in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff. </summary>
         public string SentRequest { get; set; }
-        /// <summary> Received response time in TimeSpan &apos;G&apos; (general long) format: d:hh:mm:ss.fffffff. </summary>
+        /// <summary> Received response time in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff. </summary>
         public string ReceivedResponse { get; set; }
-        /// <summary> DOM processing time in TimeSpan &apos;G&apos; (general long) format: d:hh:mm:ss.fffffff. </summary>
+        /// <summary> DOM processing time in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff. </summary>
         public string DomProcessing { get; set; }
         /// <summary> Collection of custom properties. </summary>
         public IDictionary<string, string> Properties { get; }

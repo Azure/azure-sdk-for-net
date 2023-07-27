@@ -15,22 +15,60 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(StringIndexType))
+            {
+                writer.WritePropertyName("stringIndexType"u8);
+                writer.WriteStringValue(StringIndexType.Value.ToString());
+            }
             if (Optional.IsDefined(ModelVersion))
             {
-                writer.WritePropertyName("model-version");
+                writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
             if (Optional.IsDefined(LoggingOptOut))
             {
-                writer.WritePropertyName("loggingOptOut");
+                writer.WritePropertyName("loggingOptOut"u8);
                 writer.WriteBooleanValue(LoggingOptOut.Value);
             }
-            if (Optional.IsDefined(StringIndexType))
-            {
-                writer.WritePropertyName("stringIndexType");
-                writer.WriteStringValue(StringIndexType.Value.ToString());
-            }
             writer.WriteEndObject();
+        }
+
+        internal static EntityLinkingTaskParameters DeserializeEntityLinkingTaskParameters(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<StringIndexType> stringIndexType = default;
+            Optional<string> modelVersion = default;
+            Optional<bool> loggingOptOut = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("stringIndexType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stringIndexType = new StringIndexType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("modelVersion"u8))
+                {
+                    modelVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("loggingOptOut"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    loggingOptOut = property.Value.GetBoolean();
+                    continue;
+                }
+            }
+            return new EntityLinkingTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(stringIndexType));
         }
     }
 }

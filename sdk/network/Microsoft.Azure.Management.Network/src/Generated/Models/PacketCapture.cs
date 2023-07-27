@@ -34,10 +34,16 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the PacketCapture class.
         /// </summary>
-        /// <param name="target">The ID of the targeted resource, only VM is
-        /// currently supported.</param>
+        /// <param name="target">The ID of the targeted resource, only AzureVM
+        /// and AzureVMSS as target type are currently supported.</param>
         /// <param name="storageLocation">The storage location for a packet
         /// capture session.</param>
+        /// <param name="scope">A list of AzureVMSS instances which can be
+        /// included or excluded to run packet capture. If both included and
+        /// excluded are empty, then the packet capture will run on all
+        /// instances of AzureVMSS.</param>
+        /// <param name="targetType">Target type of the resource provided.
+        /// Possible values include: 'AzureVM', 'AzureVMSS'</param>
         /// <param name="bytesToCapturePerPacket">Number of bytes captured per
         /// packet, the remaining bytes are truncated.</param>
         /// <param name="totalBytesPerSession">Maximum size of the capture
@@ -45,9 +51,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="timeLimitInSeconds">Maximum duration of the capture
         /// session in seconds.</param>
         /// <param name="filters">A list of packet capture filters.</param>
-        public PacketCapture(string target, PacketCaptureStorageLocation storageLocation, long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?), IList<PacketCaptureFilter> filters = default(IList<PacketCaptureFilter>))
+        public PacketCapture(string target, PacketCaptureStorageLocation storageLocation, PacketCaptureMachineScope scope = default(PacketCaptureMachineScope), PacketCaptureTargetType? targetType = default(PacketCaptureTargetType?), long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?), IList<PacketCaptureFilter> filters = default(IList<PacketCaptureFilter>))
         {
             Target = target;
+            Scope = scope;
+            TargetType = targetType;
             BytesToCapturePerPacket = bytesToCapturePerPacket;
             TotalBytesPerSession = totalBytesPerSession;
             TimeLimitInSeconds = timeLimitInSeconds;
@@ -62,11 +70,27 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the ID of the targeted resource, only VM is currently
-        /// supported.
+        /// Gets or sets the ID of the targeted resource, only AzureVM and
+        /// AzureVMSS as target type are currently supported.
         /// </summary>
         [JsonProperty(PropertyName = "properties.target")]
         public string Target { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of AzureVMSS instances which can be included or
+        /// excluded to run packet capture. If both included and excluded are
+        /// empty, then the packet capture will run on all instances of
+        /// AzureVMSS.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scope")]
+        public PacketCaptureMachineScope Scope { get; set; }
+
+        /// <summary>
+        /// Gets or sets target type of the resource provided. Possible values
+        /// include: 'AzureVM', 'AzureVMSS'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetType")]
+        public PacketCaptureTargetType? TargetType { get; set; }
 
         /// <summary>
         /// Gets or sets number of bytes captured per packet, the remaining

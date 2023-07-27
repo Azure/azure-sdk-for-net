@@ -43,11 +43,10 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task CreateCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
-            CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
+            CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
             string communicationServiceName = "myCommunicationService";
-            CommunicationServiceData data = new CommunicationServiceData()
+            CommunicationServiceResourceData data = new CommunicationServiceResourceData("global")
             {
-                Location = "global",
                 DataLocation = "UnitedStates",
             };
             ArmOperation<CommunicationServiceResource> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task ListCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_ListAllCommunicationService
-            CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
+            CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
 
             AsyncPageable<CommunicationServiceResource> list = collection.GetAllAsync();
             await foreach (CommunicationServiceResource communicationService  in list)
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Communication.Tests.Samples
         public async Task DeleteCommunicationService()
         {
             #region Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
-            CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
+            CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
 
             CommunicationServiceResource communicationService = await collection.GetAsync("myCommunicationService");
             await communicationService.DeleteAsync(WaitUntil.Completed);

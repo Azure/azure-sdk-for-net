@@ -6,14 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the WebApplicationFirewallPolicy data model. </summary>
-    public partial class WebApplicationFirewallPolicyData : NetworkResourceData
+    /// <summary>
+    /// A class representing the WebApplicationFirewallPolicy data model.
+    /// Defines web application firewall policy.
+    /// </summary>
+    public partial class WebApplicationFirewallPolicyData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of WebApplicationFirewallPolicyData. </summary>
         public WebApplicationFirewallPolicyData()
@@ -39,9 +43,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="managedRules"> Describes the managedRules structure. </param>
         /// <param name="httpListeners"> A collection of references to application gateway http listeners. </param>
         /// <param name="pathBasedRules"> A collection of references to application gateway path rules. </param>
-        internal WebApplicationFirewallPolicyData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, ProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<WritableSubResource> httpListeners, IReadOnlyList<WritableSubResource> pathBasedRules) : base(id, name, resourceType, location, tags)
+        internal WebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, PolicySettings policySettings, IList<WebApplicationFirewallCustomRule> customRules, IReadOnlyList<ApplicationGatewayData> applicationGateways, NetworkProvisioningState? provisioningState, WebApplicationFirewallPolicyResourceState? resourceState, ManagedRulesDefinition managedRules, IReadOnlyList<WritableSubResource> httpListeners, IReadOnlyList<WritableSubResource> pathBasedRules) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             PolicySettings = policySettings;
             CustomRules = customRules;
             ApplicationGateways = applicationGateways;
@@ -53,7 +57,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The PolicySettings for policy. </summary>
         public PolicySettings PolicySettings { get; set; }
         /// <summary> The custom rules inside the policy. </summary>
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> A collection of references to application gateways. </summary>
         public IReadOnlyList<ApplicationGatewayData> ApplicationGateways { get; }
         /// <summary> The provisioning state of the web application firewall policy resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Resource status of the policy. </summary>
         public WebApplicationFirewallPolicyResourceState? ResourceState { get; }
         /// <summary> Describes the managedRules structure. </summary>

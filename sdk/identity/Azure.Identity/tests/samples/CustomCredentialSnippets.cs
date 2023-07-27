@@ -19,11 +19,10 @@ namespace Azure.Identity.Tests.samples
         {
             #region Snippet:TokenCredentialCreateUsage
             AccessToken token = GetTokenForScope("https://storage.azure.com/.default");
-#if SNIPPET
-            var credential = TokenCredential.Create((_, _) => token);
+
+            var credential = DelegatedTokenCredential.Create((_, _) => token);
 
             var client = new BlobClient(new Uri("https://aka.ms/bloburl"), credential);
-#endif
             #endregion
         }
 
@@ -69,7 +68,7 @@ namespace Azure.Identity.Tests.samples
             #endregion
         }
 
-        #region Snippet:OnBehalfOfCredential
+        //#region Snippet:OnBehalfOfCredential
         public class OnBehalfOfCredential : TokenCredential
         {
             private readonly IConfidentialClientApplication _confidentialClient;
@@ -94,7 +93,7 @@ namespace Azure.Identity.Tests.samples
                 return new AccessToken(result.AccessToken, result.ExpiresOn);
             }
         }
-        #endregion
+        //#endregion
 
         public void OnBehalfOfCredentialUsage()
         {
@@ -102,11 +101,11 @@ namespace Azure.Identity.Tests.samples
             string clientId = "00000000-0000-0000-0000-000000000000";
             string userAccessToken = "00000000-0000-0000-0000-000000000000";
 
-            #region Snippet:OnBehalfOfCredentialUsage
+            //#region Snippet:OnBehalfOfCredentialUsage
             var oboCredential = new OnBehalfOfCredential(clientId, clientSecret, userAccessToken);
 
             var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), oboCredential);
-            #endregion
+            //#endregion
         }
     }
 }

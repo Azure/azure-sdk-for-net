@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);netstandard2.1;net6.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Queues client library</AssemblyTitle>
-    <Version>12.10.0-beta.1</Version>
+    <Version>12.16.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>12.9.0</ApiCompatVersion>
+    <ApiCompatVersion>12.15.0</ApiCompatVersion>
     <DefineConstants>QueueSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Queues;Microsoft;Azure;Queues;Queue;Storage;StorageScalable;$(PackageCommonTags)</PackageTags>
     <Description>
@@ -21,6 +21,12 @@
     <NoWarn>$(NoWarn);IDT002;IDT003</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" />
     <PackageReference Include="System.Text.Json" />
@@ -40,6 +46,7 @@
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared\ClientsideEncryption" />
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\Models\*.cs" LinkBase="Shared\ClientsideEncryption\Models" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)CompatSwitches.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)GeoRedundantReadPolicy.cs" LinkBase="Shared" />
@@ -48,11 +55,11 @@
     <Compile Include="$(AzureStorageSharedSources)SasQueryParametersInternals.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientConfiguration.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureStorageSharedSources)StorageClientDiagnostics.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageClientOptions.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageCollectionEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageExceptionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)StorageRequestFailedDetailsParser.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageRequestValidationPipelinePolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyCredentialInternals.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)StorageSharedKeyPipelinePolicy.cs" LinkBase="Shared" />

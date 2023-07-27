@@ -14,32 +14,34 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static MinCapacityCapability DeserializeMinCapacityCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> value = default;
-            Optional<CapabilityStatus> status = default;
+            Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = property.Value.GetString().ToCapabilityStatus();
+                    status = property.Value.GetString().ToSqlCapabilityStatus();
                     continue;
                 }
-                if (property.NameEquals("reason"))
+                if (property.NameEquals("reason"u8))
                 {
                     reason = property.Value.GetString();
                     continue;

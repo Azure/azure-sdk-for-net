@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
-                writer.WritePropertyName("diskEncryptionSetId");
+                writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
             writer.WriteEndObject();
@@ -25,12 +25,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskImageEncryption DeserializeDiskImageEncryption(JsonElement element)
         {
-            Optional<string> diskEncryptionSetId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskEncryptionSetId"))
+                if (property.NameEquals("diskEncryptionSetId"u8))
                 {
-                    diskEncryptionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

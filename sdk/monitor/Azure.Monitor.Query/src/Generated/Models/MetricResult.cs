@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -23,22 +24,10 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceType"/>, <paramref name="localizedName"/> or <paramref name="timeSeries"/> is null. </exception>
         internal MetricResult(string id, string resourceType, LocalizableString localizedName, MetricUnit unit, IEnumerable<MetricTimeSeriesElement> timeSeries)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (resourceType == null)
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-            if (localizedName == null)
-            {
-                throw new ArgumentNullException(nameof(localizedName));
-            }
-            if (timeSeries == null)
-            {
-                throw new ArgumentNullException(nameof(timeSeries));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(resourceType, nameof(resourceType));
+            Argument.AssertNotNull(localizedName, nameof(localizedName));
+            Argument.AssertNotNull(timeSeries, nameof(timeSeries));
 
             Id = id;
             ResourceType = resourceType;
@@ -52,7 +41,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="resourceType"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="description"> Detailed description of this metric. </param>
-        /// <param name="errorCode"> &apos;Success&apos; or the error details on query failures for this metric. </param>
+        /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeSeries"> the time series returned when a data query is performed. </param>

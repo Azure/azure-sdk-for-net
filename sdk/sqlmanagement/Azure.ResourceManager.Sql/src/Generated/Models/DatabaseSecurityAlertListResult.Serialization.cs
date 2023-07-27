@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static DatabaseSecurityAlertListResult DeserializeDatabaseSecurityAlertListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DatabaseSecurityAlertPolicyData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<SqlDatabaseSecurityAlertPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabaseSecurityAlertPolicyData> array = new List<DatabaseSecurityAlertPolicyData>();
+                    List<SqlDatabaseSecurityAlertPolicyData> array = new List<SqlDatabaseSecurityAlertPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseSecurityAlertPolicyData.DeserializeDatabaseSecurityAlertPolicyData(item));
+                        array.Add(SqlDatabaseSecurityAlertPolicyData.DeserializeSqlDatabaseSecurityAlertPolicyData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

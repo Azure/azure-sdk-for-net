@@ -406,11 +406,11 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
-                                                         string arg1,
-                                                         string arg2,
-                                                         string arg3,
-                                                         TValue2 arg4)
+        private unsafe void WriteEvent<TValue1>(int eventId,
+                                                string arg1,
+                                                string arg2,
+                                                string arg3,
+                                                TValue1 arg4)
             where TValue1 : struct
         {
             fixed (char* arg1Ptr = arg1)

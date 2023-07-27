@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Pre-provisioned and readily available Event Hubs Cluster count per region. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Initializes a new instance of AvailableCluster. </summary>
         /// <param name="location"> Location fo the Available Cluster. </param>
-        internal AvailableCluster(string location)
+        internal AvailableCluster(AzureLocation? location)
         {
             Location = location;
         }
 
         /// <summary> Location fo the Available Cluster. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

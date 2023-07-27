@@ -13,11 +13,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class RouteTableTests : NetworkServiceClientTestBase
     {
         private SubscriptionResource _subscription;
 
-        public RouteTableTests(bool isAsync) : base(isAsync)
+        public RouteTableTests(bool isAsync, string apiVersion)
+        : base(isAsync, RouteTableResource.ResourceType, apiVersion)
         {
         }
 
@@ -227,7 +229,7 @@ namespace Azure.ResourceManager.Network.Tests
             // Get RouteTable
             getRouteTableResponse = await routeTableCollection.GetAsync(routeTableName);
             Assert.AreEqual(1, getRouteTableResponse.Value.Data.Subnets.Count);
-            Assert.AreEqual(getSubnetResponse.Value.Id.ToString(), getRouteTableResponse.Value.Data.Subnets[0].Id);
+            Assert.AreEqual(getSubnetResponse.Value.Id, getRouteTableResponse.Value.Data.Subnets[0].Id);
         }
     }
 }

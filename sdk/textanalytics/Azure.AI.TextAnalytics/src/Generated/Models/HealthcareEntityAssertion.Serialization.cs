@@ -10,40 +10,62 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
-    public partial class HealthcareEntityAssertion
+    public partial class HealthcareEntityAssertion : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Conditionality))
+            {
+                writer.WritePropertyName("conditionality"u8);
+                writer.WriteStringValue(Conditionality.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Certainty))
+            {
+                writer.WritePropertyName("certainty"u8);
+                writer.WriteStringValue(Certainty.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Association))
+            {
+                writer.WritePropertyName("association"u8);
+                writer.WriteStringValue(Association.Value.ToSerialString());
+            }
+            writer.WriteEndObject();
+        }
+
         internal static HealthcareEntityAssertion DeserializeHealthcareEntityAssertion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EntityConditionality> conditionality = default;
             Optional<EntityCertainty> certainty = default;
             Optional<EntityAssociation> association = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("conditionality"))
+                if (property.NameEquals("conditionality"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     conditionality = property.Value.GetString().ToEntityConditionality();
                     continue;
                 }
-                if (property.NameEquals("certainty"))
+                if (property.NameEquals("certainty"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     certainty = property.Value.GetString().ToEntityCertainty();
                     continue;
                 }
-                if (property.NameEquals("association"))
+                if (property.NameEquals("association"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     association = property.Value.GetString().ToEntityAssociation();

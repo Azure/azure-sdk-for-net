@@ -758,6 +758,9 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// New state of the alert. Possible values include: 'New', 'Acknowledged',
         /// 'Closed'
         /// </param>
+        /// <param name='comment'>
+        /// reason of change alert state
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -779,7 +782,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Alert>> ChangeStateWithHttpMessagesAsync(string alertId, string newState, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Alert>> ChangeStateWithHttpMessagesAsync(string alertId, string newState, Comments comment = default(Comments), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -811,6 +814,7 @@ namespace Microsoft.Azure.Management.AlertsManagement
                 tracingParameters.Add("alertId", alertId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("newState", newState);
+                tracingParameters.Add("comment", comment);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ChangeState", tracingParameters);
             }
@@ -866,6 +870,12 @@ namespace Microsoft.Azure.Management.AlertsManagement
 
             // Serialize Request
             string _requestContent = null;
+            if(comment != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(comment, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {

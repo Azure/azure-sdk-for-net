@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> Type of the sync group log. </summary>
+    /// <summary> The SyncGroupLogType. </summary>
     public readonly partial struct SyncGroupLogType : IEquatable<SyncGroupLogType>
     {
         private readonly string _value;

@@ -14,38 +14,44 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineScaleSetSku DeserializeVirtualMachineScaleSetSku(JsonElement element)
         {
-            Optional<string> resourceType = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceType> resourceType = default;
             Optional<ComputeSku> sku = default;
             Optional<VirtualMachineScaleSetSkuCapacity> capacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceType"))
-                {
-                    resourceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("resourceType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     sku = ComputeSku.DeserializeComputeSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("capacity"))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = VirtualMachineScaleSetSkuCapacity.DeserializeVirtualMachineScaleSetSkuCapacity(property.Value);
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetSku(resourceType.Value, sku.Value, capacity.Value);
+            return new VirtualMachineScaleSetSku(Optional.ToNullable(resourceType), sku.Value, capacity.Value);
         }
     }
 }

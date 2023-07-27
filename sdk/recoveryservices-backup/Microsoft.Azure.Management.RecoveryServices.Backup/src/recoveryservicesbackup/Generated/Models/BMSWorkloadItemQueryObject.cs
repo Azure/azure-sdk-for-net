@@ -35,12 +35,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'DefaultBackup'</param>
         /// <param name="workloadItemType">Workload Item type. Possible values
         /// include: 'Invalid', 'SQLInstance', 'SQLDataBase', 'SAPHanaSystem',
-        /// 'SAPHanaDatabase', 'SAPAseSystem', 'SAPAseDatabase'</param>
+        /// 'SAPHanaDatabase', 'SAPAseSystem', 'SAPAseDatabase',
+        /// 'SAPHanaDBInstance'</param>
         /// <param name="workloadType">Workload type. Possible values include:
         /// 'Invalid', 'VM', 'FileFolder', 'AzureSqlDb', 'SQLDB', 'Exchange',
         /// 'Sharepoint', 'VMwareVM', 'SystemState', 'Client',
         /// 'GenericDataSource', 'SQLDataBase', 'AzureFileShare',
-        /// 'SAPHanaDatabase', 'SAPAseDatabase'</param>
+        /// 'SAPHanaDatabase', 'SAPAseDatabase', 'SAPHanaDBInstance'</param>
         /// <param name="protectionStatus">Backup status query parameter.
         /// Possible values include: 'Invalid', 'NotProtected', 'Protecting',
         /// 'Protected', 'ProtectionFailed'</param>
@@ -69,7 +70,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Gets or sets workload Item type. Possible values include:
         /// 'Invalid', 'SQLInstance', 'SQLDataBase', 'SAPHanaSystem',
-        /// 'SAPHanaDatabase', 'SAPAseSystem', 'SAPAseDatabase'
+        /// 'SAPHanaDatabase', 'SAPAseSystem', 'SAPAseDatabase',
+        /// 'SAPHanaDBInstance'
         /// </summary>
         [JsonProperty(PropertyName = "workloadItemType")]
         public string WorkloadItemType { get; set; }
@@ -79,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'VM', 'FileFolder', 'AzureSqlDb', 'SQLDB', 'Exchange',
         /// 'Sharepoint', 'VMwareVM', 'SystemState', 'Client',
         /// 'GenericDataSource', 'SQLDataBase', 'AzureFileShare',
-        /// 'SAPHanaDatabase', 'SAPAseDatabase'
+        /// 'SAPHanaDatabase', 'SAPAseDatabase', 'SAPHanaDBInstance'
         /// </summary>
         [JsonProperty(PropertyName = "workloadType")]
         public string WorkloadType { get; set; }

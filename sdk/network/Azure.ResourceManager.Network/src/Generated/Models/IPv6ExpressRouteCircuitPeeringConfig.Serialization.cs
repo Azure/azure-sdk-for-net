@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryPeerAddressPrefix))
             {
-                writer.WritePropertyName("primaryPeerAddressPrefix");
+                writer.WritePropertyName("primaryPeerAddressPrefix"u8);
                 writer.WriteStringValue(PrimaryPeerAddressPrefix);
             }
             if (Optional.IsDefined(SecondaryPeerAddressPrefix))
             {
-                writer.WritePropertyName("secondaryPeerAddressPrefix");
+                writer.WritePropertyName("secondaryPeerAddressPrefix"u8);
                 writer.WriteStringValue(SecondaryPeerAddressPrefix);
             }
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
-                writer.WritePropertyName("microsoftPeeringConfig");
+                writer.WritePropertyName("microsoftPeeringConfig"u8);
                 writer.WriteObjectValue(MicrosoftPeeringConfig);
             }
             if (Optional.IsDefined(RouteFilter))
             {
-                writer.WritePropertyName("routeFilter");
+                writer.WritePropertyName("routeFilter"u8);
                 JsonSerializer.Serialize(writer, RouteFilter);
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state");
+                writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WriteEndObject();
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static IPv6ExpressRouteCircuitPeeringConfig DeserializeIPv6ExpressRouteCircuitPeeringConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryPeerAddressPrefix = default;
             Optional<string> secondaryPeerAddressPrefix = default;
             Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
@@ -53,41 +57,38 @@ namespace Azure.ResourceManager.Network.Models
             Optional<ExpressRouteCircuitPeeringState> state = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryPeerAddressPrefix"))
+                if (property.NameEquals("primaryPeerAddressPrefix"u8))
                 {
                     primaryPeerAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryPeerAddressPrefix"))
+                if (property.NameEquals("secondaryPeerAddressPrefix"u8))
                 {
                     secondaryPeerAddressPrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("microsoftPeeringConfig"))
+                if (property.NameEquals("microsoftPeeringConfig"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value);
                     continue;
                 }
-                if (property.NameEquals("routeFilter"))
+                if (property.NameEquals("routeFilter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new ExpressRouteCircuitPeeringState(property.Value.GetString());

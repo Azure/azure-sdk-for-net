@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <RootNamespace>Azure.Monitor.OpenTelemetry.Exporter</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

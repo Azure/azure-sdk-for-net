@@ -15,6 +15,7 @@ $EngScriptsDir = Join-Path $EngDir "scripts"
 . (Join-Path $EngCommonScriptsDir Invoke-DevOpsAPI.ps1)
 . (Join-Path $EngCommonScriptsDir artifact-metadata-parsing.ps1)
 . (Join-Path $EngCommonScriptsDir "Helpers" git-helpers.ps1)
+. (Join-Path $EngCommonScriptsDir "Helpers" Package-Helpers.ps1)
 
 # Setting expected from common languages settings
 $Language = "Unknown"
@@ -50,6 +51,12 @@ $FindArtifactForApiReviewFn = "Find-${Language}-Artifacts-For-Apireview"
 $TestProxyTrustCertFn = "Import-Dev-Cert-${Language}"
 $ValidateDocsMsPackagesFn = "Validate-${Language}-DocMsPackages"
 $GetOnboardedDocsMsPackagesFn = "Get-${Language}-OnboardedDocsMsPackages"
+$GetOnboardedDocsMsPackagesForMonikerFn = "Get-${Language}-OnboardedDocsMsPackagesForMoniker"
 $GetDocsMsTocDataFn = "Get-${Language}-DocsMsTocData"
 $GetDocsMsTocChildrenForManagementPackagesFn = "Get-${Language}-DocsMsTocChildrenForManagementPackages"
 $UpdateDocsMsTocFn = "Get-${Language}-UpdatedDocsMsToc"
+$GetPackageLevelReadmeFn = "Get-${Language}-PackageLevelReadme"
+$GetRepositoryLinkFn = "Get-${Language}-RepositoryLink"
+$GetEmitterAdditionalOptionsFn = "Get-${Language}-EmitterAdditionalOptions"
+$GetEmitterNameFn = "Get-${Language}-EmitterName"
+$GetEmitterPackageJsonPathFn = "Get-${Language}-EmitterPackageJsonPath"

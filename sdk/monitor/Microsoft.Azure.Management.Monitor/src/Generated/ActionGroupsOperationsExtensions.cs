@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='notificationRequest'>
             /// The notification request body which includes the contact details
             /// </param>
-            public static TestNotificationResponse PostTestNotifications(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest)
+            public static ActionGroupsPostTestNotificationsHeaders PostTestNotifications(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest)
             {
                 return operations.PostTestNotificationsAsync(notificationRequest).GetAwaiter().GetResult();
             }
@@ -220,11 +220,97 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TestNotificationResponse> PostTestNotificationsAsync(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ActionGroupsPostTestNotificationsHeaders> PostTestNotificationsAsync(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.PostTestNotificationsWithHttpMessagesAsync(notificationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Body;
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            public static ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders CreateNotificationsAtResourceGroupLevel(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest)
+            {
+                return operations.CreateNotificationsAtResourceGroupLevelAsync(resourceGroupName, notificationRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders> CreateNotificationsAtResourceGroupLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, notificationRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='actionGroupName'>
+            /// The name of the action group.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            public static ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders CreateNotificationsAtActionGroupResourceLevel(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest)
+            {
+                return operations.CreateNotificationsAtActionGroupResourceLevelAsync(resourceGroupName, actionGroupName, notificationRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='actionGroupName'>
+            /// The name of the action group.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders> CreateNotificationsAtActionGroupResourceLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(resourceGroupName, actionGroupName, notificationRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
                 }
             }
 
@@ -257,6 +343,92 @@ namespace Microsoft.Azure.Management.Monitor
             public static async Task<TestNotificationDetailsResponse> GetTestNotificationsAsync(this IActionGroupsOperations operations, string notificationId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetTestNotificationsWithHttpMessagesAsync(notificationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the test notifications by the notification id
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='notificationId'>
+            /// The notification id
+            /// </param>
+            public static TestNotificationDetailsResponse GetTestNotificationsAtResourceGroupLevel(this IActionGroupsOperations operations, string resourceGroupName, string notificationId)
+            {
+                return operations.GetTestNotificationsAtResourceGroupLevelAsync(resourceGroupName, notificationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the test notifications by the notification id
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='notificationId'>
+            /// The notification id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TestNotificationDetailsResponse> GetTestNotificationsAtResourceGroupLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, string notificationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetTestNotificationsAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, notificationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get the test notifications by the notification id
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='actionGroupName'>
+            /// The name of the action group.
+            /// </param>
+            /// <param name='notificationId'>
+            /// The notification id
+            /// </param>
+            public static TestNotificationDetailsResponse GetTestNotificationsAtActionGroupResourceLevel(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, string notificationId)
+            {
+                return operations.GetTestNotificationsAtActionGroupResourceLevelAsync(resourceGroupName, actionGroupName, notificationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get the test notifications by the notification id
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='actionGroupName'>
+            /// The name of the action group.
+            /// </param>
+            /// <param name='notificationId'>
+            /// The notification id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TestNotificationDetailsResponse> GetTestNotificationsAtActionGroupResourceLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, string notificationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetTestNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(resourceGroupName, actionGroupName, notificationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -380,7 +552,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='notificationRequest'>
             /// The notification request body which includes the contact details
             /// </param>
-            public static TestNotificationResponse BeginPostTestNotifications(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest)
+            public static ActionGroupsPostTestNotificationsHeaders BeginPostTestNotifications(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest)
             {
                 return operations.BeginPostTestNotificationsAsync(notificationRequest).GetAwaiter().GetResult();
             }
@@ -397,11 +569,97 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TestNotificationResponse> BeginPostTestNotificationsAsync(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ActionGroupsPostTestNotificationsHeaders> BeginPostTestNotificationsAsync(this IActionGroupsOperations operations, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginPostTestNotificationsWithHttpMessagesAsync(notificationRequest, null, cancellationToken).ConfigureAwait(false))
                 {
-                    return _result.Body;
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            public static ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders BeginCreateNotificationsAtResourceGroupLevel(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest)
+            {
+                return operations.BeginCreateNotificationsAtResourceGroupLevelAsync(resourceGroupName, notificationRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ActionGroupsCreateNotificationsAtResourceGroupLevelHeaders> BeginCreateNotificationsAtResourceGroupLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateNotificationsAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, notificationRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='actionGroupName'>
+            /// The name of the action group.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            public static ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders BeginCreateNotificationsAtActionGroupResourceLevel(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest)
+            {
+                return operations.BeginCreateNotificationsAtActionGroupResourceLevelAsync(resourceGroupName, actionGroupName, notificationRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Send test notifications to a set of provided receivers
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='actionGroupName'>
+            /// The name of the action group.
+            /// </param>
+            /// <param name='notificationRequest'>
+            /// The notification request body which includes the contact details
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ActionGroupsCreateNotificationsAtActionGroupResourceLevelHeaders> BeginCreateNotificationsAtActionGroupResourceLevelAsync(this IActionGroupsOperations operations, string resourceGroupName, string actionGroupName, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateNotificationsAtActionGroupResourceLevelWithHttpMessagesAsync(resourceGroupName, actionGroupName, notificationRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
                 }
             }
 

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Microsoft.KeyVault'</param>
         /// <param name="requireInfrastructureEncryption">Enable Infrastructure
         /// Encryption (Double Encryption)</param>
-        public Encryption(IList<KeyVaultProperties> keyVaultProperties = default(IList<KeyVaultProperties>), KeySource? keySource = default(KeySource?), bool? requireInfrastructureEncryption = default(bool?))
+        public Encryption(IList<KeyVaultProperties> keyVaultProperties = default(IList<KeyVaultProperties>), string keySource = default(string), bool? requireInfrastructureEncryption = default(bool?))
         {
             KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Encryption. Possible values include: 'Microsoft.KeyVault'
         /// </summary>
         [JsonProperty(PropertyName = "keySource")]
-        public KeySource? KeySource { get; set; }
+        public string KeySource { get; set; }
 
         /// <summary>
         /// Gets or sets enable Infrastructure Encryption (Double Encryption)

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -16,20 +17,17 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="relationType"> The type related to the target. </param>
         /// <param name="ref"> The JSON pointer indicating the linked object. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ref"/> is null. </exception>
-        internal TargetRelation(TargetRelationType relationType, string @ref)
+        public TargetRelation(TargetRelationType relationType, string @ref)
         {
-            if (@ref == null)
-            {
-                throw new ArgumentNullException(nameof(@ref));
-            }
+            Argument.AssertNotNull(@ref, nameof(@ref));
 
             RelationType = relationType;
             Ref = @ref;
         }
 
         /// <summary> The type related to the target. </summary>
-        public TargetRelationType RelationType { get; }
+        public TargetRelationType RelationType { get; set; }
         /// <summary> The JSON pointer indicating the linked object. </summary>
-        public string Ref { get; }
+        public string Ref { get; set; }
     }
 }

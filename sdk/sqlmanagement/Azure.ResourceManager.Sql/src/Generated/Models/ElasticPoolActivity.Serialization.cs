@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ElasticPoolActivity DeserializeElasticPoolActivity(JsonElement element)
         {
-            Optional<string> location = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<int> errorCode = default;
             Optional<string> errorMessage = default;
@@ -57,32 +61,40 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<int> requestedDtuGuarantee = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -91,171 +103,157 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("errorCode"))
+                        if (property0.NameEquals("errorCode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errorCode = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("errorMessage"))
+                        if (property0.NameEquals("errorMessage"u8))
                         {
                             errorMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("errorSeverity"))
+                        if (property0.NameEquals("errorSeverity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             errorSeverity = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("operation"))
+                        if (property0.NameEquals("operation"u8))
                         {
                             operation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("operationId"))
+                        if (property0.NameEquals("operationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             operationId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("percentComplete"))
+                        if (property0.NameEquals("percentComplete"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             percentComplete = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("requestedDatabaseDtuMax"))
+                        if (property0.NameEquals("requestedDatabaseDtuMax"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDatabaseDtuMax = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("requestedDatabaseDtuMin"))
+                        if (property0.NameEquals("requestedDatabaseDtuMin"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDatabaseDtuMin = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("requestedDtu"))
+                        if (property0.NameEquals("requestedDtu"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDtu = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("requestedElasticPoolName"))
+                        if (property0.NameEquals("requestedElasticPoolName"u8))
                         {
                             requestedElasticPoolName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("requestedStorageLimitInGB"))
+                        if (property0.NameEquals("requestedStorageLimitInGB"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedStorageLimitInGB = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("elasticPoolName"))
+                        if (property0.NameEquals("elasticPoolName"u8))
                         {
                             elasticPoolName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverName"))
+                        if (property0.NameEquals("serverName"u8))
                         {
                             serverName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("state"))
+                        if (property0.NameEquals("state"u8))
                         {
                             state = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("requestedStorageLimitInMB"))
+                        if (property0.NameEquals("requestedStorageLimitInMB"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedStorageLimitInMB = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("requestedDatabaseDtuGuarantee"))
+                        if (property0.NameEquals("requestedDatabaseDtuGuarantee"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDatabaseDtuGuarantee = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("requestedDatabaseDtuCap"))
+                        if (property0.NameEquals("requestedDatabaseDtuCap"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDatabaseDtuCap = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("requestedDtuGuarantee"))
+                        if (property0.NameEquals("requestedDtuGuarantee"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestedDtuGuarantee = property0.Value.GetInt32();
@@ -265,7 +263,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new ElasticPoolActivity(id, name, type, systemData, location.Value, Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), Optional.ToNullable(requestedDatabaseDtuMax), Optional.ToNullable(requestedDatabaseDtuMin), Optional.ToNullable(requestedDtu), requestedElasticPoolName.Value, Optional.ToNullable(requestedStorageLimitInGB), elasticPoolName.Value, serverName.Value, Optional.ToNullable(startTime), state.Value, Optional.ToNullable(requestedStorageLimitInMB), Optional.ToNullable(requestedDatabaseDtuGuarantee), Optional.ToNullable(requestedDatabaseDtuCap), Optional.ToNullable(requestedDtuGuarantee));
+            return new ElasticPoolActivity(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(endTime), Optional.ToNullable(errorCode), errorMessage.Value, Optional.ToNullable(errorSeverity), operation.Value, Optional.ToNullable(operationId), Optional.ToNullable(percentComplete), Optional.ToNullable(requestedDatabaseDtuMax), Optional.ToNullable(requestedDatabaseDtuMin), Optional.ToNullable(requestedDtu), requestedElasticPoolName.Value, Optional.ToNullable(requestedStorageLimitInGB), elasticPoolName.Value, serverName.Value, Optional.ToNullable(startTime), state.Value, Optional.ToNullable(requestedStorageLimitInMB), Optional.ToNullable(requestedDatabaseDtuGuarantee), Optional.ToNullable(requestedDatabaseDtuCap), Optional.ToNullable(requestedDtuGuarantee));
         }
     }
 }

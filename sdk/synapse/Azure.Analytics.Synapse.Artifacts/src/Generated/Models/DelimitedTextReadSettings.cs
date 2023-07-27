@@ -22,7 +22,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="type"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="skipLineCount"> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="compressionProperties"> Compression settings. </param>
+        /// <param name="compressionProperties">
+        /// Compression settings.
+        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
+        /// </param>
         internal DelimitedTextReadSettings(string type, IDictionary<string, object> additionalProperties, object skipLineCount, CompressionReadSettings compressionProperties) : base(type, additionalProperties)
         {
             SkipLineCount = skipLineCount;
@@ -32,7 +36,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </summary>
         public object SkipLineCount { get; set; }
-        /// <summary> Compression settings. </summary>
+        /// <summary>
+        /// Compression settings.
+        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
+        /// </summary>
         public CompressionReadSettings CompressionProperties { get; set; }
     }
 }

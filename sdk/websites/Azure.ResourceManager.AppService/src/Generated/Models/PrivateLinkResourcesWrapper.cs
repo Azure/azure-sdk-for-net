@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -17,24 +18,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrivateLinkResourcesWrapper(IEnumerable<PrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IEnumerable<AppServicePrivateLinkResourceData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>
-        internal PrivateLinkResourcesWrapper(IReadOnlyList<PrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IReadOnlyList<AppServicePrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<PrivateLinkResource> Value { get; }
+        public IReadOnlyList<AppServicePrivateLinkResourceData> Value { get; }
     }
 }

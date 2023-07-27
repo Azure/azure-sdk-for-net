@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerDnsAliasListResult DeserializeServerDnsAliasListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerDnsAliasData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<SqlServerDnsAliasData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerDnsAliasData> array = new List<ServerDnsAliasData>();
+                    List<SqlServerDnsAliasData> array = new List<SqlServerDnsAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerDnsAliasData.DeserializeServerDnsAliasData(item));
+                        array.Add(SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -21,22 +23,22 @@ namespace Azure.ResourceManager.Network
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
+                writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -45,26 +47,26 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PeeringLocation))
             {
-                writer.WritePropertyName("peeringLocation");
+                writer.WritePropertyName("peeringLocation"u8);
                 writer.WriteStringValue(PeeringLocation);
             }
             if (Optional.IsDefined(BandwidthInGbps))
             {
-                writer.WritePropertyName("bandwidthInGbps");
+                writer.WritePropertyName("bandwidthInGbps"u8);
                 writer.WriteNumberValue(BandwidthInGbps.Value);
             }
             if (Optional.IsDefined(Encapsulation))
             {
-                writer.WritePropertyName("encapsulation");
+                writer.WritePropertyName("encapsulation"u8);
                 writer.WriteStringValue(Encapsulation.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Links))
             {
-                writer.WritePropertyName("links");
+                writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
@@ -72,18 +74,27 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(BillingType))
+            {
+                writer.WritePropertyName("billingType"u8);
+                writer.WriteStringValue(BillingType.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ExpressRoutePortData DeserializeExpressRoutePortData(JsonElement element)
         {
-            Optional<string> etag = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ETag> etag = default;
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> peeringLocation = default;
             Optional<int> bandwidthInGbps = default;
@@ -94,50 +105,65 @@ namespace Azure.ResourceManager.Network
             Optional<string> allocationDate = default;
             Optional<IList<ExpressRouteLinkData>> links = default;
             Optional<IReadOnlyList<WritableSubResource>> circuits = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<string> resourceGuid = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
+            Optional<ExpressRoutePortsBillingType> billingType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("identity"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -148,7 +174,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -157,61 +183,57 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("peeringLocation"))
+                        if (property0.NameEquals("peeringLocation"u8))
                         {
                             peeringLocation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("bandwidthInGbps"))
+                        if (property0.NameEquals("bandwidthInGbps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             bandwidthInGbps = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("provisionedBandwidthInGbps"))
+                        if (property0.NameEquals("provisionedBandwidthInGbps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisionedBandwidthInGbps = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("mtu"))
+                        if (property0.NameEquals("mtu"u8))
                         {
                             mtu = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("encapsulation"))
+                        if (property0.NameEquals("encapsulation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encapsulation = new ExpressRoutePortsEncapsulation(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("etherType"))
+                        if (property0.NameEquals("etherType"u8))
                         {
                             etherType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("allocationDate"))
+                        if (property0.NameEquals("allocationDate"u8))
                         {
                             allocationDate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("links"))
+                        if (property0.NameEquals("links"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ExpressRouteLinkData> array = new List<ExpressRouteLinkData>();
@@ -222,41 +244,52 @@ namespace Azure.ResourceManager.Network
                             links = array;
                             continue;
                         }
-                        if (property0.NameEquals("circuits"))
+                        if (property0.NameEquals("circuits"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             circuits = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"))
+                        if (property0.NameEquals("resourceGuid"u8))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("billingType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            billingType = new ExpressRoutePortsBillingType(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ExpressRoutePortData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new ExpressRoutePortData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), identity, peeringLocation.Value, Optional.ToNullable(bandwidthInGbps), Optional.ToNullable(provisionedBandwidthInGbps), mtu.Value, Optional.ToNullable(encapsulation), etherType.Value, allocationDate.Value, Optional.ToList(links), Optional.ToList(circuits), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid), Optional.ToNullable(billingType));
         }
     }
 }

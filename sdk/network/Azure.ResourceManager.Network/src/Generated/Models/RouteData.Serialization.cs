@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -16,41 +17,41 @@ namespace Azure.ResourceManager.Network
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(ResourceType))
             {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(ResourceType);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AddressPrefix))
             {
-                writer.WritePropertyName("addressPrefix");
+                writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
             if (Optional.IsDefined(NextHopType))
             {
-                writer.WritePropertyName("nextHopType");
+                writer.WritePropertyName("nextHopType"u8);
                 writer.WriteStringValue(NextHopType.Value.ToString());
             }
             if (Optional.IsDefined(NextHopIPAddress))
             {
-                writer.WritePropertyName("nextHopIpAddress");
+                writer.WritePropertyName("nextHopIpAddress"u8);
                 writer.WriteStringValue(NextHopIPAddress);
             }
             if (Optional.IsDefined(HasBgpOverride))
             {
-                writer.WritePropertyName("hasBgpOverride");
+                writer.WritePropertyName("hasBgpOverride"u8);
                 writer.WriteBooleanValue(HasBgpOverride.Value);
             }
             writer.WriteEndObject();
@@ -59,38 +60,54 @@ namespace Azure.ResourceManager.Network
 
         internal static RouteData DeserializeRouteData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> etag = default;
-            Optional<string> type = default;
-            Optional<string> id = default;
+            Optional<ResourceType> type = default;
             Optional<string> addressPrefix = default;
             Optional<RouteNextHopType> nextHopType = default;
-            Optional<string> nextHopIpAddress = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<string> nextHopIPAddress = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> hasBgpOverride = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("type"u8))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -99,41 +116,38 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("addressPrefix"))
+                        if (property0.NameEquals("addressPrefix"u8))
                         {
                             addressPrefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nextHopType"))
+                        if (property0.NameEquals("nextHopType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nextHopType = new RouteNextHopType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("nextHopIpAddress"))
+                        if (property0.NameEquals("nextHopIpAddress"u8))
                         {
-                            nextHopIpAddress = property0.Value.GetString();
+                            nextHopIPAddress = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hasBgpOverride"))
+                        if (property0.NameEquals("hasBgpOverride"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hasBgpOverride = property0.Value.GetBoolean();
@@ -143,7 +157,7 @@ namespace Azure.ResourceManager.Network
                     continue;
                 }
             }
-            return new RouteData(id.Value, name.Value, etag.Value, type.Value, addressPrefix.Value, Optional.ToNullable(nextHopType), nextHopIpAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hasBgpOverride));
+            return new RouteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, Optional.ToNullable(nextHopType), nextHopIPAddress.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hasBgpOverride));
         }
     }
 }

@@ -3,12 +3,13 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ClientTestFixture(TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
     public class OperationLiveTests : TextAnalyticsClientLiveTestBase
     {
         public OperationLiveTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -19,6 +20,7 @@ namespace Azure.AI.TextAnalytics.Tests
         #region Analyze
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationCanPollFromNewObject()
         {
             TextAnalyticsClient client = GetClient(out var nonInstrumentedClient);
@@ -48,6 +50,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task AnalyzeOperationConvenienceCanPollFromNewObject()
         {
             TextAnalyticsClient client = GetClient(out var nonInstrumentedClient);
@@ -75,6 +78,7 @@ namespace Azure.AI.TextAnalytics.Tests
         #region Healthcare
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task HealthcareOperationCanPollFromNewObject()
         {
             TextAnalyticsClient client = GetClient(out var nonInstrumentedClient);
@@ -99,6 +103,7 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task HealthcareOperationConvenienceCanPollFromNewObject()
         {
             TextAnalyticsClient client = GetClient(out var nonInstrumentedClient);

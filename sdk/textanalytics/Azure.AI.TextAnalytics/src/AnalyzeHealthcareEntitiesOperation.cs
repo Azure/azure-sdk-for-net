@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
+using Azure.AI.TextAnalytics.ServiceClients;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -16,11 +17,31 @@ namespace Azure.AI.TextAnalytics
     /// <summary> Pageable operation class for analyzing multiple healthcare documents using long running operation. </summary>
     public class AnalyzeHealthcareEntitiesOperation : PageableOperation<AnalyzeHealthcareEntitiesResultCollection>, IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>
     {
+        internal readonly IDictionary<string, int> _idToIndexMap;
+
+        private readonly bool? _showStats;
+        private readonly string _jobId;
+        private readonly ServiceClient _serviceClient;
+        private readonly ClientDiagnostics _diagnostics;
+        private readonly OperationInternal<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> _operationInternal;
+
+        private TextAnalyticsOperationStatus _status;
+        private DateTimeOffset? _expiresOn;
+        private DateTimeOffset _lastModified;
+        private DateTimeOffset _createdOn;
+        private string _displayName;
+        private Page<AnalyzeHealthcareEntitiesResultCollection> _firstPage;
+
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for the status
         /// of the long-running operation.
         /// </summary>
         public override string Id { get; }
+
+        /// <summary>
+        /// Display Name of the operation.
+        /// </summary>
+        public virtual string DisplayName => _displayName;
 
         /// <summary>
         /// Time when the operation was created on.
@@ -62,63 +83,12 @@ namespace Azure.AI.TextAnalytics
         public override bool HasValue => _operationInternal.HasValue;
 
         /// <summary>
-        /// Provides communication with the Text Analytics Azure Cognitive Service through its REST API.
-        /// </summary>
-        private readonly TextAnalyticsRestClient _serviceClient;
-
-        private readonly OperationInternal<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>> _operationInternal;
-
-        /// <summary>
-        /// Provides tools for exception creation in case of failure.
-        /// </summary>
-        private readonly ClientDiagnostics _diagnostics;
-
-        /// <summary>
-        /// Represents the desire of the user to request statistics.
-        /// This is used in every GET request.
-        /// </summary>
-        private readonly bool? _showStats;
-
-        /// <summary>
-        /// Represents the job Id the service assigned to the operation.
-        /// </summary>
-        private readonly string _jobId;
-
-        /// <summary>
-        /// Represents the status of the long-running operation.
-        /// </summary>
-        private TextAnalyticsOperationStatus _status;
-
-        /// <summary>
-        /// Provides the results for the first page.
-        /// </summary>
-        private Page<AnalyzeHealthcareEntitiesResultCollection> _firstPage;
-
-        /// <summary>
-        /// Time when the operation will expire.
-        /// </summary>
-        private DateTimeOffset? _expiresOn;
-
-        /// <summary>
-        /// Time when the operation was last modified on.
-        /// </summary>
-        private DateTimeOffset _lastModified;
-
-        /// <summary>
-        /// Time when the operation was created on.
-        /// </summary>
-        private DateTimeOffset _createdOn;
-
-        /// <summary>
-        /// Provides the input to be part of AnalyzeHealthcareEntitiesOperation class
-        /// </summary>
-        internal readonly IDictionary<string, int> _idToIndexMap;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesOperation"/> class.
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
+        /// <exception cref="ArgumentException"><paramref name="operationId"/> is an empty string or does not represent a valid continuation token from the <see cref="Id"/> property returned on the original operation.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="operationId"/> or <paramref name="client"/> is null.</exception>
         public AnalyzeHealthcareEntitiesOperation(string operationId, TextAnalyticsClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -138,9 +108,9 @@ namespace Azure.AI.TextAnalytics
             }
 
             Id = operationId;
-            _serviceClient = client._serviceRestClient;
-            _diagnostics = client._clientDiagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _serviceClient = client.ServiceClient;
+            _diagnostics = _serviceClient.Diagnostics;
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
         }
 
         /// <summary>
@@ -151,17 +121,15 @@ namespace Azure.AI.TextAnalytics
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="idToIndexMap"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeHealthcareEntitiesOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
+        internal AnalyzeHealthcareEntitiesOperation(ServiceClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
             _idToIndexMap = idToIndexMap;
             _showStats = showStats;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
 
-            // TODO: Add validation here
-            // https://github.com/Azure/azure-sdk-for-net/issues/11505
-            _jobId = operationLocation.Split('/').Last();
+            _jobId = operationLocation.Split('/').Last().Split('?')[0];
 
             Id = OperationContinuationToken.Serialize(_jobId, idToIndexMap, showStats);
         }
@@ -237,43 +205,16 @@ namespace Azure.AI.TextAnalytics
         /// Cancels a pending or running <see cref="AnalyzeHealthcareEntitiesOperation"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual void Cancel(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Cancel)}");
-            scope.Start();
-            try
-            {
-                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = _serviceClient.CancelHealthJob(new Guid(_jobId), cancellationToken);
-                _operationInternal.RawResponse = response.GetRawResponse();
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual void Cancel(CancellationToken cancellationToken = default) =>
+            _serviceClient.CancelHealthcareJob(_jobId, cancellationToken);
 
         /// <summary>
         /// Cancels a pending or running <see cref="AnalyzeHealthcareEntitiesOperation"/>.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Task"/> to track the service request.</returns>
-        public virtual async Task CancelAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(AnalyzeHealthcareEntitiesOperation)}.{nameof(Cancel)}");
-            scope.Start();
-
-            try
-            {
-                ResponseWithHeaders<TextAnalyticsCancelHealthJobHeaders> response = await _serviceClient.CancelHealthJobAsync(new Guid(_jobId), cancellationToken).ConfigureAwait(false);
-                _operationInternal.RawResponse = response.GetRawResponse();
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
+        public virtual async Task CancelAsync(CancellationToken cancellationToken = default) =>
+            await _serviceClient.CancelHealthcareJobAsync(_jobId, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Gets the final result of the long-running operation asynchronously.
@@ -301,18 +242,8 @@ namespace Azure.AI.TextAnalytics
 
             Page<AnalyzeHealthcareEntitiesResultCollection> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                //diagnostics scope?
-                try
-                {
-                    Response<HealthcareJobState> jobState = _serviceClient.HealthStatusNextPage(nextLink, cancellationToken);
-
-                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
-                    return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                var response = _serviceClient.HealthStatusNextPage(nextLink, pageSizeHint, _idToIndexMap, cancellationToken);
+                return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { response.Value.Result }, response.Value.NextLink, response.GetRawResponse());
             }
 
             return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
@@ -322,18 +253,8 @@ namespace Azure.AI.TextAnalytics
         {
             async Task<Page<AnalyzeHealthcareEntitiesResultCollection>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                //diagnostics scope?
-                try
-                {
-                    Response<HealthcareJobState> jobState = await _serviceClient.HealthStatusNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-
-                    AnalyzeHealthcareEntitiesResultCollection result = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(jobState.Value.Results, _idToIndexMap);
-                    return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                var response = await _serviceClient.HealthStatusNextPageAsync(nextLink, pageSizeHint, _idToIndexMap, cancellationToken).ConfigureAwait(false);
+                return Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { response.Value.Result }, response.Value.NextLink, response.GetRawResponse());
             }
 
             return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
@@ -341,41 +262,37 @@ namespace Azure.AI.TextAnalytics
 
         async ValueTask<OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>> IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            Response<HealthcareJobState> response = async
-                ? await _serviceClient.HealthStatusAsync(new Guid(_jobId), null, null, _showStats, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.HealthStatus(new Guid(_jobId), null, null, _showStats, cancellationToken);
+            Response<HealthcareJobStatusResult> response = async
+                ? await _serviceClient.HealthStatusAsync(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.HealthStatus(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken);
 
-            // Add lock to avoid race condition?
+            _displayName = response.Value.DisplayName;
+            _createdOn = response.Value.CreatedOn;
+            _expiresOn = response.Value.ExpiresOn;
+            _lastModified = response.Value.LastModifiedOn;
             _status = response.Value.Status;
-            _createdOn = response.Value.CreatedDateTime;
-            _expiresOn = response.Value.ExpirationDateTime;
-            _lastModified = response.Value.LastUpdateDateTime;
 
             Response rawResponse = response.GetRawResponse();
 
             if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
             {
                 string nextLink = response.Value.NextLink;
-                AnalyzeHealthcareEntitiesResultCollection value = Transforms.ConvertToAnalyzeHealthcareEntitiesResultCollection(response.Value.Results, _idToIndexMap);
-                _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { value }, nextLink, rawResponse);
+                _firstPage = Page.FromValues(new List<AnalyzeHealthcareEntitiesResultCollection>() { response.Value.Result }, nextLink, rawResponse);
 
                 return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
             }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
-            {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors)
-                    .ConfigureAwait(false);
 
-                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, requestFailedException);
-            }
-            else if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+            if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
             {
-                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse,
-                    new RequestFailedException("The operation was canceled so no value is available."));
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Pending(rawResponse);
             }
 
-            return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Pending(rawResponse);
+            if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+            {
+                return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
+            }
+
+            return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
     }
 }

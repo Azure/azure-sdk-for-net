@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("relativePath");
+            writer.WritePropertyName("relativePath"u8);
             writer.WriteStringValue(RelativePath);
-            writer.WritePropertyName("action");
+            writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToSerialString());
-            writer.WritePropertyName("countryCodes");
+            writer.WritePropertyName("countryCodes"u8);
             writer.WriteStartArray();
             foreach (var item in CountryCodes)
             {
@@ -32,22 +32,26 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static GeoFilter DeserializeGeoFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string relativePath = default;
-            GeoFilterActions action = default;
+            GeoFilterAction action = default;
             IList<string> countryCodes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("relativePath"))
+                if (property.NameEquals("relativePath"u8))
                 {
                     relativePath = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
-                    action = property.Value.GetString().ToGeoFilterActions();
+                    action = property.Value.GetString().ToGeoFilterAction();
                     continue;
                 }
-                if (property.NameEquals("countryCodes"))
+                if (property.NameEquals("countryCodes"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())

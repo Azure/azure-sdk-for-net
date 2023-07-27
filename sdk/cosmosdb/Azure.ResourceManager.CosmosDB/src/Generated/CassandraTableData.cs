@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the CassandraTable data model. </summary>
+    /// <summary>
+    /// A class representing the CassandraTable data model.
+    /// An Azure Cosmos DB Cassandra table.
+    /// </summary>
     public partial class CassandraTableData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CassandraTableData. </summary>
@@ -30,15 +33,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CassandraTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraTablePropertiesResource resource, CassandraTablePropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> Identity for the resource. </param>
+        internal CassandraTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraTableResourceInfo resource, CassandraTablePropertiesConfig options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
+            Identity = identity;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public CassandraTablePropertiesResource Resource { get; set; }
+        public ExtendedCassandraTableResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public CassandraTablePropertiesOptions Options { get; set; }
+        public CassandraTablePropertiesConfig Options { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

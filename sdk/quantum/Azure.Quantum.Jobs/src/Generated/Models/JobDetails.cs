@@ -22,22 +22,10 @@ namespace Azure.Quantum.Jobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/>, <paramref name="inputDataFormat"/>, <paramref name="providerId"/> or <paramref name="target"/> is null. </exception>
         public JobDetails(string containerUri, string inputDataFormat, string providerId, string target)
         {
-            if (containerUri == null)
-            {
-                throw new ArgumentNullException(nameof(containerUri));
-            }
-            if (inputDataFormat == null)
-            {
-                throw new ArgumentNullException(nameof(inputDataFormat));
-            }
-            if (providerId == null)
-            {
-                throw new ArgumentNullException(nameof(providerId));
-            }
-            if (target == null)
-            {
-                throw new ArgumentNullException(nameof(target));
-            }
+            Argument.AssertNotNull(containerUri, nameof(containerUri));
+            Argument.AssertNotNull(inputDataFormat, nameof(inputDataFormat));
+            Argument.AssertNotNull(providerId, nameof(providerId));
+            Argument.AssertNotNull(target, nameof(target));
 
             ContainerUri = containerUri;
             InputDataFormat = inputDataFormat;
@@ -49,7 +37,7 @@ namespace Azure.Quantum.Jobs.Models
 
         /// <summary> Initializes a new instance of JobDetails. </summary>
         /// <param name="id"> The job id. </param>
-        /// <param name="name"> The job name. Is not required for the name to be unique and it&apos;s only used for display purposes. </param>
+        /// <param name="name"> The job name. Is not required for the name to be unique and it's only used for display purposes. </param>
         /// <param name="containerUri"> The blob container SAS uri, the container is used to host job data. </param>
         /// <param name="inputDataUri"> The input blob SAS uri, if specified, it will override the default input blob in the container. </param>
         /// <param name="inputDataFormat"> The format of the input data. </param>
@@ -65,7 +53,7 @@ namespace Azure.Quantum.Jobs.Models
         /// <param name="endExecutionTime"> The time when the job finished execution. </param>
         /// <param name="cancellationTime"> The time when a job was successfully cancelled. </param>
         /// <param name="costEstimate"> The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </param>
-        /// <param name="errorData"> The error data for the job. This is expected only when Status &apos;Failed&apos;. </param>
+        /// <param name="errorData"> The error data for the job. This is expected only when Status 'Failed'. </param>
         /// <param name="tags"> List of user-supplied tags associated with the job. </param>
         internal JobDetails(string id, string name, string containerUri, string inputDataUri, string inputDataFormat, object inputParams, string providerId, string target, IDictionary<string, string> metadata, string outputDataUri, string outputDataFormat, JobStatus? status, DateTimeOffset? creationTime, DateTimeOffset? beginExecutionTime, DateTimeOffset? endExecutionTime, DateTimeOffset? cancellationTime, CostEstimate costEstimate, ErrorData errorData, IList<string> tags)
         {
@@ -92,7 +80,7 @@ namespace Azure.Quantum.Jobs.Models
 
         /// <summary> The job id. </summary>
         public string Id { get; set; }
-        /// <summary> The job name. Is not required for the name to be unique and it&apos;s only used for display purposes. </summary>
+        /// <summary> The job name. Is not required for the name to be unique and it's only used for display purposes. </summary>
         public string Name { get; set; }
         /// <summary> The blob container SAS uri, the container is used to host job data. </summary>
         public string ContainerUri { get; set; }
@@ -124,7 +112,7 @@ namespace Azure.Quantum.Jobs.Models
         public DateTimeOffset? CancellationTime { get; }
         /// <summary> The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates. </summary>
         public CostEstimate CostEstimate { get; }
-        /// <summary> The error data for the job. This is expected only when Status &apos;Failed&apos;. </summary>
+        /// <summary> The error data for the job. This is expected only when Status 'Failed'. </summary>
         public ErrorData ErrorData { get; }
         /// <summary> List of user-supplied tags associated with the job. </summary>
         public IList<string> Tags { get; set; }

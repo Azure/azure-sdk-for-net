@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static RuleListResult DeserializeRuleListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AfdRuleData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<FrontDoorRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AfdRuleData> array = new List<AfdRuleData>();
+                    List<FrontDoorRuleData> array = new List<FrontDoorRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AfdRuleData.DeserializeAfdRuleData(item));
+                        array.Add(FrontDoorRuleData.DeserializeFrontDoorRuleData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

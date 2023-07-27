@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="storageLimit"> Storage limit. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal InstancePoolVcoresCapability(string name, int? value, MaxSizeCapability storageLimit, CapabilityStatus? status, string reason)
+        internal InstancePoolVcoresCapability(string name, int? value, MaxSizeCapability storageLimit, SqlCapabilityStatus? status, string reason)
         {
             Name = name;
             Value = value;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Storage limit. </summary>
         public MaxSizeCapability StorageLimit { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

@@ -20,8 +20,8 @@ namespace Azure.Core.Tests
                 new MockResponse(500),
                 new MockResponse(1));
 
-            var pipeline = new HttpPipeline(mockTransport, new[] {
-                new RetryPolicy(RetryMode.Exponential, TimeSpan.Zero, TimeSpan.Zero, 5)
+            var pipeline = new HttpPipeline(mockTransport, new HttpPipelinePolicy[] {
+                new RetryPolicy(5)
             }, responseClassifier: new CustomResponseClassifier());
 
             Request request = pipeline.CreateRequest();

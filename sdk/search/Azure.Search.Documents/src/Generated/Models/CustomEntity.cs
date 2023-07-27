@@ -15,28 +15,25 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class CustomEntity
     {
         /// <summary> Initializes a new instance of CustomEntity. </summary>
-        /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the &quot;normalized&quot; form of the text being found. </param>
+        /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CustomEntity(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Aliases = new ChangeTrackingList<CustomEntityAlias>();
         }
 
         /// <summary> Initializes a new instance of CustomEntity. </summary>
-        /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the &quot;normalized&quot; form of the text being found. </param>
+        /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </param>
         /// <param name="description"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
         /// <param name="type"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
         /// <param name="subtype"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
         /// <param name="id"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
-        /// <param name="caseSensitive"> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to character casing. Sample case insensitive matches of &quot;Microsoft&quot; could be: microsoft, microSoft, MICROSOFT. </param>
+        /// <param name="caseSensitive"> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to character casing. Sample case insensitive matches of "Microsoft" could be: microsoft, microSoft, MICROSOFT. </param>
         /// <param name="accentSensitive"> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to accent. </param>
-        /// <param name="fuzzyEditDistance"> Defaults to 0. Maximum value of 5. Denotes the acceptable number of divergent characters that would still constitute a match with the entity name. The smallest possible fuzziness for any given match is returned. For instance, if the edit distance is set to 3, &quot;Windows10&quot; would still match &quot;Windows&quot;, &quot;Windows10&quot; and &quot;Windows 7&quot;. When case sensitivity is set to false, case differences do NOT count towards fuzziness tolerance, but otherwise do. </param>
+        /// <param name="fuzzyEditDistance"> Defaults to 0. Maximum value of 5. Denotes the acceptable number of divergent characters that would still constitute a match with the entity name. The smallest possible fuzziness for any given match is returned. For instance, if the edit distance is set to 3, "Windows10" would still match "Windows", "Windows10" and "Windows 7". When case sensitivity is set to false, case differences do NOT count towards fuzziness tolerance, but otherwise do. </param>
         /// <param name="defaultCaseSensitive"> Changes the default case sensitivity value for this entity. It be used to change the default value of all aliases caseSensitive values. </param>
         /// <param name="defaultAccentSensitive"> Changes the default accent sensitivity value for this entity. It be used to change the default value of all aliases accentSensitive values. </param>
         /// <param name="defaultFuzzyEditDistance"> Changes the default fuzzy edit distance value for this entity. It can be used to change the default value of all aliases fuzzyEditDistance values. </param>
@@ -57,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Aliases = aliases;
         }
 
-        /// <summary> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the &quot;normalized&quot; form of the text being found. </summary>
+        /// <summary> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </summary>
         public string Name { get; set; }
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
         public string Description { get; set; }
@@ -67,11 +64,11 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Subtype { get; set; }
         /// <summary> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </summary>
         public string Id { get; set; }
-        /// <summary> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to character casing. Sample case insensitive matches of &quot;Microsoft&quot; could be: microsoft, microSoft, MICROSOFT. </summary>
+        /// <summary> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to character casing. Sample case insensitive matches of "Microsoft" could be: microsoft, microSoft, MICROSOFT. </summary>
         public bool? CaseSensitive { get; set; }
         /// <summary> Defaults to false. Boolean value denoting whether comparisons with the entity name should be sensitive to accent. </summary>
         public bool? AccentSensitive { get; set; }
-        /// <summary> Defaults to 0. Maximum value of 5. Denotes the acceptable number of divergent characters that would still constitute a match with the entity name. The smallest possible fuzziness for any given match is returned. For instance, if the edit distance is set to 3, &quot;Windows10&quot; would still match &quot;Windows&quot;, &quot;Windows10&quot; and &quot;Windows 7&quot;. When case sensitivity is set to false, case differences do NOT count towards fuzziness tolerance, but otherwise do. </summary>
+        /// <summary> Defaults to 0. Maximum value of 5. Denotes the acceptable number of divergent characters that would still constitute a match with the entity name. The smallest possible fuzziness for any given match is returned. For instance, if the edit distance is set to 3, "Windows10" would still match "Windows", "Windows10" and "Windows 7". When case sensitivity is set to false, case differences do NOT count towards fuzziness tolerance, but otherwise do. </summary>
         public int? FuzzyEditDistance { get; set; }
         /// <summary> Changes the default case sensitivity value for this entity. It be used to change the default value of all aliases caseSensitive values. </summary>
         public bool? DefaultCaseSensitive { get; set; }

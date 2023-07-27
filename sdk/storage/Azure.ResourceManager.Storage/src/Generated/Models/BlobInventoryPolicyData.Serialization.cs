@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Storage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(Policy))
+            if (Optional.IsDefined(PolicySchema))
             {
-                writer.WritePropertyName("policy");
-                writer.WriteObjectValue(Policy);
+                writer.WritePropertyName("policy"u8);
+                writer.WriteObjectValue(PolicySchema);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -31,35 +31,43 @@ namespace Azure.ResourceManager.Storage
 
         internal static BlobInventoryPolicyData DeserializeBlobInventoryPolicyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<BlobInventoryPolicySchema> policy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,21 +76,19 @@ namespace Azure.ResourceManager.Storage
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("policy"))
+                        if (property0.NameEquals("policy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             policy = BlobInventoryPolicySchema.DeserializeBlobInventoryPolicySchema(property0.Value);
@@ -92,7 +98,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new BlobInventoryPolicyData(id, name, type, systemData, Optional.ToNullable(lastModifiedTime), policy.Value);
+            return new BlobInventoryPolicyData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), policy.Value);
         }
     }
 }

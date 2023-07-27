@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstancePrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstancePrivateEndpointConnection data model.
+    /// A private endpoint connection
+    /// </summary>
     public partial class ManagedInstancePrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstancePrivateEndpointConnectionData. </summary>
@@ -26,12 +29,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
+        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="provisioningState"> State of the Private Endpoint Connection. </param>
-        internal ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ManagedInstancePrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState, string provisioningState) : base(id, name, resourceType, systemData)
+        internal ManagedInstancePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WritableSubResource privateEndpoint, ManagedInstancePrivateLinkServiceConnectionStateProperty connectionState, string provisioningState) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            ConnectionState = connectionState;
             ProvisioningState = provisioningState;
         }
 
@@ -50,7 +53,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Connection State of the Private Endpoint Connection. </summary>
-        public ManagedInstancePrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get; set; }
+        public ManagedInstancePrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
         /// <summary> State of the Private Endpoint Connection. </summary>
         public string ProvisioningState { get; }
     }

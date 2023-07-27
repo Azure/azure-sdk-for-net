@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(Address))
             {
-                writer.WritePropertyName("address");
+                writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address);
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             writer.WriteEndObject();
@@ -35,26 +35,33 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorDestination DeserializeConnectionMonitorDestination(JsonElement element)
         {
-            Optional<string> resourceId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<string> address = default;
             Optional<int> port = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("address"))
+                if (property.NameEquals("address"u8))
                 {
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();

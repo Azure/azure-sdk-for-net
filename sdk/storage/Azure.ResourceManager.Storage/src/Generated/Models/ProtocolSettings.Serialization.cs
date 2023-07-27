@@ -15,24 +15,27 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Smb))
+            if (Optional.IsDefined(SmbSetting))
             {
-                writer.WritePropertyName("smb");
-                writer.WriteObjectValue(Smb);
+                writer.WritePropertyName("smb"u8);
+                writer.WriteObjectValue(SmbSetting);
             }
             writer.WriteEndObject();
         }
 
         internal static ProtocolSettings DeserializeProtocolSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SmbSetting> smb = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("smb"))
+                if (property.NameEquals("smb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     smb = SmbSetting.DeserializeSmbSetting(property.Value);

@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
-                writer.WritePropertyName("code");
+                writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
             if (Optional.IsDefined(Level))
             {
-                writer.WritePropertyName("level");
+                writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
             if (Optional.IsDefined(DisplayStatus))
             {
-                writer.WritePropertyName("displayStatus");
+                writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
             if (Optional.IsDefined(Message))
             {
-                writer.WritePropertyName("message");
+                writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
             if (Optional.IsDefined(Time))
             {
-                writer.WritePropertyName("time");
+                writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
             writer.WriteEndObject();
@@ -46,43 +46,45 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
-            Optional<StatusLevelTypes> level = default;
+            Optional<ComputeStatusLevelType> level = default;
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = property.Value.GetString().ToStatusLevelTypes();
+                    level = property.Value.GetString().ToComputeStatusLevelType();
                     continue;
                 }
-                if (property.NameEquals("displayStatus"))
+                if (property.NameEquals("displayStatus"u8))
                 {
                     displayStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("time"))
+                if (property.NameEquals("time"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     time = property.Value.GetDateTimeOffset("O");

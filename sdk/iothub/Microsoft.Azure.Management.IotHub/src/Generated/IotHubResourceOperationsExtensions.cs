@@ -76,9 +76,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// Create or update the metadata of an Iot hub. The usual pattern to modify a
             /// property is to retrieve the IoT hub metadata and security metadata, and
             /// then combine them with the modified values in a new body to update the IoT
-            /// hub. If certain properties are missing in the JSON, updating IoT Hub may
-            /// cause these values to fallback to default, which may lead to unexpected
-            /// behavior.
+            /// hub.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -108,9 +106,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// Create or update the metadata of an Iot hub. The usual pattern to modify a
             /// property is to retrieve the IoT hub metadata and security metadata, and
             /// then combine them with the modified values in a new body to update the IoT
-            /// hub. If certain properties are missing in the JSON, updating IoT Hub may
-            /// cause these values to fallback to default, which may lead to unexpected
-            /// behavior.
+            /// hub.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1213,9 +1209,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// Create or update the metadata of an Iot hub. The usual pattern to modify a
             /// property is to retrieve the IoT hub metadata and security metadata, and
             /// then combine them with the modified values in a new body to update the IoT
-            /// hub. If certain properties are missing in the JSON, updating IoT Hub may
-            /// cause these values to fallback to default, which may lead to unexpected
-            /// behavior.
+            /// hub.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1245,9 +1239,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// Create or update the metadata of an Iot hub. The usual pattern to modify a
             /// property is to retrieve the IoT hub metadata and security metadata, and
             /// then combine them with the modified values in a new body to update the IoT
-            /// hub. If certain properties are missing in the JSON, updating IoT Hub may
-            /// cause these values to fallback to default, which may lead to unexpected
-            /// behavior.
+            /// hub.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

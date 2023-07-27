@@ -432,10 +432,6 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 CustomDomain.Validate();
             }
-            if (Encryption != null)
-            {
-                Encryption.Validate();
-            }
             if (NetworkRuleSet != null)
             {
                 NetworkRuleSet.Validate();

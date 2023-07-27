@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskEncryptionKey))
             {
-                writer.WritePropertyName("diskEncryptionKey");
+                writer.WritePropertyName("diskEncryptionKey"u8);
                 writer.WriteObjectValue(DiskEncryptionKey);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
-                writer.WritePropertyName("keyEncryptionKey");
+                writer.WritePropertyName("keyEncryptionKey"u8);
                 writer.WriteObjectValue(KeyEncryptionKey);
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static EncryptionSettingsElement DeserializeEncryptionSettingsElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyVaultAndSecretReference> diskEncryptionKey = default;
             Optional<KeyVaultAndKeyReference> keyEncryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskEncryptionKey"))
+                if (property.NameEquals("diskEncryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskEncryptionKey = KeyVaultAndSecretReference.DeserializeKeyVaultAndSecretReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("keyEncryptionKey"))
+                if (property.NameEquals("keyEncryptionKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyEncryptionKey = KeyVaultAndKeyReference.DeserializeKeyVaultAndKeyReference(property.Value);

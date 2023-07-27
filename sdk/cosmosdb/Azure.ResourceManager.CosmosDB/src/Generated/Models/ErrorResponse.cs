@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Error Response. </summary>
-    internal partial class ErrorResponse
+    public partial class ErrorResponse
     {
         /// <summary> Initializes a new instance of ErrorResponse. </summary>
         internal ErrorResponse()

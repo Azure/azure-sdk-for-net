@@ -41,13 +41,13 @@ namespace Azure.Messaging.ServiceBus.Administration
             _port = GetPort(_fullyQualifiedNamespace);
         }
 
-        internal async Task ThrowIfRequestFailedAsync(Request request, Response response)
+        internal void ThrowIfRequestFailed(Request request, Response response)
         {
             if ((response.Status >= 200) && (response.Status < 400))
             {
                 return;
             }
-            RequestFailedException ex = await _diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+            RequestFailedException ex = new RequestFailedException(response);
             if (response.Status == (int)HttpStatusCode.Unauthorized)
             {
                 throw new UnauthorizedAccessException(
@@ -222,7 +222,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 var token = await GetTokenAsync(forwardTo).ConfigureAwait(false);
                 request.Headers.Add(
                     AdministrationClientConstants.ServiceBusSupplementartyAuthorizationHeaderName,
-                    credential.IsSharedAccessCredential == true ? token : $"Bearer { token }");
+                    credential.IsSharedAccessCredential ? token : $"Bearer { token }");
             }
 
             if (!string.IsNullOrWhiteSpace(fwdDeadLetterTo))
@@ -230,7 +230,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 var token = await GetTokenAsync(fwdDeadLetterTo).ConfigureAwait(false);
                 request.Headers.Add(
                     AdministrationClientConstants.ServiceBusDlqSupplementaryAuthorizationHeaderName,
-                    credential.IsSharedAccessCredential == true ? token : $"Bearer { token }");
+                    credential.IsSharedAccessCredential ? token : $"Bearer { token }");
             }
 
             Response response = await SendHttpRequestAsync(request, cancellationToken).ConfigureAwait(false);
@@ -274,7 +274,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 
             Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
-            await ThrowIfRequestFailedAsync(request, response).ConfigureAwait(false);
+            ThrowIfRequestFailed(request, response);
             return response;
         }
 

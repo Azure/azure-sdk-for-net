@@ -17,32 +17,37 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Publisher))
             {
-                writer.WritePropertyName("publisher");
+                writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
             if (Optional.IsDefined(Offer))
             {
-                writer.WritePropertyName("offer");
+                writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
             if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("version");
+                writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (Optional.IsDefined(SharedGalleryImageId))
+            if (Optional.IsDefined(SharedGalleryImageUniqueId))
             {
-                writer.WritePropertyName("sharedGalleryImageId");
-                writer.WriteStringValue(SharedGalleryImageId);
+                writer.WritePropertyName("sharedGalleryImageId"u8);
+                writer.WriteStringValue(SharedGalleryImageUniqueId);
+            }
+            if (Optional.IsDefined(CommunityGalleryImageId))
+            {
+                writer.WritePropertyName("communityGalleryImageId"u8);
+                writer.WriteStringValue(CommunityGalleryImageId);
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WriteEndObject();
@@ -50,52 +55,66 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageReference DeserializeImageReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publisher = default;
             Optional<string> offer = default;
             Optional<string> sku = default;
             Optional<string> version = default;
             Optional<string> exactVersion = default;
             Optional<string> sharedGalleryImageId = default;
-            Optional<string> id = default;
+            Optional<string> communityGalleryImageId = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("publisher"))
+                if (property.NameEquals("publisher"u8))
                 {
                     publisher = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offer"))
+                if (property.NameEquals("offer"u8))
                 {
                     offer = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     sku = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("exactVersion"))
+                if (property.NameEquals("exactVersion"u8))
                 {
                     exactVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sharedGalleryImageId"))
+                if (property.NameEquals("sharedGalleryImageId"u8))
                 {
                     sharedGalleryImageId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("communityGalleryImageId"u8))
                 {
-                    id = property.Value.GetString();
+                    communityGalleryImageId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new ImageReference(id.Value, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value, sharedGalleryImageId.Value);
+            return new ImageReference(id.Value, publisher.Value, offer.Value, sku.Value, version.Value, exactVersion.Value, sharedGalleryImageId.Value, communityGalleryImageId.Value);
         }
     }
 }

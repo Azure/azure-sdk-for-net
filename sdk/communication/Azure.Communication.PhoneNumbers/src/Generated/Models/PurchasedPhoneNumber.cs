@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -15,8 +16,8 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of PurchasedPhoneNumber. </summary>
         /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
         /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
-        /// <param name="countryCode"> The ISO 3166-2 code of the phone number&apos;s country, e.g. US. </param>
-        /// <param name="phoneNumberType"> The phone number&apos;s type, e.g. Geographic, TollFree. </param>
+        /// <param name="countryCode"> The ISO 3166-2 code of the phone number's country, e.g. US. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, tollFree. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
         /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
@@ -24,26 +25,11 @@ namespace Azure.Communication.PhoneNumbers
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="phoneNumber"/>, <paramref name="countryCode"/>, <paramref name="capabilities"/> or <paramref name="cost"/> is null. </exception>
         internal PurchasedPhoneNumber(string id, string phoneNumber, string countryCode, PhoneNumberType phoneNumberType, PhoneNumberCapabilities capabilities, PhoneNumberAssignmentType assignmentType, DateTimeOffset purchaseDate, PhoneNumberCost cost)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (phoneNumber == null)
-            {
-                throw new ArgumentNullException(nameof(phoneNumber));
-            }
-            if (countryCode == null)
-            {
-                throw new ArgumentNullException(nameof(countryCode));
-            }
-            if (capabilities == null)
-            {
-                throw new ArgumentNullException(nameof(capabilities));
-            }
-            if (cost == null)
-            {
-                throw new ArgumentNullException(nameof(cost));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(phoneNumber, nameof(phoneNumber));
+            Argument.AssertNotNull(countryCode, nameof(countryCode));
+            Argument.AssertNotNull(capabilities, nameof(capabilities));
+            Argument.AssertNotNull(cost, nameof(cost));
 
             Id = id;
             PhoneNumber = phoneNumber;
@@ -59,9 +45,9 @@ namespace Azure.Communication.PhoneNumbers
         public string Id { get; }
         /// <summary> String of the E.164 format of the phone number, e.g. +11234567890. </summary>
         public string PhoneNumber { get; }
-        /// <summary> The ISO 3166-2 code of the phone number&apos;s country, e.g. US. </summary>
+        /// <summary> The ISO 3166-2 code of the phone number's country, e.g. US. </summary>
         public string CountryCode { get; }
-        /// <summary> The phone number&apos;s type, e.g. Geographic, TollFree. </summary>
+        /// <summary> The phone number's type, e.g. geographic, tollFree. </summary>
         public PhoneNumberType PhoneNumberType { get; }
         /// <summary> Capabilities of a phone number. </summary>
         public PhoneNumberCapabilities Capabilities { get; }

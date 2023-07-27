@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Asn))
             {
-                writer.WritePropertyName("asn");
+                writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
             if (Optional.IsDefined(BgpPeeringAddress))
             {
-                writer.WritePropertyName("bgpPeeringAddress");
+                writer.WritePropertyName("bgpPeeringAddress"u8);
                 writer.WriteStringValue(BgpPeeringAddress);
             }
             if (Optional.IsDefined(PeerWeight))
             {
-                writer.WritePropertyName("peerWeight");
+                writer.WritePropertyName("peerWeight"u8);
                 writer.WriteNumberValue(PeerWeight.Value);
             }
             if (Optional.IsCollectionDefined(BgpPeeringAddresses))
             {
-                writer.WritePropertyName("bgpPeeringAddresses");
+                writer.WritePropertyName("bgpPeeringAddresses"u8);
                 writer.WriteStartArray();
                 foreach (var item in BgpPeeringAddresses)
                 {
@@ -46,48 +46,49 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BgpSettings DeserializeBgpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> asn = default;
             Optional<string> bgpPeeringAddress = default;
             Optional<int> peerWeight = default;
-            Optional<IList<IPConfigurationBgpPeeringAddress>> bgpPeeringAddresses = default;
+            Optional<IList<NetworkIPConfigurationBgpPeeringAddress>> bgpPeeringAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("asn"))
+                if (property.NameEquals("asn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     asn = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("bgpPeeringAddress"))
+                if (property.NameEquals("bgpPeeringAddress"u8))
                 {
                     bgpPeeringAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("peerWeight"))
+                if (property.NameEquals("peerWeight"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerWeight = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("bgpPeeringAddresses"))
+                if (property.NameEquals("bgpPeeringAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IPConfigurationBgpPeeringAddress> array = new List<IPConfigurationBgpPeeringAddress>();
+                    List<NetworkIPConfigurationBgpPeeringAddress> array = new List<NetworkIPConfigurationBgpPeeringAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPConfigurationBgpPeeringAddress.DeserializeIPConfigurationBgpPeeringAddress(item));
+                        array.Add(NetworkIPConfigurationBgpPeeringAddress.DeserializeNetworkIPConfigurationBgpPeeringAddress(item));
                     }
                     bgpPeeringAddresses = array;
                     continue;

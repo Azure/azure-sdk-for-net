@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public const string ReceiptPng = "contoso-allinone.png";
 
         /// <summary>A file with multiple receipts, one per page.</summary>
-        public const string ReceipMultipage = "multipleReceipt.pdf";
+        public const string ReceiptMultipage = "multipleReceipt.pdf";
 
         /// <summary>A three-page receipt file in which the second page is blank.</summary>
         public const string ReceipMultipageWithBlankPage = "multipageReceiptBlankPage.pdf";
@@ -66,5 +66,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>A form with a table that has fixed rows and empty cells.</summary>
         public const string FormTableFixedRows = "label_table_fixed_rows1.pdf";
+
+        /// <summary>A set of IRS-1040 forms to test document classifiers.</summary>
+        public const string Irs1040 = "IRS-1040_2.pdf";
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Tests
             //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = "cm";
-            var cm = new ConnectionMonitorInput
+            var cm = new ConnectionMonitorCreateOrUpdateContent
             {
                 Location = location,
                 Source = new ConnectionMonitorSource(vm.Id),
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Tests
             //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
-            var cm = new ConnectionMonitorInput
+            var cm = new ConnectionMonitorCreateOrUpdateContent
             {
                 Location = location,
                 Source = new ConnectionMonitorSource(vm.Id),
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Tests
             //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
-            var cm = new ConnectionMonitorInput
+            var cm = new ConnectionMonitorCreateOrUpdateContent
             {
                 Location = location,
                 Source = new ConnectionMonitorSource(vm.Id),
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network.Tests
             //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
-            var cm = new ConnectionMonitorInput
+            var cm = new ConnectionMonitorCreateOrUpdateContent
             {
                 Location = location,
                 Source = new ConnectionMonitorSource(vm.Id),
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Network.Tests
             Operation<ConnectionMonitorQueryResult> queryResultOperation = await ConnectionMonitors.Get(connectionMonitorName).Value.QueryAsync(WaitUntil.Completed);
             Response<ConnectionMonitorQueryResult> queryResult = await queryResultOperation.WaitForCompletionAsync();;
             //Has.One.EqualTo(queryResult.States);
-            Assert.AreEqual("Reachable", queryResult.Value.States[0].ConnectionState);
+            Assert.AreEqual("Reachable", queryResult.Value.States[0].NetworkConnectionState);
             Assert.AreEqual("InProgress", queryResult.Value.States[0].EvaluationState);
             Assert.AreEqual(2, queryResult.Value.States[0].Hops.Count);
         }
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Network.Tests
             //await networkWatcherCollection.CreateOrUpdateAsync(true, "NetworkWatcherRG", "NetworkWatcher_westus2", properties);
 
             string connectionMonitorName = Recording.GenerateAssetName("azsmnet");
-            var cm = new ConnectionMonitorInput
+            var cm = new ConnectionMonitorCreateOrUpdateContent
             {
                 Location = location,
                 Source = new ConnectionMonitorSource(vm.Id),
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network.Tests
 
             string connectionMonitorName1 = Recording.GenerateAssetName("azsmnet");
             string connectionMonitorName2 = Recording.GenerateAssetName("azsmnet");
-            var cm = new ConnectionMonitorInput
+            var cm = new ConnectionMonitorCreateOrUpdateContent
             {
                 Location = location,
                 Source = new ConnectionMonitorSource(vm.Id),

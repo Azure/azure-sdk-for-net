@@ -19,120 +19,37 @@ namespace Azure.ResourceManager.ServiceBus
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceBus. </summary>
     public static partial class ServiceBusExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
-        /// Operation Id: Namespaces_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServiceBusNamespaceResource> GetServiceBusNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return GetExtensionClient(subscriptionResource).GetServiceBusNamespacesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces
-        /// Operation Id: Namespaces_List
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServiceBusNamespaceResource> GetServiceBusNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetServiceBusNamespaces(cancellationToken);
-        }
-
-        /// <summary>
-        /// Check the give namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckServiceBusNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
-            return await GetExtensionClient(subscriptionResource).CheckServiceBusNameAvailabilityAsync(parameters, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Check the give namespace name availability.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability
-        /// Operation Id: Namespaces_CheckNameAvailability
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="parameters"> Parameters to check availability of the given namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckServiceBusNameAvailability(this SubscriptionResource subscriptionResource, CheckNameAvailability parameters, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
-            return GetExtensionClient(subscriptionResource).CheckServiceBusNameAvailability(parameters, cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        /// <summary> Gets a collection of ServiceBusNamespaceResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ServiceBusNamespaceResources and their operations over a ServiceBusNamespaceResource. </returns>
-        public static ServiceBusNamespaceCollection GetServiceBusNamespaces(this ResourceGroupResource resourceGroupResource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return GetExtensionClient(resourceGroupResource).GetServiceBusNamespaces();
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        /// <summary>
-        /// Gets a description for the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public static async Task<Response<ServiceBusNamespaceResource>> GetServiceBusNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return await resourceGroupResource.GetServiceBusNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
         }
-
-        /// <summary>
-        /// Gets a description for the specified namespace.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}
-        /// Operation Id: Namespaces_Get
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
-        public static Response<ServiceBusNamespaceResource> GetServiceBusNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetServiceBusNamespaces().Get(namespaceName, cancellationToken);
-        }
-
         #region ServiceBusNamespaceResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceBusNamespaceResource" /> along with the instance operations that can be performed on it but with no data.
@@ -152,153 +69,153 @@ namespace Azure.ResourceManager.ServiceBus
         }
         #endregion
 
-        #region NetworkRuleSetResource
+        #region ServiceBusNetworkRuleSetResource
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceBusNetworkRuleSetResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusNetworkRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusNetworkRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkRuleSetResource" /> object. </returns>
-        public static NetworkRuleSetResource GetNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusNetworkRuleSetResource" /> object. </returns>
+        public static ServiceBusNetworkRuleSetResource GetServiceBusNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NetworkRuleSetResource.ValidateResourceId(id);
-                return new NetworkRuleSetResource(client, id);
+                ServiceBusNetworkRuleSetResource.ValidateResourceId(id);
+                return new ServiceBusNetworkRuleSetResource(client, id);
             }
             );
         }
         #endregion
 
-        #region PrivateEndpointConnectionResource
+        #region ServiceBusPrivateEndpointConnectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceBusPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource" /> object. </returns>
-        public static PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusPrivateEndpointConnectionResource" /> object. </returns>
+        public static ServiceBusPrivateEndpointConnectionResource GetServiceBusPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new PrivateEndpointConnectionResource(client, id);
+                ServiceBusPrivateEndpointConnectionResource.ValidateResourceId(id);
+                return new ServiceBusPrivateEndpointConnectionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DisasterRecoveryResource
+        #region ServiceBusDisasterRecoveryResource
         /// <summary>
-        /// Gets an object representing a <see cref="DisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DisasterRecoveryResource.CreateResourceIdentifier" /> to create a <see cref="DisasterRecoveryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusDisasterRecoveryResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusDisasterRecoveryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DisasterRecoveryResource" /> object. </returns>
-        public static DisasterRecoveryResource GetDisasterRecoveryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryResource" /> object. </returns>
+        public static ServiceBusDisasterRecoveryResource GetServiceBusDisasterRecoveryResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DisasterRecoveryResource.ValidateResourceId(id);
-                return new DisasterRecoveryResource(client, id);
+                ServiceBusDisasterRecoveryResource.ValidateResourceId(id);
+                return new ServiceBusDisasterRecoveryResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NamespaceDisasterRecoveryAuthorizationRuleResource
+        #region MigrationConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MigrationConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceDisasterRecoveryAuthorizationRuleResource" /> object. </returns>
-        public static NamespaceDisasterRecoveryAuthorizationRuleResource GetNamespaceDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MigrationConfigurationResource" /> object. </returns>
+        public static MigrationConfigurationResource GetMigrationConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
-                return new NamespaceDisasterRecoveryAuthorizationRuleResource(client, id);
+                MigrationConfigurationResource.ValidateResourceId(id);
+                return new MigrationConfigurationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NamespaceAuthorizationRuleResource
+        #region ServiceBusNamespaceAuthorizationRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceBusNamespaceAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusNamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusNamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceAuthorizationRuleResource" /> object. </returns>
-        public static NamespaceAuthorizationRuleResource GetNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusNamespaceAuthorizationRuleResource" /> object. </returns>
+        public static ServiceBusNamespaceAuthorizationRuleResource GetServiceBusNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceAuthorizationRuleResource.ValidateResourceId(id);
-                return new NamespaceAuthorizationRuleResource(client, id);
+                ServiceBusNamespaceAuthorizationRuleResource.ValidateResourceId(id);
+                return new ServiceBusNamespaceAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NamespaceQueueAuthorizationRuleResource
+        #region ServiceBusQueueAuthorizationRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceQueueAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceQueueAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceQueueAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceBusQueueAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusQueueAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusQueueAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceQueueAuthorizationRuleResource" /> object. </returns>
-        public static NamespaceQueueAuthorizationRuleResource GetNamespaceQueueAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusQueueAuthorizationRuleResource" /> object. </returns>
+        public static ServiceBusQueueAuthorizationRuleResource GetServiceBusQueueAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceQueueAuthorizationRuleResource.ValidateResourceId(id);
-                return new NamespaceQueueAuthorizationRuleResource(client, id);
+                ServiceBusQueueAuthorizationRuleResource.ValidateResourceId(id);
+                return new ServiceBusQueueAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NamespaceTopicAuthorizationRuleResource
+        #region ServiceBusTopicAuthorizationRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="NamespaceTopicAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NamespaceTopicAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NamespaceTopicAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceBusTopicAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusTopicAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusTopicAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NamespaceTopicAuthorizationRuleResource" /> object. </returns>
-        public static NamespaceTopicAuthorizationRuleResource GetNamespaceTopicAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusTopicAuthorizationRuleResource" /> object. </returns>
+        public static ServiceBusTopicAuthorizationRuleResource GetServiceBusTopicAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NamespaceTopicAuthorizationRuleResource.ValidateResourceId(id);
-                return new NamespaceTopicAuthorizationRuleResource(client, id);
+                ServiceBusTopicAuthorizationRuleResource.ValidateResourceId(id);
+                return new ServiceBusTopicAuthorizationRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MigrationConfigPropertiesResource
+        #region ServiceBusDisasterRecoveryAuthorizationRuleResource
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationConfigPropertiesResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationConfigPropertiesResource.CreateResourceIdentifier" /> to create a <see cref="MigrationConfigPropertiesResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MigrationConfigPropertiesResource" /> object. </returns>
-        public static MigrationConfigPropertiesResource GetMigrationConfigPropertiesResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" /> object. </returns>
+        public static ServiceBusDisasterRecoveryAuthorizationRuleResource GetServiceBusDisasterRecoveryAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MigrationConfigPropertiesResource.ValidateResourceId(id);
-                return new MigrationConfigPropertiesResource(client, id);
+                ServiceBusDisasterRecoveryAuthorizationRuleResource.ValidateResourceId(id);
+                return new ServiceBusDisasterRecoveryAuthorizationRuleResource(client, id);
             }
             );
         }
@@ -379,5 +296,151 @@ namespace Azure.ResourceManager.ServiceBus
             );
         }
         #endregion
+
+        /// <summary> Gets a collection of ServiceBusNamespaceResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of ServiceBusNamespaceResources and their operations over a ServiceBusNamespaceResource. </returns>
+        public static ServiceBusNamespaceCollection GetServiceBusNamespaces(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServiceBusNamespaces();
+        }
+
+        /// <summary>
+        /// Gets a description for the specified namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ServiceBusNamespaceResource>> GetServiceBusNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
+        {
+            return await resourceGroupResource.GetServiceBusNamespaces().GetAsync(namespaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a description for the specified namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ServiceBusNamespaceResource> GetServiceBusNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
+        {
+            return resourceGroupResource.GetServiceBusNamespaces().Get(namespaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceBusNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ServiceBusNamespaceResource> GetServiceBusNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceBusNamespacesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the available namespaces within the subscription, irrespective of the resource groups.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/namespaces</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceBusNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ServiceBusNamespaceResource> GetServiceBusNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetServiceBusNamespaces(cancellationToken);
+        }
+
+        /// <summary>
+        /// Check the give namespace name availability.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<ServiceBusNameAvailabilityResult>> CheckServiceBusNamespaceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckServiceBusNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check the give namespace name availability.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceBus/CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Parameters to check availability of the given namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<ServiceBusNameAvailabilityResult> CheckServiceBusNamespaceNameAvailability(this SubscriptionResource subscriptionResource, ServiceBusNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckServiceBusNamespaceNameAvailability(content, cancellationToken);
+        }
     }
 }

@@ -114,16 +114,16 @@ QnAMakerClient client = new QnAMakerClient(new ApiKeyServiceClientCredentials("{
 };
 ```
 
-Now in `Azure.AI.Language.QuestionAnswering.Projects`, you create a `QuestionAnsweringProjectsClient` along with `AzureKeyCredential` from the package `Azure.Core`:
+Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you create a `QuestionAnsweringAuthoringClient` along with `AzureKeyCredential` from the package `Azure.Core`:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateClient
 Uri endpoint = new Uri("{LanguageQnaEndpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
-QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 ```
 
-#### Creating knowledge base  
+#### Creating knowledge base
 
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could create a new `Knowledgebase` using a `QnADTO`:
 
@@ -144,7 +144,7 @@ Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation createOp =
 });
 ```
 
-Now in `Azure.AI.Language.QuestionAnswering.Projects`, you can create a new Question Answering project by defining a `RequestContent` instance with the needed project creation properties:
+Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you can create a new Question Answering project by defining a `RequestContent` instance with the needed project creation properties:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_CreateProject
 string newProjectName = "{ProjectName}";
@@ -163,7 +163,7 @@ RequestContent creationRequestContent = RequestContent.Create(
 Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
 ```
 
-#### Updating knowledge base  
+#### Updating knowledge base
 
 Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could update your knowledge base using a `UpdateKbOperationDTO`:
 
@@ -188,7 +188,7 @@ Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models.Operation updateOp =
     });
 ```
 
-Now in `Azure.AI.Language.QuestionAnswering.Projects`, you can add a new knowledge source using the `UpdateSourcesAsync` method:
+Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you can add a new knowledge source using the `UpdateSourcesAsync` method:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_UpdateKnowledgeSource
 string sourceUri = "{SourceURI}";
@@ -208,7 +208,7 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, "{ProjectName}", updateSourcesRequestContent);
+Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, "{ProjectName}", updateSourcesRequestContent);
 ```
 
 You can also update a project's questions and answers directly as follows:
@@ -229,7 +229,7 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = await client.UpdateQnasAsync(WaitUntil.Completed, "{ProjectName}", updateQnasRequestContent);
+Operation<AsyncPageable<BinaryData>> updateQnasOperation = await client.UpdateQnasAsync(WaitUntil.Completed, "{ProjectName}", updateQnasRequestContent);
 ```
 
 #### Exporting knowledge base
@@ -254,8 +254,8 @@ Previously in `Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker`, you could 
 await client.Knowledgebase.DeleteAsync("{KnowledgeBaseID}");
 ```
 
-Now in `Azure.AI.Language.QuestionAnswering.Projects`, you can delete a project using the `DeleteProjectAsync` method:
+Now in `Azure.AI.Language.QuestionAnswering.Authoring`, you can delete a project using the `DeleteProjectAsync` method:
 
 ```C# Snippet:Language_QnA_Maker_Snippets_MigrationGuide_DeleteProject
-Operation<BinaryData> deletionOperation = await client.DeleteProjectAsync(WaitUntil.Completed, "{ProjectName}");
+Operation deletionOperation = await client.DeleteProjectAsync(WaitUntil.Completed, "{ProjectName}");
 ```

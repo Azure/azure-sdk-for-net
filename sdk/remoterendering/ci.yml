@@ -21,7 +21,7 @@ pr:
     - sdk/remoterendering/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: remoterendering
     ArtifactName: packages

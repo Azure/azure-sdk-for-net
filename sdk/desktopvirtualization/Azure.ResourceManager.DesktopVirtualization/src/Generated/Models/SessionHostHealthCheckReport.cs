@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="healthCheckName"> Represents the name of the health check operation performed. </param>
         /// <param name="healthCheckResult"> Represents the Health state of the health check we performed. </param>
         /// <param name="additionalFailureDetails"> Additional detailed information on the failure. </param>
-        internal SessionHostHealthCheckReport(HealthCheckName? healthCheckName, HealthCheckResult? healthCheckResult, SessionHostHealthCheckFailureDetails additionalFailureDetails)
+        internal SessionHostHealthCheckReport(SessionHostHealthCheckName? healthCheckName, SessionHostHealthCheckResult? healthCheckResult, SessionHostHealthCheckFailureDetails additionalFailureDetails)
         {
             HealthCheckName = healthCheckName;
             HealthCheckResult = healthCheckResult;
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Represents the name of the health check operation performed. </summary>
-        public HealthCheckName? HealthCheckName { get; }
+        public SessionHostHealthCheckName? HealthCheckName { get; }
         /// <summary> Represents the Health state of the health check we performed. </summary>
-        public HealthCheckResult? HealthCheckResult { get; }
+        public SessionHostHealthCheckResult? HealthCheckResult { get; }
         /// <summary> Additional detailed information on the failure. </summary>
         public SessionHostHealthCheckFailureDetails AdditionalFailureDetails { get; }
     }

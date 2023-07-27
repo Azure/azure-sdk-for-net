@@ -19,15 +19,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> Hostname. </param>
         /// <param name="sslState"> SSL type. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
-        /// <param name="thumbprint"> SSL certificate thumbprint. </param>
+        /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
         /// <param name="toUpdate"> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </param>
         /// <param name="hostType"> Indicates whether the hostname is a standard or repository hostname. </param>
-        internal HostNameSslState(string name, SslState? sslState, string virtualIP, string thumbprint, bool? toUpdate, HostType? hostType)
+        internal HostNameSslState(string name, HostNameBindingSslState? sslState, string virtualIP, string thumbprintString, bool? toUpdate, AppServiceHostType? hostType)
         {
             Name = name;
             SslState = sslState;
             VirtualIP = virtualIP;
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
             ToUpdate = toUpdate;
             HostType = hostType;
         }
@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Hostname. </summary>
         public string Name { get; set; }
         /// <summary> SSL type. </summary>
-        public SslState? SslState { get; set; }
+        public HostNameBindingSslState? SslState { get; set; }
         /// <summary> Virtual IP address assigned to the hostname if IP based SSL is enabled. </summary>
         public string VirtualIP { get; set; }
         /// <summary> SSL certificate thumbprint. </summary>
-        public string Thumbprint { get; set; }
+        public string ThumbprintString { get; set; }
         /// <summary> Set to &lt;code&gt;true&lt;/code&gt; to update existing hostname. </summary>
         public bool? ToUpdate { get; set; }
         /// <summary> Indicates whether the hostname is a standard or repository hostname. </summary>
-        public HostType? HostType { get; set; }
+        public AppServiceHostType? HostType { get; set; }
     }
 }

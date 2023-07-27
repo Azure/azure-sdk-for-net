@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates a data flow debug session. </summary>
     public partial class DataFlowDebugSessionCreateDataFlowDebugSessionOperation : Operation<CreateDataFlowDebugSessionResponse>, IOperationSource<CreateDataFlowDebugSessionResponse>
     {
-        private readonly OperationInternals<CreateDataFlowDebugSessionResponse> _operation;
+        private readonly OperationInternal<CreateDataFlowDebugSessionResponse> _operation;
 
         /// <summary> Initializes a new instance of DataFlowDebugSessionCreateDataFlowDebugSessionOperation for mocking. </summary>
         protected DataFlowDebugSessionCreateDataFlowDebugSessionOperation()
@@ -28,11 +28,14 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal DataFlowDebugSessionCreateDataFlowDebugSessionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<CreateDataFlowDebugSessionResponse>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DataFlowDebugSessionCreateDataFlowDebugSessionOperation");
+            IOperation<CreateDataFlowDebugSessionResponse> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            _operation = new OperationInternal<CreateDataFlowDebugSessionResponse>(nextLinkOperation, clientDiagnostics, response, "DataFlowDebugSessionCreateDataFlowDebugSessionOperation");
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+#pragma warning disable CA1822
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override CreateDataFlowDebugSessionResponse Value => _operation.Value;
@@ -44,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);

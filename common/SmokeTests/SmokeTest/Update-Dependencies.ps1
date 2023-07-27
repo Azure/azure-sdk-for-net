@@ -1,21 +1,20 @@
 param(
-    [string]$ProjectFile = './SmokeTest.csproj',
-    [string]$ArtifactsPath,
-    [switch]$SkipVersionValidation,
+    [string]$ProjectFile = (Join-Path $PSScriptRoot './SmokeTest.csproj'),
+    [switch]$PreferDevVersion,
     [switch]$CI,
-    [switch]$Daily
+    [string]$ArtifactsPath
 )
 
-. $PSScriptRoot/../../../eng/common/scripts/SemVer.ps1
+. (Join-Path $PSScriptRoot ../../../eng/scripts/smoketest/Get-Package-Version.ps1)
 
-$PACKAGE_REFERENCE_XPATH = '//Project/ItemGroup/PackageReference'
+# Define a set that contains the list of packages which should not be included
+# as references to the smoke tests.  This is necessary because some compatibility
+# packages do not target netstandard2.0, and the package source is unable to
+# filter upstream to restrict to the appropriate packages for the running target.
 
-# Matches the dev.yyyymmdd portion of the version string
-$ALPHA_DATE_REGEX = 'alpha\.(\d{8})'
-
-$baselineVersionDate = $null;
-
-$PACKAGE_FEED_URL = 'https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v3/index.json'
+$packageExcludeSet = @(
+    "Microsoft.Azure.WebPubSub.AspNetCore"
+)
 
 function Log-Warning($message) {
     if ($CI) {
@@ -25,94 +24,68 @@ function Log-Warning($message) {
     }
 }
 
-function GetAllPackages {
-    $packages = Find-Package -Source $PACKAGE_FEED_URL -AllVersion -AllowPrereleaseVersions
-    if ($Daily) {
-        return $packages | Where-Object { $_.Version.Contains("alpha") }
-    }
-    return $packages | Where-Object { !$_.Version.Contains("alpha") -and !$_.Version.Contains("dev") }
+function Log-Info($message) {
+    Write-Host $message
 }
 
-function GetLatestPackage([array]$packageList, [string]$packageName) {
-    $versions = ($packageList
-        | Where-Object { $_.Name -eq $packageName }
-        | Select-Object -ExpandProperty Version)
+function AddPackageReference($csproj, $referenceNode, $packageInfo) {
+    $package = $packageInfo.Name
+    $version = $packageInfo.Version
 
-    if (!$versions) {
-        Write-Warning "Did not find any versions for $($packageName)"
-        return
+    if ($PreferDevVersion -and $packageInfo.DevVersion) {
+        $version = $packageInfo.DevVersion
     }
 
-    $sorted = [AzureEngSemanticVersion]::SortVersionStrings($versions)
-    return $sorted | Select-Object -First 1
-}
-
-function GetPackageVersion([array]$packageList, [string]$packageName) {
-    if ($Daily -or -not $ArtifactsPath) {
-        return GetLatestPackage $packageList $packageName
-    }
-
-    if (-not (Test-Path (Join-Path $ArtifactsPath $packageName))) {
-      Write-Host "No build artifact directory for smoke test dependency $packageName. Using latest upstream version."
-      return GetLatestPackage $packageList $packageName
-    }
-
-    $pkg = Get-ChildItem "$ArtifactsPath/$packageName/*.nupkg" | Select-Object -First 1
-    if ($pkg -match "$packageName\.(.*)\.nupkg") {
-        $version = $matches[1]
-        Write-Host "Found build artifact for $packageName with version $version. Using artifact version."
-        return $version
+    if ($version -and $package) {
+        Log-Info "Adding a reference for: '$($package)', version:'$($version)'."
     } else {
-      throw "No build artifact packages found for smoke test dependency '$packageName'."
+        Log-Warning "Missing artifact name or for '$($package)' [$($version)]."
+        return 0
     }
+
+    $packageNode = $csproj.CreateElement('PackageReference')
+    $referenceNode.AppendChild($packageNode) | Out-Null
+
+    $includeAttribute = $csproj.CreateAttribute('Include')
+    $includeAttribute.Value = $package
+
+    $versionAttribute = $csproj.CreateAttribute('Version')
+    $versionAttribute.Value = $version
+
+    $packageNode.Attributes.Append($includeAttribute) | Out-Null
+    $packageNode.Attributes.Append($versionAttribute) | Out-Null
+
+    return 1
 }
 
-function SetLatestPackageVersions([xml]$csproj) {
-    # For each PackageReference in the csproj, find the latest version of that
-    # package from the dev feed which is not in the excluded list.
-    $allPackages = GetAllPackages
-    $csproj |
-        Select-XML $PACKAGE_REFERENCE_XPATH
-        | Where-Object { $_.Node.HasAttribute('Version') }
-        | Where-Object { -not ($Daily -and $_.Node.HasAttribute('OverrideDailyVersion')) }
-        | ForEach-Object {
-            # Resolve package version:
-            $packageName = $_.Node.Include
+# Start the update process.
+$projectPath = Resolve-Path -Path $ProjectFile
+Log-Info "Updating the smoke test project: '$($projectPath)'"
 
-            $targetVersion = GetPackageVersion $allPackages $packageName
+# Load the project file and locate the node to overwrite.
+$csproj = New-Object xml
+$csproj.Load($projectPath)
+$referenceNode = $csproj.SelectSingleNode('//Project/ItemGroup[@Label="SmokeTestPackageReferences"]')
 
-            if ($null -eq $targetVersion) {
-                return
-            }
+# Clear all existing references.
+$referenceNode.InnerXml = ''
 
-            Write-Host "Setting $packageName to $targetVersion"
-            $_.Node.Version = "$targetVersion"
+# Query the available packages and create references for each.
+Log-Info "Querying package information."
 
+$referenceUpdateCount = 0
 
-            # Validate package version date component matches
-            if ($SkipVersionValidation) {
-                return
-            }
+Get-SmokeTestPkgProperties -ArtifactsPath $ArtifactsPath
+| Where-Object { $packageExcludeSet -notcontains $_.Name }
+| Foreach-Object { $referenceUpdateCount += AddPackageReference $csproj $referenceNode $_ }
 
-            if ($_.Node.Version -match $ALPHA_DATE_REGEX) {
-                $capture = $matches[1]
-                if ($null -eq $baselineVersionDate) {
-                    Write-Host "Using baseline version date: $capture"
-                    $baselineVersionDate = $capture
-                }
+# Save the project and report the outcome.  If no refrences were added, consider this
+# an exception state and throw.  This is intended to prevent a smoke test run against an
+# empty project being considered a successful check.
+$csproj.Save($projectPath)
 
-                if ($baselineVersionDate -ne $matches[1]) {
-                    Log-Warning "$($_.Node.Include) uses invalid version. Expected: $baselineVersionDate, Actual: $capture"
-                }
-            }
-        }
+if ($referenceUpdateCount -gt 0) {
+    Log-Info "Updates complete.  $($referenceUpdateCount) package references were added."
+} else {
+    throw "No packages have been referenced."
 }
-
-function UpdateCsprojVersions {
-    $projectFilePath = Resolve-Path -Path $ProjectFile
-    [xml]$csproj = Get-Content $projectFilePath
-    SetLatestPackageVersions $csproj
-    $csproj.Save($projectFilePath)
-}
-
-UpdateCsprojVersions

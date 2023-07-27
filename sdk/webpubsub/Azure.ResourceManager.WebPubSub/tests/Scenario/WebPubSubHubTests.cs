@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.WebPubSub.Tests
 
         private async Task<WebPubSubHubResource> CreateDefaultWebPubSubHub(WebPubSubHubCollection collection, string name)
         {
-            IList<Models.EventHandler> eventHandlers = new List<Models.EventHandler>()
+            IList<Models.WebPubSubEventHandler> eventHandlers = new List<Models.WebPubSubEventHandler>()
             {
-                new Models.EventHandler("http://example.com/api/{hub}/{event}")
+                new Models.WebPubSubEventHandler("http://example.com/api/{hub}/{event}")
                 {
                     SystemEvents ={"none"},
                     Auth = new UpstreamAuthSettings(),

@@ -12,9 +12,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class UsageTests : NetworkServiceClientTestBase
     {
-        public UsageTests(bool isAsync) : base(isAsync)
+        public UsageTests(bool isAsync, string apiVersion)
+        : base(isAsync, "Microsoft.Network/locations/usages", apiVersion)
         {
         }
 
@@ -48,7 +50,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<NetworkSecurityGroupResource> getNsgResponse = await networkSecurityGroupCollection.GetAsync(networkSecurityGroupName);
 
             // Query for usages
-            AsyncPageable<NetworkUsage> usagesResponseAP = subscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.Replace(" ", string.Empty));
+            AsyncPageable<NetworkUsage> usagesResponseAP = subscription.GetUsagesAsync(getNsgResponse.Value.Data.Location.ToString().Replace(" ", string.Empty));
             List<NetworkUsage> usagesResponse = await usagesResponseAP.ToEnumerableAsync();
             // Verify that the strings are populated
             Assert.NotNull(usagesResponse);

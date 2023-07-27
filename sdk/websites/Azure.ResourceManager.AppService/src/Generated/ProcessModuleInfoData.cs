@@ -6,13 +6,15 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the ProcessModuleInfo data model. </summary>
-    public partial class ProcessModuleInfoData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the ProcessModuleInfo data model.
+    /// Process Module Information.
+    /// </summary>
+    public partial class ProcessModuleInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of ProcessModuleInfoData. </summary>
         public ProcessModuleInfoData()
@@ -24,7 +26,6 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="baseAddress"> Base address. Used as module identifier in ARM resource URI. </param>
         /// <param name="fileName"> File name. </param>
         /// <param name="href"> HRef URI. </param>
@@ -36,7 +37,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="productVersion"> Product version. </param>
         /// <param name="isDebug"> Is debug?. </param>
         /// <param name="language"> Module language (locale). </param>
-        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal ProcessModuleInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string baseAddress, string fileName, string href, string filePath, int? moduleMemorySize, string fileVersion, string fileDescription, string product, string productVersion, bool? isDebug, string language, string kind) : base(id, name, resourceType, systemData)
         {
             BaseAddress = baseAddress;
             FileName = fileName;
@@ -49,6 +51,7 @@ namespace Azure.ResourceManager.AppService
             ProductVersion = productVersion;
             IsDebug = isDebug;
             Language = language;
+            Kind = kind;
         }
 
         /// <summary> Base address. Used as module identifier in ARM resource URI. </summary>
@@ -73,5 +76,7 @@ namespace Azure.ResourceManager.AppService
         public bool? IsDebug { get; set; }
         /// <summary> Module language (locale). </summary>
         public string Language { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

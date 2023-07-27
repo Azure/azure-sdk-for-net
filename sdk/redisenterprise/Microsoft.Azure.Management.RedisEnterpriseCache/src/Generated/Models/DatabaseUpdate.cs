@@ -58,7 +58,9 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <param name="persistence">Persistence settings</param>
         /// <param name="modules">Optional set of redis modules to enable in
         /// this database - modules can only be added at creation time.</param>
-        public DatabaseUpdate(string clientProtocol = default(string), int? port = default(int?), string provisioningState = default(string), string resourceState = default(string), string clusteringPolicy = default(string), string evictionPolicy = default(string), Persistence persistence = default(Persistence), IList<Module> modules = default(IList<Module>))
+        /// <param name="geoReplication">Optional set of properties to
+        /// configure geo replication for this database.</param>
+        public DatabaseUpdate(string clientProtocol = default(string), int? port = default(int?), string provisioningState = default(string), string resourceState = default(string), string clusteringPolicy = default(string), string evictionPolicy = default(string), Persistence persistence = default(Persistence), IList<Module> modules = default(IList<Module>), DatabasePropertiesGeoReplication geoReplication = default(DatabasePropertiesGeoReplication))
         {
             ClientProtocol = clientProtocol;
             Port = port;
@@ -68,6 +70,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
             EvictionPolicy = evictionPolicy;
             Persistence = persistence;
             Modules = modules;
+            GeoReplication = geoReplication;
             CustomInit();
         }
 
@@ -137,6 +140,13 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.modules")]
         public IList<Module> Modules { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional set of properties to configure geo
+        /// replication for this database.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.geoReplication")]
+        public DatabasePropertiesGeoReplication GeoReplication { get; set; }
 
     }
 }

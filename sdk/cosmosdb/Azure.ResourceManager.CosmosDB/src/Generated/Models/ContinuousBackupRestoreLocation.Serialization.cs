@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
             writer.WriteEndObject();
         }

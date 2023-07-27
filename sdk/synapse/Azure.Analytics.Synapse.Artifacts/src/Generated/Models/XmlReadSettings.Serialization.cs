@@ -21,30 +21,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(CompressionProperties))
             {
-                writer.WritePropertyName("compressionProperties");
+                writer.WritePropertyName("compressionProperties"u8);
                 writer.WriteObjectValue(CompressionProperties);
             }
             if (Optional.IsDefined(ValidationMode))
             {
-                writer.WritePropertyName("validationMode");
+                writer.WritePropertyName("validationMode"u8);
                 writer.WriteObjectValue(ValidationMode);
             }
             if (Optional.IsDefined(DetectDataType))
             {
-                writer.WritePropertyName("detectDataType");
+                writer.WritePropertyName("detectDataType"u8);
                 writer.WriteObjectValue(DetectDataType);
             }
             if (Optional.IsDefined(Namespaces))
             {
-                writer.WritePropertyName("namespaces");
+                writer.WritePropertyName("namespaces"u8);
                 writer.WriteObjectValue(Namespaces);
             }
             if (Optional.IsDefined(NamespacePrefixes))
             {
-                writer.WritePropertyName("namespacePrefixes");
+                writer.WritePropertyName("namespacePrefixes"u8);
                 writer.WriteObjectValue(NamespacePrefixes);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
@@ -56,6 +56,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static XmlReadSettings DeserializeXmlReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CompressionReadSettings> compressionProperties = default;
             Optional<object> validationMode = default;
             Optional<object> detectDataType = default;
@@ -66,57 +70,52 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("compressionProperties"))
+                if (property.NameEquals("compressionProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("validationMode"))
+                if (property.NameEquals("validationMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validationMode = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("detectDataType"))
+                if (property.NameEquals("detectDataType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     detectDataType = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("namespaces"))
+                if (property.NameEquals("namespaces"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     namespaces = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("namespacePrefixes"))
+                if (property.NameEquals("namespacePrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     namespacePrefixes = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;

@@ -14,30 +14,34 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ComputeUsage DeserializeComputeUsage(JsonElement element)
         {
-            string unit = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ComputeUsageUnit unit = default;
             int currentValue = default;
             long limit = default;
-            UsageName name = default;
+            ComputeUsageName name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
-                    unit = property.Value.GetString();
+                    unit = new ComputeUsageUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     currentValue = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     limit = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = ComputeUsageName.DeserializeComputeUsageName(property.Value);
                     continue;
                 }
             }

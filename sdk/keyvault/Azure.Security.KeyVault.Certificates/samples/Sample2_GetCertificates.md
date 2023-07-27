@@ -47,7 +47,7 @@ Let's list the certificates which exist in the vault along with their thumbprint
 ```C# Snippet:CertificatesSample2ListCertificates
 foreach (CertificateProperties cert in client.GetPropertiesOfCertificates())
 {
-    Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {BitConverter.ToString(cert.X509Thumbprint)}");
+    Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {cert.X509ThumbprintString}");
 }
 ```
 
@@ -107,12 +107,5 @@ foreach (DeletedCertificate deletedCert in client.GetDeletedCertificates())
     Debug.WriteLine($"Deleted certificate's recovery Id {deletedCert.RecoveryId}");
 }
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample2_GetCertificates.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample2_GetCertificates.cs)
-* [Asynchronous Sample2_GetCertificatesAsync.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/tests/samples/Sample2_GetCertificatesAsync.cs)
 
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

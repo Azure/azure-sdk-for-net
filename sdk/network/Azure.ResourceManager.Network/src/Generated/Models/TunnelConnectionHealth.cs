@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
         /// <param name="ingressBytesTransferred"> The Ingress Bytes Transferred in this connection. </param>
         /// <param name="egressBytesTransferred"> The Egress Bytes Transferred in this connection. </param>
-        /// <param name="lastConnectionEstablishedUtcTime"> The time at which connection was established in Utc format. </param>
-        internal TunnelConnectionHealth(string tunnel, VirtualNetworkGatewayConnectionStatus? connectionStatus, long? ingressBytesTransferred, long? egressBytesTransferred, string lastConnectionEstablishedUtcTime)
+        /// <param name="lastConnectionEstablishedOn"> The time at which connection was established in Utc format. </param>
+        internal TunnelConnectionHealth(string tunnel, VirtualNetworkGatewayConnectionStatus? connectionStatus, long? ingressBytesTransferred, long? egressBytesTransferred, string lastConnectionEstablishedOn)
         {
             Tunnel = tunnel;
             ConnectionStatus = connectionStatus;
             IngressBytesTransferred = ingressBytesTransferred;
             EgressBytesTransferred = egressBytesTransferred;
-            LastConnectionEstablishedUtcTime = lastConnectionEstablishedUtcTime;
+            LastConnectionEstablishedOn = lastConnectionEstablishedOn;
         }
 
         /// <summary> Tunnel name. </summary>
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The Egress Bytes Transferred in this connection. </summary>
         public long? EgressBytesTransferred { get; }
         /// <summary> The time at which connection was established in Utc format. </summary>
-        public string LastConnectionEstablishedUtcTime { get; }
+        public string LastConnectionEstablishedOn { get; }
     }
 }

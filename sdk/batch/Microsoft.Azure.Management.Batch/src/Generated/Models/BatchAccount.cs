@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <param name="tags">The tags of the resource.</param>
         /// <param name="accountEndpoint">The account endpoint used to interact
         /// with the Batch service.</param>
+        /// <param name="nodeManagementEndpoint">The endpoint used by compute
+        /// node to connect to the Batch node management service.</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Invalid', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed', 'Cancelled'</param>
@@ -50,6 +52,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// associated with the Batch account.</param>
         /// <param name="publicNetworkAccess">The network interface type for
         /// accessing Azure Batch service and Batch account operations.</param>
+        /// <param name="networkProfile">Network profile for Batch account,
+        /// which contains network rule settings for each endpoint.</param>
         /// <param name="privateEndpointConnections">List of private endpoint
         /// connections associated with the Batch account</param>
         /// <param name="autoStorage">The properties and status of any
@@ -76,14 +80,16 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// authenticate with the data plane. This does not affect
         /// authentication with the control plane.</param>
         /// <param name="identity">The identity of the Batch account.</param>
-        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), PublicNetworkAccessType? publicNetworkAccess = default(PublicNetworkAccessType?), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), AutoStorageProperties autoStorage = default(AutoStorageProperties), EncryptionProperties encryption = default(EncryptionProperties), int? dedicatedCoreQuota = default(int?), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int), IList<AuthenticationMode?> allowedAuthenticationModes = default(IList<AuthenticationMode?>), BatchAccountIdentity identity = default(BatchAccountIdentity))
+        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), string nodeManagementEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), PublicNetworkAccessType? publicNetworkAccess = default(PublicNetworkAccessType?), NetworkProfile networkProfile = default(NetworkProfile), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), AutoStorageProperties autoStorage = default(AutoStorageProperties), EncryptionProperties encryption = default(EncryptionProperties), int? dedicatedCoreQuota = default(int?), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int), IList<AuthenticationMode?> allowedAuthenticationModes = default(IList<AuthenticationMode?>), BatchAccountIdentity identity = default(BatchAccountIdentity))
             : base(id, name, type, location, tags)
         {
             AccountEndpoint = accountEndpoint;
+            NodeManagementEndpoint = nodeManagementEndpoint;
             ProvisioningState = provisioningState;
             PoolAllocationMode = poolAllocationMode;
             KeyVaultReference = keyVaultReference;
             PublicNetworkAccess = publicNetworkAccess;
+            NetworkProfile = networkProfile;
             PrivateEndpointConnections = privateEndpointConnections;
             AutoStorage = autoStorage;
             Encryption = encryption;
@@ -108,6 +114,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.accountEndpoint")]
         public string AccountEndpoint { get; private set; }
+
+        /// <summary>
+        /// Gets the endpoint used by compute node to connect to the Batch node
+        /// management service.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.nodeManagementEndpoint")]
+        public string NodeManagementEndpoint { get; private set; }
 
         /// <summary>
         /// Gets the provisioned state of the resource. Possible values
@@ -135,15 +148,26 @@ namespace Microsoft.Azure.Management.Batch.Models
         public KeyVaultReference KeyVaultReference { get; private set; }
 
         /// <summary>
-        /// Gets the network interface type for accessing Azure Batch service
-        /// and Batch account operations.
+        /// Gets or sets the network interface type for accessing Azure Batch
+        /// service and Batch account operations.
         /// </summary>
         /// <remarks>
         /// If not specified, the default value is 'enabled'. Possible values
         /// include: 'Enabled', 'Disabled'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
-        public PublicNetworkAccessType? PublicNetworkAccess { get; private set; }
+        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+
+        /// <summary>
+        /// Gets or sets network profile for Batch account, which contains
+        /// network rule settings for each endpoint.
+        /// </summary>
+        /// <remarks>
+        /// The network profile only takes effect when publicNetworkAccess is
+        /// enabled.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.networkProfile")]
+        public NetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
         /// Gets list of private endpoint connections associated with the Batch
@@ -204,15 +228,11 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// family are enforced for this account
         /// </summary>
         /// <remarks>
-        /// Batch is transitioning its core quota system for dedicated cores to
-        /// be enforced per Virtual Machine family. During this transitional
-        /// phase, the dedicated core quota per Virtual Machine family may not
-        /// yet be enforced. If this flag is false, dedicated core quota is
-        /// enforced via the old dedicatedCoreQuota property on the account and
-        /// does not consider Virtual Machine family. If this flag is true,
-        /// dedicated core quota is enforced via the
-        /// dedicatedCoreQuotaPerVMFamily property on the account, and the old
-        /// dedicatedCoreQuota does not apply.
+        /// If this flag is true, dedicated core quota is enforced via both the
+        /// dedicatedCoreQuotaPerVMFamily and dedicatedCoreQuota properties on
+        /// the account. If this flag is false, dedicated core quota is
+        /// enforced only via the dedicatedCoreQuota property on the account
+        /// and does not consider Virtual Machine family.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.dedicatedCoreQuotaPerVMFamilyEnforced")]
         public bool DedicatedCoreQuotaPerVMFamilyEnforced { get; private set; }
@@ -254,6 +274,10 @@ namespace Microsoft.Azure.Management.Batch.Models
             if (KeyVaultReference != null)
             {
                 KeyVaultReference.Validate();
+            }
+            if (NetworkProfile != null)
+            {
+                NetworkProfile.Validate();
             }
             if (PrivateEndpointConnections != null)
             {

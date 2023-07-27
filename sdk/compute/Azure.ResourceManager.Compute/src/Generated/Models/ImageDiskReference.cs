@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -13,30 +13,30 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class ImageDiskReference
     {
         /// <summary> Initializes a new instance of ImageDiskReference. </summary>
-        /// <param name="id"> A relative uri containing either a Platform Image Repository or user image reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ImageDiskReference(string id)
+        public ImageDiskReference()
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            Id = id;
         }
 
         /// <summary> Initializes a new instance of ImageDiskReference. </summary>
-        /// <param name="id"> A relative uri containing either a Platform Image Repository or user image reference. </param>
-        /// <param name="lun"> If the disk is created from an image&apos;s data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null. </param>
-        internal ImageDiskReference(string id, int? lun)
+        /// <param name="id"> A relative uri containing either a Platform Image Repository, user image, or Azure Compute Gallery image reference. </param>
+        /// <param name="sharedGalleryImageId"> A relative uri containing a direct shared Azure Compute Gallery image reference. </param>
+        /// <param name="communityGalleryImageId"> A relative uri containing a community Azure Compute Gallery image reference. </param>
+        /// <param name="lun"> If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null. </param>
+        internal ImageDiskReference(ResourceIdentifier id, string sharedGalleryImageId, string communityGalleryImageId, int? lun)
         {
             Id = id;
+            SharedGalleryImageId = sharedGalleryImageId;
+            CommunityGalleryImageId = communityGalleryImageId;
             Lun = lun;
         }
 
-        /// <summary> A relative uri containing either a Platform Image Repository or user image reference. </summary>
-        public string Id { get; set; }
-        /// <summary> If the disk is created from an image&apos;s data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null. </summary>
+        /// <summary> A relative uri containing either a Platform Image Repository, user image, or Azure Compute Gallery image reference. </summary>
+        public ResourceIdentifier Id { get; set; }
+        /// <summary> A relative uri containing a direct shared Azure Compute Gallery image reference. </summary>
+        public string SharedGalleryImageId { get; set; }
+        /// <summary> A relative uri containing a community Azure Compute Gallery image reference. </summary>
+        public string CommunityGalleryImageId { get; set; }
+        /// <summary> If the disk is created from an image's data disk, this is an index that indicates which of the data disks in the image to use. For OS disks, this field is null. </summary>
         public int? Lun { get; set; }
     }
 }

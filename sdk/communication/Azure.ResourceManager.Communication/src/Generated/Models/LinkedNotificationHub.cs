@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A notification hub that has been linked to the communication service. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.Communication.Models
 
         /// <summary> Initializes a new instance of LinkedNotificationHub. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
-        internal LinkedNotificationHub(string resourceId)
+        internal LinkedNotificationHub(ResourceIdentifier resourceId)
         {
             ResourceId = resourceId;
         }
 
         /// <summary> The resource ID of the notification hub. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
     }
 }

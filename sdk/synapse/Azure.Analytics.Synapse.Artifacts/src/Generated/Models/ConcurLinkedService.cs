@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -19,14 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> or <paramref name="username"/> is null. </exception>
         public ConcurLinkedService(object clientId, object username)
         {
-            if (clientId == null)
-            {
-                throw new ArgumentNullException(nameof(clientId));
-            }
-            if (username == null)
-            {
-                throw new ArgumentNullException(nameof(username));
-            }
+            Argument.AssertNotNull(clientId, nameof(clientId));
+            Argument.AssertNotNull(username, nameof(username));
 
             ClientId = clientId;
             Username = username;
@@ -43,9 +38,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="connectionProperties"> Properties used to connect to Concur. It is mutually exclusive with any other properties in the linked service. Type: object. </param>
         /// <param name="clientId"> Application client_id supplied by Concur App Management. </param>
         /// <param name="username"> The user name that you use to access Concur Service. </param>
-        /// <param name="password"> The password corresponding to the user name that you provided in the username field. </param>
+        /// <param name="password">
+        /// The password corresponding to the user name that you provided in the username field.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
-        /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
+        /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal ConcurLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionProperties, object clientId, object username, SecretBase password, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
@@ -67,11 +66,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ClientId { get; set; }
         /// <summary> The user name that you use to access Concur Service. </summary>
         public object Username { get; set; }
-        /// <summary> The password corresponding to the user name that you provided in the username field. </summary>
+        /// <summary>
+        /// The password corresponding to the user name that you provided in the username field.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public object UseEncryptedEndpoints { get; set; }
-        /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
+        /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
         public object UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
         public object UsePeerVerification { get; set; }

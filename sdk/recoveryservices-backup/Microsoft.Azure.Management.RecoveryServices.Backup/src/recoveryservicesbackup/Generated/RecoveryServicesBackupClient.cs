@@ -297,6 +297,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public virtual IBackupProtectionContainersOperations BackupProtectionContainers { get; private set; }
 
         /// <summary>
+        /// Gets the IDeletedProtectionContainersOperations.
+        /// </summary>
+        public virtual IDeletedProtectionContainersOperations DeletedProtectionContainers { get; private set; }
+
+        /// <summary>
         /// Gets the ISecurityPINsOperations.
         /// </summary>
         public virtual ISecurityPINsOperations SecurityPINs { get; private set; }
@@ -601,12 +606,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             ProtectionPolicyOperationStatuses = new ProtectionPolicyOperationStatusesOperations(this);
             BackupProtectableItems = new BackupProtectableItemsOperations(this);
             BackupProtectionContainers = new BackupProtectionContainersOperations(this);
+            DeletedProtectionContainers = new DeletedProtectionContainersOperations(this);
             SecurityPINs = new SecurityPINsOperations(this);
             RecoveryPointsRecommendedForMove = new RecoveryPointsRecommendedForMoveOperations(this);
             ResourceGuardProxies = new ResourceGuardProxiesOperations(this);
             ResourceGuardProxy = new ResourceGuardProxyOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-12-01";
+            ApiVersion = "2022-09-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

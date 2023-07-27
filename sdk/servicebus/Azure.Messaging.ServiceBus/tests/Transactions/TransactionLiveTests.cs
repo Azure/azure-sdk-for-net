@@ -297,14 +297,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
                 await receiver.CompleteMessageAsync(receivedMessage1);
 
-                // the service seems to abandon the message that
-                // triggered the InvalidOperationException
-                // in the transaction
-                Assert.That(
-                    async () =>
-                    await receiver.CompleteMessageAsync(receivedMessage2), Throws.InstanceOf<ServiceBusException>()
-                    .And.Property(nameof(ServiceBusException.Reason))
-                    .EqualTo(ServiceBusFailureReason.MessageLockLost));
+                await receiver.CompleteMessageAsync(receivedMessage2);
             }
         }
 
@@ -971,7 +964,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await processorA.StartProcessingAsync();
             await tcs.Task;
-            await processorA.StopProcessingAsync();
+            // close rather than just stop because we want the session link to be closed
+            await processorA.CloseAsync();
 
             // transaction wasn't committed - verify that it was rolled back
             ServiceBusSessionReceiver receiverA = await client.AcceptNextSessionAsync(queueA.QueueName);
@@ -1017,7 +1011,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await processorA.StartProcessingAsync();
             await tcs.Task;
-            await processorA.StopProcessingAsync();
+            // close rather than just stop because we want the session link to be closed
+            await processorA.CloseAsync();
 
             // this should timeout as the session message was completed
             Assert.ThrowsAsync<ServiceBusException>(

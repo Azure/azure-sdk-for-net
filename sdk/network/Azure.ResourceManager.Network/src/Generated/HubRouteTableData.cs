@@ -6,13 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the HubRouteTable data model. </summary>
-    public partial class HubRouteTableData : SubResource
+    /// <summary>
+    /// A class representing the HubRouteTable data model.
+    /// RouteTable resource in a virtual hub.
+    /// </summary>
+    public partial class HubRouteTableData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of HubRouteTableData. </summary>
         public HubRouteTableData()
@@ -25,19 +29,17 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of HubRouteTableData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routes"> List of all routes. </param>
         /// <param name="labels"> List of labels associated with this route table. </param>
         /// <param name="associatedConnections"> List of all connections associated with this route table. </param>
         /// <param name="propagatingConnections"> List of all connections that advertise to this route table. </param>
         /// <param name="provisioningState"> The provisioning state of the RouteTable resource. </param>
-        internal HubRouteTableData(string id, string name, string etag, string resourceType, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, ProvisioningState? provisioningState) : base(id)
+        internal HubRouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<HubRoute> routes, IList<string> labels, IReadOnlyList<string> associatedConnections, IReadOnlyList<string> propagatingConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             Routes = routes;
             Labels = labels;
             AssociatedConnections = associatedConnections;
@@ -45,12 +47,8 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Resource type. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> List of all routes. </summary>
         public IList<HubRoute> Routes { get; }
         /// <summary> List of labels associated with this route table. </summary>
@@ -60,6 +58,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> List of all connections that advertise to this route table. </summary>
         public IReadOnlyList<string> PropagatingConnections { get; }
         /// <summary> The provisioning state of the RouteTable resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

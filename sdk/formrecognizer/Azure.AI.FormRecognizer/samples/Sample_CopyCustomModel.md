@@ -40,7 +40,7 @@ var targetClient = new DocumentModelAdministrationClient(new Uri(targetEndpoint)
 ### Authorize the copy
 Before starting the copy, we need to get a `CopyAuthorization` from the target Form Recognizer resource that will give us permission to execute the copy.
 ```C# Snippet:FormRecognizerSampleGetCopyAuthorization
-CopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync();
+DocumentModelCopyAuthorization targetAuth = await targetClient.GetCopyAuthorizationAsync();
 ```
 
 ### Execute the copy
@@ -48,15 +48,11 @@ Now that we have authorization from the target Form Recognizer resource, we exec
 
 ```C# Snippet:FormRecognizerSampleCreateCopyModel
 string modelId = "<source_modelId>";
-CopyModelOperation newModelOperation = await sourceClient.StartCopyModelToAsync(modelId, targetAuth);
-await newModelOperation.WaitForCompletionAsync();
-DocumentModel newModel = newModelOperation.Value;
+CopyDocumentModelToOperation newModelOperation = await sourceClient.CopyDocumentModelToAsync(WaitUntil.Completed, modelId, targetAuth);
+DocumentModelDetails newModel = newModelOperation.Value;
 
 Console.WriteLine($"Original model ID => {modelId}");
 Console.WriteLine($"Copied model ID => {newModel.ModelId}");
 ```
-
-To see the full example source files, see:
-* [Copy custom models](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_CopyModelAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started

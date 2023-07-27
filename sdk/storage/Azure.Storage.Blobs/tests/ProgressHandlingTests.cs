@@ -36,7 +36,10 @@ namespace Azure.Storage.Blobs.Tests
             await client.UploadAsync(BinaryData.FromBytes(data));
 
             // Act
-            var result = await client.DownloadContentAsync(progressHandler: progress);
+            var result = await client.DownloadContentAsync(new BlobDownloadOptions
+            {
+                ProgressHandler = progress
+            });
 
             // Assert
             Assert.AreNotEqual(0, progress.List.Count);
@@ -61,9 +64,11 @@ namespace Azure.Storage.Blobs.Tests
             await client.UploadAsync(BinaryData.FromBytes(data));
 
             // Act
-            var result = await client.DownloadContentAsync(
-                progressHandler: progress,
-                range: new HttpRange(offset, length));
+            var result = await client.DownloadContentAsync(new BlobDownloadOptions
+            {
+                ProgressHandler = progress,
+                Range = new HttpRange(offset, length)
+            });
 
             // Assert
             Assert.AreNotEqual(0, progress.List.Count);
@@ -85,8 +90,10 @@ namespace Azure.Storage.Blobs.Tests
             await client.UploadAsync(BinaryData.FromBytes(data));
 
             // Act
-            var result = await client.DownloadStreamingAsync(
-                progressHandler: progress);
+            var result = await client.DownloadStreamingAsync(new BlobDownloadOptions
+            {
+                ProgressHandler = progress
+            });
             var downloadedData = new byte[result.Value.Details.ContentLength];
             using (Stream ms = new MemoryStream(downloadedData))
             {
@@ -115,9 +122,11 @@ namespace Azure.Storage.Blobs.Tests
             await client.UploadAsync(BinaryData.FromBytes(data));
 
             // Act
-            var result = await client.DownloadStreamingAsync(
-                progressHandler: progress,
-                range: new HttpRange(offset, length));
+            var result = await client.DownloadStreamingAsync(new BlobDownloadOptions
+            {
+                ProgressHandler = progress,
+                Range = new HttpRange(offset, length)
+            });
             var downloadedData = new byte[result.Value.Details.ContentLength];
             using (Stream ms = new MemoryStream(downloadedData))
             {

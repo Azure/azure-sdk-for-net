@@ -91,7 +91,42 @@ namespace Azure.Storage.Files.DataLake
             /// <summary>
             /// The 2021-06-08 service version.
             /// </summary>
-            V2021_06_08 = 12
+            V2021_06_08 = 12,
+
+            /// <summary>
+            /// The 2021-08-06 service version.
+            /// </summary>
+            V2021_08_06 = 13,
+
+            /// <summary>
+            /// The 2021-10-04 service version.
+            /// </summary>
+            V2021_10_04 = 14,
+
+            /// <summary>
+            /// The 2021-12-02 service version.
+            /// </summary>
+            V2021_12_02 = 15,
+
+            /// <summary>
+            /// The 2022-11-02 service version.
+            /// </summary>
+            V2022_11_02 = 16,
+
+            /// <summary>
+            /// The 2023-01-03 service version.
+            /// </summary>
+            V2023_01_03 = 17,
+
+            /// <summary>
+            /// The 2023-05-03 service version.
+            /// </summary>
+            V2023_05_03 = 18,
+
+            /// <summary>
+            /// The 2023-08-03 service version.
+            /// </summary>
+            V2023_08_03 = 19
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -146,6 +181,11 @@ namespace Azure.Storage.Files.DataLake
 
         /// <inheritdoc />
         public bool EnableTenantDiscovery { get; set; }
+
+        /// <summary>
+        /// Transfer validation options to be applied to blob transfers from this client.
+        /// </summary>
+        public TransferValidationOptions TransferValidation { get; } = new();
 
         /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>

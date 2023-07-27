@@ -10,11 +10,11 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Automatic tuning option desired state. </summary>
     public enum AutomaticTuningOptionModeDesired
     {
+        /// <summary> Default. </summary>
+        Default,
         /// <summary> Off. </summary>
         Off,
         /// <summary> On. </summary>
-        On,
-        /// <summary> Default. </summary>
-        Default
+        On
     }
 }

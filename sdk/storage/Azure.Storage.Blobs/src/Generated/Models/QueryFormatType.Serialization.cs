@@ -22,10 +22,10 @@ namespace Azure.Storage.Blobs.Models
 
         public static QueryFormatType ToQueryFormatType(this string value)
         {
-            if (string.Equals(value, "delimited", StringComparison.InvariantCultureIgnoreCase)) return QueryFormatType.Delimited;
-            if (string.Equals(value, "json", StringComparison.InvariantCultureIgnoreCase)) return QueryFormatType.Json;
-            if (string.Equals(value, "arrow", StringComparison.InvariantCultureIgnoreCase)) return QueryFormatType.Arrow;
-            if (string.Equals(value, "parquet", StringComparison.InvariantCultureIgnoreCase)) return QueryFormatType.Parquet;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "delimited")) return QueryFormatType.Delimited;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "json")) return QueryFormatType.Json;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "arrow")) return QueryFormatType.Arrow;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "parquet")) return QueryFormatType.Parquet;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown QueryFormatType value.");
         }
     }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static WhatIfPropertyChange DeserializeWhatIfPropertyChange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string path = default;
             WhatIfPropertyChangeType propertyChangeType = default;
             Optional<BinaryData> before = default;
@@ -23,41 +27,38 @@ namespace Azure.ResourceManager.Resources.Models
             Optional<IReadOnlyList<WhatIfPropertyChange>> children = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("propertyChangeType"))
+                if (property.NameEquals("propertyChangeType"u8))
                 {
                     propertyChangeType = property.Value.GetString().ToWhatIfPropertyChangeType();
                     continue;
                 }
-                if (property.NameEquals("before"))
+                if (property.NameEquals("before"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     before = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("after"))
+                if (property.NameEquals("after"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     after = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("children"))
+                if (property.NameEquals("children"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();

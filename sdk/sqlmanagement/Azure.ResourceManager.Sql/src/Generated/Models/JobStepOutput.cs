@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -20,22 +21,10 @@ namespace Azure.ResourceManager.Sql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/>, <paramref name="databaseName"/>, <paramref name="tableName"/> or <paramref name="credential"/> is null. </exception>
         public JobStepOutput(string serverName, string databaseName, string tableName, string credential)
         {
-            if (serverName == null)
-            {
-                throw new ArgumentNullException(nameof(serverName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(serverName, nameof(serverName));
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(tableName, nameof(tableName));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             ServerName = serverName;
             DatabaseName = databaseName;
@@ -44,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of JobStepOutput. </summary>
-        /// <param name="jobStepOutputType"> The output destination type. </param>
+        /// <param name="outputType"> The output destination type. </param>
         /// <param name="subscriptionId"> The output destination subscription id. </param>
         /// <param name="resourceGroupName"> The output destination resource group. </param>
         /// <param name="serverName"> The output destination server name. </param>
@@ -52,9 +41,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="schemaName"> The output destination schema. </param>
         /// <param name="tableName"> The output destination table. </param>
         /// <param name="credential"> The resource ID of the credential to use to connect to the output destination. </param>
-        internal JobStepOutput(JobStepOutputType? jobStepOutputType, Guid? subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string credential)
+        internal JobStepOutput(JobStepOutputType? outputType, Guid? subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName, string credential)
         {
-            JobStepOutputType = jobStepOutputType;
+            OutputType = outputType;
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             ServerName = serverName;
@@ -65,7 +54,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The output destination type. </summary>
-        public JobStepOutputType? JobStepOutputType { get; set; }
+        public JobStepOutputType? OutputType { get; set; }
         /// <summary> The output destination subscription id. </summary>
         public Guid? SubscriptionId { get; set; }
         /// <summary> The output destination resource group. </summary>

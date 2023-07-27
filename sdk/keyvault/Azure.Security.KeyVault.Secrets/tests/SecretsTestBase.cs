@@ -14,11 +14,11 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
     [ClientTestFixture(
-        SecretClientOptions.ServiceVersion.V7_0,
-        SecretClientOptions.ServiceVersion.V7_1,
+        SecretClientOptions.ServiceVersion.V7_4,
+        SecretClientOptions.ServiceVersion.V7_3,
         SecretClientOptions.ServiceVersion.V7_2,
-        SecretClientOptions.ServiceVersion.V7_3)]
-    [NonParallelizable]
+        SecretClientOptions.ServiceVersion.V7_1,
+        SecretClientOptions.ServiceVersion.V7_0)]
     public abstract class SecretsTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback
@@ -273,6 +273,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                 new ClientSecretCredentialOptions()
                 {
                     AuthorityHost = new Uri(TestEnvironment.AuthorityHostUrl),
+                    AdditionallyAllowedTenants = { TestEnvironment.TenantId },
                 }
             );
         }

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> The secret management attributes. </summary>
-    public partial class SecretAttributes : BaseAttributes
+    public partial class SecretAttributes : SecretBaseAttributes
     {
         /// <summary> Initializes a new instance of SecretAttributes. </summary>
         public SecretAttributes()

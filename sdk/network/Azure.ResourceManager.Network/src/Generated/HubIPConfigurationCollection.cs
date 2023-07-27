@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -26,8 +25,8 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class HubIPConfigurationCollection : ArmCollection, IEnumerable<HubIPConfigurationResource>, IAsyncEnumerable<HubIPConfigurationResource>
     {
-        private readonly ClientDiagnostics _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics;
-        private readonly VirtualHubIpConfigurationRestOperations _hubIPConfigurationVirtualHubIpConfigurationRestClient;
+        private readonly ClientDiagnostics _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics;
+        private readonly VirtualHubIpConfigurationRestOperations _hubIPConfigurationVirtualHubIPConfigurationRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="HubIPConfigurationCollection"/> class for mocking. </summary>
         protected HubIPConfigurationCollection()
@@ -39,9 +38,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal HubIPConfigurationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubIPConfigurationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(HubIPConfigurationResource.ResourceType, out string hubIPConfigurationVirtualHubIpConfigurationApiVersion);
-            _hubIPConfigurationVirtualHubIpConfigurationRestClient = new VirtualHubIpConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hubIPConfigurationVirtualHubIpConfigurationApiVersion);
+            _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", HubIPConfigurationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HubIPConfigurationResource.ResourceType, out string hubIPConfigurationVirtualHubIPConfigurationApiVersion);
+            _hubIPConfigurationVirtualHubIPConfigurationRestClient = new VirtualHubIpConfigurationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hubIPConfigurationVirtualHubIPConfigurationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -54,11 +53,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a VirtualHubIpConfiguration resource if it doesn&apos;t exist else updates the existing VirtualHubIpConfiguration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
-        /// Operation Id: VirtualHubIpConfiguration_CreateOrUpdate
+        /// Creates a VirtualHubIpConfiguration resource if it doesn't exist else updates the existing VirtualHubIpConfiguration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubIpConfiguration_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="data"> Hub Ip Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -69,12 +76,12 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.CreateOrUpdate");
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _hubIPConfigurationVirtualHubIpConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<HubIPConfigurationResource>(new HubIPConfigurationOperationSource(Client), _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, _hubIPConfigurationVirtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<HubIPConfigurationResource>(new HubIPConfigurationOperationSource(Client), _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics, Pipeline, _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -87,11 +94,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a VirtualHubIpConfiguration resource if it doesn&apos;t exist else updates the existing VirtualHubIpConfiguration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
-        /// Operation Id: VirtualHubIpConfiguration_CreateOrUpdate
+        /// Creates a VirtualHubIpConfiguration resource if it doesn't exist else updates the existing VirtualHubIpConfiguration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubIpConfiguration_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="data"> Hub Ip Configuration parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,12 +117,12 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.CreateOrUpdate");
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _hubIPConfigurationVirtualHubIpConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, data, cancellationToken);
-                var operation = new NetworkArmOperation<HubIPConfigurationResource>(new HubIPConfigurationOperationSource(Client), _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics, Pipeline, _hubIPConfigurationVirtualHubIpConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, data, cancellationToken);
+                var operation = new NetworkArmOperation<HubIPConfigurationResource>(new HubIPConfigurationOperationSource(Client), _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics, Pipeline, _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -121,8 +136,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves the details of a Virtual Hub Ip configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
-        /// Operation Id: VirtualHubIpConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubIpConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,11 +155,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Get");
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _hubIPConfigurationVirtualHubIpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken).ConfigureAwait(false);
+                var response = await _hubIPConfigurationVirtualHubIPConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HubIPConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -150,8 +173,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves the details of a Virtual Hub Ip configuration.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
-        /// Operation Id: VirtualHubIpConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubIpConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,11 +192,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Get");
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Get");
             scope.Start();
             try
             {
-                var response = _hubIPConfigurationVirtualHubIpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken);
+                var response = _hubIPConfigurationVirtualHubIPConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new HubIPConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -179,92 +210,60 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Retrieves the details of all VirtualHubIpConfigurations.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations
-        /// Operation Id: VirtualHubIpConfiguration_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubIpConfiguration_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HubIPConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HubIPConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<HubIPConfigurationResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hubIPConfigurationVirtualHubIpConfigurationRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubIPConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<HubIPConfigurationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _hubIPConfigurationVirtualHubIpConfigurationRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubIPConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HubIPConfigurationResource(Client, HubIPConfigurationData.DeserializeHubIPConfigurationData(e)), _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics, Pipeline, "HubIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Retrieves the details of all VirtualHubIpConfigurations.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations
-        /// Operation Id: VirtualHubIpConfiguration_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubIpConfiguration_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HubIPConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HubIPConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<HubIPConfigurationResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hubIPConfigurationVirtualHubIpConfigurationRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubIPConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<HubIPConfigurationResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _hubIPConfigurationVirtualHubIpConfigurationRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new HubIPConfigurationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hubIPConfigurationVirtualHubIPConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HubIPConfigurationResource(Client, HubIPConfigurationData.DeserializeHubIPConfigurationData(e)), _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics, Pipeline, "HubIPConfigurationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
-        /// Operation Id: VirtualHubIpConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubIpConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -274,11 +273,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Exists");
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _hubIPConfigurationVirtualHubIpConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hubIPConfigurationVirtualHubIPConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -290,8 +289,16 @@ namespace Azure.ResourceManager.Network
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}
-        /// Operation Id: VirtualHubIpConfiguration_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/ipConfigurations/{ipConfigName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualHubIpConfiguration_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="ipConfigName"> The name of the ipconfig. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -301,11 +308,11 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(ipConfigName, nameof(ipConfigName));
 
-            using var scope = _hubIPConfigurationVirtualHubIpConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Exists");
+            using var scope = _hubIPConfigurationVirtualHubIPConfigurationClientDiagnostics.CreateScope("HubIPConfigurationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _hubIPConfigurationVirtualHubIpConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken);
+                var response = _hubIPConfigurationVirtualHubIPConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ipConfigName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

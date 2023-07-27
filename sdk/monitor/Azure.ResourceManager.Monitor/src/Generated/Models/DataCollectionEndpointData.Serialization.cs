@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -18,69 +19,125 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties");
-                writer.WriteObjectValue(Properties);
-            }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(ImmutableId))
+            {
+                writer.WritePropertyName("immutableId"u8);
+                writer.WriteStringValue(ImmutableId);
+            }
+            if (Optional.IsDefined(ConfigurationAccess))
+            {
+                writer.WritePropertyName("configurationAccess"u8);
+                writer.WriteObjectValue(ConfigurationAccess);
+            }
+            if (Optional.IsDefined(LogsIngestion))
+            {
+                writer.WritePropertyName("logsIngestion"u8);
+                writer.WriteObjectValue(LogsIngestion);
+            }
+            if (Optional.IsDefined(MetricsIngestion))
+            {
+                writer.WritePropertyName("metricsIngestion"u8);
+                writer.WriteObjectValue(MetricsIngestion);
+            }
+            if (Optional.IsDefined(NetworkAcls))
+            {
+                writer.WritePropertyName("networkAcls"u8);
+                writer.WriteObjectValue(NetworkAcls);
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("location");
-            writer.WriteStringValue(Location);
             writer.WriteEndObject();
         }
 
         internal static DataCollectionEndpointData DeserializeDataCollectionEndpointData(JsonElement element)
         {
-            Optional<DataCollectionEndpointProperties> properties = default;
-            Optional<KnownDataCollectionEndpointResourceKind> kind = default;
-            Optional<string> etag = default;
-            IDictionary<string, string> tags = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataCollectionEndpointResourceKind> kind = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ETag> etag = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
+            Optional<string> description = default;
+            Optional<string> immutableId = default;
+            Optional<DataCollectionEndpointConfigurationAccess> configurationAccess = default;
+            Optional<DataCollectionEndpointLogsIngestion> logsIngestion = default;
+            Optional<DataCollectionEndpointMetricsIngestion> metricsIngestion = default;
+            Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
+            Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
+            Optional<IReadOnlyList<DataCollectionRulePrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
+            Optional<DataCollectionEndpointFailoverConfiguration> failoverConfiguration = default;
+            Optional<DataCollectionEndpointMetadata> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = DataCollectionEndpointProperties.DeserializeDataCollectionEndpointProperties(property.Value);
+                    kind = new DataCollectionEndpointResourceKind(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new KnownDataCollectionEndpointResourceKind(property.Value.GetString());
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -89,33 +146,136 @@ namespace Azure.ResourceManager.Monitor
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("immutableId"u8))
+                        {
+                            immutableId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationAccess"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            configurationAccess = DataCollectionEndpointConfigurationAccess.DeserializeDataCollectionEndpointConfigurationAccess(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("logsIngestion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            logsIngestion = DataCollectionEndpointLogsIngestion.DeserializeDataCollectionEndpointLogsIngestion(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("metricsIngestion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            metricsIngestion = DataCollectionEndpointMetricsIngestion.DeserializeDataCollectionEndpointMetricsIngestion(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("networkAcls"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkAcls = DataCollectionEndpointNetworkAcls.DeserializeDataCollectionEndpointNetworkAcls(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new DataCollectionEndpointProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("privateLinkScopedResources"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DataCollectionRulePrivateLinkScopedResourceInfo> array = new List<DataCollectionRulePrivateLinkScopedResourceInfo>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DataCollectionRulePrivateLinkScopedResourceInfo.DeserializeDataCollectionRulePrivateLinkScopedResourceInfo(item));
+                            }
+                            privateLinkScopedResources = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("failoverConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            failoverConfiguration = DataCollectionEndpointFailoverConfiguration.DeserializeDataCollectionEndpointFailoverConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("metadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            metadata = DataCollectionEndpointMetadata.DeserializeDataCollectionEndpointMetadata(property0.Value);
+                            continue;
+                        }
+                    }
                     continue;
                 }
             }
-            return new DataCollectionEndpointData(id, name, type, systemData, tags, location, properties.Value, Optional.ToNullable(kind), etag.Value);
+            return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, metricsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateLinkScopedResources), failoverConfiguration.Value, metadata.Value);
         }
     }
 }

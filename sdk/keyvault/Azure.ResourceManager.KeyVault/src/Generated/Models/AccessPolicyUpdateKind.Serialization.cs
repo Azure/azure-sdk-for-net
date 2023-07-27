@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         public static AccessPolicyUpdateKind ToAccessPolicyUpdateKind(this string value)
         {
-            if (string.Equals(value, "add", StringComparison.InvariantCultureIgnoreCase)) return AccessPolicyUpdateKind.Add;
-            if (string.Equals(value, "replace", StringComparison.InvariantCultureIgnoreCase)) return AccessPolicyUpdateKind.Replace;
-            if (string.Equals(value, "remove", StringComparison.InvariantCultureIgnoreCase)) return AccessPolicyUpdateKind.Remove;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "add")) return AccessPolicyUpdateKind.Add;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "replace")) return AccessPolicyUpdateKind.Replace;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "remove")) return AccessPolicyUpdateKind.Remove;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccessPolicyUpdateKind value.");
         }
     }

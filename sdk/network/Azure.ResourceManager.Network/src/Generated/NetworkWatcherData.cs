@@ -6,12 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NetworkWatcher data model. </summary>
-    public partial class NetworkWatcherData : NetworkResourceData
+    /// <summary>
+    /// A class representing the NetworkWatcher data model.
+    /// Network watcher in a resource group.
+    /// </summary>
+    public partial class NetworkWatcherData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkWatcherData. </summary>
         public NetworkWatcherData()
@@ -26,15 +31,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="provisioningState"> The provisioning state of the network watcher resource. </param>
-        internal NetworkWatcherData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NetworkWatcherData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             ProvisioningState = provisioningState;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The provisioning state of the network watcher resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

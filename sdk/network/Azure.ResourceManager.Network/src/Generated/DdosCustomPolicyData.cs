@@ -5,21 +5,23 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the DdosCustomPolicy data model. </summary>
-    public partial class DdosCustomPolicyData : NetworkResourceData
+    /// <summary>
+    /// A class representing the DdosCustomPolicy data model.
+    /// A DDoS custom policy in a resource group.
+    /// </summary>
+    public partial class DdosCustomPolicyData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of DdosCustomPolicyData. </summary>
         public DdosCustomPolicyData()
         {
-            PublicIPAddresses = new ChangeTrackingList<WritableSubResource>();
-            ProtocolCustomSettings = new ChangeTrackingList<ProtocolCustomSettingsFormat>();
         }
 
         /// <summary> Initializes a new instance of DdosCustomPolicyData. </summary>
@@ -31,26 +33,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
-        /// <param name="publicIPAddresses"> The list of public IPs associated with the DDoS custom policy resource. This list is read-only. </param>
-        /// <param name="protocolCustomSettings"> The protocol-specific DDoS policy customization parameters. </param>
-        internal DdosCustomPolicyData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, string resourceGuid, ProvisioningState? provisioningState, IReadOnlyList<WritableSubResource> publicIPAddresses, IList<ProtocolCustomSettingsFormat> protocolCustomSettings) : base(id, name, resourceType, location, tags)
+        internal DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
-            PublicIPAddresses = publicIPAddresses;
-            ProtocolCustomSettings = protocolCustomSettings;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the DDoS custom policy resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The list of public IPs associated with the DDoS custom policy resource. This list is read-only. </summary>
-        public IReadOnlyList<WritableSubResource> PublicIPAddresses { get; }
-        /// <summary> The protocol-specific DDoS policy customization parameters. </summary>
-        public IList<ProtocolCustomSettingsFormat> ProtocolCustomSettings { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

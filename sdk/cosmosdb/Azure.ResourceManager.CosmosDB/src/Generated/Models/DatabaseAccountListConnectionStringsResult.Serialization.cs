@@ -15,20 +15,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static DatabaseAccountListConnectionStringsResult DeserializeDatabaseAccountListConnectionStringsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DatabaseAccountConnectionString>> connectionStrings = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<CosmosDBAccountConnectionString>> connectionStrings = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionStrings"))
+                if (property.NameEquals("connectionStrings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatabaseAccountConnectionString> array = new List<DatabaseAccountConnectionString>();
+                    List<CosmosDBAccountConnectionString> array = new List<CosmosDBAccountConnectionString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseAccountConnectionString.DeserializeDatabaseAccountConnectionString(item));
+                        array.Add(CosmosDBAccountConnectionString.DeserializeCosmosDBAccountConnectionString(item));
                     }
                     connectionStrings = array;
                     continue;

@@ -62,11 +62,11 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Create a namespace AuthorizationRule
-                var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);
-                string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
+                var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);                
+
                 var createAutorizationRuleParameter = new SBAuthorizationRule()
                 {
-                    Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
+                    Rights = new List<string>() { AccessRights.Listen, AccessRights.Send }
                 };
 
                 var jsonStr = ServiceBusManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
@@ -104,10 +104,8 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Contains(getAllNamespaceAuthorizationRulesResponse, ns => ns.Name == authorizationRuleName);
                 Assert.Contains(getAllNamespaceAuthorizationRulesResponse, auth => auth.Name == ServiceBusManagementHelper.DefaultNamespaceAuthorizationRule);
 
-                // Update namespace authorizationRule
-                string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
                 SBAuthorizationRule updateNamespaceAuthorizationRuleParameter = new SBAuthorizationRule();
-                updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
+                updateNamespaceAuthorizationRuleParameter.Rights = new List<string>() { AccessRights.Listen };
 
                 var updateNamespaceAuthorizationRuleResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup,
                     namespaceName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter);
@@ -136,24 +134,73 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
-                // Regenerate AuthorizationRules
-                //Primary
+                // Regenerate Keys for the create Authorization rules
                 var regenerateKeysParameters = new RegenerateAccessKeyParameters();
                 regenerateKeysParameters.KeyType = KeyType.PrimaryKey;
 
-                var regenerateKeysResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, regenerateKeysParameters);
-                Assert.NotNull(regenerateKeysResponse);
-                Assert.NotEqual(regenerateKeysResponse.PrimaryKey, listKeysResponse.PrimaryKey);
-                Assert.Equal(regenerateKeysResponse.SecondaryKey, listKeysResponse.SecondaryKey);
+                var regeneratePrimaryKeysResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, regenerateKeysParameters);
 
-                //Secondary
-                regenerateKeysParameters.KeyType = KeyType.SecondaryKey;
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    var beforeKey = listKeysResponse.PrimaryKey;
+                    var afterKey = regeneratePrimaryKeysResponse.PrimaryKey;
+                    Assert.NotEqual(afterKey, beforeKey);
+                }
 
-                var regenerateSecondaryKeyResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, regenerateKeysParameters);
-                Assert.NotNull(regenerateSecondaryKeyResponse);
-                Assert.NotEqual(regenerateSecondaryKeyResponse.SecondaryKey, listKeysResponse.SecondaryKey);
-                Assert.Equal(regenerateSecondaryKeyResponse.PrimaryKey, regenerateKeysResponse.PrimaryKey);
+                Assert.Equal(listKeysResponse.SecondaryKey, regeneratePrimaryKeysResponse.SecondaryKey);
+                
 
+                listKeysResponse = regeneratePrimaryKeysResponse;
+
+                var regenerateSecondaryKeysResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, new RegenerateAccessKeyParameters() { KeyType = KeyType.SecondaryKey });
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    var beforeKey = regeneratePrimaryKeysResponse.SecondaryKey;
+                    var afterKey = regenerateSecondaryKeysResponse.SecondaryKey;
+                    Assert.NotEqual(afterKey, beforeKey);
+                }
+
+                Assert.Equal(listKeysResponse.PrimaryKey, regenerateSecondaryKeysResponse.PrimaryKey);
+                listKeysResponse = regenerateSecondaryKeysResponse;
+
+                RegenerateAccessKeyParameters keyObject = new RegenerateAccessKeyParameters()
+                {
+                    Key = ServiceBusManagementHelper.GenerateRandomKey(),
+                    KeyType = KeyType.PrimaryKey
+                };
+                var regeneratePrimaryKeyResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, keyObject);
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    Assert.Equal(keyObject.Key, regeneratePrimaryKeyResponse.PrimaryKey);
+                    Assert.Equal(listKeysResponse.SecondaryKey, regeneratePrimaryKeyResponse.SecondaryKey);
+                }
+                else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                {
+                    Assert.Equal("Sanitized", regeneratePrimaryKeyResponse.PrimaryKey);
+                    Assert.Equal("Sanitized", regeneratePrimaryKeyResponse.SecondaryKey);
+                }
+                
+                listKeysResponse = regeneratePrimaryKeyResponse;
+                 keyObject = new RegenerateAccessKeyParameters()
+                {
+                    Key = ServiceBusManagementHelper.GenerateRandomKey(),
+                    KeyType = KeyType.SecondaryKey
+                };
+
+                var regenerateSecondaryKeyResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, keyObject);
+
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    Assert.Equal(keyObject.Key, regenerateSecondaryKeyResponse.SecondaryKey);
+                    Assert.Equal(listKeysResponse.PrimaryKey, regenerateSecondaryKeyResponse.PrimaryKey);
+                }
+                else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
+                {
+                    Assert.Equal("Sanitized", regenerateSecondaryKeyResponse.SecondaryKey);
+                    Assert.Equal("Sanitized", regenerateSecondaryKeyResponse.PrimaryKey);
+                }                              
+                
 
                 // Delete namespace authorizationRule
                 ServiceBusManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);

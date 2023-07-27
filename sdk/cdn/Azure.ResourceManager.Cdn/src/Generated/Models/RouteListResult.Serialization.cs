@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static RouteListResult DeserializeRouteListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AfdRouteData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<FrontDoorRouteData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AfdRouteData> array = new List<AfdRouteData>();
+                    List<FrontDoorRouteData> array = new List<FrontDoorRouteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AfdRouteData.DeserializeAfdRouteData(item));
+                        array.Add(FrontDoorRouteData.DeserializeFrontDoorRouteData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

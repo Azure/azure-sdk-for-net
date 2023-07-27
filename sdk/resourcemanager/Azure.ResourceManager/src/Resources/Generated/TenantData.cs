@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the Tenant data model. </summary>
+    /// <summary>
+    /// A class representing the Tenant data model.
+    /// Tenant Id information.
+    /// </summary>
     public partial class TenantData
     {
         /// <summary> Initializes a new instance of TenantData. </summary>
@@ -22,16 +25,16 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Initializes a new instance of TenantData. </summary>
-        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000. </param>
-        /// <param name="tenantId"> The tenant ID. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </param>
+        /// <param name="tenantId"> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="tenantCategory"> Category of the tenant. </param>
         /// <param name="country"> Country/region name of the address for the tenant. </param>
         /// <param name="countryCode"> Country/region abbreviation for the tenant. </param>
         /// <param name="displayName"> The display name of the tenant. </param>
         /// <param name="domains"> The list of domains for the tenant. </param>
         /// <param name="defaultDomain"> The default domain for the tenant. </param>
-        /// <param name="tenantType"> The tenant type. Only available for &apos;Home&apos; tenant category. </param>
-        /// <param name="tenantBrandingLogoUri"> The tenant&apos;s branding logo URL. Only available for &apos;Home&apos; tenant category. </param>
+        /// <param name="tenantType"> The tenant type. Only available for 'Home' tenant category. </param>
+        /// <param name="tenantBrandingLogoUri"> The tenant's branding logo URL. Only available for 'Home' tenant category. </param>
         internal TenantData(string id, Guid? tenantId, TenantCategory? tenantCategory, string country, string countryCode, string displayName, IReadOnlyList<string> domains, string defaultDomain, string tenantType, Uri tenantBrandingLogoUri)
         {
             Id = id;
@@ -46,9 +49,9 @@ namespace Azure.ResourceManager.Resources
             TenantBrandingLogoUri = tenantBrandingLogoUri;
         }
 
-        /// <summary> The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000. </summary>
+        /// <summary> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </summary>
         public string Id { get; }
-        /// <summary> The tenant ID. For example, 00000000-0000-0000-0000-000000000000. </summary>
+        /// <summary> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </summary>
         public Guid? TenantId { get; }
         /// <summary> Category of the tenant. </summary>
         public TenantCategory? TenantCategory { get; }
@@ -62,9 +65,9 @@ namespace Azure.ResourceManager.Resources
         public IReadOnlyList<string> Domains { get; }
         /// <summary> The default domain for the tenant. </summary>
         public string DefaultDomain { get; }
-        /// <summary> The tenant type. Only available for &apos;Home&apos; tenant category. </summary>
+        /// <summary> The tenant type. Only available for 'Home' tenant category. </summary>
         public string TenantType { get; }
-        /// <summary> The tenant&apos;s branding logo URL. Only available for &apos;Home&apos; tenant category. </summary>
+        /// <summary> The tenant's branding logo URL. Only available for 'Home' tenant category. </summary>
         public Uri TenantBrandingLogoUri { get; }
     }
 }

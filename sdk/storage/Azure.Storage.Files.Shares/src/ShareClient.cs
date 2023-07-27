@@ -121,7 +121,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="shareName">
         /// The name of the share in the storage account to reference.
         /// </param>
-        public ShareClient(string connectionString, string shareName)
+        public ShareClient(
+            string connectionString,
+            string shareName)
             : this(connectionString, shareName, null)
         {
         }
@@ -147,7 +149,10 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareClient(string connectionString, string shareName, ShareClientOptions options)
+        public ShareClient(
+            string connectionString,
+            string shareName,
+            ShareClientOptions options)
         {
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
@@ -156,8 +161,8 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(conn.Credentials),
                 sharedKeyCredential: conn.Credentials as StorageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                clientDiagnostics: new ClientDiagnostics(options),
+                clientOptions: options);
             _shareRestClient = BuildShareRestClient(_uri);
         }
 
@@ -174,8 +179,16 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareClient(Uri shareUri, ShareClientOptions options = default)
-            : this(shareUri, (HttpPipelinePolicy)null, options, null)
+        public ShareClient(
+            Uri shareUri,
+            ShareClientOptions options = default)
+            : this(
+                  shareUri,
+                  (HttpPipelinePolicy)null,
+                  options,
+                  storageSharedKeyCredential: default,
+                  sasCredential: default,
+                  tokenCredential: default)
         {
         }
 
@@ -195,14 +208,27 @@ namespace Azure.Storage.Files.Shares
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        public ShareClient(Uri shareUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
-            : this(shareUri, credential.AsPolicy(), options, credential)
+        public ShareClient(
+            Uri shareUri,
+            StorageSharedKeyCredential credential,
+            ShareClientOptions options = default)
+            : this(
+                  shareUri,
+                  credential.AsPolicy(),
+                  options,
+                  storageSharedKeyCredential: credential,
+                  sasCredential: default,
+                  tokenCredential: default)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareClient"/>
         /// class.
+        ///
+        /// Note that token credential authentication is only compatible with the <see cref="GetPermission(string, CancellationToken)"/>,
+        /// <see cref="GetPermissionAsync(string, CancellationToken)"/>, <see cref="CreatePermission(string, CancellationToken)"/>, and
+        /// <see cref="CreatePermissionAsync(string, CancellationToken)"/> share-level operations.
         /// </summary>
         /// <param name="shareUri">
         /// A <see cref="Uri"/> referencing the share that includes the
@@ -220,9 +246,60 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
-        public ShareClient(Uri shareUri, AzureSasCredential credential, ShareClientOptions options = default)
-            : this(shareUri, credential.AsPolicy<ShareUriBuilder>(shareUri), options, null)
+        public ShareClient(
+            Uri shareUri,
+            AzureSasCredential credential,
+            ShareClientOptions options = default)
+            : this(
+                  shareUri,
+                  credential.AsPolicy<ShareUriBuilder>(shareUri),
+                  options,
+                  storageSharedKeyCredential: default,
+                  sasCredential: credential,
+                  tokenCredential: default)
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareClient"/>
+        /// class.
+        ///
+        /// Note that the only share-level operations that support token credential authentication are
+        /// <see cref="CreatePermission(string, CancellationToken)"/>,
+        /// <see cref="CreatePermissionAsync(string, CancellationToken)"/>,
+        /// <see cref="GetPermission(string, CancellationToken)"/>, and
+        /// <see cref="GetPermissionAsync(string, CancellationToken)"/>.
+        ///
+        /// This constructor also allow the construction of a <see cref="ShareServiceClient"/> that can be used to derive
+        /// a <see cref="ShareClient"/> that has token credential authentication.
+        ///
+        /// Also note that <see cref="ShareClientOptions.ShareTokenIntent"/> is currently required for token authentication.
+        /// </summary>
+        /// <param name="shareUri">
+        /// A <see cref="Uri"/> referencing the share that includes the
+        /// name of the account and the name of the share.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public ShareClient(
+            Uri shareUri,
+            TokenCredential credential,
+            ShareClientOptions options = default)
+            : this(
+                  shareUri: shareUri,
+                  authentication: credential.AsPolicy(options),
+                  options: options ?? new ShareClientOptions(),
+                  storageSharedKeyCredential: default,
+                  sasCredential: default,
+                  tokenCredential: credential)
+        {
+            Errors.VerifyHttpsTokenAuth(shareUri);
         }
 
         /// <summary>
@@ -244,11 +321,19 @@ namespace Azure.Storage.Files.Shares
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
         internal ShareClient(
             Uri shareUri,
             HttpPipelinePolicy authentication,
             ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential)
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(shareUri, nameof(shareUri));
             options ??= new ShareClientOptions();
@@ -256,8 +341,10 @@ namespace Azure.Storage.Files.Shares
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new StorageClientDiagnostics(options),
-                version: options.Version);
+                sasCredential: sasCredential,
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                clientOptions: options);
             _shareRestClient = BuildShareRestClient(shareUri);
         }
 
@@ -287,7 +374,8 @@ namespace Azure.Storage.Files.Shares
                 _clientConfiguration.ClientDiagnostics,
                 _clientConfiguration.Pipeline,
                 uri.AbsoluteUri,
-                _clientConfiguration.Version.ToVersionString());
+                _clientConfiguration.ClientOptions.Version.ToVersionString(),
+                _clientConfiguration.ClientOptions.ShareTokenIntent);
         }
         #endregion ctors
 
@@ -3489,6 +3577,7 @@ namespace Azure.Storage.Files.Shares
                 ShareUriBuilder shareUriBuilder = new ShareUriBuilder(Uri)
                 {
                     // erase parameters unrelated to container
+                    ShareName = null,
                     DirectoryOrFilePath = null,
                     Snapshot = null,
                 };

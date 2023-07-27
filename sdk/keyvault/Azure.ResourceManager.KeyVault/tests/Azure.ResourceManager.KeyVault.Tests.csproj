@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TestHelperProjects>Rbac1.6;</TestHelperProjects>
-  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.KeyVault.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />

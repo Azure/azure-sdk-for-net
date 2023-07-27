@@ -15,24 +15,27 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FirewallPolicyNatRuleCollectionActionType))
+            if (Optional.IsDefined(ActionType))
             {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(FirewallPolicyNatRuleCollectionActionType.Value.ToString());
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ActionType.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static FirewallPolicyNatRuleCollectionAction DeserializeFirewallPolicyNatRuleCollectionAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FirewallPolicyNatRuleCollectionActionType> type = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new FirewallPolicyNatRuleCollectionActionType(property.Value.GetString());

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the GremlinGraph data model. </summary>
+    /// <summary>
+    /// A class representing the GremlinGraph data model.
+    /// An Azure Cosmos DB Gremlin graph.
+    /// </summary>
     public partial class GremlinGraphData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GremlinGraphData. </summary>
@@ -30,15 +33,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal GremlinGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GremlinGraphPropertiesResource resource, GremlinGraphPropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> Identity for the resource. </param>
+        internal GremlinGraphData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedGremlinGraphResourceInfo resource, GremlinGraphPropertiesConfig options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
+            Identity = identity;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public GremlinGraphPropertiesResource Resource { get; set; }
+        public ExtendedGremlinGraphResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public GremlinGraphPropertiesOptions Options { get; set; }
+        public GremlinGraphPropertiesConfig Options { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

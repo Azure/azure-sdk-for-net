@@ -15,19 +15,13 @@ namespace Azure.Monitor.Query.Models
     internal partial class ErrorDetail
     {
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        /// <param name="code"> The error&apos;s code. </param>
+        /// <param name="code"> The error's code. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ErrorDetail(string code, string message)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;
@@ -35,10 +29,10 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
-        /// <param name="code"> The error&apos;s code. </param>
+        /// <param name="code"> The error's code. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="target"> Indicates which property in the request is responsible for the error. </param>
-        /// <param name="value"> Indicates which value in &apos;target&apos; is responsible for the error. </param>
+        /// <param name="value"> Indicates which value in 'target' is responsible for the error. </param>
         /// <param name="resources"> Indicates resources which were responsible for the error. </param>
         /// <param name="additionalProperties"> Additional properties that can be provided on the error details object. </param>
         internal ErrorDetail(string code, string message, string target, string value, IReadOnlyList<string> resources, object additionalProperties)
@@ -51,13 +45,13 @@ namespace Azure.Monitor.Query.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> The error&apos;s code. </summary>
+        /// <summary> The error's code. </summary>
         public string Code { get; }
         /// <summary> A human readable error message. </summary>
         public string Message { get; }
         /// <summary> Indicates which property in the request is responsible for the error. </summary>
         public string Target { get; }
-        /// <summary> Indicates which value in &apos;target&apos; is responsible for the error. </summary>
+        /// <summary> Indicates which value in 'target' is responsible for the error. </summary>
         public string Value { get; }
         /// <summary> Indicates resources which were responsible for the error. </summary>
         public IReadOnlyList<string> Resources { get; }

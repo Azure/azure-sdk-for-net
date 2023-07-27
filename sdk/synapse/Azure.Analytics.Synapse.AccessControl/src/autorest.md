@@ -11,7 +11,6 @@ require:
     - https://github.com/Azure/azure-rest-api-specs/blob/37c4ff1612668f5acec62dea729ca3a66b591d7f/specification/synapse/data-plane/readme.md
 namespace: Azure.Analytics.Synapse.AccessControl
 public-clients: true
-data-plane: true
 security: AADToken
 security-scopes: https://dev.azuresynapse.net/.default
 ```

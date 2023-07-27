@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="routingSource">Routing source. Possible values
         /// include: 'Invalid', 'DeviceMessages', 'TwinChangeEvents',
         /// 'DeviceLifecycleEvents', 'DeviceJobLifecycleEvents',
-        /// 'DeviceConnectionStateEvents'</param>
+        /// 'DigitalTwinChangeEvents', 'DeviceConnectionStateEvents',
+        /// 'MqttBrokerMessages'</param>
         /// <param name="message">Routing message</param>
         /// <param name="twin">Routing Twin Reference</param>
         public TestAllRoutesInput(string routingSource = default(string), RoutingMessage message = default(RoutingMessage), RoutingTwin twin = default(RoutingTwin))
@@ -51,7 +52,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Gets or sets routing source. Possible values include: 'Invalid',
         /// 'DeviceMessages', 'TwinChangeEvents', 'DeviceLifecycleEvents',
-        /// 'DeviceJobLifecycleEvents', 'DeviceConnectionStateEvents'
+        /// 'DeviceJobLifecycleEvents', 'DigitalTwinChangeEvents',
+        /// 'DeviceConnectionStateEvents', 'MqttBrokerMessages'
         /// </summary>
         [JsonProperty(PropertyName = "routingSource")]
         public string RoutingSource { get; set; }

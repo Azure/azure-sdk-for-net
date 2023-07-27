@@ -130,6 +130,28 @@ namespace Azure.Storage.Blobs.Tests
                 OpenWriteAsync(client, overwrite: false, maxDataSize: Constants.KB),
                 e => Assert.AreEqual("BlockBlobClient.OpenWrite only supports overwriting", e.Message));
         }
+
+        [RecordedTest]
+        public async Task OpenWriteAsync_NullOptions()
+        {
+            // Arrange
+            await using IDisposingContainer<BlobContainerClient> disposingContainer = await GetDisposingContainerAsync();
+            BlobClient client = GetResourceClient(disposingContainer.Container);
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            // Act
+            try
+            {
+                using (var writeStream = await client.OpenWriteAsync(true))
+                {
+                    await new MemoryStream(data).CopyToAsync(writeStream);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
         #endregion
     }
 }

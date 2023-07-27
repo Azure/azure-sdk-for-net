@@ -16,21 +16,25 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static OSFamilyListResult DeserializeOSFamilyListResult(JsonElement element)
         {
-            IReadOnlyList<OSFamilyData> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<CloudServiceOSFamilyData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<OSFamilyData> array = new List<OSFamilyData>();
+                    List<CloudServiceOSFamilyData> array = new List<CloudServiceOSFamilyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OSFamilyData.DeserializeOSFamilyData(item));
+                        array.Add(CloudServiceOSFamilyData.DeserializeCloudServiceOSFamilyData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

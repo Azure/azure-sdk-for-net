@@ -18,26 +18,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static IotHubDeviceTelemetryEventData DeserializeIotHubDeviceTelemetryEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> body = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             Optional<IReadOnlyDictionary<string, string>> systemProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("body"))
+                if (property.NameEquals("body"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     body = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -48,11 +50,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     properties = dictionary;
                     continue;
                 }
-                if (property.NameEquals("systemProperties"))
+                if (property.NameEquals("systemProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

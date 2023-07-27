@@ -19,44 +19,47 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
             if (Optional.IsDefined(Product))
             {
-                writer.WritePropertyName("product");
+                writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
             if (Optional.IsDefined(Vendor))
             {
-                writer.WritePropertyName("vendor");
+                writer.WritePropertyName("vendor"u8);
                 writer.WriteStringValue(Vendor);
             }
             if (Optional.IsDefined(MarketplacePublisher))
             {
-                writer.WritePropertyName("marketplacePublisher");
+                writer.WritePropertyName("marketplacePublisher"u8);
                 writer.WriteStringValue(MarketplacePublisher);
             }
             if (Optional.IsDefined(MarketplaceOffer))
             {
-                writer.WritePropertyName("marketplaceOffer");
+                writer.WritePropertyName("marketplaceOffer"u8);
                 writer.WriteStringValue(MarketplaceOffer);
             }
             writer.WriteEndObject();
@@ -65,13 +68,17 @@ namespace Azure.ResourceManager.AppService
 
         internal static PremierAddOnData DeserializePremierAddOnData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> sku = default;
             Optional<string> product = default;
             Optional<string> vendor = default;
@@ -79,13 +86,17 @@ namespace Azure.ResourceManager.AppService
             Optional<string> marketplaceOffer = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -94,32 +105,36 @@ namespace Azure.ResourceManager.AppService
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,27 +143,27 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("sku"))
+                        if (property0.NameEquals("sku"u8))
                         {
                             sku = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("product"))
+                        if (property0.NameEquals("product"u8))
                         {
                             product = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("vendor"))
+                        if (property0.NameEquals("vendor"u8))
                         {
                             vendor = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("marketplacePublisher"))
+                        if (property0.NameEquals("marketplacePublisher"u8))
                         {
                             marketplacePublisher = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("marketplaceOffer"))
+                        if (property0.NameEquals("marketplaceOffer"u8))
                         {
                             marketplaceOffer = property0.Value.GetString();
                             continue;
@@ -157,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new PremierAddOnData(id, name, type, systemData, tags, location, kind.Value, sku.Value, product.Value, vendor.Value, marketplacePublisher.Value, marketplaceOffer.Value);
+            return new PremierAddOnData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, product.Value, vendor.Value, marketplacePublisher.Value, marketplaceOffer.Value, kind.Value);
         }
     }
 }

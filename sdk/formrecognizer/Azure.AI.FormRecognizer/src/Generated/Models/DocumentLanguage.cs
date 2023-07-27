@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -15,39 +16,33 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     public partial class DocumentLanguage
     {
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
-        /// <param name="languageCode"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>
+        /// <param name="locale"> Detected language.  Value may an ISO 639-1 language code (ex. "en", "fr") or BCP 47 language tag (ex. "zh-Hans"). </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the language applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="languageCode"/> or <paramref name="spans"/> is null. </exception>
-        internal DocumentLanguage(string languageCode, IEnumerable<DocumentSpan> spans, float confidence)
+        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> or <paramref name="spans"/> is null. </exception>
+        internal DocumentLanguage(string locale, IEnumerable<DocumentSpan> spans, float confidence)
         {
-            if (languageCode == null)
-            {
-                throw new ArgumentNullException(nameof(languageCode));
-            }
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(locale, nameof(locale));
+            Argument.AssertNotNull(spans, nameof(spans));
 
-            LanguageCode = languageCode;
+            Locale = locale;
             Spans = spans.ToList();
             Confidence = confidence;
         }
 
         /// <summary> Initializes a new instance of DocumentLanguage. </summary>
-        /// <param name="languageCode"> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </param>
+        /// <param name="locale"> Detected language.  Value may an ISO 639-1 language code (ex. "en", "fr") or BCP 47 language tag (ex. "zh-Hans"). </param>
         /// <param name="spans"> Location of the text elements in the concatenated content the language applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>
-        internal DocumentLanguage(string languageCode, IReadOnlyList<DocumentSpan> spans, float confidence)
+        internal DocumentLanguage(string locale, IReadOnlyList<DocumentSpan> spans, float confidence)
         {
-            LanguageCode = languageCode;
+            Locale = locale;
             Spans = spans;
             Confidence = confidence;
         }
 
-        /// <summary> Detected language.  Value may an ISO 639-1 language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;zh-Hans&quot;). </summary>
-        public string LanguageCode { get; }
+        /// <summary> Detected language.  Value may an ISO 639-1 language code (ex. "en", "fr") or BCP 47 language tag (ex. "zh-Hans"). </summary>
+        public string Locale { get; }
         /// <summary> Location of the text elements in the concatenated content the language applies to. </summary>
         public IReadOnlyList<DocumentSpan> Spans { get; }
         /// <summary> Confidence of correctly identifying the language. </summary>

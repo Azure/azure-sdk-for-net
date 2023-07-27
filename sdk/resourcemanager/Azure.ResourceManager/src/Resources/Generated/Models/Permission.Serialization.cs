@@ -15,17 +15,20 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static Permission DeserializePermission(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<string>> actions = default;
             Optional<IReadOnlyList<string>> notActions = default;
             Optional<IReadOnlyList<string>> dataActions = default;
             Optional<IReadOnlyList<string>> notDataActions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -36,11 +39,10 @@ namespace Azure.ResourceManager.Resources.Models
                     actions = array;
                     continue;
                 }
-                if (property.NameEquals("notActions"))
+                if (property.NameEquals("notActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -51,11 +53,10 @@ namespace Azure.ResourceManager.Resources.Models
                     notActions = array;
                     continue;
                 }
-                if (property.NameEquals("dataActions"))
+                if (property.NameEquals("dataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -66,11 +67,10 @@ namespace Azure.ResourceManager.Resources.Models
                     dataActions = array;
                     continue;
                 }
-                if (property.NameEquals("notDataActions"))
+                if (property.NameEquals("notDataActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

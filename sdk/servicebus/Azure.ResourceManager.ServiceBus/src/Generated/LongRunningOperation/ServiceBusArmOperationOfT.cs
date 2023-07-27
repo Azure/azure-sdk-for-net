@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceBus
     internal class ServiceBusArmOperation<T> : ArmOperation<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
-        private readonly OperationOrResponseInternals<T> _operation;
+        private readonly OperationInternal<T> _operation;
 
         /// <summary> Initializes a new instance of ServiceBusArmOperation for mocking. </summary>
         protected ServiceBusArmOperation()
@@ -28,16 +28,20 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal ServiceBusArmOperation(Response<T> response)
         {
-            _operation = new OperationOrResponseInternals<T>(response);
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal ServiceBusArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal ServiceBusArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
-            _operation = new OperationOrResponseInternals<T>(source, clientDiagnostics, pipeline, request, response, finalStateVia, "ServiceBusArmOperation");
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+            _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "ServiceBusArmOperation", fallbackStrategy: new SequentialDelayStrategy());
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+#pragma warning disable CA1822
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override T Value => _operation.Value;
@@ -49,7 +53,7 @@ namespace Azure.ResourceManager.ServiceBus
         public override bool HasCompleted => _operation.HasCompleted;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);

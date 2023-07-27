@@ -15,47 +15,47 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnClientConnectionHealth DeserializeVpnClientConnectionHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> totalIngressBytesTransferred = default;
             Optional<long> totalEgressBytesTransferred = default;
             Optional<int> vpnClientConnectionsCount = default;
-            Optional<IReadOnlyList<string>> allocatedIpAddresses = default;
+            Optional<IReadOnlyList<string>> allocatedIPAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalIngressBytesTransferred"))
+                if (property.NameEquals("totalIngressBytesTransferred"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalIngressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalEgressBytesTransferred"))
+                if (property.NameEquals("totalEgressBytesTransferred"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalEgressBytesTransferred = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("vpnClientConnectionsCount"))
+                if (property.NameEquals("vpnClientConnectionsCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vpnClientConnectionsCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("allocatedIpAddresses"))
+                if (property.NameEquals("allocatedIpAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         array.Add(item.GetString());
                     }
-                    allocatedIpAddresses = array;
+                    allocatedIPAddresses = array;
                     continue;
                 }
             }
-            return new VpnClientConnectionHealth(Optional.ToNullable(totalIngressBytesTransferred), Optional.ToNullable(totalEgressBytesTransferred), Optional.ToNullable(vpnClientConnectionsCount), Optional.ToList(allocatedIpAddresses));
+            return new VpnClientConnectionHealth(Optional.ToNullable(totalIngressBytesTransferred), Optional.ToNullable(totalEgressBytesTransferred), Optional.ToNullable(vpnClientConnectionsCount), Optional.ToList(allocatedIPAddresses));
         }
     }
 }

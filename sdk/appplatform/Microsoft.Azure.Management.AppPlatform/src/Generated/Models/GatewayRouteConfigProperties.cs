@@ -37,14 +37,15 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// route config. Possible values include: 'Creating', 'Updating',
         /// 'Succeeded', 'Failed', 'Deleting'</param>
         /// <param name="appResourceId">The resource Id of the Azure Spring
-        /// Cloud app, required unless route defines `uri`.</param>
+        /// Apps app, required unless route defines `uri`.</param>
         /// <param name="routes">Array of API routes, each route contains
         /// properties such as `title`, `uri`, `ssoEnabled`, `predicates`,
         /// `filters`.</param>
-        public GatewayRouteConfigProperties(string provisioningState = default(string), string appResourceId = default(string), IList<GatewayApiRoute> routes = default(IList<GatewayApiRoute>))
+        public GatewayRouteConfigProperties(string provisioningState = default(string), string appResourceId = default(string), GatewayRouteConfigOpenApiProperties openApi = default(GatewayRouteConfigOpenApiProperties), IList<GatewayApiRoute> routes = default(IList<GatewayApiRoute>))
         {
             ProvisioningState = provisioningState;
             AppResourceId = appResourceId;
+            OpenApi = openApi;
             Routes = routes;
             CustomInit();
         }
@@ -63,11 +64,16 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource Id of the Azure Spring Cloud app,
-        /// required unless route defines `uri`.
+        /// Gets or sets the resource Id of the Azure Spring Apps app, required
+        /// unless route defines `uri`.
         /// </summary>
         [JsonProperty(PropertyName = "appResourceId")]
         public string AppResourceId { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "openApi")]
+        public GatewayRouteConfigOpenApiProperties OpenApi { get; set; }
 
         /// <summary>
         /// Gets or sets array of API routes, each route contains properties

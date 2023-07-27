@@ -14,22 +14,30 @@ namespace Azure.ResourceManager.Compute
     {
         internal static SharedGalleryData DeserializeSharedGalleryData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
-            Optional<string> location = default;
+            Optional<AzureLocation> location = default;
             Optional<string> uniqueId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("identifier"))
+                if (property.NameEquals("identifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -38,7 +46,7 @@ namespace Azure.ResourceManager.Compute
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("uniqueId"))
+                        if (property0.NameEquals("uniqueId"u8))
                         {
                             uniqueId = property0.Value.GetString();
                             continue;
@@ -47,7 +55,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new SharedGalleryData(name.Value, location.Value, uniqueId.Value);
+            return new SharedGalleryData(name.Value, Optional.ToNullable(location), uniqueId.Value);
         }
     }
 }

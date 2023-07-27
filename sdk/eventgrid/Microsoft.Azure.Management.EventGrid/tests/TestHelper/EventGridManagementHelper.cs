@@ -22,6 +22,7 @@ namespace EventGrid.Tests.TestHelper
         internal const string PartnerRegistrationPrefix = "sdk-PartReg-";
         internal const string PartnerNamespacePrefix = "sdk-PartNs-";
         internal const string EventChannelPrefix = "sdk-EvtChnl-";
+        internal const string ChannelPrefix = "sdk-Chnl-";
         internal const string PartnerTopicPrefix = "sdk-PartTop-";
         internal const string SystemTopicPrefix = "sdk-SystemTopic-";
 

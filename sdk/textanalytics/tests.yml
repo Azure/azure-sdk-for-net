@@ -1,3 +1,9 @@
+parameters:
+- name: Location
+  displayName: Location
+  type: string
+  default: eastus
+
 trigger: none
 
 extends:
@@ -7,9 +13,7 @@ extends:
     CloudConfig:
       Public:
         SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-      Canary:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'centraluseuap'
+        Location: '${{ parameters.Location }}'
       UsGov:
         SubscriptionConfiguration: $(sub-config-gov-test-resources)
       China:
@@ -21,9 +25,8 @@ extends:
         AZURE_TENANT_ID: $(aad-azure-sdk-test-tenant-id)
         AZURE_CLIENT_SECRET: $(aad-azure-sdk-test-client-secret)
         AZURE_CLIENT_ID: $(aad-azure-sdk-test-client-id)
-        AZURE_AUTHORITY_HOST: $(aad-azure-sdk-test-authority-uri)
-        TEXT_ANALYTICS_ENDPOINT: $(js-textanalytics-test-service-endpoint)
-        TEXT_ANALYTICS_API_KEY: $(js-textanalytics-api-key-new)
+        TEXTANALYTICS_STATIC_ENDPOINT: $(js-textanalytics-test-service-endpoint)
+        TEXTANALYTICS_STATIC_API_KEY: $(js-textanalytics-api-key-new)
         TEXTANALYTICS_SINGLE_CATEGORY_CLASSIFY_PROJECT_NAME: $(js-single-category-classify-project-name)
         TEXTANALYTICS_SINGLE_CATEGORY_CLASSIFY_DEPLOYMENT_NAME: $(js-single-category-classify-deployment-name)
         TEXTANALYTICS_MULTI_CATEGORY_CLASSIFY_PROJECT_NAME: $(js-multi-category-classify-project-name)

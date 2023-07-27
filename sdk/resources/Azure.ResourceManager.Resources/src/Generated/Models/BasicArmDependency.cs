@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment dependency information. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="id"> The ID of the dependency. </param>
         /// <param name="resourceType"> The dependency resource type. </param>
         /// <param name="resourceName"> The dependency resource name. </param>
-        internal BasicArmDependency(string id, string resourceType, string resourceName)
+        internal BasicArmDependency(string id, ResourceType? resourceType, string resourceName)
         {
             Id = id;
             ResourceType = resourceType;
@@ -29,7 +31,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The ID of the dependency. </summary>
         public string Id { get; }
         /// <summary> The dependency resource type. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The dependency resource name. </summary>
         public string ResourceName { get; }
     }

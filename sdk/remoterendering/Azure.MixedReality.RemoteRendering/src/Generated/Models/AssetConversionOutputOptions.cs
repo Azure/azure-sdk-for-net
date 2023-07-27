@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
@@ -17,10 +18,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <exception cref="ArgumentNullException"> <paramref name="storageContainerUri"/> is null. </exception>
         public AssetConversionOutputOptions(Uri storageContainerUri)
         {
-            if (storageContainerUri == null)
-            {
-                throw new ArgumentNullException(nameof(storageContainerUri));
-            }
+            Argument.AssertNotNull(storageContainerUri, nameof(storageContainerUri));
 
             StorageContainerUri = storageContainerUri;
         }
@@ -29,7 +27,7 @@ namespace Azure.MixedReality.RemoteRendering
         /// <param name="storageContainerUri"> The URI of the Azure blob storage container where the result of the conversion should be written to. </param>
         /// <param name="storageContainerWriteSas"> An Azure blob storage container shared access signature giving write access to the storage container. Optional. If not provided, the Azure Remote Rendering account needs to be linked with the storage account containing the blob container. See https://docs.microsoft.com/azure/remote-rendering/how-tos/create-an-account#link-storage-accounts for details. For security purposes this field will never be filled out in responses bodies. </param>
         /// <param name="blobPrefix"> A prefix which gets prepended in front of all files produced by the conversion process. Will be treated as a virtual folder. Optional. If not provided, output files will be stored at the container root. </param>
-        /// <param name="outputAssetFilename"> The file name of the output asset. Must end in &apos;.arrAsset&apos;. Optional. If not provided, file name will the same name as the input asset, with &apos;.arrAsset&apos; extension. </param>
+        /// <param name="outputAssetFilename"> The file name of the output asset. Must end in '.arrAsset'. Optional. If not provided, file name will the same name as the input asset, with '.arrAsset' extension. </param>
         internal AssetConversionOutputOptions(Uri storageContainerUri, string storageContainerWriteSas, string blobPrefix, string outputAssetFilename)
         {
             StorageContainerUri = storageContainerUri;
@@ -41,7 +39,7 @@ namespace Azure.MixedReality.RemoteRendering
         public string StorageContainerWriteSas { get; set; }
         /// <summary> A prefix which gets prepended in front of all files produced by the conversion process. Will be treated as a virtual folder. Optional. If not provided, output files will be stored at the container root. </summary>
         public string BlobPrefix { get; set; }
-        /// <summary> The file name of the output asset. Must end in &apos;.arrAsset&apos;. Optional. If not provided, file name will the same name as the input asset, with &apos;.arrAsset&apos; extension. </summary>
+        /// <summary> The file name of the output asset. Must end in '.arrAsset'. Optional. If not provided, file name will the same name as the input asset, with '.arrAsset' extension. </summary>
         public string OutputAssetFilename { get; set; }
     }
 }

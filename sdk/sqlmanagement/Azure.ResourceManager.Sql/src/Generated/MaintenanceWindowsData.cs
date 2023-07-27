@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the MaintenanceWindows data model. </summary>
+    /// <summary>
+    /// A class representing the MaintenanceWindows data model.
+    /// Maintenance windows.
+    /// </summary>
     public partial class MaintenanceWindowsData : ResourceData
     {
         /// <summary> Initializes a new instance of MaintenanceWindowsData. </summary>

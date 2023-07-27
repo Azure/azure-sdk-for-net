@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="createTime">Time the factory was created in ISO8601
         /// format.</param>
         /// <param name="version">Version of the factory.</param>
+        /// <param name="purviewConfiguration">Purview information of the
+        /// factory.</param>
         /// <param name="repoConfiguration">Git repo information of the
         /// factory.</param>
         /// <param name="globalParameters">List of parameters for
@@ -58,7 +60,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="publicNetworkAccess">Whether or not public network
         /// access is allowed for the data factory. Possible values include:
         /// 'Enabled', 'Disabled'</param>
-        public Factory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string eTag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), FactoryIdentity identity = default(FactoryIdentity), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), string version = default(string), FactoryRepoConfiguration repoConfiguration = default(FactoryRepoConfiguration), IDictionary<string, GlobalParameterSpecification> globalParameters = default(IDictionary<string, GlobalParameterSpecification>), EncryptionConfiguration encryption = default(EncryptionConfiguration), string publicNetworkAccess = default(string))
+        public Factory(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string eTag = default(string), IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), FactoryIdentity identity = default(FactoryIdentity), string provisioningState = default(string), System.DateTime? createTime = default(System.DateTime?), string version = default(string), PurviewConfiguration purviewConfiguration = default(PurviewConfiguration), FactoryRepoConfiguration repoConfiguration = default(FactoryRepoConfiguration), IDictionary<string, GlobalParameterSpecification> globalParameters = default(IDictionary<string, GlobalParameterSpecification>), EncryptionConfiguration encryption = default(EncryptionConfiguration), string publicNetworkAccess = default(string))
             : base(id, name, type, location, tags, eTag)
         {
             AdditionalProperties = additionalProperties;
@@ -66,6 +68,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             ProvisioningState = provisioningState;
             CreateTime = createTime;
             Version = version;
+            PurviewConfiguration = purviewConfiguration;
             RepoConfiguration = repoConfiguration;
             GlobalParameters = globalParameters;
             Encryption = encryption;
@@ -108,6 +111,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; private set; }
+
+        /// <summary>
+        /// Gets or sets purview information of the factory.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.purviewConfiguration")]
+        public PurviewConfiguration PurviewConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets git repo information of the factory.

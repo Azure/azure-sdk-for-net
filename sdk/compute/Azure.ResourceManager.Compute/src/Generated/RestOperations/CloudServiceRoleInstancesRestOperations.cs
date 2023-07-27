@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-03-01";
+            _apiVersion = apiVersion ?? "2022-09-04";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Deletes a role instance from a cloud service. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Deletes a role instance from a cloud service. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewType? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -144,14 +144,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a role instance from a cloud service. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoleInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CloudServiceRoleInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        RoleInstanceData value = default;
+                        CloudServiceRoleInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleInstanceData.DeserializeRoleInstanceData(document.RootElement);
+                        value = CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RoleInstanceData)null, message.Response);
+                    return Response.FromValue((CloudServiceRoleInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -178,14 +178,14 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a role instance from a cloud service. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoleInstanceData> Get(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public Response<CloudServiceRoleInstanceData> Get(string subscriptionId, string resourceGroupName, string cloudServiceName, string roleInstanceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -198,13 +198,13 @@ namespace Azure.ResourceManager.Compute
             {
                 case 200:
                     {
-                        RoleInstanceData value = default;
+                        CloudServiceRoleInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleInstanceData.DeserializeRoleInstanceData(document.RootElement);
+                        value = CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RoleInstanceData)null, message.Response);
+                    return Response.FromValue((CloudServiceRoleInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Retrieves information about the run-time state of a role instance in a cloud service. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -266,8 +266,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Retrieves information about the run-time state of a role instance in a cloud service. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -322,13 +322,13 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoleInstanceListResult>> ListAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleInstanceListResult>> ListAsync(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -352,13 +352,13 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoleInstanceListResult> List(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public Response<RoleInstanceListResult> List(string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -405,8 +405,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The Reboot Role Instance asynchronous operation requests a reboot of a role instance in the cloud service. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -432,8 +432,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The Reboot Role Instance asynchronous operation requests a reboot of a role instance in the cloud service. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -482,8 +482,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The Reimage Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -509,8 +509,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The Reimage Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -559,8 +559,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The Rebuild Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instance. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -586,8 +586,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The Rebuild Role Instance asynchronous operation reinstalls the operating system on instances of web roles or worker roles and initializes the storage resources that are used by them. If you do not want to initialize storage resources, you can use Reimage Role Instance. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -636,8 +636,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a remote desktop file for a role instance in a cloud service. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -665,8 +665,8 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> Gets a remote desktop file for a role instance in a cloud service. </summary>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="cloudServiceName"/> or <paramref name="roleInstanceName"/> is null. </exception>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -709,13 +709,13 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RoleInstanceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RoleInstanceListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -741,13 +741,13 @@ namespace Azure.ResourceManager.Compute
         /// <summary> Gets the list of all role instances in a cloud service. Use nextLink property in the response to get the next page of role instances. Do this till nextLink is null to fetch all the role instances. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The String to use. </param>
-        /// <param name="cloudServiceName"> The String to use. </param>
-        /// <param name="expand"> The expand expression to apply to the operation. &apos;UserData&apos; is not supported for cloud services. </param>
+        /// <param name="resourceGroupName"> Name of the resource group. </param>
+        /// <param name="cloudServiceName"> Name of the cloud service. </param>
+        /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="cloudServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RoleInstanceListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewTypes? expand = null, CancellationToken cancellationToken = default)
+        public Response<RoleInstanceListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string cloudServiceName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

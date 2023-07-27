@@ -18,21 +18,24 @@ namespace Azure.ResourceManager.DeviceUpdate
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IotHubs))
             {
-                writer.WritePropertyName("iotHubs");
+                writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
                 foreach (var item in IotHubs)
                 {
@@ -42,12 +45,12 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
             if (Optional.IsDefined(EnableDiagnostics))
             {
-                writer.WritePropertyName("enableDiagnostics");
+                writer.WritePropertyName("enableDiagnostics"u8);
                 writer.WriteBooleanValue(EnableDiagnostics.Value);
             }
             if (Optional.IsDefined(DiagnosticStorageProperties))
             {
-                writer.WritePropertyName("diagnosticStorageProperties");
+                writer.WritePropertyName("diagnosticStorageProperties"u8);
                 writer.WriteObjectValue(DiagnosticStorageProperties);
             }
             writer.WriteEndObject();
@@ -56,12 +59,16 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         internal static DeviceUpdateInstanceData DeserializeDeviceUpdateInstanceData(JsonElement element)
         {
-            IDictionary<string, string> tags = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> accountName = default;
             Optional<IList<IotHubSettings>> iotHubs = default;
@@ -69,8 +76,12 @@ namespace Azure.ResourceManager.DeviceUpdate
             Optional<DiagnosticStorageProperties> diagnosticStorageProperties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -79,32 +90,36 @@ namespace Azure.ResourceManager.DeviceUpdate
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -113,26 +128,24 @@ namespace Azure.ResourceManager.DeviceUpdate
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("accountName"))
+                        if (property0.NameEquals("accountName"u8))
                         {
                             accountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("iotHubs"))
+                        if (property0.NameEquals("iotHubs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IotHubSettings> array = new List<IotHubSettings>();
@@ -143,21 +156,19 @@ namespace Azure.ResourceManager.DeviceUpdate
                             iotHubs = array;
                             continue;
                         }
-                        if (property0.NameEquals("enableDiagnostics"))
+                        if (property0.NameEquals("enableDiagnostics"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableDiagnostics = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("diagnosticStorageProperties"))
+                        if (property0.NameEquals("diagnosticStorageProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diagnosticStorageProperties = DiagnosticStorageProperties.DeserializeDiagnosticStorageProperties(property0.Value);
@@ -167,7 +178,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                     continue;
                 }
             }
-            return new DeviceUpdateInstanceData(id, name, type, systemData, tags, location, Optional.ToNullable(provisioningState), accountName.Value, Optional.ToList(iotHubs), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value);
+            return new DeviceUpdateInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), accountName.Value, Optional.ToList(iotHubs), Optional.ToNullable(enableDiagnostics), diagnosticStorageProperties.Value);
         }
     }
 }

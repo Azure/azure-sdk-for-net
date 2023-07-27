@@ -6,13 +6,15 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the DomainOwnershipIdentifier data model. </summary>
-    public partial class DomainOwnershipIdentifierData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the DomainOwnershipIdentifier data model.
+    /// Domain ownership Identifier.
+    /// </summary>
+    public partial class DomainOwnershipIdentifierData : ResourceData
     {
         /// <summary> Initializes a new instance of DomainOwnershipIdentifierData. </summary>
         public DomainOwnershipIdentifierData()
@@ -24,14 +26,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="ownershipId"> Ownership Id. </param>
-        internal DomainOwnershipIdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string ownershipId) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal DomainOwnershipIdentifierData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ownershipId, string kind) : base(id, name, resourceType, systemData)
         {
             OwnershipId = ownershipId;
+            Kind = kind;
         }
 
         /// <summary> Ownership Id. </summary>
         public string OwnershipId { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

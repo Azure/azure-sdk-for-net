@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
     public partial class SubscriptionUsageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionUsageResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string locationName, string usageName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string usageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}";
             return new ResourceIdentifier(resourceId);
@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a subscription usage metric.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// Operation Id: SubscriptionUsages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubscriptionUsages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SubscriptionUsageResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -99,7 +107,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _subscriptionUsageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionUsageResource(Client, response.Value), response.GetRawResponse());
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary>
         /// Gets a subscription usage metric.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}
-        /// Operation Id: SubscriptionUsages_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/usages/{usageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubscriptionUsages_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SubscriptionUsageResource> Get(CancellationToken cancellationToken = default)
@@ -123,7 +139,7 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _subscriptionUsageRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SubscriptionUsageResource(Client, response.Value), response.GetRawResponse());

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -17,29 +18,26 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public JitApprover(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
         /// <summary> Initializes a new instance of JitApprover. </summary>
         /// <param name="id"> The approver service principal Id. </param>
-        /// <param name="jitApproverType"> The approver type. </param>
+        /// <param name="approverType"> The approver type. </param>
         /// <param name="displayName"> The approver display name. </param>
-        internal JitApprover(string id, JitApproverType? jitApproverType, string displayName)
+        internal JitApprover(string id, JitApproverType? approverType, string displayName)
         {
             Id = id;
-            JitApproverType = jitApproverType;
+            ApproverType = approverType;
             DisplayName = displayName;
         }
 
         /// <summary> The approver service principal Id. </summary>
         public string Id { get; set; }
         /// <summary> The approver type. </summary>
-        public JitApproverType? JitApproverType { get; set; }
+        public JitApproverType? ApproverType { get; set; }
         /// <summary> The approver display name. </summary>
         public string DisplayName { get; set; }
     }

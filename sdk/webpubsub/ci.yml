@@ -8,6 +8,8 @@ trigger:
   paths:
     include:
     - sdk/webpubsub/
+    exclude:
+    - sdk/webpubsub/Azure.ResourceManager.WebPubSub/
 
 pr:
   branches:
@@ -19,21 +21,25 @@ pr:
   paths:
     include:
     - sdk/webpubsub/
-    - sdk/resourcemanager/
+    exclude:
+    - sdk/webpubsub/Azure.ResourceManager.WebPubSub/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: webpubsub
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.Messaging.WebPubSub
       safeName: AzureMessagingWebPubSub
+    - name: Azure.Messaging.WebPubSub.Client
+      safeName: AzureMessagingWebPubSubClient
     - name: Microsoft.Azure.WebJobs.Extensions.WebPubSub
       safeName: MicrosoftAzureWebJobsExtensionsWebPubSub
     - name: Microsoft.Azure.WebPubSub.AspNetCore
       safeName: MicrosoftAzureWebPubSubAspNetCore
     - name: Microsoft.Azure.WebPubSub.Common
       safeName: MicrosoftAzureWebPubSubCommon
-    - name: Azure.ResourceManager.WebPubSub
-      safeName: AzureResourceManagerWebPubSub
+    - name: Microsoft.Azure.Functions.Worker.Extensions.WebPubSub
+      safeName: MicrosoftAzureFunctionsWorkerExtensionsWebPubSub

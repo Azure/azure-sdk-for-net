@@ -1,14 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+
 namespace Azure.Identity
 {
     /// <summary>
     /// Options to configure the <see cref="SharedTokenCacheCredential"/> authentication.
     /// </summary>
-    public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class SharedTokenCacheCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery
     {
         private string _tenantId;
+        private TokenCachePersistenceOptions _tokenCachePersistenceOptions;
+
+        internal static readonly TokenCachePersistenceOptions s_defaulTokenCachetPersistenceOptions = new TokenCachePersistenceOptions();
 
         /// <summary>
         /// The client id of the application registration used to authenticate users in the cache.
@@ -42,9 +47,18 @@ namespace Azure.Identity
         public AuthenticationRecord AuthenticationRecord { get; set; }
 
         /// <summary>
-        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential.
+        /// Specifies the <see cref="TokenCachePersistenceOptions"/> to be used by the credential. Value cannot be null.
         /// </summary>
-        public TokenCachePersistenceOptions TokenCachePersistenceOptions { get; }
+        public TokenCachePersistenceOptions TokenCachePersistenceOptions
+        {
+            get { return _tokenCachePersistenceOptions; }
+            set
+            {
+                Argument.AssertNotNull(value, nameof(value));
+
+                _tokenCachePersistenceOptions = value;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialOptions"/>.
@@ -59,7 +73,11 @@ namespace Azure.Identity
         /// <param name="tokenCacheOptions">The <see cref="TokenCachePersistenceOptions"/> that will apply to the token cache used by this credential.</param>
         public SharedTokenCacheCredentialOptions(TokenCachePersistenceOptions tokenCacheOptions)
         {
-            TokenCachePersistenceOptions = tokenCacheOptions;
+            // if no tokenCacheOptions were specified we should use the default shared token cache
+            TokenCachePersistenceOptions = tokenCacheOptions ?? s_defaulTokenCachetPersistenceOptions;
         }
+
+        /// <inheritdoc/>
+        public bool DisableInstanceDiscovery { get; set; }
     }
 }

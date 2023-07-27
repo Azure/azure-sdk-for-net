@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,24 +20,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/> or <paramref name="description"/> is null. </exception>
-        internal RunCommandDocumentBase(string schema, string id, OperatingSystemTypes osType, string label, string description)
+        internal RunCommandDocumentBase(string schema, string id, SupportedOperatingSystemType osType, string label, string description)
         {
-            if (schema == null)
-            {
-                throw new ArgumentNullException(nameof(schema));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (label == null)
-            {
-                throw new ArgumentNullException(nameof(label));
-            }
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
+            Argument.AssertNotNull(schema, nameof(schema));
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(label, nameof(label));
+            Argument.AssertNotNull(description, nameof(description));
 
             Schema = schema;
             Id = id;
@@ -50,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The VM run command id. </summary>
         public string Id { get; }
         /// <summary> The Operating System type. </summary>
-        public OperatingSystemTypes OSType { get; }
+        public SupportedOperatingSystemType OSType { get; }
         /// <summary> The VM run command label. </summary>
         public string Label { get; }
         /// <summary> The VM run command description. </summary>

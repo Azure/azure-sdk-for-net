@@ -179,11 +179,6 @@ namespace Microsoft.Azure.Management.Automation
         public virtual ICredentialOperations Credential { get; private set; }
 
         /// <summary>
-        /// Gets the IHybridRunbookWorkerGroupOperations.
-        /// </summary>
-        public virtual IHybridRunbookWorkerGroupOperations HybridRunbookWorkerGroup { get; private set; }
-
-        /// <summary>
         /// Gets the IJobScheduleOperations.
         /// </summary>
         public virtual IJobScheduleOperations JobSchedule { get; private set; }
@@ -292,6 +287,16 @@ namespace Microsoft.Azure.Management.Automation
         /// Gets the IHybridRunbookWorkersOperations.
         /// </summary>
         public virtual IHybridRunbookWorkersOperations HybridRunbookWorkers { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeletedAutomationAccountsOperations.
+        /// </summary>
+        public virtual IDeletedAutomationAccountsOperations DeletedAutomationAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IHybridRunbookWorkerGroupOperations.
+        /// </summary>
+        public virtual IHybridRunbookWorkerGroupOperations HybridRunbookWorkerGroup { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the AutomationClient class.
@@ -555,7 +560,6 @@ namespace Microsoft.Azure.Management.Automation
             Connection = new ConnectionOperations(this);
             ConnectionType = new ConnectionTypeOperations(this);
             Credential = new CredentialOperations(this);
-            HybridRunbookWorkerGroup = new HybridRunbookWorkerGroupOperations(this);
             JobSchedule = new JobScheduleOperations(this);
             LinkedWorkspace = new LinkedWorkspaceOperations(this);
             Activity = new ActivityOperations(this);
@@ -578,6 +582,8 @@ namespace Microsoft.Azure.Management.Automation
             TestJob = new TestJobOperations(this);
             Webhook = new WebhookOperations(this);
             HybridRunbookWorkers = new HybridRunbookWorkersOperations(this);
+            DeletedAutomationAccounts = new DeletedAutomationAccountsOperations(this);
+            HybridRunbookWorkerGroup = new HybridRunbookWorkerGroupOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

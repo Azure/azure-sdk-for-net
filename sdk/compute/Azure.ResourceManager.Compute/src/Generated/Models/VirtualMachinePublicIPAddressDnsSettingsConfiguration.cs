@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes a virtual machines network configuration&apos;s DNS settings. </summary>
+    /// <summary> Describes a virtual machines network configuration's DNS settings. </summary>
     internal partial class VirtualMachinePublicIPAddressDnsSettingsConfiguration
     {
         /// <summary> Initializes a new instance of VirtualMachinePublicIPAddressDnsSettingsConfiguration. </summary>
@@ -17,10 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <exception cref="ArgumentNullException"> <paramref name="domainNameLabel"/> is null. </exception>
         public VirtualMachinePublicIPAddressDnsSettingsConfiguration(string domainNameLabel)
         {
-            if (domainNameLabel == null)
-            {
-                throw new ArgumentNullException(nameof(domainNameLabel));
-            }
+            Argument.AssertNotNull(domainNameLabel, nameof(domainNameLabel));
 
             DomainNameLabel = domainNameLabel;
         }

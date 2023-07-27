@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>Azure Cognitive Services Text Analytics is a cloud service that provides advanced natural language processing over raw text, and features like Language Detection, Sentiment Analysis, Key Phrase Extraction, Named Entity Recognition, Personally Identifiable Information (PII) Recognition, Linked Entity Recognition, Text Analytics for Health, and more.</Description>
     <AssemblyTitle>Microsoft Azure.AI.TextAnalytics client library</AssemblyTitle>
-    <Version>5.2.0-beta.3</Version>
+    <Version>5.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>5.1.1</ApiCompatVersion>
+    <ApiCompatVersion>5.3.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Text Analytics</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!-- AZC0012 - Single word class names are too generic for Entity.cs class  -->
@@ -17,11 +17,18 @@
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
+  <!-- Import the Text Analytics legacy generated source -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+    <Compile Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/**/*" LinkBase="Shared/Legacy/Generated" />
+    <Compile Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Custom/**/*" LinkBase="Shared/Legacy/Custom" />
+  </ItemGroup>
+
+  <!-- Import Azure.Core shared source -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared/core" />
+    <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 </Project>

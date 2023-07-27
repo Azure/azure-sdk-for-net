@@ -19,30 +19,32 @@ namespace Microsoft.Azure.Management.DataProtection
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("DataProtection", "BackupInstances", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "BackupPolicies", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "BackupVaultOperationResults", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "BackupVaults", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "DataProtection", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "DataProtectionOperations", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "ExportJobs", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "ExportJobsOperationResult", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "Jobs", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "OperationResult", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "OperationStatus", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "RecoveryPoints", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "ResourceGuards", "2021-07-01"),
-                new Tuple<string, string, string>("DataProtection", "RestorableTimeRanges", "2021-07-01"),
+                new Tuple<string, string, string>("DataProtection", "BackupInstances", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "BackupPolicies", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "BackupVaultOperationResults", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "BackupVaults", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "DataProtection", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "DataProtectionOperations", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "ExportJobs", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "ExportJobsOperationResult", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "Jobs", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "OperationResult", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "OperationStatus", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "OperationStatusBackupVaultContext", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "OperationStatusResourceGroupContext", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "RecoveryPoints", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "ResourceGuards", "2022-04-01"),
+                new Tuple<string, string, string>("DataProtection", "RestorableTimeRanges", "2022-04-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.3.2";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/dataprotection/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions --csharp-sdks-folder=D:\\SDK_DPP\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/dataprotection/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\Code\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "main";
-      public static readonly String GithubCommidId = "b49af808cba06f45b01193623ce1ff9e2e017777";
+      public static readonly String GithubCommidId = "1278b951080f769d400bb5d03090de8bc21dc355";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

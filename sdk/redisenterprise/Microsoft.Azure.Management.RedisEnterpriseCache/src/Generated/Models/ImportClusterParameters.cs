@@ -11,10 +11,12 @@
 namespace Microsoft.Azure.Management.RedisEnterprise.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Import an RDB file into a target database
+    /// Import RDB files into a target database
     /// </summary>
     /// <remarks>
     /// Parameters for a Redis Enterprise import operation.
@@ -32,11 +34,11 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <summary>
         /// Initializes a new instance of the ImportClusterParameters class.
         /// </summary>
-        /// <param name="sasUri">SAS URI for the target blob to import
+        /// <param name="sasUris">SAS URIs for the target blobs to import
         /// from</param>
-        public ImportClusterParameters(string sasUri)
+        public ImportClusterParameters(IList<string> sasUris)
         {
-            SasUri = sasUri;
+            SasUris = sasUris;
             CustomInit();
         }
 
@@ -46,10 +48,10 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SAS URI for the target blob to import from
+        /// Gets or sets SAS URIs for the target blobs to import from
         /// </summary>
-        [JsonProperty(PropertyName = "sasUri")]
-        public string SasUri { get; set; }
+        [JsonProperty(PropertyName = "sasUris")]
+        public IList<string> SasUris { get; set; }
 
     }
 }

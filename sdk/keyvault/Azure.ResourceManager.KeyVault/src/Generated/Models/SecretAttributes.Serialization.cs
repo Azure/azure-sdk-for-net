@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
             if (Optional.IsDefined(NotBefore))
             {
-                writer.WritePropertyName("nbf");
+                writer.WritePropertyName("nbf"u8);
                 writer.WriteNumberValue(NotBefore.Value, "U");
             }
             if (Optional.IsDefined(Expires))
             {
-                writer.WritePropertyName("exp");
+                writer.WritePropertyName("exp"u8);
                 writer.WriteNumberValue(Expires.Value, "U");
             }
             writer.WriteEndObject();
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static SecretAttributes DeserializeSecretAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<DateTimeOffset> nbf = default;
             Optional<DateTimeOffset> exp = default;
@@ -43,54 +47,49 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<DateTimeOffset> updated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("nbf"))
+                if (property.NameEquals("nbf"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    nbf = property.Value.GetDateTimeOffset("U");
+                    nbf = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
-                if (property.NameEquals("exp"))
+                if (property.NameEquals("exp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    exp = property.Value.GetDateTimeOffset("U");
+                    exp = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
-                if (property.NameEquals("created"))
+                if (property.NameEquals("created"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("U");
+                    created = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
-                if (property.NameEquals("updated"))
+                if (property.NameEquals("updated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("U");
+                    updated = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
             }

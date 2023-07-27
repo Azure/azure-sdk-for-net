@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
             var description = "This is a gallery for test";
-            var update = new PatchableGalleryData()
+            var update = new GalleryPatch()
             {
                 Description = description
             };
@@ -66,10 +66,14 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(description, updatedGallery.Data.Description);
         }
 
-        [TestCase]
         [RecordedTest]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36714")]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
             var tags = new Dictionary<string, string>()

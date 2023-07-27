@@ -19,17 +19,17 @@ using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 {
-    public class EntityBindingLiveTests: TablesLiveTestBase
+    public class EntityBindingLiveTests : TablesLiveTestBase
     {
-        private static DateTimeOffset DateTimeOffsetValue = DateTimeOffset.Parse("07-08-1997", null,  DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
-        private static DateTime DateTimeValue = DateTime.Parse("07-08-1997", null,  DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+        private static DateTimeOffset DateTimeOffsetValue = DateTimeOffset.Parse("07-08-1997", null, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
+        private static DateTime DateTimeValue = DateTime.Parse("07-08-1997", null, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal);
 
         public EntityBindingLiveTests(bool isAsync, bool useCosmos) : base(isAsync, useCosmos)
         {
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanBindToNonExistingEntityProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(CanBindToNonExistingEntityProgram<>) })]
         public async Task CanBindToNonExistingEntity(string entityType)
         {
             // Act & Assert
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanBindToExistingEntityProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(CanBindToExistingEntityProgram<>) })]
         public async Task CanBindToExistingEntity(string entityType)
         {
             foreach (var values in AllowedTypedWithValues)
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanBindToExistingEntityUsingExpressionsProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(CanBindToExistingEntityUsingExpressionsProgram<>) })]
         public async Task CanBindToExistingEntityUsingExpressions(string entityType)
         {
             AllowedTypesWithValue values = AllowedTypedWithValues.First();
@@ -181,20 +181,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(AddEntityProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(AddEntityProgram<>) })]
         public async Task CanAddEntity(string entityType)
         {
             foreach (var values in AllowedTypedWithValues)
             {
                 // Act
-                await CallAsync(
-                    typeof(AddEntityProgram<>).MakeGenericType(values.Type),
-                    entityType,
-                    arguments: new
-                    {
-                        original = values.Value1Base,
-                        originalTyped = values.Value1,
-                    });
+                try
+                {
+                    await CallAsync(
+                        typeof(AddEntityProgram<>).MakeGenericType(values.Type),
+                        entityType,
+                        arguments: new
+                        {
+                            original = values.Value1Base,
+                            originalTyped = values.Value1,
+                        });
+                }
+                catch (FunctionInvocationException ex)
+                {
+                    Assert.AreEqual("ITableEntityExplicit", entityType);
+                    var inner = ex.InnerException.InnerException;
+                    Assert.That(inner, Is.TypeOf<InvalidOperationException>());
+                    Assert.That(inner.Message, Does.StartWith("Expected ITableEntity instance to have TableEntity type"));
+                    return;
+                }
 
                 // Assert
                 TableEntity entity = await TableClient.GetEntityAsync<TableEntity>(PartitionKey, RowKey);
@@ -241,6 +252,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
 
             [return: Table(TableNameExpression)]
+            public static ITableEntity ITableEntityExplicit(T original)
+            {
+                var entity = new ExplicitITableEntity<T>
+                {
+                    Value = original,
+                    RowKey = RowKey
+                };
+                ((ITableEntity)entity).PartitionKey = PartitionKey;
+                return entity;
+            }
+
+            [return: Table(TableNameExpression)]
             public static PocoTableEntity<T> PocoTableEntity(T originalTyped)
             {
                 return new PocoTableEntity<T>
@@ -261,10 +284,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     ["RowKey"] = RowKey
                 };
             }
+
+            [return: Table(TableNameExpression)]
+            public static byte[] ByteArray(object original)
+            {
+                // This test case is meant to simulate the isolated worker scenario
+                // where the table output attribute data comes in as a byte array
+                var dict = new Dictionary<string, object>
+                {
+                    ["Value"] = original,
+                    ["PartitionKey"] = PartitionKey,
+                    ["RowKey"] = RowKey
+                };
+                // We enrich with OData annotations as this is what the isolated workers would ideally do
+                // and our test cases expect it.
+                return new BinaryData(dict.ToOdataAnnotatedDictionary()).ToArray();
+            }
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(AddEntityProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(AddEntityProgram<>) })]
         public async Task CanAddEntityThrowsWhenEntityExists(string entityType)
         {
             var values = AllowedTypedWithValues.First();
@@ -276,7 +315,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }, TableUpdateMode.Replace);
 
             // Act
-            var exception = Assert.ThrowsAsync<FunctionInvocationException>(async () => await CallAsync(
+            var exception = Assert.CatchAsync(async () => await CallAsync(
                 typeof(AddEntityProgram<>).MakeGenericType(values.Type),
                 entityType,
                 arguments: new
@@ -286,11 +325,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 }));
 
             // Assert
-            StringAssert.Contains("The specified entity already exists", exception.ToString());
+            if (entityType == "ITableEntityExplicit")
+            {
+                StringAssert.Contains("Expected ITableEntity instance to have TableEntity type", exception.ToString());
+            }
+            else
+            {
+                StringAssert.Contains("The specified entity already exists", exception.ToString());
+            }
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanAddEntityWithOverwriteProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(CanAddEntityWithOverwriteProgram<>) })]
         public async Task CanAddEntityWithOverwrite(string entityType)
         {
             var values = AllowedTypedWithValues.First();
@@ -366,10 +412,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     ["ETag"] = "*"
                 };
             }
+
+            [return: Table(TableNameExpression)]
+            public static byte[] ByteArray(object original)
+            {
+                var dict = new Dictionary<string, object>
+                {
+                    ["Value"] = original,
+                    ["PartitionKey"] = PartitionKey,
+                    ["RowKey"] = RowKey,
+                    ["ETag"] = "*"
+                };
+                return new BinaryData(dict.ToOdataAnnotatedDictionary()).ToArray();
+            }
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanAddEntityWithIdsInAttributeProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(CanAddEntityWithIdsInAttributeProgram<>) })]
         public async Task CanAddEntityWithIdsInAttribute(string entityType)
         {
             var values = AllowedTypedWithValues.First();
@@ -435,10 +494,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                     ["Value"] = JToken.FromObject(original)
                 };
             }
+
+            [return: Table(TableNameExpression, PartitionKey, RowKey)]
+            public static byte[] ByteArray(object original)
+            {
+                var dict = new Dictionary<string, object>
+                {
+                    ["Value"] = original
+                };
+                return new BinaryData(dict.ToOdataAnnotatedDictionary()).ToArray();
+            }
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanAddEntityUsingCollectorProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(CanAddEntityUsingCollectorProgram<>) })]
         public async Task CanAddEntityUsingCollector(string entityType)
         {
             var values = AllowedTypedWithValues.First();
@@ -576,7 +645,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanAddEntityUsingAsyncCollectorProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(CanAddEntityUsingAsyncCollectorProgram<>) })]
         public async Task CanAddEntityUsingAsyncCollector(string entityType)
         {
             var values = AllowedTypedWithValues.First();
@@ -710,7 +779,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdateEntityValueProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(UpdateEntityValueProgram<>) })]
         public async Task CanUpdateProperty(string entityType)
         {
             foreach (var values in AllowedTypedWithValues)
@@ -741,7 +810,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdateEntityValueProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(UpdateEntityValueProgram<>) })]
         public async Task CanUpdatePropertyFromNull(string entityType)
         {
             foreach (var values in AllowedTypedWithValues)
@@ -778,7 +847,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdateEntityValueProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(UpdateEntityValueProgram<>) })]
         public async Task CanUpdatePropertyToNull(string entityType)
         {
             foreach (var values in AllowedTypedWithValues)
@@ -846,7 +915,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(NoEntityUpdateProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(NoEntityUpdateProgram<>) })]
         public async Task SkipsUpdateWithNoChanges(string entityType)
         {
             foreach (var values in AllowedTypedWithValues)
@@ -870,7 +939,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(NoEntityUpdateProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(NoEntityUpdateProgram<>) })]
         public async Task SkipsUpdateWithNoChangesNull(string entityType)
         {
             foreach (var values in AllowedTypedWithValues)
@@ -906,7 +975,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             var response = await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
             {
                 ["Value"] = bytes
-            },TableUpdateMode.Replace);
+            }, TableUpdateMode.Replace);
 
             // Act
             await CallAsync(
@@ -929,7 +998,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             var response = await TableClient.UpsertEntityAsync(new TableEntity(PartitionKey, RowKey)
             {
                 ["Value"] = bytes
-            },TableUpdateMode.Replace);
+            }, TableUpdateMode.Replace);
 
             // Act
             await CallAsync(
@@ -986,7 +1055,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(CanOverwriteBySettingAnEtagProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(CanOverwriteBySettingAnEtagProgram<>) })]
         public async Task CanOverwriteBySettingAnEtag(string entityType)
         {
             AllowedTypesWithValue values = AllowedTypedWithValues.First();
@@ -1060,7 +1129,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdatingPropertyInParallelThrowsProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(UpdatingPropertyInParallelThrowsProgram<>) })]
         public async Task UpdatingPropertyInParallelThrows(string entityType)
         {
             AllowedTypesWithValue values = AllowedTypedWithValues.First();
@@ -1159,7 +1228,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdatingPartitionKeyThrowsProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(UpdatingPartitionKeyThrowsProgram<>) })]
         public async Task UpdatingPartitionKeyThrows(string entityType)
         {
             // Arrange
@@ -1207,7 +1276,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         }
 
         [RecordedTest]
-        [TestCaseSource(nameof(MethodsOf), new object[] {typeof(UpdatingRowKeyThrowsProgram<>)})]
+        [TestCaseSource(nameof(MethodsOf), new object[] { typeof(UpdatingRowKeyThrowsProgram<>) })]
         public async Task UpdatingRowKeyThrows(string entityType)
         {
             // Arrange
@@ -1327,8 +1396,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
 
             var entities = await TableClient.QueryAsync<TableEntity>().ToEnumerableAsync();
             Assert.AreEqual(TableEntityWriter.MaxBatchSize * 4, entities.Count);
-            Assert.AreEqual(TableEntityWriter.MaxBatchSize * 4, entities.Select(e=> e.RowKey).Distinct().Count());
-            Assert.AreEqual(TableEntityWriter.MaxBatchSize * 4, entities.Select(e=> (int)e["Value"]).Distinct().Count());
+            Assert.AreEqual(TableEntityWriter.MaxBatchSize * 4, entities.Select(e => e.RowKey).Distinct().Count());
+            Assert.AreEqual(TableEntityWriter.MaxBatchSize * 4, entities.Select(e => (int)e["Value"]).Distinct().Count());
         }
 
         private class InsertOverBatchLimitProgram
@@ -1354,27 +1423,36 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [LiveOnly]
         public async Task InsertOverPartitionLimit()
         {
+            if (UseCosmos)
+            {
+                Assert.Ignore("Hits the rate limit");
+            }
             await CallAsync<InsertOverPartitionLimitProgram>(arguments: new Dictionary<string, object> { { "test", this } });
             var entities = await TableClient.QueryAsync<TableEntity>().ToEnumerableAsync();
             Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Count);
-            Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Select(e=> e.RowKey).Distinct().Count());
-            Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Select(e=> (int)e["Value"]).Distinct().Count());
+            Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Select(e => e.RowKey).Distinct().Count());
+            Assert.AreEqual(TableEntityWriter.MaxPartitionWidth + 10, entities.Select(e => (int)e["Value"]).Distinct().Count());
         }
 
         private class InsertOverPartitionLimitProgram
         {
             public async Task Call([Table(TableNameExpression)] IAsyncCollector<TableEntity> collector, EntityBindingLiveTests test)
             {
+                int delay = 5000;
+                int maxRetries = 5;
+                int retries = 1;
                 for (int i = 0; i < TableEntityWriter.MaxPartitionWidth + 10; i++)
                 {
                     try
                     {
                         await collector.AddAsync(new TableEntity(i.ToString(), i.ToString()) { ["Value"] = i });
                     }
-                    catch (FunctionInvocationException ex) when(ex.InnerException is TableTransactionFailedException ttfe && ttfe.Status == 429)
+                    catch (FunctionInvocationException ex) when (ex.InnerException is TableTransactionFailedException ttfe && ttfe.Status == 429 && retries <= maxRetries)
                     {
-                        await test.Delay(3000);
-                        await collector.AddAsync(new TableEntity(i.ToString(), i.ToString()) { ["Value"] = i });
+                        await test.Delay(delay);
+                        delay *= 2;
+                        retries++;
+                        i--;
                     }
                 }
             }
@@ -1452,6 +1530,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public T Value { get; set; }
             public string PartitionKey { get; set; }
             public string RowKey { get; set; }
+        }
+
+        private class ExplicitITableEntity<T> : ITableEntity
+        {
+            public T Value { get; set; }
+            string ITableEntity.PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
         }
 
         private class CustomTableEntity<T> : ITableEntity

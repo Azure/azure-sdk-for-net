@@ -24,14 +24,8 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
         internal DataTableCell(int rowIndex, int columnIndex, string text, IEnumerable<float> boundingBox, float confidence)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (boundingBox == null)
-            {
-                throw new ArgumentNullException(nameof(boundingBox));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
 
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;

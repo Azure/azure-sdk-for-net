@@ -3,6 +3,8 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -106,5 +108,47 @@ namespace Azure.Core.TestFramework
             => string.IsNullOrEmpty(filePath)
                 ? $"The operation timed out after reaching the limit of {timeout.TotalMilliseconds}ms."
                 : $"The operation at {filePath}:{lineNumber} timed out after reaching the limit of {timeout.TotalMilliseconds}ms.";
+
+        public static bool IsTaskFaulted(object taskObj)
+        {
+            return (bool)taskObj.GetType().GetProperty("IsFaulted").GetValue(taskObj);
+        }
+
+        public static object GetResultFromTask(object returnValue)
+        {
+            try
+            {
+                Type returnType = returnValue.GetType();
+                return IsTaskType(returnType)
+                    ? returnType.GetProperty("Result").GetValue(returnValue)
+                    : returnValue;
+            }
+            catch (TargetInvocationException e)
+            {
+                if (e.InnerException is AggregateException aggException)
+                {
+                    throw aggException.InnerExceptions.First();
+                }
+                else
+                {
+                    throw e.InnerException;
+                }
+            }
+        }
+
+        public static bool IsTaskType(Type type)
+        {
+            string name = type.Name;
+            return name.StartsWith("ValueTask", StringComparison.Ordinal) ||
+                   name.StartsWith("Task", StringComparison.Ordinal) ||
+                   name.StartsWith("AsyncStateMachineBox", StringComparison.Ordinal); //in .net 5 the type is not task here
+        }
+
+        public static object GetValueFromTask(Type taskResultType, object instrumentedResult)
+        {
+            var method = typeof(Task).GetMethod("FromResult", BindingFlags.Public | BindingFlags.Static);
+            var genericMethod = method.MakeGenericMethod(taskResultType);
+            return genericMethod.Invoke(null, new object[] { instrumentedResult });
+        }
     }
 }

@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Text;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
@@ -18,7 +18,8 @@ namespace Azure.Search.Documents
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
-        private const string QueryAnswerRawSplitter = "|count-";
+        private const string QueryAnswerCountRaw = "count-";
+        private const string QueryAnswerThresholdRaw = "threshold-";
         private const string QueryCaptionRawSplitter = "|highlight-";
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace Azure.Search.Documents
         /// A full-text search query expression;  Use "*" or omit this
         /// parameter to match all documents.
         /// </summary>
-        [CodeGenMember("search")]
+        [CodeGenMember("Search")]
         internal string SearchText { get; set; }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace Azure.Search.Documents
         /// construct the filter expression.
         /// </summary>
         /// <seealso href="https://docs.microsoft.com/azure/search/search-filters">Filters in Azure Cognitive Search</seealso>
-        [CodeGenMember("filter")]
+        [CodeGenMember("Filter")]
         public string Filter { get; set; }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenMember("searchFields")]
+        [CodeGenMember("SearchFields")]
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();
@@ -88,7 +89,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join SemanticFields so it can be sent as a comma-separated string.
         /// </summary>
-        [CodeGenMember("semanticFields")]
+        [CodeGenMember("SemanticFields")]
         internal string SemanticFieldsRaw
         {
             get => SemanticFields.CommaJoin();
@@ -104,7 +105,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join Select so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenMember("select")]
+        [CodeGenMember("Select")]
         internal string SelectRaw
         {
             get => Select.CommaJoin();
@@ -119,7 +120,7 @@ namespace Azure.Search.Documents
         /// that can be used to issue another Search request for the next page
         /// of results.
         /// </summary>
-        [CodeGenMember("top")]
+        [CodeGenMember("Top")]
         public int? Size { get; set; }
 
         /// <summary>
@@ -137,7 +138,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join OrderBy so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenMember("orderby")]
+        [CodeGenMember("OrderBy")]
         internal string OrderByRaw
         {
             get => OrderBy.CommaJoin();
@@ -160,7 +161,7 @@ namespace Azure.Search.Documents
         /// comma-separated list of name:value pairs.
         /// </summary>
         /// <seealso href="https://docs.microsoft.com/azure/search/search-filters-facets">How to build a facet filter in Azure Cognitive Search.</seealso>
-        [CodeGenMember("facets")]
+        [CodeGenMember("Facets")]
         public IList<string> Facets { get; internal set; } = new List<string>();
 
         /// <summary>
@@ -170,19 +171,19 @@ namespace Azure.Search.Documents
         /// called &apos;mylocation&apos; the parameter string would be
         /// &quot;mylocation--122.2,44.8&quot; (without the quotes).
         /// </summary>
-        [CodeGenMember("scoringParameters")]
+        [CodeGenMember("ScoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
 
         /// <summary> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </summary>
-        [CodeGenMember("semanticConfiguration")]
+        [CodeGenMember("SemanticConfiguration")]
         public string SemanticConfigurationName { get; set; }
 
         /// <summary> A value that specifies the language of the search query. </summary>
-        [CodeGenMember("queryLanguage")]
+        [CodeGenMember("QueryLanguage")]
         public QueryLanguage? QueryLanguage { get; set; }
 
         /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
-        [CodeGenMember("speller")]
+        [CodeGenMember("Speller")]
         public QuerySpellerType? QuerySpeller { get; set; }
 
         /// <summary> A value that specifies whether <see cref="SearchResults{T}.Answers"/> should be returned as part of the search response. </summary>
@@ -191,54 +192,73 @@ namespace Azure.Search.Documents
         /// <summary> A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
         public int? QueryAnswerCount { get; set; }
 
-        /// <summary> Constructed from <see cref="QueryAnswer"/> and <see cref="QueryAnswerCount"/>.</summary>
-        [CodeGenMember("answers")]
+        /// <summary> A value that specifies the threshold of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
+        public double? QueryAnswerThreshold { get; set; }
+
+        /// <summary> Constructed from <see cref="QueryAnswer"/>, <see cref="QueryAnswerCount"/> and <see cref="QueryAnswerThreshold"/>. For example: "extractive|count-1,threshold-0.7"</summary>
+        [CodeGenMember("Answers")]
         internal string QueryAnswerRaw
         {
             get
             {
-                string queryAnswerStringValue = null;
-
                 if (QueryAnswer.HasValue)
                 {
-                    queryAnswerStringValue = $"{QueryAnswer.Value}{QueryAnswerRawSplitter}{QueryAnswerCount.GetValueOrDefault(1)}";
+                    StringBuilder queryAnswerStringValue = new(QueryAnswer.Value.ToString());
+
+                    int tokens = 0;
+                    char NextToken() => tokens++ == 0 ? '|' : ',';
+
+                    if (QueryAnswerCount.HasValue)
+                    {
+                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerCountRaw}{QueryAnswerCount.Value}");
+                        tokens = 1;
+                    }
+
+                    if (QueryAnswerThreshold.HasValue)
+                    {
+                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerThresholdRaw}{QueryAnswerThreshold.Value}");
+                    }
+
+                    return queryAnswerStringValue.ToString();
                 }
 
-                return queryAnswerStringValue;
+                return null;
             }
-
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(value)) // If the value is - "extractive" or "extractive|count-1" or "extractive|threshold-0.7" or "extractive|count-5,threshold-0.9" or "extractive|threshold-0.8,count-4"
                 {
-                    QueryAnswer = null;
-                    QueryAnswerCount = null;
-                }
-                else
-                {
-                    if (value.Contains(QueryAnswerRawSplitter))
+                    string[] queryAnswerValues = value.Split('|');
+                    if (!string.IsNullOrEmpty(queryAnswerValues[0]))
                     {
-                        var queryAnswerPart = value.Substring(0, value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase));
-                        var countPart = value.Substring(value.IndexOf(QueryAnswerRawSplitter, StringComparison.OrdinalIgnoreCase) + QueryAnswerRawSplitter.Length);
-
-                        if (string.IsNullOrEmpty(queryAnswerPart))
-                        {
-                            QueryAnswer = null;
-                        }
-                        else
-                        {
-                            QueryAnswer = new QueryAnswerType(queryAnswerPart);
-                        }
-
-                        if (int.TryParse(countPart, out int countValue))
-                        {
-                            QueryAnswerCount = countValue;
-                        }
+                        QueryAnswer = new QueryAnswerType(queryAnswerValues[0]);
                     }
-                    else
+
+                    if (queryAnswerValues.Length == 2)
                     {
-                        QueryAnswer = new QueryAnswerType(value);
-                        QueryAnswerCount = null;
+                        var queryAnswerParams = queryAnswerValues[1].Split(',');
+                        if (queryAnswerParams.Length <= 2)
+                        {
+                            foreach (var param in queryAnswerParams)
+                            {
+                                if (param.Contains(QueryAnswerCountRaw))
+                                {
+                                    var countPart = param.Substring(param.IndexOf(QueryAnswerCountRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerCountRaw.Length);
+                                    if (int.TryParse(countPart, out int countValue))
+                                    {
+                                        QueryAnswerCount = countValue;
+                                    }
+                                }
+                                else if (param.Contains(QueryAnswerThresholdRaw))
+                                {
+                                    var thresholdPart = param.Substring(param.IndexOf(QueryAnswerThresholdRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerThresholdRaw.Length);
+                                    if (double.TryParse(thresholdPart, out double thresholdValue))
+                                    {
+                                        QueryAnswerThreshold = thresholdValue;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -258,7 +278,7 @@ namespace Azure.Search.Documents
         public bool? QueryCaptionHighlightEnabled { get; set; }
 
         /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlightEnabled"/>.</summary>
-        [CodeGenMember("captions")]
+        [CodeGenMember("Captions")]
         internal string QueryCaptionRaw
         {
             get
@@ -267,7 +287,14 @@ namespace Azure.Search.Documents
 
                 if (QueryCaption.HasValue)
                 {
-                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
+                    if (QueryCaption.Value == QueryCaptionType.Extractive)
+                    {
+                        queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
+                    }
+                    else
+                    {
+                        queryCaptionStringValue = QueryCaption.Value.ToString();
+                    }
                 }
 
                 return queryCaptionStringValue;
@@ -307,8 +334,8 @@ namespace Azure.Search.Documents
         /// <param name="destination">The destination options.</param>
         private static void Copy(SearchOptions source, SearchOptions destination)
         {
-            Debug.Assert(source != null);
-            Debug.Assert(destination != null);
+            System.Diagnostics.Debug.Assert(source != null);
+            System.Diagnostics.Debug.Assert(destination != null);
 
             destination.Facets = source.Facets;
             destination.Filter = source.Filter;
@@ -320,6 +347,7 @@ namespace Azure.Search.Documents
             destination.OrderBy = source.OrderBy;
             destination.QueryAnswer = source.QueryAnswer;
             destination.QueryAnswerCount = source.QueryAnswerCount;
+            destination.QueryAnswerThreshold = source.QueryAnswerThreshold;
             destination.QueryCaption = source.QueryCaption;
             destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
             destination.QueryLanguage = source.QueryLanguage;
@@ -334,6 +362,7 @@ namespace Azure.Search.Documents
             destination.Select = source.Select;
             destination.SemanticConfigurationName = source.SemanticConfigurationName;
             destination.SemanticFields = source.SemanticFields;
+            destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
         }

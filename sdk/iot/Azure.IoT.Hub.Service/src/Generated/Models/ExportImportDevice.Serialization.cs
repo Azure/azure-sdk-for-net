@@ -17,68 +17,73 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(ModuleId))
             {
-                writer.WritePropertyName("moduleId");
+                writer.WritePropertyName("moduleId"u8);
                 writer.WriteStringValue(ModuleId);
             }
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("eTag");
+                writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag);
             }
             if (Optional.IsDefined(ImportMode))
             {
-                writer.WritePropertyName("importMode");
+                writer.WritePropertyName("importMode"u8);
                 writer.WriteStringValue(ImportMode.Value.ToString());
             }
             if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("status");
+                writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(StatusReason))
             {
-                writer.WritePropertyName("statusReason");
+                writer.WritePropertyName("statusReason"u8);
                 writer.WriteStringValue(StatusReason);
             }
             if (Optional.IsDefined(Authentication))
             {
-                writer.WritePropertyName("authentication");
+                writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
             if (Optional.IsDefined(TwinETag))
             {
-                writer.WritePropertyName("twinETag");
+                writer.WritePropertyName("twinETag"u8);
                 writer.WriteStringValue(TwinETag);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("properties");
+                writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
             if (Optional.IsDefined(Capabilities))
             {
-                writer.WritePropertyName("capabilities");
+                writer.WritePropertyName("capabilities"u8);
                 writer.WriteObjectValue(Capabilities);
             }
             if (Optional.IsDefined(DeviceScope))
             {
-                writer.WritePropertyName("deviceScope");
+                writer.WritePropertyName("deviceScope"u8);
                 writer.WriteStringValue(DeviceScope);
             }
             writer.WriteEndObject();

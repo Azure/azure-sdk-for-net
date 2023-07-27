@@ -77,6 +77,46 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void ContentLengthThrowsIfExceedsMaxInt()
+        {
+            long size = int.MaxValue;
+            size += 1;
+
+            var mockResponse = new MockResponse(200);
+            mockResponse.AddHeader(new HttpHeader("Content-Length", size.ToString()));
+
+            bool threw = false;
+            try
+            {
+                _ = mockResponse.Headers.ContentLength;
+            }
+            catch (OverflowException ex)
+            {
+                threw = true;
+                Assert.IsTrue(ex.Message.Contains("Headers.ContentLengthLong"));
+            }
+
+            Assert.IsTrue(threw);
+        }
+
+        [Test]
+        public void ContentLengthLongParsedIfExists()
+        {
+            long size = int.MaxValue;
+            size += 1;
+
+            var bigResponse = new MockResponse(200);
+            bigResponse.AddHeader(new HttpHeader("Content-Length", size.ToString()));
+
+            Assert.AreEqual(size, bigResponse.Headers.ContentLengthLong);
+
+            var smallResponse = new MockResponse(200);
+            smallResponse.AddHeader(new HttpHeader("Content-Length", "100"));
+
+            Assert.AreEqual(100, smallResponse.Headers.ContentLengthLong);
+        }
+
+        [Test]
         public void DateReturnsNullForNoHeader()
         {
             var mockResponse = new MockResponse(200);

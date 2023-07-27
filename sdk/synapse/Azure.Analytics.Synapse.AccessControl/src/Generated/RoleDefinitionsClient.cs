@@ -13,6 +13,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Synapse.AccessControl
 {
+    // Data plane generated client.
     /// <summary> The RoleDefinitions service client. </summary>
     public partial class RoleDefinitionsClient
     {
@@ -36,63 +37,46 @@ namespace Azure.Analytics.Synapse.AccessControl
         /// <summary> Initializes a new instance of RoleDefinitionsClient. </summary>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public RoleDefinitionsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AccessControlClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of RoleDefinitionsClient. </summary>
+        /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public RoleDefinitionsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options = null)
+        public RoleDefinitionsClient(Uri endpoint, TokenCredential credential, AccessControlClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AccessControlClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
-        /// <summary> List role definitions. </summary>
+        /// <summary>
+        /// [Protocol Method] List role definitions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
-        ///   permissions: [
-        ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
-        ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetRoleDefinitionsAsync(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionsAsync(bool?,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetRoleDefinitionsAsync(bool? isBuiltIn, string scope, RequestContext context)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
             scope0.Start();
@@ -108,48 +92,23 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> List role definitions. </summary>
+        /// <summary>
+        /// [Protocol Method] List role definitions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="isBuiltIn"> Is a Synapse Built-In Role or not. </param>
         /// <param name="scope"> Scope of the Synapse Built-in Role. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
-        ///   permissions: [
-        ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
-        ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetRoleDefinitions(bool? isBuiltIn = null, string scope = null, RequestContext context = null)
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitions(bool?,string,RequestContext)']/*" />
+        public virtual Response GetRoleDefinitions(bool? isBuiltIn, string scope, RequestContext context)
         {
             using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitions");
             scope0.Start();
@@ -165,54 +124,29 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
         }
 
-        /// <summary> Get role definition by role definition Id. </summary>
+        /// <summary>
+        /// [Protocol Method] Get role definition by role definition Id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
-        ///   permissions: [
-        ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
-        ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestContext context = null)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionByIdAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetRoleDefinitionByIdAsync(string roleDefinitionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, context);
@@ -220,59 +154,34 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
-        /// <summary> Get role definition by role definition Id. </summary>
+        /// <summary>
+        /// [Protocol Method] Get role definition by role definition Id.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="roleDefinitionId"> Synapse Built-In Role Definition Id. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   id: SynapseRoleDefinitionId,
-        ///   name: string,
-        ///   isBuiltIn: boolean,
-        ///   description: string,
-        ///   permissions: [
-        ///     {
-        ///       actions: [string],
-        ///       notActions: [string],
-        ///       dataActions: [string],
-        ///       notDataActions: [string]
-        ///     }
-        ///   ],
-        ///   scopes: [string],
-        ///   availabilityStatus: string
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestContext context = null)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetRoleDefinitionById(string,RequestContext)']/*" />
+        public virtual Response GetRoleDefinitionById(string roleDefinitionId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(roleDefinitionId, nameof(roleDefinitionId));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetRoleDefinitionById");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetRoleDefinitionByIdRequest(roleDefinitionId, context);
@@ -280,36 +189,29 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
-        /// <summary> List rbac scopes. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetScopesAsync(RequestContext context = null)
+        /// <summary>
+        /// [Protocol Method] List rbac scopes.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopesAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetScopesAsync(RequestContext context)
         {
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetScopesRequest(context);
@@ -317,36 +219,29 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }
 
-        /// <summary> List rbac scopes. </summary>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   error: {
-        ///     code: string,
-        ///     message: string,
-        ///     target: string,
-        ///     details: [ErrorResponse],
-        ///     additionalInfo: [
-        ///       {
-        ///         type: string,
-        ///         info: AnyObject
-        ///       }
-        ///     ]
-        ///   }
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetScopes(RequestContext context = null)
+        /// <summary>
+        /// [Protocol Method] List rbac scopes.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsClient.xml" path="doc/members/member[@name='GetScopes(RequestContext)']/*" />
+        public virtual Response GetScopes(RequestContext context)
         {
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
-            scope0.Start();
+            using var scope = ClientDiagnostics.CreateScope("RoleDefinitionsClient.GetScopes");
+            scope.Start();
             try
             {
                 using HttpMessage message = CreateGetScopesRequest(context);
@@ -354,7 +249,7 @@ namespace Azure.Analytics.Synapse.AccessControl
             }
             catch (Exception e)
             {
-                scope0.Failed(e);
+                scope.Failed(e);
                 throw;
             }
         }

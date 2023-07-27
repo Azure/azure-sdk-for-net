@@ -20,60 +20,63 @@ namespace Azure.ResourceManager.WebPubSub
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(Identity))
             {
-                writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Tls))
             {
-                writer.WritePropertyName("tls");
+                writer.WritePropertyName("tls"u8);
                 writer.WriteObjectValue(Tls);
             }
             if (Optional.IsDefined(LiveTraceConfiguration))
             {
-                writer.WritePropertyName("liveTraceConfiguration");
+                writer.WritePropertyName("liveTraceConfiguration"u8);
                 writer.WriteObjectValue(LiveTraceConfiguration);
             }
             if (Optional.IsDefined(ResourceLogConfiguration))
             {
-                writer.WritePropertyName("resourceLogConfiguration");
+                writer.WritePropertyName("resourceLogConfiguration"u8);
                 writer.WriteObjectValue(ResourceLogConfiguration);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
-                writer.WritePropertyName("networkACLs");
+                writer.WritePropertyName("networkACLs"u8);
                 writer.WriteObjectValue(NetworkAcls);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
-                writer.WritePropertyName("publicNetworkAccess");
+                writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess);
             }
-            if (Optional.IsDefined(DisableLocalAuth))
+            if (Optional.IsDefined(IsLocalAuthDisabled))
             {
-                writer.WritePropertyName("disableLocalAuth");
-                writer.WriteBooleanValue(DisableLocalAuth.Value);
+                writer.WritePropertyName("disableLocalAuth"u8);
+                writer.WriteBooleanValue(IsLocalAuthDisabled.Value);
             }
-            if (Optional.IsDefined(DisableAadAuth))
+            if (Optional.IsDefined(IsAadAuthDisabled))
             {
-                writer.WritePropertyName("disableAadAuth");
-                writer.WriteBooleanValue(DisableAadAuth.Value);
+                writer.WritePropertyName("disableAadAuth"u8);
+                writer.WriteBooleanValue(IsAadAuthDisabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -81,54 +84,60 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static WebPubSubData DeserializeWebPubSubData(JsonElement element)
         {
-            Optional<WebPubSubSku> sku = default;
-            Optional<ManagedIdentity> identity = default;
-            IDictionary<string, string> tags = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<BillingInfoSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SystemData> systemData = default;
+            Optional<WebPubSubProvisioningState> provisioningState = default;
             Optional<string> externalIP = default;
             Optional<string> hostName = default;
             Optional<int> publicPort = default;
             Optional<int> serverPort = default;
             Optional<string> version = default;
-            Optional<IReadOnlyList<PrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<IReadOnlyList<SharedPrivateLinkData>> sharedPrivateLinkResources = default;
+            Optional<IReadOnlyList<WebPubSubPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<IReadOnlyList<WebPubSubSharedPrivateLinkData>> sharedPrivateLinkResources = default;
             Optional<WebPubSubTlsSettings> tls = default;
             Optional<string> hostNamePrefix = default;
             Optional<LiveTraceConfiguration> liveTraceConfiguration = default;
             Optional<ResourceLogConfiguration> resourceLogConfiguration = default;
-            Optional<WebPubSubNetworkAcls> networkACLs = default;
+            Optional<WebPubSubNetworkAcls> networkAcls = default;
             Optional<string> publicNetworkAccess = default;
             Optional<bool> disableLocalAuth = default;
             Optional<bool> disableAadAuth = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = WebPubSubSku.DeserializeWebPubSubSku(property.Value);
+                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("identity"))
+                if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -137,32 +146,36 @@ namespace Azure.ResourceManager.WebPubSub
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,146 +184,135 @@ namespace Azure.ResourceManager.WebPubSub
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new WebPubSubProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("externalIP"))
+                        if (property0.NameEquals("externalIP"u8))
                         {
                             externalIP = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("hostName"))
+                        if (property0.NameEquals("hostName"u8))
                         {
                             hostName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publicPort"))
+                        if (property0.NameEquals("publicPort"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicPort = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("serverPort"))
+                        if (property0.NameEquals("serverPort"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverPort = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointConnections"))
+                        if (property0.NameEquals("privateEndpointConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateEndpointConnectionData> array = new List<PrivateEndpointConnectionData>();
+                            List<WebPubSubPrivateEndpointConnectionData> array = new List<WebPubSubPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionData.DeserializePrivateEndpointConnectionData(item));
+                                array.Add(WebPubSubPrivateEndpointConnectionData.DeserializeWebPubSubPrivateEndpointConnectionData(item));
                             }
                             privateEndpointConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("sharedPrivateLinkResources"))
+                        if (property0.NameEquals("sharedPrivateLinkResources"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SharedPrivateLinkData> array = new List<SharedPrivateLinkData>();
+                            List<WebPubSubSharedPrivateLinkData> array = new List<WebPubSubSharedPrivateLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SharedPrivateLinkData.DeserializeSharedPrivateLinkData(item));
+                                array.Add(WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(item));
                             }
                             sharedPrivateLinkResources = array;
                             continue;
                         }
-                        if (property0.NameEquals("tls"))
+                        if (property0.NameEquals("tls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tls = WebPubSubTlsSettings.DeserializeWebPubSubTlsSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hostNamePrefix"))
+                        if (property0.NameEquals("hostNamePrefix"u8))
                         {
                             hostNamePrefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("liveTraceConfiguration"))
+                        if (property0.NameEquals("liveTraceConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             liveTraceConfiguration = LiveTraceConfiguration.DeserializeLiveTraceConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("resourceLogConfiguration"))
+                        if (property0.NameEquals("resourceLogConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceLogConfiguration = ResourceLogConfiguration.DeserializeResourceLogConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("networkACLs"))
+                        if (property0.NameEquals("networkACLs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            networkACLs = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value);
+                            networkAcls = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             publicNetworkAccess = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("disableLocalAuth"))
+                        if (property0.NameEquals("disableLocalAuth"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableLocalAuth = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("disableAadAuth"))
+                        if (property0.NameEquals("disableAadAuth"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableAadAuth = property0.Value.GetBoolean();
@@ -320,7 +322,7 @@ namespace Azure.ResourceManager.WebPubSub
                     continue;
                 }
             }
-            return new WebPubSubData(id, name, type, systemData, tags, location, sku.Value, identity.Value, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkACLs.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
+            return new WebPubSubData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(provisioningState), externalIP.Value, hostName.Value, Optional.ToNullable(publicPort), Optional.ToNullable(serverPort), version.Value, Optional.ToList(privateEndpointConnections), Optional.ToList(sharedPrivateLinkResources), tls.Value, hostNamePrefix.Value, liveTraceConfiguration.Value, resourceLogConfiguration.Value, networkAcls.Value, publicNetworkAccess.Value, Optional.ToNullable(disableLocalAuth), Optional.ToNullable(disableAadAuth));
         }
     }
 }

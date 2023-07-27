@@ -15,26 +15,29 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static PrivateLinkResourcesListResult DeserializePrivateLinkResourcesListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateLinkResource>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<ServiceBusPrivateLinkResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateLinkResource> array = new List<PrivateLinkResource>();
+                    List<ServiceBusPrivateLinkResource> array = new List<ServiceBusPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateLinkResource.DeserializePrivateLinkResource(item));
+                        array.Add(ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -25,5 +25,12 @@ namespace Azure.Messaging.EventHubs.Perf
         ///
         [Option("batch-size", HelpText = "Events per batch")]
         public int BatchSize { get; set; }
+
+        /// <summary>
+        ///   The number of partitions that the Event Hub used for testing should have.
+        /// </summary>
+        ///
+        [Option("partition-count", Default = 4, HelpText = "The number of partitions that the Event Hub should have.")]
+        public int PartitionCount { get; set; }
     }
 }

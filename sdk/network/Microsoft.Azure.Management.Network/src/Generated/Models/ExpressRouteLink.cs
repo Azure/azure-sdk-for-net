@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// panel port.</param>
         /// <param name="rackId">Mapping of physical patch panel to
         /// rack.</param>
+        /// <param name="coloLocation">Cololocation for ExpressRoute Hybrid
+        /// Direct.</param>
         /// <param name="connectorType">Physical fiber port type. Possible
         /// values include: 'LC', 'SC'</param>
         /// <param name="adminState">Administrative state of the physical port.
@@ -55,13 +57,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// child port resources of the parent.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
-        public ExpressRouteLink(string id = default(string), string routerName = default(string), string interfaceName = default(string), string patchPanelId = default(string), string rackId = default(string), string connectorType = default(string), string adminState = default(string), string provisioningState = default(string), ExpressRouteLinkMacSecConfig macSecConfig = default(ExpressRouteLinkMacSecConfig), string name = default(string), string etag = default(string))
+        public ExpressRouteLink(string id = default(string), string routerName = default(string), string interfaceName = default(string), string patchPanelId = default(string), string rackId = default(string), string coloLocation = default(string), string connectorType = default(string), string adminState = default(string), string provisioningState = default(string), ExpressRouteLinkMacSecConfig macSecConfig = default(ExpressRouteLinkMacSecConfig), string name = default(string), string etag = default(string))
             : base(id)
         {
             RouterName = routerName;
             InterfaceName = interfaceName;
             PatchPanelId = patchPanelId;
             RackId = rackId;
+            ColoLocation = coloLocation;
             ConnectorType = connectorType;
             AdminState = adminState;
             ProvisioningState = provisioningState;
@@ -99,6 +102,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.rackId")]
         public string RackId { get; private set; }
+
+        /// <summary>
+        /// Gets cololocation for ExpressRoute Hybrid Direct.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.coloLocation")]
+        public string ColoLocation { get; private set; }
 
         /// <summary>
         /// Gets physical fiber port type. Possible values include: 'LC', 'SC'

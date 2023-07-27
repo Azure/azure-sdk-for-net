@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> Custom model build mode. </summary>
+    /// <summary> Custom document model build mode. </summary>
     public readonly partial struct DocumentBuildMode : IEquatable<DocumentBuildMode>
     {
         private readonly string _value;

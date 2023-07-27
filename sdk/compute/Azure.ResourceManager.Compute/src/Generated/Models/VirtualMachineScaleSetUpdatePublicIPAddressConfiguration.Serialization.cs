@@ -17,87 +17,33 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
-                writer.WritePropertyName("idleTimeoutInMinutes");
+                writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
             if (Optional.IsDefined(DnsSettings))
             {
-                writer.WritePropertyName("dnsSettings");
+                writer.WritePropertyName("dnsSettings"u8);
                 writer.WriteObjectValue(DnsSettings);
+            }
+            if (Optional.IsDefined(PublicIPPrefix))
+            {
+                writer.WritePropertyName("publicIPPrefix"u8);
+                JsonSerializer.Serialize(writer, PublicIPPrefix);
             }
             if (Optional.IsDefined(DeleteOption))
             {
-                writer.WritePropertyName("deleteOption");
+                writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
-        }
-
-        internal static VirtualMachineScaleSetUpdatePublicIPAddressConfiguration DeserializeVirtualMachineScaleSetUpdatePublicIPAddressConfiguration(JsonElement element)
-        {
-            Optional<string> name = default;
-            Optional<int> idleTimeoutInMinutes = default;
-            Optional<VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings> dnsSettings = default;
-            Optional<DeleteOptions> deleteOption = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("name"))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("idleTimeoutInMinutes"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            idleTimeoutInMinutes = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dnsSettings"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            dnsSettings = VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings.DeserializeVirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("deleteOption"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            deleteOption = new DeleteOptions(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
-            }
-            return new VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(name.Value, Optional.ToNullable(idleTimeoutInMinutes), dnsSettings.Value, Optional.ToNullable(deleteOption));
         }
     }
 }

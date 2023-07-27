@@ -2,7 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.Language.QuestionAnswering.Projects;
+#region Snippet:QuestionAnsweringClient_Namespaces
+using Azure.Core;
+using Azure.AI.Language.QuestionAnswering;
+#endregion
+#region Snippet:QuestionAnsweringAuthoringClient_Namespace
+using Azure.AI.Language.QuestionAnswering.Authoring;
+#endregion
+#region Snippet:QuestionAnswering_Identity_Namespace
+using Azure.Identity;
+#endregion
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
@@ -12,20 +21,30 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
         public void CreateQuestionAnsweringClient()
         {
             #region Snippet:QuestionAnsweringClient_Create
-            Uri endpoint = new Uri("{LanguageEndpoint}");
-            AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
             QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
             #endregion
         }
 
-        public void CreateQuestionAnsweringProjectsClient()
+        public void CreateQuestionAnsweringAuthoringClient()
         {
-            #region Snippet:QuestionAnsweringProjectsClient_Create
-            Uri endpoint = new Uri("{LanguageEndpoint}");
-            AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+            #region Snippet:QuestionAnsweringAuthoringClient_Create
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+            AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-            QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
+            #endregion
+        }
+
+        public void CreateQuestionAnsweringClientWithDefaultAzureCredential()
+        {
+            #region Snippet:QuestionAnsweringClient_CreateWithDefaultAzureCredential
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+
+            QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
             #endregion
         }
 

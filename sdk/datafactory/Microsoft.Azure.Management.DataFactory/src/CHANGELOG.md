@@ -1,5 +1,66 @@
 # Changelog for the Azure Data Factory V2 .NET SDK
 
+## Version 9.3.0
+###  Feature Additions
+- Added support customProperties in IntegrationRuntimeDataFlow
+
+## Version 9.2.0
+###  Feature Additions
+- Added AzureBlobFS sasUri and sasToken properties in ADF
+
+## Version 9.1.0
+###  Feature Additions
+- Added AzureBlobStorage containerUri and authenticationType properties in ADF
+- Added support copyComputeScale And pipelineExternalComputeScale in IntegrationRuntime
+
+## Version 9.0.0
+###  Feature Additions
+### Breaking Changes
+- Added support for credential operations in DataFactory
+- Added exportsettings required in Snowflake source
+- Added scan folder and spark config support in Sparkjob activity
+
+## Version 8.0.0
+###  Feature Additions
+### Breaking Changes
+- Added properties to spark job activity
+- Added disablePublish property into FactoryRepoConfiguration
+- Added scriptBlockExecutionTimeout property into Script Activity
+
+## Version 7.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Stored Procedure Parameters in ADF
+
+## Version 6.4.0
+###  Feature Additions
+- Added GoogleSheets connector in ADF
+- Added Synapse Spark activities in ADF
+
+## Version 6.3.0
+###  Feature Additions
+- Changed FactoryGitHubConfiguration url format for hostName description
+- Added SAP ODP connector in ADF
+- Added support OAuth2ClientCredential auth in RestSevice
+
+## Version 6.2.0
+###  Feature Additions
+- Added globalParameters apis into ADF
+- Added support for running staging on multiple sources in parallel
+- Added purview configuration into ADF
+- Added support rejected data linked service in dataflow sink
+
+## Version 6.1.0
+###  Feature Additions
+- Added Dataworld, AppFigures, Asana, Twilio connectors in ADF
+- Added PrivateEndpoint property Into PrivateLinkConnectionApprovalRequest
+
+## Version 6.0.0
+###  Feature Additions
+### Breaking Changes
+- Fixed Expression mode for SqlServerStoredProcedureActivity
+- Added Policy property into ExecutePipelineActivity
+
 ## Version 5.4.0
 ###  Feature Additions
 - Added Web Activity disable cert validation

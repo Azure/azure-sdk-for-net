@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -15,19 +16,16 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class RoleInstances
     {
         /// <summary> Initializes a new instance of RoleInstances. </summary>
-        /// <param name="roleInstancesValue"> List of cloud service role instance names. Value of &apos;*&apos; will signify all role instances of the cloud service. </param>
+        /// <param name="roleInstancesValue"> List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roleInstancesValue"/> is null. </exception>
         public RoleInstances(IEnumerable<string> roleInstancesValue)
         {
-            if (roleInstancesValue == null)
-            {
-                throw new ArgumentNullException(nameof(roleInstancesValue));
-            }
+            Argument.AssertNotNull(roleInstancesValue, nameof(roleInstancesValue));
 
             RoleInstancesValue = roleInstancesValue.ToList();
         }
 
-        /// <summary> List of cloud service role instance names. Value of &apos;*&apos; will signify all role instances of the cloud service. </summary>
+        /// <summary> List of cloud service role instance names. Value of '*' will signify all role instances of the cloud service. </summary>
         public IList<string> RoleInstancesValue { get; }
     }
 }

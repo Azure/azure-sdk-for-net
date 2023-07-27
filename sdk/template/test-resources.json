@@ -18,7 +18,6 @@
         },
         "testApplicationOid": {
             "type": "string",
-            "defaultValue": "b3653439-8136-4cd5-aac3-2a9460871ca6",
             "metadata": {
                 "description": "The client OID to grant access to test resources."
             }

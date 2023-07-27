@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VirtualRouterPeering data model. </summary>
-    public partial class VirtualRouterPeeringData : SubResource
+    /// <summary>
+    /// A class representing the VirtualRouterPeering data model.
+    /// Virtual Router Peering resource.
+    /// </summary>
+    public partial class VirtualRouterPeeringData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VirtualRouterPeeringData. </summary>
         public VirtualRouterPeeringData()
@@ -19,33 +24,27 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of VirtualRouterPeeringData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the virtual router peering that is unique within a virtual router. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Peering type. </param>
         /// <param name="peerAsn"> Peer ASN. </param>
         /// <param name="peerIP"> Peer IP. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal VirtualRouterPeeringData(string id, string name, string etag, string resourceType, long? peerAsn, string peerIP, ProvisioningState? provisioningState) : base(id)
+        internal VirtualRouterPeeringData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, long? peerAsn, string peerIP, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             PeerAsn = peerAsn;
             PeerIP = peerIP;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the virtual router peering that is unique within a virtual router. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Peering type. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> Peer ASN. </summary>
         public long? PeerAsn { get; set; }
         /// <summary> Peer IP. </summary>
         public string PeerIP { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

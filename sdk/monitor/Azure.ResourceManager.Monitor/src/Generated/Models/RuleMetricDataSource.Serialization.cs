@@ -17,29 +17,29 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(MetricName))
             {
-                writer.WritePropertyName("metricName");
+                writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
+                writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceId);
             }
             if (Optional.IsDefined(LegacyResourceId))
             {
-                writer.WritePropertyName("legacyResourceId");
+                writer.WritePropertyName("legacyResourceId"u8);
                 writer.WriteStringValue(LegacyResourceId);
             }
             if (Optional.IsDefined(ResourceLocation))
             {
-                writer.WritePropertyName("resourceLocation");
+                writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation);
             }
             if (Optional.IsDefined(MetricNamespace))
             {
-                writer.WritePropertyName("metricNamespace");
+                writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
             writer.WriteEndObject();
@@ -47,46 +47,58 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleMetricDataSource DeserializeRuleMetricDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metricName = default;
             string odataType = default;
-            Optional<string> resourceId = default;
-            Optional<string> legacyResourceId = default;
+            Optional<ResourceIdentifier> resourceUri = default;
+            Optional<ResourceIdentifier> legacyResourceId = default;
             Optional<string> resourceLocation = default;
             Optional<string> metricNamespace = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("metricName"))
+                if (property.NameEquals("metricName"u8))
                 {
                     metricName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceUri"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("legacyResourceId"))
+                if (property.NameEquals("legacyResourceId"u8))
                 {
-                    legacyResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    legacyResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceLocation"))
+                if (property.NameEquals("resourceLocation"u8))
                 {
                     resourceLocation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("metricNamespace"))
+                if (property.NameEquals("metricNamespace"u8))
                 {
                     metricNamespace = property.Value.GetString();
                     continue;
                 }
             }
-            return new RuleMetricDataSource(odataType, resourceId.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, metricName.Value);
+            return new RuleMetricDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, metricName.Value);
         }
     }
 }

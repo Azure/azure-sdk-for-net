@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         {
         }
 
-        private async Task<SiteSourceControlResource> GetSiteSourceControlCollectionAsync()
+        private async Task<WebSiteSourceControlResource> GetSiteSourceControlCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
             var SiteName = Recording.GenerateAssetName("testSiteSource");
             var SiteInput = ResourceDataHelper.GetBasicSiteData(DefaultLocation);
             var lro = await resourceGroup.GetWebSites().CreateOrUpdateAsync(WaitUntil.Completed, SiteName, SiteInput);
             var Site = lro.Value;
-            return Site.GetSiteSourceControl();
+            return Site.GetWebSiteSourceControl();
         }
 
         [TestCase]
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
             //var controlName = Recording.GenerateAssetName("testSiteSourceControl-");
             var input = ResourceDataHelper.GetBasicSiteSourceControlData();
             var lro = await container.CreateOrUpdateAsync(WaitUntil.Completed, input);
-            SiteSourceControlResource sourcecontrol1 = lro.Value;
-            SiteSourceControlResource sourcecontrol2 = await container.GetAsync();
+            WebSiteSourceControlResource sourcecontrol1 = lro.Value;
+            WebSiteSourceControlResource sourcecontrol2 = await container.GetAsync();
             ResourceDataHelper.AssertSiteSourceControlData(sourcecontrol1.Data, sourcecontrol2.Data);
         }
 

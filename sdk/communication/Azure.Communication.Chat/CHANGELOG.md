@@ -10,6 +10,17 @@
 
 ### Other Changes
 
+## 1.1.2 (2023-06-19)
+
+### Features Added
+- Optimized the logic for deserializing types derived from the `CommunicationIdentifier`.
+- Added factory methods for `public` models in `ChatModelFactory`.
+
+## 1.1.1 (2022-09-16)
+
+### Features Added
+Updated `Azure.Communication.Common` version.
+
 ## 1.1.0 (2021-09-15)
 Updated `Azure.Communication.Chat` version.
 

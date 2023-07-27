@@ -14,28 +14,36 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static VpnGatewayIPConfiguration DeserializeVpnGatewayIPConfiguration(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<string> publicIpAddress = default;
-            Optional<string> privateIpAddress = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> id = default;
+            Optional<string> publicIPAddress = default;
+            Optional<string> privateIPAddress = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("publicIpAddress"))
+                if (property.NameEquals("publicIpAddress"u8))
                 {
-                    publicIpAddress = property.Value.GetString();
+                    publicIPAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("privateIpAddress"))
+                if (property.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = property.Value.GetString();
+                    privateIPAddress = property.Value.GetString();
                     continue;
                 }
             }
-            return new VpnGatewayIPConfiguration(id.Value, publicIpAddress.Value, privateIpAddress.Value);
+            return new VpnGatewayIPConfiguration(id.Value, publicIPAddress.Value, privateIPAddress.Value);
         }
     }
 }

@@ -13,18 +13,18 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of IPsecPolicy. </summary>
         /// <param name="saLifeTimeSeconds"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) lifetime in seconds for a site to site VPN tunnel. </param>
         /// <param name="saDataSizeKilobytes"> The IPSec Security Association (also called Quick Mode or Phase 2 SA) payload size in KB for a site to site VPN tunnel. </param>
-        /// <param name="iPsecEncryption"> The IPSec encryption algorithm (IKE phase 1). </param>
-        /// <param name="iPsecIntegrity"> The IPSec integrity algorithm (IKE phase 1). </param>
+        /// <param name="ipsecEncryption"> The IPSec encryption algorithm (IKE phase 1). </param>
+        /// <param name="ipsecIntegrity"> The IPSec integrity algorithm (IKE phase 1). </param>
         /// <param name="ikeEncryption"> The IKE encryption algorithm (IKE phase 2). </param>
         /// <param name="ikeIntegrity"> The IKE integrity algorithm (IKE phase 2). </param>
         /// <param name="dhGroup"> The DH Group used in IKE Phase 1 for initial SA. </param>
         /// <param name="pfsGroup"> The Pfs Group used in IKE Phase 2 for new child SA. </param>
-        public IPsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, IPsecEncryption iPsecEncryption, IPsecIntegrity iPsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DhGroup dhGroup, PfsGroup pfsGroup)
+        public IPsecPolicy(int saLifeTimeSeconds, int saDataSizeKilobytes, IPsecEncryption ipsecEncryption, IPsecIntegrity ipsecIntegrity, IkeEncryption ikeEncryption, IkeIntegrity ikeIntegrity, DHGroup dhGroup, PfsGroup pfsGroup)
         {
             SaLifeTimeSeconds = saLifeTimeSeconds;
             SaDataSizeKilobytes = saDataSizeKilobytes;
-            IPsecEncryption = iPsecEncryption;
-            IPsecIntegrity = iPsecIntegrity;
+            IPsecEncryption = ipsecEncryption;
+            IPsecIntegrity = ipsecIntegrity;
             IkeEncryption = ikeEncryption;
             IkeIntegrity = ikeIntegrity;
             DhGroup = dhGroup;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The IKE integrity algorithm (IKE phase 2). </summary>
         public IkeIntegrity IkeIntegrity { get; set; }
         /// <summary> The DH Group used in IKE Phase 1 for initial SA. </summary>
-        public DhGroup DhGroup { get; set; }
+        public DHGroup DhGroup { get; set; }
         /// <summary> The Pfs Group used in IKE Phase 2 for new child SA. </summary>
         public PfsGroup PfsGroup { get; set; }
     }

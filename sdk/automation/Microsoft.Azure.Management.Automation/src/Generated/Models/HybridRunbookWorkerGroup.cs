@@ -11,16 +11,15 @@
 namespace Microsoft.Azure.Management.Automation.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Definition of hybrid runbook worker group.
     /// </summary>
-    public partial class HybridRunbookWorkerGroup : IResource
+    [Rest.Serialization.JsonTransformation]
+    public partial class HybridRunbookWorkerGroup : Resource
     {
         /// <summary>
         /// Initializes a new instance of the HybridRunbookWorkerGroup class.
@@ -33,24 +32,20 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <summary>
         /// Initializes a new instance of the HybridRunbookWorkerGroup class.
         /// </summary>
-        /// <param name="id">Gets or sets the id of the resource.</param>
-        /// <param name="name">Gets or sets the name of the group.</param>
+        /// <param name="id">Fully qualified resource Id for the
+        /// resource</param>
+        /// <param name="name">The name of the resource</param>
         /// <param name="type">The type of the resource.</param>
-        /// <param name="hybridRunbookWorkers">Gets or sets the list of hybrid
-        /// runbook workers.</param>
-        /// <param name="credential">Sets the credential of a worker
-        /// group.</param>
         /// <param name="groupType">Type of the HybridWorkerGroup. Possible
         /// values include: 'User', 'System'</param>
+        /// <param name="credential">Sets the credential of a worker
+        /// group.</param>
         /// <param name="systemData">Resource system metadata.</param>
-        public HybridRunbookWorkerGroup(string id = default(string), string name = default(string), string type = default(string), IList<HybridRunbookWorkerLegacy> hybridRunbookWorkers = default(IList<HybridRunbookWorkerLegacy>), RunAsCredentialAssociationProperty credential = default(RunAsCredentialAssociationProperty), string groupType = default(string), SystemData systemData = default(SystemData))
+        public HybridRunbookWorkerGroup(string id = default(string), string name = default(string), string type = default(string), string groupType = default(string), RunAsCredentialAssociationProperty credential = default(RunAsCredentialAssociationProperty), SystemData systemData = default(SystemData))
+            : base(id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
-            HybridRunbookWorkers = hybridRunbookWorkers;
-            Credential = credential;
             GroupType = groupType;
+            Credential = credential;
             SystemData = systemData;
             CustomInit();
         }
@@ -61,41 +56,17 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id of the resource.
+        /// Gets or sets type of the HybridWorkerGroup. Possible values
+        /// include: 'User', 'System'
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the group.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets the type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the list of hybrid runbook workers.
-        /// </summary>
-        [JsonProperty(PropertyName = "hybridRunbookWorkers")]
-        public IList<HybridRunbookWorkerLegacy> HybridRunbookWorkers { get; set; }
+        [JsonProperty(PropertyName = "properties.groupType")]
+        public string GroupType { get; set; }
 
         /// <summary>
         /// Gets or sets sets the credential of a worker group.
         /// </summary>
-        [JsonProperty(PropertyName = "credential")]
+        [JsonProperty(PropertyName = "properties.credential")]
         public RunAsCredentialAssociationProperty Credential { get; set; }
-
-        /// <summary>
-        /// Gets or sets type of the HybridWorkerGroup. Possible values
-        /// include: 'User', 'System'
-        /// </summary>
-        [JsonProperty(PropertyName = "groupType")]
-        public string GroupType { get; set; }
 
         /// <summary>
         /// Gets or sets resource system metadata.

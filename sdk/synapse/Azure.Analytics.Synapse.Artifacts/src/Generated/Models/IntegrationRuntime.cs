@@ -10,7 +10,11 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Azure Synapse nested object which serves as a compute resource for activities. </summary>
+    /// <summary>
+    /// Azure Synapse nested object which serves as a compute resource for activities.
+    /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
+    /// </summary>
     public partial class IntegrationRuntime
     {
         /// <summary> Initializes a new instance of IntegrationRuntime. </summary>

@@ -17,9 +17,12 @@ namespace Azure.Identity
     /// </summary>
     public class ClientAssertionCredential : TokenCredential
     {
+        internal readonly string[] AdditionallyAllowedTenantIds;
+
         internal string TenantId { get; }
         internal string ClientId { get; }
         internal MsalConfidentialClient Client { get; }
+        internal CredentialPipeline Pipeline { get; }
         internal bool AllowMultiTenantAuthentication { get; }
 
         /// <summary>
@@ -43,6 +46,8 @@ namespace Azure.Identity
             ClientId = clientId;
 
             Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, options);
+            Pipeline = options?.Pipeline ?? Client.Pipeline;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -60,6 +65,8 @@ namespace Azure.Identity
             ClientId = clientId;
 
             Client = options?.MsalClient ?? new MsalConfidentialClient(options?.Pipeline ?? CredentialPipeline.GetInstance(options), tenantId, clientId, assertionCallback, options);
+            Pipeline = options?.Pipeline ?? Client.Pipeline;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
@@ -70,13 +77,13 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = Client.Pipeline.StartGetTokenScope("ClientAssertionCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope("ClientAssertionCredential.GetToken", requestContext);
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
 
-                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, false, cancellationToken).EnsureCompleted();
+                AuthenticationResult result = Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.IsCaeEnabled, false, cancellationToken).EnsureCompleted();
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -94,13 +101,13 @@ namespace Azure.Identity
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public async override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
-            using CredentialDiagnosticScope scope = Client.Pipeline.StartGetTokenScope("ClientAssertionCredential.GetToken", requestContext);
+            using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope("ClientAssertionCredential.GetToken", requestContext);
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds);
 
-                AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, true, cancellationToken).ConfigureAwait(false);
+                AuthenticationResult result = await Client.AcquireTokenForClientAsync(requestContext.Scopes, tenantId, requestContext.IsCaeEnabled, true, cancellationToken).ConfigureAwait(false);
 
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }

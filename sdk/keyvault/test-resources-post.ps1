@@ -20,6 +20,8 @@ param (
     $RemainingArguments
 )
 
+Import-Module -Name $PSScriptRoot/../../eng/common/scripts/X509Certificate2 -Verbose
+
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
     $ErrorActionPreference = 'Stop'
@@ -29,43 +31,6 @@ function Log($Message) {
     Write-Host ('{0} - {1}' -f [DateTime]::Now.ToLongTimeString(), $Message)
 }
 
-function New-X509Certificate2([string] $SubjectName) {
-
-    $rsa = [RSA]::Create(2048)
-    try {
-        $req = [CertificateRequest]::new(
-            [string] $SubjectName,
-            $rsa,
-            [HashAlgorithmName]::SHA256,
-            [RSASignaturePadding]::Pkcs1
-        )
-
-        # TODO: Add any KUs necessary to $req.CertificateExtensions
-
-        $NotBefore = [DateTimeOffset]::Now.AddDays(-1)
-        $NotAfter = $NotBefore.AddDays(365)
-
-        $req.CreateSelfSigned($NotBefore, $NotAfter)
-    }
-    finally {
-        $rsa.Dispose()
-    }
-}
-
-function Export-X509Certificate2([string] $Path, [X509Certificate2] $Certificate) {
-
-    $Certificate.Export([X509ContentType]::Pfx) | Set-Content $Path -AsByteStream
-}
-
-function Export-X509Certificate2PEM([string] $Path, [X509Certificate2] $Certificate) {
-
-@"
------BEGIN CERTIFICATE-----
-$([Convert]::ToBase64String($Certificate.RawData, 'InsertLineBreaks'))
------END CERTIFICATE-----
-"@ > $Path
-
-}
 
 # Make sure we deployed a Managed HSM.
 if (!$DeploymentOutputs['AZURE_MANAGEDHSM_URL']) {
@@ -78,11 +43,11 @@ $hsmName = $hsmUrl.Host.Substring(0, $hsmUrl.Host.IndexOf('.'))
 
 Log 'Creating 3 X509 certificates to activate security domain'
 $wrappingFiles = foreach ($i in 0..2) {
-    $certificate = New-X509Certificate2 "CN=$($hsmUrl.Host)"
+    $certificate = New-X509Certificate2 -SubjectName "CN=$($hsmUrl.Host)"
 
     $baseName = "$PSScriptRoot\$hsmName-certificate$i"
-    Export-X509Certificate2 "$baseName.pfx" $certificate
-    Export-X509Certificate2PEM "$baseName.cer" $certificate
+    Export-X509Certificate2 -Path "$baseName.pfx" -Type 'Pfx' -Certificate $certificate
+    Export-X509Certificate2 -Path "$baseName.cer" -Type 'Certificate' -Certificate $certificate
 
     Resolve-Path "$baseName.cer"
 }
@@ -95,7 +60,13 @@ if (Test-Path $sdpath) {
     Remove-Item $sdPath -Force
 }
 
-Export-AzKeyVaultSecurityDomain -Name $hsmName -Quorum 2 -Certificates $wrappingFiles -OutputPath $sdPath
+Export-AzKeyVaultSecurityDomain -Name $hsmName -Quorum 2 -Certificates $wrappingFiles -OutputPath $sdPath -ErrorAction SilentlyContinue -Verbose
+if ( !$? ) {
+    Write-Host $Error[0].Exception
+    Write-Error $Error[0]
+
+    exit
+}
 
 Log "Security domain downloaded to '$sdPath'; Managed HSM is now active at '$hsmUrl'"
 

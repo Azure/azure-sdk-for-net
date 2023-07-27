@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
-            writer.WriteBooleanValue(Enabled);
-            writer.WritePropertyName("type");
-            writer.WriteStringValue(InventoryRuleType.ToString());
-            writer.WritePropertyName("rules");
+            writer.WritePropertyName("enabled"u8);
+            writer.WriteBooleanValue(IsEnabled);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(RuleType.ToString());
+            writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
@@ -32,22 +32,32 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static BlobInventoryPolicySchema DeserializeBlobInventoryPolicySchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
-            InventoryRuleType type = default;
+            Optional<string> destination = default;
+            BlobInventoryRuleType type = default;
             IList<BlobInventoryPolicyRule> rules = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("destination"u8))
                 {
-                    type = new InventoryRuleType(property.Value.GetString());
+                    destination = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rules"))
+                if (property.NameEquals("type"u8))
+                {
+                    type = new BlobInventoryRuleType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("rules"u8))
                 {
                     List<BlobInventoryPolicyRule> array = new List<BlobInventoryPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -58,7 +68,7 @@ namespace Azure.ResourceManager.Storage.Models
                     continue;
                 }
             }
-            return new BlobInventoryPolicySchema(enabled, type, rules);
+            return new BlobInventoryPolicySchema(enabled, destination.Value, type, rules);
         }
     }
 }

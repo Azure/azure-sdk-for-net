@@ -2,6 +2,13 @@
 
 This sample discusses the metadata available for an Event Hub instance and demonstrates how to query and inspect the information.  To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Table of contents
+
+- [Client types](#client-types)
+- [Query the properties of an Event Hub](#query-the-properties-of-an-event-hub)
+- [Query the partitions of an Event Hub](#query-the-partitions-of-an-event-hub)
+- [Query the properties of a partition](#query-the-properties-of-a-partition)
+
 # Client types
 
 Querying and inspecting metadata is a common scenario when publishing and reading events.  As a result, the core operations are available to the `EventHubProducerClient` and `EventHubConsumerClient`.  

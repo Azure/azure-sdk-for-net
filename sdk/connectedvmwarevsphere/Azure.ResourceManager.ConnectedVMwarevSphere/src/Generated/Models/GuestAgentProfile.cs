@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
@@ -17,16 +18,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of GuestAgentProfile. </summary>
         public GuestAgentProfile()
         {
-            ErrorDetails = new ChangeTrackingList<ErrorDetail>();
+            ErrorDetails = new ChangeTrackingList<ResponseError>();
         }
 
         /// <summary> Initializes a new instance of GuestAgentProfile. </summary>
-        /// <param name="vmUuid"> Specifies the VM&apos;s unique SMBIOS ID. </param>
+        /// <param name="vmUuid"> Specifies the VM's unique SMBIOS ID. </param>
         /// <param name="status"> The status of the hybrid machine agent. </param>
         /// <param name="lastStatusChange"> The time of the last status change. </param>
         /// <param name="agentVersion"> The hybrid machine agent full version. </param>
         /// <param name="errorDetails"> Details about the error state. </param>
-        internal GuestAgentProfile(string vmUuid, StatusTypes? status, DateTimeOffset? lastStatusChange, string agentVersion, IReadOnlyList<ErrorDetail> errorDetails)
+        internal GuestAgentProfile(string vmUuid, StatusType? status, DateTimeOffset? lastStatusChange, string agentVersion, IReadOnlyList<ResponseError> errorDetails)
         {
             VmUuid = vmUuid;
             Status = status;
@@ -35,15 +36,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             ErrorDetails = errorDetails;
         }
 
-        /// <summary> Specifies the VM&apos;s unique SMBIOS ID. </summary>
+        /// <summary> Specifies the VM's unique SMBIOS ID. </summary>
         public string VmUuid { get; }
         /// <summary> The status of the hybrid machine agent. </summary>
-        public StatusTypes? Status { get; }
+        public StatusType? Status { get; }
         /// <summary> The time of the last status change. </summary>
         public DateTimeOffset? LastStatusChange { get; }
         /// <summary> The hybrid machine agent full version. </summary>
         public string AgentVersion { get; }
         /// <summary> Details about the error state. </summary>
-        public IReadOnlyList<ErrorDetail> ErrorDetails { get; }
+        public IReadOnlyList<ResponseError> ErrorDetails { get; }
     }
 }

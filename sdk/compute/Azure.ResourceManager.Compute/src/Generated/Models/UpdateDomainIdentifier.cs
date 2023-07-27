@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Defines an update domain for the cloud service. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of UpdateDomainIdentifier. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource Name. </param>
-        internal UpdateDomainIdentifier(string id, string name)
+        internal UpdateDomainIdentifier(ResourceIdentifier id, string name)
         {
             Id = id;
             Name = name;
         }
 
         /// <summary> Resource Id. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Resource Name. </summary>
         public string Name { get; }
     }

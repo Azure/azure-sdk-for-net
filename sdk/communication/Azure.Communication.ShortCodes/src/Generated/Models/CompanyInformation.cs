@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Communication.ShortCodes.Models
 {
     /// <summary> The CompanyInformation. </summary>
@@ -18,10 +20,10 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Initializes a new instance of CompanyInformation. </summary>
         /// <param name="name"> Legal entity name for customer submitting Program Brief. </param>
         /// <param name="url"> Company URL for customer submitting Program Brief. </param>
-        /// <param name="address"> Company&apos;s address for the customer submitting the Program Brief. </param>
+        /// <param name="address"> Company's address for the customer submitting the Program Brief. </param>
         /// <param name="contactInformation"> Contact Information. </param>
         /// <param name="customerCareInformation"> Customer Care Information. </param>
-        internal CompanyInformation(string name, string url, string address, ContactInformation contactInformation, CustomerCareInformation customerCareInformation)
+        internal CompanyInformation(string name, Uri url, string address, ContactInformation contactInformation, CustomerCareInformation customerCareInformation)
         {
             Name = name;
             Url = url;
@@ -33,8 +35,8 @@ namespace Azure.Communication.ShortCodes.Models
         /// <summary> Legal entity name for customer submitting Program Brief. </summary>
         public string Name { get; set; }
         /// <summary> Company URL for customer submitting Program Brief. </summary>
-        public string Url { get; set; }
-        /// <summary> Company&apos;s address for the customer submitting the Program Brief. </summary>
+        public Uri Url { get; set; }
+        /// <summary> Company's address for the customer submitting the Program Brief. </summary>
         public string Address { get; set; }
         /// <summary> Contact Information. </summary>
         public ContactInformation ContactInformation { get; set; }

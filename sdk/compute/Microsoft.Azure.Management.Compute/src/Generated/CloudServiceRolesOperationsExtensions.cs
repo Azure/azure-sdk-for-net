@@ -31,8 +31,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static CloudServiceRole Get(this ICloudServiceRolesOperations operations, string roleName, string resourceGroupName, string cloudServiceName)
             {
@@ -49,8 +51,10 @@ namespace Microsoft.Azure.Management.Compute
             /// Name of the role.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -72,8 +76,10 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             public static IPage<CloudServiceRole> List(this ICloudServiceRolesOperations operations, string resourceGroupName, string cloudServiceName)
             {
@@ -89,8 +95,10 @@ namespace Microsoft.Azure.Management.Compute
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
+            /// Name of the resource group.
             /// </param>
             /// <param name='cloudServiceName'>
+            /// Name of the cloud service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

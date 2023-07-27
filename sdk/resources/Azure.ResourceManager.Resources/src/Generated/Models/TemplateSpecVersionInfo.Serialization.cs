@@ -15,31 +15,33 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TemplateSpecVersionInfo DeserializeTemplateSpecVersionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<DateTimeOffset> timeCreated = default;
             Optional<DateTimeOffset> timeModified = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timeCreated"))
+                if (property.NameEquals("timeCreated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeCreated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("timeModified"))
+                if (property.NameEquals("timeModified"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeModified = property.Value.GetDateTimeOffset("O");

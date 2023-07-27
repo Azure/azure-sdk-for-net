@@ -1,71 +1,64 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/virtualMachines/imageVM/instanceView?api-version=2021-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL1JHZm9yU0RLdGVzdFJlc291cmNlcy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVzL2ltYWdlVk0vaW5zdGFuY2VWaWV3P2FwaS12ZXJzaW9uPTIwMjEtMTEtMDE=",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.Compute/virtualMachines/imageVM/instanceView?api-version=2023-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Jlc291cmNlR3JvdXBzL1JHZm9yU0RLdGVzdFJlc291cmNlcy9wcm92aWRlcnMvTWljcm9zb2Z0LkNvbXB1dGUvdmlydHVhbE1hY2hpbmVzL2ltYWdlVk0vaW5zdGFuY2VWaWV3P2FwaS12ZXJzaW9uPTIwMjMtMDMtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3350e09a-20f7-4a73-9282-eca7a9213143"
+          "21c85dd9-370f-4fc7-83db-d7f7b7a4bbf8"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/6.0.1523.11507",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Compute.ComputeManagementClient/50.0.0"
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Compute.ComputeManagementClient/61.0.0"
         ]
       },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
-        "Date": [
-          "Wed, 17 Nov 2021 12:10:58 GMT"
-        ],
         "Pragma": [
           "no-cache"
         ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0",
-          "Microsoft-HTTPAPI/2.0"
+        "x-ms-failure-cause": [
+          "gateway"
         ],
-        "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/LowCostGet3Min;3999,Microsoft.Compute/LowCostGet30Min;31999"
+        "x-ms-request-id": [
+          "51b05f7f-fdb6-422d-8b28-d954e0fd19ac"
+        ],
+        "x-ms-correlation-request-id": [
+          "51b05f7f-fdb6-422d-8b28-d954e0fd19ac"
+        ],
+        "x-ms-routing-request-id": [
+          "CANADACENTRAL:20230316T165156Z:51b05f7f-fdb6-422d-8b28-d954e0fd19ac"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-request-id": [
-          "2e815ca2-ce90-4d9a-9d3e-5e729186c818"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
-        ],
-        "x-ms-correlation-request-id": [
-          "7bfa62c3-b7ff-40ff-a9ba-bea9d5993f00"
-        ],
-        "x-ms-routing-request-id": [
-          "EASTUS2:20211117T121059Z:7bfa62c3-b7ff-40ff-a9ba-bea9d5993f00"
-        ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
-        "Content-Length": [
-          "1841"
+        "Date": [
+          "Thu, 16 Mar 2023 16:51:56 GMT"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Content-Length": [
+          "234"
         ]
       },
-      "ResponseBody": "{\r\n  \"patchStatus\": {\r\n    \"hotpatchStatus\": {\r\n      \"hotpatchEnablementStatus\": \"Disabled\",\r\n      \"hotpatchReadinessStatus\": \"EnablementRequired\",\r\n      \"lastRefreshedTime\": \"2021-03-24T16:05:19.0174555+00:00\",\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"Success\",\r\n        \"message\": \"0 error/s reported\"\r\n      }\r\n    },\r\n    \"availablePatchSummary\": {\r\n      \"assessmentActivityId\": \"dc781b28-4bf7-4563-85f0-8d4015cde5c4\",\r\n      \"status\": \"Succeeded\",\r\n      \"startTime\": \"2021-03-24T16:04:45.2816268+00:00\",\r\n      \"lastModifiedTime\": \"2021-03-24T16:05:19.0174555+00:00\",\r\n      \"criticalAndSecurityPatchCount\": 3,\r\n      \"otherPatchCount\": 5,\r\n      \"rebootPending\": false,\r\n      \"error\": {\r\n        \"details\": [],\r\n        \"code\": \"Success\",\r\n        \"message\": \"0 error/s reported\"\r\n      }\r\n    }\r\n  },\r\n  \"disks\": [\r\n    {\r\n      \"name\": \"imageVM_OsDisk_1_1193bfcbb54745ae8343a2e08b157601\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2021-09-21T21:57:56.1424973+00:00\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"imageDisk\",\r\n      \"statuses\": [\r\n        {\r\n          \"code\": \"ProvisioningState/succeeded\",\r\n          \"level\": \"Info\",\r\n          \"displayStatus\": \"Provisioning succeeded\",\r\n          \"time\": \"2021-09-21T21:57:56.1424973+00:00\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"bootDiagnostics\": {},\r\n  \"hyperVGeneration\": \"V1\",\r\n  \"statuses\": [\r\n    {\r\n      \"code\": \"ProvisioningState/succeeded\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"Provisioning succeeded\",\r\n      \"time\": \"2021-09-21T21:57:56.1581234+00:00\"\r\n    },\r\n    {\r\n      \"code\": \"PowerState/deallocated\",\r\n      \"level\": \"Info\",\r\n      \"displayStatus\": \"VM deallocated\"\r\n    }\r\n  ]\r\n}",
-      "StatusCode": 200
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.Compute/virtualMachines/imageVM' under resource group 'RGforSDKtestResources' was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix\"\r\n  }\r\n}",
+      "StatusCode": 404
     }
   ],
   "Names": {},

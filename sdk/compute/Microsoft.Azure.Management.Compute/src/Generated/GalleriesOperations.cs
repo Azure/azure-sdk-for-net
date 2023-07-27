@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryName");
             }
-            string apiVersion = "2021-10-01";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2021-10-01";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -553,7 +553,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-10-01";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -756,7 +756,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 gallery.Validate();
             }
-            string apiVersion = "2021-10-01";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1002,7 +1002,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "gallery");
             }
-            string apiVersion = "2021-10-01";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1200,7 +1200,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "galleryName");
             }
-            string apiVersion = "2021-10-01";
+            string apiVersion = "2022-03-03";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

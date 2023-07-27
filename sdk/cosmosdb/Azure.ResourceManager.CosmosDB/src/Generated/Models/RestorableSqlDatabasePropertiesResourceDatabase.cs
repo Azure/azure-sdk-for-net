@@ -6,45 +6,40 @@
 #nullable disable
 
 using System;
+using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB SQL database resource object. </summary>
-    public partial class RestorableSqlDatabasePropertiesResourceDatabase : SqlDatabaseResource
+    public partial class RestorableSqlDatabasePropertiesResourceDatabase : CosmosDBSqlDatabaseResourceInfo
     {
         /// <summary> Initializes a new instance of RestorableSqlDatabasePropertiesResourceDatabase. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public RestorableSqlDatabasePropertiesResourceDatabase(string id) : base(id)
+        /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public RestorableSqlDatabasePropertiesResourceDatabase(string databaseName) : base(databaseName)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
         }
 
         /// <summary> Initializes a new instance of RestorableSqlDatabasePropertiesResourceDatabase. </summary>
-        /// <param name="id"> Name of the Cosmos DB SQL database. </param>
+        /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
         /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>
         /// <param name="self"> A system generated property that specifies the addressable path of the database resource. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal RestorableSqlDatabasePropertiesResourceDatabase(string id, string colls, string users, string self, string rid, float? ts, string etag) : base(id)
+        internal RestorableSqlDatabasePropertiesResourceDatabase(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string colls, string users, string self, string rid, float? timestamp, ETag? etag) : base(databaseName, restoreParameters, createMode)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
             Colls = colls;
             Users = users;
             Self = self;
             Rid = rid;
-            Ts = ts;
-            Etag = etag;
+            Timestamp = timestamp;
+            ETag = etag;
         }
 
         /// <summary> A system generated property that specified the addressable path of the collections resource. </summary>
@@ -56,8 +51,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A system generated property. A unique identifier. </summary>
         public string Rid { get; }
         /// <summary> A system generated property that denotes the last updated timestamp of the resource. </summary>
-        public float? Ts { get; }
+        public float? Timestamp { get; }
         /// <summary> A system generated property representing the resource etag required for optimistic concurrency control. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
     }
 }

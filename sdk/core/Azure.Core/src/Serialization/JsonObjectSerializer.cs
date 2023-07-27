@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// A <see cref="JsonObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> to for serialization/deserialization.
+    /// An <see cref="ObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> for serialization/deserialization.
     /// </summary>
     public class JsonObjectSerializer : ObjectSerializer, IMemberNameConverter
     {

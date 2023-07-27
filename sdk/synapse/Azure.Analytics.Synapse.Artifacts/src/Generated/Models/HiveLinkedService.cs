@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -14,15 +15,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class HiveLinkedService : LinkedService
     {
         /// <summary> Initializes a new instance of HiveLinkedService. </summary>
-        /// <param name="host"> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </param>
+        /// <param name="host"> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </param>
         /// <param name="authenticationType"> The authentication method used to access the Hive server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public HiveLinkedService(object host, HiveAuthenticationType authenticationType)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            Argument.AssertNotNull(host, nameof(host));
 
             Host = host;
             AuthenticationType = authenticationType;
@@ -36,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="host"> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </param>
+        /// <param name="host"> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </param>
         /// <param name="port"> The TCP port that the Hive server uses to listen for client connections. </param>
         /// <param name="serverType"> The type of Hive server. </param>
         /// <param name="thriftTransportProtocol"> The transport protocol to use in the Thrift layer. </param>
@@ -45,7 +43,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="zooKeeperNameSpace"> The namespace on ZooKeeper under which Hive Server 2 nodes are added. </param>
         /// <param name="useNativeQuery"> Specifies whether the driver uses native HiveQL queries,or converts them into an equivalent form in HiveQL. </param>
         /// <param name="username"> The user name that you use to access Hive Server. </param>
-        /// <param name="password"> The password corresponding to the user name that you provided in the Username field. </param>
+        /// <param name="password">
+        /// The password corresponding to the user name that you provided in the Username field
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="httpPath"> The partial URL corresponding to the Hive server. </param>
         /// <param name="enableSsl"> Specifies whether the connections to the server are encrypted using SSL. The default value is false. </param>
         /// <param name="trustedCertPath"> The full path of the .pem file containing trusted CA certificates for verifying the server when connecting over SSL. This property can only be set when using SSL on self-hosted IR. The default value is the cacerts.pem file installed with the IR. </param>
@@ -75,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "Hive";
         }
 
-        /// <summary> IP address or host name of the Hive server, separated by &apos;;&apos; for multiple hosts (only when serviceDiscoveryMode is enable). </summary>
+        /// <summary> IP address or host name of the Hive server, separated by ';' for multiple hosts (only when serviceDiscoveryMode is enable). </summary>
         public object Host { get; set; }
         /// <summary> The TCP port that the Hive server uses to listen for client connections. </summary>
         public object Port { get; set; }
@@ -93,7 +95,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object UseNativeQuery { get; set; }
         /// <summary> The user name that you use to access Hive Server. </summary>
         public object Username { get; set; }
-        /// <summary> The password corresponding to the user name that you provided in the Username field. </summary>
+        /// <summary>
+        /// The password corresponding to the user name that you provided in the Username field
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The partial URL corresponding to the Hive server. </summary>
         public object HttpPath { get; set; }

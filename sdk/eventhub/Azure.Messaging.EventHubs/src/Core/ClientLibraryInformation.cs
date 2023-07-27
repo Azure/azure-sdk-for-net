@@ -56,6 +56,12 @@ namespace Azure.Messaging.EventHubs.Core
         public string UserAgent => $"azsdk-net-{ Product }/{ Version } ({ Framework }; { Platform })";
 
         /// <summary>
+        ///   Client Information properties serialized with normalized names
+        /// </summary>
+        ///
+        public KeyValuePair<string, string>[] SerializedProperties { get; }
+
+        /// <summary>
         ///   Prevents a default instance of the <see cref="ClientLibraryInformation"/> class from being created.
         /// </summary>
         ///
@@ -72,6 +78,7 @@ namespace Azure.Messaging.EventHubs.Core
 #else
             Platform = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
 #endif
+            SerializedProperties = SerializeProperties(this);
         }
 
         /// <summary>
@@ -80,10 +87,12 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>An enumerable set of the properties, with name and value.</returns>
         ///
-        public IEnumerable<KeyValuePair<string, string>> EnumerateProperties() =>
+        private static KeyValuePair<string, string>[] SerializeProperties(ClientLibraryInformation self) =>
             typeof(ClientLibraryInformation)
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                .Select(property => new KeyValuePair<string, string>(GetTelemetryName(property), (string)property.GetValue(this, null)));
+                .Where(static property => property.Name != nameof(SerializedProperties))
+                .Select(property => new KeyValuePair<string, string>(GetTelemetryName(property), (string)property.GetValue(self, null)))
+                .ToArray();
 
         /// <summary>
         ///   Gets the name of the property, as it should appear in telemetry
@@ -94,10 +103,10 @@ namespace Azure.Messaging.EventHubs.Core
         ///
         /// <returns>The name of the property for use as telemetry for the client library.</returns>
         ///
-        private static string GetTelemetryName(PropertyInfo property)
+        private static string GetTelemetryName(MemberInfo property)
         {
             string name = property.GetCustomAttribute<DescriptionAttribute>(false)?.Description;
-            return ((string.IsNullOrEmpty(name)) ? property.Name : name).ToLowerInvariant();
+            return (string.IsNullOrEmpty(name) ? property.Name : name).ToLowerInvariant();
         }
     }
 }

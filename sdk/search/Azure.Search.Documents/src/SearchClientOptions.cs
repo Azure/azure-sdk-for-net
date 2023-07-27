@@ -35,13 +35,18 @@ namespace Azure.Search.Documents
             /// The 2021_04_30_Preview version of the Azure Cognitive Search service.
             /// </summary>
             V2021_04_30_Preview = 2,
-            #pragma warning restore CA1707
+
+            /// <summary>
+            /// The 2023_07_01_Preview version of the Azure Cognitive Search service.
+            /// </summary>
+            V2023_07_01_Preview = 3,
+#pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2021_04_30_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_07_01_Preview;
 
         /// <summary>
         /// The service version to use when creating continuation tokens that
@@ -65,6 +70,12 @@ namespace Azure.Search.Documents
         /// will be used if no value is provided.
         /// </summary>
         public ObjectSerializer Serializer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="SearchAudience.AzurePublicCloud" /> will be assumed.</value>
+        public SearchAudience? Audience { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchClientOptions"/>
@@ -120,9 +131,11 @@ namespace Azure.Search.Documents
         internal HttpPipeline Build(TokenCredential credential)
         {
             Debug.Assert(credential != null);
+            var authorizationScope = $"{(string.IsNullOrEmpty(Audience?.ToString()) ? SearchAudience.AzurePublicCloud : Audience)}/.default";
+
             return HttpPipelineBuilder.Build(
                 options: this,
-                perCallPolicies: new[] { new BearerTokenAuthenticationPolicy(credential, Constants.CredentialScopeName) },
+                perCallPolicies: new[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) },
                 perRetryPolicies: Array.Empty<HttpPipelinePolicy>(),
                 responseClassifier: null);
         }
@@ -187,6 +200,7 @@ namespace Azure.Search.Documents
             {
                 SearchClientOptions.ServiceVersion.V2020_06_30 => version,
                 SearchClientOptions.ServiceVersion.V2021_04_30_Preview => version,
+                SearchClientOptions.ServiceVersion.V2023_07_01_Preview => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -210,6 +224,7 @@ namespace Azure.Search.Documents
             {
                 SearchClientOptions.ServiceVersion.V2020_06_30 => "2020-06-30",
                 SearchClientOptions.ServiceVersion.V2021_04_30_Preview => "2021-04-30-Preview",
+                SearchClientOptions.ServiceVersion.V2023_07_01_Preview => "2023-07-01-Preview",
                 _ => throw CreateInvalidVersionException(version)
             };
 

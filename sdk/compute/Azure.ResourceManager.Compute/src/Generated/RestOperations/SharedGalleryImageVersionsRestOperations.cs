@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Compute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-07-01";
+            _apiVersion = apiVersion ?? "2022-03-03";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string location, string galleryUniqueName, string galleryImageName, SharedToValues? sharedTo)
+        internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -71,12 +71,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedGalleryImageVersionList>> ListAsync(string subscriptionId, string location, string galleryUniqueName, string galleryImageName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SharedGalleryImageVersionList>> ListAsync(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
@@ -103,12 +102,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedGalleryImageVersionList> List(string subscriptionId, string location, string galleryUniqueName, string galleryImageName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SharedGalleryImageVersionList> List(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
@@ -128,7 +126,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -159,12 +157,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedGalleryImageVersionData>> GetAsync(string subscriptionId, string location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SharedGalleryImageVersionData>> GetAsync(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
@@ -194,12 +191,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedGalleryImageVersionData> Get(string subscriptionId, string location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/>, <paramref name="galleryImageName"/> or <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SharedGalleryImageVersionData> Get(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
             Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
@@ -222,7 +218,7 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string location, string galleryUniqueName, string galleryImageName, SharedToValues? sharedTo)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -244,13 +240,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SharedGalleryImageVersionList>> ListNextPageAsync(string nextLink, string subscriptionId, string location, string galleryUniqueName, string galleryImageName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SharedGalleryImageVersionList>> ListNextPageAsync(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
@@ -278,13 +273,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the Shared Gallery Image Definition from which the Image Versions are to be listed. </param>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="location"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SharedGalleryImageVersionList> ListNextPage(string nextLink, string subscriptionId, string location, string galleryUniqueName, string galleryImageName, SharedToValues? sharedTo = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="galleryUniqueName"/> or <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SharedGalleryImageVersionList> ListNextPage(string nextLink, string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(galleryUniqueName, nameof(galleryUniqueName));
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 

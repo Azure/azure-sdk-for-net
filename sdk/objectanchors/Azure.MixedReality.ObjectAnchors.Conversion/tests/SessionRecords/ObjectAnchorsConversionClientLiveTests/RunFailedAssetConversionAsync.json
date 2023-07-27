@@ -1,0 +1,342 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://aoa.eastus2.mixedreality.azure.com/accounts/2eb113b4-e5d2-4753-9e95-270a7fe18545/blobUploadEndpoint?api-version=0.3-preview.2",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-1a5e80c3db3a1e47a8afda8924c173b2-38e52a2d21111b45-00",
+        "User-Agent": "azsdk-net-MixedReality.ObjectAnchors.Conversion/0.3.0-alpha.20221020.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-mrc-cv": "Vd8U0FOTokClwZlkDI46yQ",
+        "x-ms-client-request-id": "ee57a9b3cb7ea68afdc88838c9708e31",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "245",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 00:16:48 GMT",
+        "MS-CV": "EzK81Biydk2aYh2H1myajQ.0",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "inputAssetUri": "https://aoacnrystorewu2.blob.core.windows.net/421ee486-93a8-431a-958b-d3f82a2e62e7/1ac9d834-ceda-480e-b992-819ac1136901?sv=2018-03-28\u0026sr=b\u0026sig=EPPH0dbPVE7TbNhDup%2Bn1R2YJfXp%2FERtCoCMWlM9MAk%3D\u0026se=2022-04-27T02%3A44%3A43Z\u0026sp=cw"
+      }
+    },
+    {
+      "RequestUri": "https://aoacnrystorewu2.blob.core.windows.net/421ee486-93a8-431a-958b-d3f82a2e62e7/1ac9d834-ceda-480e-b992-819ac1136901?sv=2018-03-28\u0026sr=b\u0026sig=EPPH0dbPVE7TbNhDup%2Bn1R2YJfXp%2FERtCoCMWlM9MAk%3D\u0026se=2022-04-27T02%3A44%3A43Z\u0026sp=cw",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/xml",
+        "Content-Length": "10",
+        "Content-Type": "application/octet-stream",
+        "If-None-Match": "*",
+        "traceparent": "00-f305798828be57488ebf446b3cf1ff38-acf9aac768b98a40-00",
+        "User-Agent": "azsdk-net-Storage.Blobs/12.13.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-blob-type": "BlockBlob",
+        "x-ms-client-request-id": "60c3f5d607fc8addfdaf70156625b7ad",
+        "x-ms-return-client-request-id": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "RequestBody": "SSdtIGEgZmFrZQ==",
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Content-Length": "0",
+        "Content-MD5": "sLZfT00rFQ08drzv9mjPyQ==",
+        "Date": "Fri, 21 Oct 2022 00:16:47 GMT",
+        "ETag": "\u00220x8DAB2F98B69EF5D\u0022",
+        "Last-Modified": "Fri, 21 Oct 2022 00:16:48 GMT",
+        "Server": [
+          "Windows-Azure-Blob/1.0",
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-client-request-id": "60c3f5d607fc8addfdaf70156625b7ad",
+        "x-ms-content-crc64": "6MbwaltneJ0=",
+        "x-ms-request-id": "008e966a-c01e-0080-2ee2-e4d54a000000",
+        "x-ms-request-server-encrypted": "true",
+        "x-ms-version": "2019-12-12"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://aoa.eastus2.mixedreality.azure.com/accounts/2eb113b4-e5d2-4753-9e95-270a7fe18545/jobs/933929ff-03d0-bf4d-19cc-496a44741031?api-version=0.3-preview.2",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "438",
+        "Content-Type": "application/json",
+        "traceparent": "00-532c00c1eab2664083cea4a84d1ae1ee-5d9c63be20b56a4f-00",
+        "User-Agent": "azsdk-net-MixedReality.ObjectAnchors.Conversion/0.3.0-alpha.20221020.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b6d41713a001accbcbcdf0ce5a7440d8",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "assetFileType": ".ply",
+        "inputAssetUri": "https://aoacnrystorewu2.blob.core.windows.net/421ee486-93a8-431a-958b-d3f82a2e62e7/1ac9d834-ceda-480e-b992-819ac1136901?sv=2018-03-28\u0026sr=b\u0026sig=EPPH0dbPVE7TbNhDup%2Bn1R2YJfXp%2FERtCoCMWlM9MAk%3D\u0026se=2022-04-27T02%3A44%3A43Z\u0026sp=cw",
+        "ingestionConfiguration": {
+          "gravity": {
+            "x": 0,
+            "y": -1,
+            "z": 0
+          },
+          "gtTrajectory": [],
+          "scale": 0.00100000005,
+          "disableDetectScaleUnits": false,
+          "testTrajectory": []
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "585",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 00:16:48 GMT",
+        "MS-CV": "hOLtXY5cIUiUKOFWf5qouQ.0",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "clientErrorDetails": null,
+        "serverErrorDetails": null,
+        "errorCode": "NO_ERROR",
+        "jobId": "933929ff-03d0-bf4d-19cc-496a44741031",
+        "outputModelUri": null,
+        "jobStatus": "NotStarted",
+        "assetFileType": ".ply",
+        "inputAssetUri": null,
+        "accountId": "2eb113b4-e5d2-4753-9e95-270a7fe18545",
+        "ingestionConfiguration": {
+          "dimensions": null,
+          "boundingBoxCenter": null,
+          "gravity": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          "keyFrameIndexes": null,
+          "gtTrajectory": [],
+          "principalAxis": null,
+          "scale": 0.001,
+          "disableDetectScaleUnits": false,
+          "supportingPlane": null,
+          "testTrajectory": [],
+          "modelResolution": "VoxelSize4Cm"
+        },
+        "scaledAssetDimensions": null
+      }
+    },
+    {
+      "RequestUri": "https://aoa.eastus2.mixedreality.azure.com/accounts/2eb113b4-e5d2-4753-9e95-270a7fe18545/jobs/933929ff-03d0-bf4d-19cc-496a44741031?api-version=0.3-preview.2",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-MixedReality.ObjectAnchors.Conversion/0.3.0-alpha.20221020.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-mrc-cv": "3LcKnmOZKUCPIkCGszAUaw",
+        "x-ms-client-request-id": "9f38da11fb37d261a8034630bd734589",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "585",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 00:16:48 GMT",
+        "MS-CV": "vDf2O9pBR0qZ\u002BuA597Tc0g.0",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "clientErrorDetails": null,
+        "serverErrorDetails": null,
+        "errorCode": "NO_ERROR",
+        "jobId": "933929ff-03d0-bf4d-19cc-496a44741031",
+        "outputModelUri": null,
+        "jobStatus": "NotStarted",
+        "assetFileType": ".ply",
+        "inputAssetUri": null,
+        "accountId": "2eb113b4-e5d2-4753-9e95-270a7fe18545",
+        "ingestionConfiguration": {
+          "dimensions": null,
+          "boundingBoxCenter": null,
+          "gravity": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          "keyFrameIndexes": null,
+          "gtTrajectory": [],
+          "principalAxis": null,
+          "scale": 0.001,
+          "disableDetectScaleUnits": false,
+          "supportingPlane": null,
+          "testTrajectory": [],
+          "modelResolution": "VoxelSize4Cm"
+        },
+        "scaledAssetDimensions": null
+      }
+    },
+    {
+      "RequestUri": "https://aoa.eastus2.mixedreality.azure.com/accounts/2eb113b4-e5d2-4753-9e95-270a7fe18545/jobs/933929ff-03d0-bf4d-19cc-496a44741031?api-version=0.3-preview.2",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-MixedReality.ObjectAnchors.Conversion/0.3.0-alpha.20221020.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-mrc-cv": "HSarBApauESl44rqU5Znlw",
+        "x-ms-client-request-id": "4f023f9e01505fab5d8dc703137f64a4",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "585",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 00:17:03 GMT",
+        "MS-CV": "bqVcELzokEqd4XHgMDrxXg.0",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "clientErrorDetails": null,
+        "serverErrorDetails": null,
+        "errorCode": "NO_ERROR",
+        "jobId": "933929ff-03d0-bf4d-19cc-496a44741031",
+        "outputModelUri": null,
+        "jobStatus": "NotStarted",
+        "assetFileType": ".ply",
+        "inputAssetUri": null,
+        "accountId": "2eb113b4-e5d2-4753-9e95-270a7fe18545",
+        "ingestionConfiguration": {
+          "dimensions": null,
+          "boundingBoxCenter": null,
+          "gravity": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          "keyFrameIndexes": null,
+          "gtTrajectory": [],
+          "principalAxis": null,
+          "scale": 0.001,
+          "disableDetectScaleUnits": false,
+          "supportingPlane": null,
+          "testTrajectory": [],
+          "modelResolution": "VoxelSize4Cm"
+        },
+        "scaledAssetDimensions": null
+      }
+    },
+    {
+      "RequestUri": "https://aoa.eastus2.mixedreality.azure.com/accounts/2eb113b4-e5d2-4753-9e95-270a7fe18545/jobs/933929ff-03d0-bf4d-19cc-496a44741031?api-version=0.3-preview.2",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-MixedReality.ObjectAnchors.Conversion/0.3.0-alpha.20221020.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-mrc-cv": "Wdz1JXm/iU2uj1OQ8Se/rw",
+        "x-ms-client-request-id": "6958718c703b18f9b6010dfe599bee57",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "585",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 00:17:18 GMT",
+        "MS-CV": "NBIhduX7Q0OlN6I5Q214dw.0",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "clientErrorDetails": null,
+        "serverErrorDetails": null,
+        "errorCode": "NO_ERROR",
+        "jobId": "933929ff-03d0-bf4d-19cc-496a44741031",
+        "outputModelUri": null,
+        "jobStatus": "NotStarted",
+        "assetFileType": ".ply",
+        "inputAssetUri": null,
+        "accountId": "2eb113b4-e5d2-4753-9e95-270a7fe18545",
+        "ingestionConfiguration": {
+          "dimensions": null,
+          "boundingBoxCenter": null,
+          "gravity": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          "keyFrameIndexes": null,
+          "gtTrajectory": [],
+          "principalAxis": null,
+          "scale": 0.001,
+          "disableDetectScaleUnits": false,
+          "supportingPlane": null,
+          "testTrajectory": [],
+          "modelResolution": "VoxelSize4Cm"
+        },
+        "scaledAssetDimensions": null
+      }
+    },
+    {
+      "RequestUri": "https://aoa.eastus2.mixedreality.azure.com/accounts/2eb113b4-e5d2-4753-9e95-270a7fe18545/jobs/933929ff-03d0-bf4d-19cc-496a44741031?api-version=0.3-preview.2",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "User-Agent": "azsdk-net-MixedReality.ObjectAnchors.Conversion/0.3.0-alpha.20221020.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-mrc-cv": "cQLaOfsiOkeB7Tl0\u002Bw5Sew",
+        "x-ms-client-request-id": "1b2f6688f17210872ed841aa345ebf29",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Connection": "keep-alive",
+        "Content-Length": "896",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Oct 2022 00:17:34 GMT",
+        "MS-CV": "WtqQBbvFDEqjMWmcknrOIw.0",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "clientErrorDetails": "The provided asset was corrupted, malformed, or otherwise unable to be converted in its provided format. Ensure the asset is a validly constructed file of the specified type, and refer to the asset size guidelines before submitting an asset for conversion to ensure conformity: https://aka.ms/aoa/faq",
+        "serverErrorDetails": null,
+        "errorCode": "ASSET_CANNOT_BE_CONVERTED",
+        "jobId": "933929ff-03d0-bf4d-19cc-496a44741031",
+        "outputModelUri": null,
+        "jobStatus": "Failed",
+        "assetFileType": ".ply",
+        "inputAssetUri": null,
+        "accountId": "2eb113b4-e5d2-4753-9e95-270a7fe18545",
+        "ingestionConfiguration": {
+          "dimensions": null,
+          "boundingBoxCenter": null,
+          "gravity": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          },
+          "keyFrameIndexes": null,
+          "gtTrajectory": [],
+          "principalAxis": null,
+          "scale": 0.001,
+          "disableDetectScaleUnits": false,
+          "supportingPlane": null,
+          "testTrajectory": [],
+          "modelResolution": "VoxelSize4Cm"
+        },
+        "scaledAssetDimensions": null
+      }
+    }
+  ],
+  "Variables": {
+    "ACCOUNT_DOMAIN": "eastus2.mixedreality.azure.com",
+    "ACCOUNT_ID": "2eb113b4-e5d2-4753-9e95-270a7fe18545",
+    "ACCOUNT_KEY": "Sanitized",
+    "RandomSeed": "561924547"
+  }
+}

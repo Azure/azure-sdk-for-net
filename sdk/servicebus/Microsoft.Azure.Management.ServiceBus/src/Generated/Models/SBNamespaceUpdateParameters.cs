@@ -51,18 +51,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Service Bus operations.</param>
         /// <param name="metricId">Identifier for Azure Insights
         /// metrics</param>
-        /// <param name="zoneRedundant">Enabling this property creates a
-        /// Premium Service Bus Namespace in regions supported availability
-        /// zones.</param>
         /// <param name="encryption">Properties of BYOK Encryption
         /// description</param>
         /// <param name="privateEndpointConnections">List of private endpoint
         /// connections.</param>
         /// <param name="disableLocalAuth">This property disables SAS
         /// authentication for the Service Bus namespace.</param>
+        /// <param name="alternateName">Alternate name for namespace</param>
         /// <param name="identity">Properties of BYOK Identity
         /// description</param>
-        public SBNamespaceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), bool? zoneRedundant = default(bool?), Encryption encryption = default(Encryption), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? disableLocalAuth = default(bool?), Identity identity = default(Identity))
+        public SBNamespaceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SBSku sku = default(SBSku), string provisioningState = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string metricId = default(string), Encryption encryption = default(Encryption), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? disableLocalAuth = default(bool?), string alternateName = default(string), Identity identity = default(Identity))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -72,10 +70,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
             MetricId = metricId;
-            ZoneRedundant = zoneRedundant;
             Encryption = encryption;
             PrivateEndpointConnections = privateEndpointConnections;
             DisableLocalAuth = disableLocalAuth;
+            AlternateName = alternateName;
             Identity = identity;
             CustomInit();
         }
@@ -128,13 +126,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string MetricId { get; private set; }
 
         /// <summary>
-        /// Gets or sets enabling this property creates a Premium Service Bus
-        /// Namespace in regions supported availability zones.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.zoneRedundant")]
-        public bool? ZoneRedundant { get; set; }
-
-        /// <summary>
         /// Gets or sets properties of BYOK Encryption description
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryption")]
@@ -152,6 +143,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets alternate name for namespace
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.alternateName")]
+        public string AlternateName { get; set; }
 
         /// <summary>
         /// Gets or sets properties of BYOK Identity description

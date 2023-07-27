@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Directory))
             {
-                writer.WritePropertyName("directory");
+                writer.WritePropertyName("directory"u8);
                 writer.WriteStringValue(Directory);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static FileSystemTokenStore DeserializeFileSystemTokenStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> directory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("directory"))
+                if (property.NameEquals("directory"u8))
                 {
                     directory = property.Value.GetString();
                     continue;

@@ -21,43 +21,45 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static MachineExtensionInstanceViewStatus DeserializeMachineExtensionInstanceViewStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
-            Optional<StatusLevelTypes> level = default;
+            Optional<MachineExtensionStatusLevelType> level = default;
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"))
+                if (property.NameEquals("code"u8))
                 {
                     code = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("level"))
+                if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = new StatusLevelTypes(property.Value.GetString());
+                    level = new MachineExtensionStatusLevelType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("displayStatus"))
+                if (property.NameEquals("displayStatus"u8))
                 {
                     displayStatus = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("message"))
+                if (property.NameEquals("message"u8))
                 {
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("time"))
+                if (property.NameEquals("time"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     time = property.Value.GetDateTimeOffset("O");

@@ -17,26 +17,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static IotHubDeviceCreatedEventData DeserializeIotHubDeviceCreatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deviceId = default;
             Optional<string> hubName = default;
             Optional<DeviceTwinInfo> twin = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hubName"))
+                if (property.NameEquals("hubName"u8))
                 {
                     hubName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("twin"))
+                if (property.NameEquals("twin"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     twin = DeviceTwinInfo.DeserializeDeviceTwinInfo(property.Value);

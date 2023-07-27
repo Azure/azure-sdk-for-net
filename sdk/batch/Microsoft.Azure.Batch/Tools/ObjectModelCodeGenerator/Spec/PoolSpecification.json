@@ -266,6 +266,20 @@
             "Type": "IList<Models.MountConfiguration>",
             "Name": "MountConfiguration"
           }
+        },
+        {
+          "Key": {
+            "Type": "Common.NodeCommunicationMode?",
+            "Name": "TargetNodeCommunicationMode",
+            "SummaryComment": "The desired node communication mode for the pool.",
+            "RemarksComment": "If omitted, the default value is default.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.NodeCommunicationMode?",
+            "Name": "TargetNodeCommunicationMode"
+          }
         }
       ]
     }

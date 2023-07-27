@@ -40,11 +40,9 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public bool? Close { get; set; }
 
-        ///// <summary>
-        ///// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        ///// hashing on uploads.
-        ///// </summary>
-        // TODO #27253
-        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        /// <summary>
+        /// Optional override settings for this client's <see cref="DataLakeClientOptions.TransferValidation"/> settings.
+        /// </summary>
+        public UploadTransferValidationOptions TransferValidation { get; set; }
     }
 }

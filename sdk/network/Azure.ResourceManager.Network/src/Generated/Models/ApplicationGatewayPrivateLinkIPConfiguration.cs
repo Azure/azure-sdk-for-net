@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The application gateway private link ip configuration. </summary>
-    public partial class ApplicationGatewayPrivateLinkIPConfiguration : SubResource
+    public partial class ApplicationGatewayPrivateLinkIPConfiguration : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkIPConfiguration. </summary>
         public ApplicationGatewayPrivateLinkIPConfiguration()
@@ -20,36 +21,30 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayPrivateLinkIPConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of application gateway private link ip configuration. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> The resource type. </param>
         /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="subnet"> Reference to the subnet resource. </param>
-        /// <param name="primary"> Whether the ip configuration is primary or not. </param>
+        /// <param name="isPrimary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link IP configuration. </param>
-        internal ApplicationGatewayPrivateLinkIPConfiguration(string id, string name, string etag, string resourceType, string privateIPAddress, IPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, bool? primary, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayPrivateLinkIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, WritableSubResource subnet, bool? isPrimary, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
-            Primary = primary;
+            IsPrimary = isPrimary;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of application gateway private link ip configuration. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> The resource type. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> The private IP address of the IP configuration. </summary>
         public string PrivateIPAddress { get; set; }
         /// <summary> The private IP address allocation method. </summary>
-        public IPAllocationMethod? PrivateIPAllocationMethod { get; set; }
+        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Reference to the subnet resource. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -65,8 +60,8 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Whether the ip configuration is primary or not. </summary>
-        public bool? Primary { get; set; }
+        public bool? IsPrimary { get; set; }
         /// <summary> The provisioning state of the application gateway private link IP configuration. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

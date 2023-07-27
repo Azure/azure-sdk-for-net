@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Storage
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> List the local users associated with the storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> List the local users associated with the storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Get the local user of the storage account by username. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="username"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LocalUserData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string username, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageAccountLocalUserData>> GetAsync(string subscriptionId, string resourceGroupName, string accountName, string username, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        LocalUserData value = default;
+                        StorageAccountLocalUserData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LocalUserData.DeserializeLocalUserData(document.RootElement);
+                        value = StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LocalUserData)null, message.Response);
+                    return Response.FromValue((StorageAccountLocalUserData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -173,13 +173,13 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Get the local user of the storage account by username. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="username"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LocalUserData> Get(string subscriptionId, string resourceGroupName, string accountName, string username, CancellationToken cancellationToken = default)
+        public Response<StorageAccountLocalUserData> Get(string subscriptionId, string resourceGroupName, string accountName, string username, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -192,19 +192,19 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        LocalUserData value = default;
+                        StorageAccountLocalUserData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LocalUserData.DeserializeLocalUserData(document.RootElement);
+                        value = StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((LocalUserData)null, message.Response);
+                    return Response.FromValue((StorageAccountLocalUserData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string username, LocalUserData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string username, StorageAccountLocalUserData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -232,14 +232,14 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Create or update the properties of a local user associated with the storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="data"> The local user associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="username"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LocalUserData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string username, LocalUserData data, CancellationToken cancellationToken = default)
+        public async Task<Response<StorageAccountLocalUserData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string accountName, string username, StorageAccountLocalUserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -253,9 +253,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        LocalUserData value = default;
+                        StorageAccountLocalUserData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LocalUserData.DeserializeLocalUserData(document.RootElement);
+                        value = StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -265,14 +265,14 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Create or update the properties of a local user associated with the storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="data"> The local user associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="username"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="username"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LocalUserData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string username, LocalUserData data, CancellationToken cancellationToken = default)
+        public Response<StorageAccountLocalUserData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string accountName, string username, StorageAccountLocalUserData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.Storage
             {
                 case 200:
                     {
-                        LocalUserData value = default;
+                        StorageAccountLocalUserData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LocalUserData.DeserializeLocalUserData(document.RootElement);
+                        value = StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Deletes the local user associated with the specified storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Deletes the local user associated with the specified storage account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> List SSH authorized keys and shared key of the local user. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> List SSH authorized keys and shared key of the local user. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Regenerate the local user SSH password. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Regenerate the local user SSH password. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the storage account within the specified resource group. Storage account names must be between 3 and 24 characters in length and use numbers and lower-case letters only. </param>
         /// <param name="username"> The name of local user. The username must contain lowercase letters and numbers only. It must be unique only within the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

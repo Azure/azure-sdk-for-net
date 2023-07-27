@@ -20,7 +20,7 @@ dotnet add package Azure.Verticals.AgriFood.Farming --prerelease
 
 To use this package, you must have:
 
-- An [Azure subscription][azure_subscription] 
+- An [Azure subscription][azure_subscription]
 - An [AgriFood (FarmBeats) resource][install_farmbeats]
 
 ### Authenticate the client
@@ -47,13 +47,13 @@ Farm hierarchy is a collection of below entities.
 - Field - is a multi-polygon area. This is expected to be stable across seasons.
 - Seasonal field - is a multi-polygon area. To define a seasonal boundary we need the details of area (boundary), time (season) and crop. New seasonal fields are expected to be created for every growing season.
 - Boundary - is the actual multi-polygon area expressed as a geometry (in geojson). It is normally associated with a field or a seasonal field. Satellite, weather and farm operations data is linked to a boundary.
-- Cascade delete - Agronomic data is stored hierarchically with farmer as the root. The hierarchy includes Farmer -> Farms -> Fields -> Seasonal Fields -> Boundaries -> Associated data (satellite, weather, farm operations). Cascade delete refers to the process of deleting any node and its subtree. 
+- Cascade delete - Agronomic data is stored hierarchically with farmer as the root. The hierarchy includes Farmer -> Farms -> Fields -> Seasonal Fields -> Boundaries -> Associated data (satellite, weather, farm operations). Cascade delete refers to the process of deleting any node and its subtree.
 
 ### [Scenes][scenes]
 Scenes refers to images normally ingested using satellite APIs. This includes raw bands and derived bands (Ex: NDVI). Scenes may also include spatial outputs of an inference or AI/ML model (Ex: LAI).
 
 ### [Farm Operations][farm_operations_docs]
-Fam operations includes details pertaining to tilling, planting, application of pesticides & nutrients, and harvesting. This can either be manually pushed into FarmBeats using APIs or the same information can be pulled from farm equipment service providers like John Deere. 
+Fam operations includes details pertaining to tilling, planting, application of pesticides & nutrients, and harvesting. This can either be manually pushed into FarmBeats using APIs or the same information can be pulled from farm equipment service providers like John Deere.
 
 ### Protocol Methods
 
@@ -70,7 +70,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -85,7 +85,7 @@ var credential = new DefaultAzureCredential();
 var client = new FamersClient(new Uri("https://<my-account-name>.farmbeats.azure.net"), credential);
 
 var response = await client.ListAsync();
-var responseDocument = JsonDocument.Parse(response.Content);
+using var responseDocument = JsonDocument.Parse(response.Content);
 Console.WriteLine(responseDocument.RootElement.GetProperty("value"));
 ```
 

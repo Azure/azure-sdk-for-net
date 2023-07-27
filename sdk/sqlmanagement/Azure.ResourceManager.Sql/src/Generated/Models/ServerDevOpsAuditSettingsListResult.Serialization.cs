@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerDevOpsAuditSettingsListResult DeserializeServerDevOpsAuditSettingsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerDevOpsAuditingSettingsData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<SqlServerDevOpsAuditingSettingData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerDevOpsAuditingSettingsData> array = new List<ServerDevOpsAuditingSettingsData>();
+                    List<SqlServerDevOpsAuditingSettingData> array = new List<SqlServerDevOpsAuditingSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerDevOpsAuditingSettingsData.DeserializeServerDevOpsAuditingSettingsData(item));
+                        array.Add(SqlServerDevOpsAuditingSettingData.DeserializeSqlServerDevOpsAuditingSettingData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage
     public partial class DeletedAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedAccountResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string deletedAccountName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string deletedAccountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}";
             return new ResourceIdentifier(resourceId);
@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary>
         /// Get properties of specified deleted account resource.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
-        /// Operation Id: DeletedAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeletedAccountResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -99,7 +107,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = await _deletedAccountRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _deletedAccountRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedAccountResource(Client, response.Value), response.GetRawResponse());
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary>
         /// Get properties of specified deleted account resource.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}
-        /// Operation Id: DeletedAccounts_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Storage/locations/{location}/deletedAccounts/{deletedAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeletedAccountResource> Get(CancellationToken cancellationToken = default)
@@ -123,7 +139,7 @@ namespace Azure.ResourceManager.Storage
             scope.Start();
             try
             {
-                var response = _deletedAccountRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _deletedAccountRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DeletedAccountResource(Client, response.Value), response.GetRawResponse());

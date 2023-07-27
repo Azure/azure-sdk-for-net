@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the JitRequest data model. </summary>
+    /// <summary>
+    /// A class representing the JitRequest data model.
+    /// Information about JIT request definition.
+    /// </summary>
     public partial class JitRequestData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of JitRequestData. </summary>
@@ -37,7 +41,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="jitRequestState"> The JIT request state. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal JitRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, string publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ResourcesProvisioningState? provisioningState, JitRequestState? jitRequestState, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location)
+        internal JitRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string applicationResourceId, Guid? publisherTenantId, IList<JitAuthorizationPolicies> jitAuthorizationPolicies, JitSchedulingPolicy jitSchedulingPolicy, ResourcesProvisioningState? provisioningState, JitRequestState? jitRequestState, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location)
         {
             ApplicationResourceId = applicationResourceId;
             PublisherTenantId = publisherTenantId;
@@ -52,7 +56,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The parent application id. </summary>
         public string ApplicationResourceId { get; set; }
         /// <summary> The publisher tenant id. </summary>
-        public string PublisherTenantId { get; }
+        public Guid? PublisherTenantId { get; }
         /// <summary> The JIT authorization policies. </summary>
         public IList<JitAuthorizationPolicies> JitAuthorizationPolicies { get; }
         /// <summary> The JIT request properties. </summary>

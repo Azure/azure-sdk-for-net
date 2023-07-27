@@ -35,14 +35,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// configurations. Cloud service can have up to two load balancer
         /// configurations, corresponding to a Public Load Balancer and an
         /// Internal Load Balancer.</param>
+        /// <param name="slotType">Possible values include: 'Production',
+        /// 'Staging'</param>
         /// <param name="swappableCloudService">The id reference of the cloud
         /// service containing the target IP with which the subject cloud
         /// service can perform a swap. This property cannot be updated once it
         /// is set. The swappable cloud service referred by this id must be
         /// present otherwise an error will be thrown.</param>
-        public CloudServiceNetworkProfile(IList<LoadBalancerConfiguration> loadBalancerConfigurations = default(IList<LoadBalancerConfiguration>), SubResource swappableCloudService = default(SubResource))
+        public CloudServiceNetworkProfile(IList<LoadBalancerConfiguration> loadBalancerConfigurations = default(IList<LoadBalancerConfiguration>), string slotType = default(string), SubResource swappableCloudService = default(SubResource))
         {
             LoadBalancerConfigurations = loadBalancerConfigurations;
+            SlotType = slotType;
             SwappableCloudService = swappableCloudService;
             CustomInit();
         }
@@ -59,6 +62,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "loadBalancerConfigurations")]
         public IList<LoadBalancerConfiguration> LoadBalancerConfigurations { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Production', 'Staging'
+        /// </summary>
+        [JsonProperty(PropertyName = "slotType")]
+        public string SlotType { get; set; }
 
         /// <summary>
         /// Gets or sets the id reference of the cloud service containing the

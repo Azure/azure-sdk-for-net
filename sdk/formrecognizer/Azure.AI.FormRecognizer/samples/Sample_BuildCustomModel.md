@@ -27,7 +27,7 @@ When building a custom model, you'll need to choose a build mode that's appropri
 - Template build mode: recommended when the custom documents all have the same layout. Fields are expected to be in the same place across documents. Build time tends to be considerably shorter than the neural build mode.
 - Neural build mode: recommended when custom documents have different layouts. Fields are expected to be the same but they can be placed in different positions across documents.
 
-A `DocumentModel` is returned indicating the document types the model will recognize, and the fields it will extract from each document type.
+A `DocumentModelDetails` instance is returned indicating the document types the model will recognize, and the fields it will extract from each document type.
 
 ```C# Snippet:FormRecognizerSampleBuildModel
 // For this sample, you can use the training documents found in the `trainingFiles` folder.
@@ -38,34 +38,30 @@ A `DocumentModel` is returned indicating the document types the model will recog
 // For instructions to set up documents for training in an Azure Blob Storage Container, please see:
 // https://aka.ms/azsdk/formrecognizer/buildcustommodel
 
-Uri trainingFileUri = new Uri("<trainingFileUri>");
+Uri blobContainerUri = new Uri("<blobContainerUri>");
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // We are selecting the Template build mode in this sample. For more information about the available
 // build modes and their differences, please see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-BuildModelOperation operation = await client.StartBuildModelAsync(trainingFileUri, DocumentBuildMode.Template);
-Response<DocumentModel> operationResponse = await operation.WaitForCompletionAsync();
-DocumentModel model = operationResponse.Value;
+BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
+DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"  Model Id: {model.ModelId}");
 if (string.IsNullOrEmpty(model.Description))
     Console.WriteLine($"  Model description: {model.Description}");
 Console.WriteLine($"  Created on: {model.CreatedOn}");
 Console.WriteLine("  Doc types the model can recognize:");
-foreach (KeyValuePair<string, DocTypeInfo> docType in model.DocTypes)
+foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.DocumentTypes)
 {
-    Console.WriteLine($"    Doc type: {docType.Key} which has the following fields:");
-    foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
+    Console.WriteLine($"    Doc type: {documentType.Key} which has the following fields:");
+    foreach (KeyValuePair<string, DocumentFieldSchema> schema in documentType.Value.FieldSchema)
     {
-        Console.WriteLine($"    Field: {schema.Key} with confidence {docType.Value.FieldConfidence[schema.Key]}");
+        Console.WriteLine($"    Field: {schema.Key} with confidence {documentType.Value.FieldConfidence[schema.Key]}");
     }
 }
 ```
-
-To see the full example source files, see:
-* [Build a model](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/samples/Sample_BuildCustomModelAsync.cs)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer#getting-started
 [labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool

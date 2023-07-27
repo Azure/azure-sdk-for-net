@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(Display))
             {
-                writer.WritePropertyName("display");
+                writer.WritePropertyName("display"u8);
                 writer.WriteStringValue(Display);
             }
             if (Optional.IsDefined(Dependency))
             {
-                writer.WritePropertyName("dependency");
+                writer.WritePropertyName("dependency"u8);
                 writer.WriteStringValue(Dependency);
             }
             if (Optional.IsCollectionDefined(MajorVersions))
             {
-                writer.WritePropertyName("majorVersions");
+                writer.WritePropertyName("majorVersions"u8);
                 writer.WriteStartArray();
                 foreach (var item in MajorVersions)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(Frameworks))
             {
-                writer.WritePropertyName("frameworks");
+                writer.WritePropertyName("frameworks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Frameworks)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsCollectionDefined(IsDeprecated))
             {
-                writer.WritePropertyName("isDeprecated");
+                writer.WritePropertyName("isDeprecated"u8);
                 writer.WriteStartArray();
                 foreach (var item in IsDeprecated)
                 {
@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ApplicationStack DeserializeApplicationStack(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> display = default;
             Optional<string> dependency = default;
@@ -74,26 +78,25 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<IList<ApplicationStack>> isDeprecated = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("display"))
+                if (property.NameEquals("display"u8))
                 {
                     display = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependency"))
+                if (property.NameEquals("dependency"u8))
                 {
                     dependency = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("majorVersions"))
+                if (property.NameEquals("majorVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StackMajorVersion> array = new List<StackMajorVersion>();
@@ -104,11 +107,10 @@ namespace Azure.ResourceManager.AppService.Models
                     majorVersions = array;
                     continue;
                 }
-                if (property.NameEquals("frameworks"))
+                if (property.NameEquals("frameworks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationStack> array = new List<ApplicationStack>();
@@ -119,11 +121,10 @@ namespace Azure.ResourceManager.AppService.Models
                     frameworks = array;
                     continue;
                 }
-                if (property.NameEquals("isDeprecated"))
+                if (property.NameEquals("isDeprecated"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationStack> array = new List<ApplicationStack>();

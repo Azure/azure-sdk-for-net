@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The StatusCodeCount. </summary>
+    /// <summary> The status code and count of the cloud service instance view statuses. </summary>
     public partial class StatusCodeCount
     {
         /// <summary> Initializes a new instance of StatusCodeCount. </summary>

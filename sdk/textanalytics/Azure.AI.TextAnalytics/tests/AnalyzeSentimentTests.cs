@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -308,9 +309,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(documents, "en", new TextAnalyticsRequestOptions { IncludeStatistics = true }, default);
 
-            foreach (AnalyzeSentimentResult docs in results)
+            foreach (AnalyzeSentimentResult result in results)
             {
-                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                Assert.False(result.HasError);
+                CheckAnalyzeSentimentProperties(result.DocumentSentiment);
             }
 
             Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
@@ -434,8 +437,10 @@ namespace Azure.AI.TextAnalytics.Tests
             Assert.AreEqual(exceptionMessage, ex.Message);
         }
 
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
         [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        [Ignore("LRO not implemented")]
         public async Task AnalyzeSentimentWithMultipleActions()
         {
             TextAnalyticsClient client = GetClient();
@@ -471,12 +476,67 @@ namespace Azure.AI.TextAnalytics.Tests
             CollectionAssert.AreEquivalent(expected, AnalyzeSentimentActionsResults.Select(result => result.ActionName));
         }
 
-        private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = false)
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task AnalyzeSentimentBatchDisableServiceLogs()
+        {
+            TextAnalyticsClient client = GetClient();
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void AnalyzeSentimentBatchDisableServiceLogsThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new TextAnalyticsRequestOptions { DisableServiceLogs = true }));
+            Assert.AreEqual("AnalyzeSentimentOptions.DisableServiceLogs is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public async Task AnalyzeSentimentBatchIncludeOpinionMining()
+        {
+            TextAnalyticsClient client = GetClient();
+            AnalyzeSentimentResultCollection results = await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new AnalyzeSentimentOptions { IncludeOpinionMining = true });
+
+            foreach (AnalyzeSentimentResult docs in results)
+            {
+                CheckAnalyzeSentimentProperties(docs.DocumentSentiment);
+            }
+
+            Assert.AreEqual("Positive", results[0].DocumentSentiment.Sentiment.ToString());
+            Assert.AreEqual("Negative", results[1].DocumentSentiment.Sentiment.ToString());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_0)]
+        public void AnalyzeSentimentBatchIncludeOpinionMiningThrows()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = GetClient();
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.AnalyzeSentimentBatchAsync(batchConvenienceDocuments, "en", options: new AnalyzeSentimentOptions { IncludeOpinionMining = true }));
+            Assert.AreEqual("AnalyzeSentimentOptions.IncludeOpinionMining is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+        }
+
+        private void CheckAnalyzeSentimentProperties(DocumentSentiment doc, bool opinionMining = default)
         {
             Assert.IsNotNull(doc.ConfidenceScores.Positive);
             Assert.IsNotNull(doc.ConfidenceScores.Neutral);
             Assert.IsNotNull(doc.ConfidenceScores.Negative);
-            Assert.IsTrue(CheckTotalConfidenceScoreValue(doc.ConfidenceScores));
+            // TODO enable again. Issue tracking work: https://github.com/Azure/azure-sdk-for-net/issues/28246
+            // Assert.IsTrue(CheckTotalConfidenceScoreValue(doc.ConfidenceScores));
 
             foreach (var sentence in doc.Sentences)
             {
@@ -484,7 +544,8 @@ namespace Azure.AI.TextAnalytics.Tests
                 Assert.IsNotNull(sentence.ConfidenceScores.Positive);
                 Assert.IsNotNull(sentence.ConfidenceScores.Neutral);
                 Assert.IsNotNull(sentence.ConfidenceScores.Negative);
-                Assert.IsTrue(CheckTotalConfidenceScoreValue(sentence.ConfidenceScores));
+                // TODO enable again. Issue tracking work: https://github.com/Azure/azure-sdk-for-net/issues/28246
+                // Assert.IsTrue(CheckTotalConfidenceScoreValue(sentence.ConfidenceScores));
 
                 Assert.IsNotNull(sentence.Opinions);
                 if (opinionMining)

@@ -33,13 +33,15 @@ namespace Azure.Analytics.Purview.Administration.Tests
             };
             Response createResponse = await client.CreateOrUpdateCollectionAsync(RequestContent.Create(data), default);
 
-            JsonElement createBodyJson = JsonDocument.Parse(GetContentFromResponse(createResponse)).RootElement;
+            using var jsonDocumentCreate = JsonDocument.Parse(GetContentFromResponse(createResponse));
+            JsonElement createBodyJson = jsonDocumentCreate.RootElement;
             Assert.AreEqual("mysubCollection", createBodyJson.GetProperty("name").GetString());
             while (true)
             {
                 System.Threading.Thread.Sleep(1000);
                 Response getResponse = await client.GetCollectionAsync(new());
-                JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+                using var jsonDocumentGet = JsonDocument.Parse(GetContentFromResponse(getResponse));
+                JsonElement getBodyJson = jsonDocumentGet.RootElement;
                 if (getBodyJson.GetProperty("collectionProvisioningState").GetString() == "Succeeded")
                     break;
             }
@@ -62,13 +64,15 @@ namespace Azure.Analytics.Purview.Administration.Tests
             };
             Response createResponse = await client.CreateOrUpdateCollectionAsync(RequestContent.Create(data), default);
             Response getResponse = await client.GetCollectionAsync(new());
-            JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+            using var jsonDocumentGet = JsonDocument.Parse(GetContentFromResponse(getResponse));
+            JsonElement getBodyJson = jsonDocumentGet.RootElement;
             Assert.AreEqual("myCollection1", getBodyJson.GetProperty("name").GetString());
             while (true)
             {
                 System.Threading.Thread.Sleep(1000);
                 Response getRes = await client.GetCollectionAsync(new());
-                JsonElement getJson = JsonDocument.Parse(GetContentFromResponse(getRes)).RootElement;
+                using var jsonDocumentGetRes = JsonDocument.Parse(GetContentFromResponse(getRes));
+                JsonElement getJson = jsonDocumentGetRes.RootElement;
                 if (getJson.GetProperty("collectionProvisioningState").GetString() == "Succeeded")
                     break;
             }

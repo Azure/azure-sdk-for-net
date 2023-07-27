@@ -1,12 +1,19 @@
 ---
 - rule:
-    # management
+    # track 1 management
     paths:
       - "sdk/**/Microsoft.Azure.Management*/**"
-      - "sdk/**/Azure.ResourceManger*/**"
     reviewers:
-      - m-nash
-      - fengzhou-msft
       - archerzz
       - ArcturusZhang
-      - Yao725
+      - live1206
+
+- rule:
+    # track 2 management
+    paths:
+      - "sdk/**/Azure.ResourceManager*/**"
+    reviewers:
+      - m-nash
+      - archerzz
+      - ArcturusZhang
+      - live1206

@@ -11,4 +11,7 @@ description: Samples for the Azure.Template client library.
 
 # Azure.Template Samples
 
-- [Getting secrets](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/samples/Sample1_HelloWorld.md)
+These code samples show common scenarios with the Azure Template client library.
+
+|[Sample1_HelloWorld](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorld.cs) |Get secrets synchronously.|
+|[Sample1_HelloWorld_Async](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/Samples/Sample1_HelloWorldAsync.cs)] |Get secrets asynchronously.|

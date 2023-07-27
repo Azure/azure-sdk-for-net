@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
             }
-            string apiVersion = "2021-05-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -326,16 +326,19 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='gatewayName'>
         /// The name of the gateway.
         /// </param>
+        /// <param name='ipConfigurationId'>
+        /// VpnGateway ipConfigurationId to specify the gateway instance.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VpnGateway>> ResetWithHttpMessagesAsync(string resourceGroupName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VpnGateway>> ResetWithHttpMessagesAsync(string resourceGroupName, string gatewayName, string ipConfigurationId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<VpnGateway> _response = await BeginResetWithHttpMessagesAsync(resourceGroupName, gatewayName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<VpnGateway> _response = await BeginResetWithHttpMessagesAsync(resourceGroupName, gatewayName, ipConfigurationId, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -428,7 +431,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2021-05-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -606,7 +609,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-05-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -808,7 +811,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 vpnGatewayParameters.Validate();
             }
-            string apiVersion = "2021-05-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1034,7 +1037,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vpnGatewayParameters");
             }
-            string apiVersion = "2021-05-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1232,7 +1235,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
             }
-            string apiVersion = "2021-05-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1373,6 +1376,9 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='gatewayName'>
         /// The name of the gateway.
         /// </param>
+        /// <param name='ipConfigurationId'>
+        /// VpnGateway ipConfigurationId to specify the gateway instance.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1394,7 +1400,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VpnGateway>> BeginResetWithHttpMessagesAsync(string resourceGroupName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VpnGateway>> BeginResetWithHttpMessagesAsync(string resourceGroupName, string gatewayName, string ipConfigurationId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1408,7 +1414,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-05-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1418,6 +1424,7 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("ipConfigurationId", ipConfigurationId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginReset", tracingParameters);
@@ -1429,6 +1436,10 @@ namespace Microsoft.Azure.Management.Network
             _url = _url.Replace("{gatewayName}", System.Uri.EscapeDataString(gatewayName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (ipConfigurationId != null)
+            {
+                _queryParameters.Add(string.Format("ipConfigurationId={0}", System.Uri.EscapeDataString(ipConfigurationId)));
+            }
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
@@ -1606,7 +1617,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-05-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1811,7 +1822,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-05-01";
+            string apiVersion = "2022-09-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

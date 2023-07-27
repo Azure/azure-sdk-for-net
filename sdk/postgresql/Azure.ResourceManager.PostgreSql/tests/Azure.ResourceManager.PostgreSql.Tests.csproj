@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.KeyVault" />
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
+    <PackageReference Include="Azure.ResourceManager.PrivateDns" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" />
+    <PackageReference Include="Microsoft.Graph" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.PostgreSql.csproj" />
+  </ItemGroup>
+</Project>

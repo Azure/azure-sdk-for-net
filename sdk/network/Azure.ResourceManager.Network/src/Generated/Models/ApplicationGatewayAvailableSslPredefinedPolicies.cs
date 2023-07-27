@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Network.Models
             Value = new ChangeTrackingList<ApplicationGatewaySslPredefinedPolicy>();
         }
 
+        /// <summary> Initializes a new instance of ApplicationGatewayAvailableSslPredefinedPolicies. </summary>
+        /// <param name="value"> List of available Ssl predefined policy. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
+        internal ApplicationGatewayAvailableSslPredefinedPolicies(IReadOnlyList<ApplicationGatewaySslPredefinedPolicy> value, string nextLink)
+        {
+            Value = value;
+            NextLink = nextLink;
+        }
+
         /// <summary> List of available Ssl predefined policy. </summary>
         public IReadOnlyList<ApplicationGatewaySslPredefinedPolicy> Value { get; }
         /// <summary> URL to get the next set of results. </summary>

@@ -19,10 +19,13 @@ namespace Azure.Storage.Blobs.ChangeFeed
         /// GetChangeFeedClient.
         /// </summary>
         /// <param name="serviceClient"></param>
+        /// <param name="options"></param>
         /// <returns><see cref="BlobChangeFeedClient"/>.</returns>
-        public static BlobChangeFeedClient GetChangeFeedClient(this BlobServiceClient serviceClient)
+        public static BlobChangeFeedClient GetChangeFeedClient(
+            this BlobServiceClient serviceClient,
+            BlobChangeFeedClientOptions options = default)
         {
-            return new BlobChangeFeedClient(serviceClient);
+            return new BlobChangeFeedClient(serviceClient, options);
         }
 
         /// <summary>

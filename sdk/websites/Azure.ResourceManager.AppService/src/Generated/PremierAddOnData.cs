@@ -7,13 +7,15 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the PremierAddOn data model. </summary>
-    public partial class PremierAddOnData : AppServiceResource
+    /// <summary>
+    /// A class representing the PremierAddOn data model.
+    /// Premier add-on.
+    /// </summary>
+    public partial class PremierAddOnData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PremierAddOnData. </summary>
         /// <param name="location"> The location. </param>
@@ -28,19 +30,20 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="sku"> Premier add on SKU. </param>
         /// <param name="product"> Premier add on Product. </param>
         /// <param name="vendor"> Premier add on Vendor. </param>
         /// <param name="marketplacePublisher"> Premier add on Marketplace publisher. </param>
         /// <param name="marketplaceOffer"> Premier add on Marketplace offer. </param>
-        internal PremierAddOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer) : base(id, name, resourceType, systemData, tags, location, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal PremierAddOnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string sku, string product, string vendor, string marketplacePublisher, string marketplaceOffer, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Product = product;
             Vendor = vendor;
             MarketplacePublisher = marketplacePublisher;
             MarketplaceOffer = marketplaceOffer;
+            Kind = kind;
         }
 
         /// <summary> Premier add on SKU. </summary>
@@ -53,5 +56,7 @@ namespace Azure.ResourceManager.AppService
         public string MarketplacePublisher { get; set; }
         /// <summary> Premier add on Marketplace offer. </summary>
         public string MarketplaceOffer { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

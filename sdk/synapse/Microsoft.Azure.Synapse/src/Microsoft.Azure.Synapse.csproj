@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Synapse</PackageId>
 		<Description>Azure Synapse Client SDK Library</Description>
-		<Version>0.1.0-preview</Version>
+		<Version>0.1.0-preview.1</Version>
 		<AssemblyName>Microsoft.Azure.Synapse</AssemblyName>
 		<PackageTags>Microsoft Azure Synapse;Synapse;Azure Synapse Analytics;</PackageTags>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>

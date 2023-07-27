@@ -4,63 +4,72 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-
 using Azure.Core.Pipeline;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    public class AzureMonitorTraceExporter : BaseExporter<Activity>
+    internal sealed class AzureMonitorTraceExporter : BaseExporter<Activity>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
-        private readonly ResourceParser _resourceParser;
-        private readonly AzureMonitorPersistentStorage _persistentStorage;
+        private readonly float _sampleRate; // This value is recorded on TelemetryItem.SampleRate.
+        private AzureMonitorResource? _resource;
+        private bool _disposed;
 
-        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
+        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, TransmitterFactory.Instance.Get(options))
         {
         }
 
-        internal AzureMonitorTraceExporter(ITransmitter transmitter)
+        internal AzureMonitorTraceExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
         {
+            _sampleRate = (float)Math.Round(options.SamplingRatio * 100);
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
-            _resourceParser = new ResourceParser();
-
-            if (transmitter is AzureMonitorTransmitter _azureMonitorTransmitter && _azureMonitorTransmitter._storage != null)
-            {
-                _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
-            }
         }
+
+        internal AzureMonitorResource? TraceResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(_instrumentationKey);
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<Activity> batch)
         {
-            _persistentStorage?.StartExporterTimer();
-
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
+            ExportResult exportResult = ExportResult.Failure;
+
             try
             {
-                if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
+                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, TraceResource, _instrumentationKey, _sampleRate);
+                if (telemetryItems.Count > 0)
                 {
-                    var resource = ParentProvider.GetResource();
-                    _resourceParser.UpdateRoleNameAndInstance(resource);
+                    exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorTraceExporter, false, CancellationToken.None).EnsureCompleted();
                 }
-
-                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
-                var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
-
-                return exportResult;
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToExport{EventLevelSuffix.Error}", ex.LogAsyncException());
-                return ExportResult.Failure;
+                AzureMonitorExporterEventSource.Log.FailedToExport(nameof(AzureMonitorTraceExporter), _instrumentationKey, ex);
             }
+
+            return exportResult;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    AzureMonitorExporterEventSource.Log.DisposedObject(nameof(AzureMonitorTraceExporter));
+                    _transmitter?.Dispose();
+                }
+
+                _disposed = true;
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

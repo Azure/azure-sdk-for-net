@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Azure.AI.Personalizer
 {
@@ -19,13 +19,13 @@ namespace Azure.AI.Personalizer
         /// <summary> Initializes a new instance of DecisionContext. </summary>
         /// <param name="contextFeatures"> The context feature </param>
         /// <param name="rankableActions"> Rankable actions </param>
-        public DecisionContext(IEnumerable<object> contextFeatures, List<PersonalizerRankableAction> rankableActions)
+        public DecisionContext(IList<BinaryData> contextFeatures, List<PersonalizerRankableAction> rankableActions)
         {
-            this.ContextFeatures = contextFeatures.Select(f => JsonSerializer.Serialize(f)).ToList();
+            this.ContextFeatures = contextFeatures;
             this.Documents = rankableActions
                 .Select(action =>
                 {
-                    List<string> actionFeatures = action.Features.Select(f => JsonSerializer.Serialize(f)).ToList();
+                    IList<BinaryData> actionFeatures = action.Features.Select(f => BinaryData.FromObjectAsJson(f)).ToList();
 
                     return new DecisionContextDocument(action.Id, actionFeatures, null, null);
                 }).ToArray();
@@ -36,12 +36,12 @@ namespace Azure.AI.Personalizer
         /// <param name="slotIdToFeatures"> A map from slot id to its features </param>
         public DecisionContext(PersonalizerRankMultiSlotOptions rankRequest, Dictionary<string, IList<object>> slotIdToFeatures)
         {
-            this.ContextFeatures = rankRequest.ContextFeatures.Select(f => JsonSerializer.Serialize(f)).ToList();
+            this.ContextFeatures = rankRequest.ContextFeatures.Select(f => BinaryData.FromObjectAsJson(f)).ToList();
 
             this.Documents = rankRequest.Actions
                 .Select(action =>
                 {
-                    List<string> actionFeatures = action.Features.Select(f => JsonSerializer.Serialize(f)).ToList();
+                    IList<BinaryData> actionFeatures = action.Features.Select(f => BinaryData.FromObjectAsJson(f)).ToList();
 
                     return new DecisionContextDocument(action.Id, actionFeatures, null, null);
                 }).ToList();
@@ -53,9 +53,7 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Properties from url </summary>
         [JsonPropertyName("FromUrl")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        [JsonConverter(typeof(JsonRawStringListConverter))]
-        public List<string> ContextFeatures { get; }
+        public IList<BinaryData> ContextFeatures { get; }
 
         /// <summary> Properties of documents </summary>
         [JsonPropertyName("_multi")]
@@ -63,15 +61,14 @@ namespace Azure.AI.Personalizer
 
         /// <summary> Properties of slots </summary>
         [JsonPropertyName("_slots")]
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public IList<DecisionContextDocument> Slots { get; }
 
-        private static List<string> serializeFeatures(IList<object> features)
+        private static IList<BinaryData> serializeFeatures(IList<object> features)
         {
-            List<string> result = new List<string>();
+            IList<BinaryData> result = new List<BinaryData>();
             foreach (object feature in features)
             {
-                result.Add(JsonSerializer.Serialize(feature));
+                result.Add(BinaryData.FromObjectAsJson(feature));
             }
 
             return result;

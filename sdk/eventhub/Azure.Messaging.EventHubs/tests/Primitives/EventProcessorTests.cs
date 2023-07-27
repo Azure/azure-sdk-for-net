@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests
@@ -31,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
     public partial class EventProcessorTests
     {
         /// <summary>An empty event batch to use for mocking.</summary>
-        private readonly IReadOnlyList<EventData> EmptyBatch = new List<EventData>(0);
+        private static readonly IReadOnlyList<EventData> EmptyBatch = new List<EventData>(0);
 
         /// <summary>
         ///   Retrieves the load balancer for an event processor instance, using its private accessor.
@@ -82,6 +83,22 @@ namespace Azure.Messaging.EventHubs.Tests
                     .GetValue(processor);
 
         /// <summary>
+        ///   Retrieves the cancellation source used for the processor's activity when running, using its private accessor.
+        /// </summary>
+        ///
+        /// <typeparam name="T">The partition type to which the processor is bound.</typeparam>
+        ///
+        /// <param name="processor">The processor instance to operate on.</param>
+        ///
+        /// <returns>The cancellation source associated with the processor's activity when running.</returns>
+        ///
+        private static CancellationTokenSource GetRunningProcessorCancellationSource<T>(EventProcessor<T> processor) where T : EventProcessorPartition, new() =>
+            (CancellationTokenSource)
+                typeof(EventProcessor<T>)
+                    .GetField("_runningProcessorCancellationSource", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(processor);
+
+        /// <summary>
         ///   Retrieves the active set of partition processors for an event processor, using its private accessor.
         /// </summary>
         ///
@@ -96,6 +113,50 @@ namespace Azure.Messaging.EventHubs.Tests
                 typeof(EventProcessor<T>)
                     .GetProperty("ActivePartitionProcessors", BindingFlags.Instance | BindingFlags.NonPublic)
                     .GetValue(processor);
+
+        /// <summary>
+        ///   Invokes the processor infrastructure method responsible for starting a partition
+        ///   processing task, using its private accessor.
+        /// </summary>
+        ///
+        /// <typeparam name="T">The partition type to which the processor is bound.</typeparam>
+        ///
+        /// <param name="processor">The processor instance to operate on.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing should be started.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns><c>true</c> if the <paramref name="partitionId"/> was started; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool InvokeTryStartProcessingPartition<T>(EventProcessor<T> processor,
+                                                                 string partitionId,
+                                                                 CancellationToken cancellationToken) where T : EventProcessorPartition, new() =>
+            (bool)
+                typeof(EventProcessor<T>)
+                    .GetMethod("TryStartProcessingPartition", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(processor, new object[] { partitionId, cancellationToken });
+
+        /// <summary>
+        ///   Invokes the processor infrastructure method responsible for stopping a partition
+        ///   processing task, using its private accessor.
+        /// </summary>
+        ///
+        /// <typeparam name="T">The partition type to which the processor is bound.</typeparam>
+        ///
+        /// <param name="processor">The processor instance to operate on.</param>
+        /// <param name="partitionId">The identifier of the Event Hub partition whose processing should be stopped.</param>
+        /// <param name="reason">The reason why the processing is being stopped.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns><c>true</c> if the <paramref name="partitionId"/> was owned and was being processed; otherwise, <c>false</c>.</returns>
+        ///
+        private static Task<bool> InvokeTryStopProcessingPartitionAsync<T>(EventProcessor<T> processor,
+                                                                           string partitionId,
+                                                                           ProcessingStoppedReason reason,
+                                                                           CancellationToken cancellationToken) where T : EventProcessorPartition, new() =>
+            (Task<bool>)
+                typeof(EventProcessor<T>)
+                    .GetMethod("TryStopProcessingPartitionAsync", BindingFlags.Instance | BindingFlags.NonPublic)
+                    .Invoke(processor, new object[] { partitionId, reason, cancellationToken });
 
         /// <summary>
         ///   A basic custom partition type, allowing for testing or processor functionality.
@@ -154,7 +215,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                           PartitionLoadBalancer loadBalancer) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options, loadBalancer) { }
 
             public LastEnqueuedEventProperties InvokeReadLastEnqueuedEventProperties(string partitionId) => ReadLastEnqueuedEventProperties(partitionId);
-            internal override Task ValidateStartupAsync(bool async, CancellationToken cancellationToken = default) => Task.CompletedTask;
+            protected internal override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
             protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => Task.FromResult(Enumerable.Empty<EventProcessorPartitionOwnership>());
             protected override Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, CancellationToken cancellationToken) => Task.FromResult(default(EventProcessorCheckpoint));
             protected override Task<IEnumerable<EventProcessorCheckpoint>> ListCheckpointsAsync(CancellationToken cancellationToken = default) => Task.FromResult(Enumerable.Empty<EventProcessorCheckpoint>());

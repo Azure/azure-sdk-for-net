@@ -11,26 +11,26 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A list of the database&apos;s security alert policies. </summary>
+    /// <summary> A list of the database's security alert policies. </summary>
     internal partial class DatabaseSecurityAlertListResult
     {
         /// <summary> Initializes a new instance of DatabaseSecurityAlertListResult. </summary>
         internal DatabaseSecurityAlertListResult()
         {
-            Value = new ChangeTrackingList<DatabaseSecurityAlertPolicyData>();
+            Value = new ChangeTrackingList<SqlDatabaseSecurityAlertPolicyData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseSecurityAlertListResult. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal DatabaseSecurityAlertListResult(IReadOnlyList<DatabaseSecurityAlertPolicyData> value, string nextLink)
+        internal DatabaseSecurityAlertListResult(IReadOnlyList<SqlDatabaseSecurityAlertPolicyData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Array of results. </summary>
-        public IReadOnlyList<DatabaseSecurityAlertPolicyData> Value { get; }
+        public IReadOnlyList<SqlDatabaseSecurityAlertPolicyData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

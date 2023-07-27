@@ -37,14 +37,16 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         /// <param name="id">Quota request ID.</param>
         /// <param name="name">Quota request name.</param>
-        /// <param name="provisioningState">The quota request status.</param>
+        /// <param name="provisioningState">The quota request status. Possible
+        /// values include: 'Accepted', 'Invalid', 'Succeeded', 'Failed',
+        /// 'InProgress'</param>
         /// <param name="message">User friendly status message.</param>
         /// <param name="requestSubmitTime">The time when the quota request was
         /// submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the
         /// ISO 8601 standard.</param>
         /// <param name="value">The quotaRequests.</param>
         /// <param name="type">Resource type</param>
-        public QuotaRequestDetails(string id = default(string), string name = default(string), object provisioningState = default(object), string message = default(string), System.DateTime? requestSubmitTime = default(System.DateTime?), IList<SubRequest> value = default(IList<SubRequest>), string type = default(string))
+        public QuotaRequestDetails(string id = default(string), string name = default(string), string provisioningState = default(string), string message = default(string), System.DateTime? requestSubmitTime = default(System.DateTime?), IList<SubRequest> value = default(IList<SubRequest>), string type = default(string))
         {
             Id = id;
             Name = name;
@@ -74,10 +76,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the quota request status.
+        /// Gets or sets the quota request status. Possible values include:
+        /// 'Accepted', 'Invalid', 'Succeeded', 'Failed', 'InProgress'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public object ProvisioningState { get; set; }
+        public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets user friendly status message.

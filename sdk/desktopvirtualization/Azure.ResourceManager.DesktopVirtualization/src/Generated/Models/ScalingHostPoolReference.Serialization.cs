@@ -15,35 +15,42 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(HostPoolArmPath))
+            if (Optional.IsDefined(HostPoolId))
             {
-                writer.WritePropertyName("hostPoolArmPath");
-                writer.WriteStringValue(HostPoolArmPath);
+                writer.WritePropertyName("hostPoolArmPath"u8);
+                writer.WriteStringValue(HostPoolId);
             }
-            if (Optional.IsDefined(ScalingPlanEnabled))
+            if (Optional.IsDefined(IsScalingPlanEnabled))
             {
-                writer.WritePropertyName("scalingPlanEnabled");
-                writer.WriteBooleanValue(ScalingPlanEnabled.Value);
+                writer.WritePropertyName("scalingPlanEnabled"u8);
+                writer.WriteBooleanValue(IsScalingPlanEnabled.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ScalingHostPoolReference DeserializeScalingHostPoolReference(JsonElement element)
         {
-            Optional<string> hostPoolArmPath = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> hostPoolArmPath = default;
             Optional<bool> scalingPlanEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hostPoolArmPath"))
-                {
-                    hostPoolArmPath = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("scalingPlanEnabled"))
+                if (property.NameEquals("hostPoolArmPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    hostPoolArmPath = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("scalingPlanEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     scalingPlanEnabled = property.Value.GetBoolean();

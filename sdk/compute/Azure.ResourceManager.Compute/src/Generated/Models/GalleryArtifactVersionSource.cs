@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -19,16 +19,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of GalleryArtifactVersionSource. </summary>
         /// <param name="id"> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </param>
-        /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
-        internal GalleryArtifactVersionSource(string id, Uri uri)
+        internal GalleryArtifactVersionSource(ResourceIdentifier id)
         {
             Id = id;
-            Uri = uri;
         }
 
         /// <summary> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </summary>
-        public string Id { get; set; }
-        /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
-        public Uri Uri { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

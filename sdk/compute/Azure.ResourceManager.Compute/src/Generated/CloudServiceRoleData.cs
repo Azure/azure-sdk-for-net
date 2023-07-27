@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the CloudServiceRole data model. </summary>
+    /// <summary>
+    /// A class representing the CloudServiceRole data model.
+    /// Describes a role of the cloud service.
+    /// </summary>
     public partial class CloudServiceRoleData : ResourceData
     {
         /// <summary> Initializes a new instance of CloudServiceRoleData. </summary>
@@ -26,24 +29,19 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> The systemData. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Describes the cloud service role sku. </param>
-        /// <param name="properties"></param>
-        internal CloudServiceRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, CloudServiceRoleSku sku, CloudServiceRoleProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="uniqueId"> Specifies the ID which uniquely identifies a cloud service role. </param>
+        internal CloudServiceRoleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, CloudServiceRoleSku sku, string uniqueId) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Sku = sku;
-            Properties = properties;
+            UniqueId = uniqueId;
         }
 
         /// <summary> Resource location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> Describes the cloud service role sku. </summary>
         public CloudServiceRoleSku Sku { get; }
-        /// <summary> Gets the properties. </summary>
-        internal CloudServiceRoleProperties Properties { get; }
         /// <summary> Specifies the ID which uniquely identifies a cloud service role. </summary>
-        public string CloudServiceRoleUniqueId
-        {
-            get => Properties.UniqueId;
-        }
+        public string UniqueId { get; }
     }
 }

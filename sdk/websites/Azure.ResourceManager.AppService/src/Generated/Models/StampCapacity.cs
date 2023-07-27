@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="computeMode"> Shared/dedicated workers. </param>
         /// <param name="workerSize"> Size of the machines. </param>
         /// <param name="workerSizeId">
-        /// Size ID of machines: 
+        /// Size ID of machines:
         /// 0 - Small
         /// 1 - Medium
         /// 2 - Large
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isApplicableForAllComputeModes"> &lt;code&gt;true&lt;/code&gt; if capacity is applicable for all apps; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="siteMode"> Shared or Dedicated. </param>
         /// <param name="isLinux"> Is this a linux stamp capacity. </param>
-        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOptions? computeMode, WorkerSizeOptions? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux)
+        internal StampCapacity(string name, long? availableCapacity, long? totalCapacity, string unit, ComputeModeOption? computeMode, WorkerSizeOption? workerSize, int? workerSizeId, bool? excludeFromCapacityAllocation, bool? isApplicableForAllComputeModes, string siteMode, bool? isLinux)
         {
             Name = name;
             AvailableCapacity = availableCapacity;
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Name of the unit. </summary>
         public string Unit { get; }
         /// <summary> Shared/dedicated workers. </summary>
-        public ComputeModeOptions? ComputeMode { get; }
+        public ComputeModeOption? ComputeMode { get; }
         /// <summary> Size of the machines. </summary>
-        public WorkerSizeOptions? WorkerSize { get; }
+        public WorkerSizeOption? WorkerSize { get; }
         /// <summary>
-        /// Size ID of machines: 
+        /// Size ID of machines:
         /// 0 - Small
         /// 1 - Medium
         /// 2 - Large

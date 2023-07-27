@@ -33,9 +33,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="verifyClientCertIssuerDN">Verify client certificate
         /// issuer name on the application gateway.</param>
-        public ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN = default(bool?))
+        /// <param name="verifyClientRevocation">Verify client certificate
+        /// revocation status. Possible values include: 'None', 'OCSP'</param>
+        public ApplicationGatewayClientAuthConfiguration(bool? verifyClientCertIssuerDN = default(bool?), string verifyClientRevocation = default(string))
         {
             VerifyClientCertIssuerDN = verifyClientCertIssuerDN;
+            VerifyClientRevocation = verifyClientRevocation;
             CustomInit();
         }
 
@@ -50,6 +53,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "verifyClientCertIssuerDN")]
         public bool? VerifyClientCertIssuerDN { get; set; }
+
+        /// <summary>
+        /// Gets or sets verify client certificate revocation status. Possible
+        /// values include: 'None', 'OCSP'
+        /// </summary>
+        [JsonProperty(PropertyName = "verifyClientRevocation")]
+        public string VerifyClientRevocation { get; set; }
 
     }
 }

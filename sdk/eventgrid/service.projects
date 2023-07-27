@@ -1,5 +1,31 @@
+<!--
+  This file allows overrides and extensions to the build configuration defined
+  by the central engineering system, and is considered during pipeline builds for
+  CI, test runs, and package release.
+
+  Based on the SDKType variable (msbuild property or env variable) this will filter
+  the set of projects to to match what type of SDK we are interested in building.
+
+  SDKType values
+   - "all" will build all projects
+   - "data" will build the Track 1 data plane library
+   - "client" will build the Track 2 data plane libraries
+   - "mgmtclient" will build the Track 2 mgmt libraries
+-->
+
 <Project>
-  <ItemGroup>
-    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.*\**\*.csproj" Condition="'$(AZURE_EVENTGRID_TEST_MODE)' == 'Live'" />
+  <ItemGroup Condition="'$(SDKType)' == 'all'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)**\*.csproj" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Messaging.EventGrid\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents\**\*.csproj" />
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.WebJobs.Extensions.EventGrid\**\*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.EventGrid\**\*.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,22 +6,22 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The HardThresholdCondition. </summary>
     public partial class HardThresholdCondition
     {
-
         /// <summary> Initializes a new instance of HardThresholdCondition. </summary>
         /// <param name="lowerBound">
         /// lower bound
-        /// 
+        ///
         /// should be specified when anomalyDetectorDirection is Both or Down
         /// </param>
         /// <param name="upperBound">
         /// upper bound
-        /// 
+        ///
         /// should be specified when anomalyDetectorDirection is Both or Up
         /// </param>
         /// <param name="anomalyDetectorDirection"> detection direction. </param>

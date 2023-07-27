@@ -15,15 +15,19 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MetricDefinitionCollection DeserializeMetricDefinitionCollection(JsonElement element)
         {
-            IReadOnlyList<MetricDefinition> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<MonitorMetricDefinition> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<MetricDefinition> array = new List<MetricDefinition>();
+                    List<MonitorMetricDefinition> array = new List<MonitorMetricDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDefinition.DeserializeMetricDefinition(item));
+                        array.Add(MonitorMetricDefinition.DeserializeMonitorMetricDefinition(item));
                     }
                     value = array;
                     continue;

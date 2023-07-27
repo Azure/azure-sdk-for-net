@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
+using Azure.Storage.Blobs;
+using Azure.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,13 +25,15 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 {
     internal static class StorageConfiguration
     {
-        private const string AccountNameEnvironmentVariable = "MABFC_StorageAccount";
-        private const string AccountKeyEnvironmentVariable = "MABFC_StorageKey";
+        private const string AccountNameEnvironmentVariable = "MABOM_StorageAccount";
+        private const string AccountKeyEnvironmentVariable = "MABOM_StorageKey";
+        private const string StorageAccountBlobEndpointVariable = "MABOM_BlobEndpoint";
 
-        internal static CloudStorageAccount GetAccount(ITestOutputHelper output)
+        internal static BlobServiceClient GetAccount(ITestOutputHelper output)
         {
             var accountName = Environment.GetEnvironmentVariable(AccountNameEnvironmentVariable);
             var accountKey = Environment.GetEnvironmentVariable(AccountKeyEnvironmentVariable);
+            var blobEndpoint = Environment.GetEnvironmentVariable(StorageAccountBlobEndpointVariable);
 
             var unset = new List<string>();
 
@@ -47,16 +49,16 @@ namespace Microsoft.Azure.Batch.Conventions.Files.IntegrationTests
 
             if (unset.Any())
             {
-                var error = $"Storage account not configured for integration tests: environment variable(s) {string.Join(" and ", unset)} not set.";
+                var error = $"Blob Service Client not configured for integration tests: environment variable(s) {string.Join(" and ", unset)} not set.";
                 output?.WriteLine(error);
                 throw new InvalidOperationException(error);
             }
 
             try
             {
-                var credentials = new StorageCredentials(accountName, accountKey);
-                var account = new CloudStorageAccount(credentials, true);
-                return account;
+                var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+                var blobClient = new BlobServiceClient(new Uri(blobEndpoint), credentials);
+                return blobClient;
             }
             catch (Exception ex)
             {

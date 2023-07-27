@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -30,13 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Unutilized capacity of the capacity reservation. </summary>
-        internal CapacityReservationUtilization UtilizationInfo { get; }
-        /// <summary> A list of all virtual machines resource ids allocated against the capacity reservation. </summary>
-        public IReadOnlyList<Resources.Models.SubResource> UtilizationInfoVirtualMachinesAllocated
-        {
-            get => UtilizationInfo.VirtualMachinesAllocated;
-        }
-
+        public CapacityReservationUtilization UtilizationInfo { get; }
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
     }

@@ -284,7 +284,10 @@ namespace Azure.Storage.Blobs.Test
                 blockBlobClient.StageBlockAsync(
                     base64BlockId: string.Empty,
                     content: new MemoryStream(),
-                    conditions: conditions),
+                    options: new BlockBlobStageBlockOptions
+                    {
+                        Conditions = conditions
+                    }),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"StageBlock does not support the {invalidCondition} condition(s)."));
@@ -374,9 +377,12 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlockInfo> response = await blob.StageBlockAsync(
                     base64BlockId: ToBase64(GetNewBlockName()),
                     content: stream,
-                    conditions: new BlobRequestConditions
+                    options: new BlockBlobStageBlockOptions
                     {
-                        LeaseId = leaseId
+                        Conditions = new BlobRequestConditions
+                        {
+                            LeaseId = leaseId
+                        }
                     });
 
                 // Assert
@@ -407,9 +413,12 @@ namespace Azure.Storage.Blobs.Test
                     blob.StageBlockAsync(
                         base64BlockId: ToBase64(GetNewBlockName()),
                         content: stream,
-                        conditions: new BlobRequestConditions
+                        options: new BlockBlobStageBlockOptions
                         {
-                            LeaseId = garbageLeaseId
+                            Conditions = new BlobRequestConditions
+                            {
+                                LeaseId = garbageLeaseId
+                            }
                         }),
                     e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
             }
@@ -446,7 +455,7 @@ namespace Azure.Storage.Blobs.Test
                 new IOException("Simulated stream fault"),
                 () => timesFaulted++))
             {
-                await blobFaulty.StageBlockAsync(ToBase64(blockName), stream, null, null, progressHandler: progressHandler);
+                await blobFaulty.StageBlockAsync(ToBase64(blockName), stream, null, null, progressHandler: progressHandler, default);
 
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
@@ -509,7 +518,10 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlockInfo> response = await blob.StageBlockAsync(
                     base64BlockId: ToBase64(GetNewBlockName()),
                     content: stream,
-                    progressHandler: progress);
+                    options: new BlockBlobStageBlockOptions
+                    {
+                        ProgressHandler = progress
+                    });
             }
 
             // Assert
@@ -1689,6 +1701,31 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task CommitBlockListAsync_ColdTier()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Size);
+            string blockName = GetNewBlockName();
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            await blob.StageBlockAsync(ToBase64(blockName), stream);
+            string[] commitList = new string[]
+            {
+                ToBase64(blockName),
+            };
+
+            await blob.CommitBlockListAsync(commitList, accessTier: AccessTier.Cold);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual("Cold", response.Value.AccessTier);
+        }
+
+        [RecordedTest]
         public async Task GetBlockListAsync()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -2068,6 +2105,30 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobProperties> response = await blob.GetPropertiesAsync();
             AssertDictionaryEquality(metadata, response.Value.Metadata);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task UploadAsync_AccessTier_Cold()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            byte[] data = GetRandomBuffer(Size);
+
+            BlobUploadOptions options = new BlobUploadOptions
+            {
+                AccessTier = AccessTier.Cold
+            };
+
+            // Act
+            using Stream stream = new MemoryStream(data);
+            await blob.UploadAsync(content: stream, options: options);
+
+            // Assert
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
+            Assert.AreEqual("Cold", response.Value.AccessTier);
         }
 
         [RecordedTest]
@@ -2727,7 +2788,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task SyncUploadFromUriAsync_OverwiteSourceBlobProperties()
+        public async Task SyncUploadFromUriAsync_OverwriteSourceBlobProperties()
         {
             // Arrange
             var constants = TestConstants.Create(this);
@@ -2753,8 +2814,7 @@ namespace Azure.Storage.Blobs.Test
                     ContentLanguage = constants.ContentLanguage,
                     ContentType = constants.ContentType
                 },
-                // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
-                // Metadata = metadata,
+                Metadata = metadata,
                 Tags = tags,
                 AccessTier = AccessTier.Hot
             };
@@ -2778,8 +2838,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
             Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
             Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
-            // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
-            //AssertDictionaryEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
             Assert.AreEqual(tags.Count, response.Value.TagCount);
             Assert.AreEqual(AccessTier.Hot.ToString(), response.Value.AccessTier);
         }
@@ -3298,7 +3357,6 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
-        [PlaybackOnly("TODO https://github.com/Azure/azure-sdk-for-net/issues/27493")]
         [TestCase(null)]
         [TestCase(BlobCopySourceTagsMode.Replace)]
         [TestCase(BlobCopySourceTagsMode.Copy)]
@@ -3358,6 +3416,34 @@ namespace Azure.Storage.Blobs.Test
             {
                 AssertDictionaryEquality(destTags, getTagsResponse.Value.Tags);
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task SyncUploadFromUriAsync_AccessTier_Cold()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            await using DisposingContainer test = await GetTestContainerAsync();
+            BlockBlobClient sourceBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+            // Upload data to source blob
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            await sourceBlob.UploadAsync(stream);
+
+            BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+            {
+                AccessTier = AccessTier.Cold
+            };
+
+            // Act
+            await destBlob.SyncUploadFromUriAsync(sourceBlob.Uri, options);
+
+            // Assert
+            Response<BlobProperties> response = await destBlob.GetPropertiesAsync();
+            Assert.AreEqual("Cold", response.Value.AccessTier);
         }
 
         [RecordedTest]

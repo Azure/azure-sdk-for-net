@@ -7,13 +7,17 @@
 
 using System;
 using Azure.AI.MetricsAdvisor.Models;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    /// <summary> The DataSourceCredential. </summary>
-    public partial class DataSourceCredentialEntity
+    /// <summary>
+    /// The DataSourceCredential.
+    /// Please note <see cref="DataSourceCredentialEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SqlConnectionStringCredentialEntity"/>, <see cref="DataLakeSharedKeyCredentialEntity"/>, <see cref="ServicePrincipalCredentialEntity"/> and <see cref="ServicePrincipalInKeyVaultCredentialEntity"/>.
+    /// </summary>
+    public abstract partial class DataSourceCredentialEntity
     {
-
         /// <summary> Initializes a new instance of DataSourceCredentialEntity. </summary>
         /// <param name="credentialKind"> Type of data source credential. </param>
         /// <param name="id"> Unique id of data source credential. </param>

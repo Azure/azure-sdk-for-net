@@ -8,9 +8,9 @@
     <Description>Provides management capabilities for Microsoft Azure IoT Device Provisioning Service.</Description>
     <AssemblyTitle>Microsoft Azure Provisioning Service Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.DeviceProvisioningServices</AssemblyName>
-    <Version>3.0.0</Version>
+    <Version>4.0.0</Version>
     <PackageTags>Microsoft Azure IoT Provisioning Services;IoT Device Provisioning Service Management;IoT Provisioning Service;</PackageTags>
-    <PackageReleaseNotes>This is a general availability release of the Azure IoT Device Provisioning Service SDK for API version 2021-10-15.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is a general availability release of the Azure IoT Device Provisioning Service SDK for API version 2022-02-05.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

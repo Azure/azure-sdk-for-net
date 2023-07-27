@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// Description of queue Resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SBQueue : Resource
+    public partial class SBQueue : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the SBQueue class.
@@ -32,9 +32,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the SBQueue class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="countDetails">Message Count Details.</param>
         /// <param name="createdAt">The exact time the message was
         /// created.</param>
@@ -93,8 +98,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// forward the Dead Letter message</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public SBQueue(string id = default(string), string name = default(string), string type = default(string), MessageCountDetails countDetails = default(MessageCountDetails), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), long? sizeInBytes = default(long?), long? messageCount = default(long?), System.TimeSpan? lockDuration = default(System.TimeSpan?), int? maxSizeInMegabytes = default(int?), long? maxMessageSizeInKilobytes = default(long?), bool? requiresDuplicateDetection = default(bool?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), bool? enablePartitioning = default(bool?), bool? enableExpress = default(bool?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public SBQueue(string id = default(string), string name = default(string), string type = default(string), string location = default(string), MessageCountDetails countDetails = default(MessageCountDetails), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), System.DateTime? accessedAt = default(System.DateTime?), long? sizeInBytes = default(long?), long? messageCount = default(long?), System.TimeSpan? lockDuration = default(System.TimeSpan?), int? maxSizeInMegabytes = default(int?), long? maxMessageSizeInKilobytes = default(long?), bool? requiresDuplicateDetection = default(bool?), bool? requiresSession = default(bool?), System.TimeSpan? defaultMessageTimeToLive = default(System.TimeSpan?), bool? deadLetteringOnMessageExpiration = default(bool?), System.TimeSpan? duplicateDetectionHistoryTimeWindow = default(System.TimeSpan?), int? maxDeliveryCount = default(int?), EntityStatus? status = default(EntityStatus?), bool? enableBatchedOperations = default(bool?), System.TimeSpan? autoDeleteOnIdle = default(System.TimeSpan?), bool? enablePartitioning = default(bool?), bool? enableExpress = default(bool?), string forwardTo = default(string), string forwardDeadLetteredMessagesTo = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             CountDetails = countDetails;
             CreatedAt = createdAt;

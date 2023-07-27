@@ -5,14 +5,14 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="../../Azure.Core/src/Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
-    <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'net47'" />
+    <Reference Include="System.Web" Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'net47'" />
     <!-- 
       Explicit references to pull in patched versions of ASP.NET Core packages
     -->
@@ -23,15 +23,17 @@
   </ItemGroup>
   <!-- Import Azure.Core shared source -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared" />
+    <Compile Remove="Shared\*.cs" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared\Core" />
   </ItemGroup>
     
   <ItemGroup>
     <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
       <_Parameter1>TestProxyPath</_Parameter1>
-      <_Parameter2>$(NuGetPackageRoot)azure.sdk.tools.testproxy\$(TestProxyVersion)\tools\net6.0\any\Azure.Sdk.Tools.TestProxy.dll</_Parameter2>
+      <_Parameter2>$(NuGetPackageRoot)\azure.sdk.tools.testproxy\$(TestProxyVersion)\tools\net6.0\any\Azure.Sdk.Tools.TestProxy.dll</_Parameter2>
     </AssemblyAttribute>
-  </ItemGroup>  
+  </ItemGroup>
 </Project>

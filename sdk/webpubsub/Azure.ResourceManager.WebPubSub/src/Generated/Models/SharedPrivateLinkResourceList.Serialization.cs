@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         internal static SharedPrivateLinkResourceList DeserializeSharedPrivateLinkResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<SharedPrivateLinkData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<WebPubSubSharedPrivateLinkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SharedPrivateLinkData> array = new List<SharedPrivateLinkData>();
+                    List<WebPubSubSharedPrivateLinkData> array = new List<WebPubSubSharedPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedPrivateLinkData.DeserializeSharedPrivateLinkData(item));
+                        array.Add(WebPubSubSharedPrivateLinkData.DeserializeWebPubSubSharedPrivateLinkData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

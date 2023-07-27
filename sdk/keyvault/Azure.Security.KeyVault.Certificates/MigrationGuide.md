@@ -1,6 +1,6 @@
 # Migrate from Microsoft.Azure.KeyVault to Azure.Security.KeyVault.Certificates
 
-This guide is intended to assist in the migration to version 4 of the Key Vault client library [`Azure.Security.KeyVault.Certificates`](https://www.nuget.org/packages/Azure.Security.KeyVault.Certificates) from version 3 of [`Microsoft.Azure.KeyVault`](https://www.nuget.org/packages/Microsoft.Azure.KeyVault). It will focus on side-by-side comparisons for similar operations between the two packages.
+This guide is intended to assist in the migration to version 4 of the Key Vault client library [`Azure.Security.KeyVault.Certificates`](https://www.nuget.org/packages/Azure.Security.KeyVault.Certificates) from [deprecated] version 3 of [`Microsoft.Azure.KeyVault`](https://www.nuget.org/packages/Microsoft.Azure.KeyVault). It will focus on side-by-side comparisons for similar operations between the two packages.
 
 Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those new to the Key Vault client library for .NET, please refer to the [`Azure.Security.KeyVault.Certificates` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md) and [`Azure.Security.KeyVault.Certificates` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/samples) for the `Azure.Security.KeyVault.Certificates` library rather than this guide.
 
@@ -17,8 +17,11 @@ Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those ne
   - [Listing certificates](#listing-certificates)
   - [Deleting certificates](#deleting-certificates)
 - [Additional samples](#additional-samples)
+- [Support](#support)
 
 ## Migration benefits
+
+> Note: `Microsoft.Azure.KeyVault` has been [deprecated]. Please upgrade to `Azure.Security.KeyVault.Certificates` for continued support.
 
 A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be. As Azure has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to understand the gaps that the .NET client libraries have.
 
@@ -105,7 +108,7 @@ using (HttpClient httpClient = new HttpClient())
 
 ### Creating certificate policies
 
-Before creating or importing a certificate, you need to define a certificate policy that defines the subject (e.g. web site, email address), lifetime management properties, and [more](https://docs.microsoft.com/azure/key-vault/certificates/about-certificates#certificate-policy). You can define your own policy or, as is common in testing applications, use a self-signed certificate policy.
+Before creating or importing a certificate, you need to define a certificate policy that defines the subject (e.g. web site, email address), lifetime management properties, and [more](https://learn.microsoft.com/azure/key-vault/certificates/about-certificates#certificate-policy). You can define your own policy or, as is common in testing applications, use a self-signed certificate policy.
 
 #### Custom policy
 
@@ -394,5 +397,13 @@ Synchronous methods are also available on `CertificateClient`, though we recomme
 
 ## Additional samples
 
-- [Key Vault certificates samples for .NET](https://docs.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultcertificates-samples/)
-- [All Key Vault samples for .NET](https://docs.microsoft.com/samples/browse/?products=azure-key-vault&languages=csharp)
+- [Key Vault certificates samples for .NET](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultcertificates-samples/)
+- [All Key Vault samples for .NET](https://learn.microsoft.com/samples/browse/?products=azure-key-vault&languages=csharp)
+
+## Support
+
+If you have migrated your code base and are experiencing errors, see our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Certificates/TROUBLESHOOTING.md).
+For additional support, please search our [existing issues](https://github.com/Azure/azure-sdk-for-net/issues) or [open a new issue](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
+You may also find existing answers on community sites like [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-keyvault+.net).
+
+[deprecated]: https://aka.ms/azsdk/deprecated

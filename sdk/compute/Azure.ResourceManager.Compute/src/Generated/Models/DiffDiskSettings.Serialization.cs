@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Option))
             {
-                writer.WritePropertyName("option");
+                writer.WritePropertyName("option"u8);
                 writer.WriteStringValue(Option.Value.ToString());
             }
             if (Optional.IsDefined(Placement))
             {
-                writer.WritePropertyName("placement");
+                writer.WritePropertyName("placement"u8);
                 writer.WriteStringValue(Placement.Value.ToString());
             }
             writer.WriteEndObject();
@@ -30,25 +30,27 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiffDiskSettings DeserializeDiffDiskSettings(JsonElement element)
         {
-            Optional<DiffDiskOptions> option = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DiffDiskOption> option = default;
             Optional<DiffDiskPlacement> placement = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("option"))
+                if (property.NameEquals("option"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    option = new DiffDiskOptions(property.Value.GetString());
+                    option = new DiffDiskOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("placement"))
+                if (property.NameEquals("placement"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     placement = new DiffDiskPlacement(property.Value.GetString());

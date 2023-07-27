@@ -15,54 +15,55 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static RecordSet DeserializeRecordSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recordType = default;
             Optional<string> recordSetName = default;
             Optional<string> fqdn = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<int> ttl = default;
             Optional<IReadOnlyList<string>> ipAddresses = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordType"))
+                if (property.NameEquals("recordType"u8))
                 {
                     recordType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recordSetName"))
+                if (property.NameEquals("recordSetName"u8))
                 {
                     recordSetName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fqdn"))
+                if (property.NameEquals("fqdn"u8))
                 {
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"))
+                if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new NetworkProvisioningState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ttl"))
+                if (property.NameEquals("ttl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ttl = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ipAddresses"))
+                if (property.NameEquals("ipAddresses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

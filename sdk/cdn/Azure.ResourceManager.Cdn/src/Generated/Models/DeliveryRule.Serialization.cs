@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("order");
+            writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);
             if (Optional.IsCollectionDefined(Conditions))
             {
-                writer.WritePropertyName("conditions");
+                writer.WritePropertyName("conditions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("actions");
+            writer.WritePropertyName("actions"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
@@ -45,27 +45,30 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRule DeserializeDeliveryRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             int order = default;
             Optional<IList<DeliveryRuleCondition>> conditions = default;
             IList<DeliveryRuleAction> actions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("order"))
+                if (property.NameEquals("order"u8))
                 {
                     order = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("conditions"))
+                if (property.NameEquals("conditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DeliveryRuleCondition> array = new List<DeliveryRuleCondition>();
@@ -76,7 +79,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     conditions = array;
                     continue;
                 }
-                if (property.NameEquals("actions"))
+                if (property.NameEquals("actions"u8))
                 {
                     List<DeliveryRuleAction> array = new List<DeliveryRuleAction>();
                     foreach (var item in property.Value.EnumerateArray())

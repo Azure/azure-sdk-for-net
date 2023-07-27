@@ -1,22 +1,34 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Communication.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using System.Security;
 using System.Threading;
+using Azure.Core.TestFramework.Models;
+using System;
+using Azure.Communication.Tests;
+using static Azure.Communication.Identity.CommunicationIdentityClientOptions;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Communication.Identity.Tests
 {
     public class CommunicationIdentityClientLiveTestBase : RecordedTestBase<CommunicationIdentityClientTestEnvironment>
     {
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
+        private const string URIIdentityReplacerRegEx = @"/identities/([^/?]+)";
+
         public CommunicationIdentityClientLiveTestBase(bool isAsync) : base(isAsync)
         {
             JsonPathSanitizers.Add("$..token");
+            JsonPathSanitizers.Add("$..appId");
+            JsonPathSanitizers.Add("$..userId");
+            JsonPathSanitizers.Add("$..id");
             SanitizedHeaders.Add("x-ms-content-sha256");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIIdentityReplacerRegEx, "/identities/Sanitized"));
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
         }
 
         /// <summary>
@@ -24,59 +36,64 @@ namespace Azure.Communication.Identity.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="CommunicationIdentityClient" />.</returns>
-        protected CommunicationIdentityClient CreateClientWithConnectionString()
+        private CommunicationIdentityClient CreateClientWithConnectionString(ServiceVersion? version)
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicConnectionString,
-                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs(version)));
 
-        protected CommunicationIdentityClient CreateClientWithAzureKeyCredential()
+        private CommunicationIdentityClient CreateClientWithAzureKeyCredential(ServiceVersion? version)
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicEndpoint,
                     new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey),
-                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs(version)));
 
-        protected CommunicationIdentityClient CreateClientWithTokenCredential()
+        private CommunicationIdentityClient CreateClientWithTokenCredential(ServiceVersion? version)
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestDynamicEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
-                    CreateIdentityClientOptionsWithCorrelationVectorLogs()));
+                    CreateIdentityClientOptionsWithCorrelationVectorLogs(version)));
 
-        private CommunicationIdentityClientOptions CreateIdentityClientOptionsWithCorrelationVectorLogs()
+        private CommunicationIdentityClientOptions CreateIdentityClientOptionsWithCorrelationVectorLogs(ServiceVersion? version)
         {
-            CommunicationIdentityClientOptions communicationIdentityClientOptions = new CommunicationIdentityClientOptions();
+            CommunicationIdentityClientOptions communicationIdentityClientOptions = (version == null) ? new CommunicationIdentityClientOptions()
+                : new CommunicationIdentityClientOptions((ServiceVersion)version);
             communicationIdentityClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(communicationIdentityClientOptions);
         }
 
-        protected async Task<string> generateTeamsToken()
-        {
-            string token;
-            if (Mode == RecordedTestMode.Playback)
+        protected CommunicationIdentityClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString, ServiceVersion? version = default)
+            => authMethod switch
             {
-                token = "Sanitized";
-            }
-            else
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(version),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(version),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(version),
+                _ => throw new ArgumentOutOfRangeException(nameof(authMethod)),
+            };
+
+        protected async Task<GetTokenForTeamsUserOptions> CreateTeamsUserParams()
+        {
+            GetTokenForTeamsUserOptions options = new GetTokenForTeamsUserOptions("Sanitized", "Sanitized", "Sanitized");
+            if (!TestEnvironment.ShouldIgnoreIdentityExchangeTokenTest && Mode != RecordedTestMode.Playback)
             {
                 IPublicClientApplication publicClientApplication = PublicClientApplicationBuilder.Create(TestEnvironment.CommunicationM365AppId)
                                                     .WithAuthority(TestEnvironment.CommunicationM365AadAuthority + "/" + TestEnvironment.CommunicationM365AadTenant)
                                                     .WithRedirectUri(TestEnvironment.CommunicationM365RedirectUri)
                                                     .Build();
-                string[] scopes = { TestEnvironment.CommunicationM365Scope };
-                SecureString communicationMsalPassword = new SecureString();
-                foreach (char c in TestEnvironment.CommunicationMsalPassword)
-                {
-                    communicationMsalPassword.AppendChar(c);
-                }
+                string[] scopes = {
+                    "https://auth.msft.communication.azure.com/Teams.ManageCalls",
+                    "https://auth.msft.communication.azure.com/Teams.ManageChats"
+                };
+
                 AuthenticationResult result = await publicClientApplication.AcquireTokenByUsernamePassword(
                     scopes,
                     TestEnvironment.CommunicationMsalUsername,
-                    communicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
-                token = result.AccessToken;
+                    TestEnvironment.CommunicationMsalPassword).ExecuteAsync(CancellationToken.None).ConfigureAwait(false);
+                options = new GetTokenForTeamsUserOptions(result.AccessToken, TestEnvironment.CommunicationM365AppId, result.UniqueId);
             }
-            return token;
+            return options;
         }
     }
 }

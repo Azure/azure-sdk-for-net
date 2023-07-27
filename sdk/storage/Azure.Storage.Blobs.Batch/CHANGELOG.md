@@ -1,6 +1,46 @@
 # Release History
 
-## 12.9.0-beta.1 (Unreleased)
+## 12.15.0-beta.1 (Unreleased)
+- Added support for service version 2023-05-03 and 2023-08-03.
+
+## 12.14.0 (2023-07-11)
+- Includes all features from 12.14.0-beta.1.
+
+## 12.14.0-beta.1 (2023-05-30)
+- Added support for service version 2023-01-03.
+
+## 12.13.0 (2023-04-11)
+- Includes all features from 12.13.0-beta.1.
+
+## 12.13.0-beta.1 (2023-03-28)
+- Added support for service version 2022-11-02.
+- `BlobBatch` is made explicitly resilient to multiple dispose
+
+## 12.12.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 12.12.0 (2023-02-21)
+- Includes all features from 12.12.0-beta.1.
+
+## 12.12.0-beta.1 (2023-02-07)
+- Added support for service version 2021-12-02.
+
+## 12.11.0 (2022-10-12)
+- Includes all features from 12.11.0-beta.1.
+
+## 12.11.0-beta.1 (2022-08-23)
+- Added support for service version 2021-10-04.
+
+## 12.10.0 (2022-07-07)
+- Includes all features from 12.10.0-beta.1.
+
+## 12.10.0-beta.1 (2022-06-15)
+- Added support for service version 2021-08-06.
+
+## 12.9.0 (2022-05-02)
+- Includes all features from 12.9.0-beta.1.
+
+## 12.9.0-beta.1 (2022-04-12)
 - Added support for service version 2021-06-08.
 
 ## 12.8.0 (2022-03-10)

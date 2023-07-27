@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerVersion))
             {
-                writer.WritePropertyName("serverVersion");
+                writer.WritePropertyName("serverVersion"u8);
                 writer.WriteStringValue(ServerVersion.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,17 +25,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ApiProperties DeserializeApiProperties(JsonElement element)
         {
-            Optional<ServerVersion> serverVersion = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<CosmosDBServerVersion> serverVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serverVersion"))
+                if (property.NameEquals("serverVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serverVersion = new ServerVersion(property.Value.GetString());
+                    serverVersion = new CosmosDBServerVersion(property.Value.GetString());
                     continue;
                 }
             }

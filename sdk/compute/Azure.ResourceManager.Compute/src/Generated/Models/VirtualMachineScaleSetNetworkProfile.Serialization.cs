@@ -19,12 +19,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(HealthProbe))
             {
-                writer.WritePropertyName("healthProbe");
+                writer.WritePropertyName("healthProbe"u8);
                 JsonSerializer.Serialize(writer, HealthProbe);
             }
             if (Optional.IsCollectionDefined(NetworkInterfaceConfigurations))
             {
-                writer.WritePropertyName("networkInterfaceConfigurations");
+                writer.WritePropertyName("networkInterfaceConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceConfigurations)
                 {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(NetworkApiVersion))
             {
-                writer.WritePropertyName("networkApiVersion");
+                writer.WritePropertyName("networkApiVersion"u8);
                 writer.WriteStringValue(NetworkApiVersion.Value.ToString());
             }
             writer.WriteEndObject();
@@ -42,26 +42,28 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineScaleSetNetworkProfile DeserializeVirtualMachineScaleSetNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> healthProbe = default;
             Optional<IList<VirtualMachineScaleSetNetworkConfiguration>> networkInterfaceConfigurations = default;
             Optional<NetworkApiVersion> networkApiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("healthProbe"))
+                if (property.NameEquals("healthProbe"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    healthProbe = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    healthProbe = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("networkInterfaceConfigurations"))
+                if (property.NameEquals("networkInterfaceConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineScaleSetNetworkConfiguration> array = new List<VirtualMachineScaleSetNetworkConfiguration>();
@@ -72,11 +74,10 @@ namespace Azure.ResourceManager.Compute.Models
                     networkInterfaceConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("networkApiVersion"))
+                if (property.NameEquals("networkApiVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkApiVersion = new NetworkApiVersion(property.Value.GetString());

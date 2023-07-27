@@ -33,9 +33,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="privateRanges">List of private IP addresses/IP address
         /// ranges to not be SNAT.</param>
-        public FirewallPolicySNAT(IList<string> privateRanges = default(IList<string>))
+        /// <param name="autoLearnPrivateRanges">The operation mode for
+        /// automatically learning private ranges to not be SNAT. Possible
+        /// values include: 'Enabled', 'Disabled'</param>
+        public FirewallPolicySNAT(IList<string> privateRanges = default(IList<string>), string autoLearnPrivateRanges = default(string))
         {
             PrivateRanges = privateRanges;
+            AutoLearnPrivateRanges = autoLearnPrivateRanges;
             CustomInit();
         }
 
@@ -50,6 +54,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "privateRanges")]
         public IList<string> PrivateRanges { get; set; }
+
+        /// <summary>
+        /// Gets or sets the operation mode for automatically learning private
+        /// ranges to not be SNAT. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "autoLearnPrivateRanges")]
+        public string AutoLearnPrivateRanges { get; set; }
 
     }
 }

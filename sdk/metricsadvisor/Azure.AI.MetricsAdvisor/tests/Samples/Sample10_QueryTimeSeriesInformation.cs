@@ -24,7 +24,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string metricId = MetricId;
 
-            string dimensionName = "region";
+            string dimensionName = "Dim1";
             var options = new GetMetricDimensionValuesOptions() { MaxPageSize = 10 };
 
             Console.WriteLine($"The dimension '{dimensionName}' can assume the following values (limited to 10):");
@@ -55,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             string detectionConfigurationId = DetectionConfigurationId;
 
-            string dimensionName = "region";
+            string dimensionName = "Dim1";
 
             var startsOn = DateTimeOffset.Parse("2020-01-01T00:00:00Z");
             var endsOn = DateTimeOffset.UtcNow;
@@ -169,15 +169,15 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var dimensions = new Dictionary<string, string>()
             {
-                { "region", "Karachi" },
-                { "category", "__SUM__" }
+                { "Dim1", "JPN" },
+                { "Dim2", "__SUM__" }
             };
             var seriesKey1 = new DimensionKey(dimensions);
 
             dimensions = new Dictionary<string, string>()
             {
-                { "region", "Cairo" },
-                { "category", "Shoes Handbags & Sunglasses" }
+                { "Dim1", "USD" },
+                { "Dim2", "US" }
             };
             var seriesKey2 = new DimensionKey(dimensions);
 

@@ -12,7 +12,6 @@
     <Version>1.0.0.0</Version>
     <Company>MSIT</Company>
     <Copyright>Copyright © MSIT 2013</Copyright>
-    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
     <PropertyGroup>
     <ExcludeFromBuild>false</ExcludeFromBuild>

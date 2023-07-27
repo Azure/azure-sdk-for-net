@@ -71,18 +71,18 @@ namespace Azure.ResourceManager.Monitor
             return GetCachedClient(Client => new MetricAlertCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of LogSearchRuleResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of LogSearchRuleResources and their operations over a LogSearchRuleResource. </returns>
-        public virtual LogSearchRuleCollection GetLogSearchRules()
+        /// <summary> Gets a collection of ScheduledQueryRuleResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ScheduledQueryRuleResources and their operations over a ScheduledQueryRuleResource. </returns>
+        public virtual ScheduledQueryRuleCollection GetScheduledQueryRules()
         {
-            return GetCachedClient(Client => new LogSearchRuleCollection(Client, Id));
+            return GetCachedClient(Client => new ScheduledQueryRuleCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of PrivateLinkScopeResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of PrivateLinkScopeResources and their operations over a PrivateLinkScopeResource. </returns>
-        public virtual PrivateLinkScopeCollection GetPrivateLinkScopes()
+        /// <summary> Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MonitorPrivateLinkScopeResources and their operations over a MonitorPrivateLinkScopeResource. </returns>
+        public virtual MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes()
         {
-            return GetCachedClient(Client => new PrivateLinkScopeCollection(Client, Id));
+            return GetCachedClient(Client => new MonitorPrivateLinkScopeCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ActivityLogAlertResources in the ResourceGroupResource. </summary>
@@ -106,16 +106,31 @@ namespace Azure.ResourceManager.Monitor
             return GetCachedClient(Client => new DataCollectionRuleCollection(Client, Id));
         }
 
+        /// <summary> Gets a collection of MonitorWorkspaceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MonitorWorkspaceResources and their operations over a MonitorWorkspaceResource. </returns>
+        public virtual MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources()
+        {
+            return GetCachedClient(Client => new MonitorWorkspaceResourceCollection(Client, Id));
+        }
+
         /// <summary>
         /// Get the status of an azure asynchronous operation associated with a private link scope operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// Operation Id: PrivateLinkScopeOperationStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopeOperationStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OperationStatus>> GetPrivateLinkScopeOperationStatuAsync(string asyncOperationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetPrivateLinkScopeOperationStatusAsync(string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatu");
+            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatus");
             scope.Start();
             try
             {
@@ -131,14 +146,22 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Get the status of an azure asynchronous operation associated with a private link scope operation.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}
-        /// Operation Id: PrivateLinkScopeOperationStatus_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopeOperationStatuses/{asyncOperationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkScopeOperationStatus_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="asyncOperationId"> The operation Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<OperationStatus> GetPrivateLinkScopeOperationStatu(string asyncOperationId, CancellationToken cancellationToken = default)
+        public virtual Response<MonitorPrivateLinkScopeOperationStatus> GetPrivateLinkScopeOperationStatus(string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatu");
+            using var scope = PrivateLinkScopeOperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetPrivateLinkScopeOperationStatus");
             scope.Start();
             try
             {

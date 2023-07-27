@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -21,18 +22,9 @@ namespace Azure.AI.FormRecognizer.Models
         /// <exception cref="ArgumentNullException"> <paramref name="docType"/>, <paramref name="pageRange"/> or <paramref name="fields"/> is null. </exception>
         internal DocumentResult(string docType, IEnumerable<int> pageRange, IReadOnlyDictionary<string, FieldValue_internal> fields)
         {
-            if (docType == null)
-            {
-                throw new ArgumentNullException(nameof(docType));
-            }
-            if (pageRange == null)
-            {
-                throw new ArgumentNullException(nameof(pageRange));
-            }
-            if (fields == null)
-            {
-                throw new ArgumentNullException(nameof(fields));
-            }
+            Argument.AssertNotNull(docType, nameof(docType));
+            Argument.AssertNotNull(pageRange, nameof(pageRange));
+            Argument.AssertNotNull(fields, nameof(fields));
 
             DocType = docType;
             PageRange = pageRange.ToList();

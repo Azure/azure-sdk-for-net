@@ -15,13 +15,13 @@ namespace Azure.AI.Personalizer
     {
         private bool useLocalInference;
         private float subsampleRate;
-        private const ServiceVersion LatestVersion = ServiceVersion.V1_1_preview_3;
+        private const ServiceVersion LatestVersion = ServiceVersion.V1_1_Preview_3;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "v1.1-preview.3". </summary>
-            V1_1_preview_3 = 1,
+            V1_1_Preview_3 = 1,
         }
 
         internal string Version { get; }
@@ -34,7 +34,7 @@ namespace Azure.AI.Personalizer
 
             Version = version switch
             {
-                ServiceVersion.V1_1_preview_3 => "v1.1-preview.3",
+                ServiceVersion.V1_1_Preview_3 => "v1.1-preview.3",
                 _ => throw new NotSupportedException()
             };
 

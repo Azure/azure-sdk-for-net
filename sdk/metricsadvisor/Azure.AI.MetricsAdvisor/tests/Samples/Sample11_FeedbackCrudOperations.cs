@@ -26,7 +26,7 @@ namespace Azure.AI.MetricsAdvisor.Samples
 
             var dimensions = new Dictionary<string, string>()
             {
-                { "region", "Karachi" }
+                { "Dim1", "USD" }
             };
             var dimensionKey = new DimensionKey(dimensions);
 

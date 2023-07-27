@@ -16,15 +16,7 @@ the lifetime of remote rendering sessions.
 
 ### Install the package
 
-Install the Azure Mixed Reality ARR client library for .NET using one of the following methods.
-
-From Visual Studio Package Manager:
-
-```powershell
-Install-Package Azure.MixedReality.RemoteRendering
-```
-
-From .NET CLI
+Install the Azure Mixed Reality ARR client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.MixedReality.RemoteRendering
@@ -72,7 +64,7 @@ An example is `https://remoterendering.eastus2.mixedreality.azure.com`.
 
 Use the `AccountKeyCredential` object to use an account identifier and account key to authenticate:
 
-```csharp Snippet:CreateAClient
+```C# Snippet:CreateAClient
 AzureKeyCredential accountKeyCredential = new AzureKeyCredential(accountKey);
 
 RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, accountKeyCredential);
@@ -82,7 +74,7 @@ RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint
 
 Use the `ClientSecretCredential` object to perform client secret authentication.
 
-```csharp Snippet:CreateAClientWithAAD
+```C# Snippet:CreateAClientWithAAD
 TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clientSecret, new TokenCredentialOptions
 {
     AuthorityHost = new Uri($"https://login.microsoftonline.com/{tenantId}")
@@ -95,10 +87,9 @@ RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint
 
 Use the `DeviceCodeCredential` object to perform device code authentication.
 
-```csharp Snippet:CreateAClientWithDeviceCode
+```C# Snippet:CreateAClientWithDeviceCode
 Task deviceCodeCallback(DeviceCodeInfo deviceCodeInfo, CancellationToken cancellationToken)
 {
-    Debug.WriteLine(deviceCodeInfo.Message);
     Console.WriteLine(deviceCodeInfo.Message);
     return Task.FromResult(0);
 }
@@ -119,7 +110,7 @@ information about using device code authentication flow.
 Use the `DefaultAzureCredential` object with `includeInteractiveCredentials: true` to use default interactive authentication
 flow:
 
-```csharp Snippet:CreateAClientWithAzureCredential
+```C# Snippet:CreateAClientWithAzureCredential
 TokenCredential credential = new DefaultAzureCredential(includeInteractiveCredentials: true);
 
 RemoteRenderingClient client = new RemoteRenderingClient(remoteRenderingEndpoint, accountId, accountDomain, credential);
@@ -131,7 +122,7 @@ You can pass a Mixed Reality access token as an `AccessToken` previously retriev
 [Mixed Reality STS service](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/mixedreality/Azure.MixedReality.Authentication)
 to be used with a Mixed Reality client library:
 
-```csharp Snippet:CreateAClientWithStaticAccessToken
+```C# Snippet:CreateAClientWithStaticAccessToken
 // GetMixedRealityAccessTokenFromWebService is a hypothetical method that retrieves
 // a Mixed Reality access token from a web service. The web service would use the
 // MixedRealityStsClient and credentials to obtain an access token to be returned
@@ -164,15 +155,15 @@ It provides methods to create and manage asset conversions and rendering session
 We assume that a RemoteRenderingClient has been constructed as described in the [Authenticate the Client](#authenticate-the-client) section.
 The following snippet describes how to request that "box.fbx", found at the root of the blob container at the given URI, gets converted.
 
-```csharp Snippet:StartAnAssetConversion
-    AssetConversionInputOptions inputOptions = new AssetConversionInputOptions(storageUri, "box.fbx");
-    AssetConversionOutputOptions outputOptions = new AssetConversionOutputOptions(storageUri);
-    AssetConversionOptions conversionOptions = new AssetConversionOptions(inputOptions, outputOptions);
+```C# Snippet:StartAnAssetConversion
+AssetConversionInputOptions inputOptions = new AssetConversionInputOptions(storageUri, "box.fbx");
+AssetConversionOutputOptions outputOptions = new AssetConversionOutputOptions(storageUri);
+AssetConversionOptions conversionOptions = new AssetConversionOptions(inputOptions, outputOptions);
 
-    // A randomly generated GUID is a good choice for a conversionId.
-    string conversionId = Guid.NewGuid().ToString();
+// A randomly generated GUID is a good choice for a conversionId.
+string conversionId = Guid.NewGuid().ToString();
 
-    AssetConversionOperation conversionOperation = client.StartConversion(conversionId, conversionOptions);
+AssetConversionOperation conversionOperation = client.StartConversion(conversionId, conversionOptions);
 ```
 
 The output files will be placed beside the input asset.
@@ -187,20 +178,20 @@ We want to convert the gltf so that it has access to the other files which share
 To keep things tidy, we also want the output files to be written to a different storage container and given a common prefix: "ConvertedBicycle".
 The code is as follows:
 
-```csharp Snippet:StartAComplexAssetConversion
-    AssetConversionInputOptions input = new AssetConversionInputOptions(inputStorageUri, "bicycle.gltf")
-    {
-        BlobPrefix = "Bicycle"
-    };
-    AssetConversionOutputOptions output = new AssetConversionOutputOptions(outputStorageUri)
-    {
-        BlobPrefix = "ConvertedBicycle"
-    };
-    AssetConversionOptions conversionOptions = new AssetConversionOptions(inputOptions, outputOptions);
+```C# Snippet:StartAComplexAssetConversion
+AssetConversionInputOptions inputOptions = new AssetConversionInputOptions(inputStorageUri, "bicycle.gltf")
+{
+    BlobPrefix = "Bicycle"
+};
+AssetConversionOutputOptions outputOptions = new AssetConversionOutputOptions(outputStorageUri)
+{
+    BlobPrefix = "ConvertedBicycle"
+};
+AssetConversionOptions conversionOptions = new AssetConversionOptions(inputOptions, outputOptions);
 
-    string conversionId = Guid.NewGuid().ToString();
+string conversionId = Guid.NewGuid().ToString();
 
-    AssetConversionOperation conversionOperation = client.StartConversion(conversionId, conversionOptions);
+AssetConversionOperation conversionOperation = client.StartConversion(conversionId, conversionOptions);
 ```
 
 > NOTE: when a prefix is given in the input options, then the input file parameter is assumed to be relative to that prefix.
@@ -213,16 +204,16 @@ This code uses an existing conversionOperation and polls regularly until the con
 The default polling period is 10 seconds.
 Note that a conversionOperation can be constructed from the conversionId of an existing conversion and a client.
 
-```csharp Snippet:QueryConversionStatus
-    AssetConversion conversion = conversionOperation.WaitForCompletionAsync().Result;
-    if (conversion.Status == AssetConversionStatus.Succeeded)
-    {
-        Console.WriteLine($"Conversion succeeded: Output written to {conversion.Output.OutputAssetUri}");
-    }
-    else if (conversion.Status == AssetConversionStatus.Failed)
-    {
-        Console.WriteLine($"Conversion failed: {conversion.Error.Code} {conversion.Error.Message}");
-    }
+```C# Snippet:QueryConversionStatus
+AssetConversion conversion = conversionOperation.WaitForCompletionAsync().Result;
+if (conversion.Status == AssetConversionStatus.Succeeded)
+{
+    Console.WriteLine($"Conversion succeeded: Output written to {conversion.Output.OutputAssetUri}");
+}
+else if (conversion.Status == AssetConversionStatus.Failed)
+{
+    Console.WriteLine($"Conversion failed: {conversion.Error.Code} {conversion.Error.Message}");
+}
 ```
 
 ### List conversions
@@ -231,14 +222,14 @@ You can get information about your conversions using the `getConversions` method
 This method may return conversions which have yet to start, conversions which are running and conversions which have finished.
 In this example, we just list the output URIs of successful conversions started in the last day.
 
-```csharp Snippet:ListConversions
-    foreach (var conversion in client.GetConversions())
+```C# Snippet:GetConversions
+foreach (var conversion in client.GetConversions())
+{
+    if ((conversion.Status == AssetConversionStatus.Succeeded) && (conversion.CreatedOn > DateTimeOffset.Now.AddDays(-1)))
     {
-        if ((conversion.Status == AssetConversionStatus.Succeeded) && (conversion.CreatedOn > DateTimeOffset.Now.AddDays(-1)))
-        {
-            Console.WriteLine($"output asset URI: {conversion.Output.OutputAssetUri}");
-        }
+        Console.WriteLine($"output asset URI: {conversion.Output.OutputAssetUri}");
     }
+}
 ```
 
 ### Create a session
@@ -246,23 +237,23 @@ In this example, we just list the output URIs of successful conversions started 
 We assume that a RemoteRenderingClient has been constructed as described in the [Authenticate the Client](#authenticate-the-client) section.
 The following snippet describes how to request that a new rendering session be started.
 
-```csharp Snippet:CreateASession
-    RenderingSessionOptions options = new RenderingSessionOptions(TimeSpan.FromMinutes(30), RenderingServerSize.Standard);
+```C# Snippet:CreateASession
+RenderingSessionOptions options = new RenderingSessionOptions(TimeSpan.FromMinutes(30), RenderingServerSize.Standard);
 
-    // A randomly generated GUID is a good choice for a sessionId.
-    string sessionId = Guid.NewGuid().ToString();
+// A randomly generated GUID is a good choice for a sessionId.
+string sessionId = Guid.NewGuid().ToString();
 
-    StartRenderingSessionOperation startSessionOperation = client.StartSession(sessionId, options);
+StartRenderingSessionOperation startSessionOperation = client.StartSession(sessionId, options);
 
-    RenderingSession newSession = startSessionOperation.WaitForCompletionAsync().Result;
-    if (newSession.Status == RenderingSessionStatus.Ready)
-    {
-        Console.WriteLine($"Session {sessionId} is ready.");
-    }
-    else if (newSession.Status == RenderingSessionStatus.Error)
-    {
-        Console.WriteLine($"Session {sessionId} encountered an error: {newSession.Error.Code} {newSession.Error.Message}");
-    }
+RenderingSession newSession = startSessionOperation.WaitForCompletionAsync().Result;
+if (newSession.Status == RenderingSessionStatus.Ready)
+{
+    Console.WriteLine($"Session {sessionId} is ready.");
+}
+else if (newSession.Status == RenderingSessionStatus.Error)
+{
+    Console.WriteLine($"Session {sessionId} encountered an error: {newSession.Error.Code} {newSession.Error.Message}");
+}
 ```
 
 ### Extend the lease time of a session
@@ -274,17 +265,17 @@ This example shows how to query the current properties and then extend the lease
 > NOTE: The runtime SDKs also offer this functionality, and in many typical scenarios, you would use them to
 > extend the session lease.
 
-```csharp Snippet:UpdateSession
-    RenderingSession currentSession = client.GetSession(sessionId);
+```C# Snippet:UpdateSession
+RenderingSession currentSession = client.GetSession(sessionId);
 
-    if (currentSession.MaxLeaseTime - DateTimeOffset.Now.Subtract(currentSession.CreatedOn.Value) < TimeSpan.FromMinutes(2))
-    {
-        TimeSpan newLeaseTime = currentSession.MaxLeaseTime.Value.Add(TimeSpan.FromMinutes(30));
+if (currentSession.MaxLeaseTime - DateTimeOffset.Now.Subtract(currentSession.CreatedOn.Value) < TimeSpan.FromMinutes(2))
+{
+    TimeSpan newLeaseTime = currentSession.MaxLeaseTime.Value.Add(TimeSpan.FromMinutes(30));
 
-        UpdateSessionOptions longerLeaseSettings = new UpdateSessionOptions(newLeaseTime);
+    UpdateSessionOptions longerLeaseSettings = new UpdateSessionOptions(newLeaseTime);
 
-        client.UpdateSession(sessionId, longerLeaseSettings);
-    }
+    client.UpdateSession(sessionId, longerLeaseSettings);
+}
 ```
 
 ### List sessions
@@ -292,26 +283,26 @@ This example shows how to query the current properties and then extend the lease
 You can get information about your sessions using the `getSessions` method.
 This method may return sessions which have yet to start and sessions which are ready.
 
-```csharp Snippet:ListSessions
-    foreach (var properties in client.GetSessions())
+```C# Snippet:ListSessions
+foreach (var properties in client.GetSessions())
+{
+    if (properties.Status == RenderingSessionStatus.Starting)
     {
-        if (properties.Status == RenderingSessionStatus.Starting)
-        {
-            Console.WriteLine($"Session \"{properties.SessionId}\" is starting.");
-        }
-        else if (properties.Status == RenderingSessionStatus.Ready)
-        {
-            Console.WriteLine($"Session \"{properties.SessionId}\" is ready at host {properties.Host}");
-        }
+        Console.WriteLine($"Session \"{properties.SessionId}\" is starting.");
     }
+    else if (properties.Status == RenderingSessionStatus.Ready)
+    {
+        Console.WriteLine($"Session \"{properties.SessionId}\" is ready at host {properties.Host}");
+    }
+}
 ```
 
 ### Stop a session
 
 The following code will stop a running session with given id.
 
-```csharp Snippet:StopSession
-    client.StopSession(sessionId);
+```C# Snippet:StopSession
+client.StopSession(sessionId);
 ```
 
 ## Troubleshooting

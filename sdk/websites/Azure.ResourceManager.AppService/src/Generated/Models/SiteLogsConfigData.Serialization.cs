@@ -19,30 +19,30 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationLogs))
             {
-                writer.WritePropertyName("applicationLogs");
+                writer.WritePropertyName("applicationLogs"u8);
                 writer.WriteObjectValue(ApplicationLogs);
             }
             if (Optional.IsDefined(HttpLogs))
             {
-                writer.WritePropertyName("httpLogs");
+                writer.WritePropertyName("httpLogs"u8);
                 writer.WriteObjectValue(HttpLogs);
             }
-            if (Optional.IsDefined(FailedRequestsTracing))
+            if (Optional.IsDefined(IsFailedRequestsTracing))
             {
-                writer.WritePropertyName("failedRequestsTracing");
-                writer.WriteObjectValue(FailedRequestsTracing);
+                writer.WritePropertyName("failedRequestsTracing"u8);
+                writer.WriteObjectValue(IsFailedRequestsTracing);
             }
-            if (Optional.IsDefined(DetailedErrorMessages))
+            if (Optional.IsDefined(IsDetailedErrorMessages))
             {
-                writer.WritePropertyName("detailedErrorMessages");
-                writer.WriteObjectValue(DetailedErrorMessages);
+                writer.WritePropertyName("detailedErrorMessages"u8);
+                writer.WriteObjectValue(IsDetailedErrorMessages);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -50,43 +50,51 @@ namespace Azure.ResourceManager.AppService
 
         internal static SiteLogsConfigData DeserializeSiteLogsConfigData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<ApplicationLogsConfig> applicationLogs = default;
-            Optional<HttpLogsConfig> httpLogs = default;
-            Optional<EnabledConfig> failedRequestsTracing = default;
-            Optional<EnabledConfig> detailedErrorMessages = default;
+            Optional<AppServiceHttpLogsConfig> httpLogs = default;
+            Optional<WebAppEnabledConfig> failedRequestsTracing = default;
+            Optional<WebAppEnabledConfig> detailedErrorMessages = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,51 +103,47 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("applicationLogs"))
+                        if (property0.NameEquals("applicationLogs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             applicationLogs = ApplicationLogsConfig.DeserializeApplicationLogsConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("httpLogs"))
+                        if (property0.NameEquals("httpLogs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            httpLogs = HttpLogsConfig.DeserializeHttpLogsConfig(property0.Value);
+                            httpLogs = AppServiceHttpLogsConfig.DeserializeAppServiceHttpLogsConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("failedRequestsTracing"))
+                        if (property0.NameEquals("failedRequestsTracing"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            failedRequestsTracing = EnabledConfig.DeserializeEnabledConfig(property0.Value);
+                            failedRequestsTracing = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("detailedErrorMessages"))
+                        if (property0.NameEquals("detailedErrorMessages"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            detailedErrorMessages = EnabledConfig.DeserializeEnabledConfig(property0.Value);
+                            detailedErrorMessages = WebAppEnabledConfig.DeserializeWebAppEnabledConfig(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SiteLogsConfigData(id, name, type, systemData, kind.Value, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value);
+            return new SiteLogsConfigData(id, name, type, systemData.Value, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value, kind.Value);
         }
     }
 }

@@ -21,24 +21,27 @@ namespace Azure.ResourceManager.AppService
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Certificates))
             {
-                writer.WritePropertyName("certificates");
+                writer.WritePropertyName("certificates"u8);
                 writer.WriteStartObject();
                 foreach (var item in Certificates)
                 {
@@ -49,32 +52,32 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(DistinguishedName))
             {
-                writer.WritePropertyName("distinguishedName");
+                writer.WritePropertyName("distinguishedName"u8);
                 writer.WriteStringValue(DistinguishedName);
             }
             if (Optional.IsDefined(ValidityInYears))
             {
-                writer.WritePropertyName("validityInYears");
+                writer.WritePropertyName("validityInYears"u8);
                 writer.WriteNumberValue(ValidityInYears.Value);
             }
             if (Optional.IsDefined(KeySize))
             {
-                writer.WritePropertyName("keySize");
+                writer.WritePropertyName("keySize"u8);
                 writer.WriteNumberValue(KeySize.Value);
             }
             if (Optional.IsDefined(ProductType))
             {
-                writer.WritePropertyName("productType");
+                writer.WritePropertyName("productType"u8);
                 writer.WriteStringValue(ProductType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(AutoRenew))
+            if (Optional.IsDefined(IsAutoRenew))
             {
-                writer.WritePropertyName("autoRenew");
-                writer.WriteBooleanValue(AutoRenew.Value);
+                writer.WritePropertyName("autoRenew"u8);
+                writer.WriteBooleanValue(IsAutoRenew.Value);
             }
             if (Optional.IsDefined(Csr))
             {
-                writer.WritePropertyName("csr");
+                writer.WritePropertyName("csr"u8);
                 writer.WriteStringValue(Csr);
             }
             writer.WriteEndObject();
@@ -83,14 +86,18 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServiceCertificateOrderData DeserializeAppServiceCertificateOrderData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<IDictionary<string, AppServiceCertificate>> certificates = default;
+            Optional<SystemData> systemData = default;
+            Optional<IDictionary<string, AppServiceCertificateProperties>> certificates = default;
             Optional<string> distinguishedName = default;
             Optional<string> domainVerificationToken = default;
             Optional<int> validityInYears = default;
@@ -99,10 +106,10 @@ namespace Azure.ResourceManager.AppService
             Optional<bool> autoRenew = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<CertificateOrderStatus> status = default;
-            Optional<CertificateDetails> signedCertificate = default;
+            Optional<AppServiceCertificateDetails> signedCertificate = default;
             Optional<string> csr = default;
-            Optional<CertificateDetails> intermediate = default;
-            Optional<CertificateDetails> root = default;
+            Optional<AppServiceCertificateDetails> intermediate = default;
+            Optional<AppServiceCertificateDetails> root = default;
             Optional<string> serialNumber = default;
             Optional<DateTimeOffset> lastCertificateIssuanceTime = default;
             Optional<DateTimeOffset> expirationTime = default;
@@ -112,13 +119,17 @@ namespace Azure.ResourceManager.AppService
             Optional<CertificateOrderContact> contact = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -127,32 +138,36 @@ namespace Azure.ResourceManager.AppService
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -161,166 +176,152 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("certificates"))
+                        if (property0.NameEquals("certificates"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, AppServiceCertificate> dictionary = new Dictionary<string, AppServiceCertificate>();
+                            Dictionary<string, AppServiceCertificateProperties> dictionary = new Dictionary<string, AppServiceCertificateProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, AppServiceCertificate.DeserializeAppServiceCertificate(property1.Value));
+                                dictionary.Add(property1.Name, AppServiceCertificateProperties.DeserializeAppServiceCertificateProperties(property1.Value));
                             }
                             certificates = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("distinguishedName"))
+                        if (property0.NameEquals("distinguishedName"u8))
                         {
                             distinguishedName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("domainVerificationToken"))
+                        if (property0.NameEquals("domainVerificationToken"u8))
                         {
                             domainVerificationToken = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("validityInYears"))
+                        if (property0.NameEquals("validityInYears"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validityInYears = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("keySize"))
+                        if (property0.NameEquals("keySize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             keySize = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("productType"))
+                        if (property0.NameEquals("productType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             productType = property0.Value.GetString().ToCertificateProductType();
                             continue;
                         }
-                        if (property0.NameEquals("autoRenew"))
+                        if (property0.NameEquals("autoRenew"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoRenew = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = property0.Value.GetString().ToProvisioningState();
                             continue;
                         }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("status"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = property0.Value.GetString().ToCertificateOrderStatus();
                             continue;
                         }
-                        if (property0.NameEquals("signedCertificate"))
+                        if (property0.NameEquals("signedCertificate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            signedCertificate = CertificateDetails.DeserializeCertificateDetails(property0.Value);
+                            signedCertificate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("csr"))
+                        if (property0.NameEquals("csr"u8))
                         {
                             csr = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("intermediate"))
+                        if (property0.NameEquals("intermediate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            intermediate = CertificateDetails.DeserializeCertificateDetails(property0.Value);
+                            intermediate = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("root"))
+                        if (property0.NameEquals("root"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            root = CertificateDetails.DeserializeCertificateDetails(property0.Value);
+                            root = AppServiceCertificateDetails.DeserializeAppServiceCertificateDetails(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("serialNumber"))
+                        if (property0.NameEquals("serialNumber"u8))
                         {
                             serialNumber = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("lastCertificateIssuanceTime"))
+                        if (property0.NameEquals("lastCertificateIssuanceTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastCertificateIssuanceTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("expirationTime"))
+                        if (property0.NameEquals("expirationTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("isPrivateKeyExternal"))
+                        if (property0.NameEquals("isPrivateKeyExternal"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isPrivateKeyExternal = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("appServiceCertificateNotRenewableReasons"))
+                        if (property0.NameEquals("appServiceCertificateNotRenewableReasons"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AppServiceCertificateNotRenewableReason> array = new List<AppServiceCertificateNotRenewableReason>();
@@ -331,21 +332,19 @@ namespace Azure.ResourceManager.AppService
                             appServiceCertificateNotRenewableReasons = array;
                             continue;
                         }
-                        if (property0.NameEquals("nextAutoRenewalTimeStamp"))
+                        if (property0.NameEquals("nextAutoRenewalTimeStamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nextAutoRenewalTimeStamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("contact"))
+                        if (property0.NameEquals("contact"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             contact = CertificateOrderContact.DeserializeCertificateOrderContact(property0.Value);
@@ -355,7 +354,7 @@ namespace Azure.ResourceManager.AppService
                     continue;
                 }
             }
-            return new AppServiceCertificateOrderData(id, name, type, systemData, tags, location, kind.Value, Optional.ToDictionary(certificates), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), Optional.ToList(appServiceCertificateNotRenewableReasons), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value);
+            return new AppServiceCertificateOrderData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToDictionary(certificates), distinguishedName.Value, domainVerificationToken.Value, Optional.ToNullable(validityInYears), Optional.ToNullable(keySize), Optional.ToNullable(productType), Optional.ToNullable(autoRenew), Optional.ToNullable(provisioningState), Optional.ToNullable(status), signedCertificate.Value, csr.Value, intermediate.Value, root.Value, serialNumber.Value, Optional.ToNullable(lastCertificateIssuanceTime), Optional.ToNullable(expirationTime), Optional.ToNullable(isPrivateKeyExternal), Optional.ToList(appServiceCertificateNotRenewableReasons), Optional.ToNullable(nextAutoRenewalTimeStamp), contact.Value, kind.Value);
         }
     }
 }

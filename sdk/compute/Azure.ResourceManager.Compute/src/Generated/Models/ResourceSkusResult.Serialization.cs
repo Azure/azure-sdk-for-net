@@ -15,21 +15,25 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ResourceSkusResult DeserializeResourceSkusResult(JsonElement element)
         {
-            IReadOnlyList<ResourceSku> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<ComputeResourceSku> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<ResourceSku> array = new List<ResourceSku>();
+                    List<ComputeResourceSku> array = new List<ComputeResourceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSku.DeserializeResourceSku(item));
+                        array.Add(ComputeResourceSku.DeserializeComputeResourceSku(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using static Azure.DigitalTwins.Core.Samples.SampleLogger;
@@ -55,7 +56,21 @@ namespace Azure.DigitalTwins.Core.Samples
             {
                 Id = basicDtId,
                 // model Id of digital twin
-                Metadata = { ModelId = modelId },
+                Metadata =
+                {
+                    ModelId = modelId,
+                    PropertyMetadata = new Dictionary<string, DigitalTwinPropertyMetadata>
+                    {
+                        {
+                            "Prop2",
+                            new DigitalTwinPropertyMetadata
+                            {
+                                // must always be serialized as ISO 8601
+                                SourceTime = DateTimeOffset.UtcNow,
+                            }
+                        }
+                    },
+                },
                 Contents =
                 {
                     // digital twin properties
@@ -66,6 +81,18 @@ namespace Azure.DigitalTwins.Core.Samples
                         "Component1",
                         new BasicDigitalTwinComponent
                         {
+                            // writeable component metadata
+                            Metadata =  new Dictionary<string, DigitalTwinPropertyMetadata>
+                            {
+                                {
+                                    "ComponentProp2",
+                                    new DigitalTwinPropertyMetadata
+                                    {
+                                        // must always be serialized as ISO 8601
+                                        SourceTime = DateTimeOffset.UtcNow,
+                                    }
+                                }
+                            },
                             // component properties
                             Contents =
                             {
@@ -98,10 +125,12 @@ namespace Azure.DigitalTwins.Core.Samples
             Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
                 $"ETag: {basicDt.ETag}\n\t" +
                 $"ModelId: {basicDt.Metadata.ModelId}\n\t" +
-                $"Prop1: {basicDt.Contents["Prop1"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop1"].LastUpdatedOn}\n\t" +
-                $"Prop2: {basicDt.Contents["Prop2"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop2"].LastUpdatedOn}\n\t" +
-                $"Component1.Prop1: {component1.Contents["ComponentProp1"]} and  last updated on: {component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
-                $"Component1.Prop2: {component1.Contents["ComponentProp2"]} and last updated on: {component1.Metadata["ComponentProp2"].LastUpdatedOn}");
+                $"LastUpdatedOn: {basicDt.LastUpdatedOn}\n\t" +
+                $"Prop1: {basicDt.Contents["Prop1"]}, last updated on {basicDt.Metadata.PropertyMetadata["Prop1"].LastUpdatedOn}\n\t" +
+                $"Prop2: {basicDt.Contents["Prop2"]}, last updated on {basicDt.Metadata.PropertyMetadata["Prop2"].LastUpdatedOn} and sourced at {basicDt.Metadata.PropertyMetadata["Prop2"].SourceTime}\n\t" +
+                $"Component1.LastUpdatedOn: {component1.LastUpdatedOn}\n\t" +
+                $"Component1.Prop1: {component1.Contents["ComponentProp1"]}, last updated on: {component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
+                $"Component1.Prop2: {component1.Contents["ComponentProp2"]}, last updated on: {component1.Metadata["ComponentProp2"].LastUpdatedOn} and sourced at: {component1.Metadata["ComponentProp2"].SourceTime}");
 
             #endregion Snippet:DigitalTwinsSampleGetBasicDigitalTwin
 

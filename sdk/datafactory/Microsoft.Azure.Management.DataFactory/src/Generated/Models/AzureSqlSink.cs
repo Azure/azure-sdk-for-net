@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Azure SQL. Type: SqlWriteBehaviorEnum (or Expression with
         /// resultType SqlWriteBehaviorEnum)</param>
         /// <param name="upsertSettings">SQL upsert settings.</param>
-        public AzureSqlSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object sqlWriterStoredProcedureName = default(object), object sqlWriterTableType = default(object), object preCopyScript = default(object), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>), object storedProcedureTableTypeParameterName = default(object), object tableOption = default(object), object sqlWriterUseTableLock = default(object), object writeBehavior = default(object), SqlUpsertSettings upsertSettings = default(SqlUpsertSettings))
+        public AzureSqlSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object sqlWriterStoredProcedureName = default(object), object sqlWriterTableType = default(object), object preCopyScript = default(object), object storedProcedureParameters = default(object), object storedProcedureTableTypeParameterName = default(object), object tableOption = default(object), object sqlWriterUseTableLock = default(object), object writeBehavior = default(object), SqlUpsertSettings upsertSettings = default(SqlUpsertSettings))
             : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Gets or sets SQL stored procedure parameters.
         /// </summary>
         [JsonProperty(PropertyName = "storedProcedureParameters")]
-        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; set; }
+        public object StoredProcedureParameters { get; set; }
 
         /// <summary>
         /// Gets or sets the stored procedure parameter name of the table type.

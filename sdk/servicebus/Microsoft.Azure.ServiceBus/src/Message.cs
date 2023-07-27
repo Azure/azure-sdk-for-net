@@ -464,11 +464,15 @@ namespace Microsoft.Azure.ServiceBus
                 set => this.partitionId = value;
             }
 
-            /// <summary>Gets or sets the original sequence number of the message.</summary>
+            /// <summary>Gets the original sequence number of the message.</summary>
             /// <value>The enqueued sequence number of the message.</value>
             /// <remarks>
-            /// For messages that have been auto-forwarded, this property reflects the sequence number
-            /// that had first been assigned to the message at its original point of submission. This property is read-only.
+            ///    This property is read-only.
+            ///    For messages that have been auto-forwarded from a queue to another queue, this property reflects 0.
+            ///    For messages that have been auto-forwarded from a topic subscription to another topic, this property will be updated with an appropriate
+            ///    sequence number at the destination topic.
+            ///    For messages that have been auto-forwarded from a topic subscription to a queue, this property reflects the sequence number
+            ///    that had first been assigned to the message at its original point of submission.
             /// </remarks>
             public long EnqueuedSequenceNumber
             {

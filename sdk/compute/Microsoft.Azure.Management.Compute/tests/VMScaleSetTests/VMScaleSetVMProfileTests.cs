@@ -129,7 +129,7 @@ namespace Compute.Tests.VMScaleSetTests
         /// <summary>
         /// Checks if application profile can be set through API
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Resource does not exists")]
         public void TestVMScaleSetApplicationProfile()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
@@ -147,7 +147,7 @@ namespace Compute.Tests.VMScaleSetTests
                 {
                     // for recording the test ensure that a real galley application version exists at the location
                     // creating a gallery application version is beyond the sope of this test
-                    new VMGalleryApplication("/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8")
+                    new VMGalleryApplication("/subscriptions/5393f919-a68a-43d0-9063-4b2bda6bffdf/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8", treatFailureAsDeploymentFailure: true, enableAutomaticUpgrade: true)
                 };
 
                 VirtualMachineScaleSet inputVMScaleSet;
@@ -172,6 +172,9 @@ namespace Compute.Tests.VMScaleSetTests
                     Assert.NotNull(response.VirtualMachineProfile.ApplicationProfile);
                     Assert.NotNull(response.VirtualMachineProfile.ApplicationProfile.GalleryApplications);
                     Assert.Equal(1, response.VirtualMachineProfile.ApplicationProfile.GalleryApplications.Count);
+                    VMGalleryApplication vmGalleryApplication = response.VirtualMachineProfile.ApplicationProfile.GalleryApplications[0];
+                    Assert.True(vmGalleryApplication.TreatFailureAsDeploymentFailure);
+                    Assert.True(vmGalleryApplication.EnableAutomaticUpgrade);
                 }
                 finally
                 {

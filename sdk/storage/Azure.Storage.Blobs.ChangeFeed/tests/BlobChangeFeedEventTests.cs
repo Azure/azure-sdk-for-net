@@ -282,9 +282,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("application/json", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].NewValue);
             Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].OldValue);
 
-            Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.AsyncOperationInfo.DestinationAccessTier);
-            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.IsAsync);
-            Assert.AreEqual("copyId", changeFeedEvent.EventData.AsyncOperationInfo.CopyId);
+            Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.LongRunningOperationInfo.DestinationAccessTier);
+            Assert.IsTrue(changeFeedEvent.EventData.LongRunningOperationInfo.IsAsync);
+            Assert.AreEqual("copyId", changeFeedEvent.EventData.LongRunningOperationInfo.CopyId);
         }
 
         [Test]
@@ -391,9 +391,9 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             Assert.AreEqual("application/json", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].NewValue);
             Assert.AreEqual("application/octet-stream", changeFeedEvent.EventData.UpdatedBlobProperties["ContentType"].OldValue);
 
-            Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.AsyncOperationInfo.DestinationAccessTier);
-            Assert.IsTrue(changeFeedEvent.EventData.AsyncOperationInfo.IsAsync);
-            Assert.AreEqual("copyId", changeFeedEvent.EventData.AsyncOperationInfo.CopyId);
+            Assert.AreEqual(AccessTier.Hot, changeFeedEvent.EventData.LongRunningOperationInfo.DestinationAccessTier);
+            Assert.IsTrue(changeFeedEvent.EventData.LongRunningOperationInfo.IsAsync);
+            Assert.AreEqual("copyId", changeFeedEvent.EventData.LongRunningOperationInfo.CopyId);
 
             Assert.AreEqual(2, changeFeedEvent.EventData.UpdatedBlobTags.OldTags.Count);
             Assert.AreEqual("Value1_3", changeFeedEvent.EventData.UpdatedBlobTags.OldTags["Tag1"]);

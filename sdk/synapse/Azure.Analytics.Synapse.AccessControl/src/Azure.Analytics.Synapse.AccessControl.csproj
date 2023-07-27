@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the Microsoft Azure Synapse Analytics Access Control client library</Description>
     <AssemblyTitle>Azure.Analytics.Synapse.AccessControl</AssemblyTitle>

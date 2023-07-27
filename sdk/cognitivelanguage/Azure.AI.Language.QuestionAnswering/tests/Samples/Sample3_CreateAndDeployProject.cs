@@ -5,22 +5,20 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Language.QuestionAnswering.Projects;
+using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using System.Linq;
-using System.Threading;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 {
-    public partial class QuestionAnsweringProjectsClientSamples : QuestionAnsweringProjectsLiveTestBase
+    public partial class QuestionAnsweringAuthoringClientSamples : QuestionAnsweringAuthoringLiveTestBase
     {
         [RecordedTest]
         [SyncOnly]
-        // TODO: Make this test Sync once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-        public async Task CreateAndDeploy()
+        public void CreateAndDeploy()
         {
-            QuestionAnsweringProjectsClient client = Client;
-            #region Snippet:QuestionAnsweringProjectsClient_CreateProject
+            QuestionAnsweringAuthoringClient client = Client;
+            #region Snippet:QuestionAnsweringAuthoringClient_CreateProject
             // Set project name and request content parameters
             string newProjectName = "{ProjectName}";
 #if !SNIPPET
@@ -38,6 +36,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 );
 
             Response creationResponse = client.CreateProject(newProjectName, creationRequestContent);
+#if !SNIPPET
+            EnqueueProjectDeletion(newProjectName);
+#endif
 
             // Projects can be retrieved as follows
             Pageable<BinaryData> projects = client.GetProjects();
@@ -52,7 +53,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             Assert.AreEqual(201, creationResponse.Status);
             Assert.That(projects.Any(project => project.ToString().Contains(newProjectName)));
 
-            #region Snippet:QuestionAnsweringProjectsClient_UpdateSources
+            #region Snippet:QuestionAnsweringAuthoringClient_UpdateSources
 
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
@@ -75,39 +76,29 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-#if SNIPPET
-            Operation<BinaryData> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
-#else
-            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, newProjectName, updateSourcesRequestContent);
-            await updateSourcesOperation.WaitForCompletionAsync();
-#endif
+            Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
             // Knowledge Sources can be retrieved as follows
-            Pageable<BinaryData> sources = client.GetSources(newProjectName);
+            Pageable<BinaryData> sources = updateSourcesOperation.Value;
+
             Console.WriteLine("Sources: ");
             foreach (BinaryData source in sources)
             {
                 Console.WriteLine(source);
             }
-            #endregion
+#endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That(sources.Any(source => source.ToString().Contains(sourceUri)));
 
-            #region Snippet:QuestionAnsweringProjectsClient_DeployProject
+#region Snippet:QuestionAnsweringAuthoringClient_DeployProject
             // Set deployment name and start operation
             string newDeploymentName = "{DeploymentName}";
 #if !SNIPPET
             newDeploymentName = "production";
 #endif
-#if SNIPPET
+
             Operation<BinaryData> deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
-#else
-            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Started, newProjectName, newDeploymentName);
-            await deploymentOperation.WaitForCompletionAsync();
-#endif
 
             // Deployments can be retrieved as follows
             Pageable<BinaryData> deployments = client.GetDeployments(newProjectName);
@@ -116,21 +107,19 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(deployment);
             }
-            #endregion
+#endregion
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That(deployments.Any(deployment => deployment.ToString().Contains(newDeploymentName)));
-
-            DeleteProject(newProjectName);
         }
 
         [RecordedTest]
         [AsyncOnly]
         public async Task CreateAndDeployAsync()
         {
-            QuestionAnsweringProjectsClient client = Client;
+            QuestionAnsweringAuthoringClient client = Client;
 
-            #region Snippet:QuestionAnsweringProjectsClient_CreateProjectAsync
+#region Snippet:QuestionAnsweringAuthoringClient_CreateProjectAsync
             // Set project name and request content parameters
             string newProjectName = "{ProjectName}";
 #if !SNIPPET
@@ -150,6 +139,9 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                 );
 
             Response creationResponse = await client.CreateProjectAsync(newProjectName, creationRequestContent);
+#if !SNIPPET
+            EnqueueProjectDeletion(newProjectName);
+#endif
 
             // Projects can be retrieved as follows
             AsyncPageable<BinaryData> projects = client.GetProjectsAsync();
@@ -159,12 +151,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             {
                 Console.WriteLine(project);
             }
-            #endregion
+#endregion
 
             Assert.AreEqual(201, creationResponse.Status);
             Assert.That((await projects.ToEnumerableAsync()).Any(project => project.ToString().Contains(newProjectName)));
 
-            #region Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync
+#region Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync
 
             // Set request content parameters for updating our new project's sources
             string sourceUri = "{KnowledgeSourceUri}";
@@ -187,43 +179,29 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-#if SNIPPET
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
-#else
-            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, newProjectName, updateSourcesRequestContent);
-            await updateSourcesOperation.WaitForCompletionAsync();
-#endif
-
-            Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperation.Value}");
+            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
             // Knowledge Sources can be retrieved as follows
-            AsyncPageable<BinaryData> sources = client.GetSourcesAsync(newProjectName);
+            AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
+
             Console.WriteLine("Sources: ");
             await foreach (BinaryData source in sources)
             {
                 Console.WriteLine(source);
             }
-            #endregion
+#endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That((await sources.ToEnumerableAsync()).Any(source => source.ToString().Contains(sourceUri)));
 
-            #region Snippet:QuestionAnsweringProjectsClient_DeployProjectAsync
+#region Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync
             // Set deployment name and start operation
             string newDeploymentName = "{DeploymentName}";
 #if !SNIPPET
             newDeploymentName = "production";
 #endif
-#if SNIPPET
-            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Completed, newProjectName, newDeploymentName);
-#else
-            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Started, newProjectName, newDeploymentName);
-            await deploymentOperation.WaitForCompletionAsync();
-#endif
 
-            Console.WriteLine($"Update Sources operation result: \n{deploymentOperation.Value}");
+            Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Completed, newProjectName, newDeploymentName);
 
             // Deployments can be retrieved as follows
             AsyncPageable<BinaryData> deployments = client.GetDeploymentsAsync(newProjectName);
@@ -236,8 +214,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
 
             Assert.True(deploymentOperation.HasCompleted);
             Assert.That((await deployments.ToEnumerableAsync()).Any(deployment => deployment.ToString().Contains(newDeploymentName)));
-
-            await DeleteProjectAsync(newProjectName);
         }
     }
 }

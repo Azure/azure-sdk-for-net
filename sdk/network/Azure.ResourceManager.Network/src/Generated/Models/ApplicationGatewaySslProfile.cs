@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> SSL profile of an application gateway. </summary>
-    public partial class ApplicationGatewaySslProfile : SubResource
+    public partial class ApplicationGatewaySslProfile : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>
         public ApplicationGatewaySslProfile()
@@ -22,49 +23,31 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewaySslProfile. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the SSL profile that is unique within an Application Gateway. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="trustedClientCertificates"> Array of references to application gateway trusted client certificates. </param>
         /// <param name="sslPolicy"> SSL policy of the application gateway resource. </param>
         /// <param name="clientAuthConfiguration"> Client authentication configuration of the application gateway resource. </param>
         /// <param name="provisioningState"> The provisioning state of the HTTP listener resource. </param>
-        internal ApplicationGatewaySslProfile(string id, string name, string etag, string resourceType, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewaySslProfile(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<WritableSubResource> trustedClientCertificates, ApplicationGatewaySslPolicy sslPolicy, ApplicationGatewayClientAuthConfiguration clientAuthConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             TrustedClientCertificates = trustedClientCertificates;
             SslPolicy = sslPolicy;
             ClientAuthConfiguration = clientAuthConfiguration;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the SSL profile that is unique within an Application Gateway. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> Array of references to application gateway trusted client certificates. </summary>
         public IList<WritableSubResource> TrustedClientCertificates { get; }
         /// <summary> SSL policy of the application gateway resource. </summary>
         public ApplicationGatewaySslPolicy SslPolicy { get; set; }
         /// <summary> Client authentication configuration of the application gateway resource. </summary>
-        internal ApplicationGatewayClientAuthConfiguration ClientAuthConfiguration { get; set; }
-        /// <summary> Verify client certificate issuer name on the application gateway. </summary>
-        public bool? VerifyClientCertIssuerDN
-        {
-            get => ClientAuthConfiguration is null ? default : ClientAuthConfiguration.VerifyClientCertIssuerDN;
-            set
-            {
-                if (ClientAuthConfiguration is null)
-                    ClientAuthConfiguration = new ApplicationGatewayClientAuthConfiguration();
-                ClientAuthConfiguration.VerifyClientCertIssuerDN = value;
-            }
-        }
-
+        public ApplicationGatewayClientAuthConfiguration ClientAuthConfiguration { get; set; }
         /// <summary> The provisioning state of the HTTP listener resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

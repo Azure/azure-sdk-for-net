@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="fileExtension"/> is null. </exception>
         public DelimitedTextWriteSettings(object fileExtension)
         {
-            if (fileExtension == null)
-            {
-                throw new ArgumentNullException(nameof(fileExtension));
-            }
+            Argument.AssertNotNull(fileExtension, nameof(fileExtension));
 
             FileExtension = fileExtension;
             Type = "DelimitedTextWriteSettings";
@@ -32,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="quoteAllText"> Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="fileExtension"> The file extension used to create the files. Type: string (or Expression with resultType string). </param>
-        /// <param name="maxRowsPerFile"> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="maxRowsPerFile"> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="fileNamePrefix"> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </param>
         internal DelimitedTextWriteSettings(string type, IDictionary<string, object> additionalProperties, object quoteAllText, object fileExtension, object maxRowsPerFile, object fileNamePrefix) : base(type, additionalProperties)
         {
@@ -47,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object QuoteAllText { get; set; }
         /// <summary> The file extension used to create the files. Type: string (or Expression with resultType string). </summary>
         public object FileExtension { get; set; }
-        /// <summary> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </summary>
         public object MaxRowsPerFile { get; set; }
         /// <summary> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </summary>
         public object FileNamePrefix { get; set; }

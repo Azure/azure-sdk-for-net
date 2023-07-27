@@ -12,18 +12,15 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes a virtual machine scale set network profile&apos;s network configurations. </summary>
-    public partial class VirtualMachineScaleSetNetworkConfiguration : SubResource
+    /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
+    public partial class VirtualMachineScaleSetNetworkConfiguration : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>
         /// <param name="name"> The network configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineScaleSetNetworkConfiguration(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             IPConfigurations = new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>();
@@ -34,17 +31,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The network configuration name. </param>
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
+        /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
         /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
         /// <param name="networkSecurityGroup"> The network security group. </param>
         /// <param name="dnsSettings"> The dns settings to be applied on the network interfaces. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        internal VirtualMachineScaleSetNetworkConfiguration(string id, string name, bool? primary, bool? enableAcceleratedNetworking, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? enableIPForwarding, DeleteOptions? deleteOption) : base(id)
+        internal VirtualMachineScaleSetNetworkConfiguration(ResourceIdentifier id, string name, bool? primary, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? enableIPForwarding, ComputeDeleteOption? deleteOption) : base(id)
         {
             Name = name;
             Primary = primary;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
+            IsTcpStateTrackingDisabled = isTcpStateTrackingDisabled;
             EnableFpga = enableFpga;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
@@ -59,6 +58,8 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Primary { get; set; }
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? EnableAcceleratedNetworking { get; set; }
+        /// <summary> Specifies whether the network interface is disabled for tcp state tracking. </summary>
+        public bool? IsTcpStateTrackingDisabled { get; set; }
         /// <summary> Specifies whether the network interface is FPGA networking-enabled. </summary>
         public bool? EnableFpga { get; set; }
         /// <summary> The network security group. </summary>
@@ -93,6 +94,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Whether IP forwarding enabled on this NIC. </summary>
         public bool? EnableIPForwarding { get; set; }
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public DeleteOptions? DeleteOption { get; set; }
+        public ComputeDeleteOption? DeleteOption { get; set; }
     }
 }

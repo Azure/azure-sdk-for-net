@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Private endpoint. </summary>
@@ -17,12 +19,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         /// <summary> Initializes a new instance of PrivateEndpoint. </summary>
         /// <param name="id"> Full qualified Id of the private endpoint. </param>
-        internal PrivateEndpoint(string id)
+        internal PrivateEndpoint(ResourceIdentifier id)
         {
             Id = id;
         }
 
         /// <summary> Full qualified Id of the private endpoint. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,22 +15,30 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static DomainValidationProperties DeserializeDomainValidationProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> validationToken = default;
-            Optional<string> expirationDate = default;
+            Optional<DateTimeOffset> expirationDate = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("validationToken"))
+                if (property.NameEquals("validationToken"u8))
                 {
                     validationToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expirationDate"))
+                if (property.NameEquals("expirationDate"u8))
                 {
-                    expirationDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new DomainValidationProperties(validationToken.Value, expirationDate.Value);
+            return new DomainValidationProperties(validationToken.Value, Optional.ToNullable(expirationDate));
         }
     }
 }

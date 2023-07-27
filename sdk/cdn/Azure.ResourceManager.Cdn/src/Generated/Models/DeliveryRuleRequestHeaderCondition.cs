@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -13,29 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class DeliveryRuleRequestHeaderCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of DeliveryRuleRequestHeaderCondition. </summary>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleRequestHeaderCondition(RequestHeaderMatchConditionParameters parameters)
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DeliveryRuleRequestHeaderCondition(RequestHeaderMatchCondition properties)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            Parameters = parameters;
+            Properties = properties;
             Name = MatchVariable.RequestHeader;
         }
 
         /// <summary> Initializes a new instance of DeliveryRuleRequestHeaderCondition. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleRequestHeaderCondition(MatchVariable name, RequestHeaderMatchConditionParameters parameters) : base(name)
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        internal DeliveryRuleRequestHeaderCondition(MatchVariable name, RequestHeaderMatchCondition properties) : base(name)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the condition. </summary>
-        public RequestHeaderMatchConditionParameters Parameters { get; set; }
+        public RequestHeaderMatchCondition Properties { get; set; }
     }
 }

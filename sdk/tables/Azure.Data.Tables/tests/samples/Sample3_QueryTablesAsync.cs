@@ -26,7 +26,6 @@ namespace Azure.Data.Tables.Samples
 
             await serviceClient.CreateTableAsync(tableName);
 
-            #region Snippet:TablesSample3QueryTablesAsync
             // Use the <see cref="TableServiceClient"> to query the service. Passing in OData filter strings is optional.
             AsyncPageable<TableItem> queryTableResults = serviceClient.QueryAsync(filter: $"TableName eq '{tableName}'");
 
@@ -36,7 +35,6 @@ namespace Azure.Data.Tables.Samples
             {
                 Console.WriteLine(table.Name);
             }
-            #endregion
 
             await serviceClient.DeleteTableAsync(tableName);
         }

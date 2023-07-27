@@ -3,4 +3,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Usage", "AZC0016:Invalid ServiceVersion member name.", Justification = "Generated code: https://github.com/Azure/autorest.csharp/issues/1524", Scope = "type", Target = "~T:Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion")]
+[assembly: SuppressMessage("Usage", "AZC0002: Client method should have cancellationToken as the last optional parameter (both name and it being optional matters", Justification = "")]

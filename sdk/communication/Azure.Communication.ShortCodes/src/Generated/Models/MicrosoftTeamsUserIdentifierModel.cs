@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
 {
@@ -17,10 +18,7 @@ namespace Azure.Communication.ShortCodes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         internal MicrosoftTeamsUserIdentifierModel(string userId)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
 
             UserId = userId;
         }
@@ -29,7 +27,7 @@ namespace Azure.Communication.ShortCodes.Models
         public string UserId { get; }
         /// <summary> True if the Microsoft Teams user is anonymous. By default false if missing. </summary>
         public bool? IsAnonymous { get; }
-        /// <summary> The cloud that the Microsoft Teams user belongs to. By default &apos;public&apos; if missing. </summary>
+        /// <summary> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </summary>
         public CommunicationCloudEnvironmentModel? Cloud { get; }
     }
 }

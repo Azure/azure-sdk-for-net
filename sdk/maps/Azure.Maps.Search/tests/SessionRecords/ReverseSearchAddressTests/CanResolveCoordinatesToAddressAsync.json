@@ -1,0 +1,69 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/reverse/json?api-version=1.0\u0026query=24%2C121\u0026language=en-US",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f3d51add9d049d46ba17b2c0eb14dfec-1fb6f4ffa9c6fd46-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20221013.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-id": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+        "x-ms-client-request-id": "6f417c8c84bf3040fbea328abdc69551",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "680",
+        "Content-Type": "application/json",
+        "Date": "Wed, 12 Oct 2022 16:05:29 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 4EF3E3DF53184757B3E71601FA0A7B4F Ref B: TPE30EDGE0617 Ref C: 2022-10-12T16:05:29Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "queryTime": 21,
+          "numResults": 1
+        },
+        "addresses": [
+          {
+            "address": {
+              "buildingNumber": "1-20",
+              "streetNumber": "1-20",
+              "routeNumbers": [],
+              "street": "Niuwei Road",
+              "streetName": "Niuwei Road",
+              "streetNameAndNumber": "1-20Niuwei Road",
+              "countryCode": "TW",
+              "countrySubdivision": "Taiwan",
+              "municipality": "Nantou County",
+              "postalCode": "545",
+              "municipalitySubdivision": "Puli Township",
+              "country": "Taiwan",
+              "countryCodeISO3": "TWN",
+              "freeformAddress": "1-20, Niuwei Road, Puli Township, Nantou County 54558",
+              "boundingBox": {
+                "northEast": "24.000558,120.988821",
+                "southWest": "24.000178,120.987017",
+                "entity": "position"
+              },
+              "extendedPostalCode": "54558",
+              "localName": "Puli Township"
+            },
+            "position": "24.000296,120.988716"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "86ff944f-d704-4f24-8af8-34f4a58ff4e0",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "RandomSeed": "159051533"
+  }
+}

@@ -45,16 +45,17 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="provisioningState">Provisioning state of the Event
         /// Grid Domain Resource. Possible values include: 'Creating',
         /// 'Updating', 'Deleting', 'Succeeded', 'Canceled', 'Failed'</param>
-        /// <param name="endpoint">Endpoint for the domain.</param>
+        /// <param name="endpoint">Endpoint for the Event Grid Domain Resource
+        /// which is used for publishing the events.</param>
         /// <param name="inputSchema">This determines the format that Event
-        /// Grid should expect for incoming events published to the domain.
-        /// Possible values include: 'EventGridSchema', 'CustomEventSchema',
-        /// 'CloudEventSchemaV1_0'</param>
+        /// Grid should expect for incoming events published to the Event Grid
+        /// Domain Resource. Possible values include: 'EventGridSchema',
+        /// 'CustomEventSchema', 'CloudEventSchemaV1_0'</param>
         /// <param name="inputSchemaMapping">Information about the
         /// InputSchemaMapping which specified the info about mapping event
         /// payload.</param>
-        /// <param name="metricResourceId">Metric resource id for the
-        /// domain.</param>
+        /// <param name="metricResourceId">Metric resource id for the Event
+        /// Grid Domain Resource.</param>
         /// <param name="publicNetworkAccess">This determines if traffic is
         /// allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso
@@ -105,11 +106,14 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// auto-managed mode provides the flexibility to perform less
         /// operations and manage fewer
         /// resources by the user.</param>
-        /// <param name="systemData">The system metadata relating to Domain
-        /// resource.</param>
+        /// <param name="dataResidencyBoundary">Data Residency Boundary of the
+        /// resource. Possible values include: 'WithinGeopair',
+        /// 'WithinRegion'</param>
+        /// <param name="systemData">The system metadata relating to the Event
+        /// Grid Domain resource.</param>
         /// <param name="identity">Identity information for the Event Grid
         /// Domain resource.</param>
-        public Domain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), bool? autoCreateTopicWithFirstSubscription = default(bool?), bool? autoDeleteTopicWithLastSubscription = default(bool?), SystemData systemData = default(SystemData), IdentityInfo identity = default(IdentityInfo))
+        public Domain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping), string metricResourceId = default(string), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), bool? autoCreateTopicWithFirstSubscription = default(bool?), bool? autoDeleteTopicWithLastSubscription = default(bool?), string dataResidencyBoundary = default(string), SystemData systemData = default(SystemData), IdentityInfo identity = default(IdentityInfo))
             : base(location, id, name, type, tags)
         {
             PrivateEndpointConnections = privateEndpointConnections;
@@ -123,6 +127,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             DisableLocalAuth = disableLocalAuth;
             AutoCreateTopicWithFirstSubscription = autoCreateTopicWithFirstSubscription;
             AutoDeleteTopicWithLastSubscription = autoDeleteTopicWithLastSubscription;
+            DataResidencyBoundary = dataResidencyBoundary;
             SystemData = systemData;
             Identity = identity;
             CustomInit();
@@ -148,16 +153,17 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets endpoint for the domain.
+        /// Gets endpoint for the Event Grid Domain Resource which is used for
+        /// publishing the events.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpoint")]
         public string Endpoint { get; private set; }
 
         /// <summary>
         /// Gets or sets this determines the format that Event Grid should
-        /// expect for incoming events published to the domain. Possible values
-        /// include: 'EventGridSchema', 'CustomEventSchema',
-        /// 'CloudEventSchemaV1_0'
+        /// expect for incoming events published to the Event Grid Domain
+        /// Resource. Possible values include: 'EventGridSchema',
+        /// 'CustomEventSchema', 'CloudEventSchemaV1_0'
         /// </summary>
         [JsonProperty(PropertyName = "properties.inputSchema")]
         public string InputSchema { get; set; }
@@ -170,7 +176,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public InputSchemaMapping InputSchemaMapping { get; set; }
 
         /// <summary>
-        /// Gets metric resource id for the domain.
+        /// Gets metric resource id for the Event Grid Domain Resource.
         /// </summary>
         [JsonProperty(PropertyName = "properties.metricResourceId")]
         public string MetricResourceId { get; private set; }
@@ -252,7 +258,15 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public bool? AutoDeleteTopicWithLastSubscription { get; set; }
 
         /// <summary>
-        /// Gets the system metadata relating to Domain resource.
+        /// Gets or sets data Residency Boundary of the resource. Possible
+        /// values include: 'WithinGeopair', 'WithinRegion'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataResidencyBoundary")]
+        public string DataResidencyBoundary { get; set; }
+
+        /// <summary>
+        /// Gets the system metadata relating to the Event Grid Domain
+        /// resource.
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -13,29 +14,26 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class DeliveryRuleResponseHeaderAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of DeliveryRuleResponseHeaderAction. </summary>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleResponseHeaderAction(HeaderActionParameters parameters)
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DeliveryRuleResponseHeaderAction(HeaderActionProperties properties)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            Parameters = parameters;
+            Properties = properties;
             Name = DeliveryRuleActionType.ModifyResponseHeader;
         }
 
         /// <summary> Initializes a new instance of DeliveryRuleResponseHeaderAction. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionType name, HeaderActionParameters parameters) : base(name)
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionType name, HeaderActionProperties properties) : base(name)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
         /// <summary> Defines the parameters for the action. </summary>
-        public HeaderActionParameters Parameters { get; set; }
+        public HeaderActionProperties Properties { get; set; }
     }
 }

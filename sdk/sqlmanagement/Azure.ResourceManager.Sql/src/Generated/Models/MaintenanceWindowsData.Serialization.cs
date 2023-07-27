@@ -18,11 +18,11 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(TimeRanges))
             {
-                writer.WritePropertyName("timeRanges");
+                writer.WritePropertyName("timeRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in TimeRanges)
                 {
@@ -36,34 +36,42 @@ namespace Azure.ResourceManager.Sql
 
         internal static MaintenanceWindowsData DeserializeMaintenanceWindowsData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<IList<MaintenanceWindowTimeRange>> timeRanges = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,11 +80,10 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("timeRanges"))
+                        if (property0.NameEquals("timeRanges"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MaintenanceWindowTimeRange> array = new List<MaintenanceWindowTimeRange>();
@@ -91,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new MaintenanceWindowsData(id, name, type, systemData, Optional.ToList(timeRanges));
+            return new MaintenanceWindowsData(id, name, type, systemData.Value, Optional.ToList(timeRanges));
         }
     }
 }

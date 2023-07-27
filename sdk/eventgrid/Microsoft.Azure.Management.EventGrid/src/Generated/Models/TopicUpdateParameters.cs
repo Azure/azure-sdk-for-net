@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <summary>
         /// Initializes a new instance of the TopicUpdateParameters class.
         /// </summary>
-        /// <param name="tags">Tags of the resource.</param>
+        /// <param name="tags">Tags of the Topic resource.</param>
         /// <param name="identity">Topic resource identity information.</param>
         /// <param name="publicNetworkAccess">This determines if traffic is
         /// allowed over public network. By default it is enabled.
@@ -48,13 +48,17 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// disable local auth. Default value is false. When the property is
         /// set to true, only AAD token will be used to authenticate if user is
         /// allowed to publish to the topic.</param>
-        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?))
+        /// <param name="dataResidencyBoundary">The data residency boundary for
+        /// the topic. Possible values include: 'WithinGeopair',
+        /// 'WithinRegion'</param>
+        public TopicUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityInfo identity = default(IdentityInfo), string publicNetworkAccess = default(string), IList<InboundIpRule> inboundIpRules = default(IList<InboundIpRule>), bool? disableLocalAuth = default(bool?), string dataResidencyBoundary = default(string))
         {
             Tags = tags;
             Identity = identity;
             PublicNetworkAccess = publicNetworkAccess;
             InboundIpRules = inboundIpRules;
             DisableLocalAuth = disableLocalAuth;
+            DataResidencyBoundary = dataResidencyBoundary;
             CustomInit();
         }
 
@@ -64,7 +68,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets tags of the resource.
+        /// Gets or sets tags of the Topic resource.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
@@ -102,6 +106,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the data residency boundary for the topic. Possible
+        /// values include: 'WithinGeopair', 'WithinRegion'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dataResidencyBoundary")]
+        public string DataResidencyBoundary { get; set; }
 
     }
 }

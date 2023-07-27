@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static CommunicationServiceResourceList DeserializeCommunicationServiceResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<CommunicationServiceData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<CommunicationServiceResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CommunicationServiceData> array = new List<CommunicationServiceData>();
+                    List<CommunicationServiceResourceData> array = new List<CommunicationServiceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationServiceData.DeserializeCommunicationServiceData(item));
+                        array.Add(CommunicationServiceResourceData.DeserializeCommunicationServiceResourceData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

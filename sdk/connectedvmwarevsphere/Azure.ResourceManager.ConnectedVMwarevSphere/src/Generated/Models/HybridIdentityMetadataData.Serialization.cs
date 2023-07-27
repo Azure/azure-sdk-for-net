@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(VmId))
             {
-                writer.WritePropertyName("vmId");
+                writer.WritePropertyName("vmId"u8);
                 writer.WriteStringValue(VmId);
             }
             if (Optional.IsDefined(PublicKey))
             {
-                writer.WritePropertyName("publicKey");
+                writer.WritePropertyName("publicKey"u8);
                 writer.WriteStringValue(PublicKey);
             }
             writer.WriteEndObject();
@@ -34,37 +34,45 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static HybridIdentityMetadataData DeserializeHybridIdentityMetadataData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> vmId = default;
             Optional<string> publicKey = default;
-            Optional<SystemAssignedServiceIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -73,27 +81,26 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("vmId"))
+                        if (property0.NameEquals("vmId"u8))
                         {
                             vmId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("publicKey"))
+                        if (property0.NameEquals("publicKey"u8))
                         {
                             publicKey = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("identity"))
+                        if (property0.NameEquals("identity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            identity = JsonSerializer.Deserialize<SystemAssignedServiceIdentity>(property0.Value.ToString());
+                            identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
@@ -102,7 +109,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new HybridIdentityMetadataData(id, name, type, systemData, vmId.Value, publicKey.Value, identity, provisioningState.Value);
+            return new HybridIdentityMetadataData(id, name, type, systemData.Value, vmId.Value, publicKey.Value, identity, provisioningState.Value);
         }
     }
 }

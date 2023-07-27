@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.EventGrid
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IChannelsOperations.
+        /// </summary>
+        public virtual IChannelsOperations Channels { get; private set; }
+
+        /// <summary>
         /// Gets the IDomainsOperations.
         /// </summary>
         public virtual IDomainsOperations Domains { get; private set; }
@@ -87,14 +92,34 @@ namespace Microsoft.Azure.Management.EventGrid
         public virtual IDomainTopicsOperations DomainTopics { get; private set; }
 
         /// <summary>
+        /// Gets the ITopicEventSubscriptionsOperations.
+        /// </summary>
+        public virtual ITopicEventSubscriptionsOperations TopicEventSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IDomainEventSubscriptionsOperations.
+        /// </summary>
+        public virtual IDomainEventSubscriptionsOperations DomainEventSubscriptions { get; private set; }
+
+        /// <summary>
         /// Gets the IEventSubscriptionsOperations.
         /// </summary>
         public virtual IEventSubscriptionsOperations EventSubscriptions { get; private set; }
 
         /// <summary>
+        /// Gets the IDomainTopicEventSubscriptionsOperations.
+        /// </summary>
+        public virtual IDomainTopicEventSubscriptionsOperations DomainTopicEventSubscriptions { get; private set; }
+
+        /// <summary>
         /// Gets the ISystemTopicEventSubscriptionsOperations.
         /// </summary>
         public virtual ISystemTopicEventSubscriptionsOperations SystemTopicEventSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerTopicEventSubscriptionsOperations.
+        /// </summary>
+        public virtual IPartnerTopicEventSubscriptionsOperations PartnerTopicEventSubscriptions { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -105,6 +130,26 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Gets the ITopicsOperations.
         /// </summary>
         public virtual ITopicsOperations Topics { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerConfigurationsOperations.
+        /// </summary>
+        public virtual IPartnerConfigurationsOperations PartnerConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerNamespacesOperations.
+        /// </summary>
+        public virtual IPartnerNamespacesOperations PartnerNamespaces { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerRegistrationsOperations.
+        /// </summary>
+        public virtual IPartnerRegistrationsOperations PartnerRegistrations { get; private set; }
+
+        /// <summary>
+        /// Gets the IPartnerTopicsOperations.
+        /// </summary>
+        public virtual IPartnerTopicsOperations PartnerTopics { get; private set; }
 
         /// <summary>
         /// Gets the IPrivateEndpointConnectionsOperations.
@@ -130,6 +175,11 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Gets the ITopicTypesOperations.
         /// </summary>
         public virtual ITopicTypesOperations TopicTypes { get; private set; }
+
+        /// <summary>
+        /// Gets the IVerifiedPartnersOperations.
+        /// </summary>
+        public virtual IVerifiedPartnersOperations VerifiedPartners { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the EventGridManagementClient class.
@@ -372,19 +422,29 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </summary>
         private void Initialize()
         {
+            Channels = new ChannelsOperations(this);
             Domains = new DomainsOperations(this);
             DomainTopics = new DomainTopicsOperations(this);
+            TopicEventSubscriptions = new TopicEventSubscriptionsOperations(this);
+            DomainEventSubscriptions = new DomainEventSubscriptionsOperations(this);
             EventSubscriptions = new EventSubscriptionsOperations(this);
+            DomainTopicEventSubscriptions = new DomainTopicEventSubscriptionsOperations(this);
             SystemTopicEventSubscriptions = new SystemTopicEventSubscriptionsOperations(this);
+            PartnerTopicEventSubscriptions = new PartnerTopicEventSubscriptionsOperations(this);
             Operations = new Operations(this);
             Topics = new TopicsOperations(this);
+            PartnerConfigurations = new PartnerConfigurationsOperations(this);
+            PartnerNamespaces = new PartnerNamespacesOperations(this);
+            PartnerRegistrations = new PartnerRegistrationsOperations(this);
+            PartnerTopics = new PartnerTopicsOperations(this);
             PrivateEndpointConnections = new PrivateEndpointConnectionsOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
             SystemTopics = new SystemTopicsOperations(this);
             ExtensionTopics = new ExtensionTopicsOperations(this);
             TopicTypes = new TopicTypesOperations(this);
+            VerifiedPartners = new VerifiedPartnersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-12-01";
+            ApiVersion = "2022-06-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

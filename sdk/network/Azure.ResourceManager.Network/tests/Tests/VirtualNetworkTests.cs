@@ -10,7 +10,6 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Network.Tests.Helpers;
 using NUnit.Framework;
-using SubResource = Azure.ResourceManager.Network.Models.SubResource;
 
 namespace Azure.ResourceManager.Network.Tests
 {
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.1.9",
                         Subnet = new SubnetData()
                         {
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.Network.Tests
                     new NetworkInterfaceIPConfigurationData()
                     {
                         Name = ipConfigName,
-                        PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                        PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                         PrivateIPAddress = "10.0.1.9",
                         Subnet = new SubnetData()
                         {

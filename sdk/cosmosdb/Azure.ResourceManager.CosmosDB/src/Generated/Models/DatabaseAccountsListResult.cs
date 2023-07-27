@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of DatabaseAccountsListResult. </summary>
         internal DatabaseAccountsListResult()
         {
-            Value = new ChangeTrackingList<DatabaseAccountData>();
+            Value = new ChangeTrackingList<CosmosDBAccountData>();
         }
 
         /// <summary> Initializes a new instance of DatabaseAccountsListResult. </summary>
         /// <param name="value"> List of database account and their properties. </param>
-        internal DatabaseAccountsListResult(IReadOnlyList<DatabaseAccountData> value)
+        internal DatabaseAccountsListResult(IReadOnlyList<CosmosDBAccountData> value)
         {
             Value = value;
         }
 
         /// <summary> List of database account and their properties. </summary>
-        public IReadOnlyList<DatabaseAccountData> Value { get; }
+        public IReadOnlyList<CosmosDBAccountData> Value { get; }
     }
 }

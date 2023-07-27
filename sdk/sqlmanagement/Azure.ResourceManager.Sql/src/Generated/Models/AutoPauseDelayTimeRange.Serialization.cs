@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static AutoPauseDelayTimeRange DeserializeAutoPauseDelayTimeRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minValue = default;
             Optional<int> maxValue = default;
             Optional<int> stepSize = default;
@@ -22,61 +26,55 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<int> doNotPauseValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("minValue"))
+                if (property.NameEquals("minValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minValue = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxValue"))
+                if (property.NameEquals("maxValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxValue = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stepSize"))
+                if (property.NameEquals("stepSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stepSize = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("default"))
+                if (property.NameEquals("default"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @default = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new PauseDelayTimeUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("doNotPauseValue"))
+                if (property.NameEquals("doNotPauseValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     doNotPauseValue = property.Value.GetInt32();

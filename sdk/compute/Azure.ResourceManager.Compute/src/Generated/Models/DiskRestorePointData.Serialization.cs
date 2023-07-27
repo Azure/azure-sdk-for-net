@@ -17,49 +17,58 @@ namespace Azure.ResourceManager.Compute
     {
         internal static DiskRestorePointData DeserializeDiskRestorePointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> timeCreated = default;
-            Optional<string> sourceResourceId = default;
-            Optional<OperatingSystemTypes> osType = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<SupportedOperatingSystemType> osType = default;
             Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<DiskPurchasePlan> purchasePlan = default;
             Optional<SupportedCapabilities> supportedCapabilities = default;
             Optional<string> familyId = default;
             Optional<string> sourceUniqueId = default;
-            Optional<Encryption> encryption = default;
+            Optional<DiskEncryption> encryption = default;
             Optional<bool> supportsHibernation = default;
             Optional<NetworkAccessPolicy> networkAccessPolicy = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
-            Optional<string> diskAccessId = default;
+            Optional<DiskPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<ResourceIdentifier> diskAccessId = default;
             Optional<float> completionPercent = default;
             Optional<string> replicationState = default;
-            Optional<string> sourceResourceLocation = default;
+            Optional<AzureLocation> sourceResourceLocation = default;
+            Optional<DiskSecurityProfile> securityProfile = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,141 +77,152 @@ namespace Azure.ResourceManager.Compute
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("timeCreated"))
+                        if (property0.NameEquals("timeCreated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeCreated = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("sourceResourceId"))
-                        {
-                            sourceResourceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("osType"))
+                        if (property0.NameEquals("sourceResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = property0.Value.GetString().ToOperatingSystemTypes();
+                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hyperVGeneration"))
+                        if (property0.NameEquals("osType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            osType = property0.Value.GetString().ToSupportedOperatingSystemType();
+                            continue;
+                        }
+                        if (property0.NameEquals("hyperVGeneration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             hyperVGeneration = new HyperVGeneration(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("purchasePlan"))
+                        if (property0.NameEquals("purchasePlan"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("supportedCapabilities"))
+                        if (property0.NameEquals("supportedCapabilities"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("familyId"))
+                        if (property0.NameEquals("familyId"u8))
                         {
                             familyId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sourceUniqueId"))
+                        if (property0.NameEquals("sourceUniqueId"u8))
                         {
                             sourceUniqueId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("encryption"))
+                        if (property0.NameEquals("encryption"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("supportsHibernation"))
+                        if (property0.NameEquals("supportsHibernation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             supportsHibernation = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("networkAccessPolicy"))
+                        if (property0.NameEquals("networkAccessPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkAccessPolicy = new NetworkAccessPolicy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("publicNetworkAccess"))
+                        if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new DiskPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("diskAccessId"))
-                        {
-                            diskAccessId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("completionPercent"))
+                        if (property0.NameEquals("diskAccessId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            diskAccessId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("completionPercent"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             completionPercent = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("replicationState"))
+                        if (property0.NameEquals("replicationState"u8))
                         {
                             replicationState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sourceResourceLocation"))
+                        if (property0.NameEquals("sourceResourceLocation"u8))
                         {
-                            sourceResourceLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceResourceLocation = new AzureLocation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("securityProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DiskRestorePointData(id, name, type, systemData, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, sourceResourceLocation.Value);
+            return new DiskRestorePointData(id, name, type, systemData.Value, Optional.ToNullable(timeCreated), sourceResourceId.Value, Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, familyId.Value, sourceUniqueId.Value, encryption.Value, Optional.ToNullable(supportsHibernation), Optional.ToNullable(networkAccessPolicy), Optional.ToNullable(publicNetworkAccess), diskAccessId.Value, Optional.ToNullable(completionPercent), replicationState.Value, Optional.ToNullable(sourceResourceLocation), securityProfile.Value);
         }
     }
 }

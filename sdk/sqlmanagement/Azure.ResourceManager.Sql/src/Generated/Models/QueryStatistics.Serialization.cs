@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Intervals))
             {
-                writer.WritePropertyName("intervals");
+                writer.WritePropertyName("intervals"u8);
                 writer.WriteStartArray();
                 foreach (var item in Intervals)
                 {
@@ -35,10 +35,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static QueryStatistics DeserializeQueryStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> databaseName = default;
             Optional<string> queryId = default;
             Optional<string> startTime = default;
@@ -46,27 +50,31 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IList<QueryMetricInterval>> intervals = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -75,31 +83,30 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("databaseName"))
+                        if (property0.NameEquals("databaseName"u8))
                         {
                             databaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("queryId"))
+                        if (property0.NameEquals("queryId"u8))
                         {
                             queryId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             startTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             endTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("intervals"))
+                        if (property0.NameEquals("intervals"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<QueryMetricInterval> array = new List<QueryMetricInterval>();
@@ -114,7 +121,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new QueryStatistics(id, name, type, systemData, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals));
+            return new QueryStatistics(id, name, type, systemData.Value, databaseName.Value, queryId.Value, startTime.Value, endTime.Value, Optional.ToList(intervals));
         }
     }
 }

@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
+using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
 
 namespace Azure.Security.ConfidentialLedger.Tests
@@ -18,11 +19,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
     public class ConfidentialLedgerClientLiveTests : RecordedTestBase<ConfidentialLedgerEnvironment>
     {
         private TokenCredential Credential;
-        private ConfidentialLedgerClientOptions Options;
         private ConfidentialLedgerClient Client;
-        private ConfidentialLedgerIdentityServiceClient IdentityClient;
-        private string transactionId;
+        private ConfidentialLedgerCertificateClient IdentityClient;
         private HashSet<string> TestsNotRequiringLedgerEntry = new() { "GetEnclaveQuotes", "GetConsortiumMembers", "GetConstitution" };
+        private (X509Certificate2 Cert, string PEM) serviceCert;
 
         public ConfidentialLedgerClientLiveTests(bool isAsync) : base(isAsync)
         {
@@ -31,37 +31,25 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
             Credential = TestEnvironment.Credential;
-            var httpHandler = new HttpClientHandler();
-            httpHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) =>
-            {
-                return true;
-            };
-            Options = new ConfidentialLedgerClientOptions { Transport = new HttpClientTransport(httpHandler) };
-            if (TestEnvironment.Mode == RecordedTestMode.Playback)
-            {
-                Options.OperationPollingInterval = TimeSpan.Zero;
-            }
+            IdentityClient = new ConfidentialLedgerCertificateClient(
+                    TestEnvironment.ConfidentialLedgerIdentityUrl,
+                   InstrumentClientOptions(new ConfidentialLedgerCertificateClientOptions()));
+
+            serviceCert = ConfidentialLedgerClient.GetIdentityServerTlsCert(TestEnvironment.ConfidentialLedgerUrl, new(), IdentityClient);
+
+            if (Mode != RecordedTestMode.Playback)
+                await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { TLSValidationCert = serviceCert.PEM, AllowAutoRedirect = true } });
+
             Client = InstrumentClient(
                 new ConfidentialLedgerClient(
                     TestEnvironment.ConfidentialLedgerUrl,
-                    Credential,
-                    InstrumentClientOptions(Options)));
-
-            IdentityClient = InstrumentClient(
-                new ConfidentialLedgerIdentityServiceClient(
-                    TestEnvironment.ConfidentialLedgerIdentityUrl,
-                    InstrumentClientOptions(Options)));
-
-            if (!TestsNotRequiringLedgerEntry.Contains(TestContext.CurrentContext.Test.MethodName))
-            {
-                var operation = Client.PostLedgerEntryAsync(RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }), waitForCompletion: true)
-                    .GetAwaiter()
-                    .GetResult();
-                transactionId = operation.Id;
-            }
+                    credential: Credential,
+                    clientCertificate: null,
+                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions()),
+                    identityServiceCert: serviceCert.Cert));
         }
 
         public async Task GetUser(string objId)
@@ -72,7 +60,26 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(objId));
         }
+#if NET6_0_OR_GREATER
+        [LiveOnly]
+        [RecordedTest]
+        public async Task AuthWithClientCert()
+        {
+            await SetProxyOptionsAsync(new ProxyOptions { Transport = new ProxyOptionsTransport { TLSValidationCert = serviceCert.PEM, Certificates = { new ProxyOptionsTransportCertificatesItem { PemValue = TestEnvironment.ClientPEM, PemKey = TestEnvironment.ClientPEMPk } } } });
+            var _cert = X509Certificate2.CreateFromPem(TestEnvironment.ClientPEM, TestEnvironment.ClientPEMPk);
+            _cert = new X509Certificate2(_cert.Export(X509ContentType.Pfx));
+            var certClient = InstrumentClient(new ConfidentialLedgerClient(
+                TestEnvironment.ConfidentialLedgerUrl,
+                credential: null,
+                clientCertificate: _cert,
+                ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions())));
+            var result = await certClient.GetConstitutionAsync(new());
+            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(stringResult, Does.Contain("digest"));
+        }
+#endif
         [RecordedTest]
         public async Task GetLedgerEntries()
         {
@@ -140,11 +147,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetConsortiumMembers()
         {
-            var result = await Client.GetConsortiumMembersAsync(new());
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+            await foreach (var page in Client.GetConsortiumMembersAsync(new()))
+            {
+                var stringResult = page.ToString();
 
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain("BEGIN CERTIFICATE"));
+                Assert.That(stringResult, Does.Contain("BEGIN CERTIFICATE"));
+            }
         }
 
         [RecordedTest]
@@ -161,8 +169,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         public async Task PostLedgerEntry()
         {
             var operation = await Client.PostLedgerEntryAsync(
-                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }),
-                waitForCompletion: true);
+                waitUntil: WaitUntil.Completed,
+                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
             var result = operation.GetRawResponse();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
@@ -175,6 +183,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
         [RecordedTest]
         public async Task GetCurrentLedgerEntry()
         {
+            await Client.PostLedgerEntryAsync(
+               waitUntil: WaitUntil.Completed,
+               RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
+
             var result = await Client.GetCurrentLedgerEntryAsync();
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
@@ -202,6 +214,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
+        [LiveOnly]
         public async Task GetLedgerIdentity()
         {
             var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;

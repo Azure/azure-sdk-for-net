@@ -17,6 +17,7 @@
   
   <ItemGroup>
     <Compile Remove="perf/**/*.*" />
+    <Compile Remove="public/**" />
   </ItemGroup>
   
   <!-- Shared source from Azure.Core -->

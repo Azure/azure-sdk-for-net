@@ -6,26 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> The Communication Services error. </summary>
     internal partial class CommunicationErrorResponse
     {
-        /// <summary> Initializes a new instance of CommunicationErrorResponse. </summary>
-        /// <param name="error"> The Communication Services error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal CommunicationErrorResponse(CommunicationError error)
-        {
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
-
-            Error = error;
-        }
-
-        /// <summary> The Communication Services error. </summary>
-        public CommunicationError Error { get; }
     }
 }

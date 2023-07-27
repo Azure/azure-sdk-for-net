@@ -6,27 +6,31 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Azure Blob Storage content. </summary>
-    internal partial class AzureBlobContentSource
+    public partial class AzureBlobContentSource
     {
         /// <summary> Initializes a new instance of AzureBlobContentSource. </summary>
-        /// <param name="containerUrl"> Azure Blob Storage container URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> is null. </exception>
-        public AzureBlobContentSource(string containerUrl)
+        /// <param name="containerUri"> Azure Blob Storage container URL. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
+        public AzureBlobContentSource(Uri containerUri)
         {
-            if (containerUrl == null)
-            {
-                throw new ArgumentNullException(nameof(containerUrl));
-            }
+            Argument.AssertNotNull(containerUri, nameof(containerUri));
 
-            ContainerUrl = containerUrl;
+            ContainerUri = containerUri;
         }
 
-        /// <summary> Azure Blob Storage container URL. </summary>
-        public string ContainerUrl { get; }
+        /// <summary> Initializes a new instance of AzureBlobContentSource. </summary>
+        /// <param name="containerUri"> Azure Blob Storage container URL. </param>
+        /// <param name="prefix"> Blob name prefix. </param>
+        internal AzureBlobContentSource(Uri containerUri, string prefix)
+        {
+            ContainerUri = containerUri;
+            Prefix = prefix;
+        }
         /// <summary> Blob name prefix. </summary>
         public string Prefix { get; set; }
     }

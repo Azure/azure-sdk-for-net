@@ -55,6 +55,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// delivered to the endpoint. This values allows endpoints to be taken
         /// out of rotation faster or slower than the typical times used in
         /// Azure.</param>
+        /// <param name="probeThreshold">The number of consecutive successful
+        /// or failed probes in order to allow or deny traffic from being
+        /// delivered to this endpoint. After failing the number of consecutive
+        /// probes equal to this value, the endpoint will be taken out of
+        /// rotation and require the same number of successful consecutive
+        /// probes to be placed back in rotation.</param>
         /// <param name="requestPath">The URI used for requesting health status
         /// from the VM. Path is required if a protocol is set to http.
         /// Otherwise, it is not allowed. There is no default value.</param>
@@ -67,7 +73,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public Probe(string protocol, int port, string id = default(string), IList<SubResource> loadBalancingRules = default(IList<SubResource>), int? intervalInSeconds = default(int?), int? numberOfProbes = default(int?), string requestPath = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public Probe(string protocol, int port, string id = default(string), IList<SubResource> loadBalancingRules = default(IList<SubResource>), int? intervalInSeconds = default(int?), int? numberOfProbes = default(int?), int? probeThreshold = default(int?), string requestPath = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             LoadBalancingRules = loadBalancingRules;
@@ -75,6 +81,7 @@ namespace Microsoft.Azure.Management.Network.Models
             Port = port;
             IntervalInSeconds = intervalInSeconds;
             NumberOfProbes = numberOfProbes;
+            ProbeThreshold = probeThreshold;
             RequestPath = requestPath;
             ProvisioningState = provisioningState;
             Name = name;
@@ -129,6 +136,17 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.numberOfProbes")]
         public int? NumberOfProbes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of consecutive successful or failed probes
+        /// in order to allow or deny traffic from being delivered to this
+        /// endpoint. After failing the number of consecutive probes equal to
+        /// this value, the endpoint will be taken out of rotation and require
+        /// the same number of successful consecutive probes to be placed back
+        /// in rotation.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.probeThreshold")]
+        public int? ProbeThreshold { get; set; }
 
         /// <summary>
         /// Gets or sets the URI used for requesting health status from the VM.

@@ -17,32 +17,32 @@ namespace Azure.ResourceManager.EventHubs.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
-                writer.WritePropertyName("enabled");
+                writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
             if (Optional.IsDefined(Encoding))
             {
-                writer.WritePropertyName("encoding");
+                writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToSerialString());
             }
             if (Optional.IsDefined(IntervalInSeconds))
             {
-                writer.WritePropertyName("intervalInSeconds");
+                writer.WritePropertyName("intervalInSeconds"u8);
                 writer.WriteNumberValue(IntervalInSeconds.Value);
             }
             if (Optional.IsDefined(SizeLimitInBytes))
             {
-                writer.WritePropertyName("sizeLimitInBytes");
+                writer.WritePropertyName("sizeLimitInBytes"u8);
                 writer.WriteNumberValue(SizeLimitInBytes.Value);
             }
             if (Optional.IsDefined(Destination))
             {
-                writer.WritePropertyName("destination");
+                writer.WritePropertyName("destination"u8);
                 writer.WriteObjectValue(Destination);
             }
             if (Optional.IsDefined(SkipEmptyArchives))
             {
-                writer.WritePropertyName("skipEmptyArchives");
+                writer.WritePropertyName("skipEmptyArchives"u8);
                 writer.WriteBooleanValue(SkipEmptyArchives.Value);
             }
             writer.WriteEndObject();
@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static CaptureDescription DeserializeCaptureDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<EncodingCaptureDescription> encoding = default;
             Optional<int> intervalInSeconds = default;
@@ -58,61 +62,55 @@ namespace Azure.ResourceManager.EventHubs.Models
             Optional<bool> skipEmptyArchives = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("encoding"))
+                if (property.NameEquals("encoding"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encoding = property.Value.GetString().ToEncodingCaptureDescription();
                     continue;
                 }
-                if (property.NameEquals("intervalInSeconds"))
+                if (property.NameEquals("intervalInSeconds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     intervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sizeLimitInBytes"))
+                if (property.NameEquals("sizeLimitInBytes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sizeLimitInBytes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("destination"))
+                if (property.NameEquals("destination"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destination = EventHubDestination.DeserializeEventHubDestination(property.Value);
                     continue;
                 }
-                if (property.NameEquals("skipEmptyArchives"))
+                if (property.NameEquals("skipEmptyArchives"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skipEmptyArchives = property.Value.GetBoolean();

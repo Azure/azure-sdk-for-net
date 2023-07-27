@@ -30,6 +30,8 @@ namespace Microsoft.Extensions.Azure
     {
         public static void AddAzureClients(this Microsoft.Extensions.DependencyInjection.IServiceCollection collection, System.Action<Microsoft.Extensions.Azure.AzureClientFactoryBuilder> configureClients) { }
         public static void AddAzureClientsCore(this Microsoft.Extensions.DependencyInjection.IServiceCollection collection) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static void AddAzureClientsCore(this Microsoft.Extensions.DependencyInjection.IServiceCollection collection, bool enableLogForwarding) { }
     }
     public abstract partial class AzureComponentFactory
     {

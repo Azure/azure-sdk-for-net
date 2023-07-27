@@ -11,14 +11,14 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    internal partial class SecurityPolicyWebApplicationFirewallAssociation : IUtf8JsonSerializable
+    public partial class SecurityPolicyWebApplicationFirewallAssociation : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Domains))
             {
-                writer.WritePropertyName("domains");
+                writer.WritePropertyName("domains"u8);
                 writer.WriteStartArray();
                 foreach (var item in Domains)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsCollectionDefined(PatternsToMatch))
             {
-                writer.WritePropertyName("patternsToMatch");
+                writer.WritePropertyName("patternsToMatch"u8);
                 writer.WriteStartArray();
                 foreach (var item in PatternsToMatch)
                 {
@@ -41,30 +41,32 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static SecurityPolicyWebApplicationFirewallAssociation DeserializeSecurityPolicyWebApplicationFirewallAssociation(JsonElement element)
         {
-            Optional<IList<ActivatedResourceReference>> domains = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<FrontDoorActivatedResourceInfo>> domains = default;
             Optional<IList<string>> patternsToMatch = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("domains"))
+                if (property.NameEquals("domains"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ActivatedResourceReference> array = new List<ActivatedResourceReference>();
+                    List<FrontDoorActivatedResourceInfo> array = new List<FrontDoorActivatedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivatedResourceReference.DeserializeActivatedResourceReference(item));
+                        array.Add(FrontDoorActivatedResourceInfo.DeserializeFrontDoorActivatedResourceInfo(item));
                     }
                     domains = array;
                     continue;
                 }
-                if (property.NameEquals("patternsToMatch"))
+                if (property.NameEquals("patternsToMatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

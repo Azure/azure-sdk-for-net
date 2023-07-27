@@ -37,11 +37,10 @@ Now that we have the resource group created, we can manage the Communication Ser
 ***Create a Communication Service***
 
 ```C# Snippet:Managing_CommunicationService_CreateAnApplicationDefinition
-CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
+CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
 string communicationServiceName = "myCommunicationService";
-CommunicationServiceData data = new CommunicationServiceData()
+CommunicationServiceResourceData data = new CommunicationServiceResourceData("global")
 {
-    Location = "global",
     DataLocation = "UnitedStates",
 };
 ArmOperation<CommunicationServiceResource> communicationServiceLro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, communicationServiceName, data);
@@ -51,7 +50,7 @@ CommunicationServiceResource communicationService = communicationServiceLro.Valu
 ***List all Communication Service***
 
 ```C# Snippet:Managing_CommunicationService_ListAllCommunicationService
-CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
+CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
 
 AsyncPageable<CommunicationServiceResource> list = collection.GetAllAsync();
 await foreach (CommunicationServiceResource communicationService  in list)
@@ -63,7 +62,7 @@ await foreach (CommunicationServiceResource communicationService  in list)
 ***Delete a Communication Service***
 
 ```C# Snippet:Managing_CommunicationService_DeleteAnApplicationDefinition
-CommunicationServiceCollection collection = resourceGroup.GetCommunicationServices();
+CommunicationServiceResourceCollection collection = resourceGroup.GetCommunicationServiceResources();
 
 CommunicationServiceResource communicationService = await collection.GetAsync("myCommunicationService");
 await communicationService.DeleteAsync(WaitUntil.Completed);

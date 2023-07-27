@@ -6,13 +6,15 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the DiagnosticCategory data model. </summary>
-    public partial class DiagnosticCategoryData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the DiagnosticCategory data model.
+    /// Class representing detector definition
+    /// </summary>
+    public partial class DiagnosticCategoryData : ResourceData
     {
         /// <summary> Initializes a new instance of DiagnosticCategoryData. </summary>
         public DiagnosticCategoryData()
@@ -24,14 +26,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="description"> Description of the diagnostic category. </param>
-        internal DiagnosticCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string description) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        internal DiagnosticCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string kind) : base(id, name, resourceType, systemData)
         {
             Description = description;
+            Kind = kind;
         }
 
         /// <summary> Description of the diagnostic category. </summary>
         public string Description { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

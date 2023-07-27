@@ -54,17 +54,17 @@ namespace Azure.Storage
                     // Convenience methods like BlobContainerClient.CreateIfNotExists will cause a lot of these responses and
                     // we don't want them polluting AppInsights with noise.  See RequestActivityPolicy for how this is applied.
 
-                    RequestHeaders header = message.Request.Headers;
+                    RequestHeaders requestHeaders = message.Request.Headers;
 
-                    if (header.TryGetValue(Constants.HeaderNames.ErrorCode, out var error) &&
+                    if (message.Response.Headers.TryGetValue(Constants.HeaderNames.ErrorCode, out var error) &&
                         (error == Constants.ErrorCodes.ContainerAlreadyExists ||
                          error == Constants.ErrorCodes.BlobAlreadyExists))
                     {
                         var isConditional =
-                            header.Contains(HttpHeader.Names.IfMatch) ||
-                            header.Contains(HttpHeader.Names.IfNoneMatch) ||
-                            header.Contains(HttpHeader.Names.IfModifiedSince) ||
-                            header.Contains(HttpHeader.Names.IfUnmodifiedSince);
+                            requestHeaders.Contains(HttpHeader.Names.IfMatch) ||
+                            requestHeaders.Contains(HttpHeader.Names.IfNoneMatch) ||
+                            requestHeaders.Contains(HttpHeader.Names.IfModifiedSince) ||
+                            requestHeaders.Contains(HttpHeader.Names.IfUnmodifiedSince);
                         return !isConditional;
                     }
 

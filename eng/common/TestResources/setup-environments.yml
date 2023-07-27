@@ -21,7 +21,7 @@ steps:
     condition: contains(variables['OSVmImage'], 'mac')
 
   - task: Powershell@2
-    displayName: Register Dogfood environment
+    displayName: Setup Az Modules and Dogfood Environment
     inputs:
       targetType: inline
       pwsh: true

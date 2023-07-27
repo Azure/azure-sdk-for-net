@@ -13,7 +13,7 @@ Azure Purview Account is a fully managed cloud service.
 Install the Azure Purview Account client library for .NET with [NuGet][client_nuget_package]:
 
 ```dotnetcli
-dotnet add package Azure.Analysis.Purview.Account
+dotnet add package Azure.Analysis.Purview.Account --prerelease
 ```
 
 ### Prerequisites
@@ -50,7 +50,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -65,7 +65,7 @@ var credential = new DefaultAzureCredential();
 var client = new PurviewAccountClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 
 var Response response = await client.GetAccountPropertiesAsync();
-var responseDocument = JsonDocument.Parse(response.Content);
+using var responseDocument = JsonDocument.Parse(response.Content);
 Console.WriteLine(responseDocument.RootElement.GetProperty("name"));
 ```
 

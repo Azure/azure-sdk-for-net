@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -28,24 +28,24 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             if (Optional.IsDefined(ArtifactId))
             {
-                writer.WritePropertyName("artifactId");
+                writer.WritePropertyName("artifactId"u8);
                 writer.WriteStringValue(ArtifactId);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(File))
             {
-                writer.WritePropertyName("file");
+                writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(File);
             }
             if (Optional.IsDefined(ClassName))
             {
-                writer.WritePropertyName("className");
+                writer.WritePropertyName("className"u8);
                 writer.WriteStringValue(ClassName);
             }
             if (Optional.IsCollectionDefined(Arguments))
             {
-                writer.WritePropertyName("args");
+                writer.WritePropertyName("args"u8);
                 writer.WriteStartArray();
                 foreach (var item in Arguments)
                 {
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             if (Optional.IsCollectionDefined(Jars))
             {
-                writer.WritePropertyName("jars");
+                writer.WritePropertyName("jars"u8);
                 writer.WriteStartArray();
                 foreach (var item in Jars)
                 {
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             if (Optional.IsCollectionDefined(PythonFiles))
             {
-                writer.WritePropertyName("pyFiles");
+                writer.WritePropertyName("pyFiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in PythonFiles)
                 {
@@ -75,7 +75,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             if (Optional.IsCollectionDefined(Files))
             {
-                writer.WritePropertyName("files");
+                writer.WritePropertyName("files"u8);
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
@@ -85,7 +85,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             if (Optional.IsCollectionDefined(Archives))
             {
-                writer.WritePropertyName("archives");
+                writer.WritePropertyName("archives"u8);
                 writer.WriteStartArray();
                 foreach (var item in Archives)
                 {
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             if (Optional.IsCollectionDefined(Configuration))
             {
-                writer.WritePropertyName("conf");
+                writer.WritePropertyName("conf"u8);
                 writer.WriteStartObject();
                 foreach (var item in Configuration)
                 {
@@ -106,27 +106,27 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             if (Optional.IsDefined(DriverMemory))
             {
-                writer.WritePropertyName("driverMemory");
+                writer.WritePropertyName("driverMemory"u8);
                 writer.WriteStringValue(DriverMemory);
             }
             if (Optional.IsDefined(DriverCores))
             {
-                writer.WritePropertyName("driverCores");
+                writer.WritePropertyName("driverCores"u8);
                 writer.WriteNumberValue(DriverCores.Value);
             }
             if (Optional.IsDefined(ExecutorMemory))
             {
-                writer.WritePropertyName("executorMemory");
+                writer.WritePropertyName("executorMemory"u8);
                 writer.WriteStringValue(ExecutorMemory);
             }
             if (Optional.IsDefined(ExecutorCores))
             {
-                writer.WritePropertyName("executorCores");
+                writer.WritePropertyName("executorCores"u8);
                 writer.WriteNumberValue(ExecutorCores.Value);
             }
             if (Optional.IsDefined(ExecutorCount))
             {
-                writer.WritePropertyName("numExecutors");
+                writer.WritePropertyName("numExecutors"u8);
                 writer.WriteNumberValue(ExecutorCount.Value);
             }
             writer.WriteEndObject();

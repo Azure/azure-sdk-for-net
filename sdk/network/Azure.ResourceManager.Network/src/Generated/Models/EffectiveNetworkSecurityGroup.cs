@@ -18,19 +18,20 @@ namespace Azure.ResourceManager.Network.Models
         internal EffectiveNetworkSecurityGroup()
         {
             EffectiveSecurityRules = new ChangeTrackingList<EffectiveNetworkSecurityRule>();
+            TagToIPAddresses = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of EffectiveNetworkSecurityGroup. </summary>
         /// <param name="networkSecurityGroup"> The ID of network security group that is applied. </param>
         /// <param name="association"> Associated resources. </param>
         /// <param name="effectiveSecurityRules"> A collection of effective security rules. </param>
-        /// <param name="tagMap"> Mapping of tags to list of IP Addresses included within the tag. </param>
-        internal EffectiveNetworkSecurityGroup(WritableSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, string tagMap)
+        /// <param name="tagToIPAddresses"> Mapping of tags to list of IP Addresses included within the tag. </param>
+        internal EffectiveNetworkSecurityGroup(WritableSubResource networkSecurityGroup, EffectiveNetworkSecurityGroupAssociation association, IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules, IReadOnlyDictionary<string, IList<string>> tagToIPAddresses)
         {
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;
             EffectiveSecurityRules = effectiveSecurityRules;
-            TagMap = tagMap;
+            TagToIPAddresses = tagToIPAddresses;
         }
 
         /// <summary> The ID of network security group that is applied. </summary>
@@ -38,8 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier NetworkSecurityGroupId
         {
-            get => NetworkSecurityGroup.Id;
-            set => NetworkSecurityGroup.Id = value;
+            get => NetworkSecurityGroup?.Id;
         }
 
         /// <summary> Associated resources. </summary>
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> A collection of effective security rules. </summary>
         public IReadOnlyList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; }
         /// <summary> Mapping of tags to list of IP Addresses included within the tag. </summary>
-        public string TagMap { get; }
+        public IReadOnlyDictionary<string, IList<string>> TagToIPAddresses { get; }
     }
 }

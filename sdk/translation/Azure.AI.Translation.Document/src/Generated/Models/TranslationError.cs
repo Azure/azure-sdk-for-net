@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.AI.Translation.Document.Models
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal TranslationError(TranslationErrorCode code, string message)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;
@@ -31,8 +29,8 @@ namespace Azure.AI.Translation.Document.Models
         /// <param name="code"> Enums containing high level error codes. </param>
         /// <param name="message"> Gets high level error message. </param>
         /// <param name="target">
-        /// Gets the source of the error. 
-        /// For example it would be &quot;documents&quot; or &quot;document id&quot; in case of invalid document.
+        /// Gets the source of the error.
+        /// For example it would be "documents" or "document id" in case of invalid document.
         /// </param>
         /// <param name="innerError">
         /// New Inner Error format which conforms to Cognitive Services API Guidelines which is available at https://microsoft.sharepoint.com/%3Aw%3A/t/CognitiveServicesPMO/EUoytcrjuJdKpeOKIK_QRC8BPtUYQpKBi8JsWyeDMRsWlQ?e=CPq8ow.
@@ -51,8 +49,8 @@ namespace Azure.AI.Translation.Document.Models
         /// <summary> Gets high level error message. </summary>
         public string Message { get; }
         /// <summary>
-        /// Gets the source of the error. 
-        /// For example it would be &quot;documents&quot; or &quot;document id&quot; in case of invalid document.
+        /// Gets the source of the error.
+        /// For example it would be "documents" or "document id" in case of invalid document.
         /// </summary>
         public string Target { get; }
         /// <summary>

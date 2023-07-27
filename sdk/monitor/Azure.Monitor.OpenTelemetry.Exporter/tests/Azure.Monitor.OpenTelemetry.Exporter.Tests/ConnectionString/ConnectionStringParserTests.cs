@@ -2,12 +2,25 @@
 // Licensed under the MIT License.
 
 using System;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class ConnectionStringParserTests
     {
+        [Fact]
+        public void TestConnectionString_Full()
+        {
+            RunTest(
+                connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://ingestion.azuremonitor.com/;AADAudience=https://monitor.azure.com//testing",
+                expectedIngestionEndpoint: "https://ingestion.azuremonitor.com/",
+                expectedInstrumentationKey: "00000000-0000-0000-0000-000000000000",
+                expectedAadAudience: "https://monitor.azure.com//testing");
+        }
+
         [Fact]
         public void TestInstrumentationKey_IsRequired()
         {
@@ -72,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
         }
 
         [Fact]
-        public void TestExpliticOverride_PreservesSchema()
+        public void TestExplicitOverride_PreservesSchema()
         {
             RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=http://custom.contoso.com:444/",
@@ -81,7 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
         }
 
         [Fact]
-        public void TestExpliticOverride_InvalidValue()
+        public void TestExplicitOverride_InvalidValue()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https:////custom.contoso.com",
@@ -90,7 +103,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
         }
 
         [Fact]
-        public void TestExpliticOverride_InvalidValue2()
+        public void TestExplicitOverride_InvalidValue2()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;IngestionEndpoint=https://www.~!@#$%&^*()_{}{}><?<?>:L\":\"_+_+_",
@@ -99,7 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
         }
 
         [Fact]
-        public void TestExpliticOverride_InvalidValue3()
+        public void TestExplicitOverride_InvalidValue3()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=~!@#$%&^*()_{}{}><?<?>:L\":\"_+_+_",
@@ -108,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
         }
 
         [Fact]
-        public void TestExpliticOverride_InvalidLocation()
+        public void TestExplicitOverride_InvalidLocation()
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: "InstrumentationKey=00000000-0000-0000-0000-000000000000;EndpointSuffix=ingestion.azuremonitor.com;Location=~!@#$%&^*()_{}{}><?<?>:L\":\"_+_+_",
@@ -121,15 +134,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
         {
             Assert.Throws<InvalidOperationException>(() => RunTest(
                 connectionString: new string('*', Constants.ConnectionStringMaxLength + 1),
-                expectedIngestionEndpoint: null,
-                expectedInstrumentationKey: null));
-        }
-
-        [Fact]
-        public void TestParseConnectionString_Null()
-        {
-            Assert.Throws<InvalidOperationException>(() => RunTest(
-                connectionString: null,
                 expectedIngestionEndpoint: null,
                 expectedInstrumentationKey: null));
         }
@@ -152,12 +156,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
                 expectedInstrumentationKey: null));
         }
 
-        private void RunTest(string connectionString, string expectedIngestionEndpoint, string expectedInstrumentationKey)
+        private void RunTest(string connectionString, string? expectedIngestionEndpoint, string? expectedInstrumentationKey, string? expectedAadAudience = null)
         {
-            ConnectionStringParser.GetValues(connectionString, out string ikey, out string endpoint);
+            var connectionVars = ConnectionStringParser.GetValues(connectionString);
 
-            Assert.Equal(expectedIngestionEndpoint, endpoint);
-            Assert.Equal(expectedInstrumentationKey, ikey);
+            Assert.Equal(expectedIngestionEndpoint, connectionVars.IngestionEndpoint);
+            Assert.Equal(expectedInstrumentationKey, connectionVars.InstrumentationKey);
+            Assert.Equal(expectedAadAudience, connectionVars.AadAudience);
         }
     }
 }

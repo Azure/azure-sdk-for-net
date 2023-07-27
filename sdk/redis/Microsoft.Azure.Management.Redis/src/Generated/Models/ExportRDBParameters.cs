@@ -33,11 +33,15 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="prefix">Prefix to use for exported files.</param>
         /// <param name="container">Container name to export to.</param>
         /// <param name="format">File format.</param>
-        public ExportRDBParameters(string prefix, string container, string format = default(string))
+        /// <param name="preferredDataArchiveAuthMethod">Preferred auth method
+        /// to communicate to storage account used for data archive, specify
+        /// SAS or ManagedIdentity, default value is SAS</param>
+        public ExportRDBParameters(string prefix, string container, string format = default(string), string preferredDataArchiveAuthMethod = default(string))
         {
             Format = format;
             Prefix = prefix;
             Container = container;
+            PreferredDataArchiveAuthMethod = preferredDataArchiveAuthMethod;
             CustomInit();
         }
 
@@ -63,6 +67,14 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         [JsonProperty(PropertyName = "container")]
         public string Container { get; set; }
+
+        /// <summary>
+        /// Gets or sets preferred auth method to communicate to storage
+        /// account used for data archive, specify SAS or ManagedIdentity,
+        /// default value is SAS
+        /// </summary>
+        [JsonProperty(PropertyName = "preferred-data-archive-auth-method")]
+        public string PreferredDataArchiveAuthMethod { get; set; }
 
         /// <summary>
         /// Validate the object.

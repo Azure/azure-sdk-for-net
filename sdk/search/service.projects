@@ -1,6 +1,9 @@
 <Project>
-  <ItemGroup>
-    <!-- Remove data plane tests from nightly live runs: https://github.com/Azure/azure-sdk-for-net/issues/10437 -->
-    <ProjectReference Remove="$(MSBuildThisFileDirectory)Microsoft.Azure.*\**\*.csproj" Condition="'$(AZURE_SEARCH_TEST_MODE)' == 'Live'" />
+  <ItemGroup Condition="'$(SDKType)' == 'client'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Search.*\**\*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
   </ItemGroup>
 </Project>

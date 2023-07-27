@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UltraSSDEnabled))
+            if (Optional.IsDefined(UltraSsdEnabled))
             {
-                writer.WritePropertyName("ultraSSDEnabled");
-                writer.WriteBooleanValue(UltraSSDEnabled.Value);
+                writer.WritePropertyName("ultraSSDEnabled"u8);
+                writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
             if (Optional.IsDefined(HibernationEnabled))
             {
-                writer.WritePropertyName("hibernationEnabled");
+                writer.WritePropertyName("hibernationEnabled"u8);
                 writer.WriteBooleanValue(HibernationEnabled.Value);
             }
             writer.WriteEndObject();
@@ -30,32 +30,34 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AdditionalCapabilities DeserializeAdditionalCapabilities(JsonElement element)
         {
-            Optional<bool> ultraSSDEnabled = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> ultraSsdEnabled = default;
             Optional<bool> hibernationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ultraSSDEnabled"))
+                if (property.NameEquals("ultraSSDEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ultraSSDEnabled = property.Value.GetBoolean();
+                    ultraSsdEnabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("hibernationEnabled"))
+                if (property.NameEquals("hibernationEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hibernationEnabled = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new AdditionalCapabilities(Optional.ToNullable(ultraSSDEnabled), Optional.ToNullable(hibernationEnabled));
+            return new AdditionalCapabilities(Optional.ToNullable(ultraSsdEnabled), Optional.ToNullable(hibernationEnabled));
         }
     }
 }

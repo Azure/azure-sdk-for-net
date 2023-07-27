@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Tests.Models
         [Test]
         public void MaxAgeInSecondsNull()
         {
-            JsonDocument doc = JsonDocument.Parse(@"{
+            using JsonDocument doc = JsonDocument.Parse(@"{
     ""allowedOrigins"": [
         ""*""
     ],

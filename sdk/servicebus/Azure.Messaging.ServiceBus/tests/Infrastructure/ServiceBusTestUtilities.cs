@@ -36,6 +36,19 @@ namespace Azure.Messaging.ServiceBus.Tests
             return batch;
         }
 
+        internal static List<ServiceBusMessage> AddAndReturnMessages(ServiceBusMessageBatch batch, int count, string sessionId = null, string partitionKey = null)
+        {
+            var messages = new List<ServiceBusMessage>();
+            for (int i = 0; i < count; i++)
+            {
+                var currentMessage = GetMessage(sessionId, partitionKey);
+                Assert.That(() => batch.TryAddMessage(currentMessage), Is.True, "A message was rejected by the batch; all messages should be accepted.");
+                messages.Add(currentMessage);
+            }
+
+            return messages;
+        }
+
         internal static Task ExceptionHandler(ProcessErrorEventArgs eventArgs)
         {
             Assert.IsNotNull(eventArgs.CancellationToken);

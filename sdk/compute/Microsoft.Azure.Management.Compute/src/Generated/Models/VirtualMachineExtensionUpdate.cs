@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="protectedSettingsFromKeyVault">The extensions
         /// protected settings that are passed by reference, and consumed from
         /// key vault</param>
-        public VirtualMachineExtensionUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), bool? suppressFailures = default(bool?), object protectedSettingsFromKeyVault = default(object))
+        public VirtualMachineExtensionUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), bool? suppressFailures = default(bool?), KeyVaultSecretReference protectedSettingsFromKeyVault = default(KeyVaultSecretReference))
             : base(tags)
         {
             ForceUpdateTag = forceUpdateTag;
@@ -157,7 +157,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// reference, and consumed from key vault
         /// </summary>
         [JsonProperty(PropertyName = "properties.protectedSettingsFromKeyVault")]
-        public object ProtectedSettingsFromKeyVault { get; set; }
+        public KeyVaultSecretReference ProtectedSettingsFromKeyVault { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ProtectedSettingsFromKeyVault != null)
+            {
+                ProtectedSettingsFromKeyVault.Validate();
+            }
+        }
     }
 }

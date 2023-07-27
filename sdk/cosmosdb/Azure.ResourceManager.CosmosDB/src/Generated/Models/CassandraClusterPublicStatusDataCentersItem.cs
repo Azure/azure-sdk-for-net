@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal CassandraClusterPublicStatusDataCentersItem()
         {
             SeedNodes = new ChangeTrackingList<string>();
-            Nodes = new ChangeTrackingList<ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems>();
+            Nodes = new ChangeTrackingList<CassandraClusterDataCenterNodeItem>();
         }
 
         /// <summary> Initializes a new instance of CassandraClusterPublicStatusDataCentersItem. </summary>
         /// <param name="name"> The name of this Datacenter. </param>
         /// <param name="seedNodes"> A list of all seed nodes in the cluster, managed and unmanaged. </param>
         /// <param name="nodes"></param>
-        internal CassandraClusterPublicStatusDataCentersItem(string name, IReadOnlyList<string> seedNodes, IReadOnlyList<ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems> nodes)
+        internal CassandraClusterPublicStatusDataCentersItem(string name, IReadOnlyList<string> seedNodes, IReadOnlyList<CassandraClusterDataCenterNodeItem> nodes)
         {
             Name = name;
             SeedNodes = seedNodes;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A list of all seed nodes in the cluster, managed and unmanaged. </summary>
         public IReadOnlyList<string> SeedNodes { get; }
         /// <summary> Gets the nodes. </summary>
-        public IReadOnlyList<ComponentsM9L909SchemasCassandraclusterpublicstatusPropertiesDatacentersItemsPropertiesNodesItems> Nodes { get; }
+        public IReadOnlyList<CassandraClusterDataCenterNodeItem> Nodes { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -19,10 +20,7 @@ namespace Azure.Storage.Files.Shares.Models
         /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
         internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota)
         {
-            if (etag == null)
-            {
-                throw new ArgumentNullException(nameof(etag));
-            }
+            Argument.AssertNotNull(etag, nameof(etag));
 
             LastModified = lastModified;
             Etag = etag;

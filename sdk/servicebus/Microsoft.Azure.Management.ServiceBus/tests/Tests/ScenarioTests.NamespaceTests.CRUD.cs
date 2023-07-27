@@ -48,11 +48,17 @@ namespace ServiceBus.Tests.ScenarioTests
                         {
                             {"tag1", "value1"},
                             {"tag2", "value2"}
-                        }
+                        },
+                        MinimumTlsVersion = "1.2",
+                        PublicNetworkAccess = "Enabled"
                     });
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
+                Assert.Equal("Standard",createNamespaceResponse.Sku.Name);
+                Assert.Equal("Standard", createNamespaceResponse.Sku.Tier);
+                Assert.Equal("1.2", createNamespaceResponse.MinimumTlsVersion);
+                Assert.Equal("Enabled", createNamespaceResponse.PublicNetworkAccess);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
@@ -77,6 +83,12 @@ namespace ServiceBus.Tests.ScenarioTests
                 getAllNamespacesResponse = ServiceBusManagementClient.Namespaces.List();
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
+               
+                if (getAllNamespacesResponse.ToList().Find(item => item.Name == getNamespaceResponse.Name).Equals(null))
+                {
+                    getAllNamespacesResponse = ServiceBusManagementClient.Namespaces.ListNext(getAllNamespacesResponse.NextPageLink);
+                }
+               
                 Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
 
                 //Update namespace tags

@@ -2,14 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Options to configure the <see cref="InteractiveBrowserCredential"/>.
     /// </summary>
-    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ITokenCacheOptions
+    public class InteractiveBrowserCredentialOptions : TokenCredentialOptions, ISupportsTokenCachePersistenceOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
     {
         private string _tenantId;
 
@@ -27,6 +29,13 @@ namespace Azure.Identity
             get { return _tenantId; }
             set { _tenantId = Validations.ValidateTenantId(value, allowNull: true); }
         }
+
+        /// <summary>
+        /// Specifies tenants in addition to the specified <see cref="TenantId"/> for which the credential may acquire tokens.
+        /// Add the wildcard value "*" to allow the credential to acquire tokens for any tenant the logged in account can access.
+        /// If no value is specified for <see cref="TenantId"/>, this option will have no effect, and the credential will acquire tokens for any requested tenant.
+        /// </summary>
+        public IList<string> AdditionallyAllowedTenants { get; internal set; } = new List<string>();
 
         /// <summary>
         /// The client ID of the application used to authenticate the user. If not specified the user will be authenticated with an Azure development application.
@@ -53,5 +62,13 @@ namespace Azure.Identity
         /// Avoids the account prompt and pre-populates the username of the account to login.
         /// </summary>
         public string LoginHint { get; set; }
+
+        /// <inheritdoc/>
+        public bool DisableInstanceDiscovery { get; set; }
+
+        /// <summary>
+        /// The options for customizing the browser for interactive authentication.
+        /// </summary>
+        public BrowserCustomizationOptions BrowserCustomizedOptions { get; set; }
     }
 }

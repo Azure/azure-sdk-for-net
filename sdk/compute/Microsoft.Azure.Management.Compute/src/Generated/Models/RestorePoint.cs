@@ -44,10 +44,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the time of the restore point creation.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
         /// restore point.</param>
-        /// <param name="consistencyMode">Gets the consistency mode for the
-        /// restore point. Please refer to https://aka.ms/RestorePoints for
-        /// more details. Possible values include: 'CrashConsistent',
-        /// 'FileSystemConsistent', 'ApplicationConsistent'</param>
+        /// <param name="consistencyMode">ConsistencyMode of the RestorePoint.
+        /// Can be specified in the input while creating a restore point. For
+        /// now, only CrashConsistent is accepted as a valid input. Please
+        /// refer to https://aka.ms/RestorePoints for more details. Possible
+        /// values include: 'CrashConsistent', 'FileSystemConsistent',
+        /// 'ApplicationConsistent'</param>
         /// <param name="timeCreated">Gets the creation time of the restore
         /// point.</param>
         /// <param name="sourceRestorePoint">Resource Id of the source restore
@@ -84,7 +86,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// point creation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sourceMetadata")]
-        public RestorePointSourceMetadata SourceMetadata { get; private set; }
+        public RestorePointSourceMetadata SourceMetadata { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the restore point.
@@ -93,13 +95,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets the consistency mode for the restore point. Please refer to
+        /// Gets or sets consistencyMode of the RestorePoint. Can be specified
+        /// in the input while creating a restore point. For now, only
+        /// CrashConsistent is accepted as a valid input. Please refer to
         /// https://aka.ms/RestorePoints for more details. Possible values
         /// include: 'CrashConsistent', 'FileSystemConsistent',
         /// 'ApplicationConsistent'
         /// </summary>
         [JsonProperty(PropertyName = "properties.consistencyMode")]
-        public string ConsistencyMode { get; private set; }
+        public string ConsistencyMode { get; set; }
 
         /// <summary>
         /// Gets the creation time of the restore point.

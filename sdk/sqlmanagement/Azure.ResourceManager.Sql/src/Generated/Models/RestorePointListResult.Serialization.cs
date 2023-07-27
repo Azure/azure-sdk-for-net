@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static RestorePointListResult DeserializeRestorePointListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<RestorePointData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<SqlServerDatabaseRestorePointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RestorePointData> array = new List<RestorePointData>();
+                    List<SqlServerDatabaseRestorePointData> array = new List<SqlServerDatabaseRestorePointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorePointData.DeserializeRestorePointData(item));
+                        array.Add(SqlServerDatabaseRestorePointData.DeserializeSqlServerDatabaseRestorePointData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

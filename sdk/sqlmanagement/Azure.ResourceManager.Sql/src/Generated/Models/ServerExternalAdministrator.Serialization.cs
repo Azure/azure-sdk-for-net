@@ -18,97 +18,96 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorType))
             {
-                writer.WritePropertyName("administratorType");
+                writer.WritePropertyName("administratorType"u8);
                 writer.WriteStringValue(AdministratorType.Value.ToString());
             }
             if (Optional.IsDefined(PrincipalType))
             {
-                writer.WritePropertyName("principalType");
+                writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
             if (Optional.IsDefined(Login))
             {
-                writer.WritePropertyName("login");
+                writer.WritePropertyName("login"u8);
                 writer.WriteStringValue(Login);
             }
             if (Optional.IsDefined(Sid))
             {
-                writer.WritePropertyName("sid");
+                writer.WritePropertyName("sid"u8);
                 writer.WriteStringValue(Sid.Value);
             }
             if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("tenantId");
+                writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (Optional.IsDefined(AzureADOnlyAuthentication))
+            if (Optional.IsDefined(IsAzureADOnlyAuthenticationEnabled))
             {
-                writer.WritePropertyName("azureADOnlyAuthentication");
-                writer.WriteBooleanValue(AzureADOnlyAuthentication.Value);
+                writer.WritePropertyName("azureADOnlyAuthentication"u8);
+                writer.WriteBooleanValue(IsAzureADOnlyAuthenticationEnabled.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static ServerExternalAdministrator DeserializeServerExternalAdministrator(JsonElement element)
         {
-            Optional<AdministratorType> administratorType = default;
-            Optional<PrincipalType> principalType = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<SqlAdministratorType> administratorType = default;
+            Optional<SqlServerPrincipalType> principalType = default;
             Optional<string> login = default;
             Optional<Guid> sid = default;
             Optional<Guid> tenantId = default;
             Optional<bool> azureADOnlyAuthentication = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("administratorType"))
+                if (property.NameEquals("administratorType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    administratorType = new AdministratorType(property.Value.GetString());
+                    administratorType = new SqlAdministratorType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("principalType"))
+                if (property.NameEquals("principalType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    principalType = new PrincipalType(property.Value.GetString());
+                    principalType = new SqlServerPrincipalType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("login"))
+                if (property.NameEquals("login"u8))
                 {
                     login = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sid"))
+                if (property.NameEquals("sid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sid = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("tenantId"))
+                if (property.NameEquals("tenantId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("azureADOnlyAuthentication"))
+                if (property.NameEquals("azureADOnlyAuthentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureADOnlyAuthentication = property.Value.GetBoolean();

@@ -100,13 +100,22 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the preview feature with the specified name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// Operation Id: Features_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Features_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual async Task<Response<FeatureResource>> GetFeatureAsync(string featureName, CancellationToken cancellationToken = default)
         {
             return await GetFeatures().GetAsync(featureName, cancellationToken).ConfigureAwait(false);
@@ -114,13 +123,22 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the preview feature with the specified name.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}
-        /// Operation Id: Features_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Features_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="featureName"> The name of the feature to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="featureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="featureName"/> is null. </exception>
+        [ForwardsClientCalls]
         public virtual Response<FeatureResource> GetFeature(string featureName, CancellationToken cancellationToken = default)
         {
             return GetFeatures().Get(featureName, cancellationToken);
@@ -128,8 +146,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the specified resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// Operation Id: Providers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -153,8 +179,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Gets the specified resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
-        /// Operation Id: Providers_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,8 +212,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Unregisters a subscription from a resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister
-        /// Operation Id: Providers_Unregister
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Unregister</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ResourceProviderResource>> UnregisterAsync(CancellationToken cancellationToken = default)
@@ -200,8 +242,16 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Unregisters a subscription from a resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister
-        /// Operation Id: Providers_Unregister
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/unregister</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Unregister</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ResourceProviderResource> Unregister(CancellationToken cancellationToken = default)
@@ -222,72 +272,68 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Get the provider permissions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions
-        /// Operation Id: Providers_ProviderPermissions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_ProviderPermissions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProviderPermission" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderPermission> ProviderPermissionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderPermission>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderResource.ProviderPermissions");
-                scope.Start();
-                try
-                {
-                    var response = await _resourceProviderProvidersRestClient.ProviderPermissionsAsync(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateProviderPermissionsRequest(Id.SubscriptionId, Id.Provider);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ProviderPermission.DeserializeProviderPermission, _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Get the provider permissions.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions
-        /// Operation Id: Providers_ProviderPermissions
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/providerPermissions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_ProviderPermissions</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProviderPermission" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderPermission> ProviderPermissions(CancellationToken cancellationToken = default)
         {
-            Page<ProviderPermission> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderResource.ProviderPermissions");
-                scope.Start();
-                try
-                {
-                    var response = _resourceProviderProvidersRestClient.ProviderPermissions(Id.SubscriptionId, Id.Provider, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateProviderPermissionsRequest(Id.SubscriptionId, Id.Provider);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ProviderPermission.DeserializeProviderPermission, _resourceProviderProvidersClientDiagnostics, Pipeline, "ResourceProviderResource.ProviderPermissions", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// Registers a subscription with a resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
-        /// Operation Id: Providers_Register
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Register</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="options"> The third party consent for S2S. </param>
+        /// <param name="content"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ResourceProviderResource>> RegisterAsync(ResourceProviderRegistrationOptions options = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceProviderResource>> RegisterAsync(ProviderRegistrationContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderResource.Register");
             scope.Start();
             try
             {
-                var response = await _resourceProviderProvidersRestClient.RegisterAsync(Id.SubscriptionId, Id.Provider, options, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceProviderProvidersRestClient.RegisterAsync(Id.SubscriptionId, Id.Provider, content, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -299,18 +345,26 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// Registers a subscription with a resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register
-        /// Operation Id: Providers_Register
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/register</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Register</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="options"> The third party consent for S2S. </param>
+        /// <param name="content"> The third party consent for S2S. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ResourceProviderResource> Register(ResourceProviderRegistrationOptions options = null, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceProviderResource> Register(ProviderRegistrationContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderResource.Register");
             scope.Start();
             try
             {
-                var response = _resourceProviderProvidersRestClient.Register(Id.SubscriptionId, Id.Provider, options, cancellationToken);
+                var response = _resourceProviderProvidersRestClient.Register(Id.SubscriptionId, Id.Provider, content, cancellationToken);
                 return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -322,58 +376,46 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary>
         /// List the resource types for a specified resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
-        /// Operation Id: ProviderResourceTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderResourceTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProviderResourceType" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderResourceType> GetProviderResourceTypesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ProviderResourceType>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerResourceTypesClientDiagnostics.CreateScope("ResourceProviderResource.GetProviderResourceTypes");
-                scope.Start();
-                try
-                {
-                    var response = await _providerResourceTypesRestClient.ListAsync(Id.SubscriptionId, Id.Provider, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider, expand);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
         /// List the resource types for a specified resource provider.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes
-        /// Operation Id: ProviderResourceTypes_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}/resourceTypes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderResourceTypes_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProviderResourceType" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderResourceType> GetProviderResourceTypes(string expand = null, CancellationToken cancellationToken = default)
         {
-            Page<ProviderResourceType> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _providerResourceTypesClientDiagnostics.CreateScope("ResourceProviderResource.GetProviderResourceTypes");
-                scope.Start();
-                try
-                {
-                    var response = _providerResourceTypesRestClient.List(Id.SubscriptionId, Id.Provider, expand, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _providerResourceTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.Provider, expand);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, ProviderResourceType.DeserializeProviderResourceType, _providerResourceTypesClientDiagnostics, Pipeline, "ResourceProviderResource.GetProviderResourceTypes", "value", null, cancellationToken);
         }
     }
 }

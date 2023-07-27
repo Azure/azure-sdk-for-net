@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static ConsumerGroupListResult DeserializeConsumerGroupListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ConsumerGroupData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<EventHubsConsumerGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConsumerGroupData> array = new List<ConsumerGroupData>();
+                    List<EventHubsConsumerGroupData> array = new List<EventHubsConsumerGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumerGroupData.DeserializeConsumerGroupData(item));
+                        array.Add(EventHubsConsumerGroupData.DeserializeEventHubsConsumerGroupData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

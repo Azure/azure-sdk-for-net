@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.DnsResolver.Models
     {
         internal static OutboundEndpointListResult DeserializeOutboundEndpointListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OutboundEndpointData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<DnsResolverOutboundEndpointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OutboundEndpointData> array = new List<OutboundEndpointData>();
+                    List<DnsResolverOutboundEndpointData> array = new List<DnsResolverOutboundEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEndpointData.DeserializeOutboundEndpointData(item));
+                        array.Add(DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

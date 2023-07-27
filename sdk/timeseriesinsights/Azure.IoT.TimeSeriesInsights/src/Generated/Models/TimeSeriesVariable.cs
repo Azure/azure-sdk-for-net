@@ -7,26 +7,30 @@
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Variables are named calculations over values from the events. Time Series Insights variable definitions contain formula and computation rules. Variables are stored in the type definition in Time Series Model and can be provided inline via Query APIs to override the stored definition. </summary>
-    public partial class TimeSeriesVariable
+    /// <summary>
+    /// Variables are named calculations over values from the events. Time Series Insights variable definitions contain formula and computation rules. Variables are stored in the type definition in Time Series Model and can be provided inline via Query APIs to override the stored definition.
+    /// Please note <see cref="TimeSeriesVariable"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AggregateVariable"/>, <see cref="CategoricalVariable"/> and <see cref="NumericVariable"/>.
+    /// </summary>
+    public abstract partial class TimeSeriesVariable
     {
         /// <summary> Initializes a new instance of TimeSeriesVariable. </summary>
-        public TimeSeriesVariable()
+        protected TimeSeriesVariable()
         {
         }
 
         /// <summary> Initializes a new instance of TimeSeriesVariable. </summary>
-        /// <param name="kind"> Allowed &quot;kind&quot; values are - &quot;numeric&quot; or &quot;aggregate&quot;. While &quot;numeric&quot; allows you to specify value of the reconstructed signal and the expression to aggregate them, the &quot;aggregate&quot; kind lets you directly aggregate on the event properties without specifying value. </param>
-        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </param>
+        /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
+        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
         internal TimeSeriesVariable(string kind, TimeSeriesExpression filter)
         {
             Kind = kind;
             Filter = filter;
         }
 
-        /// <summary> Allowed &quot;kind&quot; values are - &quot;numeric&quot; or &quot;aggregate&quot;. While &quot;numeric&quot; allows you to specify value of the reconstructed signal and the expression to aggregate them, the &quot;aggregate&quot; kind lets you directly aggregate on the event properties without specifying value. </summary>
+        /// <summary> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </summary>
         internal string Kind { get; set; }
-        /// <summary> Filter over the events that restricts the number of events being considered for computation. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </summary>
+        /// <summary> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </summary>
         public TimeSeriesExpression Filter { get; set; }
     }
 }

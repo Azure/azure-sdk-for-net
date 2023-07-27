@@ -16,36 +16,36 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(MemberName))
             {
-                writer.WritePropertyName("memberName");
+                writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
             }
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label");
+                writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
             if (Optional.IsDefined(Context))
             {
-                writer.WritePropertyName("context");
+                writer.WritePropertyName("context"u8);
                 writer.WriteStringValue(Context);
             }
             if (Optional.IsDefined(StartTime))
             {
-                writer.WritePropertyName("startTime");
+                writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
             if (Optional.IsDefined(EndTime))
             {
-                writer.WritePropertyName("endTime");
+                writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndTime);
             }
             if (Optional.IsDefined(Importance))
             {
-                writer.WritePropertyName("importance");
+                writer.WritePropertyName("importance"u8);
                 writer.WriteStringValue(Importance);
             }
             writer.WriteEndObject();
@@ -54,10 +54,14 @@ namespace Azure.ResourceManager.Sql
 
         internal static WorkloadClassifierData DeserializeWorkloadClassifierData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> memberName = default;
             Optional<string> label = default;
             Optional<string> context = default;
@@ -66,27 +70,31 @@ namespace Azure.ResourceManager.Sql
             Optional<string> importance = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -95,32 +103,32 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("memberName"))
+                        if (property0.NameEquals("memberName"u8))
                         {
                             memberName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("label"))
+                        if (property0.NameEquals("label"u8))
                         {
                             label = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("context"))
+                        if (property0.NameEquals("context"u8))
                         {
                             context = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("startTime"))
+                        if (property0.NameEquals("startTime"u8))
                         {
                             startTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("endTime"))
+                        if (property0.NameEquals("endTime"u8))
                         {
                             endTime = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("importance"))
+                        if (property0.NameEquals("importance"u8))
                         {
                             importance = property0.Value.GetString();
                             continue;
@@ -129,7 +137,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new WorkloadClassifierData(id, name, type, systemData, memberName.Value, label.Value, context.Value, startTime.Value, endTime.Value, importance.Value);
+            return new WorkloadClassifierData(id, name, type, systemData.Value, memberName.Value, label.Value, context.Value, startTime.Value, endTime.Value, importance.Value);
         }
     }
 }

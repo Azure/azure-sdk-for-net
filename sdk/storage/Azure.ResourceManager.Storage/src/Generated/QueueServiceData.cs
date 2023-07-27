@@ -12,7 +12,10 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the QueueService data model. </summary>
+    /// <summary>
+    /// A class representing the QueueService data model.
+    /// The properties of a storage account’s Queue service.
+    /// </summary>
     public partial class QueueServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of QueueServiceData. </summary>
@@ -26,21 +29,21 @@ namespace Azure.ResourceManager.Storage
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="cors"> Specifies CORS rules for the Queue service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Queue service. </param>
-        internal QueueServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CorsRules cors) : base(id, name, resourceType, systemData)
+        internal QueueServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageCorsRules cors) : base(id, name, resourceType, systemData)
         {
             Cors = cors;
         }
 
         /// <summary> Specifies CORS rules for the Queue service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Queue service. </summary>
-        internal CorsRules Cors { get; set; }
+        internal StorageCorsRules Cors { get; set; }
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<CorsRule> CorsRulesValue
+        public IList<StorageCorsRule> CorsRules
         {
             get
             {
                 if (Cors is null)
-                    Cors = new CorsRules();
-                return Cors.CorsRulesValue;
+                    Cors = new StorageCorsRules();
+                return Cors.CorsRules;
             }
         }
     }

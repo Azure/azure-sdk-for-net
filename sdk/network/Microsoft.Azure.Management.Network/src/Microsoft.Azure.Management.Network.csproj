@@ -10,19 +10,16 @@
 			Development of this library has shifted focus to the Azure Unified SDK. The future development will be focused on "Azure.ResourceManager.Network" (https://www.nuget.org/packages/Azure.ResourceManager.Network/). Please see the package changelog for more information.
 		</Description>
 		<AssemblyName>Microsoft.Azure.Management.Network</AssemblyName>
-		<Version>21.0.0</Version>
+		<Version>26.0.0</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>
 		<PackageReleaseNotes>
 		<![CDATA[
-			- Added new api version 2021-05-01
-			- Added routing intent resource
-			- Updated exclusion match variable enum to support new values
-			- Added new SKU values
-			- Updated WAF policy exclusions to include ruleset/rulegroup/rule hierarchy
-			- Vnet encryption: added NIC flag, vnet property, vnet peering property
-			- Fixed cycles in custom IP prefix
-			- Added missed property to LBAddress
-		]]></PackageReleaseNotes>
+			- Added flowlog property in virtual network
+			- adding auth status property to circuit 
+			- Add support for State flag in Custom Rule
+			- Fix LRO header model validation
+			- Add new status code for application gateway custom error page
+			- Fix missing resource id in application gateway list example		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

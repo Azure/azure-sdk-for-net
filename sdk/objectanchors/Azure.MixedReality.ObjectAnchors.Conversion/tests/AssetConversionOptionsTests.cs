@@ -80,7 +80,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             float x = 0.2672612f;
             float y = 0.5345224f;
             float z = 0.8017837f;
-            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, new Vector3(x, y, z), default, default, default, 1, default, default);
+            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, new Vector3(x, y, z), default, default, default, 1, false, default, default);
             Assert.AreEqual(x, config.Gravity.X);
             Assert.AreEqual(y, config.Gravity.Y);
             Assert.AreEqual(z, config.Gravity.Z);
@@ -94,7 +94,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             float y = 2;
             float z = 3;
             float w = 4;
-            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, gravity, default, default, default, 1, new Vector4(x, y, z, w), default);
+            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, gravity, default, default, default, 1, false, new Vector4(x, y, z, w), default);
             Assert.AreEqual(x, config.SupportingPlane.Value.X);
             Assert.AreEqual(y, config.SupportingPlane.Value.Y);
             Assert.AreEqual(z, config.SupportingPlane.Value.Z);
@@ -109,7 +109,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
             float y = 2;
             float z = 3;
             float w = 4;
-            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, gravity, default, default, new Quaternion(x, y, z, w), 1, default, default);
+            var config = ObjectAnchorsConversionModelFactory.AssetConversionConfiguration(default, default, gravity, default, default, new Quaternion(x, y, z, w), 1, false, default, default);
             Assert.AreEqual(x, config.PrincipalAxis.Value.X);
             Assert.AreEqual(y, config.PrincipalAxis.Value.Y);
             Assert.AreEqual(z, config.PrincipalAxis.Value.Z);

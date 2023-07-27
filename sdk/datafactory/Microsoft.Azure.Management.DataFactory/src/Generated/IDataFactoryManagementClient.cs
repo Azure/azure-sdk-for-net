@@ -156,6 +156,11 @@ namespace Microsoft.Azure.Management.DataFactory
         IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; }
 
         /// <summary>
+        /// Gets the ICredentialOperations.
+        /// </summary>
+        ICredentialOperations CredentialOperations { get; }
+
+        /// <summary>
         /// Gets the IPrivateEndPointConnectionsOperations.
         /// </summary>
         IPrivateEndPointConnectionsOperations PrivateEndPointConnections { get; }
@@ -169,6 +174,11 @@ namespace Microsoft.Azure.Management.DataFactory
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         IPrivateLinkResourcesOperations PrivateLinkResources { get; }
+
+        /// <summary>
+        /// Gets the IGlobalParametersOperations.
+        /// </summary>
+        IGlobalParametersOperations GlobalParameters { get; }
 
     }
 }

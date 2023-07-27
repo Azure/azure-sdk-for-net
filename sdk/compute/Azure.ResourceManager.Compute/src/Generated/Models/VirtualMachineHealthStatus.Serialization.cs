@@ -14,14 +14,17 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineHealthStatus DeserializeVirtualMachineHealthStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InstanceViewStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);

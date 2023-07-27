@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -52,6 +53,7 @@ namespace Azure.Storage.Test.Shared
         public string GetNewBlobName() => BlobsClientBuilder.GetNewBlobName();
         public string GetNewBlockName() => BlobsClientBuilder.GetNewBlockName();
         public string GetNewNonAsciiBlobName() => BlobsClientBuilder.GetNewNonAsciiBlobName();
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(BlobsClientBuilder.Tenants.TestConfigDefault.BlobServiceEndpoint);
 
         public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,
@@ -571,6 +573,30 @@ namespace Azure.Storage.Test.Shared
                 Assert.AreEqual(_expectedBlobQueryError.Description, blobQueryError.Description);
                 Assert.AreEqual(_expectedBlobQueryError.Position, blobQueryError.Position);
             }
+        }
+
+        /// <summary>
+        /// For our Download Initial Response 304 tests, sometimes the Modfified Since time
+        /// comes back to be later than the actual Utc time in the environment that ran the test.
+        /// We run this method to check the IfModified time and if it's later than the time, then
+        /// let's wait until that time has past and then continue.
+        ///
+        /// Or else when we attempt to the Download at set the LastModified time before that, it will
+        /// send us back a 200, or even an error for sending a LastModified time that's in the future.
+        ///
+        /// At most it's a 1 second difference wait. But most of the time there's no wait.
+        /// </summary>
+        /// <returns>Returns the time the IfModifiedSince should be for the Download Request to cause a 304</returns>
+        public DateTimeOffset CheckModifiedSinceAndWait(Response<BlobContentInfo> uploadResponse)
+        {
+            DateTimeOffset offsetNow = Recording.UtcNow;
+            if (DateTimeOffset.Compare(uploadResponse.Value.LastModified, offsetNow) > 0)
+            {
+                // Wait the difference plus 2 second
+                Thread.Sleep(uploadResponse.Value.LastModified.Subtract(offsetNow));
+                offsetNow = uploadResponse.Value.LastModified;
+            }
+            return offsetNow;
         }
     }
 }

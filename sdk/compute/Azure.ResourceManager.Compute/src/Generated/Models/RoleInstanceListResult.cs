@@ -8,38 +8,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The RoleInstanceListResult. </summary>
+    /// <summary> The list operation result. </summary>
     internal partial class RoleInstanceListResult
     {
         /// <summary> Initializes a new instance of RoleInstanceListResult. </summary>
-        /// <param name="value"></param>
+        /// <param name="value"> The list of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RoleInstanceListResult(IEnumerable<RoleInstanceData> value)
+        internal RoleInstanceListResult(IEnumerable<CloudServiceRoleInstanceData> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of RoleInstanceListResult. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
-        internal RoleInstanceListResult(IReadOnlyList<RoleInstanceData> value, string nextLink)
+        /// <param name="value"> The list of resources. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </param>
+        internal RoleInstanceListResult(IReadOnlyList<CloudServiceRoleInstanceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<RoleInstanceData> Value { get; }
-        /// <summary> Gets the next link. </summary>
+        /// <summary> The list of resources. </summary>
+        public IReadOnlyList<CloudServiceRoleInstanceData> Value { get; }
+        /// <summary> The URI to fetch the next page of resources. Use this to get the next page of resources. Do this till nextLink is null to fetch all the resources. </summary>
         public string NextLink { get; }
     }
 }

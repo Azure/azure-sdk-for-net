@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
-                writer.WritePropertyName("groupIds");
+                writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in GroupIds)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             }
             if (Optional.IsDefined(RequestMessage))
             {
-                writer.WritePropertyName("requestMessage");
+                writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
             writer.WriteEndObject();
@@ -41,21 +41,24 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static PrivateLinkServiceConnection DeserializePrivateLinkServiceConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<string>> groupIds = default;
             Optional<string> requestMessage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupIds"))
+                if (property.NameEquals("groupIds"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     groupIds = array;
                     continue;
                 }
-                if (property.NameEquals("requestMessage"))
+                if (property.NameEquals("requestMessage"u8))
                 {
                     requestMessage = property.Value.GetString();
                     continue;

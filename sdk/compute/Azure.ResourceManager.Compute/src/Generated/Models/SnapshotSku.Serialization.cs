@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
             writer.WriteEndObject();
@@ -25,21 +25,24 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static SnapshotSku DeserializeSnapshotSku(JsonElement element)
         {
-            Optional<SnapshotStorageAccountTypes> name = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<SnapshotStorageAccountType> name = default;
             Optional<string> tier = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new SnapshotStorageAccountTypes(property.Value.GetString());
+                    name = new SnapshotStorageAccountType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tier"))
+                if (property.NameEquals("tier"u8))
                 {
                     tier = property.Value.GetString();
                     continue;

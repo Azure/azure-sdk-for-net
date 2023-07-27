@@ -1,0 +1,16 @@
+{
+  "data": {
+    "actions": [
+      {
+        "@odata.type": "microsoft.graph.tokenIssuanceStart.provideClaimsForToken",
+        "claims": {
+          "DateOfBirth": "01/01/2000",
+          "CustomRoles": [
+            "Writer",
+            "Editor"
+          ]
+        }
+      }
+    ]
+  }
+}

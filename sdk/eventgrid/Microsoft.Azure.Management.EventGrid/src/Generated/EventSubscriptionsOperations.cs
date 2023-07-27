@@ -2331,10 +2331,11 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// List all event subscriptions for a specific topic.
+        /// List all event subscriptions.
         /// </summary>
         /// <remarks>
-        /// List all event subscriptions that have been created for a specific topic.
+        /// List all event subscriptions that have been created for a specific
+        /// resource.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -5050,10 +5051,11 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// List all event subscriptions for a specific topic.
+        /// List all event subscriptions.
         /// </summary>
         /// <remarks>
-        /// List all event subscriptions that have been created for a specific topic.
+        /// List all event subscriptions that have been created for a specific
+        /// resource.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

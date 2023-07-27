@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the CassandraKeyspace data model. </summary>
+    /// <summary>
+    /// A class representing the CassandraKeyspace data model.
+    /// An Azure Cosmos DB Cassandra keyspace.
+    /// </summary>
     public partial class CassandraKeyspaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CassandraKeyspaceData. </summary>
@@ -30,15 +33,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CassandraKeyspacePropertiesResource resource, CassandraKeyspacePropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> Identity for the resource. </param>
+        internal CassandraKeyspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedCassandraKeyspaceResourceInfo resource, CassandraKeyspacePropertiesConfig options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
+            Identity = identity;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public CassandraKeyspacePropertiesResource Resource { get; set; }
+        public ExtendedCassandraKeyspaceResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public CassandraKeyspacePropertiesOptions Options { get; set; }
+        public CassandraKeyspacePropertiesConfig Options { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Azure.Communication.CallingServer
     /// <summary>
     /// The states of a call.
     /// </summary>
-    [CodeGenModel("CallConnectionState", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("CallConnectionStateModel", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public readonly partial struct CallConnectionState
     {
     }

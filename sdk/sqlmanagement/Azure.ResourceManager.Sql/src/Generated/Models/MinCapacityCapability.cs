@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="value"> Min capacity value. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal MinCapacityCapability(double? value, CapabilityStatus? status, string reason)
+        internal MinCapacityCapability(double? value, SqlCapabilityStatus? status, string reason)
         {
             Value = value;
             Status = status;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Min capacity value. </summary>
         public double? Value { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

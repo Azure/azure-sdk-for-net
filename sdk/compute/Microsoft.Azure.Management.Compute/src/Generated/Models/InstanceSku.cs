@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The role instance SKU.
+    /// </summary>
     public partial class InstanceSku
     {
         /// <summary>

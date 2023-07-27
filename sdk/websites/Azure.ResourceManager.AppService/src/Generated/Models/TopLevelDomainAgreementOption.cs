@@ -18,6 +18,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IncludePrivacy { get; set; }
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? ForTransfer { get; set; }
+        public bool? IsForTransfer { get; set; }
     }
 }

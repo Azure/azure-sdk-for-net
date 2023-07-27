@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Verticals.AgriFood.Farming
 {
-    /// <summary> Client options for FarmBeats library clients. </summary>
+    /// <summary> Client options for FarmBeatsClient. </summary>
     public partial class FarmBeatsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2021_03_31_preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_11_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2021-03-31-preview". </summary>
-            V2021_03_31_preview = 1,
+            /// <summary> Service version "2022-11-01-preview". </summary>
+            V2022_11_01_Preview = 1,
         }
 
         internal string Version { get; }
@@ -29,7 +29,7 @@ namespace Azure.Verticals.AgriFood.Farming
         {
             Version = version switch
             {
-                ServiceVersion.V2021_03_31_preview => "2021-03-31-preview",
+                ServiceVersion.V2022_11_01_Preview => "2022-11-01-preview",
                 _ => throw new NotSupportedException()
             };
         }

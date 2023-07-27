@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables;
 using Newtonsoft.Json.Linq;
@@ -110,6 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
         [GenericTestCase(typeof(JObject))]
         [GenericTestCase(typeof(StructTableEntity))]
         [GenericTestCase(typeof(PocoTableEntity))]
+        [GenericTestCase(typeof(ExplicitlyImplementedITableEntity))]
         public async Task Table_IfBoundToReturnAndTableIsMissingAndAdds_CreatesTable<T>()
         {
             // Act
@@ -128,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Table_IfBoundToTableClient_BindsAndCreatesTable()
         {
             // Act
@@ -190,6 +193,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
                 };
             }
 
+            if (typeof(T) == typeof(ExplicitlyImplementedITableEntity))
+            {
+                return (T)(object)new ExplicitlyImplementedITableEntity()
+                {
+                    StringRK = RowKey,
+                    StringPK = PartitionKey,
+                    Value = "test value"
+                };
+            }
+
             Assert.Fail();
             return default;
         }
@@ -206,6 +219,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             public string RowKey { get; set; }
             public string PartitionKey { get; set; }
             public string Value { get; set; }
+        }
+
+        private class ExplicitlyImplementedITableEntity : ITableEntity
+        {
+            public string StringPK { get; set; }
+            public string StringRK { get; set; }
+            public string Value { get; set; }
+
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            string ITableEntity.PartitionKey
+            {
+                get => StringPK;
+                set => StringPK = value;
+            }
+            string ITableEntity.RowKey
+            {
+                get => StringRK;
+                set => StringRK = value;
+            }
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -13,6 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
+    // Data plane generated client.
     /// <summary> The PurviewCatalog service client. </summary>
     public partial class PurviewCatalogClient
     {
@@ -36,74 +38,45 @@ namespace Azure.Analytics.Purview.Catalog
         /// <summary> Initializes a new instance of PurviewCatalogClient. </summary>
         /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public PurviewCatalogClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewCatalogClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of PurviewCatalogClient. </summary>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewCatalogClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options = null)
+        public PurviewCatalogClient(Uri endpoint, TokenCredential credential, PurviewCatalogClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewCatalogClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
 
-        /// <summary> Gets data using search. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets data using search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   keywords: string,
-        ///   offset: number,
-        ///   limit: number,
-        ///   filter: AnyObject,
-        ///   facets: [
-        ///     {
-        ///       count: number,
-        ///       facet: string,
-        ///       sort: AnyObject
-        ///     }
-        ///   ],
-        ///   taxonomySetting: {
-        ///     assetTypes: [string],
-        ///     facet: SearchFacetItem
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   @search.count: number,
-        ///   @search.facets: {
-        ///     assetType: [
-        ///       {
-        ///         count: number,
-        ///         value: string
-        ///       }
-        ///     ],
-        ///     classification: [SearchFacetItemValue],
-        ///     classificationCategory: [SearchFacetItemValue],
-        ///     contactId: [SearchFacetItemValue],
-        ///     fileExtension: [SearchFacetItemValue],
-        ///     label: [SearchFacetItemValue],
-        ///     term: [SearchFacetItemValue]
-        ///   },
-        ///   value: [SearchResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='SearchAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SearchAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -122,59 +95,22 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Gets data using search. </summary>
+        /// <summary>
+        /// [Protocol Method] Gets data using search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   keywords: string,
-        ///   offset: number,
-        ///   limit: number,
-        ///   filter: AnyObject,
-        ///   facets: [
-        ///     {
-        ///       count: number,
-        ///       facet: string,
-        ///       sort: AnyObject
-        ///     }
-        ///   ],
-        ///   taxonomySetting: {
-        ///     assetTypes: [string],
-        ///     facet: SearchFacetItem
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   @search.count: number,
-        ///   @search.facets: {
-        ///     assetType: [
-        ///       {
-        ///         count: number,
-        ///         value: string
-        ///       }
-        ///     ],
-        ///     classification: [SearchFacetItemValue],
-        ///     classificationCategory: [SearchFacetItemValue],
-        ///     contactId: [SearchFacetItemValue],
-        ///     fileExtension: [SearchFacetItemValue],
-        ///     label: [SearchFacetItemValue],
-        ///     term: [SearchFacetItemValue]
-        ///   },
-        ///   value: [SearchResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Search(RequestContent,RequestContext)']/*" />
         public virtual Response Search(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -193,32 +129,22 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get search suggestions by query criteria. </summary>
+        /// <summary>
+        /// [Protocol Method] Get search suggestions by query criteria.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   keywords: string,
-        ///   limit: number,
-        ///   filter: AnyObject
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [SuggestResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='SuggestAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> SuggestAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -237,32 +163,22 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get search suggestions by query criteria. </summary>
+        /// <summary>
+        /// [Protocol Method] Get search suggestions by query criteria.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   keywords: string,
-        ///   limit: number,
-        ///   filter: AnyObject
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [SuggestResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Suggest(RequestContent,RequestContext)']/*" />
         public virtual Response Suggest(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -281,34 +197,22 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Browse entities by path or entity type. </summary>
+        /// <summary>
+        /// [Protocol Method] Browse entities by path or entity type.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   entityType: string,
-        ///   path: string,
-        ///   limit: number,
-        ///   offset: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   @search.count: number,
-        ///   value: [BrowseResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='BrowseAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> BrowseAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -327,34 +231,22 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Browse entities by path or entity type. </summary>
+        /// <summary>
+        /// [Protocol Method] Browse entities by path or entity type.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   entityType: string,
-        ///   path: string,
-        ///   limit: number,
-        ///   offset: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   @search.count: number,
-        ///   value: [BrowseResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='Browse(RequestContent,RequestContext)']/*" />
         public virtual Response Browse(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -373,32 +265,22 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get auto complete options. </summary>
+        /// <summary>
+        /// [Protocol Method] Get auto complete options.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   keywords: string,
-        ///   limit: number,
-        ///   filter: AnyObject
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [AutoCompleteResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='AutoCompleteAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> AutoCompleteAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -417,32 +299,22 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get auto complete options. </summary>
+        /// <summary>
+        /// [Protocol Method] Get auto complete options.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   keywords: string,
-        ///   limit: number,
-        ///   filter: AnyObject
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   value: [AutoCompleteResultValue]
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewCatalogClient.xml" path="doc/members/member[@name='AutoComplete(RequestContent,RequestContext)']/*" />
         public virtual Response AutoComplete(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -459,6 +331,49 @@ namespace Azure.Analytics.Purview.Catalog
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        private PurviewEntities _cachedPurviewEntities;
+        private PurviewGlossaries _cachedPurviewGlossaries;
+        private PurviewLineages _cachedPurviewLineages;
+        private PurviewRelationships _cachedPurviewRelationships;
+        private PurviewTypes _cachedPurviewTypes;
+        private PurviewCollections _cachedPurviewCollections;
+
+        /// <summary> Initializes a new instance of PurviewEntities. </summary>
+        public virtual PurviewEntities GetPurviewEntitiesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewEntities) ?? Interlocked.CompareExchange(ref _cachedPurviewEntities, new PurviewEntities(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedPurviewEntities;
+        }
+
+        /// <summary> Initializes a new instance of PurviewGlossaries. </summary>
+        public virtual PurviewGlossaries GetPurviewGlossariesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewGlossaries) ?? Interlocked.CompareExchange(ref _cachedPurviewGlossaries, new PurviewGlossaries(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewGlossaries;
+        }
+
+        /// <summary> Initializes a new instance of PurviewLineages. </summary>
+        public virtual PurviewLineages GetPurviewLineagesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewLineages) ?? Interlocked.CompareExchange(ref _cachedPurviewLineages, new PurviewLineages(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewLineages;
+        }
+
+        /// <summary> Initializes a new instance of PurviewRelationships. </summary>
+        public virtual PurviewRelationships GetPurviewRelationshipsClient()
+        {
+            return Volatile.Read(ref _cachedPurviewRelationships) ?? Interlocked.CompareExchange(ref _cachedPurviewRelationships, new PurviewRelationships(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint), null) ?? _cachedPurviewRelationships;
+        }
+
+        /// <summary> Initializes a new instance of PurviewTypes. </summary>
+        public virtual PurviewTypes GetPurviewTypesClient()
+        {
+            return Volatile.Read(ref _cachedPurviewTypes) ?? Interlocked.CompareExchange(ref _cachedPurviewTypes, new PurviewTypes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewTypes;
+        }
+
+        /// <summary> Initializes a new instance of PurviewCollections. </summary>
+        public virtual PurviewCollections GetPurviewCollectionsClient()
+        {
+            return Volatile.Read(ref _cachedPurviewCollections) ?? Interlocked.CompareExchange(ref _cachedPurviewCollections, new PurviewCollections(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPurviewCollections;
         }
 
         internal HttpMessage CreateSearchRequest(RequestContent content, RequestContext context)

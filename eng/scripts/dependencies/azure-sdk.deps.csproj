@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <OutputType>Exe</OutputType>
     <EnableDefaultItems>false</EnableDefaultItems>
-    <!-- 
-      Loading a dev version of some dependencies causes some downgrade warnings. 
-      This can happen sometimes after releaseing a new version when the version in 
+    <!--
+      Loading a dev version of some dependencies causes some downgrade warnings.
+      This can happen sometimes after releaseing a new version when the version in
       the repo has not yet been updated.
     -->
     <NoWarn>$(NoWarn);NU1605</NoWarn>

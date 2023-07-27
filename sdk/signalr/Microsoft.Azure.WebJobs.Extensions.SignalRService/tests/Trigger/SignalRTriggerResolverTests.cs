@@ -4,8 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using Microsoft.Azure.SignalR;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
+using Microsoft.Extensions.Options;
+using Moq;
 using SignalRServiceExtension.Tests.Utils;
 using Xunit;
 
@@ -16,12 +17,9 @@ namespace SignalRServiceExtension.Tests.Trigger
         public static IEnumerable<object[]> SignatureTestData()
         {
             var connectionId = "0f9c97a2f0bf4706afe87a14e0797b11";
-            var accessKeys = new AccessKey[]
-            {
-                new AccessKey("https://endpoint1", "7aab239577fd4f24bc919802fb629f5f"),
-                new AccessKey("https://endpont2", "a5f2815d0d0c4b00bd27e832432f91ab")
-            };
-            var wrongAccessKeys = new AccessKey[] { new AccessKey("http://wrong", Guid.NewGuid().ToString()) };
+            var accessKeys = CreateOptions(new string[] { "7aab239577fd4f24bc919802fb629f5f", "a5f2815d0d0c4b00bd27e832432f91ab" });
+            var wrongAccessKeys = CreateOptions(new string[] { Guid.NewGuid().ToString() });
+
             var signatures = new string[]
             {
                 "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
@@ -43,10 +41,17 @@ namespace SignalRServiceExtension.Tests.Trigger
 
         [Theory]
         [MemberData(nameof(SignatureTestData))]
-        internal void SignatureTest(HttpRequestMessage request, AccessKey[] accessKeys, bool validate)
+        internal void SignatureTest(HttpRequestMessage request, IOptionsMonitor<SignatureValidationOptions> signatureValidationOptions, bool validate)
         {
             var resolver = new SignalRRequestResolver();
-            Assert.Equal(validate, resolver.ValidateSignature(request, accessKeys));
+            Assert.Equal(validate, resolver.ValidateSignature(request, signatureValidationOptions));
+        }
+
+        internal static IOptionsMonitor<SignatureValidationOptions> CreateOptions(string[] accessKeys, bool requireValidation = true)
+        {
+            var options = new SignatureValidationOptions() { RequireValidation = requireValidation };
+            options.AccessKeys.AddRange(accessKeys ?? Array.Empty<string>());
+            return Mock.Of<IOptionsMonitor<SignatureValidationOptions>>(o => o.CurrentValue == options);
         }
     }
 }

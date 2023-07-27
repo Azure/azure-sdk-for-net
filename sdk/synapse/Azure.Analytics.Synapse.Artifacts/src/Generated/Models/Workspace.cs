@@ -19,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         public Workspace(string location) : base(location)
         {
-            if (location == null)
-            {
-                throw new ArgumentNullException(nameof(location));
-            }
+            Argument.AssertNotNull(location, nameof(location));
 
             ConnectivityEndpoints = new ChangeTrackingDictionary<string, string>();
             PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnection>();
@@ -32,18 +29,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Initializes a new instance of Workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
+        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> Identity of the workspace. </param>
         /// <param name="defaultDataLakeStorage"> Workspace default data lake storage account details. </param>
         /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
-        /// <param name="managedResourceGroupName"> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &apos;-&apos;, &apos;_&apos;, &apos;(&apos;, &apos;)&apos; and&apos;.&apos;. Note that the name cannot end with &apos;.&apos;. </param>
+        /// <param name="managedResourceGroupName"> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'. Note that the name cannot end with '.'. </param>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="sqlAdministratorLogin"> Login for workspace SQL active directory administrator. </param>
         /// <param name="virtualNetworkProfile"> Virtual Network profile. </param>
         /// <param name="connectivityEndpoints"> Connectivity endpoints. </param>
-        /// <param name="managedVirtualNetwork"> Setting this to &apos;default&apos; will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </param>
+        /// <param name="managedVirtualNetwork"> Setting this to 'default' will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections to the workspace. </param>
         /// <param name="encryption"> The encryption details of the workspace. </param>
         /// <param name="workspaceUID"> The workspace unique identifier. </param>
@@ -79,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public DataLakeStorageAccountDetails DefaultDataLakeStorage { get; set; }
         /// <summary> SQL administrator login password. </summary>
         public string SqlAdministratorLoginPassword { get; set; }
-        /// <summary> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and &apos;-&apos;, &apos;_&apos;, &apos;(&apos;, &apos;)&apos; and&apos;.&apos;. Note that the name cannot end with &apos;.&apos;. </summary>
+        /// <summary> Workspace managed resource group. The resource group name uniquely identifies the resource group within the user subscriptionId. The resource group name must be no longer than 90 characters long, and must be alphanumeric characters (Char.IsLetterOrDigit()) and '-', '_', '(', ')' and'.'. Note that the name cannot end with '.'. </summary>
         public string ManagedResourceGroupName { get; set; }
         /// <summary> Resource provisioning state. </summary>
         public string ProvisioningState { get; }
@@ -89,7 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public VirtualNetworkProfile VirtualNetworkProfile { get; set; }
         /// <summary> Connectivity endpoints. </summary>
         public IDictionary<string, string> ConnectivityEndpoints { get; }
-        /// <summary> Setting this to &apos;default&apos; will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </summary>
+        /// <summary> Setting this to 'default' will ensure that all compute for this workspace is in a virtual network managed on behalf of the user. </summary>
         public string ManagedVirtualNetwork { get; set; }
         /// <summary> Private endpoint connections to the workspace. </summary>
         public IList<PrivateEndpointConnection> PrivateEndpointConnections { get; }

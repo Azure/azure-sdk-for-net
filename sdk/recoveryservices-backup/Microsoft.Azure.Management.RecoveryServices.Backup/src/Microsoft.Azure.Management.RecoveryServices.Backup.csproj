@@ -6,13 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.RecoveryServices.Backup</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services backup feature under Azure Resource manager.</Description>
-		<Version>4.4.0-preview</Version>
+		<Version>5.1.0-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.Backup</AssemblyName>
 		<PackageTags>Recoveryservices;Backup;CrossRegionRestore</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added new API related to Resource Guard
+- Added new API options related to Smart Tiering
        ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

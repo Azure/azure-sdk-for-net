@@ -175,8 +175,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// availability. Not applicable to a Hyperscale database within an
         /// elastic pool.</param>
         /// <param name="secondaryType">The secondary type of the database if
-        /// it is a secondary.  Valid values are Geo and Named. Possible values
-        /// include: 'Geo', 'Named'</param>
+        /// it is a secondary.  Valid values are Geo, Named and Standby.
+        /// Possible values include: 'Geo', 'Named', 'Standby'</param>
         /// <param name="currentSku">The name and tier of the SKU.</param>
         /// <param name="autoPauseDelay">Time in minutes after which database
         /// is automatically paused. A value of -1 means that automatic pause
@@ -206,11 +206,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// for this database.</param>
         /// <param name="federatedClientId">The Client id used for cross tenant
         /// per database CMK scenario</param>
-        /// <param name="primaryDelegatedIdentityClientId">The Primary
-        /// Delegated Identity Client id used for per database CMK - for
-        /// internal use only</param>
         /// <param name="sourceResourceId">The resource identifier of the
         /// source associated with the create operation of this database.
+        ///
+        /// This property is only supported for DataWarehouse edition and
+        /// allows to restore across subscriptions.
         ///
         /// When sourceResourceId is specified, sourceDatabaseId,
         /// recoverableDatabaseId, restorableDroppedDatabaseId and
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// must be PointInTimeRestore, Restore or Recover.
         ///
         /// When createMode is PointInTimeRestore, sourceResourceId must be the
-        /// resource ID of an existing database or existing sql pool, and
+        /// resource ID of the existing database or existing sql pool, and
         /// restorePointInTime must be specified.
         ///
         /// When createMode is Restore, sourceResourceId must be the resource
@@ -227,16 +227,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// When createMode is Recover, sourceResourceId must be the resource
         /// ID of recoverable database or recoverable sql pool.
         ///
-        /// This property allows to restore across subscriptions which is only
-        /// supported for DataWarehouse edition.
-        ///
         /// When source subscription belongs to a different tenant than target
         /// subscription, “x-ms-authorization-auxiliary” header must contain
         /// authentication token for the source tenant. For more details about
         /// “x-ms-authorization-auxiliary” header see
         /// https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/authenticate-multi-tenant
         /// </param>
-        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), DatabaseIdentity identity = default(DatabaseIdentity), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string), bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?), System.Guid? federatedClientId = default(System.Guid?), System.Guid? primaryDelegatedIdentityClientId = default(System.Guid?), string sourceResourceId = default(string))
+        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), DatabaseIdentity identity = default(DatabaseIdentity), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string), bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?), System.Guid? federatedClientId = default(System.Guid?), string sourceResourceId = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -281,7 +278,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             IsLedgerOn = isLedgerOn;
             IsInfraEncryptionEnabled = isInfraEncryptionEnabled;
             FederatedClientId = federatedClientId;
-            PrimaryDelegatedIdentityClientId = primaryDelegatedIdentityClientId;
             SourceResourceId = sourceResourceId;
             CustomInit();
         }
@@ -558,8 +554,8 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets the secondary type of the database if it is a
-        /// secondary.  Valid values are Geo and Named. Possible values
-        /// include: 'Geo', 'Named'
+        /// secondary.  Valid values are Geo, Named and Standby. Possible
+        /// values include: 'Geo', 'Named', 'Standby'
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryType")]
         public string SecondaryType { get; set; }
@@ -645,15 +641,11 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.Guid? FederatedClientId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Primary Delegated Identity Client id used for per
-        /// database CMK - for internal use only
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.primaryDelegatedIdentityClientId")]
-        public System.Guid? PrimaryDelegatedIdentityClientId { get; set; }
-
-        /// <summary>
         /// Gets or sets the resource identifier of the source associated with
         /// the create operation of this database.
+        ///
+        /// This property is only supported for DataWarehouse edition and
+        /// allows to restore across subscriptions.
         ///
         /// When sourceResourceId is specified, sourceDatabaseId,
         /// recoverableDatabaseId, restorableDroppedDatabaseId and
@@ -661,7 +653,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// must be PointInTimeRestore, Restore or Recover.
         ///
         /// When createMode is PointInTimeRestore, sourceResourceId must be the
-        /// resource ID of an existing database or existing sql pool, and
+        /// resource ID of the existing database or existing sql pool, and
         /// restorePointInTime must be specified.
         ///
         /// When createMode is Restore, sourceResourceId must be the resource
@@ -669,9 +661,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         ///
         /// When createMode is Recover, sourceResourceId must be the resource
         /// ID of recoverable database or recoverable sql pool.
-        ///
-        /// This property allows to restore across subscriptions which is only
-        /// supported for DataWarehouse edition.
         ///
         /// When source subscription belongs to a different tenant than target
         /// subscription, “x-ms-authorization-auxiliary” header must contain

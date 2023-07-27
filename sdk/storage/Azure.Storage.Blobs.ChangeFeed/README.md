@@ -17,7 +17,7 @@ process change events that occur in your Blob Storage account at a low cost.
 Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
 
 ```dotnetcli
-dotnet add package Azure.Storage.Blobs.ChangeFeed
+dotnet add package Azure.Storage.Blobs.ChangeFeed --prerelease
 ```
 
 ### Prerequisites
@@ -61,7 +61,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -94,7 +94,7 @@ await foreach (BlobChangeFeedEvent changeFeedEvent in changeFeedClient.GetChange
 }
 ```
 
-### Resume with continuationToken 
+### Resume with continuationToken
 ```C# Snippet:SampleSnippetsChangeFeed_ResumeWithCursor
 string continuationToken = null;
 await foreach (Page<BlobChangeFeedEvent> page in changeFeedClient.GetChangesAsync().AsPages(pageSizeHint: 10))

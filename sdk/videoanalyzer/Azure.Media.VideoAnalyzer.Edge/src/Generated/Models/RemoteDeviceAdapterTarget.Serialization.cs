@@ -15,17 +15,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("host");
+            writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
             writer.WriteEndObject();
         }
 
         internal static RemoteDeviceAdapterTarget DeserializeRemoteDeviceAdapterTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string host = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("host"))
+                if (property.NameEquals("host"u8))
                 {
                     host = property.Value.GetString();
                     continue;

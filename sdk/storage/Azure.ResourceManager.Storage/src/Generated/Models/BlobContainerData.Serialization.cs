@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -19,26 +20,26 @@ namespace Azure.ResourceManager.Storage
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultEncryptionScope))
             {
-                writer.WritePropertyName("defaultEncryptionScope");
+                writer.WritePropertyName("defaultEncryptionScope"u8);
                 writer.WriteStringValue(DefaultEncryptionScope);
             }
-            if (Optional.IsDefined(DenyEncryptionScopeOverride))
+            if (Optional.IsDefined(PreventEncryptionScopeOverride))
             {
-                writer.WritePropertyName("denyEncryptionScopeOverride");
-                writer.WriteBooleanValue(DenyEncryptionScopeOverride.Value);
+                writer.WritePropertyName("denyEncryptionScopeOverride"u8);
+                writer.WriteBooleanValue(PreventEncryptionScopeOverride.Value);
             }
             if (Optional.IsDefined(PublicAccess))
             {
-                writer.WritePropertyName("publicAccess");
+                writer.WritePropertyName("publicAccess"u8);
                 writer.WriteStringValue(PublicAccess.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
@@ -49,17 +50,17 @@ namespace Azure.ResourceManager.Storage
             }
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
-                writer.WritePropertyName("immutableStorageWithVersioning");
+                writer.WritePropertyName("immutableStorageWithVersioning"u8);
                 writer.WriteObjectValue(ImmutableStorageWithVersioning);
             }
             if (Optional.IsDefined(EnableNfsV3RootSquash))
             {
-                writer.WritePropertyName("enableNfsV3RootSquash");
+                writer.WritePropertyName("enableNfsV3RootSquash"u8);
                 writer.WriteBooleanValue(EnableNfsV3RootSquash.Value);
             }
             if (Optional.IsDefined(EnableNfsV3AllSquash))
             {
-                writer.WritePropertyName("enableNfsV3AllSquash");
+                writer.WritePropertyName("enableNfsV3AllSquash"u8);
                 writer.WriteBooleanValue(EnableNfsV3AllSquash.Value);
             }
             writer.WriteEndObject();
@@ -68,24 +69,28 @@ namespace Azure.ResourceManager.Storage
 
         internal static BlobContainerData DeserializeBlobContainerData(JsonElement element)
         {
-            Optional<string> etag = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> version = default;
             Optional<bool> deleted = default;
             Optional<DateTimeOffset> deletedTime = default;
             Optional<int> remainingRetentionDays = default;
             Optional<string> defaultEncryptionScope = default;
             Optional<bool> denyEncryptionScopeOverride = default;
-            Optional<PublicAccess> publicAccess = default;
+            Optional<StoragePublicAccessType> publicAccess = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<LeaseStatus> leaseStatus = default;
-            Optional<LeaseState> leaseState = default;
-            Optional<LeaseDuration> leaseDuration = default;
+            Optional<StorageLeaseStatus> leaseStatus = default;
+            Optional<StorageLeaseState> leaseState = default;
+            Optional<StorageLeaseDurationType> leaseDuration = default;
             Optional<IDictionary<string, string>> metadata = default;
-            Optional<ImmutabilityPolicyProperties> immutabilityPolicy = default;
+            Optional<BlobContainerImmutabilityPolicy> immutabilityPolicy = default;
             Optional<LegalHoldProperties> legalHold = default;
             Optional<bool> hasLegalHold = default;
             Optional<bool> hasImmutabilityPolicy = default;
@@ -94,32 +99,40 @@ namespace Azure.ResourceManager.Storage
             Optional<bool> enableNfsV3AllSquash = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -128,111 +141,101 @@ namespace Azure.ResourceManager.Storage
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("version"))
+                        if (property0.NameEquals("version"u8))
                         {
                             version = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deleted"))
+                        if (property0.NameEquals("deleted"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deleted = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("deletedTime"))
+                        if (property0.NameEquals("deletedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deletedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("remainingRetentionDays"))
+                        if (property0.NameEquals("remainingRetentionDays"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             remainingRetentionDays = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("defaultEncryptionScope"))
+                        if (property0.NameEquals("defaultEncryptionScope"u8))
                         {
                             defaultEncryptionScope = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("denyEncryptionScopeOverride"))
+                        if (property0.NameEquals("denyEncryptionScopeOverride"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             denyEncryptionScopeOverride = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("publicAccess"))
+                        if (property0.NameEquals("publicAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicAccess = property0.Value.GetString().ToPublicAccess();
+                            publicAccess = property0.Value.GetString().ToStoragePublicAccessType();
                             continue;
                         }
-                        if (property0.NameEquals("lastModifiedTime"))
+                        if (property0.NameEquals("lastModifiedTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("leaseStatus"))
+                        if (property0.NameEquals("leaseStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseStatus = new LeaseStatus(property0.Value.GetString());
+                            leaseStatus = new StorageLeaseStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("leaseState"))
+                        if (property0.NameEquals("leaseState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseState = new LeaseState(property0.Value.GetString());
+                            leaseState = new StorageLeaseState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("leaseDuration"))
+                        if (property0.NameEquals("leaseDuration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            leaseDuration = new LeaseDuration(property0.Value.GetString());
+                            leaseDuration = new StorageLeaseDurationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -243,71 +246,64 @@ namespace Azure.ResourceManager.Storage
                             metadata = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("immutabilityPolicy"))
+                        if (property0.NameEquals("immutabilityPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            immutabilityPolicy = ImmutabilityPolicyProperties.DeserializeImmutabilityPolicyProperties(property0.Value);
+                            immutabilityPolicy = BlobContainerImmutabilityPolicy.DeserializeBlobContainerImmutabilityPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("legalHold"))
+                        if (property0.NameEquals("legalHold"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             legalHold = LegalHoldProperties.DeserializeLegalHoldProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hasLegalHold"))
+                        if (property0.NameEquals("hasLegalHold"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hasLegalHold = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("hasImmutabilityPolicy"))
+                        if (property0.NameEquals("hasImmutabilityPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hasImmutabilityPolicy = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("immutableStorageWithVersioning"))
+                        if (property0.NameEquals("immutableStorageWithVersioning"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             immutableStorageWithVersioning = ImmutableStorageWithVersioning.DeserializeImmutableStorageWithVersioning(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("enableNfsV3RootSquash"))
+                        if (property0.NameEquals("enableNfsV3RootSquash"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableNfsV3RootSquash = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enableNfsV3AllSquash"))
+                        if (property0.NameEquals("enableNfsV3AllSquash"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableNfsV3AllSquash = property0.Value.GetBoolean();
@@ -317,7 +313,7 @@ namespace Azure.ResourceManager.Storage
                     continue;
                 }
             }
-            return new BlobContainerData(id, name, type, systemData, etag.Value, version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), defaultEncryptionScope.Value, Optional.ToNullable(denyEncryptionScopeOverride), Optional.ToNullable(publicAccess), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToDictionary(metadata), immutabilityPolicy.Value, legalHold.Value, Optional.ToNullable(hasLegalHold), Optional.ToNullable(hasImmutabilityPolicy), immutableStorageWithVersioning.Value, Optional.ToNullable(enableNfsV3RootSquash), Optional.ToNullable(enableNfsV3AllSquash));
+            return new BlobContainerData(id, name, type, systemData.Value, version.Value, Optional.ToNullable(deleted), Optional.ToNullable(deletedTime), Optional.ToNullable(remainingRetentionDays), defaultEncryptionScope.Value, Optional.ToNullable(denyEncryptionScopeOverride), Optional.ToNullable(publicAccess), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(leaseStatus), Optional.ToNullable(leaseState), Optional.ToNullable(leaseDuration), Optional.ToDictionary(metadata), immutabilityPolicy.Value, legalHold.Value, Optional.ToNullable(hasLegalHold), Optional.ToNullable(hasImmutabilityPolicy), immutableStorageWithVersioning.Value, Optional.ToNullable(enableNfsV3RootSquash), Optional.ToNullable(enableNfsV3AllSquash), Optional.ToNullable(etag));
         }
     }
 }

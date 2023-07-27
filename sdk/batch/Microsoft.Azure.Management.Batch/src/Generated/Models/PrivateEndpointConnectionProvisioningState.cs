@@ -22,11 +22,10 @@ namespace Microsoft.Azure.Management.Batch.Models
     public enum PrivateEndpointConnectionProvisioningState
     {
         /// <summary>
-        /// The connection status is final and is ready for use if Status is
-        /// Approved.
+        /// The connection is creating.
         /// </summary>
-        [EnumMember(Value = "Succeeded")]
-        Succeeded,
+        [EnumMember(Value = "Creating")]
+        Creating,
         /// <summary>
         /// The user has requested that the connection status be updated, but
         /// the update operation has not yet completed. You may not reference
@@ -35,11 +34,27 @@ namespace Microsoft.Azure.Management.Batch.Models
         [EnumMember(Value = "Updating")]
         Updating,
         /// <summary>
+        /// The connection is deleting.
+        /// </summary>
+        [EnumMember(Value = "Deleting")]
+        Deleting,
+        /// <summary>
+        /// The connection status is final and is ready for use if Status is
+        /// Approved.
+        /// </summary>
+        [EnumMember(Value = "Succeeded")]
+        Succeeded,
+        /// <summary>
         /// The user requested that the connection be updated and it failed.
         /// You may retry the update operation.
         /// </summary>
         [EnumMember(Value = "Failed")]
-        Failed
+        Failed,
+        /// <summary>
+        /// The user has cancelled the connection creation.
+        /// </summary>
+        [EnumMember(Value = "Cancelled")]
+        Cancelled
     }
     internal static class PrivateEndpointConnectionProvisioningStateEnumExtension
     {
@@ -52,12 +67,18 @@ namespace Microsoft.Azure.Management.Batch.Models
         {
             switch( value )
             {
-                case PrivateEndpointConnectionProvisioningState.Succeeded:
-                    return "Succeeded";
+                case PrivateEndpointConnectionProvisioningState.Creating:
+                    return "Creating";
                 case PrivateEndpointConnectionProvisioningState.Updating:
                     return "Updating";
+                case PrivateEndpointConnectionProvisioningState.Deleting:
+                    return "Deleting";
+                case PrivateEndpointConnectionProvisioningState.Succeeded:
+                    return "Succeeded";
                 case PrivateEndpointConnectionProvisioningState.Failed:
                     return "Failed";
+                case PrivateEndpointConnectionProvisioningState.Cancelled:
+                    return "Cancelled";
             }
             return null;
         }
@@ -66,12 +87,18 @@ namespace Microsoft.Azure.Management.Batch.Models
         {
             switch( value )
             {
-                case "Succeeded":
-                    return PrivateEndpointConnectionProvisioningState.Succeeded;
+                case "Creating":
+                    return PrivateEndpointConnectionProvisioningState.Creating;
                 case "Updating":
                     return PrivateEndpointConnectionProvisioningState.Updating;
+                case "Deleting":
+                    return PrivateEndpointConnectionProvisioningState.Deleting;
+                case "Succeeded":
+                    return PrivateEndpointConnectionProvisioningState.Succeeded;
                 case "Failed":
                     return PrivateEndpointConnectionProvisioningState.Failed;
+                case "Cancelled":
+                    return PrivateEndpointConnectionProvisioningState.Cancelled;
             }
             return null;
         }

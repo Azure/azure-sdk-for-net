@@ -48,8 +48,9 @@ namespace Azure.Security.Attestation
             return message;
         }
 
-        /// <summary> Retrieves metadata signing certificates in use by the attestation service. </summary>
+        /// <summary> Retrieves the attestation signing keys in use by the attestation service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves metadata signing certificates in use by the attestation service. </remarks>
         public async Task<Response<JsonWebKeySet>> GetAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
@@ -64,12 +65,13 @@ namespace Azure.Security.Attestation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Retrieves metadata signing certificates in use by the attestation service. </summary>
+        /// <summary> Retrieves the attestation signing keys in use by the attestation service. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves metadata signing certificates in use by the attestation service. </remarks>
         public Response<JsonWebKeySet> Get(CancellationToken cancellationToken = default)
         {
             using var message = CreateGetRequest();
@@ -84,7 +86,7 @@ namespace Azure.Security.Attestation
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

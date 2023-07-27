@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of ConnectionMonitorEndpointFilter. </summary>
-        /// <param name="connectionMonitorEndpointFilterType"> The behavior of the endpoint filter. Currently only &apos;Include&apos; is supported. </param>
+        /// <param name="filterType"> The behavior of the endpoint filter. Currently only 'Include' is supported. </param>
         /// <param name="items"> List of items in the filter. </param>
-        internal ConnectionMonitorEndpointFilter(ConnectionMonitorEndpointFilterType? connectionMonitorEndpointFilterType, IList<ConnectionMonitorEndpointFilterItem> items)
+        internal ConnectionMonitorEndpointFilter(ConnectionMonitorEndpointFilterType? filterType, IList<ConnectionMonitorEndpointFilterItem> items)
         {
-            ConnectionMonitorEndpointFilterType = connectionMonitorEndpointFilterType;
+            FilterType = filterType;
             Items = items;
         }
 
-        /// <summary> The behavior of the endpoint filter. Currently only &apos;Include&apos; is supported. </summary>
-        public ConnectionMonitorEndpointFilterType? ConnectionMonitorEndpointFilterType { get; set; }
+        /// <summary> The behavior of the endpoint filter. Currently only 'Include' is supported. </summary>
+        public ConnectionMonitorEndpointFilterType? FilterType { get; set; }
         /// <summary> List of items in the filter. </summary>
         public IList<ConnectionMonitorEndpointFilterItem> Items { get; }
     }

@@ -16,11 +16,21 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PrefixMatch))
+            if (Optional.IsCollectionDefined(IncludePrefix))
             {
-                writer.WritePropertyName("prefixMatch");
+                writer.WritePropertyName("prefixMatch"u8);
                 writer.WriteStartArray();
-                foreach (var item in PrefixMatch)
+                foreach (var item in IncludePrefix)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ExcludePrefix))
+            {
+                writer.WritePropertyName("excludePrefix"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExcludePrefix)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -28,7 +38,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             if (Optional.IsCollectionDefined(BlobTypes))
             {
-                writer.WritePropertyName("blobTypes");
+                writer.WritePropertyName("blobTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in BlobTypes)
                 {
@@ -38,30 +48,40 @@ namespace Azure.ResourceManager.Storage.Models
             }
             if (Optional.IsDefined(IncludeBlobVersions))
             {
-                writer.WritePropertyName("includeBlobVersions");
+                writer.WritePropertyName("includeBlobVersions"u8);
                 writer.WriteBooleanValue(IncludeBlobVersions.Value);
             }
             if (Optional.IsDefined(IncludeSnapshots))
             {
-                writer.WritePropertyName("includeSnapshots");
+                writer.WritePropertyName("includeSnapshots"u8);
                 writer.WriteBooleanValue(IncludeSnapshots.Value);
+            }
+            if (Optional.IsDefined(IncludeDeleted))
+            {
+                writer.WritePropertyName("includeDeleted"u8);
+                writer.WriteBooleanValue(IncludeDeleted.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static BlobInventoryPolicyFilter DeserializeBlobInventoryPolicyFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> prefixMatch = default;
+            Optional<IList<string>> excludePrefix = default;
             Optional<IList<string>> blobTypes = default;
             Optional<bool> includeBlobVersions = default;
             Optional<bool> includeSnapshots = default;
+            Optional<bool> includeDeleted = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("prefixMatch"))
+                if (property.NameEquals("prefixMatch"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -72,11 +92,24 @@ namespace Azure.ResourceManager.Storage.Models
                     prefixMatch = array;
                     continue;
                 }
-                if (property.NameEquals("blobTypes"))
+                if (property.NameEquals("excludePrefix"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    excludePrefix = array;
+                    continue;
+                }
+                if (property.NameEquals("blobTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -87,28 +120,35 @@ namespace Azure.ResourceManager.Storage.Models
                     blobTypes = array;
                     continue;
                 }
-                if (property.NameEquals("includeBlobVersions"))
+                if (property.NameEquals("includeBlobVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     includeBlobVersions = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("includeSnapshots"))
+                if (property.NameEquals("includeSnapshots"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     includeSnapshots = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("includeDeleted"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    includeDeleted = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new BlobInventoryPolicyFilter(Optional.ToList(prefixMatch), Optional.ToList(blobTypes), Optional.ToNullable(includeBlobVersions), Optional.ToNullable(includeSnapshots));
+            return new BlobInventoryPolicyFilter(Optional.ToList(prefixMatch), Optional.ToList(excludePrefix), Optional.ToList(blobTypes), Optional.ToNullable(includeBlobVersions), Optional.ToNullable(includeSnapshots), Optional.ToNullable(includeDeleted));
         }
     }
 }

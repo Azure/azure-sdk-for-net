@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -13,8 +14,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NetworkVirtualAppliance data model. </summary>
-    public partial class NetworkVirtualApplianceData : NetworkResourceData
+    /// <summary>
+    /// A class representing the NetworkVirtualAppliance data model.
+    /// NetworkVirtualAppliance Resource.
+    /// </summary>
+    public partial class NetworkVirtualApplianceData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of NetworkVirtualApplianceData. </summary>
         public NetworkVirtualApplianceData()
@@ -22,7 +26,9 @@ namespace Azure.ResourceManager.Network
             BootStrapConfigurationBlobs = new ChangeTrackingList<string>();
             CloudInitConfigurationBlobs = new ChangeTrackingList<string>();
             VirtualApplianceNics = new ChangeTrackingList<VirtualApplianceNicProperties>();
+            AdditionalNics = new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>();
             VirtualApplianceSites = new ChangeTrackingList<WritableSubResource>();
+            VirtualApplianceConnections = new ChangeTrackingList<WritableSubResource>();
             InboundSecurityRules = new ChangeTrackingList<WritableSubResource>();
         }
 
@@ -40,15 +46,21 @@ namespace Azure.ResourceManager.Network
         /// <param name="virtualHub"> The Virtual Hub where Network Virtual Appliance is being deployed. </param>
         /// <param name="cloudInitConfigurationBlobs"> CloudInitConfigurationBlob storage URLs. </param>
         /// <param name="cloudInitConfiguration"> CloudInitConfiguration string in plain text. </param>
-        /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. </param>
+        /// <param name="virtualApplianceAsn"> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </param>
+        /// <param name="sshPublicKey"> Public key for SSH login. </param>
         /// <param name="virtualApplianceNics"> List of Virtual Appliance Network Interfaces. </param>
+        /// <param name="additionalNics"> Details required for Additional Network Interface. </param>
         /// <param name="virtualApplianceSites"> List of references to VirtualApplianceSite. </param>
+        /// <param name="virtualApplianceConnections"> List of references to VirtualApplianceConnections. </param>
         /// <param name="inboundSecurityRules"> List of references to InboundSecurityRules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal NetworkVirtualApplianceData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity, string etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> inboundSecurityRules, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="deploymentType"> The deployment type. PartnerManaged for the SaaS NVA. </param>
+        /// <param name="delegation"> The delegation for the Virtual Appliance. </param>
+        /// <param name="partnerManagedResource"> The delegation for the Virtual Appliance. </param>
+        internal NetworkVirtualApplianceData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ManagedServiceIdentity identity, ETag? etag, VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, WritableSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource) : base(id, name, resourceType, location, tags)
         {
             Identity = identity;
-            Etag = etag;
+            ETag = etag;
             NvaSku = nvaSku;
             AddressPrefix = addressPrefix;
             BootStrapConfigurationBlobs = bootStrapConfigurationBlobs;
@@ -56,16 +68,22 @@ namespace Azure.ResourceManager.Network
             CloudInitConfigurationBlobs = cloudInitConfigurationBlobs;
             CloudInitConfiguration = cloudInitConfiguration;
             VirtualApplianceAsn = virtualApplianceAsn;
+            SshPublicKey = sshPublicKey;
             VirtualApplianceNics = virtualApplianceNics;
+            AdditionalNics = additionalNics;
             VirtualApplianceSites = virtualApplianceSites;
+            VirtualApplianceConnections = virtualApplianceConnections;
             InboundSecurityRules = inboundSecurityRules;
             ProvisioningState = provisioningState;
+            DeploymentType = deploymentType;
+            Delegation = delegation;
+            PartnerManagedResource = partnerManagedResource;
         }
 
         /// <summary> The service principal that has read access to cloud-init and config blob. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Network Virtual Appliance SKU. </summary>
         public VirtualApplianceSkuProperties NvaSku { get; set; }
         /// <summary> Address Prefix. </summary>
@@ -90,15 +108,27 @@ namespace Azure.ResourceManager.Network
         public IList<string> CloudInitConfigurationBlobs { get; }
         /// <summary> CloudInitConfiguration string in plain text. </summary>
         public string CloudInitConfiguration { get; set; }
-        /// <summary> VirtualAppliance ASN. </summary>
+        /// <summary> VirtualAppliance ASN. Microsoft private, public and IANA reserved ASN are not supported. </summary>
         public long? VirtualApplianceAsn { get; set; }
+        /// <summary> Public key for SSH login. </summary>
+        public string SshPublicKey { get; set; }
         /// <summary> List of Virtual Appliance Network Interfaces. </summary>
         public IReadOnlyList<VirtualApplianceNicProperties> VirtualApplianceNics { get; }
+        /// <summary> Details required for Additional Network Interface. </summary>
+        public IList<VirtualApplianceAdditionalNicProperties> AdditionalNics { get; }
         /// <summary> List of references to VirtualApplianceSite. </summary>
         public IReadOnlyList<WritableSubResource> VirtualApplianceSites { get; }
+        /// <summary> List of references to VirtualApplianceConnections. </summary>
+        public IReadOnlyList<WritableSubResource> VirtualApplianceConnections { get; }
         /// <summary> List of references to InboundSecurityRules. </summary>
         public IReadOnlyList<WritableSubResource> InboundSecurityRules { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> The deployment type. PartnerManaged for the SaaS NVA. </summary>
+        public string DeploymentType { get; }
+        /// <summary> The delegation for the Virtual Appliance. </summary>
+        public VirtualApplianceDelegationProperties Delegation { get; set; }
+        /// <summary> The delegation for the Virtual Appliance. </summary>
+        public PartnerManagedResourceProperties PartnerManagedResource { get; set; }
     }
 }

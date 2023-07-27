@@ -2,6 +2,18 @@
 
 This sample demonstrates using credentials to authorize clients with the Event Hubs service.  In most scenarios, identity or shared access credentials provide a better approach to security than connection strings for production applications.  One of the key benefits is support for in-place rotation to update access policies without the need to stop applications.  Most credential sources also allow for better security than connection strings, as they support more fine-grained access control.
 
+## Table of contents
+
+- [Prerequisites](#prerequisites)
+    - [Identity authorization](#identity-authorization)
+    - [Event Hubs Shared Access Signature authorization](#event-hubs-shared-access-signature-authorization)
+    - [Event Hubs Shared Access Key authorization](#event-hubs-shared-access-key-authorization)
+- [Client types](#client-types)
+- [Processing events with identity-based authorization](#processing-events-with-identity-based-authorization)
+- [Processing events with Shared Access Signature authorization](#processing-events-with-shared-access-signature-authorization)
+- [Processing events with Shared Access Key authorization](#processing-events-with-shared-access-key-authorization)
+- [Parsing a connection string for information](#parsing-a-connection-string-for-information)
+
 ## Prerequisites
 
 To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README.  You will also need to the fully qualified namespace for the Event Hubs resource that you would like to use.  This can be found in the Azure Portal view of the Event Hubs namespace in the "Overview" tab.  In the center pane, the "essentials" area will list a "hostname."  This is the fully qualified namespace and is likely be similar to: `{your-namespace}.servicebus.windows.net`.  

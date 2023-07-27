@@ -1,6 +1,12 @@
 {
+  "matrix": {
+    "$IMPORT": "eng/pipelines/templates/stages/platform-matrix.json",
+    "ArmTemplateParameters": "@{ enableAttestation = $true }"
+  },
   "displayNames": {
-      "@{ enableHsm = $true }": "HSM"
+    "@{ enableAttestation = $true }": "",
+    "@{ enableAttestation = $false }": "NoAttestation",
+    "@{ enableHsm = $true }": "HSM"
   },
   "include": [
     {
@@ -11,7 +17,7 @@
         }
       },
       "ArmTemplateParameters": "@{ enableHsm = $true }",
-      "TestTargetFramework": [ "netcoreapp3.1" ]
+      "TestTargetFramework": [ "net6.0" ]
     }
   ]
 }

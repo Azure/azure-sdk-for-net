@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Information from validate template deployment response. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmDeploymentValidateResult. </summary>
         /// <param name="error"> The deployment validation error. </param>
         /// <param name="properties"> The template deployment properties. </param>
-        internal ArmDeploymentValidateResult(ResourcesResponseError error, ArmDeploymentPropertiesExtended properties)
+        internal ArmDeploymentValidateResult(ResponseError error, ArmDeploymentPropertiesExtended properties)
         {
             Error = error;
             Properties = properties;
         }
 
         /// <summary> The deployment validation error. </summary>
-        public ResourcesResponseError Error { get; }
+        public ResponseError Error { get; }
         /// <summary> The template deployment properties. </summary>
         public ArmDeploymentPropertiesExtended Properties { get; }
     }

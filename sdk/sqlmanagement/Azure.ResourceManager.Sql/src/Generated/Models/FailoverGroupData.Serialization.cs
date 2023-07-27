@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ReadWriteEndpoint))
             {
-                writer.WritePropertyName("readWriteEndpoint");
+                writer.WritePropertyName("readWriteEndpoint"u8);
                 writer.WriteObjectValue(ReadWriteEndpoint);
             }
             if (Optional.IsDefined(ReadOnlyEndpoint))
             {
-                writer.WritePropertyName("readOnlyEndpoint");
+                writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue(ReadOnlyEndpoint);
             }
             if (Optional.IsCollectionDefined(PartnerServers))
             {
-                writer.WritePropertyName("partnerServers");
+                writer.WritePropertyName("partnerServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in PartnerServers)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql
             }
             if (Optional.IsCollectionDefined(Databases))
             {
-                writer.WritePropertyName("databases");
+                writer.WritePropertyName("databases"u8);
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
@@ -67,30 +67,37 @@ namespace Azure.ResourceManager.Sql
 
         internal static FailoverGroupData DeserializeFailoverGroupData(JsonElement element)
         {
-            Optional<string> location = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<FailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
             Optional<FailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
             Optional<FailoverGroupReplicationRole> replicationRole = default;
             Optional<string> replicationState = default;
-            Optional<IList<PartnerInfo>> partnerServers = default;
+            Optional<IList<PartnerServerInfo>> partnerServers = default;
             Optional<IList<string>> databases = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -101,27 +108,31 @@ namespace Azure.ResourceManager.Sql
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -130,61 +141,56 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("readWriteEndpoint"))
+                        if (property0.NameEquals("readWriteEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readWriteEndpoint = FailoverGroupReadWriteEndpoint.DeserializeFailoverGroupReadWriteEndpoint(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("readOnlyEndpoint"))
+                        if (property0.NameEquals("readOnlyEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readOnlyEndpoint = FailoverGroupReadOnlyEndpoint.DeserializeFailoverGroupReadOnlyEndpoint(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("replicationRole"))
+                        if (property0.NameEquals("replicationRole"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicationRole = new FailoverGroupReplicationRole(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("replicationState"))
+                        if (property0.NameEquals("replicationState"u8))
                         {
                             replicationState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("partnerServers"))
+                        if (property0.NameEquals("partnerServers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PartnerInfo> array = new List<PartnerInfo>();
+                            List<PartnerServerInfo> array = new List<PartnerServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerInfo.DeserializePartnerInfo(item));
+                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item));
                             }
                             partnerServers = array;
                             continue;
                         }
-                        if (property0.NameEquals("databases"))
+                        if (property0.NameEquals("databases"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -199,7 +205,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new FailoverGroupData(id, name, type, systemData, location.Value, Optional.ToDictionary(tags), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerServers), Optional.ToList(databases));
+            return new FailoverGroupData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerServers), Optional.ToList(databases));
         }
     }
 }

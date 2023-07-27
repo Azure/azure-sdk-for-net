@@ -15,6 +15,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static V1Manifest DeserializeV1Manifest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> architecture = default;
             Optional<string> name = default;
             Optional<string> tag = default;
@@ -24,26 +28,25 @@ namespace Azure.Containers.ContainerRegistry
             Optional<int> schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("architecture"))
+                if (property.NameEquals("architecture"u8))
                 {
                     architecture = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"))
+                if (property.NameEquals("tag"u8))
                 {
                     tag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fsLayers"))
+                if (property.NameEquals("fsLayers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FsLayer> array = new List<FsLayer>();
@@ -54,11 +57,10 @@ namespace Azure.Containers.ContainerRegistry
                     fsLayers = array;
                     continue;
                 }
-                if (property.NameEquals("history"))
+                if (property.NameEquals("history"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<History> array = new List<History>();
@@ -69,11 +71,10 @@ namespace Azure.Containers.ContainerRegistry
                     history = array;
                     continue;
                 }
-                if (property.NameEquals("signatures"))
+                if (property.NameEquals("signatures"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ImageSignature> array = new List<ImageSignature>();
@@ -84,11 +85,10 @@ namespace Azure.Containers.ContainerRegistry
                     signatures = array;
                     continue;
                 }
-                if (property.NameEquals("schemaVersion"))
+                if (property.NameEquals("schemaVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schemaVersion = property.Value.GetInt32();

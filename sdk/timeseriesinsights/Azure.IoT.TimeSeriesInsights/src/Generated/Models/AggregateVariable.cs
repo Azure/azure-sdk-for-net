@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -13,30 +14,27 @@ namespace Azure.IoT.TimeSeriesInsights
     public partial class AggregateVariable : TimeSeriesVariable
     {
         /// <summary> Initializes a new instance of AggregateVariable. </summary>
-        /// <param name="aggregation"> Aggregation time series expression when kind is &quot;aggregate&quot; is used to represent the aggregation that needs to be performed directly using event properties like &quot;$event.Temperature&quot;. For example, aggregation for calculating range of temperature changes can be written as: &quot;max($event.Temperature)-min($event.Temperature)&quot;. </param>
+        /// <param name="aggregation"> Aggregation time series expression when kind is "aggregate" is used to represent the aggregation that needs to be performed directly using event properties like "$event.Temperature". For example, aggregation for calculating range of temperature changes can be written as: "max($event.Temperature)-min($event.Temperature)". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="aggregation"/> is null. </exception>
         public AggregateVariable(TimeSeriesExpression aggregation)
         {
-            if (aggregation == null)
-            {
-                throw new ArgumentNullException(nameof(aggregation));
-            }
+            Argument.AssertNotNull(aggregation, nameof(aggregation));
 
             Aggregation = aggregation;
             Kind = "aggregate";
         }
 
         /// <summary> Initializes a new instance of AggregateVariable. </summary>
-        /// <param name="kind"> Allowed &quot;kind&quot; values are - &quot;numeric&quot; or &quot;aggregate&quot;. While &quot;numeric&quot; allows you to specify value of the reconstructed signal and the expression to aggregate them, the &quot;aggregate&quot; kind lets you directly aggregate on the event properties without specifying value. </param>
-        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </param>
-        /// <param name="aggregation"> Aggregation time series expression when kind is &quot;aggregate&quot; is used to represent the aggregation that needs to be performed directly using event properties like &quot;$event.Temperature&quot;. For example, aggregation for calculating range of temperature changes can be written as: &quot;max($event.Temperature)-min($event.Temperature)&quot;. </param>
+        /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
+        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
+        /// <param name="aggregation"> Aggregation time series expression when kind is "aggregate" is used to represent the aggregation that needs to be performed directly using event properties like "$event.Temperature". For example, aggregation for calculating range of temperature changes can be written as: "max($event.Temperature)-min($event.Temperature)". </param>
         internal AggregateVariable(string kind, TimeSeriesExpression filter, TimeSeriesExpression aggregation) : base(kind, filter)
         {
             Aggregation = aggregation;
             Kind = kind ?? "aggregate";
         }
 
-        /// <summary> Aggregation time series expression when kind is &quot;aggregate&quot; is used to represent the aggregation that needs to be performed directly using event properties like &quot;$event.Temperature&quot;. For example, aggregation for calculating range of temperature changes can be written as: &quot;max($event.Temperature)-min($event.Temperature)&quot;. </summary>
+        /// <summary> Aggregation time series expression when kind is "aggregate" is used to represent the aggregation that needs to be performed directly using event properties like "$event.Temperature". For example, aggregation for calculating range of temperature changes can be written as: "max($event.Temperature)-min($event.Temperature)". </summary>
         public TimeSeriesExpression Aggregation { get; set; }
     }
 }

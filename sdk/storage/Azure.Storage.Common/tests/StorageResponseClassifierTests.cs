@@ -83,11 +83,13 @@ namespace Azure.Storage.Tests
         public void IsError_409_ConditionalResponse(string code, string header, bool isError)
         {
             var mockRequest = new MockRequest();
-            mockRequest.Headers.Add("x-ms-error-code", code);
             mockRequest.Headers.Add(header, "value");
             var httpMessage = new HttpMessage(mockRequest, new ResponseClassifier());
 
-            httpMessage.Response = new MockResponse(409);
+            var mockResponse = new MockResponse(409);
+            mockResponse.AddHeader("x-ms-error-code", code);
+            httpMessage.Response = mockResponse;
+
             Assert.AreEqual(isError, classifier.IsErrorResponse(httpMessage));
         }
 

@@ -40,7 +40,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
-        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'</param>
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase',
+        /// 'SAPHanaDBInstance'</param>
         /// <param name="containerName">Unique name of container</param>
         /// <param name="sourceResourceId">ARM ID of the resource to be backed
         /// up.</param>
@@ -70,6 +71,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// is protected in archive</param>
         /// <param name="policyName">Name of the policy used for
         /// protection</param>
+        /// <param name="softDeleteRetentionPeriod">Soft delete retention
+        /// period in days</param>
         /// <param name="protectedItemDataId">Internal ID of a backup item.
         /// Used by Azure SQL Backup engine to contact Recovery
         /// Services.</param>
@@ -78,8 +81,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'ProtectionError', 'ProtectionStopped', 'ProtectionPaused'</param>
         /// <param name="extendedInfo">Additional information for this backup
         /// item.</param>
-        public AzureSqlProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), bool? isArchiveEnabled = default(bool?), string policyName = default(string), string protectedItemDataId = default(string), string protectionState = default(string), AzureSqlProtectedItemExtendedInfo extendedInfo = default(AzureSqlProtectedItemExtendedInfo))
-            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName)
+        public AzureSqlProtectedItem(string backupManagementType = default(string), string workloadType = default(string), string containerName = default(string), string sourceResourceId = default(string), string policyId = default(string), System.DateTime? lastRecoveryPoint = default(System.DateTime?), string backupSetName = default(string), string createMode = default(string), System.DateTime? deferredDeleteTimeInUTC = default(System.DateTime?), bool? isScheduledForDeferredDelete = default(bool?), string deferredDeleteTimeRemaining = default(string), bool? isDeferredDeleteScheduleUpcoming = default(bool?), bool? isRehydrate = default(bool?), IList<string> resourceGuardOperationRequests = default(IList<string>), bool? isArchiveEnabled = default(bool?), string policyName = default(string), int? softDeleteRetentionPeriod = default(int?), string protectedItemDataId = default(string), string protectionState = default(string), AzureSqlProtectedItemExtendedInfo extendedInfo = default(AzureSqlProtectedItemExtendedInfo))
+            : base(backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
         {
             ProtectedItemDataId = protectedItemDataId;
             ProtectionState = protectionState;

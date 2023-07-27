@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SyncFullSchemaTable DeserializeSyncFullSchemaTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SyncFullSchemaTableColumn>> columns = default;
             Optional<string> errorId = default;
             Optional<bool> hasError = default;
@@ -22,11 +26,10 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> quotedName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columns"))
+                if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SyncFullSchemaTableColumn> array = new List<SyncFullSchemaTableColumn>();
@@ -37,27 +40,26 @@ namespace Azure.ResourceManager.Sql.Models
                     columns = array;
                     continue;
                 }
-                if (property.NameEquals("errorId"))
+                if (property.NameEquals("errorId"u8))
                 {
                     errorId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hasError"))
+                if (property.NameEquals("hasError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasError = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("quotedName"))
+                if (property.NameEquals("quotedName"u8))
                 {
                     quotedName = property.Value.GetString();
                     continue;

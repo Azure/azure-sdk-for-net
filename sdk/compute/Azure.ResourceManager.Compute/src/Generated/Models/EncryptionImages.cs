@@ -29,19 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Contains encryption settings for an OS disk image. </summary>
-        internal OSDiskImageEncryption OSDiskImage { get; set; }
-        /// <summary> A relative URI containing the resource ID of the disk encryption set. </summary>
-        public string DiskEncryptionSetId
-        {
-            get => OSDiskImage is null ? default : OSDiskImage.DiskEncryptionSetId;
-            set
-            {
-                if (OSDiskImage is null)
-                    OSDiskImage = new OSDiskImageEncryption();
-                OSDiskImage.DiskEncryptionSetId = value;
-            }
-        }
-
+        public OSDiskImageEncryption OSDiskImage { get; set; }
         /// <summary> A list of encryption specifications for data disk images. </summary>
         public IList<DataDiskImageEncryption> DataDiskImages { get; }
     }

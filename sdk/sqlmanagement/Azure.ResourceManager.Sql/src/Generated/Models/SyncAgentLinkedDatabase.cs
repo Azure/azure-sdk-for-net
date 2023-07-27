@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -29,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="serverName"> Server name of the sync agent linked database. </param>
         /// <param name="databaseName"> Database name of the sync agent linked database. </param>
         /// <param name="userName"> User name of the sync agent linked database. </param>
-        internal SyncAgentLinkedDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, string databaseId, string description, string serverName, string databaseName, string userName) : base(id, name, resourceType, systemData)
+        internal SyncAgentLinkedDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, Guid? databaseId, string description, string serverName, string databaseName, string userName) : base(id, name, resourceType, systemData)
         {
             DatabaseType = databaseType;
             DatabaseId = databaseId;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Type of the sync agent linked database. </summary>
         public SyncMemberDbType? DatabaseType { get; }
         /// <summary> Id of the sync agent linked database. </summary>
-        public string DatabaseId { get; }
+        public Guid? DatabaseId { get; }
         /// <summary> Description of the sync agent linked database. </summary>
         public string Description { get; }
         /// <summary> Server name of the sync agent linked database. </summary>

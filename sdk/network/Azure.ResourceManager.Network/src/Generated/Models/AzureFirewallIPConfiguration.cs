@@ -5,13 +5,14 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> IP configuration of an Azure Firewall. </summary>
-    public partial class AzureFirewallIPConfiguration : SubResource
+    public partial class AzureFirewallIPConfiguration : NetworkResourceData
     {
         /// <summary> Initializes a new instance of AzureFirewallIPConfiguration. </summary>
         public AzureFirewallIPConfiguration()
@@ -20,33 +21,27 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of AzureFirewallIPConfiguration. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="privateIPAddress"> The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes. </param>
-        /// <param name="subnet"> Reference to the subnet resource. This resource must be named &apos;AzureFirewallSubnet&apos; or &apos;AzureFirewallManagementSubnet&apos;. </param>
+        /// <param name="subnet"> Reference to the subnet resource. This resource must be named 'AzureFirewallSubnet' or 'AzureFirewallManagementSubnet'. </param>
         /// <param name="publicIPAddress"> Reference to the PublicIP resource. This field is a mandatory input if subnet is not null. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure firewall IP configuration resource. </param>
-        internal AzureFirewallIPConfiguration(string id, string name, string etag, string resourceType, string privateIPAddress, WritableSubResource subnet, WritableSubResource publicIPAddress, ProvisioningState? provisioningState) : base(id)
+        internal AzureFirewallIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             PrivateIPAddress = privateIPAddress;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> The Firewall Internal Load Balancer IP to be used as the next hop in User Defined Routes. </summary>
         public string PrivateIPAddress { get; }
-        /// <summary> Reference to the subnet resource. This resource must be named &apos;AzureFirewallSubnet&apos; or &apos;AzureFirewallManagementSubnet&apos;. </summary>
+        /// <summary> Reference to the subnet resource. This resource must be named 'AzureFirewallSubnet' or 'AzureFirewallManagementSubnet'. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId
@@ -75,6 +70,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the Azure firewall IP configuration resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -6,13 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VirtualHubRouteTableV2 data model. </summary>
-    public partial class VirtualHubRouteTableV2Data : SubResource
+    /// <summary>
+    /// A class representing the VirtualHubRouteTableV2 data model.
+    /// VirtualHubRouteTableV2 Resource.
+    /// </summary>
+    public partial class VirtualHubRouteTableV2Data : NetworkResourceData
     {
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
         public VirtualHubRouteTableV2Data()
@@ -23,29 +27,27 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of VirtualHubRouteTableV2Data. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routes"> List of all routes. </param>
         /// <param name="attachedConnections"> List of all connections attached to this route table v2. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual hub route table v2 resource. </param>
-        internal VirtualHubRouteTableV2Data(string id, string name, string etag, IList<VirtualHubRouteV2> routes, IList<string> attachedConnections, ProvisioningState? provisioningState) : base(id)
+        internal VirtualHubRouteTableV2Data(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IList<VirtualHubRouteV2> routes, IList<string> attachedConnections, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
+            ETag = etag;
             Routes = routes;
             AttachedConnections = attachedConnections;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> List of all routes. </summary>
         public IList<VirtualHubRouteV2> Routes { get; }
         /// <summary> List of all connections attached to this route table v2. </summary>
         public IList<string> AttachedConnections { get; }
         /// <summary> The provisioning state of the virtual hub route table v2 resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PrivateBlob))
             {
-                writer.WritePropertyName("privateBlob");
+                writer.WritePropertyName("privateBlob"u8);
                 writer.WriteStringValue(PrivateBlob);
             }
             if (Optional.IsDefined(CertPassword))
             {
-                writer.WritePropertyName("certPassword");
+                writer.WritePropertyName("certPassword"u8);
                 writer.WriteStringValue(CertPassword);
             }
             writer.WriteEndObject();
@@ -34,35 +34,43 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static TdeCertificate DeserializeTdeCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> privateBlob = default;
             Optional<string> certPassword = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,12 +79,12 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("privateBlob"))
+                        if (property0.NameEquals("privateBlob"u8))
                         {
                             privateBlob = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("certPassword"))
+                        if (property0.NameEquals("certPassword"u8))
                         {
                             certPassword = property0.Value.GetString();
                             continue;
@@ -85,7 +93,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new TdeCertificate(id, name, type, systemData, privateBlob.Value, certPassword.Value);
+            return new TdeCertificate(id, name, type, systemData.Value, privateBlob.Value, certPassword.Value);
         }
     }
 }

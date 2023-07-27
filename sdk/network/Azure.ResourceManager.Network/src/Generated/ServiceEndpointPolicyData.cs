@@ -5,20 +5,26 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the ServiceEndpointPolicy data model. </summary>
-    public partial class ServiceEndpointPolicyData : NetworkResourceData
+    /// <summary>
+    /// A class representing the ServiceEndpointPolicy data model.
+    /// Service End point policy resource.
+    /// </summary>
+    public partial class ServiceEndpointPolicyData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
         public ServiceEndpointPolicyData()
         {
             ServiceEndpointPolicyDefinitions = new ChangeTrackingList<ServiceEndpointPolicyDefinitionData>();
             Subnets = new ChangeTrackingList<SubnetData>();
+            ContextualServiceEndpointPolicies = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of ServiceEndpointPolicyData. </summary>
@@ -33,18 +39,22 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnets"> A collection of references to subnets. </param>
         /// <param name="resourceGuid"> The resource GUID property of the service endpoint policy resource. </param>
         /// <param name="provisioningState"> The provisioning state of the service endpoint policy resource. </param>
-        internal ServiceEndpointPolicyData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        /// <param name="serviceAlias"> The alias indicating if the policy belongs to a service. </param>
+        /// <param name="contextualServiceEndpointPolicies"> A collection of contextual service endpoint policy. </param>
+        internal ServiceEndpointPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string kind, IList<ServiceEndpointPolicyDefinitionData> serviceEndpointPolicyDefinitions, IReadOnlyList<SubnetData> subnets, Guid? resourceGuid, NetworkProvisioningState? provisioningState, string serviceAlias, IList<string> contextualServiceEndpointPolicies) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             Kind = kind;
             ServiceEndpointPolicyDefinitions = serviceEndpointPolicyDefinitions;
             Subnets = subnets;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            ServiceAlias = serviceAlias;
+            ContextualServiceEndpointPolicies = contextualServiceEndpointPolicies;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Kind of service endpoint policy. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> A collection of service endpoint policy definitions of the service endpoint policy. </summary>
@@ -52,8 +62,12 @@ namespace Azure.ResourceManager.Network
         /// <summary> A collection of references to subnets. </summary>
         public IReadOnlyList<SubnetData> Subnets { get; }
         /// <summary> The resource GUID property of the service endpoint policy resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the service endpoint policy resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> The alias indicating if the policy belongs to a service. </summary>
+        public string ServiceAlias { get; set; }
+        /// <summary> A collection of contextual service endpoint policy. </summary>
+        public IList<string> ContextualServiceEndpointPolicies { get; }
     }
 }

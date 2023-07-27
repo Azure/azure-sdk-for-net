@@ -1,0 +1,55 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdktest-contentsafety.cognitiveservices.azure.com/contentsafety/text:analyze?api-version=2023-04-30-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "60",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-00fe58e9876ed7e1d55b1b1a4b2185e7-196cc4d4d49ae929-00",
+        "User-Agent": "azsdk-net-AI.ContentSafety/1.0.0-alpha.20230601.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a9f871fa2284c18ecbd7065b49dcf51c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "text": "You are an idiot",
+        "categories": [
+          "Hate",
+          "SelfHarm"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2022-12-30-preview,2023-04-30-preview",
+        "apim-request-id": "d41b9bf7-2fcc-4073-bb03-b7f7c115f99d",
+        "Content-Type": "application/json; charset=utf-8",
+        "csp-billing-usage": "CognitiveServices.ContentSafety.Text:Analyze=1",
+        "Date": "Thu, 01 Jun 2023 15:08:25 GMT",
+        "Server": "istio-envoy",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "Transfer-Encoding": "chunked",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "66",
+        "x-ms-region": "Central US EUAP"
+      },
+      "ResponseBody": {
+        "blocklistsMatchResults": [],
+        "hateResult": {
+          "category": "Hate",
+          "severity": 2
+        },
+        "selfHarmResult": {
+          "category": "SelfHarm",
+          "severity": 0
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "CONTENT_SAFETY_ENDPOINT": "https://sdktest-contentsafety.cognitiveservices.azure.com/",
+    "CONTENT_SAFETY_KEY": "Sanitized",
+    "RandomSeed": "1139492038"
+  }
+}

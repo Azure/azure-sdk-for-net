@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DetectorAbnormalTimePeriod. </summary>
         public DetectorAbnormalTimePeriod()
         {
-            MetaData = new ChangeTrackingList<IList<NameValuePair>>();
-            Solutions = new ChangeTrackingList<Solution>();
+            MetaData = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
+            Solutions = new ChangeTrackingList<DiagnosticSolution>();
         }
 
         /// <summary> Initializes a new instance of DetectorAbnormalTimePeriod. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="metaData"> Downtime metadata. </param>
         /// <param name="issueType"> Represents the type of the Detector. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
-        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<NameValuePair>> metaData, IssueType? issueType, IList<Solution> solutions)
+        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<AppServiceNameValuePair>> metaData, DetectorIssueType? issueType, IList<DiagnosticSolution> solutions)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Represents the rank of the Detector. </summary>
         public double? Priority { get; set; }
         /// <summary> Downtime metadata. </summary>
-        public IList<IList<NameValuePair>> MetaData { get; }
+        public IList<IList<AppServiceNameValuePair>> MetaData { get; }
         /// <summary> Represents the type of the Detector. </summary>
-        public IssueType? IssueType { get; set; }
+        public DetectorIssueType? IssueType { get; set; }
         /// <summary> List of proposed solutions. </summary>
-        public IList<Solution> Solutions { get; }
+        public IList<DiagnosticSolution> Solutions { get; }
     }
 }

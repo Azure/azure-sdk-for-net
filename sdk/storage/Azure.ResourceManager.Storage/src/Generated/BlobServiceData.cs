@@ -12,7 +12,10 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    /// <summary> A class representing the BlobService data model. </summary>
+    /// <summary>
+    /// A class representing the BlobService data model.
+    /// The properties of a storage account’s Blob service.
+    /// </summary>
     public partial class BlobServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of BlobServiceData. </summary>
@@ -30,19 +33,19 @@ namespace Azure.ResourceManager.Storage
         /// <param name="defaultServiceVersion"> DefaultServiceVersion indicates the default version to use for requests to the Blob service if an incoming request’s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </param>
         /// <param name="deleteRetentionPolicy"> The blob service properties for blob soft delete. </param>
         /// <param name="isVersioningEnabled"> Versioning is enabled if set to true. </param>
-        /// <param name="automaticSnapshotPolicyEnabled"> Deprecated in favor of isVersioningEnabled property. </param>
+        /// <param name="isAutomaticSnapshotPolicyEnabled"> Deprecated in favor of isVersioningEnabled property. </param>
         /// <param name="changeFeed"> The blob service properties for change feed events. </param>
         /// <param name="restorePolicy"> The blob service properties for blob restore policy. </param>
         /// <param name="containerDeleteRetentionPolicy"> The blob service properties for container soft delete. </param>
         /// <param name="lastAccessTimeTrackingPolicy"> The blob service property to configure last access time based tracking policy. </param>
-        internal BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, CorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, bool? isVersioningEnabled, bool? automaticSnapshotPolicyEnabled, ChangeFeed changeFeed, RestorePolicyProperties restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy) : base(id, name, resourceType, systemData)
+        internal BlobServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageSku sku, StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Cors = cors;
             DefaultServiceVersion = defaultServiceVersion;
             DeleteRetentionPolicy = deleteRetentionPolicy;
             IsVersioningEnabled = isVersioningEnabled;
-            AutomaticSnapshotPolicyEnabled = automaticSnapshotPolicyEnabled;
+            IsAutomaticSnapshotPolicyEnabled = isAutomaticSnapshotPolicyEnabled;
             ChangeFeed = changeFeed;
             RestorePolicy = restorePolicy;
             ContainerDeleteRetentionPolicy = containerDeleteRetentionPolicy;
@@ -52,15 +55,15 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Sku name and tier. </summary>
         public StorageSku Sku { get; }
         /// <summary> Specifies CORS rules for the Blob service. You can include up to five CorsRule elements in the request. If no CorsRule elements are included in the request body, all CORS rules will be deleted, and CORS will be disabled for the Blob service. </summary>
-        internal CorsRules Cors { get; set; }
+        internal StorageCorsRules Cors { get; set; }
         /// <summary> The List of CORS rules. You can include up to five CorsRule elements in the request. </summary>
-        public IList<CorsRule> CorsRulesValue
+        public IList<StorageCorsRule> CorsRules
         {
             get
             {
                 if (Cors is null)
-                    Cors = new CorsRules();
-                return Cors.CorsRulesValue;
+                    Cors = new StorageCorsRules();
+                return Cors.CorsRules;
             }
         }
 
@@ -71,11 +74,11 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Versioning is enabled if set to true. </summary>
         public bool? IsVersioningEnabled { get; set; }
         /// <summary> Deprecated in favor of isVersioningEnabled property. </summary>
-        public bool? AutomaticSnapshotPolicyEnabled { get; set; }
+        public bool? IsAutomaticSnapshotPolicyEnabled { get; set; }
         /// <summary> The blob service properties for change feed events. </summary>
-        public ChangeFeed ChangeFeed { get; set; }
+        public BlobServiceChangeFeed ChangeFeed { get; set; }
         /// <summary> The blob service properties for blob restore policy. </summary>
-        public RestorePolicyProperties RestorePolicy { get; set; }
+        public RestorePolicy RestorePolicy { get; set; }
         /// <summary> The blob service properties for container soft delete. </summary>
         public DeleteRetentionPolicy ContainerDeleteRetentionPolicy { get; set; }
         /// <summary> The blob service property to configure last access time based tracking policy. </summary>

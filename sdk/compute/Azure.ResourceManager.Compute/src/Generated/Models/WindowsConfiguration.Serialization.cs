@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisionVmAgent))
             {
-                writer.WritePropertyName("provisionVMAgent");
+                writer.WritePropertyName("provisionVMAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (Optional.IsDefined(EnableAutomaticUpdates))
+            if (Optional.IsDefined(IsAutomaticUpdatesEnabled))
             {
-                writer.WritePropertyName("enableAutomaticUpdates");
-                writer.WriteBooleanValue(EnableAutomaticUpdates.Value);
+                writer.WritePropertyName("enableAutomaticUpdates"u8);
+                writer.WriteBooleanValue(IsAutomaticUpdatesEnabled.Value);
             }
             if (Optional.IsDefined(TimeZone))
             {
-                writer.WritePropertyName("timeZone");
+                writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
             if (Optional.IsCollectionDefined(AdditionalUnattendContent))
             {
-                writer.WritePropertyName("additionalUnattendContent");
+                writer.WritePropertyName("additionalUnattendContent"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalUnattendContent)
                 {
@@ -43,57 +43,64 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(PatchSettings))
             {
-                writer.WritePropertyName("patchSettings");
+                writer.WritePropertyName("patchSettings"u8);
                 writer.WriteObjectValue(PatchSettings);
             }
             if (Optional.IsDefined(WinRM))
             {
-                writer.WritePropertyName("winRM");
+                writer.WritePropertyName("winRM"u8);
                 writer.WriteObjectValue(WinRM);
+            }
+            if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
+            {
+                writer.WritePropertyName("enableVMAgentPlatformUpdates"u8);
+                writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static WindowsConfiguration DeserializeWindowsConfiguration(JsonElement element)
         {
-            Optional<bool> provisionVMAgent = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<bool> provisionVmAgent = default;
             Optional<bool> enableAutomaticUpdates = default;
             Optional<string> timeZone = default;
             Optional<IList<AdditionalUnattendContent>> additionalUnattendContent = default;
             Optional<PatchSettings> patchSettings = default;
             Optional<WinRMConfiguration> winRM = default;
+            Optional<bool> enableVmAgentPlatformUpdates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("provisionVMAgent"))
+                if (property.NameEquals("provisionVMAgent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisionVMAgent = property.Value.GetBoolean();
+                    provisionVmAgent = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enableAutomaticUpdates"))
+                if (property.NameEquals("enableAutomaticUpdates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableAutomaticUpdates = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("timeZone"))
+                if (property.NameEquals("timeZone"u8))
                 {
                     timeZone = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("additionalUnattendContent"))
+                if (property.NameEquals("additionalUnattendContent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AdditionalUnattendContent> array = new List<AdditionalUnattendContent>();
@@ -104,28 +111,35 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalUnattendContent = array;
                     continue;
                 }
-                if (property.NameEquals("patchSettings"))
+                if (property.NameEquals("patchSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     patchSettings = PatchSettings.DeserializePatchSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("winRM"))
+                if (property.NameEquals("winRM"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     winRM = WinRMConfiguration.DeserializeWinRMConfiguration(property.Value);
                     continue;
                 }
+                if (property.NameEquals("enableVMAgentPlatformUpdates"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableVmAgentPlatformUpdates = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new WindowsConfiguration(Optional.ToNullable(provisionVMAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, Optional.ToList(additionalUnattendContent), patchSettings.Value, winRM.Value);
+            return new WindowsConfiguration(Optional.ToNullable(provisionVmAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, Optional.ToList(additionalUnattendContent), patchSettings.Value, winRM.Value, Optional.ToNullable(enableVmAgentPlatformUpdates));
         }
     }
 }

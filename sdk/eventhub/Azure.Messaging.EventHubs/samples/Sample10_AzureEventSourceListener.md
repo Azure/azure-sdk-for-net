@@ -2,6 +2,19 @@
 
 The Event Hubs client library is instrumented using the .NET [`EventSource`](https://docs.microsoft.com/dotnet/api/system.diagnostics.tracing.eventsource) mechanism for logging. When instrumenting or diagnosing issues with applications that consume the library, it is often helpful to have access to the Event Hubs logs.  The following scenarios demonstrate how to use the [`AzureEventSourceListener`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#logging) from the `Azure.Core` package to capture logs emitted by the Event Hubs client library.
 
+## Table of contents
+
+- [Azure Event Source Listener lifetime](#azure-event-source-listener-lifetime)
+- [Capture all events and write them in to the console](#capture-all-events-and-write-them-in-to-the-console)
+- [Capture all events and write them to `Trace`](#capture-all-events-and-write-them-to-trace)
+- [Apply filtering logic to logs](#apply-filtering-logic-to-logs)
+- [Capture filtered logs to a file](#capture-filtered-logs-to-a-file)
+- [Finding the desired events](#finding-the-desired-events)
+    - [Event Source: "Azure-Messaging-EventHubs"](#event-source-azure-messaging-eventhubs)
+    - [Event Source: "Azure-Messaging-EventHubs-Processor-EventProcessorClient"](#event-source-azure-messaging-eventhubs-processor-eventprocessorclient)
+    - [Event Source: "Azure-Messaging-EventHubs-Processor-BlobEventStore"](#event-source-azure-messaging-eventhubs-processor-blobeventstore)
+    - [Event Source: "Azure-Messaging-EventHubs-Processor-PartitionLoadBalancer"](#event-source-azure-messaging-eventhubs-processor-partitionloadbalancer)
+
 ## Azure Event Source Listener lifetime
 
 In order for the `AzureEventSourceListener` to collect logs, it must be in scope and active while the client library is in use.  If the listener is disposed or otherwise out of scope, logs cannot be collected.  Generally, we recommend creating the listener as a top-level member of the class where the Event Hubs client being inspected is used.
@@ -66,7 +79,7 @@ finally
 
 ## Apply filtering logic to logs
 
-This examples demonstrates using a callback with the listener to allow custom logic, such as filtering, of the log messages.  This can help to reduce log spam when troubleshooting by capturing just the log entries that are helpful.   
+This examples demonstrates using a callback with the listener to allow custom logic, such as filtering, of the log messages.  This can help to reduce log spam when troubleshooting by capturing just the log entries that are helpful.
 
 In the snippet below, the `Verbose` messages for the `Azure-Identity` event source are captured and written to `Trace` output.  Log messages for the `Azure-Messaging-EventHubs` event source are filtered to capture only a specific set to aid in debugging publishing, which are then written to the standard `Console` output.
 
@@ -114,7 +127,7 @@ finally
 
 ## Capture filtered logs to a file
 
-For scenarios where capturing logs to `Trace` or `Console` outputs isn't ideal, log information can be streamed into a variety of targets, such as Azure Storage, databases, and files for durable persistence.    This example demonstrates capturing error logs to a text file so that they can be analyzed later, while capturing non-error information to `Console` output.  
+For scenarios where capturing logs to `Trace` or `Console` outputs isn't ideal, log information can be streamed into a variety of targets, such as Azure Storage, databases, and files for durable persistence.    This example demonstrates capturing error logs to a text file so that they can be analyzed later, while capturing non-error information to `Console` output.
 
 ```C# Snippet:EventHubs_Sample10_CustomListenerWithFile
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
@@ -162,15 +175,15 @@ finally
 
 ## Finding the desired events
 
-The Event Hubs client library logs using several event sources for different areas of functionality.  Each event source contains multiple log events, with most grouped into logical sets that follow the pattern:  
+The Event Hubs client library logs using several event sources for different areas of functionality.  Each event source contains multiple log events, with most grouped into logical sets that follow the pattern:
 
 - `{ Operation Name }Start`
 - `{ Operation Name }Error`
 - `{ Operation Name }Complete`
 
-Each operation will always emit its "Start" and "Complete" log events, and will only emit its "Error" event as needed.  For AMQP operations, the "Complete" event will detail the number of retries that were used for that operation.  
+Each operation will always emit its "Start" and "Complete" log events, and will only emit its "Error" event as needed.  For AMQP operations, the "Complete" event will detail the number of retries that were used for that operation.
 
-Unfortunately, there is currently way to easily view all of the log events offered.  To discover the available log events, inspecting the associated source code is the best option. 
+Unfortunately, there is currently way to easily view all of the log events offered.  To discover the available log events, inspecting the associated source code is the best option.
 
 ### Event Source: "Azure-Messaging-EventHubs"
 

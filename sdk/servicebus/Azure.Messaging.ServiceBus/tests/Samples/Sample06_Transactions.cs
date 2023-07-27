@@ -167,7 +167,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
             using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                // This will through an InvalidOperationException because a "receive" cannot be
+                // This will throw an InvalidOperationException because a "receive" cannot be
                 // routed through a different entity.
                 await receiverA.CompleteMessageAsync(receivedMessage);
                 await senderB.SendMessageAsync(new ServiceBusMessage());

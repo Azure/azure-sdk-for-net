@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,14 +21,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
         public BlobEventsTrigger(IEnumerable<BlobEventType> events, string scope)
         {
-            if (events == null)
-            {
-                throw new ArgumentNullException(nameof(events));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(events, nameof(events));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             Events = events.ToList();
             Scope = scope;
@@ -41,8 +36,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
-        /// <param name="blobPathBeginsWith"> The blob path must begin with the pattern provided for trigger to fire. For example, &apos;/records/blobs/december/&apos; will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </param>
-        /// <param name="blobPathEndsWith"> The blob path must end with the pattern provided for trigger to fire. For example, &apos;december/boxes.csv&apos; will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </param>
+        /// <param name="blobPathBeginsWith"> The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </param>
+        /// <param name="blobPathEndsWith"> The blob path must end with the pattern provided for trigger to fire. For example, 'december/boxes.csv' will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </param>
         /// <param name="ignoreEmptyBlobs"> If set to true, blobs with zero bytes will be ignored. </param>
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
@@ -56,9 +51,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "BlobEventsTrigger";
         }
 
-        /// <summary> The blob path must begin with the pattern provided for trigger to fire. For example, &apos;/records/blobs/december/&apos; will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>
+        /// <summary> The blob path must begin with the pattern provided for trigger to fire. For example, '/records/blobs/december/' will only fire the trigger for blobs in the december folder under the records container. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>
         public string BlobPathBeginsWith { get; set; }
-        /// <summary> The blob path must end with the pattern provided for trigger to fire. For example, &apos;december/boxes.csv&apos; will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>
+        /// <summary> The blob path must end with the pattern provided for trigger to fire. For example, 'december/boxes.csv' will only fire the trigger for blobs named boxes in a december folder. At least one of these must be provided: blobPathBeginsWith, blobPathEndsWith. </summary>
         public string BlobPathEndsWith { get; set; }
         /// <summary> If set to true, blobs with zero bytes will be ignored. </summary>
         public bool? IgnoreEmptyBlobs { get; set; }

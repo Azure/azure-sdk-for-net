@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Time series expression (TSX) written as a single string. Examples: &quot;$event.Status.String=&apos;Good&apos;&quot;, &quot;avg($event.Temperature)&quot;. Refer to the documentation on how to write time series expressions. </summary>
+    /// <summary> Time series expression (TSX) written as a single string. Examples: "$event.Status.String='Good'", "avg($event.Temperature)". Refer to the documentation on how to write time series expressions. </summary>
     public partial class TimeSeriesExpression
     {
         /// <summary> Initializes a new instance of TimeSeriesExpression. </summary>
-        /// <param name="expression"> Time series expression (TSX) written as a single string. Examples: &quot;$event.Status.String=&apos;Good&apos;&quot;, &quot;avg($event.Temperature)&quot;. Refer to the documentation on how to write time series expressions. </param>
+        /// <param name="expression"> Time series expression (TSX) written as a single string. Examples: "$event.Status.String='Good'", "avg($event.Temperature)". Refer to the documentation on how to write time series expressions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public TimeSeriesExpression(string expression)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
+            Argument.AssertNotNull(expression, nameof(expression));
 
             Expression = expression;
         }

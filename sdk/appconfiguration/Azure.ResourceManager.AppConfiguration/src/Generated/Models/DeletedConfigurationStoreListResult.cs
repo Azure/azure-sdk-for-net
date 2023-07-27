@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of DeletedConfigurationStoreListResult. </summary>
         internal DeletedConfigurationStoreListResult()
         {
-            Value = new ChangeTrackingList<DeletedConfigurationStoreData>();
+            Value = new ChangeTrackingList<DeletedAppConfigurationStoreData>();
         }
 
         /// <summary> Initializes a new instance of DeletedConfigurationStoreListResult. </summary>
         /// <param name="value"> The list of deleted configuration store. </param>
         /// <param name="nextLink"> The URL to get the next set of deleted configuration stores. </param>
-        internal DeletedConfigurationStoreListResult(IReadOnlyList<DeletedConfigurationStoreData> value, string nextLink)
+        internal DeletedConfigurationStoreListResult(IReadOnlyList<DeletedAppConfigurationStoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of deleted configuration store. </summary>
-        public IReadOnlyList<DeletedConfigurationStoreData> Value { get; }
+        public IReadOnlyList<DeletedAppConfigurationStoreData> Value { get; }
         /// <summary> The URL to get the next set of deleted configuration stores. </summary>
         public string NextLink { get; }
     }

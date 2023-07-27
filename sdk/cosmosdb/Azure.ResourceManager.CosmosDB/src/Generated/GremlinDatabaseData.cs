@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the GremlinDatabase data model. </summary>
+    /// <summary>
+    /// A class representing the GremlinDatabase data model.
+    /// An Azure Cosmos DB Gremlin database.
+    /// </summary>
     public partial class GremlinDatabaseData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of GremlinDatabaseData. </summary>
@@ -30,15 +33,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal GremlinDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GremlinDatabasePropertiesResource resource, GremlinDatabasePropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> Identity for the resource. </param>
+        internal GremlinDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedGremlinDatabaseResourceInfo resource, GremlinDatabasePropertiesConfig options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
+            Identity = identity;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public GremlinDatabasePropertiesResource Resource { get; set; }
+        public ExtendedGremlinDatabaseResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public GremlinDatabasePropertiesOptions Options { get; set; }
+        public GremlinDatabasePropertiesConfig Options { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -85,9 +85,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// </param>
             /// <param name='resourceGuardProxyName'>
             /// </param>
-            public static ResourceGuardProxyBaseResource Put(this IResourceGuardProxyOperations operations, string vaultName, string resourceGroupName, string resourceGuardProxyName)
+            /// <param name='parameters'>
+            /// Request body for operation
+            /// </param>
+            public static ResourceGuardProxyBaseResource Put(this IResourceGuardProxyOperations operations, string vaultName, string resourceGroupName, string resourceGuardProxyName, ResourceGuardProxyBaseResource parameters)
             {
-                return operations.PutAsync(vaultName, resourceGroupName, resourceGuardProxyName).GetAwaiter().GetResult();
+                return operations.PutAsync(vaultName, resourceGroupName, resourceGuardProxyName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -106,12 +109,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// </param>
             /// <param name='resourceGuardProxyName'>
             /// </param>
+            /// <param name='parameters'>
+            /// Request body for operation
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceGuardProxyBaseResource> PutAsync(this IResourceGuardProxyOperations operations, string vaultName, string resourceGroupName, string resourceGuardProxyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceGuardProxyBaseResource> PutAsync(this IResourceGuardProxyOperations operations, string vaultName, string resourceGroupName, string resourceGuardProxyName, ResourceGuardProxyBaseResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PutWithHttpMessagesAsync(vaultName, resourceGroupName, resourceGuardProxyName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PutWithHttpMessagesAsync(vaultName, resourceGroupName, resourceGuardProxyName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

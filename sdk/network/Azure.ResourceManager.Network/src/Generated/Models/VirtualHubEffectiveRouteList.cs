@@ -11,12 +11,19 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> EffectiveRoutes List. </summary>
-    internal partial class VirtualHubEffectiveRouteList
+    public partial class VirtualHubEffectiveRouteList
     {
         /// <summary> Initializes a new instance of VirtualHubEffectiveRouteList. </summary>
         internal VirtualHubEffectiveRouteList()
         {
             Value = new ChangeTrackingList<VirtualHubEffectiveRoute>();
+        }
+
+        /// <summary> Initializes a new instance of VirtualHubEffectiveRouteList. </summary>
+        /// <param name="value"> The list of effective routes configured on the virtual hub or the specified resource. </param>
+        internal VirtualHubEffectiveRouteList(IReadOnlyList<VirtualHubEffectiveRoute> value)
+        {
+            Value = value;
         }
 
         /// <summary> The list of effective routes configured on the virtual hub or the specified resource. </summary>

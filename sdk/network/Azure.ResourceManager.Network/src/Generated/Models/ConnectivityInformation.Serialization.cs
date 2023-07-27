@@ -15,8 +15,12 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectivityInformation DeserializeConnectivityInformation(JsonElement element)
         {
-            Optional<IReadOnlyList<ConnectivityHop>> hops = default;
-            Optional<ConnectionStatus> connectionStatus = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
+            Optional<NetworkConnectionStatus> connectionStatus = default;
             Optional<int> avgLatencyInMs = default;
             Optional<int> minLatencyInMs = default;
             Optional<int> maxLatencyInMs = default;
@@ -24,76 +28,69 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> probesFailed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hops"))
+                if (property.NameEquals("hops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectivityHop> array = new List<ConnectivityHop>();
+                    List<ConnectivityHopInfo> array = new List<ConnectivityHopInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityHop.DeserializeConnectivityHop(item));
+                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item));
                     }
                     hops = array;
                     continue;
                 }
-                if (property.NameEquals("connectionStatus"))
+                if (property.NameEquals("connectionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    connectionStatus = new ConnectionStatus(property.Value.GetString());
+                    connectionStatus = new NetworkConnectionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("avgLatencyInMs"))
+                if (property.NameEquals("avgLatencyInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     avgLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minLatencyInMs"))
+                if (property.NameEquals("minLatencyInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxLatencyInMs"))
+                if (property.NameEquals("maxLatencyInMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxLatencyInMs = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("probesSent"))
+                if (property.NameEquals("probesSent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probesSent = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("probesFailed"))
+                if (property.NameEquals("probesFailed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probesFailed = property.Value.GetInt32();

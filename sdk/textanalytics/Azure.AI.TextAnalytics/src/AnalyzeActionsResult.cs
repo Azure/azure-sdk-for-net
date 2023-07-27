@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.AI.TextAnalytics
@@ -16,10 +17,12 @@ namespace Azure.AI.TextAnalytics
             IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
             IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
             IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionResults,
-            IReadOnlyCollection<ExtractSummaryActionResult> extractSummaryActionResults,
             IReadOnlyCollection<RecognizeCustomEntitiesActionResult> recognizeCustomEntitiesActionResults,
-            IReadOnlyCollection<SingleCategoryClassifyActionResult> singleCategoryClassifyActionResults,
-            IReadOnlyCollection<MultiCategoryClassifyActionResult> multiCategoryClassifyActionResults
+            IReadOnlyCollection<SingleLabelClassifyActionResult> singleLabelClassifyActionResults,
+            IReadOnlyCollection<MultiLabelClassifyActionResult> multiLabelClassifyActionResults,
+            IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> analyzeHealthcareEntitiesActionResults,
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults,
+            IReadOnlyCollection<AbstractiveSummarizeActionResult> abstractiveSummarizeActionResults
             )
         {
             ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
@@ -27,10 +30,33 @@ namespace Azure.AI.TextAnalytics
             RecognizePiiEntitiesResults = recognizePiiEntitiesActionResults;
             RecognizeLinkedEntitiesResults = recognizeLinkedEntitiesActionResults;
             AnalyzeSentimentResults = analyzeSentimentActionResults;
-            ExtractSummaryResults = extractSummaryActionResults;
-            SingleCategoryClassifyResults = singleCategoryClassifyActionResults;
-            MultiCategoryClassifyResults = multiCategoryClassifyActionResults;
             RecognizeCustomEntitiesResults = recognizeCustomEntitiesActionResults;
+            SingleLabelClassifyResults = singleLabelClassifyActionResults;
+            MultiLabelClassifyResults = multiLabelClassifyActionResults;
+            AnalyzeHealthcareEntitiesResults = analyzeHealthcareEntitiesActionResults;
+            ExtractiveSummarizeResults = extractiveSummarizeActionResults;
+            AbstractiveSummarizeResults = abstractiveSummarizeActionResults;
+        }
+
+        internal AnalyzeActionsResult(
+            IReadOnlyCollection<ExtractKeyPhrasesActionResult> extractKeyPhrasesActionResults,
+            IReadOnlyCollection<RecognizeEntitiesActionResult> recognizeEntitiesActionResults,
+            IReadOnlyCollection<RecognizePiiEntitiesActionResult> recognizePiiEntitiesActionResults,
+            IReadOnlyCollection<RecognizeLinkedEntitiesActionResult> recognizeLinkedEntitiesActionResults,
+            IReadOnlyCollection<AnalyzeSentimentActionResult> analyzeSentimentActionResults
+            )
+        {
+            ExtractKeyPhrasesResults = extractKeyPhrasesActionResults;
+            RecognizeEntitiesResults = recognizeEntitiesActionResults;
+            RecognizePiiEntitiesResults = recognizePiiEntitiesActionResults;
+            RecognizeLinkedEntitiesResults = recognizeLinkedEntitiesActionResults;
+            AnalyzeSentimentResults = analyzeSentimentActionResults;
+            SingleLabelClassifyResults = Array.Empty<SingleLabelClassifyActionResult>();
+            MultiLabelClassifyResults = Array.Empty<MultiLabelClassifyActionResult>();
+            RecognizeCustomEntitiesResults = Array.Empty<RecognizeCustomEntitiesActionResult>();
+            AnalyzeHealthcareEntitiesResults = Array.Empty<AnalyzeHealthcareEntitiesActionResult>();
+            ExtractiveSummarizeResults = Array.Empty<ExtractiveSummarizeActionResult>();
+            AbstractiveSummarizeResults = Array.Empty<AbstractiveSummarizeActionResult>();
         }
 
         /// <summary>
@@ -59,23 +85,33 @@ namespace Azure.AI.TextAnalytics
         public IReadOnlyCollection<AnalyzeSentimentActionResult> AnalyzeSentimentResults { get; }
 
         /// <summary>
-        /// Determines the collection of <see cref="ExtractSummaryActionResult"/>.
-        /// </summary>
-        public IReadOnlyCollection<ExtractSummaryActionResult> ExtractSummaryResults { get; }
-
-        /// <summary>
         /// Determines the collection of <see cref="RecognizeCustomEntitiesActionResult"/>.
         /// </summary>
         public IReadOnlyCollection<RecognizeCustomEntitiesActionResult> RecognizeCustomEntitiesResults { get; }
 
         /// <summary>
-        /// Determines the collection of <see cref="SingleCategoryClassifyActionResult"/>.
+        /// Determines the collection of <see cref="SingleLabelClassifyActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<SingleCategoryClassifyActionResult> SingleCategoryClassifyResults { get; }
+        public IReadOnlyCollection<SingleLabelClassifyActionResult> SingleLabelClassifyResults { get; }
 
         /// <summary>
-        /// Determines the collection of <see cref="MultiCategoryClassifyActionResult"/>.
+        /// Determines the collection of <see cref="MultiLabelClassifyActionResult"/>.
         /// </summary>
-        public IReadOnlyCollection<MultiCategoryClassifyActionResult> MultiCategoryClassifyResults { get; }
+        public IReadOnlyCollection<MultiLabelClassifyActionResult> MultiLabelClassifyResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="AnalyzeHealthcareEntitiesResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<AnalyzeHealthcareEntitiesActionResult> AnalyzeHealthcareEntitiesResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="ExtractiveSummarizeActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<ExtractiveSummarizeActionResult> ExtractiveSummarizeResults { get; }
+
+        /// <summary>
+        /// Determines the collection of <see cref="AbstractiveSummarizeActionResult"/>.
+        /// </summary>
+        public IReadOnlyCollection<AbstractiveSummarizeActionResult> AbstractiveSummarizeResults { get; }
     }
 }

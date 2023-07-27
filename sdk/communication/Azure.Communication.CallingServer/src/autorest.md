@@ -1,60 +1,25 @@
-# Azure.Communication.CallingServer
+# Azure.Communication.CallAutomation
 
-When a new version of the swagger needs to be updated:
-1. Open Azure.Communication.sln and under sdk\communication, run `dotnet msbuild /t:GenerateCode` to generate code.
-
-2. Upload the Azure.Communication.Call.dll to the [apiview.dev tool](https://apiview.dev/).
-If any of the new objects needs to be overwritten, add the required changes to the 'Models' folder.
-
-3. Repeat 2 and 3 until the desided interface is reflected in the apiview.dev.
+From Folder that contains autorest.md, Run `dotnet msbuild /t:GenerateCode` to generate code.
 
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
 ```yaml
-title: Calling server
-model-namespace: false
-require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/3893616381e816729ef9cdd768e87fb2845e189d/specification/communication/data-plane/CallingServer/readme.md
-payload-flattening-threshold: 10
+input-file:
+    -  $(this-folder)/Swagger/2022-04-07.json
+
 clear-output-folder: true
-```
+client-side-validation: false
+payload-flattening-threshold: 1
 
-### Fixing RecordingChannel 
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions
-  transform: >
-    delete $.RecordingChannelType["x-ms-enum"];
-    $.RecordingChannelType["x-ms-enum"] = {
-        "name": "RecordingChannel",
-        "modelAsString": false
-    };
-```
+openapi-type: data-plane
+tag: V2022_04_07_preview
 
-### Fixing RecordingContent
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions
-  transform: >
-    delete $.RecordingContentType["x-ms-enum"];
-    $.RecordingContentType["x-ms-enum"] = {
-        "name": "RecordingContent",
-        "modelAsString": false
-    };
-```
-    
-### Fixing RecordingFormat
-``` yaml
-directive:
-- from: swagger-document
-  where: $.definitions
-  transform: >
-    delete $.RecordingFormatType["x-ms-enum"];
-    $.RecordingFormatType["x-ms-enum"] = {
-        "name": "RecordingFormat",
-        "modelAsString": false
-    };
+model-namespace: false
+
+title:
+  Call Automation
+
+generation1-convenience-client: true
 ```

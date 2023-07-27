@@ -12,8 +12,9 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3)]
+        KeyClientOptions.ServiceVersion.V7_4,
+        KeyClientOptions.ServiceVersion.V7_3,
+        KeyClientOptions.ServiceVersion.V7_2)]
     public class ManagedHsmLiveTests : KeyClientLiveTests
     {
         public ManagedHsmLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceVersion)
@@ -31,7 +32,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         protected internal override bool IsManagedHSM => true;
 
-        [Test]
+        [RecordedTest]
         public async Task CreateRsaWithPublicExponent()
         {
             CreateRsaKeyOptions options = new CreateRsaKeyOptions(Recording.GenerateId())
@@ -51,7 +52,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(3, publicExponent);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateOctHsmKey()
         {
             string keyName = Recording.GenerateId();
@@ -65,7 +66,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(ecHsmkey, keyReturned);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateOctKey()
         {
             string keyName = Recording.GenerateId();
@@ -79,6 +80,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             AssertKeyVaultKeysEqual(keyNoHsm, keyReturned);
         }
 
+        [RecordedTest]
         [TestCase(16)]
         [TestCase(32)]
         [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
@@ -88,8 +90,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(count, rand.Length);
         }
 
-        [Test]
-        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3)]
+        [RecordedTest]
+        [ServiceVersion(Min = KeyClientOptions.ServiceVersion.V7_3, Max = KeyClientOptions.ServiceVersion.V7_3)] // TODO: Remove Max once https://github.com/Azure/azure-sdk-for-net/issues/32260 is resolved.
         public async Task ReleaseImportedKey()
         {
             string keyName = Recording.GenerateId();

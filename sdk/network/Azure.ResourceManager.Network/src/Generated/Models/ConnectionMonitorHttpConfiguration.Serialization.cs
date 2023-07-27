@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(Method))
             {
-                writer.WritePropertyName("method");
+                writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method.Value.ToString());
             }
             if (Optional.IsDefined(Path))
             {
-                writer.WritePropertyName("path");
+                writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
             if (Optional.IsCollectionDefined(RequestHeaders))
             {
-                writer.WritePropertyName("requestHeaders");
+                writer.WritePropertyName("requestHeaders"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequestHeaders)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsCollectionDefined(ValidStatusCodeRanges))
             {
-                writer.WritePropertyName("validStatusCodeRanges");
+                writer.WritePropertyName("validStatusCodeRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidStatusCodeRanges)
                 {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(PreferHttps))
             {
-                writer.WritePropertyName("preferHTTPS");
+                writer.WritePropertyName("preferHTTPS"u8);
                 writer.WriteBooleanValue(PreferHttps.Value);
             }
             writer.WriteEndObject();
@@ -61,59 +61,59 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorHttpConfiguration DeserializeConnectionMonitorHttpConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> port = default;
-            Optional<HttpConfigurationMethod> method = default;
+            Optional<NetworkHttpConfigurationMethod> method = default;
             Optional<string> path = default;
-            Optional<IList<HttpHeader>> requestHeaders = default;
+            Optional<IList<NetworkWatcherHttpHeader>> requestHeaders = default;
             Optional<IList<string>> validStatusCodeRanges = default;
             Optional<bool> preferHTTPS = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("port"))
+                if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    method = new HttpConfigurationMethod(property.Value.GetString());
+                    method = new NetworkHttpConfigurationMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     path = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("requestHeaders"))
+                if (property.NameEquals("requestHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HttpHeader> array = new List<HttpHeader>();
+                    List<NetworkWatcherHttpHeader> array = new List<NetworkWatcherHttpHeader>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpHeader.DeserializeHttpHeader(item));
+                        array.Add(NetworkWatcherHttpHeader.DeserializeNetworkWatcherHttpHeader(item));
                     }
                     requestHeaders = array;
                     continue;
                 }
-                if (property.NameEquals("validStatusCodeRanges"))
+                if (property.NameEquals("validStatusCodeRanges"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -124,11 +124,10 @@ namespace Azure.ResourceManager.Network.Models
                     validStatusCodeRanges = array;
                     continue;
                 }
-                if (property.NameEquals("preferHTTPS"))
+                if (property.NameEquals("preferHTTPS"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preferHTTPS = property.Value.GetBoolean();

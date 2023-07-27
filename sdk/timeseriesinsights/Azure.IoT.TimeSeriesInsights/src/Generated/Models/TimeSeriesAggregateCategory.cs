@@ -8,10 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Category used in categorical variables. A category is defined by &apos;label&apos; and the &apos;values&apos; that are assigned this label. </summary>
+    /// <summary> Category used in categorical variables. A category is defined by 'label' and the 'values' that are assigned this label. </summary>
     public partial class TimeSeriesAggregateCategory
     {
         /// <summary> Initializes a new instance of TimeSeriesAggregateCategory. </summary>
@@ -20,14 +21,8 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> or <paramref name="values"/> is null. </exception>
         public TimeSeriesAggregateCategory(string label, IEnumerable<object> values)
         {
-            if (label == null)
-            {
-                throw new ArgumentNullException(nameof(label));
-            }
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(label, nameof(label));
+            Argument.AssertNotNull(values, nameof(values));
 
             Label = label;
             Values = values.ToList();

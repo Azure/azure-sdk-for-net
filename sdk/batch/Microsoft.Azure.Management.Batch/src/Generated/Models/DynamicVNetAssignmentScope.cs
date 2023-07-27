@@ -27,8 +27,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         [EnumMember(Value = "none")]
         None,
         /// <summary>
-        /// Dynamic VNet assignment is done per-job. Don't use this option
-        /// unless your batch account has been approved to use this feature.
+        /// Dynamic VNet assignment is done per-job. If this value is set, the
+        /// network configuration subnet ID must also be set. This feature
+        /// requires approval before use, please contact support
         /// </summary>
         [EnumMember(Value = "job")]
         Job

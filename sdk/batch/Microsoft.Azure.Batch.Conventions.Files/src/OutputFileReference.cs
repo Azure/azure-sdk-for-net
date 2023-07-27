@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using Microsoft.WindowsAzure.Storage.Blob;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace Microsoft.Azure.Batch.Conventions.Files
 {
@@ -28,14 +30,10 @@ namespace Microsoft.Azure.Batch.Conventions.Files
     /// </summary>
     public sealed class OutputFileReference
     {
-        internal OutputFileReference(IListBlobItem blob)
-            : this((ICloudBlob)blob)
-        {
-        }
 
-        internal OutputFileReference(ICloudBlob blob)
+        internal OutputFileReference(BlobBaseClient blobClient)
         {
-            CloudBlob = blob;
+            BlobClient = blobClient;
         }
 
         /// <summary>
@@ -48,7 +46,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         {
             get
             {
-                var storagePath = Uri.AbsolutePath;  // /container/$kind/path or /container/taskid/$kind/path
+                var storagePath = WebUtility.UrlDecode(Uri.AbsolutePath);  // /container/$kind/path or /container/taskid/$kind/path
                 var pathFromContainer = storagePath.Substring(storagePath.IndexOf('/', 1) + 1);
                 var kindAndRelativePath = pathFromContainer.Substring(pathFromContainer.IndexOf('$'));
                 var relativePath = kindAndRelativePath.Substring(kindAndRelativePath.IndexOf('/') + 1);
@@ -59,29 +57,27 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <summary>
         /// Gets the URI of the file in persistent storage.
         /// </summary>
-        public Uri Uri => CloudBlob.Uri;
+        public Uri Uri => BlobClient.Uri;
 
         /// <summary>
-        /// Gets a reference to the underlying <see cref="ICloudBlob"/> object representing the
+        /// Gets a reference to the underlying <see cref="BlobBaseClient"/> object representing the
         /// file in persistent storage. This can be used to invoke blob methods or overloads not surfaced
         /// by the <see cref="OutputFileReference"/> abstraction.
         /// </summary>
-        public ICloudBlob CloudBlob { get; }
+        public BlobBaseClient BlobClient { get; }
 
         /// <summary>
         /// Downloads the contents of the file to a specified path.
         /// </summary>
         /// <param name="path">The path to which to download the file.</param>
-        /// <param name="mode">Specifies how to open or create the file.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
-        /// <seealso cref="ICloudBlob.DownloadToFileAsync(string, FileMode)"/>
-        public async Task DownloadToFileAsync(string path, FileMode mode, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DownloadToFileAsync(string path, CancellationToken cancellationToken = default(CancellationToken))
         {
 #if FullNetFx
-            await CloudBlob.DownloadToFileAsync(path, mode, cancellationToken).ConfigureAwait(false);
+            await BlobClient.DownloadToAsync(path, cancellationToken).ConfigureAwait(false);
 #else
-            await CloudBlob.DownloadToFileAsync(path, mode).ConfigureAwait(false);
+            await BlobClient.DownloadToAsync(path).ConfigureAwait(false);
 #endif
 
         }
@@ -92,13 +88,12 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <param name="target">The target stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
-        /// <seealso cref="ICloudBlob.DownloadToStreamAsync(Stream)"/>
         public async Task DownloadToStreamAsync(Stream target, CancellationToken cancellationToken = default(CancellationToken))
         {
 #if FullNetFx
-            await CloudBlob.DownloadToStreamAsync(target, cancellationToken).ConfigureAwait(false);
+            await BlobClient.DownloadToAsync(target, cancellationToken).ConfigureAwait(false);
 #else
-            await CloudBlob.DownloadToStreamAsync(target).ConfigureAwait(false);
+            await BlobClient.DownloadToAsync(target).ConfigureAwait(false);
 #endif
         }
 
@@ -109,13 +104,20 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// <param name="index">The starting offset in the byte array</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>The total number of bytes read into the buffer.</returns>
-        /// <seealso cref="ICloudBlob.DownloadToByteArrayAsync(byte[], int)"/>
         public async Task<int> DownloadToByteArrayAsync(byte[] target, int index, CancellationToken cancellationToken = default(CancellationToken))
         {
 #if FullNetFx
-            return await CloudBlob.DownloadToByteArrayAsync(target, index, cancellationToken).ConfigureAwait(false);
+            using (Stream blobStream = await this.OpenReadAsync(cancellationToken))
+            {
+                var streamLength = blobStream.Length;
+                return await blobStream.ReadAsync(target, index, Convert.ToInt32(streamLength), cancellationToken).ConfigureAwait(false);
+            }
 #else
-            return await CloudBlob.DownloadToByteArrayAsync(target, index).ConfigureAwait(false);
+            using (Stream blobStream = await this.OpenReadAsync())
+            {
+                var streamLength = blobStream.Length;
+                return await blobStream.ReadAsync(target, index, Convert.ToInt32(streamLength)).ConfigureAwait(false);
+            }
 #endif
         }
 
@@ -123,14 +125,14 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// Deletes the file from persistent storage.
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <param name="deleteOptions">A <see cref="DeleteSnapshotsOption"/> for controlling options on deleting snapshots.</param>
         /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
-        /// <seealso cref="ICloudBlob.DeleteAsync()"/>
-        public async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken), DeleteSnapshotsOption deleteOptions = DeleteSnapshotsOption.None)
         {
 #if FullNetFx
-            await CloudBlob.DeleteAsync(cancellationToken).ConfigureAwait(false);
+            await BlobClient.DeleteAsync(deleteOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
 #else
-            await CloudBlob.DeleteAsync().ConfigureAwait(false);
+            await BlobClient.DeleteAsync(deleteOptions).ConfigureAwait(false);
 #endif
         }
 
@@ -139,14 +141,15 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// </summary>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
         /// <returns>A stream to be used for reading from the blob.</returns>
-        /// <seealso cref="ICloudBlob.OpenReadAsync(WindowsAzure.Storage.AccessCondition, BlobRequestOptions, WindowsAzure.Storage.OperationContext)"/>
+        /// <seealso cref="BlobBaseClient.OpenReadAsync(BlobOpenReadOptions, CancellationToken)"/>
         public async Task<Stream> OpenReadAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
 #if FullNetFx
-            return await CloudBlob.OpenReadAsync(cancellationToken).ConfigureAwait(false);
+            return await BlobClient.OpenReadAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 #else
-            return await CloudBlob.OpenReadAsync(null, null, null).ConfigureAwait(false);
+            return await BlobClient.OpenReadAsync().ConfigureAwait(false);
 #endif
         }
+
     }
 }

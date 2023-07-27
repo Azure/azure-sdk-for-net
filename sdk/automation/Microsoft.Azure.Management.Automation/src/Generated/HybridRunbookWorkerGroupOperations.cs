@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-06-22";
+            string apiVersion = "2022-02-22";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-06-22";
+            string apiVersion = "2022-02-22";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -532,7 +532,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-06-22";
+            string apiVersion = "2022-02-22";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -699,7 +699,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <param name='hybridRunbookWorkerGroupName'>
         /// The hybrid runbook worker group name
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='hybridRunbookWorkerGroupUpdationParameters'>
         /// The hybrid runbook worker group
         /// </param>
         /// <param name='customHeaders'>
@@ -723,7 +723,7 @@ namespace Microsoft.Azure.Management.Automation
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<HybridRunbookWorkerGroup>> UpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HybridRunbookWorkerGroup>> UpdateWithHttpMessagesAsync(string resourceGroupName, string automationAccountName, string hybridRunbookWorkerGroupName, HybridRunbookWorkerGroupCreateOrUpdateParameters hybridRunbookWorkerGroupUpdationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -752,15 +752,15 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hybridRunbookWorkerGroupName");
             }
-            if (parameters == null)
+            if (hybridRunbookWorkerGroupUpdationParameters == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "hybridRunbookWorkerGroupUpdationParameters");
             }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-06-22";
+            string apiVersion = "2022-02-22";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -771,7 +771,7 @@ namespace Microsoft.Azure.Management.Automation
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("automationAccountName", automationAccountName);
                 tracingParameters.Add("hybridRunbookWorkerGroupName", hybridRunbookWorkerGroupName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("hybridRunbookWorkerGroupUpdationParameters", hybridRunbookWorkerGroupUpdationParameters);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
@@ -826,9 +826,9 @@ namespace Microsoft.Azure.Management.Automation
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
+            if(hybridRunbookWorkerGroupUpdationParameters != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(hybridRunbookWorkerGroupUpdationParameters, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -977,7 +977,7 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-06-22";
+            string apiVersion = "2022-02-22";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

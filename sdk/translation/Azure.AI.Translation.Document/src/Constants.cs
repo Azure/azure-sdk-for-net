@@ -6,7 +6,5 @@ namespace Azure.AI.Translation.Document
     internal static class Constants
     {
         public const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-
-        public const string DefaultCognitiveScope = "https://cognitiveservices.azure.com/.default";
     }
 }

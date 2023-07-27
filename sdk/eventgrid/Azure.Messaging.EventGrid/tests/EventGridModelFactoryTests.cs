@@ -315,6 +315,10 @@ namespace Azure.Messaging.EventGrid.Tests
             Assert.AreEqual(RecordingContentType.Audio, model.RecordingContentType);
             Assert.AreEqual(RecordingChannelType.Mixed, model.RecordingChannelType);
             Assert.AreEqual(RecordingFormatType.Mp3, model.RecordingFormatType);
+
+            // empty params
+            model = EventGridModelFactory.AcsRecordingFileStatusUpdatedEventData();
+            Assert.IsNotNull(model);
         }
 
         [Test]

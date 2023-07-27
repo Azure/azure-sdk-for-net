@@ -1,12 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.0.31815.197
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.QuestionAnswering", "Azure.AI.Language.QuestionAnswering\src\Azure.AI.Language.QuestionAnswering.csproj", "{9507A18C-F21A-4305-80B8-8E9DB4E5D351}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E} = {8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.QuestionAnswering.Tests", "Azure.AI.Language.QuestionAnswering\tests\Azure.AI.Language.QuestionAnswering.Tests.csproj", "{444BB90A-D67A-4590-9AC6-959256F727B0}"
 EndProject
@@ -21,6 +18,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.Conversations.Perf", "Azure.AI.Language.Conversations\perf\Azure.AI.Language.Conversations.Perf.csproj", "{1608B231-B925-4E32-A8C6-E7F81E80C8E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.AI.Language.Conversations.Tests", "Azure.AI.Language.Conversations\tests\Azure.AI.Language.Conversations.Tests.csproj", "{E30B7233-76F8-4966-9CDC-86D9C5B37462}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{7DBAEA65-0607-404C-A326-8089FC2887CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,18 +79,6 @@ Global
 		{056BF4D1-3319-4026-A370-46E8F52C10A4}.Release|x64.Build.0 = Release|Any CPU
 		{056BF4D1-3319-4026-A370-46E8F52C10A4}.Release|x86.ActiveCfg = Release|Any CPU
 		{056BF4D1-3319-4026-A370-46E8F52C10A4}.Release|x86.Build.0 = Release|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Debug|x64.Build.0 = Debug|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Debug|x86.Build.0 = Debug|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Release|x64.ActiveCfg = Release|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Release|x64.Build.0 = Release|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Release|x86.ActiveCfg = Release|Any CPU
-		{8DAB9728-0F12-40DF-A5B7-EFD602AF3C0E}.Release|x86.Build.0 = Release|Any CPU
 		{82AED6B1-C502-4802-B1D5-7A52C29BF9D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{82AED6B1-C502-4802-B1D5-7A52C29BF9D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82AED6B1-C502-4802-B1D5-7A52C29BF9D3}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -140,6 +127,18 @@ Global
 		{E30B7233-76F8-4966-9CDC-86D9C5B37462}.Release|x64.Build.0 = Release|Any CPU
 		{E30B7233-76F8-4966-9CDC-86D9C5B37462}.Release|x86.ActiveCfg = Release|Any CPU
 		{E30B7233-76F8-4966-9CDC-86D9C5B37462}.Release|x86.Build.0 = Release|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Debug|x64.Build.0 = Debug|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Debug|x86.Build.0 = Debug|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Release|x64.ActiveCfg = Release|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Release|x64.Build.0 = Release|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Release|x86.ActiveCfg = Release|Any CPU
+		{7DBAEA65-0607-404C-A326-8089FC2887CF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

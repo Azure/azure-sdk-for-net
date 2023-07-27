@@ -6,14 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the ExpressRouteCircuit data model. </summary>
-    public partial class ExpressRouteCircuitData : NetworkResourceData
+    /// <summary>
+    /// A class representing the ExpressRouteCircuit data model.
+    /// ExpressRouteCircuit resource.
+    /// </summary>
+    public partial class ExpressRouteCircuitData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteCircuitData. </summary>
         public ExpressRouteCircuitData()
@@ -42,12 +46,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="bandwidthInGbps"> The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource. </param>
         /// <param name="stag"> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </param>
         /// <param name="provisioningState"> The provisioning state of the express route circuit resource. </param>
-        /// <param name="gatewayManagerEtag"> The GatewayManager Etag. </param>
+        /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
         /// <param name="globalReachEnabled"> Flag denoting global reach status. </param>
-        internal ExpressRouteCircuitData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, string etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, ProvisioningState? provisioningState, string gatewayManagerEtag, bool? globalReachEnabled) : base(id, name, resourceType, location, tags)
+        /// <param name="authorizationKey"> The authorizationKey. </param>
+        /// <param name="authorizationStatus"> The authorization status of the Circuit. </param>
+        internal ExpressRouteCircuitData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExpressRouteCircuitSku sku, ETag? etag, bool? allowClassicOperations, string circuitProvisioningState, ServiceProviderProvisioningState? serviceProviderProvisioningState, IList<ExpressRouteCircuitAuthorizationData> authorizations, IList<ExpressRouteCircuitPeeringData> peerings, string serviceKey, string serviceProviderNotes, ExpressRouteCircuitServiceProviderProperties serviceProviderProperties, WritableSubResource expressRoutePort, float? bandwidthInGbps, int? stag, NetworkProvisioningState? provisioningState, string gatewayManagerETag, bool? globalReachEnabled, string authorizationKey, string authorizationStatus) : base(id, name, resourceType, location, tags)
         {
             Sku = sku;
-            Etag = etag;
+            ETag = etag;
             AllowClassicOperations = allowClassicOperations;
             CircuitProvisioningState = circuitProvisioningState;
             ServiceProviderProvisioningState = serviceProviderProvisioningState;
@@ -58,16 +64,18 @@ namespace Azure.ResourceManager.Network
             ServiceProviderProperties = serviceProviderProperties;
             ExpressRoutePort = expressRoutePort;
             BandwidthInGbps = bandwidthInGbps;
-            Stag = stag;
+            STag = stag;
             ProvisioningState = provisioningState;
-            GatewayManagerEtag = gatewayManagerEtag;
+            GatewayManagerETag = gatewayManagerETag;
             GlobalReachEnabled = globalReachEnabled;
+            AuthorizationKey = authorizationKey;
+            AuthorizationStatus = authorizationStatus;
         }
 
         /// <summary> The SKU. </summary>
         public ExpressRouteCircuitSku Sku { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Allow classic operations. </summary>
         public bool? AllowClassicOperations { get; set; }
         /// <summary> The CircuitProvisioningState state of the resource. </summary>
@@ -101,12 +109,16 @@ namespace Azure.ResourceManager.Network
         /// <summary> The bandwidth of the circuit when the circuit is provisioned on an ExpressRoutePort resource. </summary>
         public float? BandwidthInGbps { get; set; }
         /// <summary> The identifier of the circuit traffic. Outer tag for QinQ encapsulation. </summary>
-        public int? Stag { get; }
+        public int? STag { get; }
         /// <summary> The provisioning state of the express route circuit resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The GatewayManager Etag. </summary>
-        public string GatewayManagerEtag { get; set; }
+        public string GatewayManagerETag { get; set; }
         /// <summary> Flag denoting global reach status. </summary>
         public bool? GlobalReachEnabled { get; set; }
+        /// <summary> The authorizationKey. </summary>
+        public string AuthorizationKey { get; set; }
+        /// <summary> The authorization status of the Circuit. </summary>
+        public string AuthorizationStatus { get; }
     }
 }

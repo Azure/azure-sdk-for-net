@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PassName))
             {
-                writer.WritePropertyName("passName");
-                writer.WriteStringValue(PassName);
+                writer.WritePropertyName("passName"u8);
+                writer.WriteStringValue(PassName.Value.ToString());
             }
             if (Optional.IsDefined(ComponentName))
             {
-                writer.WritePropertyName("componentName");
-                writer.WriteStringValue(ComponentName);
+                writer.WritePropertyName("componentName"u8);
+                writer.WriteStringValue(ComponentName.Value.ToString());
             }
             if (Optional.IsDefined(SettingName))
             {
-                writer.WritePropertyName("settingName");
+                writer.WritePropertyName("settingName"u8);
                 writer.WriteStringValue(SettingName.Value.ToSerialString());
             }
             if (Optional.IsDefined(Content))
             {
-                writer.WritePropertyName("content");
+                writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
             writer.WriteEndObject();
@@ -40,39 +40,50 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AdditionalUnattendContent DeserializeAdditionalUnattendContent(JsonElement element)
         {
-            Optional<string> passName = default;
-            Optional<string> componentName = default;
-            Optional<SettingNames> settingName = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<PassName> passName = default;
+            Optional<ComponentName> componentName = default;
+            Optional<SettingName> settingName = default;
             Optional<string> content = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("passName"))
-                {
-                    passName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("componentName"))
-                {
-                    componentName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("settingName"))
+                if (property.NameEquals("passName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    settingName = property.Value.GetString().ToSettingNames();
+                    passName = new PassName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("content"))
+                if (property.NameEquals("componentName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    componentName = new ComponentName(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("settingName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    settingName = property.Value.GetString().ToSettingName();
+                    continue;
+                }
+                if (property.NameEquals("content"u8))
                 {
                     content = property.Value.GetString();
                     continue;
                 }
             }
-            return new AdditionalUnattendContent(passName.Value, componentName.Value, Optional.ToNullable(settingName), content.Value);
+            return new AdditionalUnattendContent(Optional.ToNullable(passName), Optional.ToNullable(componentName), Optional.ToNullable(settingName), content.Value);
         }
     }
 }

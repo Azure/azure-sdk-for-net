@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the Feature data model. </summary>
+    /// <summary>
+    /// A class representing the Feature data model.
+    /// Previewed feature information.
+    /// </summary>
     public partial class FeatureData : ResourceData
     {
         /// <summary> Initializes a new instance of FeatureData. </summary>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The registration state of the feature for the subscription. </summary>
         public string FeatureState
         {
-            get => Properties.State;
+            get => Properties?.State;
         }
     }
 }

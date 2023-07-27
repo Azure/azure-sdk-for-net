@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Net.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,11 +31,35 @@ namespace Azure.Messaging.ServiceBus
         public CancellationToken CancellationToken { get; }
 
         /// <summary>
+        /// An event that is raised when the session lock is lost. This event is only raised for the scope of the Process Session Message handler.
+        /// Once the handler returns, the event will not be raised. There are two cases in which this event can be raised:
+        /// <list type="numbered">
+        ///     <item>
+        ///         <description>When the session lock has expired based on the <see cref="SessionLockedUntil"/> property</description>
+        ///     </item>
+        ///     <item>
+        ///         <description>When a non-transient exception occurs while attempting to renew the session lock.</description>
+        ///     </item>
+        /// </list>
+        /// </summary>
+        public event Func<SessionLockLostEventArgs, Task> SessionLockLostAsync;
+
+        /// <summary>
+        /// Invokes the session lock lost event handler after a session lock is lost.
+        /// This method can be overridden to raise an event manually for testing purposes.
+        /// </summary>
+        /// <param name="args">The event args containing information related to the lock lost event.</param>
+        protected internal virtual Task OnSessionLockLostAsync(SessionLockLostEventArgs args) => SessionLockLostAsync?.Invoke(args) ?? Task.CompletedTask;
+
+        internal ConcurrentDictionary<ServiceBusReceivedMessage, byte> Messages => _receiveActions.Messages;
+
+        /// <summary>
         /// The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods for the args.
         /// </summary>
         private readonly ServiceBusSessionReceiver _sessionReceiver;
 
-        private readonly SessionReceiverManager _receiverManager;
+        private readonly SessionReceiverManager _manager;
+        private readonly ProcessorReceiveActions _receiveActions;
 
         /// <summary>
         /// Gets the Session Id associated with the <see cref="ServiceBusReceivedMessage"/>.
@@ -46,6 +73,21 @@ namespace Azure.Messaging.ServiceBus
         public DateTimeOffset SessionLockedUntil => _sessionReceiver.SessionLockedUntil;
 
         /// <summary>
+        /// The path of the Service Bus entity that the message was received from.
+        /// </summary>
+        public string EntityPath => _sessionReceiver.EntityPath;
+
+        /// <summary>
+        /// The identifier of the <see cref="ServiceBusSessionProcessor"/>.
+        /// </summary>
+        public string Identifier { get; }
+
+        /// <summary>
+        /// The fully qualified Service Bus namespace that the message was received from.
+        /// </summary>
+        public string FullyQualifiedNamespace => _sessionReceiver.FullyQualifiedNamespace;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
         /// </summary>
         ///
@@ -53,23 +95,54 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="receiver">The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods
         /// for the args.</param>
         /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ProcessSessionMessageEventArgs(
             ServiceBusReceivedMessage message,
             ServiceBusSessionReceiver receiver,
-            CancellationToken cancellationToken)
+            CancellationToken cancellationToken) : this(message, manager: null, cancellationToken)
         {
-            Message = message;
             _sessionReceiver = receiver;
-            CancellationToken = cancellationToken;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProcessSessionMessageEventArgs"/> class.
+        /// </summary>
+        ///
+        /// <param name="message">The current <see cref="ServiceBusReceivedMessage"/>.</param>
+        /// <param name="receiver">The <see cref="ServiceBusSessionReceiver"/> that will be used for all settlement methods
+        /// for the args.</param>
+        /// <param name="identifier">The identifier of the processor.</param>
+        /// <param name="cancellationToken">The processor's <see cref="System.Threading.CancellationToken"/> instance which will be cancelled in the event that <see cref="ServiceBusProcessor.StopProcessingAsync"/> is called.</param>
+        public ProcessSessionMessageEventArgs(
+            ServiceBusReceivedMessage message,
+            ServiceBusSessionReceiver receiver,
+            string identifier,
+            CancellationToken cancellationToken) : this(message, receiver, cancellationToken)
+        {
+            Identifier = identifier;
         }
 
         internal ProcessSessionMessageEventArgs(
             ServiceBusReceivedMessage message,
-            ServiceBusSessionReceiver receiver,
-            SessionReceiverManager receiverManager,
-            CancellationToken cancellationToken) : this(message, receiver, cancellationToken)
+            SessionReceiverManager manager,
+            string identifier,
+            CancellationToken cancellationToken) : this(message, manager, cancellationToken)
         {
-            _receiverManager = receiverManager;
+            Identifier = identifier;
+        }
+
+        internal ProcessSessionMessageEventArgs(
+            ServiceBusReceivedMessage message,
+            SessionReceiverManager manager,
+            CancellationToken cancellationToken)
+        {
+            Message = message;
+            _manager = manager;
+
+            // manager would be null in scenarios where customers are using the public constructor for testing purposes.
+            _sessionReceiver = (ServiceBusSessionReceiver) _manager?.Receiver;
+            _receiveActions = new ProcessorReceiveActions(this, _manager, false /* session locks are not message based */);
+            CancellationToken = cancellationToken;
         }
 
         /// <inheritdoc cref="ServiceBusSessionReceiver.GetSessionStateAsync(CancellationToken)"/>
@@ -136,6 +209,24 @@ namespace Azure.Messaging.ServiceBus
             message.IsSettled = true;
         }
 
+        /// <inheritdoc cref="ServiceBusReceiver.DeadLetterMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, string, string, CancellationToken)"/>
+        public virtual async Task DeadLetterMessageAsync(
+            ServiceBusReceivedMessage message,
+            Dictionary<string, object> propertiesToModify,
+            string deadLetterReason,
+            string deadLetterErrorDescription = default,
+            CancellationToken cancellationToken = default)
+        {
+            await _sessionReceiver.DeadLetterMessageAsync(
+                message,
+                propertiesToModify,
+                deadLetterReason,
+                deadLetterErrorDescription,
+                cancellationToken)
+            .ConfigureAwait(false);
+            message.IsSettled = true;
+        }
+
         /// <inheritdoc cref="ServiceBusReceiver.DeferMessageAsync(ServiceBusReceivedMessage, IDictionary{string, object}, CancellationToken)"/>
         public virtual async Task DeferMessageAsync(
             ServiceBusReceivedMessage message,
@@ -159,12 +250,29 @@ namespace Azure.Messaging.ServiceBus
         /// This depends on what other session messages may be in the queue or subscription).
         /// </summary>
         public virtual void ReleaseSession() =>
-            _receiverManager.CancelSession();
+            // manager will be null if instance created using the public constructor which is exposed for testing purposes
+            // This will be awaited when closing the receiver.
+            _ = _manager?.CancelAsync();
 
         ///<inheritdoc cref="ServiceBusSessionReceiver.RenewSessionLockAsync(CancellationToken)"/>
         public virtual async Task RenewSessionLockAsync(CancellationToken cancellationToken = default)
         {
             await _sessionReceiver.RenewSessionLockAsync(cancellationToken).ConfigureAwait(false);
+            _manager?.RefreshSessionLockToken();
         }
+
+        /// <summary>
+        /// Gets a <see cref="ProcessorReceiveActions"/> instance which enables receiving additional messages within the scope of the current event.
+        /// </summary>
+        public virtual ProcessorReceiveActions GetReceiveActions() => _receiveActions;
+
+        internal void EndExecutionScope() => _receiveActions.EndExecutionScope();
+
+        internal CancellationTokenRegistration RegisterSessionLockLostHandler() =>
+            _manager.SessionLockCancellationToken.Register(
+                () => OnSessionLockLostAsync(new SessionLockLostEventArgs(
+                    Message,
+                    SessionLockedUntil,
+                    _manager.SessionLockLostException)));
     }
 }

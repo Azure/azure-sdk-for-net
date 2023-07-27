@@ -16,29 +16,29 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     public class WebJobsEventHubTestBase
     {
         protected const string TestHubName = "%webjobstesthub%";
-        protected static readonly int Timeout = (int)TimeSpan.FromSeconds(60).TotalMilliseconds;
+        protected static readonly int Timeout = (int)EventHubsTestEnvironment.Instance.TestExecutionTimeLimit.TotalMilliseconds;
 
         /// <summary>The active Event Hub resource scope for the test fixture.</summary>
         protected EventHubScope _eventHubScope;
 
         /// <summary>
-        ///   Performs the tasks needed to initialize the test fixture.  This
-        ///   method runs once for the entire fixture, prior to running any tests.
+        ///   Performs the tasks needed to initialize each test.  This
+        ///   method runs once for the each test prior to running it.
         /// </summary>
         ///
         [SetUp]
-        public async Task FixtureSetUp()
+        public async Task BaseSetUp()
         {
             _eventHubScope = await EventHubScope.CreateAsync(2);
         }
 
         /// <summary>
-        ///   Performs the tasks needed to cleanup the test fixture after all
-        ///   tests have run.  This method runs once for the entire fixture.
+        ///   Performs the tasks needed to cleanup tests after it has run.  This
+        ///   method runs once for each test.
         /// </summary>
         ///
         [TearDown]
-        public async Task FixtureTearDown()
+        public async Task BaseTearDown()
         {
             await _eventHubScope.DisposeAsync();
         }

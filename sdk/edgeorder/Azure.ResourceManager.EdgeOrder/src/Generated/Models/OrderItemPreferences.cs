@@ -37,15 +37,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Preferences related to the shipment logistics of the order. </summary>
         internal TransportPreferences TransportPreferences { get; set; }
         /// <summary> Indicates Shipment Logistics type that the customer preferred. </summary>
-        public TransportShipmentTypes TransportPreferencesPreferredShipmentType
+        public TransportShipmentType? TransportPreferencesPreferredShipmentType
         {
-            get => TransportPreferences is null ? default : TransportPreferences.PreferredShipmentType;
-            set => TransportPreferences = new TransportPreferences(value);
+            get => TransportPreferences is null ? default(TransportShipmentType?) : TransportPreferences.PreferredShipmentType;
+            set
+            {
+                TransportPreferences = value.HasValue ? new TransportPreferences(value.Value) : null;
+            }
         }
 
         /// <summary> Preferences related to the Encryption. </summary>
         internal EncryptionPreferences EncryptionPreferences { get; set; }
-        /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the &apos;Deny&apos; or &apos;Disabled&apos; policy is configured. </summary>
+        /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the 'Deny' or 'Disabled' policy is configured. </summary>
         public DoubleEncryptionStatus? DoubleEncryptionStatus
         {
             get => EncryptionPreferences is null ? default : EncryptionPreferences.DoubleEncryptionStatus;

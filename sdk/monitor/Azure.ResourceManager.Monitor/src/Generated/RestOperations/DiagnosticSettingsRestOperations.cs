@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2017-05-01-preview";
+            _apiVersion = apiVersion ?? "2021-05-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DiagnosticSettingsData>> GetAsync(string resourceUri, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<DiagnosticSettingData>> GetAsync(string resourceUri, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -72,13 +72,13 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DiagnosticSettingsData value = default;
+                        DiagnosticSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiagnosticSettingsData.DeserializeDiagnosticSettingsData(document.RootElement);
+                        value = DiagnosticSettingData.DeserializeDiagnosticSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DiagnosticSettingsData)null, message.Response);
+                    return Response.FromValue((DiagnosticSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DiagnosticSettingsData> Get(string resourceUri, string name, CancellationToken cancellationToken = default)
+        public Response<DiagnosticSettingData> Get(string resourceUri, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -101,19 +101,19 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DiagnosticSettingsData value = default;
+                        DiagnosticSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiagnosticSettingsData.DeserializeDiagnosticSettingsData(document.RootElement);
+                        value = DiagnosticSettingData.DeserializeDiagnosticSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DiagnosticSettingsData)null, message.Response);
+                    return Response.FromValue((DiagnosticSettingData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string name, DiagnosticSettingsData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string name, DiagnosticSettingData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DiagnosticSettingsData>> CreateOrUpdateAsync(string resourceUri, string name, DiagnosticSettingsData data, CancellationToken cancellationToken = default)
+        public async Task<Response<DiagnosticSettingData>> CreateOrUpdateAsync(string resourceUri, string name, DiagnosticSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DiagnosticSettingsData value = default;
+                        DiagnosticSettingData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DiagnosticSettingsData.DeserializeDiagnosticSettingsData(document.RootElement);
+                        value = DiagnosticSettingData.DeserializeDiagnosticSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DiagnosticSettingsData> CreateOrUpdate(string resourceUri, string name, DiagnosticSettingsData data, CancellationToken cancellationToken = default)
+        public Response<DiagnosticSettingData> CreateOrUpdate(string resourceUri, string name, DiagnosticSettingData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.Monitor
             {
                 case 200:
                     {
-                        DiagnosticSettingsData value = default;
+                        DiagnosticSettingData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DiagnosticSettingsData.DeserializeDiagnosticSettingsData(document.RootElement);
+                        value = DiagnosticSettingData.DeserializeDiagnosticSettingData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

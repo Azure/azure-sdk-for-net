@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
         }
 
+        protected NetworkServiceClientTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
+        {
+        }
+
         public bool IsTestTenant = false;
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
         public Dictionary<string, string> Tags { get; internal set; }
@@ -534,7 +539,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
             };
 
@@ -553,7 +558,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
             };
 
@@ -578,8 +583,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
-                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         Subnet = new SubnetData() { Id = subnetId }
+                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                         Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
             };
@@ -614,8 +619,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
-                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         Subnet = new SubnetData() { Id = subnetId }
+                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                         Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
             };
@@ -761,6 +766,15 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         protected VirtualNetworkGatewayCollection GetVirtualNetworkGatewayCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
+        }
+
+        protected async Task<BackendAddressPoolResource> GetFirstPoolAsync(LoadBalancerResource loadBalancer)
+        {
+            await foreach (var pool in loadBalancer.GetBackendAddressPools())
+            {
+                return pool;
+            }
+            throw new InvalidOperationException($"Pool list was empty for {loadBalancer.Id}");
         }
     }
 }

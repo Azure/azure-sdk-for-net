@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,31 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2022-11-20)
+
+### Features Added
+
+- Added method `serviceClient.RemoveConnectionFromAllGroups` to remove the connection from all the groups it is in.
+- Added a `groups` option in `serviceClient.GetClientAccessUri`, to enable connections join initial groups once it is connected.
+- Added a `filter` parameter when sending messages to connections in a hub/group/user to filter out the connections recieving message, details about `filter` syntax please see [OData filter syntax for Azure Web PubSub](https://aka.ms/awps/filter-syntax).
+- Provided a utility class `ClientConnectionFilter` to generate the `filter` parameter, e.g. `ClientConnectionFilter.Create($"{group1} in groups and not({group2} in groups)"))`
+
+## 1.2.0 (2022-11-04)
+
+### Bugs Fixed
+
+- Fix the issue that the token lifetime is 0 when `expiresAfter` is not given.
+
+## 1.1.0 (2022-10-28)
+
+### Bugs Fixed
+- Fix the issue that `expiresAfter` might be 0
+
+## 1.1.0-beta.1 (2022-08-06)
+
+### Bugs Fixed
+- Fix the issue that when `expiresAfter` is less than 1 minute it requests a token with 0 ttl 
 
 ## 1.0.0 (2021-11-09)
 

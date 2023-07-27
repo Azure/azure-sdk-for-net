@@ -6,13 +6,15 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SwiftVirtualNetwork data model. </summary>
-    public partial class SwiftVirtualNetworkData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the SwiftVirtualNetwork data model.
+    /// Swift Virtual Network Contract. This is used to enable the new Swift way of doing virtual network integration.
+    /// </summary>
+    public partial class SwiftVirtualNetworkData : ResourceData
     {
         /// <summary> Initializes a new instance of SwiftVirtualNetworkData. </summary>
         public SwiftVirtualNetworkData()
@@ -24,18 +26,21 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="subnetResourceId"> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
+        /// <param name="isSwiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="subnetResourceId"> The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
-        /// <param name="swiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
-        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string subnetResourceId, bool? swiftSupported) : base(id, name, resourceType, systemData, kind)
+        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier subnetResourceId, bool? isSwiftSupported, string kind) : base(id, name, resourceType, systemData)
         {
             SubnetResourceId = subnetResourceId;
-            SwiftSupported = swiftSupported;
+            IsSwiftSupported = isSwiftSupported;
+            Kind = kind;
         }
 
-        /// <summary> The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </summary>
-        public string SubnetResourceId { get; set; }
+        /// <summary> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </summary>
+        public ResourceIdentifier SubnetResourceId { get; set; }
         /// <summary> A flag that specifies if the scale unit this Web App is on supports Swift integration. </summary>
-        public bool? SwiftSupported { get; set; }
+        public bool? IsSwiftSupported { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

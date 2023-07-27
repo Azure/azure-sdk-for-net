@@ -11,5 +11,7 @@ namespace Azure.AI.TextAnalytics
     [CodeGenModel("State")]
     public partial struct TextAnalyticsOperationStatus
     {
+        /// <summary> Rejected </summary>
+        public static TextAnalyticsOperationStatus Rejected { get; } = new TextAnalyticsOperationStatus("Rejected");
     }
 }

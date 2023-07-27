@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -15,47 +16,52 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraClusterPublicStatus DeserializeCassandraClusterPublicStatus(JsonElement element)
         {
-            Optional<string> eTag = default;
-            Optional<ManagedCassandraReaperStatus> reaperStatus = default;
-            Optional<IReadOnlyList<ConnectionError>> connectionErrors = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ETag> eTag = default;
+            Optional<CassandraReaperStatus> reaperStatus = default;
+            Optional<IReadOnlyList<CassandraConnectionError>> connectionErrors = default;
             Optional<IReadOnlyList<CassandraClusterPublicStatusDataCentersItem>> dataCenters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("eTag"))
-                {
-                    eTag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("reaperStatus"))
+                if (property.NameEquals("eTag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reaperStatus = ManagedCassandraReaperStatus.DeserializeManagedCassandraReaperStatus(property.Value);
+                    eTag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("connectionErrors"))
+                if (property.NameEquals("reaperStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectionError> array = new List<ConnectionError>();
+                    reaperStatus = CassandraReaperStatus.DeserializeCassandraReaperStatus(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("connectionErrors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CassandraConnectionError> array = new List<CassandraConnectionError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionError.DeserializeConnectionError(item));
+                        array.Add(CassandraConnectionError.DeserializeCassandraConnectionError(item));
                     }
                     connectionErrors = array;
                     continue;
                 }
-                if (property.NameEquals("dataCenters"))
+                if (property.NameEquals("dataCenters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraClusterPublicStatusDataCentersItem> array = new List<CassandraClusterPublicStatusDataCentersItem>();
@@ -67,7 +73,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraClusterPublicStatus(eTag.Value, reaperStatus.Value, Optional.ToList(connectionErrors), Optional.ToList(dataCenters));
+            return new CassandraClusterPublicStatus(Optional.ToNullable(eTag), reaperStatus.Value, Optional.ToList(connectionErrors), Optional.ToList(dataCenters));
         }
     }
 }

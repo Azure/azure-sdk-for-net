@@ -12,26 +12,25 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task DetectLanguageAsync()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
-
-            #region Snippet:DetectLanguageAsync
-            string document = @"Este documento está escrito en un idioma diferente al Inglés. Tiene como objetivo demostrar
-                                cómo invocar el método de Detección de idioma del servicio de Text Analytics en Microsoft Azure.
-                                También muestra cómo acceder a la información retornada por el servicio. Esta capacidad es útil
-                                para los sistemas de contenido que recopilan texto arbitrario, donde el idioma es desconocido.
-                                La característica Detección de idioma puede detectar una amplia gama de idiomas, variantes,
-                                dialectos y algunos idiomas regionales o culturales.";
+            #region Snippet:Sample1_DetectLanguageAsync
+            string document =
+                "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
+                + " invocar el método de Detección de Lenguaje del servicio de Text Analytics en Microsoft Azure."
+                + " También muestra cómo acceder a la información retornada por el servicio. Esta funcionalidad es"
+                + " útil para los sistemas de contenido que recopilan texto arbitrario, donde el lenguaje no se conoce"
+                + " de antemano. Puede usarse para detectar una amplia gama de lenguajes, variantes, dialectos y"
+                + " algunos idiomas regionales o culturales.";
 
             try
             {
                 Response<DetectedLanguage> response = await client.DetectLanguageAsync(document);
-
                 DetectedLanguage language = response.Value;
-                Console.WriteLine($"Detected language {language.Name} with confidence score {language.ConfidenceScore}.");
+
+                Console.WriteLine($"Detected language is {language.Name} with a confidence score of {language.ConfidenceScore}.");
             }
             catch (RequestFailedException exception)
             {

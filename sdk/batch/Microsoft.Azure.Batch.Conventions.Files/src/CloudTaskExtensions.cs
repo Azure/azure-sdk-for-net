@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿using Microsoft.Azure.Batch.Conventions.Files.Utilities;
-using Microsoft.WindowsAzure.Storage;
+using Azure.Storage.Blobs;
+using Microsoft.Azure.Batch.Conventions.Files.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,20 +31,20 @@ namespace Microsoft.Azure.Batch.Conventions.Files
         /// Gets the <see cref="TaskOutputStorage"/> for a specified <see cref="CloudTask"/>.
         /// </summary>
         /// <param name="task">The task for which to get output storage.</param>
-        /// <param name="storageAccount">The storage account linked to the Azure Batch account.</param>
+        /// <param name="blobClient">The blob service client linked to the Azure Batch storage account.</param>
         /// <returns>A TaskOutputStorage for the specified task.</returns>
-        public static TaskOutputStorage OutputStorage(this CloudTask task, CloudStorageAccount storageAccount)
+        public static TaskOutputStorage OutputStorage(this CloudTask task, BlobServiceClient blobClient)
         {
             if (task == null)
             {
                 throw new ArgumentNullException(nameof(task));
             }
-            if (storageAccount == null)
+            if (blobClient == null)
             {
-                throw new ArgumentNullException(nameof(storageAccount));
+                throw new ArgumentNullException(nameof(blobClient));
             }
 
-            return new TaskOutputStorage(storageAccount, task.JobId(), task.Id);
+            return new TaskOutputStorage(blobClient, task.JobId(), task.Id);
         }
 
         /// <summary>

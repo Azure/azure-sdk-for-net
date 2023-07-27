@@ -10,7 +10,11 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Export command settings. </summary>
+    /// <summary>
+    /// Export command settings.
+    /// Please note <see cref="ExportSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureDatabricksDeltaLakeExportCommand"/> and <see cref="SnowflakeExportCopyCommand"/>.
+    /// </summary>
     public partial class ExportSettings
     {
         /// <summary> Initializes a new instance of ExportSettings. </summary>

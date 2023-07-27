@@ -7,7 +7,7 @@
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
-    /// <summary> The Vector3. </summary>
+    /// <summary> Represents a vector with three single-precision floating-point values. </summary>
     internal partial class Vector3
     {
     }

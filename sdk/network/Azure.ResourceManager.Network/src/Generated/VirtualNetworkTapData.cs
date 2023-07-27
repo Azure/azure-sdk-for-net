@@ -5,14 +5,19 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VirtualNetworkTap data model. </summary>
-    public partial class VirtualNetworkTapData : NetworkResourceData
+    /// <summary>
+    /// A class representing the VirtualNetworkTap data model.
+    /// Virtual Network Tap resource.
+    /// </summary>
+    public partial class VirtualNetworkTapData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkTapData. </summary>
         public VirtualNetworkTapData()
@@ -33,9 +38,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="destinationNetworkInterfaceIPConfiguration"> The reference to the private IP Address of the collector nic that will receive the tap. </param>
         /// <param name="destinationLoadBalancerFrontEndIPConfiguration"> The reference to the private IP address on the internal Load Balancer that will receive the tap. </param>
         /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
-        internal VirtualNetworkTapData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, string resourceGuid, ProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort) : base(id, name, resourceType, location, tags)
+        internal VirtualNetworkTapData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             NetworkInterfaceTapConfigurations = networkInterfaceTapConfigurations;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -45,13 +50,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Specifies the list of resource IDs for the network interface IP configuration that needs to be tapped. </summary>
         public IReadOnlyList<NetworkInterfaceTapConfigurationData> NetworkInterfaceTapConfigurations { get; }
         /// <summary> The resource GUID property of the virtual network tap resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network tap resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The reference to the private IP Address of the collector nic that will receive the tap. </summary>
         public NetworkInterfaceIPConfigurationData DestinationNetworkInterfaceIPConfiguration { get; set; }
         /// <summary> The reference to the private IP address on the internal Load Balancer that will receive the tap. </summary>

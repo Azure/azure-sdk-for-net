@@ -14,16 +14,24 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static AvailableCluster DeserializeAvailableCluster(JsonElement element)
         {
-            Optional<string> location = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }
-            return new AvailableCluster(location.Value);
+            return new AvailableCluster(Optional.ToNullable(location));
         }
     }
 }

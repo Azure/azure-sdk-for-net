@@ -22,10 +22,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         public static IndexerExecutionStatus ToIndexerExecutionStatus(this string value)
         {
-            if (string.Equals(value, "transientFailure", StringComparison.InvariantCultureIgnoreCase)) return IndexerExecutionStatus.TransientFailure;
-            if (string.Equals(value, "success", StringComparison.InvariantCultureIgnoreCase)) return IndexerExecutionStatus.Success;
-            if (string.Equals(value, "inProgress", StringComparison.InvariantCultureIgnoreCase)) return IndexerExecutionStatus.InProgress;
-            if (string.Equals(value, "reset", StringComparison.InvariantCultureIgnoreCase)) return IndexerExecutionStatus.Reset;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "transientFailure")) return IndexerExecutionStatus.TransientFailure;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "success")) return IndexerExecutionStatus.Success;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "inProgress")) return IndexerExecutionStatus.InProgress;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "reset")) return IndexerExecutionStatus.Reset;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexerExecutionStatus value.");
         }
     }

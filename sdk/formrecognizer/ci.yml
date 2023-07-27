@@ -22,10 +22,10 @@ pr:
     - sdk/formrecognizer/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: formrecognizer
-    BuildSnippets: true
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
     - name: Azure.AI.FormRecognizer

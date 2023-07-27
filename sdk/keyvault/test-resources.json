@@ -37,25 +37,43 @@
         },
         "hsmLocation": {
             "type": "string",
-            "defaultValue": "southcentralus",
+            "defaultValue": "francecentral",
             "allowedValues": [
                 "australiacentral",
+                "australiaeast",
                 "canadacentral",
+                "canadaeast",
+                "centralindia",
                 "centralus",
                 "eastasia",
+                "eastus",
                 "eastus2",
+                "francecentral",
+                "japaneast",
                 "koreacentral",
+                "northcentralus",
                 "northeurope",
                 "southafricanorth",
                 "southcentralus",
-                "southeastasia",
                 "switzerlandnorth",
+                "switzerlandwest",
+                "uaenorth",
                 "uksouth",
+                "westcentralus",
                 "westeurope",
-                "westus"
+                "westus",
+                "westus2",
+                "westus3"
             ],
             "metadata": {
-                "description": "The location of the Managed HSM. By default, this is 'southcentralus'."
+                "description": "The location of the Managed HSM. By default, this is 'northcentralus'."
+            }
+        },
+        "enableAttestation": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Whether to enable deployment of attestation resources. The default is true."
             }
         },
         "enableHsm": {
@@ -212,6 +230,7 @@
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2020-12-01",
             "name": "[variables('attestationFarm')]",
+            "condition": "[parameters('enableAttestation')]",
             "location": "[parameters('location')]",
             "kind": "linux",
             "sku": {
@@ -226,6 +245,7 @@
             "type": "Microsoft.Web/sites",
             "apiVersion": "2020-12-01",
             "name": "[variables('attestationSite')]",
+            "condition": "[parameters('enableAttestation')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Web/serverfarms', variables('attestationFarm'))]"
             ],
@@ -279,6 +299,7 @@
         },
         "AZURE_KEYVAULT_ATTESTATION_URL": {
             "type": "string",
+            "condition": "[parameters('enableAttestation')]",
             "value": "[format('https://{0}/', reference(variables('attestationSite')).defaultHostName)]"
         }
     }

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TemporalType))
             {
-                writer.WritePropertyName("temporalType");
+                writer.WritePropertyName("temporalType"u8);
                 writer.WriteStringValue(TemporalType.Value.ToString());
             }
-            if (Optional.IsDefined(MemoryOptimized))
+            if (Optional.IsDefined(IsMemoryOptimized))
             {
-                writer.WritePropertyName("memoryOptimized");
-                writer.WriteBooleanValue(MemoryOptimized.Value);
+                writer.WritePropertyName("memoryOptimized"u8);
+                writer.WriteBooleanValue(IsMemoryOptimized.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -35,35 +35,43 @@ namespace Azure.ResourceManager.Sql
 
         internal static DatabaseTableData DeserializeDatabaseTableData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<TableTemporalType> temporalType = default;
             Optional<bool> memoryOptimized = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -72,21 +80,19 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("temporalType"))
+                        if (property0.NameEquals("temporalType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             temporalType = new TableTemporalType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("memoryOptimized"))
+                        if (property0.NameEquals("memoryOptimized"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             memoryOptimized = property0.Value.GetBoolean();
@@ -96,7 +102,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new DatabaseTableData(id, name, type, systemData, Optional.ToNullable(temporalType), Optional.ToNullable(memoryOptimized));
+            return new DatabaseTableData(id, name, type, systemData.Value, Optional.ToNullable(temporalType), Optional.ToNullable(memoryOptimized));
         }
     }
 }

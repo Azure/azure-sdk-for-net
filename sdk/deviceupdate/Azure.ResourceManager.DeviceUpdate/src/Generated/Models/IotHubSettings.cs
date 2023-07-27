@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -17,30 +18,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public IotHubSettings(string resourceId)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
-        }
-
-        /// <summary> Initializes a new instance of IotHubSettings. </summary>
-        /// <param name="resourceId"> IoTHub resource ID. </param>
-        /// <param name="ioTHubConnectionString"> IoTHub connection string. </param>
-        /// <param name="eventHubConnectionString"> EventHub connection string. </param>
-        internal IotHubSettings(string resourceId, string ioTHubConnectionString, string eventHubConnectionString)
-        {
-            ResourceId = resourceId;
-            IoTHubConnectionString = ioTHubConnectionString;
-            EventHubConnectionString = eventHubConnectionString;
         }
 
         /// <summary> IoTHub resource ID. </summary>
         public string ResourceId { get; set; }
-        /// <summary> IoTHub connection string. </summary>
-        public string IoTHubConnectionString { get; set; }
-        /// <summary> EventHub connection string. </summary>
-        public string EventHubConnectionString { get; set; }
     }
 }

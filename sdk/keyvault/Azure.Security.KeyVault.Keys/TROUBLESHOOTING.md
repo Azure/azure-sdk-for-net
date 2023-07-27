@@ -9,7 +9,7 @@ to troubleshoot issues common to the Azure Key Vault SDKs for .NET.
 
 ## Table of Contents
 
-* [Troubleshooting Azure.Security.KeyVault.Keys Issues](#troubleshooting-azure.security.keyvault.keys-issues)
+* [Troubleshooting Azure.Security.KeyVault.Keys Issues](#troubleshooting-azuresecuritykeyvaultkeys-issues)
   * [Serialized JSON Web Key Does Not Conform to IETF Standards](#serialized-json-web-key-does-not-conform-to-ietf-standards)
 
 ## Troubleshooting Azure.Security.KeyVault.Keys Issues

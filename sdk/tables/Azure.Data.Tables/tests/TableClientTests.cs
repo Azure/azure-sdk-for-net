@@ -3,9 +3,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
+using System.Linq;
 using System.Net;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
 using Azure.Data.Tables.Sas;
@@ -22,19 +26,19 @@ namespace Azure.Data.Tables.Tests
 
         private const string TableName = "someTableName";
         private const string AccountName = "someaccount";
+        private const string signature = "sv=2019-12-12&ss=t&srt=s&sp=rwdlacu&se=2020-08-28T23:45:30Z&st=2020-08-26T15:45:30Z&spr=https&sig=mySig&tn=someTableName";
         private static readonly Uri _url = new Uri($"https://someaccount.table.core.windows.net");
         private static readonly Uri _urlWithTableName = new Uri($"https://someaccount.table.core.windows.net/" + TableName);
         private readonly Uri _urlHttp = new Uri($"http://someaccount.table.core.windows.net");
+        private readonly Uri _localHttp = new Uri("http://127.0.0.1:10002/accountName/tableName");
+        private readonly Uri _localHttpSAS = new Uri($"http://127.0.0.1:10002/accountName/tableName?{signature}");
         private MockTransport _transport;
         private TableClient client { get; set; }
         private const string Secret = "Kg==";
         private TableEntity entityWithoutPK = new TableEntity { { TableConstants.PropertyNames.RowKey, "row" } };
         private TableEntity entityWithoutRK = new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" } };
-
         private TableEntity validEntity =
             new TableEntity { { TableConstants.PropertyNames.PartitionKey, "partition" }, { TableConstants.PropertyNames.RowKey, "row" } };
-
-        private const string signature = "sv=2019-12-12&ss=t&srt=s&sp=rwdlacu&se=2020-08-28T23:45:30Z&st=2020-08-26T15:45:30Z&spr=https&sig=mySig&tn=someTableName";
 
         [SetUp]
         public void TestSetup()
@@ -77,6 +81,16 @@ namespace Azure.Data.Tables.Tests
                 () => new TableClient(_urlHttp, new AzureSasCredential(signature)),
                 Throws.InstanceOf<ArgumentException>(),
                 "The constructor should validate the Uri is https when using a SAS token.");
+
+            Assert.That(
+                () => new TableClient(_localHttp, new AzureSasCredential(signature)),
+                Throws.Nothing,
+                "The constructor should allow local http when using a SAS token.");
+
+            Assert.That(
+                () => new TableClient(_localHttp),
+                Throws.Nothing,
+                "The constructor should allow local http when using a SAS token.");
 
             Assert.That(
                 () => new TableClient(_urlHttp, TableName, null),
@@ -278,7 +292,7 @@ namespace Azure.Data.Tables.Tests
 
             Assert.That(
                 token.StartsWith(
-                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}=2019-02-02&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
+                    $"{Parms.TableName}={TableName}&{Parms.StartPartitionKey}={sas.PartitionKeyStart}&{Parms.EndPartitionKey}={sas.PartitionKeyEnd}&{Parms.StartRowKey}={sas.RowKeyStart}&{Parms.EndRowKey}={sas.RowKeyEnd}&{Parms.Version}={sas.Version}&{Parms.StartTime}=2020-01-01T00%3A01%3A01Z&{Parms.ExpiryTime}=2020-01-01T01%3A01%3A01Z&{Parms.IPRange}=123.45.67.89-123.65.43.21&{Parms.Permissions}=raud&{Parms.Signature}="));
         }
 
         /// <summary>
@@ -423,12 +437,7 @@ namespace Azure.Data.Tables.Tests
         [Test]
         public void CreateIfNotExistsThrowsWhenTableBeingDeleted()
         {
-            _transport = new MockTransport(
-                request => throw new RequestFailedException(
-                    (int)HttpStatusCode.Conflict,
-                    null,
-                    TableErrorCode.TableBeingDeleted.ToString(),
-                    null));
+            _transport = TableAlreadyExistsTransport(TableErrorCode.TableBeingDeleted);
             var service_Instrumented = InstrumentClient(
                 new TableServiceClient(
                     new Uri($"https://example.com?{signature}"),
@@ -441,11 +450,11 @@ namespace Azure.Data.Tables.Tests
 
         private static IEnumerable<object[]> TableClientsWithTableNameInUri()
         {
-            var tokenTransport = TableAlreadyExistsTransport();
-            var tokenTransport2 = TableAlreadyExistsTransport();
-            var sharedKeyTransport = TableAlreadyExistsTransport();
-            var connStrTransport = TableAlreadyExistsTransport();
-            var devTransport = TableAlreadyExistsTransport();
+            var tokenTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var tokenTransport2 = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var sharedKeyTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var connStrTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
+            var devTransport = TableAlreadyExistsTransport(TableErrorCode.TableAlreadyExists);
 
             var sharedKeyClient = new TableClient(_urlWithTableName, TableName, new TableSharedKeyCredential(AccountName, Secret), new TableClientOptions { Transport = sharedKeyTransport });
             var connStringClient = new TableClient(
@@ -464,11 +473,11 @@ namespace Azure.Data.Tables.Tests
         }
 
         [TestCaseSource(nameof(TableClientsWithTableNameInUri))]
-        public void CreateIfNotExistsDoesNotThrowWhenClientConstructedWithUriContainingTableName(TableClient tableClient, MockTransport transport)
+        public async Task CreateIfNotExistsDoesNotThrowWhenClientConstructedWithUriContainingTableName(TableClient tableClient, MockTransport transport)
         {
             client = InstrumentClient(tableClient);
 
-            client.CreateIfNotExistsAsync();
+            await client.CreateIfNotExistsAsync();
 
             Assert.That(transport.SingleRequest.Uri.Path, Does.Not.Contain(TableName), "Path should not contain the table name");
         }
@@ -502,9 +511,54 @@ namespace Azure.Data.Tables.Tests
             CollectionAssert.Contains(actualSas.Segments, TableName);
         }
 
+        private static IEnumerable<object[]> TableClientsAllCtors(bool useEmulator)
+        {
+            Uri url;
+            string connectionString;
+            TableSharedKeyCredential sharedKeyCred;
+
+            if (useEmulator)
+            {
+                url = new Uri("http://127.0.0.1:10002/devstoreaccount1");
+                connectionString = "UseDevelopmentStorage=true";
+                sharedKeyCred = new TableSharedKeyCredential("devstoreaccount1", "Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==");
+            }
+            else
+            {
+                url = _url;
+                connectionString = $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.core.windows.net/;";
+                sharedKeyCred = new TableSharedKeyCredential(AccountName, Secret);
+            }
+
+            var tokenCred = new MockCredential();
+            var sasCred = new AzureSasCredential(signature);
+            var fromTableServiceClient = new TableServiceClient(url, sharedKeyCred).GetTableClient(TableName);
+
+            yield return new object[] { new TableClient(connectionString, TableName) };
+            yield return new object[] { new TableClient(url, TableName, sharedKeyCred) };
+            yield return new object[] { new TableClient(url, TableName, tokenCred) };
+            yield return new object[] { new TableClient(url, sasCred) };
+            yield return new object[] { new TableClient(new Uri($"{url}?{signature}")) };
+            yield return new object[] { fromTableServiceClient };
+        }
+
+        [TestCaseSource(nameof(TableClientsAllCtors), new object[] { false })]
+        public void UriPropertyIsPopulated(TableClient client)
+        {
+            Assert.AreEqual(_urlWithTableName, client.Uri);
+            Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
+        }
+
+        [TestCaseSource(nameof(TableClientsAllCtors), new object[] { true })]
+        public void UriPropertyIsPopulatedForEmulator(TableClient client)
+        {
+            Assert.AreEqual(new Uri("http://127.0.0.1:10002/devstoreaccount1/" + TableName), client.Uri);
+            Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
+        }
+
         [Test]
         [NonParallelizable]
-        public async Task CreateClientRespectsSingleQuoteEscapeCompatSwithc(
+        public async Task CreateClientRespectsSingleQuoteEscapeCompatSwitch(
             [Values(true, false, null)] bool? setDisableSwitch,
             [Values(true, false, null)] bool? setDisableEnvVar)
         {
@@ -559,13 +613,104 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        private static MockTransport TableAlreadyExistsTransport() =>
-            new(
-                _ => throw new RequestFailedException(
-                    (int)HttpStatusCode.Conflict,
-                    null,
-                    TableErrorCode.TableAlreadyExists.ToString(),
-                    null));
+        [Test]
+        [NonParallelizable]
+        public async Task CreateClientRespectsSingleQuoteEscapeCompatSwitchForDelete(
+            [Values(true, false, null)] bool? setDisableSwitch,
+            [Values(true, false, null)] bool? setDisableEnvVar)
+        {
+            TestAppContextSwitch ctx = null;
+            TestEnvVar env = null;
+            try
+            {
+                if (setDisableSwitch.HasValue)
+                {
+                    ctx = new TestAppContextSwitch(TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnDeleteEntitySwitchName, setDisableSwitch.Value.ToString());
+                }
+                if (setDisableEnvVar.HasValue)
+                {
+                    env = new TestEnvVar(TableConstants.CompatSwitches.DisableEscapeSingleQuotesOnDeleteEntityEnvVar, setDisableEnvVar.Value.ToString());
+                }
+                var response = new MockResponse(204);
+                var transport = new MockTransport(_ => response);
+                var client = new TableClient(_url, TableName, new MockCredential(), new TableClientOptions { Transport = transport });
+
+                await client.DeleteEntityAsync("fo'o", "ba'r");
+
+                if (setDisableSwitch.HasValue)
+                {
+                    if (setDisableSwitch.Value)
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Not.Contain("''"));
+                    }
+                    else
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Contain("''"));
+                    }
+                }
+                else
+                {
+                    if (setDisableEnvVar.HasValue && setDisableEnvVar.Value)
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Not.Contain("''"));
+                    }
+                    else
+                    {
+                        Assert.That(WebUtility.UrlDecode(transport.SingleRequest.Uri.PathAndQuery), Does.Contain("''"));
+                    }
+                }
+            }
+            finally
+            {
+                ctx?.Dispose();
+                env?.Dispose();
+            }
+        }
+
+        [Test]
+        public async Task LoggedQueryParameters()
+        {
+            _transport = new MockTransport(request => new MockResponse(200));
+            var options = TableClientOptions.DefaultOptions;
+            options.Transport = _transport;
+            var service_Instrumented = InstrumentClient(
+                new TableServiceClient(
+                    new Uri($"https://example.com?{signature}"),
+                    new AzureSasCredential("sig"),
+                    options));
+            client = service_Instrumented.GetTableClient(TableName);
+
+            var messages = new List<string>();
+            using AzureEventSourceListener listener = new AzureEventSourceListener(
+                (args, message) => messages.Add(string.Format(message, args)),
+                level: EventLevel.Verbose);
+
+            try
+            {
+                await client.QueryAsync<TableEntity>(filter: "myFilter", maxPerPage: 987, select: new[] { "mySelect" }).ToEnumerableAsync().ConfigureAwait(false);
+            }
+            catch {/* don't throw */}
+
+            var message = messages.First(m => m.StartsWith("Request"));
+            Assert.That(message, Does.Contain("myFilter"), "Path should not redact 'filter");
+            Assert.That(message, Does.Contain("987"), "Path should not redact 'top");
+            Assert.That(message, Does.Contain("mySelect"), "Path should not redact 'select");
+        }
+
+        private static MockTransport TableAlreadyExistsTransport(TableErrorCode errorCode)
+        {
+            MockResponse conflictResponse = new((int)HttpStatusCode.Conflict);
+            conflictResponse.SetContent(@$"{{
+  ""odata.error"": {{
+    ""code"": ""{errorCode}"",
+    ""message"": {{
+      ""lang"": ""en-US"",
+      ""value"": ""Table is being deleted.\nRequestId:7c2a1319-5002-0065-0b0e-502b52000000\nTime:2022-04-14T14:44:00.1021472Z""
+    }}
+  }}
+}}");
+            return new(_ => conflictResponse);
+        }
 
         public class EnumEntity : ITableEntity
         {

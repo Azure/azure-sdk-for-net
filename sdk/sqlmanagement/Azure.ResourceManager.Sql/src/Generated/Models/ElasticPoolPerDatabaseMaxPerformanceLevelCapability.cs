@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedPerDatabaseMinPerformanceLevels"> The list of supported min database performance levels. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolPerDatabaseMaxPerformanceLevelCapability(double? limit, PerformanceLevelUnit? unit, IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> supportedPerDatabaseMinPerformanceLevels, CapabilityStatus? status, string reason)
+        internal ElasticPoolPerDatabaseMaxPerformanceLevelCapability(double? limit, PerformanceLevelUnit? unit, IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> supportedPerDatabaseMinPerformanceLevels, SqlCapabilityStatus? status, string reason)
         {
             Limit = limit;
             Unit = unit;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The list of supported min database performance levels. </summary>
         public IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> SupportedPerDatabaseMinPerformanceLevels { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

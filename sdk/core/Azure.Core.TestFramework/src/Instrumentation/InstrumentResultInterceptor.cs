@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,10 +17,13 @@ namespace Azure.Core.TestFramework
             ?? throw new InvalidOperationException("Unable to find InstrumentOperationInterceptor method");
 
         private readonly ClientTestBase _testBase;
+        private readonly RecordedTestMode _testMode;
 
         public InstrumentResultInterceptor(ClientTestBase testBase)
         {
             _testBase = testBase;
+            // non-recorded tests are treated like Playback mode
+            _testMode = testBase is RecordedTestBase recordedTestBase ? recordedTestBase.Mode : RecordedTestMode.Playback;
         }
 
         public void Intercept(IInvocation invocation)
@@ -58,7 +61,39 @@ namespace Azure.Core.TestFramework
                 type.GetGenericTypeDefinition() == typeof(Task<>) &&
                 typeof(Operation).IsAssignableFrom(arguments[0]))
             {
+                bool swappedWaitUntilArg = false;
+                WaitUntil? current = invocation.Arguments[0] as WaitUntil?;
+
+                // We swap out WaitUntil.Completed for WaitUntil.Started when in Playback because otherwise the operation
+                // would not be instrumented when WaitForCompletion is called on it, which would mean that
+                // the zero polling strategy wouldn't be used.
+                if (current == WaitUntil.Completed && _testMode == RecordedTestMode.Playback)
+                {
+                    swappedWaitUntilArg = true;
+                    invocation.Arguments[0] = WaitUntil.Started;
+                }
+
+                // This will asynchronously invoke the operation and instrument it.
                 DiagnosticScopeValidatingInterceptor.WrapAsyncResult(invocation, this, InstrumentOperationInterceptorMethodInfo);
+
+                // if we swapped out WaitUntil.Completed, we now will need to call WaitForCompletion.
+                if (swappedWaitUntilArg)
+                {
+                    if (TaskExtensions.IsTaskFaulted(invocation.ReturnValue))
+                        return;
+
+                    object lro = TaskExtensions.GetResultFromTask(invocation.ReturnValue);
+                    CancellationToken token = invocation.Arguments.Last() switch
+                    {
+                        RequestContext requestContext => requestContext.CancellationToken,
+                        CancellationToken cancellationToken => cancellationToken,
+                        _ => CancellationToken.None
+                    };
+                    var valueTask = lro.GetType().BaseType.IsGenericType
+                        ? OperationInterceptor.InvokeWaitForCompletion(lro, lro.GetType(), token)
+                        : OperationInterceptor.InvokeWaitForCompletionResponse(lro as Operation, token);
+                    _ = TaskExtensions.GetResultFromTask(valueTask);
+                }
                 return;
             }
 

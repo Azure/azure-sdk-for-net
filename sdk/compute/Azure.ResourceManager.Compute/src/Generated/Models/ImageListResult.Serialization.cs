@@ -16,21 +16,25 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ImageListResult DeserializeImageListResult(JsonElement element)
         {
-            IReadOnlyList<ImageData> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IReadOnlyList<DiskImageData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
-                    List<ImageData> array = new List<ImageData>();
+                    List<DiskImageData> array = new List<DiskImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageData.DeserializeImageData(item));
+                        array.Add(DiskImageData.DeserializeDiskImageData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

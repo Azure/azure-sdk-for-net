@@ -20,8 +20,8 @@ namespace Azure.Analytics.Synapse.Spark
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-        private readonly string _sparkPoolName;
         private readonly string _livyApiVersion;
+        private readonly string _sparkPoolName;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -30,16 +30,16 @@ namespace Azure.Analytics.Synapse.Spark
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="livyApiVersion"> Valid api-version for the request. The default value is "2019-11-01-preview". </param>
         /// <param name="sparkPoolName"> Name of the spark pool. </param>
-        /// <param name="livyApiVersion"> Valid api-version for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="sparkPoolName"/> or <paramref name="livyApiVersion"/> is null. </exception>
-        public SparkBatchRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="livyApiVersion"/> or <paramref name="sparkPoolName"/> is null. </exception>
+        public SparkBatchRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string livyApiVersion, string sparkPoolName)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _sparkPoolName = sparkPoolName ?? throw new ArgumentNullException(nameof(sparkPoolName));
             _livyApiVersion = livyApiVersion ?? throw new ArgumentNullException(nameof(livyApiVersion));
+            _sparkPoolName = sparkPoolName ?? throw new ArgumentNullException(nameof(sparkPoolName));
         }
 
         internal HttpMessage CreateGetSparkBatchJobsRequest(int? @from, int? size, bool? detailed)
@@ -93,7 +93,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -200,7 +200,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -266,7 +266,7 @@ namespace Azure.Analytics.Synapse.Spark
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -299,7 +299,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -315,7 +315,7 @@ namespace Azure.Analytics.Synapse.Spark
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

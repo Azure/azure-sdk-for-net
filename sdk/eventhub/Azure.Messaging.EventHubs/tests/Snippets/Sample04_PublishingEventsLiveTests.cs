@@ -490,7 +490,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 MaximumWaitTime = TimeSpan.FromSeconds(1),
                 MaximumConcurrentSends = 5,
                 MaximumConcurrentSendsPerPartition = 1,
-                MaximumEventBufferLengthPerPartition = 5000
+                MaximumEventBufferLengthPerPartition = 5000,
+                EnableIdempotentRetries = true
             };
 
             var producer = new EventHubBufferedProducerClient(connectionString, eventHubName, options);

@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobListResult DeserializeJobListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SqlJobData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<SqlServerJobData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SqlJobData> array = new List<SqlJobData>();
+                    List<SqlServerJobData> array = new List<SqlServerJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlJobData.DeserializeSqlJobData(item));
+                        array.Add(SqlServerJobData.DeserializeSqlServerJobData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

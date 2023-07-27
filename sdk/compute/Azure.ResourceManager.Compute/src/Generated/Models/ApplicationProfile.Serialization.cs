@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(GalleryApplications))
             {
-                writer.WritePropertyName("galleryApplications");
+                writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();
                 foreach (var item in GalleryApplications)
                 {
@@ -31,20 +31,23 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ApplicationProfile DeserializeApplicationProfile(JsonElement element)
         {
-            Optional<IList<VmGalleryApplication>> galleryApplications = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<VirtualMachineGalleryApplication>> galleryApplications = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("galleryApplications"))
+                if (property.NameEquals("galleryApplications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VmGalleryApplication> array = new List<VmGalleryApplication>();
+                    List<VirtualMachineGalleryApplication> array = new List<VirtualMachineGalleryApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmGalleryApplication.DeserializeVmGalleryApplication(item));
+                        array.Add(VirtualMachineGalleryApplication.DeserializeVirtualMachineGalleryApplication(item));
                     }
                     galleryApplications = array;
                     continue;

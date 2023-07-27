@@ -133,6 +133,7 @@ namespace Azure.Core.Pipeline
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
+            message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
@@ -166,6 +167,7 @@ namespace Azure.Core.Pipeline
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
             message.CancellationToken = cancellationToken;
+            message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)

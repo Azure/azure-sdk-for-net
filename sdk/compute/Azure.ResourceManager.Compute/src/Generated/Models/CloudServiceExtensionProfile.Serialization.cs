@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Extensions))
             {
-                writer.WritePropertyName("extensions");
+                writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
@@ -31,20 +31,23 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceExtensionProfile DeserializeCloudServiceExtensionProfile(JsonElement element)
         {
-            Optional<IList<Extension>> extensions = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<CloudServiceExtension>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extensions"))
+                if (property.NameEquals("extensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Extension> array = new List<Extension>();
+                    List<CloudServiceExtension> array = new List<CloudServiceExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Extension.DeserializeExtension(item));
+                        array.Add(CloudServiceExtension.DeserializeCloudServiceExtension(item));
                     }
                     extensions = array;
                     continue;

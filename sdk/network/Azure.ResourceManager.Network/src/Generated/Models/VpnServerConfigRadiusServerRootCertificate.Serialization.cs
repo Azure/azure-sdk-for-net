@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -17,31 +18,43 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(PublicCertData))
             {
-                writer.WritePropertyName("publicCertData");
-                writer.WriteStringValue(PublicCertData);
+                writer.WritePropertyName("publicCertData"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(PublicCertData);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(PublicCertData.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
         }
 
         internal static VpnServerConfigRadiusServerRootCertificate DeserializeVpnServerConfigRadiusServerRootCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
-            Optional<string> publicCertData = default;
+            Optional<BinaryData> publicCertData = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publicCertData"))
+                if (property.NameEquals("publicCertData"u8))
                 {
-                    publicCertData = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicCertData = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
             }

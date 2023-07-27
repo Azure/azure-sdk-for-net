@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -13,8 +15,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     public partial class SnowflakeSource : CopySource
     {
         /// <summary> Initializes a new instance of SnowflakeSource. </summary>
-        public SnowflakeSource()
+        /// <param name="exportSettings"> Snowflake export settings. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exportSettings"/> is null. </exception>
+        public SnowflakeSource(SnowflakeExportCopyCommand exportSettings)
         {
+            Argument.AssertNotNull(exportSettings, nameof(exportSettings));
+
+            ExportSettings = exportSettings;
             Type = "SnowflakeSource";
         }
 

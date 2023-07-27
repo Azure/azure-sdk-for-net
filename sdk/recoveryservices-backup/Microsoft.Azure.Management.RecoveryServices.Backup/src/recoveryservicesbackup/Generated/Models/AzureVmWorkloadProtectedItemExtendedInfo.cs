@@ -32,16 +32,25 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// AzureVmWorkloadProtectedItemExtendedInfo class.
         /// </summary>
         /// <param name="oldestRecoveryPoint">The oldest backup copy available
-        /// for this backup item.</param>
+        /// for this backup item across all tiers.</param>
+        /// <param name="oldestRecoveryPointInVault">The oldest backup copy
+        /// available for this backup item in vault tier</param>
+        /// <param name="oldestRecoveryPointInArchive">The oldest backup copy
+        /// available for this backup item in archive tier</param>
+        /// <param name="newestRecoveryPointInArchive">The latest backup copy
+        /// available for this backup item in archive tier</param>
         /// <param name="recoveryPointCount">Number of backup copies available
         /// for this backup item.</param>
         /// <param name="policyState">Indicates consistency of policy object
         /// and policy applied to this backup item.</param>
         /// <param name="recoveryModel">Indicates consistency of policy object
         /// and policy applied to this backup item.</param>
-        public AzureVmWorkloadProtectedItemExtendedInfo(System.DateTime? oldestRecoveryPoint = default(System.DateTime?), int? recoveryPointCount = default(int?), string policyState = default(string), string recoveryModel = default(string))
+        public AzureVmWorkloadProtectedItemExtendedInfo(System.DateTime? oldestRecoveryPoint = default(System.DateTime?), System.DateTime? oldestRecoveryPointInVault = default(System.DateTime?), System.DateTime? oldestRecoveryPointInArchive = default(System.DateTime?), System.DateTime? newestRecoveryPointInArchive = default(System.DateTime?), int? recoveryPointCount = default(int?), string policyState = default(string), string recoveryModel = default(string))
         {
             OldestRecoveryPoint = oldestRecoveryPoint;
+            OldestRecoveryPointInVault = oldestRecoveryPointInVault;
+            OldestRecoveryPointInArchive = oldestRecoveryPointInArchive;
+            NewestRecoveryPointInArchive = newestRecoveryPointInArchive;
             RecoveryPointCount = recoveryPointCount;
             PolicyState = policyState;
             RecoveryModel = recoveryModel;
@@ -54,10 +63,32 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the oldest backup copy available for this backup item.
+        /// Gets or sets the oldest backup copy available for this backup item
+        /// across all tiers.
         /// </summary>
         [JsonProperty(PropertyName = "oldestRecoveryPoint")]
         public System.DateTime? OldestRecoveryPoint { get; set; }
+
+        /// <summary>
+        /// Gets or sets the oldest backup copy available for this backup item
+        /// in vault tier
+        /// </summary>
+        [JsonProperty(PropertyName = "oldestRecoveryPointInVault")]
+        public System.DateTime? OldestRecoveryPointInVault { get; set; }
+
+        /// <summary>
+        /// Gets or sets the oldest backup copy available for this backup item
+        /// in archive tier
+        /// </summary>
+        [JsonProperty(PropertyName = "oldestRecoveryPointInArchive")]
+        public System.DateTime? OldestRecoveryPointInArchive { get; set; }
+
+        /// <summary>
+        /// Gets or sets the latest backup copy available for this backup item
+        /// in archive tier
+        /// </summary>
+        [JsonProperty(PropertyName = "newestRecoveryPointInArchive")]
+        public System.DateTime? NewestRecoveryPointInArchive { get; set; }
 
         /// <summary>
         /// Gets or sets number of backup copies available for this backup

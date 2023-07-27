@@ -14,28 +14,36 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static TargetResource DeserializeTargetResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> resourceName = default;
-            Optional<string> resourceType = default;
+            Optional<ResourceType> resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"))
+                if (property.NameEquals("resourceName"u8))
                 {
                     resourceName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"))
+                if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
             }
-            return new TargetResource(id.Value, resourceName.Value, resourceType.Value);
+            return new TargetResource(id.Value, resourceName.Value, Optional.ToNullable(resourceType));
         }
     }
 }

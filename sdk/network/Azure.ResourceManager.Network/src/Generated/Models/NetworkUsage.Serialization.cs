@@ -14,36 +14,44 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkUsage DeserializeNetworkUsage(JsonElement element)
         {
-            Optional<string> id = default;
-            UsageUnit unit = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> id = default;
+            NetworkUsageUnit unit = default;
             long currentValue = default;
             long limit = default;
-            UsageName name = default;
+            NetworkUsageName name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
-                    unit = new UsageUnit(property.Value.GetString());
+                    unit = new NetworkUsageUnit(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     currentValue = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     limit = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = NetworkUsageName.DeserializeNetworkUsageName(property.Value);
                     continue;
                 }
             }

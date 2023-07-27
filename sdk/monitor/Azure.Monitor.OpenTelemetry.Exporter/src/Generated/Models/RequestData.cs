@@ -23,18 +23,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="duration"/> or <paramref name="responseCode"/> is null. </exception>
         public RequestData(int version, string id, string duration, bool success, string responseCode) : base(version)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (duration == null)
-            {
-                throw new ArgumentNullException(nameof(duration));
-            }
-            if (responseCode == null)
-            {
-                throw new ArgumentNullException(nameof(responseCode));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(duration, nameof(duration));
+            Argument.AssertNotNull(responseCode, nameof(responseCode));
 
             Id = id;
             Duration = duration;
@@ -46,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
         /// <summary> Identifier of a request call instance. Used for correlation between request and other telemetry items. </summary>
         public string Id { get; }
-        /// <summary> Name of the request. Represents code path taken to process request. Low cardinality value to allow better grouping of requests. For HTTP requests it represents the HTTP method and URL path template like &apos;GET /values/{id}&apos;. </summary>
+        /// <summary> Name of the request. Represents code path taken to process request. Low cardinality value to allow better grouping of requests. For HTTP requests it represents the HTTP method and URL path template like 'GET /values/{id}'. </summary>
         public string Name { get; set; }
         /// <summary> Request duration in format: DD.HH:MM:SS.MMMMMM. Must be less than 1000 days. </summary>
         public string Duration { get; }

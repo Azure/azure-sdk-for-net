@@ -255,7 +255,7 @@ In [ASP.NET Razor pages][aspnet_razor] as an example, you can then inject them i
 [dotnet_install]: https://dotnet.microsoft.com/download
 [identity_defaultazurecredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [identity_troubleshooting]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#troubleshooting
-[keyvault_injection]: https://docs.microsoft.com/dotnet/api/overview/azure/microsoft.extensions.azure-readme-pre
+[keyvault_injection]: https://docs.microsoft.com/dotnet/api/overview/azure/microsoft.extensions.azure-readme
 [keyvault_limits]: https://docs.microsoft.com/azure/key-vault/general/service-limits
 [keyvault_overview]: https://docs.microsoft.com/azure/key-vault/general/overview
 [keyvault_references]: https://docs.microsoft.com/azure/azure-app-configuration/use-key-vault-references-dotnet-core

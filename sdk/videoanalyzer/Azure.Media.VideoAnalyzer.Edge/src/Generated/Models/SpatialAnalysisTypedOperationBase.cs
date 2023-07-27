@@ -7,7 +7,11 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base class for Azure Cognitive Services Spatial Analysis typed operations. </summary>
+    /// <summary>
+    /// Base class for Azure Cognitive Services Spatial Analysis typed operations.
+    /// Please note <see cref="SpatialAnalysisTypedOperationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SpatialAnalysisPersonCountOperation"/>, <see cref="SpatialAnalysisPersonDistanceOperation"/>, <see cref="SpatialAnalysisPersonLineCrossingOperation"/> and <see cref="SpatialAnalysisPersonZoneCrossingOperation"/>.
+    /// </summary>
     public partial class SpatialAnalysisTypedOperationBase : SpatialAnalysisOperationBase
     {
         /// <summary> Initializes a new instance of SpatialAnalysisTypedOperationBase. </summary>
@@ -18,13 +22,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> Initializes a new instance of SpatialAnalysisTypedOperationBase. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
-        /// <param name="debug"> If set to &apos;true&apos;, enables debugging mode for this operation. </param>
+        /// <param name="debug"> If set to 'true', enables debugging mode for this operation. </param>
         /// <param name="calibrationConfiguration"> Advanced calibration configuration. </param>
         /// <param name="cameraConfiguration"> Advanced camera configuration. </param>
         /// <param name="cameraCalibratorNodeConfiguration"> Advanced camera calibrator configuration. </param>
         /// <param name="detectorNodeConfiguration"> Advanced detector node configuration. </param>
         /// <param name="trackerNodeConfiguration"> Advanced tracker node configuration. </param>
-        /// <param name="enableFaceMaskClassifier"> If set to &apos;true&apos;, enables face mask detection for this operation. </param>
+        /// <param name="enableFaceMaskClassifier"> If set to 'true', enables face mask detection for this operation. </param>
         internal SpatialAnalysisTypedOperationBase(string type, string debug, string calibrationConfiguration, string cameraConfiguration, string cameraCalibratorNodeConfiguration, string detectorNodeConfiguration, string trackerNodeConfiguration, string enableFaceMaskClassifier) : base(type)
         {
             Debug = debug;
@@ -37,7 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = type ?? "SpatialAnalysisTypedOperationBase";
         }
 
-        /// <summary> If set to &apos;true&apos;, enables debugging mode for this operation. </summary>
+        /// <summary> If set to 'true', enables debugging mode for this operation. </summary>
         public string Debug { get; set; }
         /// <summary> Advanced calibration configuration. </summary>
         public string CalibrationConfiguration { get; set; }
@@ -49,7 +53,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         public string DetectorNodeConfiguration { get; set; }
         /// <summary> Advanced tracker node configuration. </summary>
         public string TrackerNodeConfiguration { get; set; }
-        /// <summary> If set to &apos;true&apos;, enables face mask detection for this operation. </summary>
+        /// <summary> If set to 'true', enables face mask detection for this operation. </summary>
         public string EnableFaceMaskClassifier { get; set; }
     }
 }

@@ -9,6 +9,8 @@ namespace Azure.DigitalTwins.Core
         public Azure.ETag? ETag { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$dtId")]
         public string Id { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$lastUpdateTime")]
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
         public Azure.DigitalTwins.Core.DigitalTwinMetadata Metadata { get { throw null; } set { } }
     }
@@ -17,6 +19,8 @@ namespace Azure.DigitalTwins.Core
         public BasicDigitalTwinComponent() { }
         [System.Text.Json.Serialization.JsonExtensionDataAttribute]
         public System.Collections.Generic.IDictionary<string, object> Contents { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("$lastUpdateTime")]
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("$metadata")]
         public System.Collections.Generic.IDictionary<string, Azure.DigitalTwins.Core.DigitalTwinPropertyMetadata> Metadata { get { throw null; } set { } }
     }
@@ -48,6 +52,8 @@ namespace Azure.DigitalTwins.Core
         public DigitalTwinPropertyMetadata() { }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("lastUpdateTime")]
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } set { } }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("sourceTime")]
+        public System.DateTimeOffset? SourceTime { get { throw null; } set { } }
     }
     public partial class DigitalTwinsClient
     {
@@ -105,12 +111,13 @@ namespace Azure.DigitalTwins.Core
     }
     public partial class DigitalTwinsClientOptions : Azure.Core.ClientOptions
     {
-        public DigitalTwinsClientOptions(Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion version = Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion.V2020_10_31) { }
+        public DigitalTwinsClientOptions(Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion version = Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion.V2022_05_31) { }
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
         public Azure.DigitalTwins.Core.DigitalTwinsClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
             V2020_10_31 = 1,
+            V2022_05_31 = 2,
         }
     }
     public partial class DigitalTwinsEventRoute
@@ -125,8 +132,10 @@ namespace Azure.DigitalTwins.Core
         public const string DigitalTwinETag = "$etag";
         public const string DigitalTwinId = "$dtId";
         public const string DigitalTwinMetadata = "$metadata";
+        public const string MetadataLastUpdateTime = "$lastUpdateTime";
         public const string MetadataModel = "$model";
         public const string MetadataPropertyLastUpdateTime = "lastUpdateTime";
+        public const string MetadataPropertySourceTime = "sourceTime";
         public const string RelationshipId = "$relationshipId";
         public const string RelationshipName = "$relationshipName";
         public const string RelationshipSourceId = "$sourceId";
@@ -144,8 +153,9 @@ namespace Azure.DigitalTwins.Core
     }
     public static partial class DigitalTwinsModelFactory
     {
-        public static Azure.DigitalTwins.Core.DigitalTwinsModelData DigitalTwinsModelData(System.Collections.Generic.IReadOnlyDictionary<string, string> languageDisplayNames, System.Collections.Generic.IReadOnlyDictionary<string, string> languageDescriptions, string id, System.DateTimeOffset? uploadedOn, bool? decommissioned, string dtdlModel) { throw null; }
-        public static Azure.DigitalTwins.Core.IncomingRelationship IncomingRelationship(string relationshipId, string sourceId, string relationshipName, string relationshipLink) { throw null; }
+        public static Azure.DigitalTwins.Core.DigitalTwinsEventRoute DigitalTwinsEventRoute(string id = null, string endpointName = null, string filter = null) { throw null; }
+        public static Azure.DigitalTwins.Core.DigitalTwinsModelData DigitalTwinsModelData(System.Collections.Generic.IReadOnlyDictionary<string, string> languageDisplayNames = null, System.Collections.Generic.IReadOnlyDictionary<string, string> languageDescriptions = null, string id = null, System.DateTimeOffset? uploadedOn = default(System.DateTimeOffset?), bool? decommissioned = default(bool?), string dtdlModel = null) { throw null; }
+        public static Azure.DigitalTwins.Core.IncomingRelationship IncomingRelationship(string relationshipId = null, string sourceId = null, string relationshipName = null, string relationshipLink = null) { throw null; }
     }
     public partial class GetModelsOptions
     {
@@ -164,14 +174,5 @@ namespace Azure.DigitalTwins.Core
     public static partial class QueryChargeHelper
     {
         public static bool TryGetQueryCharge<T>(Azure.Page<T> page, out float queryCharge) { throw null; }
-    }
-}
-namespace Azure.DigitalTwins.Core.Models
-{
-    public static partial class AzureDigitalTwinsAPIModelFactory
-    {
-        public static Azure.DigitalTwins.Core.DigitalTwinsEventRoute DigitalTwinsEventRoute(string id = null, string endpointName = null, string filter = null) { throw null; }
-        public static Azure.DigitalTwins.Core.DigitalTwinsModelData DigitalTwinsModelData(System.Collections.Generic.IReadOnlyDictionary<string, string> languageDisplayNames = null, System.Collections.Generic.IReadOnlyDictionary<string, string> languageDescriptions = null, string id = null, System.DateTimeOffset? uploadedOn = default(System.DateTimeOffset?), bool? decommissioned = default(bool?), string dtdlModel = null) { throw null; }
-        public static Azure.DigitalTwins.Core.IncomingRelationship IncomingRelationship(string relationshipId = null, string sourceId = null, string relationshipName = null, string relationshipLink = null) { throw null; }
     }
 }

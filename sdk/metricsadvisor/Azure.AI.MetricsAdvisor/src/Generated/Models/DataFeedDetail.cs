@@ -12,10 +12,13 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The DataFeedDetail. </summary>
+    /// <summary>
+    /// The DataFeedDetail.
+    /// Please note <see cref="DataFeedDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureApplicationInsightsDataFeed"/>, <see cref="AzureBlobDataFeed"/>, <see cref="AzureCosmosDBDataFeed"/>, <see cref="AzureDataExplorerDataFeed"/>, <see cref="AzureDataLakeStorageGen2DataFeed"/>, <see cref="AzureEventHubsDataFeed"/>, <see cref="AzureLogAnalyticsDataFeed"/>, <see cref="AzureTableDataFeed"/>, <see cref="InfluxDBDataFeed"/>, <see cref="MongoDBDataFeed"/>, <see cref="MySqlDataFeed"/>, <see cref="PostgreSqlDataFeed"/> and <see cref="SQLServerDataFeed"/>.
+    /// </summary>
     internal partial class DataFeedDetail
     {
-
         /// <summary> Initializes a new instance of DataFeedDetail. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>

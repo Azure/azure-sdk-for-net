@@ -10,8 +10,10 @@ parameters:
 steps:
 - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 - pwsh: |
-    Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://aka.ms/downloadazcopy-v10-windows" -OutFile "azcopy.zip" | Wait-Process;
-    Expand-Archive -Path "azcopy.zip" -DestinationPath "$(Build.BinariesDirectory)/azcopy/"
+    if (!(Test-Path '$(Build.BinariesDirectory)/azcopy/azcopy_windows_amd64_*/azcopy.exe')) {
+      Invoke-WebRequest -MaximumRetryCount 10 -Uri "https://aka.ms/downloadazcopy-v10-windows" -OutFile "azcopy.zip" | Wait-Process;
+      Expand-Archive -Path "azcopy.zip" -DestinationPath "$(Build.BinariesDirectory)/azcopy/" -Force
+    }
   workingDirectory: $(Build.BinariesDirectory)
   displayName: Download and Extract azcopy Zip
 

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LoadBalancerConfigurations))
             {
-                writer.WritePropertyName("loadBalancerConfigurations");
+                writer.WritePropertyName("loadBalancerConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerConfigurations)
                 {
@@ -27,9 +27,14 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(SlotType))
+            {
+                writer.WritePropertyName("slotType"u8);
+                writer.WriteStringValue(SlotType.Value.ToString());
+            }
             if (Optional.IsDefined(SwappableCloudService))
             {
-                writer.WritePropertyName("swappableCloudService");
+                writer.WritePropertyName("swappableCloudService"u8);
                 JsonSerializer.Serialize(writer, SwappableCloudService);
             }
             writer.WriteEndObject();
@@ -37,37 +42,49 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element)
         {
-            Optional<IList<LoadBalancerConfiguration>> loadBalancerConfigurations = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<CloudServiceLoadBalancerConfiguration>> loadBalancerConfigurations = default;
+            Optional<CloudServiceSlotType> slotType = default;
             Optional<WritableSubResource> swappableCloudService = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("loadBalancerConfigurations"))
+                if (property.NameEquals("loadBalancerConfigurations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<LoadBalancerConfiguration> array = new List<LoadBalancerConfiguration>();
+                    List<CloudServiceLoadBalancerConfiguration> array = new List<CloudServiceLoadBalancerConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerConfiguration.DeserializeLoadBalancerConfiguration(item));
+                        array.Add(CloudServiceLoadBalancerConfiguration.DeserializeCloudServiceLoadBalancerConfiguration(item));
                     }
                     loadBalancerConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("swappableCloudService"))
+                if (property.NameEquals("slotType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    swappableCloudService = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    slotType = new CloudServiceSlotType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("swappableCloudService"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    swappableCloudService = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), swappableCloudService);
+            return new CloudServiceNetworkProfile(Optional.ToList(loadBalancerConfigurations), Optional.ToNullable(slotType), swappableCloudService);
         }
     }
 }

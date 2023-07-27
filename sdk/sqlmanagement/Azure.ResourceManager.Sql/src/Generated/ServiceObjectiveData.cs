@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ServiceObjective data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceObjective data model.
+    /// Represents a database service objective.
+    /// </summary>
     public partial class ServiceObjectiveData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceObjectiveData. </summary>
@@ -27,14 +30,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="isDefault"> Gets whether the service level objective is the default service objective. </param>
         /// <param name="isSystem"> Gets whether the service level objective is a system service objective. </param>
         /// <param name="description"> The description for the service level objective. </param>
-        /// <param name="enabled"> Gets whether the service level objective is enabled. </param>
-        internal ServiceObjectiveData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceObjectiveName, bool? isDefault, bool? isSystem, string description, bool? enabled) : base(id, name, resourceType, systemData)
+        /// <param name="isEnabled"> Gets whether the service level objective is enabled. </param>
+        internal ServiceObjectiveData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string serviceObjectiveName, bool? isDefault, bool? isSystem, string description, bool? isEnabled) : base(id, name, resourceType, systemData)
         {
             ServiceObjectiveName = serviceObjectiveName;
             IsDefault = isDefault;
             IsSystem = isSystem;
             Description = description;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> The name for the service objective. </summary>
@@ -46,6 +49,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The description for the service level objective. </summary>
         public string Description { get; }
         /// <summary> Gets whether the service level objective is enabled. </summary>
-        public bool? Enabled { get; }
+        public bool? IsEnabled { get; }
     }
 }

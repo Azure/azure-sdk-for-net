@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='resourceName'>
             /// The name of the service instance.
             /// </param>
-            public static IEnumerable<PrivateEndpointConnection> ListByService(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName)
+            public static IEnumerable<PrivateEndpointConnectionDescription> ListByService(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName)
             {
                 return operations.ListByServiceAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<PrivateEndpointConnection>> ListByServiceAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<PrivateEndpointConnectionDescription>> ListByServiceAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// The name of the private endpoint connection associated with the Azure
             /// resource
             /// </param>
-            public static PrivateEndpointConnection Get(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
+            public static PrivateEndpointConnectionDescription Get(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName)
             {
                 return operations.GetAsync(resourceGroupName, resourceName, privateEndpointConnectionName).GetAwaiter().GetResult();
             }
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnection> GetAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnectionDescription> GetAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, resourceName, privateEndpointConnectionName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='properties'>
             /// The private endpoint connection properties.
             /// </param>
-            public static PrivateEndpointConnection CreateOrUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection properties)
+            public static PrivateEndpointConnectionDescription CreateOrUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection properties)
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties).GetAwaiter().GetResult();
             }
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnection> CreateOrUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnectionDescription> CreateOrUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='properties'>
             /// The private endpoint connection properties.
             /// </param>
-            public static PrivateEndpointConnection BeginCreateOrUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection properties)
+            public static PrivateEndpointConnectionDescription BeginCreateOrUpdate(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection properties)
             {
                 return operations.BeginCreateOrUpdateAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties).GetAwaiter().GetResult();
             }
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateEndpointConnection> BeginCreateOrUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateEndpointConnectionDescription> BeginCreateOrUpdateAsync(this IPrivateEndpointConnectionsOperations operations, string resourceGroupName, string resourceName, string privateEndpointConnectionName, PrivateEndpointConnection properties, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceName, privateEndpointConnectionName, properties, null, cancellationToken).ConfigureAwait(false))
                 {

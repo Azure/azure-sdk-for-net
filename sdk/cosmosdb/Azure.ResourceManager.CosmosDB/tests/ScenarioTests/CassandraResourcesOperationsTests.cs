@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(true, responseIsDatabaseNameExists.Value);
             Assert.AreEqual(200, responseIsDatabaseNameExists.GetRawResponse().Status);
 
-            CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters(new CassandraKeyspaceResource(keyspaceName), new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings()));
+            CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters = new CassandraKeyspaceCreateUpdateParameters(new CassandraKeyspaceResource(keyspaceName), new CosmosDBCreateUpdateConfig(sampleThroughput, new AutoscaleSettings()));
 
             var cassandraKeyspaceResponse1 = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartCreateUpdateCassandraKeyspaceAsync(resourceGroupName, databaseAccountName, keyspaceName, cassandraKeyspaceCreateUpdateParameters));
             CassandraKeyspaceResource cassandraKeyspace1 = cassandraKeyspaceResponse1.Value;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(throughputSettings.Resource.Throughput, sampleThroughput);
             Assert.AreEqual(cassandraKeyspacesThroughputType, throughputSettings.Type);
 
-            CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters2 = new CassandraKeyspaceCreateUpdateParameters(new CassandraKeyspaceResource(keyspaceName), new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()));
+            CassandraKeyspaceCreateUpdateParameters cassandraKeyspaceCreateUpdateParameters2 = new CassandraKeyspaceCreateUpdateParameters(new CassandraKeyspaceResource(keyspaceName), new CosmosDBCreateUpdateConfig(sampleThroughput2, new AutoscaleSettings()));
             var cassandraKeyspaceResponse3 = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartCreateUpdateCassandraKeyspaceAsync(resourceGroupName, databaseAccountName, keyspaceName, cassandraKeyspaceCreateUpdateParameters2));
             CassandraKeyspaceResource cassandraKeyspace3 = cassandraKeyspaceResponse3.Value;
             Assert.NotNull(cassandraKeyspace3);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             IList<ClusterKey> clusterKeys = new List<ClusterKey> { new ClusterKey { Name = "columnB", OrderBy = "Asc" } };
             CassandraSchema cassandraSchema = new CassandraSchema(columns, partitionKeys, clusterKeys);
             CassandraTableResource cassandraTableResource = new CassandraTableResource(tableName, default, cassandraSchema, default);
-            CassandraTableCreateUpdateParameters cassandraTableCreateUpdateParameters = new CassandraTableCreateUpdateParameters(cassandraTableResource, new CreateUpdateOptions(sampleThroughput, new AutoscaleSettings()));
+            CassandraTableCreateUpdateParameters cassandraTableCreateUpdateParameters = new CassandraTableCreateUpdateParameters(cassandraTableResource, new CosmosDBCreateUpdateConfig(sampleThroughput, new AutoscaleSettings()));
 
             Response<CassandraTableResource> cassandraResponse = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartCreateUpdateCassandraTableAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName, cassandraTableCreateUpdateParameters));
             CassandraTableResource cassandraTable = cassandraResponse.Value;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(throughputSettings.Resource.Throughput, sampleThroughput);
             Assert.AreEqual(cassandraTablesThroughputType, throughputSettings.Type);
 
-            CassandraTableCreateUpdateParameters cassandraTableCreateUpdateParameters2 = new CassandraTableCreateUpdateParameters(cassandraTableResource, new CreateUpdateOptions(sampleThroughput2, new AutoscaleSettings()));
+            CassandraTableCreateUpdateParameters cassandraTableCreateUpdateParameters2 = new CassandraTableCreateUpdateParameters(cassandraTableResource, new CosmosDBCreateUpdateConfig(sampleThroughput2, new AutoscaleSettings()));
 
             Response<CassandraTableResource> cassandraResponse2 = await WaitForCompletionAsync(await CosmosDBManagementClient.CassandraResources.StartCreateUpdateCassandraTableAsync(resourceGroupName, databaseAccountName, keyspaceName, tableName, cassandraTableCreateUpdateParameters2));
             CassandraTableResource cassandraTable2 = cassandraResponse2.Value;
@@ -299,8 +299,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
         }
 
         private void VerifyEqualCassandraTables(CassandraTableResource expectedValue, CassandraTableResource actualValue)
@@ -315,8 +315,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             Assert.AreEqual(expectedValue.Resource.Id, actualValue.Resource.Id);
             Assert.AreEqual(expectedValue.Resource.Rid, actualValue.Resource.Rid);
-            Assert.AreEqual(expectedValue.Resource.Ts, actualValue.Resource.Ts);
-            Assert.AreEqual(expectedValue.Resource.Etag, actualValue.Resource.Etag);
+            Assert.AreEqual(expectedValue.Resource.Timestamp, actualValue.Resource.Timestamp);
+            Assert.AreEqual(expectedValue.Resource.ETag, actualValue.Resource.ETag);
         }
     }
 }

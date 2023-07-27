@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static WhatIfChangeType ToWhatIfChangeType(this string value)
         {
-            if (string.Equals(value, "Create", StringComparison.InvariantCultureIgnoreCase)) return WhatIfChangeType.Create;
-            if (string.Equals(value, "Delete", StringComparison.InvariantCultureIgnoreCase)) return WhatIfChangeType.Delete;
-            if (string.Equals(value, "Ignore", StringComparison.InvariantCultureIgnoreCase)) return WhatIfChangeType.Ignore;
-            if (string.Equals(value, "Deploy", StringComparison.InvariantCultureIgnoreCase)) return WhatIfChangeType.Deploy;
-            if (string.Equals(value, "NoChange", StringComparison.InvariantCultureIgnoreCase)) return WhatIfChangeType.NoChange;
-            if (string.Equals(value, "Modify", StringComparison.InvariantCultureIgnoreCase)) return WhatIfChangeType.Modify;
-            if (string.Equals(value, "Unsupported", StringComparison.InvariantCultureIgnoreCase)) return WhatIfChangeType.Unsupported;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Create")) return WhatIfChangeType.Create;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete")) return WhatIfChangeType.Delete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ignore")) return WhatIfChangeType.Ignore;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deploy")) return WhatIfChangeType.Deploy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoChange")) return WhatIfChangeType.NoChange;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Modify")) return WhatIfChangeType.Modify;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unsupported")) return WhatIfChangeType.Unsupported;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WhatIfChangeType value.");
         }
     }

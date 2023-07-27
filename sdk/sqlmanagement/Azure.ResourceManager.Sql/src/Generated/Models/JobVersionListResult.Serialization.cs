@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobVersionListResult DeserializeJobVersionListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<JobVersionData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<SqlServerJobVersionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<JobVersionData> array = new List<JobVersionData>();
+                    List<SqlServerJobVersionData> array = new List<SqlServerJobVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobVersionData.DeserializeJobVersionData(item));
+                        array.Add(SqlServerJobVersionData.DeserializeSqlServerJobVersionData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

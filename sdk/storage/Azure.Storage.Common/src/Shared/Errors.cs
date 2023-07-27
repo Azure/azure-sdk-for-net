@@ -4,6 +4,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace Azure.Storage
 {
@@ -52,11 +53,24 @@ namespace Azure.Storage
         public static InvalidDataException HashMismatch(string hashHeaderName)
             => new InvalidDataException($"{hashHeaderName} did not match hash of recieved data.");
 
+        public static InvalidDataException ChecksumMismatch(ReadOnlySpan<byte> left, ReadOnlySpan<byte> right)
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_0_OR_GREATER
+            => new InvalidDataException($"Compared checksums did not match. Invalid data may have been written to the destination. Left: {Convert.ToBase64String(left)} Right: {Convert.ToBase64String(right)}");
+#else
+            => new InvalidDataException($"Compared checksums did not match. Invalid data may have been written to the destination. Left: {Convert.ToBase64String(left.ToArray())} Right: {Convert.ToBase64String(right.ToArray())}");
+#endif
+
+        public static InvalidDataException HashMismatchOnStreamedDownload(string mismatchedRange)
+            => new InvalidDataException($"Detected invalid data while streaming to the destination. Range {mismatchedRange} produced mismatched checksum.");
+
         public static ArgumentException PrecalculatedHashNotSupportedOnSplit()
-            => new ArgumentException("Precalculated hash not supported when potentially partitioning an upload.");
+            => new ArgumentException("Precalculated checksum not supported when potentially partitioning an upload.");
 
         public static ArgumentException CannotDeferTransactionalHashVerification()
             => new ArgumentException("Cannot defer transactional hash verification. Returned hash is unavailable to caller.");
+
+        public static ArgumentException CannotInitializeWriteStreamWithData()
+            => new ArgumentException("Initialized buffer for StorageWriteStream must be empty.");
 
         internal static void VerifyStreamPosition(Stream stream, string streamName)
         {
@@ -65,5 +79,57 @@ namespace Azure.Storage
                 throw new ArgumentException($"{streamName}.{nameof(stream.Position)} must be less than {streamName}.{nameof(stream.Length)}. Please set {streamName}.{nameof(stream.Position)} to the start of the data to upload.");
             }
         }
+
+        public static void ThrowIfParamNull(object obj, string paramName)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException($"Param: \"{paramName}\" is null");
+            }
+        }
+
+        internal static void CheckCryptKeySize(int keySizeInBytes)
+        {
+            if (keySizeInBytes != (128 / 8) && keySizeInBytes != (192 / 8) && keySizeInBytes != (256 / 8))
+            {
+                throw new CryptographicException("Specified key is not a valid size for this algorithm.");
+            }
+        }
+
+        /// <summary>
+        /// From
+        /// https://github.com/dotnet/runtime/blob/032a7dcbe1056493e8bab51e6b5b9503de727273/src/libraries/System.Security.Cryptography/src/Resources/Strings.resx#L202
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="CryptographicException"></exception>
+        public static CryptographicException CryptographyAuthTagMismatch()
+            => throw new CryptographicException("The computed authentication tag did not match the input authentication tag.");
+
+        /// <summary>
+        /// From
+        /// https://github.com/dotnet/runtime/blob/032a7dcbe1056493e8bab51e6b5b9503de727273/src/libraries/System.Security.Cryptography/src/Resources/Strings.resx#L514
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static ArgumentException CryptographyPlaintextCiphertextLengthMismatch()
+            => throw new ArgumentException("Plaintext and ciphertext must have the same length.");
+
+        /// <summary>
+        /// From
+        /// https://github.com/dotnet/runtime/blob/032a7dcbe1056493e8bab51e6b5b9503de727273/src/libraries/System.Security.Cryptography/src/Resources/Strings.resx#L400
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static ArgumentException CryptographyInvalidNonceLength()
+            => throw new ArgumentException("The specified nonce is not a valid size for this algorithm.");
+
+        /// <summary>
+        /// From
+        /// https://github.com/dotnet/runtime/blob/032a7dcbe1056493e8bab51e6b5b9503de727273/src/libraries/System.Security.Cryptography/src/Resources/Strings.resx#L418
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public static ArgumentException CryptographyInvalidTagLength()
+            => throw new ArgumentException("The specified tag is not a valid size for this algorithm.");
     }
 }

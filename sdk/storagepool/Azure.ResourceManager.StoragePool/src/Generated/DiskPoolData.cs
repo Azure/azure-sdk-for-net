@@ -15,26 +15,23 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    /// <summary> A class representing the DiskPool data model. </summary>
+    /// <summary>
+    /// A class representing the DiskPool data model.
+    /// Response for Disk Pool request.
+    /// </summary>
     public partial class DiskPoolData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DiskPoolData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
-        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </param>
+        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
         /// <param name="status"> Operational status of the Disk Pool. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="availabilityZones"/> or <paramref name="subnetId"/> is null. </exception>
-        public DiskPoolData(AzureLocation location, ProvisioningStates provisioningState, IEnumerable<string> availabilityZones, OperationalStatus status, string subnetId) : base(location)
+        public DiskPoolData(AzureLocation location, DiskPoolIscsiTargetProvisioningState provisioningState, IEnumerable<string> availabilityZones, StoragePoolOperationalStatus status, ResourceIdentifier subnetId) : base(location)
         {
-            if (availabilityZones == null)
-            {
-                throw new ArgumentNullException(nameof(availabilityZones));
-            }
-            if (subnetId == null)
-            {
-                throw new ArgumentNullException(nameof(subnetId));
-            }
+            Argument.AssertNotNull(availabilityZones, nameof(availabilityZones));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             ManagedByExtended = new ChangeTrackingList<string>();
             ProvisioningState = provisioningState;
@@ -56,12 +53,12 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
         /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
-        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </param>
+        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
         /// <param name="status"> Operational status of the Disk Pool. </param>
         /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>
-        internal DiskPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StoragePoolSku sku, string managedBy, IReadOnlyList<string> managedByExtended, ProvisioningStates provisioningState, IList<string> availabilityZones, OperationalStatus status, IList<WritableSubResource> disks, string subnetId, IList<string> additionalCapabilities) : base(id, name, resourceType, systemData, tags, location)
+        internal DiskPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, StoragePoolSku sku, string managedBy, IReadOnlyList<string> managedByExtended, DiskPoolIscsiTargetProvisioningState provisioningState, IList<string> availabilityZones, StoragePoolOperationalStatus status, IList<WritableSubResource> disks, ResourceIdentifier subnetId, IList<string> additionalCapabilities) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ManagedBy = managedBy;
@@ -81,15 +78,15 @@ namespace Azure.ResourceManager.StoragePool
         /// <summary> List of Azure resource ids that manage this resource. </summary>
         public IReadOnlyList<string> ManagedByExtended { get; }
         /// <summary> State of the operation on the resource. </summary>
-        public ProvisioningStates ProvisioningState { get; }
-        /// <summary> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </summary>
+        public DiskPoolIscsiTargetProvisioningState ProvisioningState { get; }
+        /// <summary> Logical zone for Disk Pool resource; example: ["1"]. </summary>
         public IList<string> AvailabilityZones { get; }
         /// <summary> Operational status of the Disk Pool. </summary>
-        public OperationalStatus Status { get; set; }
+        public StoragePoolOperationalStatus Status { get; set; }
         /// <summary> List of Azure Managed Disks to attach to a Disk Pool. </summary>
         public IList<WritableSubResource> Disks { get; }
         /// <summary> Azure Resource ID of a Subnet for the Disk Pool. </summary>
-        public string SubnetId { get; set; }
+        public ResourceIdentifier SubnetId { get; set; }
         /// <summary> List of additional capabilities for Disk Pool. </summary>
         public IList<string> AdditionalCapabilities { get; }
     }

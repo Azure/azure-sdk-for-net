@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.HybridConnectivity
     public partial class EndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EndpointResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string endpointName)
+        public static ResourceIdentifier CreateResourceIdentifier(string scope, string endpointName)
         {
-            var resourceId = $"{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}";
+            var resourceId = $"{scope}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -89,8 +89,16 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         /// <summary>
         /// Gets the endpoint to the resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EndpointResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -113,8 +121,16 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         /// <summary>
         /// Gets the endpoint to the resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EndpointResource> Get(CancellationToken cancellationToken = default)
@@ -137,10 +153,18 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         /// <summary>
         /// Deletes the endpoint access to the target resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -163,10 +187,18 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         /// <summary>
         /// Deletes the endpoint access to the target resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Delete
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Delete</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="waitUntil"> "F:Azure.WaitUntil.Completed" if the method should wait to return until the long-running operation has completed on the service; "F:Azure.WaitUntil.Started" if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
@@ -189,8 +221,16 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         /// <summary>
         /// Update the endpoint to the target resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -215,8 +255,16 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         /// <summary>
         /// Update the endpoint to the target resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}
-        /// Operation Id: Endpoints_Update
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_Update</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -241,12 +289,20 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         /// <summary>
         /// Gets the endpoint access credentials to the resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listCredentials
-        /// Operation Id: Endpoints_ListCredentials
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_ListCredentials</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EndpointAccessResource>> GetCredentialsAsync(long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TargetResourceEndpointAccess>> GetCredentialsAsync(long? expiresin = null, CancellationToken cancellationToken = default)
         {
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetCredentials");
             scope.Start();
@@ -264,12 +320,20 @@ namespace Azure.ResourceManager.HybridConnectivity
 
         /// <summary>
         /// Gets the endpoint access credentials to the resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listCredentials
-        /// Operation Id: Endpoints_ListCredentials
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.HybridConnectivity/endpoints/{endpointName}/listCredentials</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Endpoints_ListCredentials</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EndpointAccessResource> GetCredentials(long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual Response<TargetResourceEndpointAccess> GetCredentials(long? expiresin = null, CancellationToken cancellationToken = default)
         {
             using var scope = _endpointResourceEndpointsClientDiagnostics.CreateScope("EndpointResource.GetCredentials");
             scope.Start();

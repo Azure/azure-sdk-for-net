@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="message"> Progress message. </param>
-        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string operationType, string fromBackupResourceId, string toBackupResourceId, BackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message) : base(id, name, resourceType, systemData)
+        internal LongTermRetentionBackupOperationResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? requestId, string operationType, ResourceIdentifier fromBackupResourceId, ResourceIdentifier toBackupResourceId, SqlBackupStorageRedundancy? targetBackupStorageRedundancy, string status, string message) : base(id, name, resourceType, systemData)
         {
             RequestId = requestId;
             OperationType = operationType;
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Operation type. </summary>
         public string OperationType { get; }
         /// <summary> Source backup resource id. </summary>
-        public string FromBackupResourceId { get; }
+        public ResourceIdentifier FromBackupResourceId { get; }
         /// <summary> Target backup resource id. </summary>
-        public string ToBackupResourceId { get; }
+        public ResourceIdentifier ToBackupResourceId { get; }
         /// <summary> The storage redundancy type of the copied backup. </summary>
-        public BackupStorageRedundancy? TargetBackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? TargetBackupStorageRedundancy { get; }
         /// <summary> Operation status. </summary>
         public string Status { get; }
         /// <summary> Progress message. </summary>

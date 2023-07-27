@@ -1,10 +1,10 @@
 namespace Azure.Core.Amqp
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct AmqpAddress : System.IEquatable<Azure.Core.Amqp.AmqpAddress>
+    public readonly partial struct AmqpAddress : System.IEquatable<Azure.Core.Amqp.AmqpAddress>
     {
-        private object _dummy;
-        private int _dummyPrimitive;
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public AmqpAddress(string address) { throw null; }
         public bool Equals(Azure.Core.Amqp.AmqpAddress other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -19,14 +19,16 @@ namespace Azure.Core.Amqp
     public partial class AmqpAnnotatedMessage
     {
         public AmqpAnnotatedMessage(Azure.Core.Amqp.AmqpMessageBody body) { }
-        public System.Collections.Generic.IDictionary<string, object> ApplicationProperties { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object?> ApplicationProperties { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageBody Body { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, object> DeliveryAnnotations { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> Footer { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object?> DeliveryAnnotations { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object?> Footer { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageHeader Header { get { throw null; } }
-        public System.Collections.Generic.IDictionary<string, object> MessageAnnotations { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, object?> MessageAnnotations { get { throw null; } }
         public Azure.Core.Amqp.AmqpMessageProperties Properties { get { throw null; } }
+        public static Azure.Core.Amqp.AmqpAnnotatedMessage FromBytes(System.BinaryData messageBytes) { throw null; }
         public bool HasSection(Azure.Core.Amqp.AmqpMessageSection section) { throw null; }
+        public System.BinaryData ToBytes() { throw null; }
     }
     public partial class AmqpMessageBody
     {
@@ -56,10 +58,10 @@ namespace Azure.Core.Amqp
         public System.TimeSpan? TimeToLive { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct AmqpMessageId : System.IEquatable<Azure.Core.Amqp.AmqpMessageId>
+    public readonly partial struct AmqpMessageId : System.IEquatable<Azure.Core.Amqp.AmqpMessageId>
     {
-        private object _dummy;
-        private int _dummyPrimitive;
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public AmqpMessageId(string messageId) { throw null; }
         public bool Equals(Azure.Core.Amqp.AmqpMessageId other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

@@ -104,5 +104,43 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 Assert.AreEqual("Session2", receivedMessage.SessionId);
             }
         }
+
+        [Test]
+        public async Task RenewSessionLockAndComplete()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                string connectionString = TestEnvironment.ServiceBusConnectionString;
+                string queueName = scope.QueueName;
+                // since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+                await using var client = new ServiceBusClient(connectionString);
+
+                // create the sender
+                ServiceBusSender sender = client.CreateSender(queueName);
+
+                // create a message and set the SessionId
+                ServiceBusMessage message = new ServiceBusMessage("Hello world!") { SessionId = "mySessionId" };
+
+                // send the message
+                await sender.SendMessageAsync(message);
+
+                // create a receiver that we can use to receive and settle the message
+                ServiceBusSessionReceiver receiver = await client.AcceptNextSessionAsync(queueName);
+
+                #region Snippet:ServiceBusRenewSessionLockAndComplete
+                ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+                // If we know that we are going to be processing the session for a long time, we can extend the lock for the session
+                // by the configured LockDuration (by default, 30 seconds).
+                await receiver.RenewSessionLockAsync();
+
+                // simulate some processing of the message
+                await Task.Delay(TimeSpan.FromSeconds(10));
+
+                // complete the message, thereby deleting it from the service
+                await receiver.CompleteMessageAsync(receivedMessage);
+                #endregion
+            }
+        }
     }
 }

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Tests
@@ -193,6 +192,17 @@ namespace Azure.ResourceManager.Tests
             Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
             Assert.AreEqual("value", aset.Data.Tags["key"]);
 
+            var data2 = ConstructGenericAvailabilitySet();
+            var asetOp2 = await aset.UpdateAsync(WaitUntil.Completed, data2);
+            aset = asetOp2.Value;
+            // Tags should not be changed with Tags:{} when constructing GenericResourceData
+            Assert.IsTrue(aset.Data.Tags.ContainsKey("key"));
+            Assert.AreEqual("value", aset.Data.Tags["key"]);
+
+            data2.Tags.Clear();
+            var asetOp3 = await aset.UpdateAsync(WaitUntil.Completed, data2);
+            Assert.AreEqual(0, asetOp3.Value.Data.Tags.Count);
+
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await aset.UpdateAsync(WaitUntil.Completed, null));
         }
 
@@ -218,6 +228,20 @@ namespace Azure.ResourceManager.Tests
                 var updateOp = await aset.UpdateAsync(WaitUntil.Started, null);
                 _ = await updateOp.WaitForCompletionAsync();
             });
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateWithApiVersionSetting()
+        {
+            var options = new ArmClientOptions();
+            options.SetApiVersion(new ResourceType("Microsoft.Compute/test"), "2022-09-01");
+            var client = GetArmClient(options);
+            var rgOp = await (await client.GetDefaultSubscriptionAsync().ConfigureAwait(false)).GetResourceGroups().Construct(AzureLocation.WestUS2).CreateOrUpdateAsync(Recording.GenerateAssetName("testrg"));
+            GenericResourceData data = ConstructGenericAvailabilitySet();
+            var asetId = rgOp.Value.Id.AppendProviderResource("Microsoft.Compute", "availabilitySets", Recording.GenerateAssetName("test-aset"));
+            var op = await client.GetGenericResources().CreateOrUpdateAsync(WaitUntil.Completed, asetId, data);
+            Assert.NotNull(op.Value);
         }
     }
 }

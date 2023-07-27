@@ -4,6 +4,7 @@ using Microsoft.Azure.Management.DeviceProvisioningServices;
 using Microsoft.Azure.Management.DeviceProvisioningServices.Models;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -20,14 +21,21 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
             var testName = "unitTestingDPSCertificatesCreateAndDelete";
             ResourceGroup rg = await GetResourceGroupAsync(testName).ConfigureAwait(false);
             ProvisioningServiceDescription service = await GetServiceAsync(testName, rg.Name).ConfigureAwait(false);
-
+            
             //add a cert
             await _provisioningClient.DpsCertificate
                 .CreateOrUpdateAsync(
                     rg.Name,
                     testName,
                     Constants.Certificate.Name,
-                    new CertificateBodyDescription(Constants.Certificate.Content))
+                    null,
+                    new CertificateProperties(
+                        Constants.Certificate.Subject,
+                        null, Constants.Certificate.Thumbprint,
+                        null, 
+                        Convert.FromBase64String(Constants.Certificate.Content),
+                        null,
+                        null))
                 .ConfigureAwait(false);
 
             CertificateListDescription certificateList = await _provisioningClient.DpsCertificate

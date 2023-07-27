@@ -31,13 +31,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="language"> Language of the SAP system where the table is located. The default value is EN. Type: string (or Expression with resultType string). </param>
         /// <param name="systemId"> SystemID of the SAP system where the table is located. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> Password to access the SAP server where the table is located. </param>
+        /// <param name="password">
+        /// Password to access the SAP server where the table is located.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="messageServer"> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="messageServerService"> The service name or port number of the Message Server. Type: string (or Expression with resultType string). </param>
         /// <param name="sncMode"> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </param>
-        /// <param name="sncMyName"> Initiator&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncPartnerName"> Communication partner&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
-        /// <param name="sncLibraryPath"> External security product&apos;s library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
+        /// <param name="sncMyName"> Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
+        /// <param name="sncPartnerName"> Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
+        /// <param name="sncLibraryPath"> External security product's library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </param>
         /// <param name="sncQop"> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </param>
         /// <param name="logonGroup"> The Logon Group for the SAP System. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
@@ -74,7 +78,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object SystemId { get; set; }
         /// <summary> Username to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public object UserName { get; set; }
-        /// <summary> Password to access the SAP server where the table is located. </summary>
+        /// <summary>
+        /// Password to access the SAP server where the table is located.
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase Password { get; set; }
         /// <summary> The hostname of the SAP Message Server. Type: string (or Expression with resultType string). </summary>
         public object MessageServer { get; set; }
@@ -82,11 +90,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object MessageServerService { get; set; }
         /// <summary> SNC activation indicator to access the SAP server where the table is located. Must be either 0 (off) or 1 (on). Type: string (or Expression with resultType string). </summary>
         public object SncMode { get; set; }
-        /// <summary> Initiator&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Initiator's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public object SncMyName { get; set; }
-        /// <summary> Communication partner&apos;s SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Communication partner's SNC name to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public object SncPartnerName { get; set; }
-        /// <summary> External security product&apos;s library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
+        /// <summary> External security product's library to access the SAP server where the table is located. Type: string (or Expression with resultType string). </summary>
         public object SncLibraryPath { get; set; }
         /// <summary> SNC Quality of Protection. Allowed value include: 1, 2, 3, 8, 9. Type: string (or Expression with resultType string). </summary>
         public object SncQop { get; set; }

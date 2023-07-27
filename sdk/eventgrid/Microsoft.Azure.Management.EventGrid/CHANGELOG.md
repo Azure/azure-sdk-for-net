@@ -1,5 +1,12 @@
 # Release History
 
+## 9.0.0 (2022-06)
+- This release corresponds to api-version 2022-06-15 which includes the following new features:
+    * Partner Events.
+    * Nested Event Subscriptions for Domains, Domain Topics, and Topics.
+    * Data residency for Topics and Domains.
+    * Management group support.
+
 ## 7.0.0 (2021-12)
 - This release corresponds to api-version 2021-12-01 which includes the following new features:
     * MSI for delivery to first party destinations.

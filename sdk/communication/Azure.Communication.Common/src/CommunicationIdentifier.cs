@@ -3,14 +3,38 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.Communication
 {
     /// <summary>Represents an identifier in Azure Communication Services.</summary>
-#pragma warning disable CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     public abstract class CommunicationIdentifier : IEquatable<CommunicationIdentifier>
-#pragma warning restore CS0659 // Type overrides Object.Equals(object o) but does not override Object.GetHashCode()
     {
+        internal const string Phone = "4:";
+        internal const string Bot = "28:";
+        internal const string BotPublicCloud = "28:orgid:";
+        internal const string BotDodCloud = "28:dod:";
+        internal const string BotDodCloudGlobal = "28:dod-global:";
+        internal const string BotGcchCloud = "28:gcch:";
+        internal const string BotGcchCloudGlobal = "28:gcch-global:";
+        internal const string TeamUserAnonymous = "8:teamsvisitor:";
+        internal const string TeamUserPublicCloud = "8:orgid:";
+        internal const string TeamUserDodCloud = "8:dod:";
+        internal const string TeamUserGcchCloud = "8:gcch:";
+        internal const string AcsUser = "8:acs:";
+        internal const string AcsUserDodCloud = "8:dod-acs:";
+        internal const string AcsUserGcchCloud = "8:gcch-acs:";
+        internal const string SpoolUser = "8:spool:";
+
+        /// <summary>
+        /// Returns the canonical string representation of the <see cref="CommunicationIdentifier"/>.
+        /// You can use the <see cref="RawId"/> for encoding the identifier and then use it as a key in a database.
+        /// </summary>
+        public virtual string RawId { get; }
+
+        /// <inheritdoc />
+        public override int GetHashCode() => RawId.GetHashCode();
+
         /// <inheritdoc />
         public abstract bool Equals(CommunicationIdentifier other);
 
@@ -18,5 +42,64 @@ namespace Azure.Communication
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
             => obj is CommunicationIdentifier other && Equals(other);
+
+        /// <summary>
+        /// Overrides the equality operator.
+        /// </summary>
+        /// <param name="left">The first identifier to compare.</param>
+        /// <param name="right">The second identifier to compare.</param>
+        /// <returns>True if the types and <see cref="RawId"/> match.</returns>
+        public static bool operator ==(CommunicationIdentifier left, CommunicationIdentifier right)
+            => ReferenceEquals(left, right) || left is not null && right is not null && Equals(left, right);
+
+        /// <summary>
+        /// Overrides the non-equality operator.
+        /// </summary>
+        /// <param name="left">The first identifier to compare.</param>
+        /// <param name="right">The second identifier to compare.</param>
+        /// <returns>True if the types or <see cref="RawId"/> values are different.</returns>
+        public static bool operator !=(CommunicationIdentifier left, CommunicationIdentifier right) => !(left == right);
+
+        /// <summary>
+        /// Creates a <see cref="CommunicationIdentifier"/> from a given rawId.
+        /// When storing rawIds, use this function to restore the identifier that was encoded in the rawId.
+        /// </summary>
+        /// <param name="rawId">The rawId to be translated to its identifier representation.</param>
+        /// <returns>Returns <see cref="CommunicationUserIdentifier"/>, <see cref="PhoneNumberIdentifier"/>, <see cref="MicrosoftTeamsUserIdentifier"/>, or <see cref="UnknownIdentifier"/> based on the identifier type.</returns>
+        public static CommunicationIdentifier FromRawId(string rawId)
+        {
+            Argument.AssertNotNullOrEmpty(rawId, nameof(rawId));
+
+            if (rawId.StartsWith(Phone, StringComparison.OrdinalIgnoreCase))
+            {
+                return new PhoneNumberIdentifier(rawId.Substring(Phone.Length));
+            }
+
+            var segments = rawId.Split(':');
+            if (segments.Length != 3)
+            {
+                return segments.Length == 2 && rawId.StartsWith(Bot, StringComparison.OrdinalIgnoreCase)
+                    ? new MicrosoftBotIdentifier(segments[1], false, CommunicationCloudEnvironment.Public)
+                    : new UnknownIdentifier(rawId);
+            }
+
+            var prefix = $"{segments[0]}:{segments[1]}:";
+            var suffix = segments[2];
+
+            return prefix switch
+            {
+                TeamUserAnonymous => new MicrosoftTeamsUserIdentifier(suffix, true),
+                TeamUserPublicCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Public),
+                TeamUserDodCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
+                TeamUserGcchCloud => new MicrosoftTeamsUserIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
+                AcsUser or SpoolUser or AcsUserDodCloud or AcsUserGcchCloud => new CommunicationUserIdentifier(rawId),
+                BotGcchCloudGlobal => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Gcch),
+                BotPublicCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Public),
+                BotDodCloudGlobal => new MicrosoftBotIdentifier(suffix, false, CommunicationCloudEnvironment.Dod),
+                BotGcchCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Gcch),
+                BotDodCloud => new MicrosoftBotIdentifier(suffix, true, CommunicationCloudEnvironment.Dod),
+                _ => new UnknownIdentifier(rawId),
+            };
+        }
     }
 }

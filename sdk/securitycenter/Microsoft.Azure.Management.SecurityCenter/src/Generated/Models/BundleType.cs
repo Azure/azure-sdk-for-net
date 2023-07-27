@@ -24,5 +24,6 @@ namespace Microsoft.Azure.Management.Security.Models
         public const string SqlServers = "SqlServers";
         public const string StorageAccounts = "StorageAccounts";
         public const string VirtualMachines = "VirtualMachines";
+        public const string CosmosDbs = "CosmosDbs";
     }
 }

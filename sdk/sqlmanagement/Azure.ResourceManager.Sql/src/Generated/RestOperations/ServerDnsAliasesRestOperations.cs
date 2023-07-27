@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerDnsAliasData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlServerDnsAliasData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        ServerDnsAliasData value = default;
+                        SqlServerDnsAliasData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServerDnsAliasData.DeserializeServerDnsAliasData(document.RootElement);
+                        value = SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerDnsAliasData)null, message.Response);
+                    return Response.FromValue((SqlServerDnsAliasData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerDnsAliasData> Get(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
+        public Response<SqlServerDnsAliasData> Get(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.Sql
             {
                 case 200:
                     {
-                        ServerDnsAliasData value = default;
+                        SqlServerDnsAliasData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServerDnsAliasData.DeserializeServerDnsAliasData(document.RootElement);
+                        value = SqlServerDnsAliasData.DeserializeSqlServerDnsAliasData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerDnsAliasData)null, message.Response);
+                    return Response.FromValue((SqlServerDnsAliasData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateAcquireRequest(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters)
+        internal HttpMessage CreateAcquireRequest(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition serverDnsAliasAcquisition)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(serverDnsAliasAcquisition);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -391,19 +391,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
-        /// <param name="parameters"> The ServerDnsAliasAcquisition to use. </param>
+        /// <param name="serverDnsAliasAcquisition"> The ServerDnsAliasAcquisition to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="dnsAliasName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="dnsAliasName"/> or <paramref name="serverDnsAliasAcquisition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> AcquireAsync(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default)
+        public async Task<Response> AcquireAsync(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition serverDnsAliasAcquisition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(serverDnsAliasAcquisition, nameof(serverDnsAliasAcquisition));
 
-            using var message = CreateAcquireRequest(subscriptionId, resourceGroupName, serverName, dnsAliasName, parameters);
+            using var message = CreateAcquireRequest(subscriptionId, resourceGroupName, serverName, dnsAliasName, serverDnsAliasAcquisition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -420,19 +420,19 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server that the alias is pointing to. </param>
         /// <param name="dnsAliasName"> The name of the server dns alias. </param>
-        /// <param name="parameters"> The ServerDnsAliasAcquisition to use. </param>
+        /// <param name="serverDnsAliasAcquisition"> The ServerDnsAliasAcquisition to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="dnsAliasName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="dnsAliasName"/> or <paramref name="serverDnsAliasAcquisition"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="dnsAliasName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Acquire(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition parameters, CancellationToken cancellationToken = default)
+        public Response Acquire(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition serverDnsAliasAcquisition, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
             Argument.AssertNotNullOrEmpty(dnsAliasName, nameof(dnsAliasName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(serverDnsAliasAcquisition, nameof(serverDnsAliasAcquisition));
 
-            using var message = CreateAcquireRequest(subscriptionId, resourceGroupName, serverName, dnsAliasName, parameters);
+            using var message = CreateAcquireRequest(subscriptionId, resourceGroupName, serverName, dnsAliasName, serverDnsAliasAcquisition);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

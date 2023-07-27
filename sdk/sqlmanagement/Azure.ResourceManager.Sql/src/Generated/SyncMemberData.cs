@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SyncMember data model. </summary>
+    /// <summary>
+    /// A class representing the SyncMember data model.
+    /// An Azure SQL Database sync member.
+    /// </summary>
     public partial class SyncMemberData : ResourceData
     {
         /// <summary> Initializes a new instance of SyncMemberData. </summary>
@@ -37,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="password"> Password of the member database in the sync member. </param>
         /// <param name="syncDirection"> Sync direction of the sync member. </param>
         /// <param name="syncState"> Sync state of the sync member. </param>
-        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, string syncAgentId, Guid? sqlServerDatabaseId, string syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState) : base(id, name, resourceType, systemData)
+        internal SyncMemberData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SyncMemberDbType? databaseType, ResourceIdentifier syncAgentId, Guid? sqlServerDatabaseId, ResourceIdentifier syncMemberAzureDatabaseResourceId, bool? usePrivateLinkConnection, string privateEndpointName, string serverName, string databaseName, string userName, string password, SyncDirection? syncDirection, SyncMemberState? syncState) : base(id, name, resourceType, systemData)
         {
             DatabaseType = databaseType;
             SyncAgentId = syncAgentId;
@@ -56,11 +59,11 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Database type of the sync member. </summary>
         public SyncMemberDbType? DatabaseType { get; set; }
         /// <summary> ARM resource id of the sync agent in the sync member. </summary>
-        public string SyncAgentId { get; set; }
+        public ResourceIdentifier SyncAgentId { get; set; }
         /// <summary> SQL Server database id of the sync member. </summary>
         public Guid? SqlServerDatabaseId { get; set; }
         /// <summary> ARM resource id of the sync member logical database, for sync members in Azure. </summary>
-        public string SyncMemberAzureDatabaseResourceId { get; set; }
+        public ResourceIdentifier SyncMemberAzureDatabaseResourceId { get; set; }
         /// <summary> Whether to use private link connection. </summary>
         public bool? UsePrivateLinkConnection { get; set; }
         /// <summary> Private endpoint name of the sync member if use private link connection is enabled, for sync members in Azure. </summary>

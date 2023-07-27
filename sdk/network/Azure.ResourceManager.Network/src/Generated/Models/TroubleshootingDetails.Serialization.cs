@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TroubleshootingDetails DeserializeTroubleshootingDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> reasonType = default;
             Optional<string> summary = default;
@@ -22,31 +26,30 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<TroubleshootingRecommendedActions>> recommendedActions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("reasonType"))
+                if (property.NameEquals("reasonType"u8))
                 {
                     reasonType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("summary"))
+                if (property.NameEquals("summary"u8))
                 {
                     summary = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("detail"))
+                if (property.NameEquals("detail"u8))
                 {
                     detail = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendedActions"))
+                if (property.NameEquals("recommendedActions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TroubleshootingRecommendedActions> array = new List<TroubleshootingRecommendedActions>();

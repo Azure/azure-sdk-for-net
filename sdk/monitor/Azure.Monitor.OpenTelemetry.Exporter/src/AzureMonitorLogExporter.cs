@@ -3,22 +3,22 @@
 
 using System;
 using System.Threading;
-
 using Azure.Core.Pipeline;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal class AzureMonitorLogExporter : BaseExporter<LogRecord>
+    internal sealed class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
-        private readonly ResourceParser _resourceParser;
-        private readonly AzureMonitorPersistentStorage _persistentStorage;
+        private AzureMonitorResource? _resource;
+        private bool _disposed;
 
-        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(new AzureMonitorTransmitter(options))
+        public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
         {
         }
 
@@ -26,41 +26,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
-            _resourceParser = new ResourceParser();
-
-            if (transmitter is AzureMonitorTransmitter _azureMonitorTransmitter && _azureMonitorTransmitter._storage != null)
-            {
-                _persistentStorage = new AzureMonitorPersistentStorage(transmitter);
-            }
         }
+
+        internal AzureMonitorResource? LogResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(_instrumentationKey);
 
         /// <inheritdoc/>
         public override ExportResult Export(in Batch<LogRecord> batch)
         {
-            _persistentStorage?.StartExporterTimer();
-
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
 
+            ExportResult exportResult = ExportResult.Failure;
+
             try
             {
-                if (_resourceParser.RoleName is null && _resourceParser.RoleInstance is null)
+                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, LogResource, _instrumentationKey);
+                if (telemetryItems.Count > 0)
                 {
-                    var resource = ParentProvider.GetResource();
-                    _resourceParser.UpdateRoleNameAndInstance(resource);
+                    exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorLogExporter, false, CancellationToken.None).EnsureCompleted();
                 }
-
-                var telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, _resourceParser.RoleName, _resourceParser.RoleInstance, _instrumentationKey);
-                var exportResult = _transmitter.TrackAsync(telemetryItems, false, CancellationToken.None).EnsureCompleted();
-                _persistentStorage?.StopExporterTimerAndTransmitFromStorage();
-
-                return exportResult;
             }
             catch (Exception ex)
             {
-                AzureMonitorExporterEventSource.Log.Write($"FailedToExport{EventLevelSuffix.Error}", ex.LogAsyncException());
-                return ExportResult.Failure;
+                AzureMonitorExporterEventSource.Log.FailedToExport(nameof(AzureMonitorLogExporter), _instrumentationKey, ex);
             }
+
+            return exportResult;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    AzureMonitorExporterEventSource.Log.DisposedObject(nameof(AzureMonitorLogExporter));
+                    _transmitter?.Dispose();
+                }
+
+                _disposed = true;
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

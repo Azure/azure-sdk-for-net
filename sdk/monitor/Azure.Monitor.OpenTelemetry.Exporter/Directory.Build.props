@@ -1,7 +1,15 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
   <PropertyGroup>
     <IsClientLibrary>true</IsClientLibrary>
   </PropertyGroup>
-  
+
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />
+
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <!-- https://github.com/Azure/azure-sdk-for-net/issues/33970 -->
+    <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+  </PropertyGroup>
+
 </Project>

@@ -21,26 +21,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         internal DocumentWord(string content, DocumentSpan span, float confidence)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             Content = content;
-            BoundingBoxPrivate = new ChangeTrackingList<float>();
+            Polygon = new ChangeTrackingList<float>();
             Span = span;
             Confidence = confidence;
         }
 
         /// <summary> Initializes a new instance of DocumentWord. </summary>
         /// <param name="content"> Text content of the word. </param>
-        /// <param name="boundingBoxPrivate"> Bounding box of the word. </param>
+        /// <param name="polygon"> Bounding polygon of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
-        internal DocumentWord(string content, IReadOnlyList<float> boundingBoxPrivate, DocumentSpan span, float confidence)
+        internal DocumentWord(string content, IReadOnlyList<float> polygon, DocumentSpan span, float confidence)
         {
             Content = content;
-            BoundingBoxPrivate = boundingBoxPrivate;
+            Polygon = polygon;
             Span = span;
             Confidence = confidence;
         }

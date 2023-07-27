@@ -10,6 +10,11 @@
         "value": 70
     },
     {
+        "op": "replace",
+        "path": "/$metadata/Temperature/sourceTime",
+        "value": "2021-06-30T16:30:00.000000Z"
+    },
+    {
         "op": "remove",
         "path": "/EmployeeId"
     }

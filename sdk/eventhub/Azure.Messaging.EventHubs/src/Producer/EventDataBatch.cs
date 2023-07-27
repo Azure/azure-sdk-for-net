@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 
@@ -44,6 +45,12 @@ namespace Azure.Messaging.EventHubs.Producer
         public long SizeInBytes => InnerBatch.SizeInBytes;
 
         /// <summary>
+        ///   The count of events contained in the batch.
+        /// </summary>
+        ///
+        public int Count => InnerBatch.Count;
+
+        /// <summary>
         ///   The publishing sequence number assigned to the first event in the batch at the time
         ///   the batch was successfully published.
         /// </summary>
@@ -60,13 +67,7 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   of the producer are enabled.  For example, it is used by idempotent publishing.
         /// </remarks>
         ///
-        internal int? StartingPublishedSequenceNumber { get; set; } // Setter should be internal when member is made public
-
-        /// <summary>
-        ///   The count of events contained in the batch.
-        /// </summary>
-        ///
-        public int Count => InnerBatch.Count;
+        internal int? StartingPublishedSequenceNumber => InnerBatch.StartingSequenceNumber;
 
         /// <summary>
         ///   The set of options that should be used when publishing the batch.
@@ -96,11 +97,16 @@ namespace Azure.Messaging.EventHubs.Producer
         private string EventHubName { get; }
 
         /// <summary>
-        ///   The list of diagnostic identifiers of events added to this batch.  To be used during
+        ///   The list of trace parent/trace state tuples of events added to this batch.  To be used during
         ///   instrumentation.
         /// </summary>
         ///
-        private List<string> EventDiagnosticIdentifiers { get; } = new List<string>();
+        private List<(string TraceParent, string TraceState)> EventDiagnosticIdentifiers { get; } = new List<(string, string)>();
+
+        /// <summary>
+        ///   The client diagnostics to use when instrumenting events added to the batch.
+        /// </summary>
+        private MessagingClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventDataBatch"/> class.
@@ -110,7 +116,7 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace to use for instrumentation.</param>
         /// <param name="eventHubName">The name of the specific Event Hub to associate the events with during instrumentation.</param>
         /// <param name="sendOptions">The set of options that should be used when publishing the batch.</param>
-        ///
+        /// <param name="clientDiagnostics">The client diagnostics to use when instrumenting events added to the batch.</param>
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
         ///   is assumed that callers are trusted and have performed deep validation.
@@ -123,7 +129,8 @@ namespace Azure.Messaging.EventHubs.Producer
         internal EventDataBatch(TransportEventBatch transportBatch,
                                 string fullyQualifiedNamespace,
                                 string eventHubName,
-                                SendEventOptions sendOptions)
+                                SendEventOptions sendOptions,
+                                MessagingClientDiagnostics clientDiagnostics)
         {
             Argument.AssertNotNull(transportBatch, nameof(transportBatch));
             Argument.AssertNotNullOrEmpty(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
@@ -134,6 +141,7 @@ namespace Azure.Messaging.EventHubs.Producer
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             SendOptions = sendOptions;
+            ClientDiagnostics = clientDiagnostics;
         }
 
         /// <summary>
@@ -146,9 +154,13 @@ namespace Azure.Messaging.EventHubs.Producer
         /// <returns><c>true</c> if the event was added; otherwise, <c>false</c>.</returns>
         ///
         /// <remarks>
-        ///   When an event is accepted into the batch, its content and state are frozen; any
-        ///   changes made to the event will not be reflected in the batch nor will any state
-        ///   transitions be reflected to the original instance.
+        ///   When an event is accepted into the batch, changes made to its properties
+        ///   will not be reflected in the batch nor will any state transitions be reflected
+        ///   to the original instance.
+        ///
+        ///   Note: Any <see cref="ReadOnlyMemory{T}" />, byte array, or <see cref="BinaryData" />
+        ///   instance associated with the event is referenced by the batch and must remain valid and
+        ///   unchanged until the batch is disposed.
         /// </remarks>
         ///
         /// <exception cref="InvalidOperationException">
@@ -157,20 +169,24 @@ namespace Azure.Messaging.EventHubs.Producer
         ///   result in an <see cref="InvalidOperationException" /> until publishing has completed.
         /// </exception>
         ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <paramref name="eventData"/> has a member in its <see cref="EventData.Properties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="EventData.Properties"/> remarks for details.
+        /// </exception>
+        ///
         public bool TryAdd(EventData eventData)
         {
             lock (SyncGuard)
             {
                 AssertNotLocked();
 
-                eventData = eventData.Clone();
-                EventDataInstrumentation.InstrumentEvent(eventData, FullyQualifiedNamespace, EventHubName);
+                ClientDiagnostics.InstrumentMessage(eventData.Properties, DiagnosticProperty.EventActivityName, out var traceparent, out var tracestate);
 
                 var added = InnerBatch.TryAdd(eventData);
 
-                if ((added) && (EventDataInstrumentation.TryExtractDiagnosticId(eventData, out string diagnosticId)))
+                if ((added) && (traceparent != null))
                 {
-                    EventDiagnosticIdentifiers.Add(diagnosticId);
+                    EventDiagnosticIdentifiers.Add((traceparent, tracestate));
                 }
 
                 return added;
@@ -220,7 +236,30 @@ namespace Azure.Messaging.EventHubs.Producer
         ///
         /// <returns>A read-only list of diagnostic identifiers.</returns>
         ///
-        internal IReadOnlyList<string> GetEventDiagnosticIdentifiers() => EventDiagnosticIdentifiers;
+        internal IReadOnlyList<(string TraceParent, string TraceState)> GetTraceContext() => EventDiagnosticIdentifiers;
+
+        /// <summary>
+        ///   Assigns message sequence numbers and publisher metadata to the batch in
+        ///   order to prepare it to be sent when certain features, such as idempotent retries,
+        ///   are active.
+        /// </summary>
+        ///
+        /// <param name="lastSequenceNumber">The sequence number assigned to the event that was most recently published to the associated partition successfully.</param>
+        /// <param name="producerGroupId">The identifier of the producer group for which publishing is being performed.</param>
+        /// <param name="ownerLevel">TThe owner level for which publishing is being performed.</param>
+        ///
+        /// <returns>The last sequence number applied to the batch.</returns>
+        ///
+        internal int ApplyBatchSequencing(int lastSequenceNumber,
+                                          long? producerGroupId,
+                                          short? ownerLevel) => InnerBatch.ApplyBatchSequencing(lastSequenceNumber, producerGroupId, ownerLevel);
+
+        /// <summary>
+        ///   Resets the batch to remove sequencing information and publisher metadata assigned
+        ///    by <see cref="ApplyBatchSequencing" />.
+        /// </summary>
+        ///
+        internal void ResetBatchSequencing() => InnerBatch.ResetBatchSequencing();
 
         /// <summary>
         ///   Locks the batch to prevent new events from being added while a service

@@ -104,9 +104,9 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
         }
 
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25266")]
         [RecordedTest]
         [NonParallelizable]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/15505")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -136,6 +136,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2019_12_12)]
         [NonParallelizable]
+        [Category("NonVirtualized")]
         public async Task GetSetServicePropertiesAsync_SmbMultiChannel()
         {
             // Arrange
@@ -206,6 +207,7 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_02_12)]
         public async Task ListSharesSegmentAsync_Premium()
         {

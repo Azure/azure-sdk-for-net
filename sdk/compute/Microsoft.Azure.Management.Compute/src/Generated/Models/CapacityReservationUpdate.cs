@@ -39,6 +39,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="reservationId">A unique id generated and assigned to
         /// the capacity reservation by the platform which does not change
         /// throughout the lifetime of the resource.</param>
+        /// <param name="platformFaultDomainCount">Specifies the value of fault
+        /// domain count that Capacity Reservation supports for requested VM
+        /// size. **Note:** The fault domain count specified for a resource
+        /// (like virtual machines scale set) must be less than or equal to
+        /// this value if it deploys using capacity reservation. Minimum
+        /// api-version: 2022-08-01.</param>
         /// <param name="virtualMachinesAssociated">A list of all virtual
         /// machine resource ids that are associated with the capacity
         /// reservation.</param>
@@ -49,8 +55,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="instanceView">The Capacity reservation instance
         /// view.</param>
         /// <param name="timeCreated">Specifies the time at which the Capacity
-        /// Reservation resource was created.&lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2021-11-01.</param>
+        /// Reservation resource was created. Minimum api-version:
+        /// 2021-11-01.</param>
         /// <param name="sku">SKU of the resource for which capacity needs be
         /// reserved. The SKU name and capacity is required to be set.
         /// Currently VM Skus with the capability called
@@ -58,10 +64,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// List Microsoft.Compute SKUs in a region
         /// (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for
         /// supported values.</param>
-        public CapacityReservationUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string reservationId = default(string), IList<SubResourceReadOnly> virtualMachinesAssociated = default(IList<SubResourceReadOnly>), System.DateTime? provisioningTime = default(System.DateTime?), string provisioningState = default(string), CapacityReservationInstanceView instanceView = default(CapacityReservationInstanceView), System.DateTime? timeCreated = default(System.DateTime?), Sku sku = default(Sku))
+        public CapacityReservationUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), string reservationId = default(string), int? platformFaultDomainCount = default(int?), IList<SubResourceReadOnly> virtualMachinesAssociated = default(IList<SubResourceReadOnly>), System.DateTime? provisioningTime = default(System.DateTime?), string provisioningState = default(string), CapacityReservationInstanceView instanceView = default(CapacityReservationInstanceView), System.DateTime? timeCreated = default(System.DateTime?), Sku sku = default(Sku))
             : base(tags)
         {
             ReservationId = reservationId;
+            PlatformFaultDomainCount = platformFaultDomainCount;
             VirtualMachinesAssociated = virtualMachinesAssociated;
             ProvisioningTime = provisioningTime;
             ProvisioningState = provisioningState;
@@ -83,6 +90,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.reservationId")]
         public string ReservationId { get; private set; }
+
+        /// <summary>
+        /// Gets specifies the value of fault domain count that Capacity
+        /// Reservation supports for requested VM size. **Note:** The fault
+        /// domain count specified for a resource (like virtual machines scale
+        /// set) must be less than or equal to this value if it deploys using
+        /// capacity reservation. Minimum api-version: 2022-08-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.platformFaultDomainCount")]
+        public int? PlatformFaultDomainCount { get; private set; }
 
         /// <summary>
         /// Gets a list of all virtual machine resource ids that are associated
@@ -111,8 +128,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets specifies the time at which the Capacity Reservation resource
-        /// was created.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
-        /// api-version: 2021-11-01.
+        /// was created. Minimum api-version: 2021-11-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }

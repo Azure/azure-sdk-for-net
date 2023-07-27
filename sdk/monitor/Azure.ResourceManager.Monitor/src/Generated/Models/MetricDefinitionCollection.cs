@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -17,24 +18,21 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricDefinitionCollection. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MetricDefinitionCollection(IEnumerable<MetricDefinition> value)
+        internal MetricDefinitionCollection(IEnumerable<MonitorMetricDefinition> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of MetricDefinitionCollection. </summary>
         /// <param name="value"> the values for the metric definitions. </param>
-        internal MetricDefinitionCollection(IReadOnlyList<MetricDefinition> value)
+        internal MetricDefinitionCollection(IReadOnlyList<MonitorMetricDefinition> value)
         {
             Value = value;
         }
 
         /// <summary> the values for the metric definitions. </summary>
-        public IReadOnlyList<MetricDefinition> Value { get; }
+        public IReadOnlyList<MonitorMetricDefinition> Value { get; }
     }
 }

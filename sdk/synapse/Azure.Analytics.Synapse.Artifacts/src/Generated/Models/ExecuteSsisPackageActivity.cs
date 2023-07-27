@@ -21,18 +21,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="packageLocation"/> or <paramref name="connectVia"/> is null. </exception>
         public ExecuteSsisPackageActivity(string name, SsisPackageLocation packageLocation, IntegrationRuntimeReference connectVia) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (packageLocation == null)
-            {
-                throw new ArgumentNullException(nameof(packageLocation));
-            }
-            if (connectVia == null)
-            {
-                throw new ArgumentNullException(nameof(connectVia));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(packageLocation, nameof(packageLocation));
+            Argument.AssertNotNull(connectVia, nameof(connectVia));
 
             PackageLocation = packageLocation;
             ConnectVia = connectVia;
@@ -54,7 +45,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
         /// <param name="packageLocation"> SSIS package location. </param>
-        /// <param name="runtime"> Specifies the runtime to execute SSIS package. The value should be &quot;x86&quot; or &quot;x64&quot;. Type: string (or Expression with resultType string). </param>
+        /// <param name="runtime"> Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string). </param>
         /// <param name="loggingLevel"> The logging level of SSIS package execution. Type: string (or Expression with resultType string). </param>
         /// <param name="environmentPath"> The environment path to execute the SSIS package. Type: string (or Expression with resultType string). </param>
         /// <param name="executionCredential"> The package execution credential. </param>
@@ -84,7 +75,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> SSIS package location. </summary>
         public SsisPackageLocation PackageLocation { get; set; }
-        /// <summary> Specifies the runtime to execute SSIS package. The value should be &quot;x86&quot; or &quot;x64&quot;. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Specifies the runtime to execute SSIS package. The value should be "x86" or "x64". Type: string (or Expression with resultType string). </summary>
         public object Runtime { get; set; }
         /// <summary> The logging level of SSIS package execution. Type: string (or Expression with resultType string). </summary>
         public object LoggingLevel { get; set; }

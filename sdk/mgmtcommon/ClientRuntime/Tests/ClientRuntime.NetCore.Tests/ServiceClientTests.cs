@@ -206,7 +206,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
                 GC.Collect();
                 Assert.NotNull(ex.Request);
                 Assert.NotNull(ex.Response);
-                Assert.Equal("2013-11-01", ex.Request.Headers["x-ms-version"].First());
+                Assert.Equal("REDACTED", ex.Request.Headers["x-ms-version"].First());
                 Assert.Equal("Text", ex.Response.Content);
             }
         }

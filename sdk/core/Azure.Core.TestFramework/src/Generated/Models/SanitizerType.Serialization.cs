@@ -21,9 +21,9 @@ namespace Azure.Core.TestFramework.Models
 
         public static SanitizerType ToSanitizerType(this string value)
         {
-            if (string.Equals(value, "BodyKeySanitizer", StringComparison.InvariantCultureIgnoreCase)) return SanitizerType.BodyKeySanitizer;
-            if (string.Equals(value, "HeaderRegexSanitizer", StringComparison.InvariantCultureIgnoreCase)) return SanitizerType.HeaderRegexSanitizer;
-            if (string.Equals(value, "UriRegexSanitizer", StringComparison.InvariantCultureIgnoreCase)) return SanitizerType.UriRegexSanitizer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BodyKeySanitizer")) return SanitizerType.BodyKeySanitizer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HeaderRegexSanitizer")) return SanitizerType.HeaderRegexSanitizer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UriRegexSanitizer")) return SanitizerType.UriRegexSanitizer;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SanitizerType value.");
         }
     }

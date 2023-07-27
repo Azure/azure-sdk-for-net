@@ -1,0 +1,40 @@
+parameters:
+- name: LanguageVersion
+  displayName: LanguageVersion (6, 7)
+  type: string
+  default: '7'
+- name: PackageVersions
+  displayName: PackageVersions (regex of package versions to run)
+  type: string
+  default: '12|source'
+- name: Tests
+  displayName: Tests (regex of tests to run)
+  type: string
+  default: '^(download|upload|list-blobs)$'
+- name: Arguments
+  displayName: Arguments (regex of arguments to run)
+  type: string
+  default: '(10240)|(10485760)|(1073741824)|(5 )|(500 )|(50000 )'
+- name: Iterations
+  displayName: Iterations (times to run each test)
+  type: number
+  default: '5'
+- name: Profile
+  type: boolean
+  default: false
+- name: AdditionalArguments
+  displayName: AdditionalArguments (passed to PerfAutomation)
+  type: string
+  default: ' '
+
+extends:
+  template: /eng/pipelines/templates/jobs/perf.yml
+  parameters:
+    LanguageVersion: ${{ parameters.LanguageVersion }}
+    ServiceDirectory: storage/Azure.Storage.Blobs
+    PackageVersions: ${{ parameters.PackageVersions }}
+    Tests: ${{ parameters.Tests }}
+    Arguments: ${{ parameters.Arguments }}
+    Iterations: ${{ parameters.Iterations }}
+    Profile: ${{ parameters.Profile }}
+    AdditionalArguments: ${{ parameters.AdditionalArguments }}

@@ -8,7 +8,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class PatternTokenizer
     {
-        [CodeGenMember("flags")]
+        [CodeGenMember("Flags")]
         internal string FlagsInternal
         {
             get => Flags.Count > 0 ? string.Join("|", Flags) : null;

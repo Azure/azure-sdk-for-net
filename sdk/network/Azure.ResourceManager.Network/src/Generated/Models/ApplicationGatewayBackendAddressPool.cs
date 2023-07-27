@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Backend Address Pool of an application gateway. </summary>
-    public partial class ApplicationGatewayBackendAddressPool : SubResource
+    public partial class ApplicationGatewayBackendAddressPool : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>
         public ApplicationGatewayBackendAddressPool()
@@ -23,33 +24,27 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayBackendAddressPool. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the backend address pool that is unique within an Application Gateway. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="backendIPConfigurations"> Collection of references to IPs defined in network interfaces. </param>
         /// <param name="backendAddresses"> Backend addresses. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal ApplicationGatewayBackendAddressPool(string id, string name, string etag, string resourceType, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayBackendAddressPool(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IList<ApplicationGatewayBackendAddress> backendAddresses, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             BackendIPConfigurations = backendIPConfigurations;
             BackendAddresses = backendAddresses;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the backend address pool that is unique within an Application Gateway. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> Collection of references to IPs defined in network interfaces. </summary>
         public IReadOnlyList<NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get; }
         /// <summary> Backend addresses. </summary>
         public IList<ApplicationGatewayBackendAddress> BackendAddresses { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

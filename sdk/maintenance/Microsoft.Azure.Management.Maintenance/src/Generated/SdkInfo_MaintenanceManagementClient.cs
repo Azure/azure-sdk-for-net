@@ -19,25 +19,27 @@ namespace Microsoft.Azure.Management.Maintenance
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Maintenance", "ApplyUpdateForResourceGroup", "2021-09-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "ApplyUpdates", "2021-09-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "ConfigurationAssignments", "2021-09-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "ConfigurationAssignmentsWithinSubscription", "2021-09-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "MaintenanceConfigurations", "2021-09-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "MaintenanceConfigurationsForResourceGroup", "2021-09-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "Operations", "2021-09-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "PublicMaintenanceConfigurations", "2021-09-01-preview"),
-                new Tuple<string, string, string>("Maintenance", "Updates", "2021-09-01-preview"),
+                new Tuple<string, string, string>("Maintenance", "ApplyUpdateForResourceGroup", "2023-04-01"),
+                new Tuple<string, string, string>("Maintenance", "ApplyUpdates", "2023-04-01"),
+                new Tuple<string, string, string>("Maintenance", "ConfigurationAssignments", "2023-04-01"),
+                new Tuple<string, string, string>("Maintenance", "ConfigurationAssignmentsForResourceGroup", "2023-04-01"),
+                new Tuple<string, string, string>("Maintenance", "ConfigurationAssignmentsForSubscriptions", "2023-04-01"),
+                new Tuple<string, string, string>("Maintenance", "ConfigurationAssignmentsWithinSubscription", "2023-04-01"),
+                new Tuple<string, string, string>("Maintenance", "MaintenanceConfigurations", "2023-04-01"),
+                new Tuple<string, string, string>("Maintenance", "MaintenanceConfigurationsForResourceGroup", "2023-04-01"),
+                new Tuple<string, string, string>("Maintenance", "Operations", "2023-04-01"),
+                new Tuple<string, string, string>("Maintenance", "PublicMaintenanceConfigurations", "2023-04-01"),
+                new Tuple<string, string, string>("Maintenance", "Updates", "2023-04-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "v2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/maintenance/resource-manager/readme.md --csharp --version=v2 --reflect-api-versions  --override-client-name=MaintenanceManagementClient --tag=package-preview-2021-09 --title=MaintenanceManagementClient --csharp.output-folder='$(csharp-sdks-folder)/maintenance/Microsoft.Azure.Management.Maintenance/src/Generated/' --csharp-sdks-folder=E:\\Github\\ARM\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@3.6.3";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/maintenance/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions  --override-client-name=MaintenanceManagementClient --title=MaintenanceManagementClient --csharp.output-folder='$(csharp-sdks-folder)/maintenance/Microsoft.Azure.Management.Maintenance/src/Generated/' --csharp-sdks-folder=E:\\Github\\AUM-GA2\\azure-sdk-for-net\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "17c68996ed7e30574adb5a51311954990932f768";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "1f449b5a17448f05ce1cd914f8ed75a0b568d130";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

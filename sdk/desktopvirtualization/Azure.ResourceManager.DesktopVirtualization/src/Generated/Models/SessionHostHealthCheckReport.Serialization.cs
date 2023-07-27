@@ -14,36 +14,37 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static SessionHostHealthCheckReport DeserializeSessionHostHealthCheckReport(JsonElement element)
         {
-            Optional<HealthCheckName> healthCheckName = default;
-            Optional<HealthCheckResult> healthCheckResult = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<SessionHostHealthCheckName> healthCheckName = default;
+            Optional<SessionHostHealthCheckResult> healthCheckResult = default;
             Optional<SessionHostHealthCheckFailureDetails> additionalFailureDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("healthCheckName"))
+                if (property.NameEquals("healthCheckName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    healthCheckName = new HealthCheckName(property.Value.GetString());
+                    healthCheckName = new SessionHostHealthCheckName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("healthCheckResult"))
+                if (property.NameEquals("healthCheckResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    healthCheckResult = new HealthCheckResult(property.Value.GetString());
+                    healthCheckResult = new SessionHostHealthCheckResult(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("additionalFailureDetails"))
+                if (property.NameEquals("additionalFailureDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalFailureDetails = SessionHostHealthCheckFailureDetails.DeserializeSessionHostHealthCheckFailureDetails(property.Value);

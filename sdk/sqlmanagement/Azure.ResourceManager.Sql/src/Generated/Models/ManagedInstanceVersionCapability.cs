@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="supportedInstancePoolEditions"> The list of supported instance pool editions. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ManagedInstanceVersionCapability(string name, IReadOnlyList<ManagedInstanceEditionCapability> supportedEditions, IReadOnlyList<InstancePoolEditionCapability> supportedInstancePoolEditions, CapabilityStatus? status, string reason)
+        internal ManagedInstanceVersionCapability(string name, IReadOnlyList<ManagedInstanceEditionCapability> supportedEditions, IReadOnlyList<InstancePoolEditionCapability> supportedInstancePoolEditions, SqlCapabilityStatus? status, string reason)
         {
             Name = name;
             SupportedEditions = supportedEditions;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The list of supported instance pool editions. </summary>
         public IReadOnlyList<InstancePoolEditionCapability> SupportedInstancePoolEditions { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Cryptography;
@@ -33,9 +34,14 @@ namespace Azure.Storage.Cryptography.Models
         public EncryptionAgent EncryptionAgent { get; set; }
 
         /// <summary>
-        /// The content encryption IV.
+        /// The content encryption IV. Only present for v1.0.
         /// </summary>
         public byte[] ContentEncryptionIV { get; set; }
+
+        /// <summary>
+        /// Information about structure of authenticated encryption blocks. Only present for v2.0.
+        /// </summary>
+        public EncryptedRegionInfo EncryptedRegionInfo { get; set; }
 
 #pragma warning disable CA2227 // Collection properties should be read only
         /// <summary>
@@ -44,7 +50,7 @@ namespace Azure.Storage.Cryptography.Models
         public Metadata KeyWrappingMetadata { get; set; }
 #pragma warning restore CA2227 // Collection properties should be read only
 
-        internal static async Task<EncryptionData> CreateInternalV1_0(
+        internal static async ValueTask<EncryptionData> CreateInternalV1_0(
             byte[] contentEncryptionIv,
             string keyWrapAlgorithm,
             byte[] contentEncryptionKey,
@@ -58,7 +64,9 @@ namespace Azure.Storage.Cryptography.Models
                 EncryptionAgent = new EncryptionAgent()
                 {
                     EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesCbc256,
+#pragma warning disable CS0618 // obsolete
                     EncryptionVersion = ClientSideEncryptionVersion.V1_0
+#pragma warning restore CS0618 // obsolete
                 },
                 KeyWrappingMetadata = new Dictionary<string, string>()
                 {
@@ -73,6 +81,47 @@ namespace Azure.Storage.Cryptography.Models
                     KeyId = keyEncryptionKey.KeyId
                 }
             };
+
+        internal static async Task<EncryptionData> CreateInternalV2_0(
+            string keyWrapAlgorithm,
+            byte[] contentEncryptionKey,
+            IKeyEncryptionKey keyEncryptionKey,
+            bool async,
+            CancellationToken cancellationToken)
+        {
+            // v2.0 binds content encryption key with protocol version under a single keywrap
+            int keyOffset = Constants.ClientSideEncryption.V2.WrappedDataVersionLength;
+            var dataToWrap = new byte[keyOffset + contentEncryptionKey.Length];
+            Encoding.UTF8.GetBytes(ClientSideEncryptionVersion.V2_0.Serialize()).CopyTo(dataToWrap, 0);
+            contentEncryptionKey.CopyTo(dataToWrap, keyOffset);
+
+            return new EncryptionData()
+            {
+                EncryptionMode = Constants.ClientSideEncryption.EncryptionMode,
+                EncryptionAgent = new EncryptionAgent()
+                {
+                    EncryptionAlgorithm = ClientSideEncryptionAlgorithm.AesGcm256,
+                    EncryptionVersion = ClientSideEncryptionVersion.V2_0
+                },
+                EncryptedRegionInfo = new EncryptedRegionInfo()
+                {
+                    DataLength = Constants.ClientSideEncryption.V2.EncryptionRegionDataSize,
+                    NonceLength = Constants.ClientSideEncryption.V2.NonceSize,
+                },
+                KeyWrappingMetadata = new Dictionary<string, string>()
+                {
+                    { Constants.ClientSideEncryption.AgentMetadataKey, AgentString }
+                },
+                WrappedContentKey = new KeyEnvelope()
+                {
+                    Algorithm = keyWrapAlgorithm,
+                    EncryptedKey = async
+                        ? await keyEncryptionKey.WrapKeyAsync(keyWrapAlgorithm, dataToWrap, cancellationToken).ConfigureAwait(false)
+                        : keyEncryptionKey.WrapKey(keyWrapAlgorithm, dataToWrap, cancellationToken),
+                    KeyId = keyEncryptionKey.KeyId
+                }
+            };
+        }
 
         /// <summary>
         /// Singleton string identifying this encryption library.

@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
@@ -180,6 +181,20 @@ namespace Azure.Messaging.EventHubs.Tests
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
 
+            // SAS constructor
+
+            description = "{{ SAS constructor }}";
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), clientOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
+            // Named Key constructor
+
+            description = "{{ Named Key constructor }}";
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureNamedKeyCredential("fakeName", "fakeKey"), clientOptions);
+            actualOptions = GetBaseOptions(processorClient);
+            assertOptionsMatch(expectedOptions, actualOptions, description);
+
             // Internal testing constructor (Token)
 
             description = "{{ internal testing constructor (Token) }}";
@@ -203,6 +218,49 @@ namespace Azure.Messaging.EventHubs.Tests
             processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), expectedOptions);
             actualOptions = GetBaseOptions(processorClient);
             assertOptionsMatch(expectedOptions, actualOptions, description);
+        }
+
+        [Test]
+        public void ConstructorsSetClientDiagnostics()
+        {
+            // Connection String constructor
+
+            EventProcessorClient processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123;EntityPath=somehub", default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Connection String and Event Hub Name constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "Endpoint=sb://somehost.com;SharedAccessKeyName=ABC;SharedAccessKey=123", "theHub", default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Namespace constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", Mock.Of<TokenCredential>(), default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // SAS constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Named Key constructor
+
+            processorClient = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "consumerGroup", "namespace", "theHub", new AzureNamedKeyCredential("fakeName", "fakeKey"), default(EventProcessorClientOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Internal testing constructor (Token)
+
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, Mock.Of<TokenCredential>(), default(EventProcessorOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+            // Internal testing constructor (Shared Key)
+
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureNamedKeyCredential("key", "value"), default(EventProcessorOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
+
+            // Internal testing constructor (SAS)
+
+            processorClient = new EventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "theHub", 100, new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value), default(EventProcessorOptions));
+            Assert.IsNotNull(processorClient.ClientDiagnostics, "The diagnostics should have been set.");
         }
 
         /// <summary>
@@ -356,9 +414,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartProcessingValidatesBlobsCanBeWritten(bool async)
+        public async Task ValidateStoragePermissionsAsyncValidatesBlobsCanBeWritten()
         {
             using var cancellationSource = new CancellationTokenSource();
 
@@ -377,14 +433,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             try
             {
-                if (async)
-                {
-                    await processorClient.StartProcessingAsync(cancellationSource.Token);
-                }
-                else
-                {
-                    processorClient.StartProcessing(cancellationSource.Token);
-                }
+                await processorClient.ValidateStoragePermissionsAsync(mockContainerClient.Object, cancellationSource.Token);
             }
             catch (Exception ex)
             {
@@ -406,9 +455,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StartProcessingLogsWhenValidationCleanupFails(bool async)
+        public async Task ValidateStoragePermissionsAsyncLogsWhenCleanupFails()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
@@ -428,14 +475,7 @@ namespace Azure.Messaging.EventHubs.Tests
             processorClient.ProcessEventAsync += eventArgs => Task.CompletedTask;
             processorClient.ProcessErrorAsync += eventArgs => Task.CompletedTask;
 
-            if (async)
-            {
-                Assert.That(async () => await processorClient.StartProcessingAsync(cancellationSource.Token), Throws.Nothing);
-            }
-            else
-            {
-                Assert.That(() => processorClient.StartProcessing(cancellationSource.Token), Throws.Nothing);
-            }
+            Assert.That(async () => await processorClient.ValidateStoragePermissionsAsync(mockContainerClient.Object, cancellationSource.Token), Throws.Nothing);
 
             mockLogger.Verify(log => log.ValidationCleanupError(
                 processorClient.Identifier,
@@ -1630,6 +1670,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => base.ClaimOwnershipAsync(desiredOwnership, cancellationToken);
             public Task InvokeUpdateCheckpointAsync(string partitionId, long offset, long? sequenceNumber, CancellationToken cancellationToken) => base.UpdateCheckpointAsync(partitionId, offset, sequenceNumber, cancellationToken);
             protected override EventHubConnection CreateConnection() => InjectedConnection;
+            protected override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
         }
 
         /// <summary>

@@ -1,6 +1,9 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.1 (2022-08-09)
+- Minor documentation fixes.
+
+## 1.2.0-beta.1 (2021-11-16)
 - The SDK now defaults to a 2s polling interval when waiting for a Standard sized rendering VM. For Premium, 10s is still used.
 
 ## 1.1.0 (2021-09-17)

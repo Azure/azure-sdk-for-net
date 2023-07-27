@@ -18,37 +18,37 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ComputerNamePrefix))
             {
-                writer.WritePropertyName("computerNamePrefix");
+                writer.WritePropertyName("computerNamePrefix"u8);
                 writer.WriteStringValue(ComputerNamePrefix);
             }
             if (Optional.IsDefined(AdminUsername))
             {
-                writer.WritePropertyName("adminUsername");
+                writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
             if (Optional.IsDefined(AdminPassword))
             {
-                writer.WritePropertyName("adminPassword");
+                writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
             if (Optional.IsDefined(CustomData))
             {
-                writer.WritePropertyName("customData");
+                writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
             }
             if (Optional.IsDefined(WindowsConfiguration))
             {
-                writer.WritePropertyName("windowsConfiguration");
+                writer.WritePropertyName("windowsConfiguration"u8);
                 writer.WriteObjectValue(WindowsConfiguration);
             }
             if (Optional.IsDefined(LinuxConfiguration))
             {
-                writer.WritePropertyName("linuxConfiguration");
+                writer.WritePropertyName("linuxConfiguration"u8);
                 writer.WriteObjectValue(LinuxConfiguration);
             }
             if (Optional.IsCollectionDefined(Secrets))
             {
-                writer.WritePropertyName("secrets");
+                writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
@@ -56,11 +56,25 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AllowExtensionOperations))
+            {
+                writer.WritePropertyName("allowExtensionOperations"u8);
+                writer.WriteBooleanValue(AllowExtensionOperations.Value);
+            }
+            if (Optional.IsDefined(RequireGuestProvisionSignal))
+            {
+                writer.WritePropertyName("requireGuestProvisionSignal"u8);
+                writer.WriteBooleanValue(RequireGuestProvisionSignal.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineScaleSetOSProfile DeserializeVirtualMachineScaleSetOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> computerNamePrefix = default;
             Optional<string> adminUsername = default;
             Optional<string> adminPassword = default;
@@ -68,53 +82,52 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WindowsConfiguration> windowsConfiguration = default;
             Optional<LinuxConfiguration> linuxConfiguration = default;
             Optional<IList<VaultSecretGroup>> secrets = default;
+            Optional<bool> allowExtensionOperations = default;
+            Optional<bool> requireGuestProvisionSignal = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("computerNamePrefix"))
+                if (property.NameEquals("computerNamePrefix"u8))
                 {
                     computerNamePrefix = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminUsername"))
+                if (property.NameEquals("adminUsername"u8))
                 {
                     adminUsername = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("adminPassword"))
+                if (property.NameEquals("adminPassword"u8))
                 {
                     adminPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("customData"))
+                if (property.NameEquals("customData"u8))
                 {
                     customData = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("windowsConfiguration"))
+                if (property.NameEquals("windowsConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("linuxConfiguration"))
+                if (property.NameEquals("linuxConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("secrets"))
+                if (property.NameEquals("secrets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VaultSecretGroup> array = new List<VaultSecretGroup>();
@@ -125,8 +138,26 @@ namespace Azure.ResourceManager.Compute.Models
                     secrets = array;
                     continue;
                 }
+                if (property.NameEquals("allowExtensionOperations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowExtensionOperations = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("requireGuestProvisionSignal"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requireGuestProvisionSignal = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new VirtualMachineScaleSetOSProfile(computerNamePrefix.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets));
+            return new VirtualMachineScaleSetOSProfile(computerNamePrefix.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal));
         }
     }
 }

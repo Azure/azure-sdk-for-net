@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _databaseAccountClientDiagnostics;
-        private DatabaseAccountsRestOperations _databaseAccountRestClient;
+        private ClientDiagnostics _cosmosDBAccountDatabaseAccountsClientDiagnostics;
+        private DatabaseAccountsRestOperations _cosmosDBAccountDatabaseAccountsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.CosmosDB
         {
         }
 
-        private ClientDiagnostics DatabaseAccountClientDiagnostics => _databaseAccountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", DatabaseAccountResource.ResourceType.Namespace, Diagnostics);
-        private DatabaseAccountsRestOperations DatabaseAccountRestClient => _databaseAccountRestClient ??= new DatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DatabaseAccountResource.ResourceType));
+        private ClientDiagnostics CosmosDBAccountDatabaseAccountsClientDiagnostics => _cosmosDBAccountDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
+        private DatabaseAccountsRestOperations CosmosDBAccountDatabaseAccountsRestClient => _cosmosDBAccountDatabaseAccountsRestClient ??= new DatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -43,19 +43,27 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters.
-        /// Request Path: /providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}
-        /// Operation Id: DatabaseAccounts_CheckNameExists
+        /// Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the '-' character, and must be between 3 and 50 characters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_CheckNameExists</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> CheckNameExistsDatabaseAccountAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            using var scope = DatabaseAccountClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameExistsDatabaseAccount");
+            using var scope = CosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameExistsDatabaseAccount");
             scope.Start();
             try
             {
-                var response = await DatabaseAccountRestClient.CheckNameExistsAsync(accountName, cancellationToken).ConfigureAwait(false);
+                var response = await CosmosDBAccountDatabaseAccountsRestClient.CheckNameExistsAsync(accountName, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -66,19 +74,27 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
-        /// Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters.
-        /// Request Path: /providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}
-        /// Operation Id: DatabaseAccounts_CheckNameExists
+        /// Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the '-' character, and must be between 3 and 50 characters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DocumentDB/databaseAccountNames/{accountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAccounts_CheckNameExists</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> CheckNameExistsDatabaseAccount(string accountName, CancellationToken cancellationToken = default)
         {
-            using var scope = DatabaseAccountClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameExistsDatabaseAccount");
+            using var scope = CosmosDBAccountDatabaseAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameExistsDatabaseAccount");
             scope.Start();
             try
             {
-                var response = DatabaseAccountRestClient.CheckNameExists(accountName, cancellationToken);
+                var response = CosmosDBAccountDatabaseAccountsRestClient.CheckNameExists(accountName, cancellationToken);
                 return response;
             }
             catch (Exception e)

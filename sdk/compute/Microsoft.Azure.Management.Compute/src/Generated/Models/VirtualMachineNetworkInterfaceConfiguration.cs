@@ -47,6 +47,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Delete', 'Detach'</param>
         /// <param name="enableAcceleratedNetworking">Specifies whether the
         /// network interface is accelerated networking-enabled.</param>
+        /// <param name="disableTcpStateTracking">Specifies whether the network
+        /// interface is disabled for tcp state tracking.</param>
         /// <param name="enableFpga">Specifies whether the network interface is
         /// FPGA networking-enabled.</param>
         /// <param name="enableIPForwarding">Whether IP forwarding enabled on
@@ -55,12 +57,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// group.</param>
         /// <param name="dnsSettings">The dns settings to be applied on the
         /// network interfaces.</param>
-        public VirtualMachineNetworkInterfaceConfiguration(string name, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, bool? primary = default(bool?), string deleteOption = default(string), bool? enableAcceleratedNetworking = default(bool?), bool? enableFpga = default(bool?), bool? enableIPForwarding = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default(VirtualMachineNetworkInterfaceDnsSettingsConfiguration), SubResource dscpConfiguration = default(SubResource))
+        public VirtualMachineNetworkInterfaceConfiguration(string name, IList<VirtualMachineNetworkInterfaceIPConfiguration> ipConfigurations, bool? primary = default(bool?), string deleteOption = default(string), bool? enableAcceleratedNetworking = default(bool?), bool? disableTcpStateTracking = default(bool?), bool? enableFpga = default(bool?), bool? enableIPForwarding = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineNetworkInterfaceDnsSettingsConfiguration dnsSettings = default(VirtualMachineNetworkInterfaceDnsSettingsConfiguration), SubResource dscpConfiguration = default(SubResource))
         {
             Name = name;
             Primary = primary;
             DeleteOption = deleteOption;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
+            DisableTcpStateTracking = disableTcpStateTracking;
             EnableFpga = enableFpga;
             EnableIPForwarding = enableIPForwarding;
             NetworkSecurityGroup = networkSecurityGroup;
@@ -101,6 +104,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableAcceleratedNetworking")]
         public bool? EnableAcceleratedNetworking { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the network interface is disabled
+        /// for tcp state tracking.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableTcpStateTracking")]
+        public bool? DisableTcpStateTracking { get; set; }
 
         /// <summary>
         /// Gets or sets specifies whether the network interface is FPGA

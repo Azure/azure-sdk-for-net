@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of ARM tracked top level resource properties for update operation. </summary>
-    internal partial class ResourceForUpdate
+    public partial class ResourceForUpdate
     {
         /// <summary> Initializes a new instance of ResourceForUpdate. </summary>
         public ResourceForUpdate()
@@ -21,5 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+        /// <summary> Managed Service Identity. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Describes the cloud service role instance.
+    /// </summary>
     public partial class RoleInstance
     {
         /// <summary>

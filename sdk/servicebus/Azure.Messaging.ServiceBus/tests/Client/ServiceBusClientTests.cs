@@ -79,15 +79,37 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
         {
             var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
             var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
+            var fakeEndpoint = new Uri("sb://fake.com");
 
             var options = new ServiceBusClientOptions
             {
                 TransportType = ServiceBusTransportType.AmqpWebSockets,
-                WebProxy = Mock.Of<IWebProxy>()
+                WebProxy = Mock.Of<IWebProxy>(),
+                CustomEndpointAddress = fakeEndpoint,
+                Identifier = "MySBClient"
             };
 
             yield return new object[] { new ReadableOptionsMock(fakeConnection, options), options, "connection string" };
             yield return new object[] { new ReadableOptionsMock("fullyQualifiedNamespace", credential.Object, options), options, "expanded argument" };
+        }
+
+        /// <summary>
+        ///   Provides test cases for the constructor tests.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> ConstructorSetsIdentifierCases()
+        {
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var fakeConnection = "Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real];EntityPath=fake";
+            var fakeEndpoint = new Uri("sb://fake.com");
+
+            var customIdOptions = new ServiceBusClientOptions
+            {
+                Identifier = "MyServiceBusClient-abcdefg"
+            };
+
+            yield return new object[] { new ReadableOptionsMock(fakeConnection, customIdOptions), customIdOptions, "connection string" };
+            yield return new object[] { new ReadableOptionsMock("fullyQualifiedNamespace", credential.Object, customIdOptions), customIdOptions, "expanded argument" };
         }
 
         /// <summary>
@@ -224,8 +246,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set default options.");
             Assert.That(options, Is.Not.SameAs(defaultOptions), $"The { constructorDescription } constructor should not have the same options instance.");
+            Assert.That(client.Identifier, Is.Not.Null, $"The {constructorDescription} constructor should have set the Identifier.");
             Assert.That(options.TransportType, Is.EqualTo(defaultOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
             Assert.That(options.WebProxy, Is.EqualTo(defaultOptions.WebProxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options.CustomEndpointAddress, Is.EqualTo(defaultOptions.CustomEndpointAddress), $"The {constructorDescription} constructor should have the correct custom endpoint.");
         }
 
         /// <summary>
@@ -243,8 +267,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
 
             Assert.That(options, Is.Not.Null, $"The { constructorDescription } constructor should have set the options.");
             Assert.That(options, Is.Not.SameAs(constructorOptions), $"The { constructorDescription } constructor should have cloned the options.");
+            Assert.That(options.Identifier, Is.EqualTo(constructorOptions.Identifier), $"The {constructorDescription} constructor should have the correct Identifier.");
             Assert.That(options.TransportType, Is.EqualTo(constructorOptions.TransportType), $"The { constructorDescription } constructor should have the correct connection type.");
             Assert.That(options.WebProxy, Is.EqualTo(constructorOptions.WebProxy), $"The { constructorDescription } constructor should have the correct proxy.");
+            Assert.That(options.CustomEndpointAddress, Is.EqualTo(constructorOptions.CustomEndpointAddress), $"The {constructorDescription} constructor should have the correct custom endpoint.");
+        }
+
+        /// <summary>
+        ///    Verifies functionality of the <see cref="ServiceBusClient" />
+        ///    constructor.
+        /// </summary>
+        ///
+        [Test]
+        [TestCaseSource(nameof(ConstructorSetsIdentifierCases))]
+        public void ConstructorSetsIdentifier(ReadableOptionsMock client,
+                                             ServiceBusClientOptions constructorOptions,
+                                             string constructorDescription)
+        {
+            ServiceBusClientOptions options = client.Options;
+
+            Assert.That(options.Identifier, Is.EqualTo(constructorOptions.Identifier), $"The {constructorDescription} constructor should have set the custom identifier");
         }
 
         /// <summary>
@@ -437,34 +479,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Client
             Assert.That(
                 () => client.ValidateEntityName(entityName),
                 Throws.InstanceOf<ArgumentException>());
-        }
-
-        [Test]
-        public void CanMockMetricsProperty()
-        {
-            var mockClient = new Mock<ServiceBusClient>();
-            mockClient.Setup(
-                client => client.GetTransportMetrics()).Returns(new Mock<ServiceBusTransportMetrics>().Object);
-            var metrics = mockClient.Object.GetTransportMetrics();
-            Assert.IsNotNull(metrics);
-        }
-
-        [Test]
-        public void MetricsPropertyThrowsWhenNotEnabled()
-        {
-            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
-            var client = new ServiceBusClient(fakeConnection);
-            Assert.That(
-                () => client.GetTransportMetrics(),
-                Throws.InstanceOf<InvalidOperationException>());
-        }
-
-        [Test]
-        public void MetricsPropertyDoesNotThrowWhenEnabled()
-        {
-            var fakeConnection = $"Endpoint=sb://not-real.servicebus.windows.net/;SharedAccessKeyName=DummyKey;SharedAccessKey=[not_real]";
-            var client = new ServiceBusClient(fakeConnection, new ServiceBusClientOptions {EnableTransportMetrics = true});
-            Assert.IsNotNull(client.GetTransportMetrics());
         }
 
         /// <summary>

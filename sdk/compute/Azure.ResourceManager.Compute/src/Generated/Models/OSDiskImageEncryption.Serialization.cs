@@ -10,14 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class OSDiskImageEncryption : IUtf8JsonSerializable
+    public partial class OSDiskImageEncryption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile);
+            }
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
-                writer.WritePropertyName("diskEncryptionSetId");
+                writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
             writer.WriteEndObject();
@@ -25,16 +30,34 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static OSDiskImageEncryption DeserializeOSDiskImageEncryption(JsonElement element)
         {
-            Optional<string> diskEncryptionSetId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<OSDiskImageSecurityProfile> securityProfile = default;
+            Optional<ResourceIdentifier> diskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("diskEncryptionSetId"))
+                if (property.NameEquals("securityProfile"u8))
                 {
-                    diskEncryptionSetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    securityProfile = OSDiskImageSecurityProfile.DeserializeOSDiskImageSecurityProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("diskEncryptionSetId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new OSDiskImageEncryption(diskEncryptionSetId.Value);
+            return new OSDiskImageEncryption(diskEncryptionSetId.Value, securityProfile.Value);
         }
     }
 }

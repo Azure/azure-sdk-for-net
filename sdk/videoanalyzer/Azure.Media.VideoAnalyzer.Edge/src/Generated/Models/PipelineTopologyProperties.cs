@@ -24,10 +24,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> Initializes a new instance of PipelineTopologyProperties. </summary>
         /// <param name="description"> An optional description of the pipeline topology. It is recommended that the expected use of the topology to be described here. </param>
-        /// <param name="parameters"> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of &quot;${PARAMETER_NAME}&quot; string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </param>
-        /// <param name="sources"> List of the topology source nodes. Source nodes enable external data to be ingested by the pipeline. </param>
-        /// <param name="processors"> List of the topology processor nodes. Processor nodes enable pipeline data to be analyzed, processed or transformed. </param>
-        /// <param name="sinks"> List of the topology sink nodes. Sink nodes allow pipeline data to be stored or exported. </param>
+        /// <param name="parameters"> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of "${PARAMETER_NAME}" string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </param>
+        /// <param name="sources">
+        /// List of the topology source nodes. Source nodes enable external data to be ingested by the pipeline.
+        /// Please note <see cref="SourceNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="IotHubMessageSource"/> and <see cref="RtspSource"/>.
+        /// </param>
+        /// <param name="processors">
+        /// List of the topology processor nodes. Processor nodes enable pipeline data to be analyzed, processed or transformed.
+        /// Please note <see cref="ProcessorNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CognitiveServicesVisionProcessor"/>, <see cref="ExtensionProcessorBase"/>, <see cref="GrpcExtension"/>, <see cref="HttpExtension"/>, <see cref="LineCrossingProcessor"/>, <see cref="MotionDetectionProcessor"/>, <see cref="ObjectTrackingProcessor"/> and <see cref="SignalGateProcessor"/>.
+        /// </param>
+        /// <param name="sinks">
+        /// List of the topology sink nodes. Sink nodes allow pipeline data to be stored or exported.
+        /// Please note <see cref="SinkNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FileSink"/>, <see cref="IotHubMessageSink"/> and <see cref="VideoSink"/>.
+        /// </param>
         internal PipelineTopologyProperties(string description, IList<ParameterDeclaration> parameters, IList<SourceNodeBase> sources, IList<ProcessorNodeBase> processors, IList<SinkNodeBase> sinks)
         {
             Description = description;
@@ -39,13 +51,25 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         /// <summary> An optional description of the pipeline topology. It is recommended that the expected use of the topology to be described here. </summary>
         public string Description { get; set; }
-        /// <summary> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of &quot;${PARAMETER_NAME}&quot; string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </summary>
+        /// <summary> List of the topology parameter declarations. Parameters declared here can be referenced throughout the topology nodes through the use of "${PARAMETER_NAME}" string pattern. Parameters can have optional default values and can later be defined in individual instances of the pipeline. </summary>
         public IList<ParameterDeclaration> Parameters { get; }
-        /// <summary> List of the topology source nodes. Source nodes enable external data to be ingested by the pipeline. </summary>
+        /// <summary>
+        /// List of the topology source nodes. Source nodes enable external data to be ingested by the pipeline.
+        /// Please note <see cref="SourceNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="IotHubMessageSource"/> and <see cref="RtspSource"/>.
+        /// </summary>
         public IList<SourceNodeBase> Sources { get; }
-        /// <summary> List of the topology processor nodes. Processor nodes enable pipeline data to be analyzed, processed or transformed. </summary>
+        /// <summary>
+        /// List of the topology processor nodes. Processor nodes enable pipeline data to be analyzed, processed or transformed.
+        /// Please note <see cref="ProcessorNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CognitiveServicesVisionProcessor"/>, <see cref="ExtensionProcessorBase"/>, <see cref="GrpcExtension"/>, <see cref="HttpExtension"/>, <see cref="LineCrossingProcessor"/>, <see cref="MotionDetectionProcessor"/>, <see cref="ObjectTrackingProcessor"/> and <see cref="SignalGateProcessor"/>.
+        /// </summary>
         public IList<ProcessorNodeBase> Processors { get; }
-        /// <summary> List of the topology sink nodes. Sink nodes allow pipeline data to be stored or exported. </summary>
+        /// <summary>
+        /// List of the topology sink nodes. Sink nodes allow pipeline data to be stored or exported.
+        /// Please note <see cref="SinkNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="FileSink"/>, <see cref="IotHubMessageSink"/> and <see cref="VideoSink"/>.
+        /// </summary>
         public IList<SinkNodeBase> Sinks { get; }
     }
 }

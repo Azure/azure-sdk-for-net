@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// "PhysicalPartitionsOfTable", "DynamicRange".</param>
         /// <param name="partitionSettings">The settings that will be leveraged
         /// for Sql source partitioning.</param>
-        public SqlSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object queryTimeout = default(object), object additionalColumns = default(object), object sqlReaderQuery = default(object), object sqlReaderStoredProcedureName = default(object), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>), object isolationLevel = default(object), object partitionOption = default(object), SqlPartitionSettings partitionSettings = default(SqlPartitionSettings))
+        public SqlSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object disableMetricsCollection = default(object), object queryTimeout = default(object), object additionalColumns = default(object), object sqlReaderQuery = default(object), object sqlReaderStoredProcedureName = default(object), object storedProcedureParameters = default(object), object isolationLevel = default(object), object partitionOption = default(object), SqlPartitionSettings partitionSettings = default(SqlPartitionSettings))
             : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, queryTimeout, additionalColumns)
         {
             SqlReaderQuery = sqlReaderQuery;
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// parameters. Example: "{Parameter1: {value: "1", type: "int"}}".
         /// </summary>
         [JsonProperty(PropertyName = "storedProcedureParameters")]
-        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; set; }
+        public object StoredProcedureParameters { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the transaction locking behavior for the SQL

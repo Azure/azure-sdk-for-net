@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
@@ -20,10 +20,7 @@ namespace Azure.ResourceManager.Models
         [InitializationConstructor]
         public ArmSku(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }

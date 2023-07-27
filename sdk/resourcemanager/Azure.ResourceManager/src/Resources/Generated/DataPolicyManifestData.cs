@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the DataPolicyManifest data model. </summary>
+    /// <summary>
+    /// A class representing the DataPolicyManifest data model.
+    /// The data policy manifest.
+    /// </summary>
     public partial class DataPolicyManifestData : ResourceData
     {
         /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>

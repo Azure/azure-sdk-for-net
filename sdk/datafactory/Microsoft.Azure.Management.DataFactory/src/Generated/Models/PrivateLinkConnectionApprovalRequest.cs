@@ -31,9 +31,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the
         /// PrivateLinkConnectionApprovalRequest class.
         /// </summary>
-        public PrivateLinkConnectionApprovalRequest(PrivateLinkConnectionState privateLinkServiceConnectionState = default(PrivateLinkConnectionState))
+        /// <param name="privateEndpoint">The resource of private
+        /// endpoint.</param>
+        public PrivateLinkConnectionApprovalRequest(PrivateLinkConnectionState privateLinkServiceConnectionState = default(PrivateLinkConnectionState), PrivateEndpoint privateEndpoint = default(PrivateEndpoint))
         {
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
+            PrivateEndpoint = privateEndpoint;
             CustomInit();
         }
 
@@ -46,6 +49,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "privateLinkServiceConnectionState")]
         public PrivateLinkConnectionState PrivateLinkServiceConnectionState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource of private endpoint.
+        /// </summary>
+        [JsonProperty(PropertyName = "privateEndpoint")]
+        public PrivateEndpoint PrivateEndpoint { get; set; }
 
     }
 }

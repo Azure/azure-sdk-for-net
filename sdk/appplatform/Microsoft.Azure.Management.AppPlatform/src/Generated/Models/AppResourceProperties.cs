@@ -48,7 +48,9 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// enabled.</param>
         /// <param name="loadedCertificates">Collection of loaded
         /// certificates</param>
-        public AppResourceProperties(bool? publicProperty = default(bool?), string url = default(string), IDictionary<string, IDictionary<string, object>> addonConfigs = default(IDictionary<string, IDictionary<string, object>>), string provisioningState = default(string), string fqdn = default(string), bool? httpsOnly = default(bool?), TemporaryDisk temporaryDisk = default(TemporaryDisk), PersistentDisk persistentDisk = default(PersistentDisk), IList<CustomPersistentDiskResource> customPersistentDisks = default(IList<CustomPersistentDiskResource>), bool? enableEndToEndTLS = default(bool?), IList<LoadedCertificate> loadedCertificates = default(IList<LoadedCertificate>))
+        /// <param name="vnetAddons">Additional App settings in vnet injection
+        /// instance</param>
+        public AppResourceProperties(bool? publicProperty = default(bool?), string url = default(string), IDictionary<string, IDictionary<string, object>> addonConfigs = default(IDictionary<string, IDictionary<string, object>>), string provisioningState = default(string), string fqdn = default(string), bool? httpsOnly = default(bool?), TemporaryDisk temporaryDisk = default(TemporaryDisk), PersistentDisk persistentDisk = default(PersistentDisk), IList<CustomPersistentDiskResource> customPersistentDisks = default(IList<CustomPersistentDiskResource>), bool? enableEndToEndTLS = default(bool?), IList<LoadedCertificate> loadedCertificates = default(IList<LoadedCertificate>), AppVNetAddons vnetAddons = default(AppVNetAddons))
         {
             PublicProperty = publicProperty;
             Url = url;
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
             CustomPersistentDisks = customPersistentDisks;
             EnableEndToEndTLS = enableEndToEndTLS;
             LoadedCertificates = loadedCertificates;
+            VnetAddons = vnetAddons;
             CustomInit();
         }
 
@@ -135,6 +138,12 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// </summary>
         [JsonProperty(PropertyName = "loadedCertificates")]
         public IList<LoadedCertificate> LoadedCertificates { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional App settings in vnet injection instance
+        /// </summary>
+        [JsonProperty(PropertyName = "vnetAddons")]
+        public AppVNetAddons VnetAddons { get; set; }
 
         /// <summary>
         /// Validate the object.

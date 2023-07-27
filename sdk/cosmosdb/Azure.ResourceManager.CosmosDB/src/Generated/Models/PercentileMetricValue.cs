@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Represents percentile metrics values. </summary>
-    public partial class PercentileMetricValue : MetricValue
+    public partial class PercentileMetricValue : CosmosDBMetricValue
     {
         /// <summary> Initializes a new instance of PercentileMetricValue. </summary>
         internal PercentileMetricValue()

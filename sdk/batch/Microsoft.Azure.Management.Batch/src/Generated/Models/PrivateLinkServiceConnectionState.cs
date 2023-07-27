@@ -36,13 +36,13 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// of Batch account</param>
         /// <param name="description">Description of the private Connection
         /// state</param>
-        /// <param name="actionRequired">Action required on the private
+        /// <param name="actionsRequired">Action required on the private
         /// connection state</param>
-        public PrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status, string description = default(string), string actionRequired = default(string))
+        public PrivateLinkServiceConnectionState(PrivateLinkServiceConnectionStatus status, string description = default(string), string actionsRequired = default(string))
         {
             Status = status;
             Description = description;
-            ActionRequired = actionRequired;
+            ActionsRequired = actionsRequired;
             CustomInit();
         }
 
@@ -71,8 +71,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <summary>
         /// Gets action required on the private connection state
         /// </summary>
-        [JsonProperty(PropertyName = "actionRequired")]
-        public string ActionRequired { get; private set; }
+        [JsonProperty(PropertyName = "actionsRequired")]
+        public string ActionsRequired { get; private set; }
 
         /// <summary>
         /// Validate the object.

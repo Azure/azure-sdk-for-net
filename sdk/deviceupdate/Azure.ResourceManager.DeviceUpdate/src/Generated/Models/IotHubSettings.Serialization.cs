@@ -15,45 +15,27 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("resourceId");
+            writer.WritePropertyName("resourceId"u8);
             writer.WriteStringValue(ResourceId);
-            if (Optional.IsDefined(IoTHubConnectionString))
-            {
-                writer.WritePropertyName("ioTHubConnectionString");
-                writer.WriteStringValue(IoTHubConnectionString);
-            }
-            if (Optional.IsDefined(EventHubConnectionString))
-            {
-                writer.WritePropertyName("eventHubConnectionString");
-                writer.WriteStringValue(EventHubConnectionString);
-            }
             writer.WriteEndObject();
         }
 
         internal static IotHubSettings DeserializeIotHubSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceId = default;
-            Optional<string> ioTHubConnectionString = default;
-            Optional<string> eventHubConnectionString = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ioTHubConnectionString"))
-                {
-                    ioTHubConnectionString = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("eventHubConnectionString"))
-                {
-                    eventHubConnectionString = property.Value.GetString();
-                    continue;
-                }
             }
-            return new IotHubSettings(resourceId, ioTHubConnectionString.Value, eventHubConnectionString.Value);
+            return new IotHubSettings(resourceId);
         }
     }
 }

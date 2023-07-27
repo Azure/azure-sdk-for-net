@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         private const string PrivateLinkValue = "PrivateLink";
-        private const string AADValue = "AAD";
+        private const string AadValue = "AAD";
 
         /// <summary> PrivateLink. </summary>
         public static AllowedCopyScope PrivateLink { get; } = new AllowedCopyScope(PrivateLinkValue);
         /// <summary> AAD. </summary>
-        public static AllowedCopyScope AAD { get; } = new AllowedCopyScope(AADValue);
+        public static AllowedCopyScope Aad { get; } = new AllowedCopyScope(AadValue);
         /// <summary> Determines if two <see cref="AllowedCopyScope"/> values are the same. </summary>
         public static bool operator ==(AllowedCopyScope left, AllowedCopyScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AllowedCopyScope"/> values are not the same. </summary>

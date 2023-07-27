@@ -18,43 +18,60 @@ namespace Azure.ResourceManager.Monitor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountId))
             {
-                writer.WritePropertyName("storageAccountId");
-                writer.WriteStringValue(StorageAccountId);
+                if (StorageAccountId != null)
+                {
+                    writer.WritePropertyName("storageAccountId"u8);
+                    writer.WriteStringValue(StorageAccountId);
+                }
+                else
+                {
+                    writer.WriteNull("storageAccountId");
+                }
             }
             if (Optional.IsDefined(ServiceBusRuleId))
             {
-                writer.WritePropertyName("serviceBusRuleId");
-                writer.WriteStringValue(ServiceBusRuleId);
+                if (ServiceBusRuleId != null)
+                {
+                    writer.WritePropertyName("serviceBusRuleId"u8);
+                    writer.WriteStringValue(ServiceBusRuleId);
+                }
+                else
+                {
+                    writer.WriteNull("serviceBusRuleId");
+                }
             }
-            writer.WritePropertyName("locations");
+            writer.WritePropertyName("locations"u8);
             writer.WriteStartArray();
             foreach (var item in Locations)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("categories");
+            writer.WritePropertyName("categories"u8);
             writer.WriteStartArray();
             foreach (var item in Categories)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("retentionPolicy");
+            writer.WritePropertyName("retentionPolicy"u8);
             writer.WriteObjectValue(RetentionPolicy);
             writer.WriteEndObject();
             writer.WriteEndObject();

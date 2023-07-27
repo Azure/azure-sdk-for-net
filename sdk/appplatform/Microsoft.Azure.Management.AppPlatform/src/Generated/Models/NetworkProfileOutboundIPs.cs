@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
     using System.Linq;
 
     /// <summary>
-    /// Desired outbound IP resources for Azure Spring Cloud instance.
+    /// Desired outbound IP resources for Azure Spring Apps resource.
     /// </summary>
     public partial class NetworkProfileOutboundIPs
     {

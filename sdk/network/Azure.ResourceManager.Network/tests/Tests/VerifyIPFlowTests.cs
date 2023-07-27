@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Tests
             var createOrUpdateOperation = await networkSecurityGroupCollection.CreateOrUpdateAsync(WaitUntil.Completed, networkSecurityGroupName, nsg.Value.Data);
             await createOrUpdateOperation.WaitForCompletionAsync();;
 
-            VerificationIPFlowParameters ipFlowProperties = new VerificationIPFlowParameters(vm.Id, "Outbound", "TCP", "80", "80", localIPAddress, "12.11.12.14");
+            VerificationIPFlowContent ipFlowProperties = new VerificationIPFlowContent(vm.Id, "Outbound", "TCP", "80", "80", localIPAddress, "12.11.12.14");
 
             //Verify IP flow from a VM to a location given the configured  rule
             var verifyIpFlowOperation = await GetNetworkWatcherCollection("NetworkWatcherRG").Get("NetworkWatcher_westus2").Value.VerifyIPFlowAsync(WaitUntil.Completed, ipFlowProperties);

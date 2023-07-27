@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
         /// <param name="name">The name of the module, e.g. 'RedisBloom',
         /// 'RediSearch', 'RedisTimeSeries'</param>
         /// <param name="args">Configuration options for the module, e.g.
-        /// 'ERROR_RATE 0.00 INITIAL_SIZE 400'.</param>
+        /// 'ERROR_RATE 0.01 INITIAL_SIZE 400'.</param>
         /// <param name="version">The version of the module, e.g.
         /// '1.0'.</param>
         public Module(string name, string args = default(string), string version = default(string))
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.RedisEnterprise.Models
 
         /// <summary>
         /// Gets or sets configuration options for the module, e.g. 'ERROR_RATE
-        /// 0.00 INITIAL_SIZE 400'.
+        /// 0.01 INITIAL_SIZE 400'.
         /// </summary>
         [JsonProperty(PropertyName = "args")]
         public string Args { get; set; }

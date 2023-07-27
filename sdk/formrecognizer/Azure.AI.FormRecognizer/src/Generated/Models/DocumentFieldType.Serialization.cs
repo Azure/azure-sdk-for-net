@@ -25,23 +25,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DocumentFieldType.List => "array",
             DocumentFieldType.Dictionary => "object",
             DocumentFieldType.Currency => "currency",
+            DocumentFieldType.Address => "address",
+            DocumentFieldType.Boolean => "boolean",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DocumentFieldType value.")
         };
 
         public static DocumentFieldType ToDocumentFieldType(this string value)
         {
-            if (string.Equals(value, "string", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.String;
-            if (string.Equals(value, "date", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Date;
-            if (string.Equals(value, "time", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Time;
-            if (string.Equals(value, "phoneNumber", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.PhoneNumber;
-            if (string.Equals(value, "number", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Double;
-            if (string.Equals(value, "integer", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Int64;
-            if (string.Equals(value, "selectionMark", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.SelectionMark;
-            if (string.Equals(value, "countryRegion", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.CountryRegion;
-            if (string.Equals(value, "signature", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Signature;
-            if (string.Equals(value, "array", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.List;
-            if (string.Equals(value, "object", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Dictionary;
-            if (string.Equals(value, "currency", StringComparison.InvariantCultureIgnoreCase)) return DocumentFieldType.Currency;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "string")) return DocumentFieldType.String;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "date")) return DocumentFieldType.Date;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "time")) return DocumentFieldType.Time;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "phoneNumber")) return DocumentFieldType.PhoneNumber;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "number")) return DocumentFieldType.Double;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "integer")) return DocumentFieldType.Int64;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "selectionMark")) return DocumentFieldType.SelectionMark;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "countryRegion")) return DocumentFieldType.CountryRegion;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "signature")) return DocumentFieldType.Signature;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "array")) return DocumentFieldType.List;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "object")) return DocumentFieldType.Dictionary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "currency")) return DocumentFieldType.Currency;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "address")) return DocumentFieldType.Address;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "boolean")) return DocumentFieldType.Boolean;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DocumentFieldType value.");
         }
     }

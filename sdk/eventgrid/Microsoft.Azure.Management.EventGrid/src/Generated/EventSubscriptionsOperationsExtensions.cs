@@ -955,10 +955,11 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List all event subscriptions for a specific topic.
+            /// List all event subscriptions.
             /// </summary>
             /// <remarks>
-            /// List all event subscriptions that have been created for a specific topic.
+            /// List all event subscriptions that have been created for a specific
+            /// resource.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -995,10 +996,11 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List all event subscriptions for a specific topic.
+            /// List all event subscriptions.
             /// </summary>
             /// <remarks>
-            /// List all event subscriptions that have been created for a specific topic.
+            /// List all event subscriptions that have been created for a specific
+            /// resource.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1744,10 +1746,11 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List all event subscriptions for a specific topic.
+            /// List all event subscriptions.
             /// </summary>
             /// <remarks>
-            /// List all event subscriptions that have been created for a specific topic.
+            /// List all event subscriptions that have been created for a specific
+            /// resource.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1761,10 +1764,11 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List all event subscriptions for a specific topic.
+            /// List all event subscriptions.
             /// </summary>
             /// <remarks>
-            /// List all event subscriptions that have been created for a specific topic.
+            /// List all event subscriptions that have been created for a specific
+            /// resource.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

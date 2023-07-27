@@ -18,69 +18,69 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayInfo))
             {
-                writer.WritePropertyName("displayInfo");
+                writer.WritePropertyName("displayInfo"u8);
                 writer.WriteObjectValue(DisplayInfo);
             }
-            writer.WritePropertyName("hierarchyInformation");
+            writer.WritePropertyName("hierarchyInformation"u8);
             writer.WriteObjectValue(HierarchyInformation);
             writer.WriteEndObject();
         }
 
         internal static ProductDetails DeserializeProductDetails(JsonElement element)
         {
-            Optional<DisplayInfo> displayInfo = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ProductDisplayInfo> displayInfo = default;
             HierarchyInformation hierarchyInformation = default;
             Optional<int> count = default;
             Optional<DoubleEncryptionStatus> productDoubleEncryptionStatus = default;
-            Optional<IReadOnlyList<DeviceDetails>> deviceDetails = default;
+            Optional<IReadOnlyList<EdgeOrderProductDeviceDetails>> deviceDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayInfo"))
+                if (property.NameEquals("displayInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    displayInfo = DisplayInfo.DeserializeDisplayInfo(property.Value);
+                    displayInfo = ProductDisplayInfo.DeserializeProductDisplayInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("hierarchyInformation"))
+                if (property.NameEquals("hierarchyInformation"u8))
                 {
                     hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("productDoubleEncryptionStatus"))
+                if (property.NameEquals("productDoubleEncryptionStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     productDoubleEncryptionStatus = new DoubleEncryptionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("deviceDetails"))
+                if (property.NameEquals("deviceDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DeviceDetails> array = new List<DeviceDetails>();
+                    List<EdgeOrderProductDeviceDetails> array = new List<EdgeOrderProductDeviceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DeviceDetails.DeserializeDeviceDetails(item));
+                        array.Add(EdgeOrderProductDeviceDetails.DeserializeEdgeOrderProductDeviceDetails(item));
                     }
                     deviceDetails = array;
                     continue;

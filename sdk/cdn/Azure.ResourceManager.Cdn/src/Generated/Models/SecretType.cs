@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string UrlSigningKeyValue = "UrlSigningKey";
+        private const string UriSigningKeyValue = "UrlSigningKey";
         private const string CustomerCertificateValue = "CustomerCertificate";
         private const string ManagedCertificateValue = "ManagedCertificate";
         private const string AzureFirstPartyManagedCertificateValue = "AzureFirstPartyManagedCertificate";
 
         /// <summary> UrlSigningKey. </summary>
-        public static SecretType UrlSigningKey { get; } = new SecretType(UrlSigningKeyValue);
+        public static SecretType UriSigningKey { get; } = new SecretType(UriSigningKeyValue);
         /// <summary> CustomerCertificate. </summary>
         public static SecretType CustomerCertificate { get; } = new SecretType(CustomerCertificateValue);
         /// <summary> ManagedCertificate. </summary>

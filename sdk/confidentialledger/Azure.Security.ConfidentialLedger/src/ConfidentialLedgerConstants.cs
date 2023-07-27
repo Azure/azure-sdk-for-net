@@ -6,7 +6,7 @@ namespace Azure.Security.ConfidentialLedger
     /// <summary>
     /// Constant values for Confidential Ledger.
     /// </summary>
-    public static class ConfidentialLedgerConstants
+    internal static class ConfidentialLedgerConstants
     {
         /// <summary>
         /// The header value containing the ledger transaction Id.

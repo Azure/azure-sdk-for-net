@@ -12,15 +12,19 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
-    <ProjectReference Include="..\..\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj" />
     <ProjectReference Include="..\src\Azure.Communication.PhoneNumbers.csproj" />
+    <Compile Include="..\..\Shared\tests\AuthMethod.cs" LinkBase="Shared\Communication.Tests" />
+    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\samples\Sample_SipRoutingClient.md" Link="samples\Sample_SipRoutingClient.md" />
+    <None Include="..\samples\Sample_SipRoutingClientAsync.md" Link="samples\Sample_SipRoutingClientAsync.md" />
     <None Include="..\tests.yml" Link="\tests.yml" />
     <None Include="..\samples\README.md" Link="samples\README.md" />
     <None Include="..\samples\Sample_PhoneNumbersClient.md" Link="samples\Sample_PhoneNumbersClient.md" />

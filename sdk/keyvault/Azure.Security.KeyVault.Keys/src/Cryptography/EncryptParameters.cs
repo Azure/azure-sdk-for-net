@@ -79,6 +79,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
         /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128Cbc"/> encryption algorithm.</returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
         public static EncryptParameters A128CbcParameters(byte[] plaintext, byte[] iv = null) =>
             new EncryptParameters(EncryptionAlgorithm.A128Cbc, plaintext, iv, null);
@@ -89,6 +92,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
         /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192Cbc"/> encryption algorithm.</returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
         public static EncryptParameters A192CbcParameters(byte[] plaintext, byte[] iv = null) =>
             new EncryptParameters(EncryptionAlgorithm.A192Cbc, plaintext, iv, null);
@@ -99,6 +105,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
         /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256Cbc"/> encryption algorithm.</returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
         public static EncryptParameters A256CbcParameters(byte[] plaintext, byte[] iv = null) =>
             new EncryptParameters(EncryptionAlgorithm.A256Cbc, plaintext, iv, null);
@@ -109,6 +118,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
         /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A128CbcPad"/> encryption algorithm.</returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
         public static EncryptParameters A128CbcPadParameters(byte[] plaintext, byte[] iv = null) =>
             new EncryptParameters(EncryptionAlgorithm.A128CbcPad, plaintext, iv, null);
@@ -119,6 +131,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
         /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A192CbcPad"/> encryption algorithm.</returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
         public static EncryptParameters A192CbcPadParameters(byte[] plaintext, byte[] iv = null) =>
             new EncryptParameters(EncryptionAlgorithm.A192CbcPad, plaintext, iv, null);
@@ -129,6 +144,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <param name="plaintext">The plaintext to encrypt.</param>
         /// <param name="iv">Optional initialization vector. If null, a cryptographically random initialization vector will be generated using <see cref="RandomNumberGenerator"/>.</param>
         /// <returns>An instance of the <see cref="EncryptParameters"/> class for the <see cref="EncryptionAlgorithm.A256CbcPad"/> encryption algorithm.</returns>
+        /// <remarks>
+        /// Microsoft recommends you not use CBC without first ensuring the integrity of the ciphertext using an HMAC, for example. See https://docs.microsoft.com/dotnet/standard/security/vulnerabilities-cbc-mode for more information.
+        /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="plaintext"/> is null.</exception>
         public static EncryptParameters A256CbcPadParameters(byte[] plaintext, byte[] iv = null) =>
             new EncryptParameters(EncryptionAlgorithm.A256CbcPad, plaintext, iv, null);

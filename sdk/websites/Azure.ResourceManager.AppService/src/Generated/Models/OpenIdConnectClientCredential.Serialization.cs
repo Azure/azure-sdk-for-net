@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Method))
             {
-                writer.WritePropertyName("method");
-                writer.WriteStringValue(Method);
+                writer.WritePropertyName("method"u8);
+                writer.WriteStringValue(Method.Value.ToString());
             }
             if (Optional.IsDefined(ClientSecretSettingName))
             {
-                writer.WritePropertyName("clientSecretSettingName");
+                writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
             writer.WriteEndObject();
@@ -30,22 +30,30 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static OpenIdConnectClientCredential DeserializeOpenIdConnectClientCredential(JsonElement element)
         {
-            Optional<string> method = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ClientCredentialMethod> method = default;
             Optional<string> clientSecretSettingName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("method"))
+                if (property.NameEquals("method"u8))
                 {
-                    method = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    method = new ClientCredentialMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientSecretSettingName"))
+                if (property.NameEquals("clientSecretSettingName"u8))
                 {
                     clientSecretSettingName = property.Value.GetString();
                     continue;
                 }
             }
-            return new OpenIdConnectClientCredential(method.Value, clientSecretSettingName.Value);
+            return new OpenIdConnectClientCredential(Optional.ToNullable(method), clientSecretSettingName.Value);
         }
     }
 }

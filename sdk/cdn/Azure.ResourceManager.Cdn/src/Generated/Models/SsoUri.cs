@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> The URI required to login to the supplemental portal from the Azure portal. </summary>
@@ -16,13 +18,13 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of SsoUri. </summary>
-        /// <param name="ssoUriValue"> The URI used to login to the supplemental portal. </param>
-        internal SsoUri(string ssoUriValue)
+        /// <param name="availableSsoUri"> The URI used to login to the supplemental portal. </param>
+        internal SsoUri(Uri availableSsoUri)
         {
-            SsoUriValue = ssoUriValue;
+            AvailableSsoUri = availableSsoUri;
         }
 
         /// <summary> The URI used to login to the supplemental portal. </summary>
-        public string SsoUriValue { get; }
+        public Uri AvailableSsoUri { get; }
     }
 }

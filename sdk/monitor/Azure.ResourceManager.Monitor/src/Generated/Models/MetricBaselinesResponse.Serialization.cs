@@ -15,20 +15,23 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static MetricBaselinesResponse DeserializeMetricBaselinesResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<SingleMetricBaseline>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<MonitorSingleMetricBaseline>> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SingleMetricBaseline> array = new List<SingleMetricBaseline>();
+                    List<MonitorSingleMetricBaseline> array = new List<MonitorSingleMetricBaseline>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SingleMetricBaseline.DeserializeSingleMetricBaseline(item));
+                        array.Add(MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline(item));
                     }
                     value = array;
                     continue;

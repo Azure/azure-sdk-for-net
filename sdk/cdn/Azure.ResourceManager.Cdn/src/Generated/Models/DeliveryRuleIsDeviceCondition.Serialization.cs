@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("parameters");
-            writer.WriteObjectValue(Parameters);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("parameters"u8);
+            writer.WriteObjectValue(Properties);
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
         }
 
         internal static DeliveryRuleIsDeviceCondition DeserializeDeliveryRuleIsDeviceCondition(JsonElement element)
         {
-            IsDeviceMatchConditionParameters parameters = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IsDeviceMatchCondition parameters = default;
             MatchVariable name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
-                    parameters = IsDeviceMatchConditionParameters.DeserializeIsDeviceMatchConditionParameters(property.Value);
+                    parameters = IsDeviceMatchCondition.DeserializeIsDeviceMatchCondition(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = new MatchVariable(property.Value.GetString());
                     continue;

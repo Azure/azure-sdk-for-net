@@ -13,7 +13,6 @@ namespace Azure.Identity
     internal class CloudShellManagedIdentitySource : ManagedIdentitySource
     {
         private readonly Uri _endpoint;
-        private readonly string _clientId;
         private const string MsiEndpointInvalidUriError = "The environment variable MSI_ENDPOINT contains an invalid Uri.";
 
         public static ManagedIdentitySource TryCreate(ManagedIdentityClientOptions options)
@@ -36,38 +35,31 @@ namespace Azure.Identity
                 throw new AuthenticationFailedException(MsiEndpointInvalidUriError, ex);
             }
 
-            return new CloudShellManagedIdentitySource(options.Pipeline, endpointUri, options.ClientId);
+            return new CloudShellManagedIdentitySource(endpointUri, options);
         }
 
-        private CloudShellManagedIdentitySource(CredentialPipeline pipeline, Uri endpoint, string clientId) : base(pipeline)
+        private CloudShellManagedIdentitySource(Uri endpoint, ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
             _endpoint = endpoint;
-            _clientId = clientId;
+            if (!string.IsNullOrEmpty(options.ClientId) || null != options.ResourceIdentifier)
+            {
+                AzureIdentityEventSource.Singleton.UserAssignedManagedIdentityNotSupported("Cloud Shell");
+            }
         }
 
         protected override Request CreateRequest(string[] scopes)
         {
             // covert the scopes to a resource string
             string resource = ScopeUtilities.ScopesToResource(scopes);
-
             Request request = Pipeline.HttpPipeline.CreateRequest();
-
             request.Method = RequestMethod.Post;
-
             request.Headers.Add(HttpHeader.Common.FormUrlEncodedContentType);
-
             request.Uri.Reset(_endpoint);
-
             request.Headers.Add("Metadata", "true");
 
             var bodyStr = $"resource={Uri.EscapeDataString(resource)}";
-
-            if (!string.IsNullOrEmpty(_clientId))
-            {
-                bodyStr += $"&{Constants.ManagedIdentityClientId}={Uri.EscapeDataString(_clientId)}";
-            }
-
             ReadOnlyMemory<byte> content = Encoding.UTF8.GetBytes(bodyStr).AsMemory();
+
             request.Content = RequestContent.Create(content);
             return request;
         }

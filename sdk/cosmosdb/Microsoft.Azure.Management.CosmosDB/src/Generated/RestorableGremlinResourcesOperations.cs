@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.CosmosDB
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IEnumerable<GremlinDatabaseRestoreResource>>> ListWithHttpMessagesAsync(string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<RestorableGremlinResourcesGetResult>>> ListWithHttpMessagesAsync(string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IEnumerable<GremlinDatabaseRestoreResource>>();
+            var _result = new AzureOperationResponse<IEnumerable<RestorableGremlinResourcesGetResult>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -262,7 +262,7 @@ namespace Microsoft.Azure.Management.CosmosDB
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<GremlinDatabaseRestoreResource>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RestorableGremlinResourcesGetResult>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

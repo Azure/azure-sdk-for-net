@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,12 +16,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorSource. </summary>
         /// <param name="resourceId"> The ID of the resource used as the source by connection monitor. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public ConnectionMonitorSource(string resourceId)
+        public ConnectionMonitorSource(ResourceIdentifier resourceId)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
         }
@@ -28,14 +26,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of ConnectionMonitorSource. </summary>
         /// <param name="resourceId"> The ID of the resource used as the source by connection monitor. </param>
         /// <param name="port"> The source port used by connection monitor. </param>
-        internal ConnectionMonitorSource(string resourceId, int? port)
+        internal ConnectionMonitorSource(ResourceIdentifier resourceId, int? port)
         {
             ResourceId = resourceId;
             Port = port;
         }
 
         /// <summary> The ID of the resource used as the source by connection monitor. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The source port used by connection monitor. </summary>
         public int? Port { get; set; }
     }

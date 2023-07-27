@@ -50,6 +50,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 JsonPatchDocument updateTwinPatchDocument = new JsonPatchDocument();
                 updateTwinPatchDocument.AppendAdd("/Humidity", 30);
                 updateTwinPatchDocument.AppendReplace("/Temperature", 70);
+                updateTwinPatchDocument.AppendReplace("/$metadata/Temperature/sourceTime", "2022-01-20T02:03:00.0943478Z");
                 updateTwinPatchDocument.AppendRemove("/EmployeeId");
 
                 await client.UpdateDigitalTwinAsync(roomTwinId, updateTwinPatchDocument, ETag.All).ConfigureAwait(false);

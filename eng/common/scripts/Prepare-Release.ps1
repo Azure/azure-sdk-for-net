@@ -152,24 +152,21 @@ if ($LASTEXITCODE -ne 0) {
   exit 1
 }
 
-# Check API status if version is GA
-if (!$newVersionParsed.IsPrerelease)
+# Check API status
+try
 {
-  try
-  {
-    az account show *> $null
-    if (!$?) {
-      Write-Host 'Running az login...'
-      az login *> $null
-    }
-    $url = az keyvault secret show --name "APIURL" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
-    $apiKey = az keyvault secret show --name "APIKEY" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
-    Check-ApiReviewStatus -PackageName $packageProperties.Name -packageVersion $newVersion -Language $LanguageDisplayName -url $url -apiKey $apiKey
+  az account show *> $null
+  if (!$?) {
+    Write-Host 'Running az login...'
+    az login *> $null
   }
-  catch
-  {
-    Write-Warning "Failed to get APIView URL and API Key from Keyvault AzureSDKPrepRelease-KV. Please check and ensure you have access to this Keyvault as reader."
-  }
+  $url = az keyvault secret show --name "APIURL" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
+  $apiKey = az keyvault secret show --name "APIKEY" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
+  Check-ApiReviewStatus -PackageName $packageProperties.Name -packageVersion $newVersion -Language $LanguageDisplayName -url $url -apiKey $apiKey
+}
+catch
+{
+  Write-Warning "Failed to get APIView URL and API Key from Keyvault AzureSDKPrepRelease-KV. Please check and ensure you have access to this Keyvault as reader."
 }
 
 if ($releaseTrackingOnly)

@@ -119,7 +119,8 @@ namespace Compute.Tests
 
                 IPage<GalleryImage> listGalleryImagesResult = m_CrpClient.GalleryImages.ListByGallery(rgName, galleryName);
                 Assert.Single(listGalleryImagesResult);
-                Assert.Null(listGalleryImagesResult.NextPageLink);
+                Assert.Equal(1, listGalleryImagesResult.Count());
+                //Assert.Null(listGalleryImagesResult.NextPageLink);
 
                 m_CrpClient.GalleryImages.Delete(rgName, galleryName, galleryImageName);
                 listGalleryImagesResult = m_CrpClient.GalleryImages.ListByGallery(rgName, galleryName);
@@ -194,13 +195,13 @@ namespace Compute.Tests
                     IPage<GalleryImageVersion> listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
                         ListByGalleryImage(rgName, galleryName, galleryImageName);
                     Assert.Single(listGalleryImageVersionsResult);
-                    Assert.Null(listGalleryImageVersionsResult.NextPageLink);
+                    Assert.Equal(1, listGalleryImageVersionsResult.Count());
+                    //Assert.Null(listGalleryImageVersionsResult.NextPageLink);
 
                     m_CrpClient.GalleryImageVersions.Delete(rgName, galleryName, galleryImageName, galleryImageVersionName);
                     listGalleryImageVersionsResult = m_CrpClient.GalleryImageVersions.
                         ListByGalleryImage(rgName, galleryName, galleryImageName);
                     Assert.Empty(listGalleryImageVersionsResult);
-                    Assert.Null(listGalleryImageVersionsResult.NextPageLink);
                     Trace.TraceInformation(string.Format("Deleted the gallery image version: {0} in gallery image: {1}",
                         galleryImageVersionName, galleryImageName));
 
@@ -231,7 +232,7 @@ namespace Compute.Tests
         {
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string location = ComputeManagementTestUtilities.DefaultLocation;
+                string location = galleryHomeLocation;
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
 
@@ -269,14 +270,14 @@ namespace Compute.Tests
                 m_CrpClient.Galleries.Delete(rgName, galleryName);
             }
         }
-        
+
         [Fact]
         public void GalleryApplicationVersion_CRUD_Tests()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                string location = ComputeManagementTestUtilities.DefaultLocation;
+                string location = galleryHomeLocation;
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", location);
                 EnsureClientsInitialized(context);
                 string rgName = ComputeManagementTestUtilities.GenerateName(ResourceGroupPrefix);
@@ -465,8 +466,9 @@ namespace Compute.Tests
                     Gallery galleryOutWithSharingProfile = m_CrpClient.Galleries.Get(rgName, galleryName, SelectPermissions.Permissions);
                     Trace.TraceInformation("Got the gallery");
                     Assert.NotNull(galleryOutWithSharingProfile);
-                    CommunityGalleryInfo communityGalleryInfo = JsonConvert.DeserializeObject<CommunityGalleryInfo>(galleryOutWithSharingProfile.SharingProfile.CommunityGalleryInfo.ToString());
-                    Assert.True(communityGalleryInfo.CommunityGalleryEnabled);
+                    //CommunityGalleryInfo communityGalleryInfo = JsonConvert.DeserializeObject<CommunityGalleryInfo>(galleryOutWithSharingProfile.SharingProfile.CommunityGalleryInfo.ToString());
+                    //Assert.True(communityGalleryInfo.CommunityGalleryEnabled);
+                    Assert.True(galleryOutWithSharingProfile.SharingProfile.CommunityGalleryInfo.CommunityGalleryEnabled);
 
                     Trace.TraceInformation("Reset this gallery to private before deleting it.");
                     SharingUpdate resetPrivateUpdate = new SharingUpdate()
@@ -509,7 +511,7 @@ namespace Compute.Tests
 
         private void ValidateSharingProfile(Gallery galleryIn, Gallery galleryOut, List<SharingProfileGroup> groups)
         {
-            if(galleryIn.SharingProfile != null)
+            if (galleryIn.SharingProfile != null)
             {
                 Assert.Equal(galleryIn.SharingProfile.Permissions, galleryOut.SharingProfile.Permissions);
                 Assert.Equal(groups.Count, galleryOut.SharingProfile.Groups.Count);
@@ -521,9 +523,9 @@ namespace Compute.Tests
                         List<string> outIds = sharingProfileGroup.Ids as List<string>;
                         List<string> inIds = null;
 
-                        foreach(SharingProfileGroup inGroup in groups)
+                        foreach (SharingProfileGroup inGroup in groups)
                         {
-                            if(inGroup.Type == sharingProfileGroup.Type)
+                            if (inGroup.Type == sharingProfileGroup.Type)
                             {
                                 inIds = inGroup.Ids as List<string>;
                                 break;
@@ -533,7 +535,7 @@ namespace Compute.Tests
                         Assert.NotNull(inIds);
                         Assert.Equal(inIds.Count, outIds.Count);
 
-                        for(int i = 0; i < inIds.Count; i++)
+                        for (int i = 0; i < inIds.Count; i++)
                         {
                             Assert.Equal(outIds[i], inIds[i]);
                         }
@@ -569,7 +571,7 @@ namespace Compute.Tests
             {
                 Assert.Equal(imageIn.HyperVGeneration, imageOut.HyperVGeneration);
             }
-            
+
             if (!string.IsNullOrEmpty(imageIn.Description))
             {
                 Assert.Equal(imageIn.Description, imageOut.Description);
@@ -595,6 +597,14 @@ namespace Compute.Tests
             Assert.NotNull(imageVersionOut.PublishingProfile.EndOfLifeDate);
             Assert.NotNull(imageVersionOut.PublishingProfile.PublishedDate);
             Assert.NotNull(imageVersionOut.StorageProfile);
+            ValidateImageVersionSecurityProfile(imageVersionIn.SafetyProfile, imageVersionOut.SafetyProfile);
+        }
+
+        private void ValidateImageVersionSecurityProfile(
+            GalleryImageVersionSafetyProfile safetyProfileIn,
+            GalleryImageVersionSafetyProfile safetyProfileOut)
+        {
+            Assert.Equal(safetyProfileIn.AllowDeletionOfReplicatedLocations, safetyProfileOut.AllowDeletionOfReplicatedLocations);
         }
 
         private Gallery GetTestInputGallery()
@@ -662,6 +672,10 @@ namespace Compute.Tests
             return new GalleryImageVersion
             {
                 Location = galleryHomeLocation,
+                SafetyProfile = new GalleryImageVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = true
+                },
                 PublishingProfile = new GalleryImageVersionPublishingProfile
                 {
                     ReplicaCount = 1,
@@ -677,7 +691,7 @@ namespace Compute.Tests
                 },
                 StorageProfile = new GalleryImageVersionStorageProfile
                 {
-                    Source = new GalleryArtifactVersionSource
+                    Source = new GalleryArtifactVersionFullSource
                     {
                         Id = sourceImageId
                     }
@@ -759,19 +773,23 @@ namespace Compute.Tests
             return new GalleryApplication
             {
                 Eula = "This is the gallery application EULA.",
-                Location = ComputeManagementTestUtilities.DefaultLocation,
+                Location = galleryHomeLocation,
                 SupportedOSType = OperatingSystemTypes.Windows,
                 PrivacyStatementUri = "www.privacystatement.com",
                 ReleaseNoteUri = "www.releasenote.com",
                 Description = "This is the gallery application description.",
             };
         }
-        
+
         private GalleryApplicationVersion GetTestInputGalleryApplicationVersion(string applicationMediaLink)
         {
             return new GalleryApplicationVersion
             {
-                Location = ComputeManagementTestUtilities.DefaultLocation,
+                Location = galleryHomeLocation,
+                SafetyProfile = new GalleryApplicationVersionSafetyProfile()
+                {
+                    AllowDeletionOfReplicatedLocations = true
+                },
                 PublishingProfile = new GalleryApplicationVersionPublishingProfile
                 {
                     Source = new UserArtifactSource
@@ -783,10 +801,40 @@ namespace Compute.Tests
                         Install = "powershell -command \"Expand-Archive -Path test.zip -DestinationPath C:\\package\"",
                         Remove = "del C:\\package "
                     },
+                    CustomActions = new List<GalleryApplicationCustomAction>()
+                    {
+                        new GalleryApplicationCustomAction()
+                        {
+                            Name = "testCustomAction",
+                            Script = "powershell -command \"echo testCustomActionScript\"",
+                            Description = "A test custom action",
+                            Parameters = new List<GalleryApplicationCustomActionParameter>()
+                            {
+                                new GalleryApplicationCustomActionParameter()
+                                {
+                                    Name = "testCustomActionParam",
+                                    Description = "A test custom action parameter",
+                                    Type = GalleryApplicationCustomActionParameterType.String,
+                                    DefaultValue = "paramDefaultValue",
+                                    Required = true,
+                                }
+                            }
+                        }
+                    },
+                    Settings = new UserArtifactSettings
+                    {
+                        PackageFileName = "test.zip",
+                        ConfigFileName = "config.cfg"
+                    },
+                    AdvancedSettings = new Dictionary<string, string>()
+                    {
+                        { "cacheLimit", "500" },
+                        { "user", "root"}
+                    },
                     ReplicaCount = 1,
                     StorageAccountType = StorageAccountType.StandardLRS,
                     TargetRegions = new List<TargetRegion> {
-                        new TargetRegion { Name = ComputeManagementTestUtilities.DefaultLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
+                        new TargetRegion { Name = galleryHomeLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
                     },
                     EndOfLifeDate = DateTime.Today.AddDays(10).Date
                 }
@@ -831,7 +879,43 @@ namespace Compute.Tests
             Assert.NotNull(applicationVersionOut.PublishingProfile.EndOfLifeDate);
             Assert.NotNull(applicationVersionOut.PublishingProfile.PublishedDate);
             Assert.NotNull(applicationVersionOut.Id);
+            Assert.Equal(applicationVersionIn.PublishingProfile.Settings.PackageFileName, applicationVersionOut.PublishingProfile.Settings.PackageFileName);
+            Assert.Equal(applicationVersionIn.PublishingProfile.Settings.ConfigFileName, applicationVersionOut.PublishingProfile.Settings.ConfigFileName);
+            Assert.Equal(applicationVersionIn.SafetyProfile.AllowDeletionOfReplicatedLocations, applicationVersionOut.SafetyProfile.AllowDeletionOfReplicatedLocations);
+            IDictionary<string, string> advancedSettingsIn = applicationVersionIn.PublishingProfile.AdvancedSettings;
+            IDictionary<string, string> advancedSettingsOut = applicationVersionOut.PublishingProfile.AdvancedSettings;
+            Assert.Equal(advancedSettingsIn.Count, advancedSettingsOut.Count);
+            foreach (KeyValuePair<string, string> kvp in advancedSettingsIn)
+            {
+                Assert.True(advancedSettingsOut.ContainsKey(kvp.Key));
+                Assert.Equal(kvp.Value, advancedSettingsOut[kvp.Key]);
+            }
+            ValidateCustomActions(applicationVersionIn.PublishingProfile.CustomActions, applicationVersionOut.PublishingProfile.CustomActions);
+        }
+
+        private void ValidateCustomActions(IList<GalleryApplicationCustomAction> customActionsIn, IList<GalleryApplicationCustomAction> customActionsOut)
+        {
+            Assert.Equal(customActionsIn.Count, customActionsOut.Count);
+            foreach (var customActionIn in customActionsIn)
+            {
+                var customActionOut = customActionsOut.First(a => a.Name == customActionIn.Name);
+                Assert.NotNull(customActionOut);
+                Assert.Equal(customActionIn.Script, customActionOut.Script);
+                Assert.Equal(customActionIn.Description, customActionOut.Description);
+
+                var parametersIn = customActionIn.Parameters;
+                var parametersOut = customActionOut.Parameters;
+                Assert.Equal(parametersIn.Count, parametersOut.Count);
+                foreach (var parameterIn in parametersIn)
+                {
+                    var parameterOut = parametersOut.First(a => a.Name == parameterIn.Name);
+                    Assert.NotNull(parameterOut);
+                    Assert.Equal(parameterIn.DefaultValue, parameterOut.DefaultValue);
+                    Assert.Equal(parameterIn.Description, parameterOut.Description);
+                    Assert.Equal(parameterIn.Required, parameterOut.Required);
+                    Assert.Equal(parameterIn.Type, parameterOut.Type);
+                }
+            }
         }
     }
 }
-

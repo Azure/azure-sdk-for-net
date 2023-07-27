@@ -26,9 +26,9 @@ namespace Azure.AI.TextAnalytics
         private const string RunningValue = "running";
         private const string SucceededValue = "succeeded";
         private const string FailedValue = "failed";
-        private const string RejectedValue = "rejected";
         private const string CancelledValue = "cancelled";
         private const string CancellingValue = "cancelling";
+        private const string PartiallyCompletedValue = "partiallyCompleted";
 
         /// <summary> notStarted. </summary>
         public static TextAnalyticsOperationStatus NotStarted { get; } = new TextAnalyticsOperationStatus(NotStartedValue);
@@ -38,12 +38,12 @@ namespace Azure.AI.TextAnalytics
         public static TextAnalyticsOperationStatus Succeeded { get; } = new TextAnalyticsOperationStatus(SucceededValue);
         /// <summary> failed. </summary>
         public static TextAnalyticsOperationStatus Failed { get; } = new TextAnalyticsOperationStatus(FailedValue);
-        /// <summary> rejected. </summary>
-        public static TextAnalyticsOperationStatus Rejected { get; } = new TextAnalyticsOperationStatus(RejectedValue);
         /// <summary> cancelled. </summary>
         public static TextAnalyticsOperationStatus Cancelled { get; } = new TextAnalyticsOperationStatus(CancelledValue);
         /// <summary> cancelling. </summary>
         public static TextAnalyticsOperationStatus Cancelling { get; } = new TextAnalyticsOperationStatus(CancellingValue);
+        /// <summary> partiallyCompleted. </summary>
+        public static TextAnalyticsOperationStatus PartiallyCompleted { get; } = new TextAnalyticsOperationStatus(PartiallyCompletedValue);
         /// <summary> Determines if two <see cref="TextAnalyticsOperationStatus"/> values are the same. </summary>
         public static bool operator ==(TextAnalyticsOperationStatus left, TextAnalyticsOperationStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TextAnalyticsOperationStatus"/> values are not the same. </summary>

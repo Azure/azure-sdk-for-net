@@ -15,11 +15,15 @@ namespace Azure.MixedReality.RemoteRendering
     {
         internal static SessionsList DeserializeSessionsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<RenderingSession> sessions = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessions"))
+                if (property.NameEquals("sessions"u8))
                 {
                     List<RenderingSession> array = new List<RenderingSession>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -29,7 +33,7 @@ namespace Azure.MixedReality.RemoteRendering
                     sessions = array;
                     continue;
                 }
-                if (property.NameEquals("@nextLink"))
+                if (property.NameEquals("@nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

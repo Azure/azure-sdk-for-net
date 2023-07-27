@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,42 +15,70 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static StorageAccountMicrosoftEndpoints DeserializeStorageAccountMicrosoftEndpoints(JsonElement element)
         {
-            Optional<string> blob = default;
-            Optional<string> queue = default;
-            Optional<string> table = default;
-            Optional<string> file = default;
-            Optional<string> web = default;
-            Optional<string> dfs = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Uri> blob = default;
+            Optional<Uri> queue = default;
+            Optional<Uri> table = default;
+            Optional<Uri> file = default;
+            Optional<Uri> web = default;
+            Optional<Uri> dfs = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("blob"))
+                if (property.NameEquals("blob"u8))
                 {
-                    blob = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blob = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queue"))
+                if (property.NameEquals("queue"u8))
                 {
-                    queue = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queue = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("table"))
+                if (property.NameEquals("table"u8))
                 {
-                    table = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    table = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("file"))
+                if (property.NameEquals("file"u8))
                 {
-                    file = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    file = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("web"))
+                if (property.NameEquals("web"u8))
                 {
-                    web = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    web = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dfs"))
+                if (property.NameEquals("dfs"u8))
                 {
-                    dfs = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dfs = new Uri(property.Value.GetString());
                     continue;
                 }
             }

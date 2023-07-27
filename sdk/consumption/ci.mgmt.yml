@@ -1,0 +1,24 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/consumption/ci.mgmt.yml
+    - sdk/consumption/Azure.ResourceManager.Consumption/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: consumption
+    BuildSnippets: false
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.Consumption
+      safeName: AzureResourceManagerConsumption

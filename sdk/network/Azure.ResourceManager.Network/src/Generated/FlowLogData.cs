@@ -5,13 +5,19 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the FlowLog data model. </summary>
-    public partial class FlowLogData : NetworkResourceData
+    /// <summary>
+    /// A class representing the FlowLog data model.
+    /// A flow log resource.
+    /// </summary>
+    public partial class FlowLogData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of FlowLogData. </summary>
         public FlowLogData()
@@ -33,9 +39,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="format"> Parameters that define the flow log format. </param>
         /// <param name="flowAnalyticsConfiguration"> Parameters that define the configuration of traffic analytics. </param>
         /// <param name="provisioningState"> The provisioning state of the flow log. </param>
-        internal FlowLogData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, string targetResourceId, string targetResourceGuid, string storageId, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogFormatParameters format, TrafficAnalyticsProperties flowAnalyticsConfiguration, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal FlowLogData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ResourceIdentifier targetResourceId, Guid? targetResourceGuid, ResourceIdentifier storageId, bool? enabled, RetentionPolicyParameters retentionPolicy, FlowLogProperties format, TrafficAnalyticsProperties flowAnalyticsConfiguration, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             TargetResourceId = targetResourceId;
             TargetResourceGuid = targetResourceGuid;
             StorageId = storageId;
@@ -47,34 +53,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> ID of network security group to which flow log will be applied. </summary>
-        public string TargetResourceId { get; set; }
+        public ResourceIdentifier TargetResourceId { get; set; }
         /// <summary> Guid of network security group to which flow log will be applied. </summary>
-        public string TargetResourceGuid { get; }
+        public Guid? TargetResourceGuid { get; }
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
-        public string StorageId { get; set; }
+        public ResourceIdentifier StorageId { get; set; }
         /// <summary> Flag to enable/disable flow logging. </summary>
         public bool? Enabled { get; set; }
         /// <summary> Parameters that define the retention policy for flow log. </summary>
         public RetentionPolicyParameters RetentionPolicy { get; set; }
         /// <summary> Parameters that define the flow log format. </summary>
-        public FlowLogFormatParameters Format { get; set; }
+        public FlowLogProperties Format { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
-            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
+            get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration;
             set
             {
                 if (FlowAnalyticsConfiguration is null)
                     FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
-                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+                FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration = value;
             }
         }
 
         /// <summary> The provisioning state of the flow log. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -1,0 +1,585 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/json?api-version=1.0\u0026query=Milford\u0026countrySet=NZ",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-f8605bd97d9f05abf81a1932ce641fc7-3d68cb1a8396460d-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "206609fb1f4706e8a4ffce8324c80b0b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "8510",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 08 Sep 2022 18:56:13 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: BB2FE508B53845F9808A7E0B861644B9 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:14Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "milford",
+          "queryType": "NON_NEAR",
+          "queryTime": 29,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 108,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/4548",
+            "score": 2.3825688362,
+            "entityType": "Municipality",
+            "address": {
+              "municipality": "Milford",
+              "countrySecondarySubdivision": "Canterbury",
+              "countryTertiarySubdivision": "Timaru",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Milford"
+            },
+            "position": {
+              "lat": -44.2381,
+              "lon": 171.354
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.18396,
+                "lon": 171.2943
+              },
+              "btmRightPoint": {
+                "lat": -44.28403,
+                "lon": 171.40991
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -44.18396,
+                "lon": 171.2943
+              },
+              "btmRightPoint": {
+                "lat": -44.28403,
+                "lon": 171.40991
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d328817"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/1932",
+            "score": 2.358474493,
+            "entityType": "Municipality",
+            "address": {
+              "municipality": "Milford Sound",
+              "countrySecondarySubdivision": "Southland",
+              "countryTertiarySubdivision": "Southland",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Milford Sound"
+            },
+            "position": {
+              "lat": -44.6718,
+              "lon": 167.927
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.42099,
+                "lon": 167.59601
+              },
+              "btmRightPoint": {
+                "lat": -44.75133,
+                "lon": 167.93049
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -44.42099,
+                "lon": 167.59601
+              },
+              "btmRightPoint": {
+                "lat": -44.75133,
+                "lon": 167.93049
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d328769"
+              }
+            }
+          },
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/3007",
+            "score": 2.1768069267,
+            "entityType": "MunicipalitySubdivision",
+            "address": {
+              "municipalitySubdivision": "Milford",
+              "municipality": "Auckland",
+              "countrySecondarySubdivision": "Auckland",
+              "countryTertiarySubdivision": "Auckland",
+              "countrySubdivision": "North Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Milford, Auckland"
+            },
+            "position": {
+              "lat": -36.7723,
+              "lon": 174.764
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -36.76367,
+                "lon": 174.74772
+              },
+              "btmRightPoint": {
+                "lat": -36.78266,
+                "lon": 174.77408
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -36.76367,
+                "lon": 174.74772
+              },
+              "btmRightPoint": {
+                "lat": -36.78266,
+                "lon": 174.77408
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d32922b"
+              }
+            }
+          },
+          {
+            "type": "POI",
+            "id": "554009000466267",
+            "score": 2.1244060993,
+            "info": "search:ta:554009000466267-NZ",
+            "poi": {
+              "name": "Milford Helicopters",
+              "phone": "\u002B64 3-249 7845",
+              "categorySet": [
+                {
+                  "id": 7376
+                }
+              ],
+              "categories": [
+                "important tourist attraction"
+              ],
+              "classifications": [
+                {
+                  "code": "IMPORTANT_TOURIST_ATTRACTION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "important tourist attraction"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "52",
+              "streetName": "Ben Loch Lane",
+              "municipality": "Te Anau",
+              "countrySecondarySubdivision": "Southland",
+              "countryTertiarySubdivision": "Southland",
+              "countrySubdivision": "South Island",
+              "postalCode": "9672",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "52 Ben Loch Lane, Te Anau, Te Anau 9672",
+              "localName": "Te Anau"
+            },
+            "position": {
+              "lat": -45.43027,
+              "lon": 167.74263
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -45.42937,
+                "lon": 167.74135
+              },
+              "btmRightPoint": {
+                "lat": -45.43117,
+                "lon": 167.74391
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": -45.43111,
+                  "lon": 167.74332
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "554009000525688",
+            "score": 2.1244060993,
+            "info": "search:ta:554009000525688-NZ",
+            "poi": {
+              "name": "Milford Track",
+              "categorySet": [
+                {
+                  "id": 7376
+                }
+              ],
+              "categories": [
+                "important tourist attraction"
+              ],
+              "classifications": [
+                {
+                  "code": "IMPORTANT_TOURIST_ATTRACTION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "important tourist attraction"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Milford Track",
+              "municipality": "Fiordland National Park",
+              "countrySecondarySubdivision": "Southland",
+              "countryTertiarySubdivision": "Southland",
+              "countrySubdivision": "South Island",
+              "postalCode": "9679",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Milford Track, Fiordland National Park, Fiordland National Park 9679",
+              "localName": "Fiordland National Park"
+            },
+            "position": {
+              "lat": -44.8604,
+              "lon": 167.82471
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.8595,
+                "lon": 167.82344
+              },
+              "btmRightPoint": {
+                "lat": -44.8613,
+                "lon": 167.82598
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": -44.86049,
+                  "lon": 167.82468
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "554008000023622",
+            "score": 2.1244060993,
+            "info": "search:ta:554008000023622-NZ",
+            "poi": {
+              "name": "Milford Sound",
+              "categorySet": [
+                {
+                  "id": 7376
+                }
+              ],
+              "categories": [
+                "important tourist attraction"
+              ],
+              "classifications": [
+                {
+                  "code": "IMPORTANT_TOURIST_ATTRACTION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "important tourist attraction"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Bowen Falls Walking Track",
+              "municipality": "Fiordland National Park",
+              "countrySecondarySubdivision": "Southland",
+              "countryTertiarySubdivision": "Southland",
+              "countrySubdivision": "South Island",
+              "postalCode": "9679",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Bowen Falls Walking Track, Fiordland National Park, Fiordland National Park 9679",
+              "localName": "Fiordland National Park"
+            },
+            "position": {
+              "lat": -44.6669,
+              "lon": 167.92566
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.66502,
+                "lon": 167.92302
+              },
+              "btmRightPoint": {
+                "lat": -44.66878,
+                "lon": 167.9283
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": -44.66543,
+                  "lon": 167.92401
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "554009000483240",
+            "score": 2.1053037643,
+            "info": "search:ta:554009000483240-NZ",
+            "poi": {
+              "name": "Milford Sound Airport",
+              "phone": "\u002B64 3-249 8092",
+              "categorySet": [
+                {
+                  "id": 7383002
+                }
+              ],
+              "categories": [
+                "airport",
+                "public authority"
+              ],
+              "classifications": [
+                {
+                  "code": "AIRPORT",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "airport"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "public authority"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "104",
+              "streetName": "Milford Sound Highway",
+              "municipality": "Milford Sound",
+              "countrySecondarySubdivision": "Southland",
+              "countryTertiarySubdivision": "Southland",
+              "countrySubdivision": "South Island",
+              "postalCode": "9679",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "104 Milford Sound Highway, Milford Sound, Milford Sound 9679",
+              "localName": "Milford Sound"
+            },
+            "position": {
+              "lat": -44.67316,
+              "lon": 167.92423
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.67074,
+                "lon": 167.91772
+              },
+              "btmRightPoint": {
+                "lat": -44.67576,
+                "lon": 167.92907
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": -44.67287,
+                  "lon": 167.92484
+                }
+              }
+            ],
+            "dataSources": {
+              "geometry": {
+                "id": "00004e57-3200-3c00-0000-00005a00de3f"
+              }
+            }
+          },
+          {
+            "type": "POI",
+            "id": "554009001005407",
+            "score": 2.1037807465,
+            "info": "search:ta:554009001005407-NZ",
+            "poi": {
+              "name": "Milford Sound Flights",
+              "categorySet": [
+                {
+                  "id": 7376
+                }
+              ],
+              "categories": [
+                "important tourist attraction"
+              ],
+              "classifications": [
+                {
+                  "code": "IMPORTANT_TOURIST_ATTRACTION",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "important tourist attraction"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetName": "Lucas Place",
+              "municipalitySubdivision": "Frankton",
+              "municipality": "Queenstown",
+              "countrySecondarySubdivision": "Otago",
+              "countryTertiarySubdivision": "Queenstown Lakes",
+              "countrySubdivision": "South Island",
+              "postalCode": "9300",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Lucas Place, Frankton, Queenstown 9300",
+              "localName": "Frankton"
+            },
+            "position": {
+              "lat": -45.02488,
+              "lon": 168.73781
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -45.02398,
+                "lon": 168.73654
+              },
+              "btmRightPoint": {
+                "lat": -45.02578,
+                "lon": 168.73908
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": -45.02496,
+                  "lon": 168.73747
+                }
+              }
+            ]
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/25303",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Milford Street",
+              "municipalitySubdivision": "Strowan",
+              "municipality": "Christchurch",
+              "countrySecondarySubdivision": "Canterbury",
+              "countryTertiarySubdivision": "Christchurch",
+              "countrySubdivision": "South Island",
+              "postalCode": "8014, 8052",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Milford Street, Strowan, Christchurch 8014, 8052",
+              "localName": "Strowan"
+            },
+            "position": {
+              "lat": -43.51011,
+              "lon": 172.61853
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -43.50963,
+                "lon": 172.61745
+              },
+              "btmRightPoint": {
+                "lat": -43.51045,
+                "lon": 172.61948
+              }
+            }
+          },
+          {
+            "type": "Street",
+            "id": "NZ/STR/p0/25306",
+            "score": 2.0962057114,
+            "address": {
+              "streetName": "Milford Street",
+              "municipality": "Middlemarch",
+              "countrySecondarySubdivision": "Otago",
+              "countryTertiarySubdivision": "Dunedin",
+              "countrySubdivision": "South Island",
+              "postalCode": "9596, 9597",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Milford Street, Middlemarch, Middlemarch 9596, 9597",
+              "localName": "Middlemarch"
+            },
+            "position": {
+              "lat": -45.50081,
+              "lon": 170.12665
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -45.50077,
+                "lon": 170.12148
+              },
+              "btmRightPoint": {
+                "lat": -45.50086,
+                "lon": 170.12936
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "2017961235"
+  }
+}

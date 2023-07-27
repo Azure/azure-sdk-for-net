@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Executes the spark job definition. </summary>
     public partial class SparkJobDefinitionExecuteSparkJobDefinitionOperation : Operation<SparkBatchJob>, IOperationSource<SparkBatchJob>
     {
-        private readonly OperationInternals<SparkBatchJob> _operation;
+        private readonly OperationInternal<SparkBatchJob> _operation;
 
         /// <summary> Initializes a new instance of SparkJobDefinitionExecuteSparkJobDefinitionOperation for mocking. </summary>
         protected SparkJobDefinitionExecuteSparkJobDefinitionOperation()
@@ -28,11 +28,14 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal SparkJobDefinitionExecuteSparkJobDefinitionOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<SparkBatchJob>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "SparkJobDefinitionExecuteSparkJobDefinitionOperation");
+            IOperation<SparkBatchJob> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            _operation = new OperationInternal<SparkBatchJob>(nextLinkOperation, clientDiagnostics, response, "SparkJobDefinitionExecuteSparkJobDefinitionOperation");
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+#pragma warning disable CA1822
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override SparkBatchJob Value => _operation.Value;
@@ -44,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);

@@ -9,17 +9,14 @@ using Azure.Test.Perf;
 
 namespace Azure.Storage.Blobs.Perf.Infrastructure
 {
-    public abstract class DownloadSasUriTest<TOptions> : ContainerTest<TOptions> where TOptions : SizeOptions
+    public abstract class DownloadSasUriTest<TOptions> : BlobTest<TOptions> where TOptions : SizeOptions
     {
-        private readonly BlobClient _blobClient;
-
         protected Uri SasUri { get; private set; }
 
-        public DownloadSasUriTest(TOptions options) : base(options)
+        public DownloadSasUriTest(TOptions options)
+            : base(options, createBlob: true, singletonBlob: true)
         {
-            _blobClient = BlobContainerClient.GetBlobClient("_blobName");
-
-            var sharedKeyBlobClient = new BlobClient(_blobClient.Uri, StorageSharedKeyCredential);
+            var sharedKeyBlobClient = new BlobClient(BlobClient.Uri, StorageSharedKeyCredential);
 
             if (sharedKeyBlobClient.CanGenerateSasUri)
             {
@@ -29,14 +26,6 @@ namespace Azure.Storage.Blobs.Perf.Infrastructure
             {
                 throw new InvalidOperationException();
             }
-        }
-
-        public override async Task GlobalSetupAsync()
-        {
-            await base.GlobalSetupAsync();
-
-            using var stream = RandomStream.Create(Options.Size);
-            await _blobClient.UploadAsync(stream, overwrite: true);
         }
     }
 }

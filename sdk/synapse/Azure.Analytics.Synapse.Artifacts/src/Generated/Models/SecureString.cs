@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Azure Synapse secure string definition. The string value will be masked with asterisks &apos;*&apos; during Get or List API calls. </summary>
+    /// <summary> Azure Synapse secure string definition. The string value will be masked with asterisks '*' during Get or List API calls. </summary>
     public partial class SecureString : SecretBase
     {
         /// <summary> Initializes a new instance of SecureString. </summary>
@@ -17,10 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecureString(string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
             Type = "SecureString";

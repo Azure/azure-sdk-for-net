@@ -8,7 +8,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/search/
+    - sdk/search/ci.yml
+    - sdk/search/service.projects
+    - sdk/search/Azure.Search.Documents/
 
 pr:
   branches:
@@ -19,22 +21,16 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/search/
+    - sdk/search/ci.yml
+    - sdk/search/service.projects
+    - sdk/search/Azure.Search.Documents/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: search
     ArtifactName: packages
     Artifacts:
     - name: Azure.Search.Documents
       safeName: AzureSearchDocuments
-    # Skip track 1 Microsoft.Azure.* packages for the release jobs
-    # - name: Microsoft.Azure.Search
-    #   safeName: MicrosoftAzureSearch
-    # - name: Microsoft.Azure.Search.Common
-    #   safeName: MicrosoftAzureSearchCommon
-    # - name: Microsoft.Azure.Search.Data
-    #   safeName: MicrosoftAzureSearchData
-    # - name: Microsoft.Azure.Search.Service
-    #   safeName: MicrosoftAzureSearchService

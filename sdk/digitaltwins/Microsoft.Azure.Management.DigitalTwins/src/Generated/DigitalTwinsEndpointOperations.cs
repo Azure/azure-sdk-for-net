@@ -82,6 +82,10 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// </return>
         public async Task<AzureOperationResponse<IPage<DigitalTwinsEndpointResource>>> ListWithHttpMessagesAsync(string resourceGroupName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -272,6 +276,10 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// </return>
         public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> GetWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -524,6 +532,10 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// </return>
         public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, DigitalTwinsEndpointResourceProperties properties, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -754,6 +766,10 @@ namespace Microsoft.Azure.Management.DigitalTwins
         /// </return>
         public async Task<AzureOperationResponse<DigitalTwinsEndpointResource>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");

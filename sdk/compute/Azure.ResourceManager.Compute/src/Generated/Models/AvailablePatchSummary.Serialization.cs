@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static AvailablePatchSummary DeserializeAvailablePatchSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PatchOperationStatus> status = default;
             Optional<string> assessmentActivityId = default;
             Optional<bool> rebootPending = default;
@@ -22,82 +26,75 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> otherPatchCount = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<ApiError> error = default;
+            Optional<ComputeApiError> error = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new PatchOperationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("assessmentActivityId"))
+                if (property.NameEquals("assessmentActivityId"u8))
                 {
                     assessmentActivityId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rebootPending"))
+                if (property.NameEquals("rebootPending"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rebootPending = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("criticalAndSecurityPatchCount"))
+                if (property.NameEquals("criticalAndSecurityPatchCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     criticalAndSecurityPatchCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("otherPatchCount"))
+                if (property.NameEquals("otherPatchCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     otherPatchCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("startTime"))
+                if (property.NameEquals("startTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedTime"))
+                if (property.NameEquals("lastModifiedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModifiedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    error = ApiError.DeserializeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
                     continue;
                 }
             }

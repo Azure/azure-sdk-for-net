@@ -15,12 +15,16 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineInstanceView DeserializeVirtualMachineInstanceView(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> platformUpdateDomain = default;
             Optional<int> platformFaultDomain = default;
             Optional<string> computerName = default;
             Optional<string> osName = default;
             Optional<string> osVersion = default;
-            Optional<HyperVGenerationType> hyperVGeneration = default;
+            Optional<HyperVGeneration> hyperVGeneration = default;
             Optional<string> rdpThumbPrint = default;
             Optional<VirtualMachineAgentInstanceView> vmAgent = default;
             Optional<MaintenanceRedeployStatus> maintenanceRedeployStatus = default;
@@ -33,81 +37,75 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<VirtualMachinePatchStatus> patchStatus = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("platformUpdateDomain"))
+                if (property.NameEquals("platformUpdateDomain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     platformUpdateDomain = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("platformFaultDomain"))
+                if (property.NameEquals("platformFaultDomain"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     platformFaultDomain = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("computerName"))
+                if (property.NameEquals("computerName"u8))
                 {
                     computerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osName"))
+                if (property.NameEquals("osName"u8))
                 {
                     osName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osVersion"))
+                if (property.NameEquals("osVersion"u8))
                 {
                     osVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hyperVGeneration"))
+                if (property.NameEquals("hyperVGeneration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    hyperVGeneration = new HyperVGenerationType(property.Value.GetString());
+                    hyperVGeneration = new HyperVGeneration(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rdpThumbPrint"))
+                if (property.NameEquals("rdpThumbPrint"u8))
                 {
                     rdpThumbPrint = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmAgent"))
+                if (property.NameEquals("vmAgent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmAgent = VirtualMachineAgentInstanceView.DeserializeVirtualMachineAgentInstanceView(property.Value);
                     continue;
                 }
-                if (property.NameEquals("maintenanceRedeployStatus"))
+                if (property.NameEquals("maintenanceRedeployStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maintenanceRedeployStatus = MaintenanceRedeployStatus.DeserializeMaintenanceRedeployStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("disks"))
+                if (property.NameEquals("disks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DiskInstanceView> array = new List<DiskInstanceView>();
@@ -118,11 +116,10 @@ namespace Azure.ResourceManager.Compute.Models
                     disks = array;
                     continue;
                 }
-                if (property.NameEquals("extensions"))
+                if (property.NameEquals("extensions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineExtensionInstanceView> array = new List<VirtualMachineExtensionInstanceView>();
@@ -133,36 +130,33 @@ namespace Azure.ResourceManager.Compute.Models
                     extensions = array;
                     continue;
                 }
-                if (property.NameEquals("vmHealth"))
+                if (property.NameEquals("vmHealth"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(property.Value);
                     continue;
                 }
-                if (property.NameEquals("bootDiagnostics"))
+                if (property.NameEquals("bootDiagnostics"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(property.Value);
                     continue;
                 }
-                if (property.NameEquals("assignedHost"))
+                if (property.NameEquals("assignedHost"u8))
                 {
                     assignedHost = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("statuses"))
+                if (property.NameEquals("statuses"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
@@ -173,11 +167,10 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
-                if (property.NameEquals("patchStatus"))
+                if (property.NameEquals("patchStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     patchStatus = VirtualMachinePatchStatus.DeserializeVirtualMachinePatchStatus(property.Value);

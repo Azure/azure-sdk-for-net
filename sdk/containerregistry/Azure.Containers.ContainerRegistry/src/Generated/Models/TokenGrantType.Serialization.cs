@@ -20,8 +20,8 @@ namespace Azure.Containers.ContainerRegistry
 
         public static TokenGrantType ToTokenGrantType(this string value)
         {
-            if (string.Equals(value, "refresh_token", StringComparison.InvariantCultureIgnoreCase)) return TokenGrantType.RefreshToken;
-            if (string.Equals(value, "password", StringComparison.InvariantCultureIgnoreCase)) return TokenGrantType.Password;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "refresh_token")) return TokenGrantType.RefreshToken;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "password")) return TokenGrantType.Password;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TokenGrantType value.");
         }
     }

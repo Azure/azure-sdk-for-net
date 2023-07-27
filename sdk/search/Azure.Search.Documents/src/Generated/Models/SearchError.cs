@@ -19,10 +19,7 @@ namespace Azure.Search.Documents.Models
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal SearchError(string message)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(message, nameof(message));
 
             Message = message;
             Details = new ChangeTrackingList<SearchError>();

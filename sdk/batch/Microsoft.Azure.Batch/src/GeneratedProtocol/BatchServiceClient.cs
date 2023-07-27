@@ -90,11 +90,6 @@ namespace Microsoft.Azure.Batch.Protocol
         public virtual IAccountOperations Account { get; private set; }
 
         /// <summary>
-        /// Gets the IJobOperations.
-        /// </summary>
-        public virtual IJobOperations Job { get; private set; }
-
-        /// <summary>
         /// Gets the ICertificateOperations.
         /// </summary>
         public virtual ICertificateOperations Certificate { get; private set; }
@@ -108,6 +103,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Gets the IJobScheduleOperations.
         /// </summary>
         public virtual IJobScheduleOperations JobSchedule { get; private set; }
+
+        /// <summary>
+        /// Gets the IJobOperations.
+        /// </summary>
+        public virtual IJobOperations Job { get; private set; }
 
         /// <summary>
         /// Gets the ITaskOperations.
@@ -254,15 +254,15 @@ namespace Microsoft.Azure.Batch.Protocol
             Application = new ApplicationOperations(this);
             Pool = new PoolOperations(this);
             Account = new AccountOperations(this);
-            Job = new JobOperations(this);
             Certificate = new CertificateOperations(this);
             File = new FileOperations(this);
             JobSchedule = new JobScheduleOperations(this);
+            Job = new JobOperations(this);
             Task = new TaskOperations(this);
             ComputeNode = new ComputeNodeOperations(this);
             ComputeNodeExtension = new ComputeNodeExtensionOperations(this);
             BaseUri = "{batchUrl}";
-            ApiVersion = "2022-01-01.15.0";
+            ApiVersion = "2023-05-01.17.0";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

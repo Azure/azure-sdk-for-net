@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,10 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         internal MicrosoftTeamsUserIdentifierModel(string userId)
         {
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(userId, nameof(userId));
 
             UserId = userId;
         }
@@ -28,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
         /// <param name="isAnonymous"> True if the Microsoft Teams user is anonymous. By default false if missing. </param>
-        /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default &apos;public&apos; if missing. </param>
+        /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </param>
         internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel? cloud)
         {
             UserId = userId;
@@ -40,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string UserId { get; }
         /// <summary> True if the Microsoft Teams user is anonymous. By default false if missing. </summary>
         public bool? IsAnonymous { get; }
-        /// <summary> The cloud that the Microsoft Teams user belongs to. By default &apos;public&apos; if missing. </summary>
+        /// <summary> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </summary>
         public CommunicationCloudEnvironmentModel? Cloud { get; }
     }
 }

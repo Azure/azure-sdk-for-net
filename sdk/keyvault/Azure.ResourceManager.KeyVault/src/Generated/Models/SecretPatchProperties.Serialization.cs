@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(ContentType))
             {
-                writer.WritePropertyName("contentType");
+                writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
             if (Optional.IsDefined(Attributes))
             {
-                writer.WritePropertyName("attributes");
+                writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes);
             }
             writer.WriteEndObject();

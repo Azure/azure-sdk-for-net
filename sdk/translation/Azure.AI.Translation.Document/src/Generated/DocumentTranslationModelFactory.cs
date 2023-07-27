@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class DocumentTranslationModelFactory
     {
         /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>

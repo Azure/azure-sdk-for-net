@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NetworkInterfaceTapConfiguration data model. </summary>
-    public partial class NetworkInterfaceTapConfigurationData : SubResource
+    /// <summary>
+    /// A class representing the NetworkInterfaceTapConfiguration data model.
+    /// Tap configuration in a Network Interface.
+    /// </summary>
+    public partial class NetworkInterfaceTapConfigurationData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationData. </summary>
         public NetworkInterfaceTapConfigurationData()
@@ -19,29 +24,23 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of NetworkInterfaceTapConfigurationData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Sub Resource type. </param>
         /// <param name="virtualNetworkTap"> The reference to the Virtual Network Tap resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network interface tap configuration resource. </param>
-        internal NetworkInterfaceTapConfigurationData(string id, string name, string etag, string resourceType, VirtualNetworkTapData virtualNetworkTap, ProvisioningState? provisioningState) : base(id)
+        internal NetworkInterfaceTapConfigurationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, VirtualNetworkTapData virtualNetworkTap, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             VirtualNetworkTap = virtualNetworkTap;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Sub Resource type. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> The reference to the Virtual Network Tap resource. </summary>
         public VirtualNetworkTapData VirtualNetworkTap { get; set; }
         /// <summary> The provisioning state of the network interface tap configuration resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

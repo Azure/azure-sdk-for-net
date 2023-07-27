@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Network.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("enabled");
+            writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            writer.WritePropertyName("drainTimeoutInSec");
-            writer.WriteNumberValue(DrainTimeoutInSec);
+            writer.WritePropertyName("drainTimeoutInSec"u8);
+            writer.WriteNumberValue(DrainTimeoutInSeconds);
             writer.WriteEndObject();
         }
 
         internal static ApplicationGatewayConnectionDraining DeserializeApplicationGatewayConnectionDraining(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             int drainTimeoutInSec = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"))
+                if (property.NameEquals("enabled"u8))
                 {
                     enabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("drainTimeoutInSec"))
+                if (property.NameEquals("drainTimeoutInSec"u8))
                 {
                     drainTimeoutInSec = property.Value.GetInt32();
                     continue;

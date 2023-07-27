@@ -6,7 +6,6 @@
     <Description>DeviceUpdate.Tests Class Library</Description>
     <AssemblyName>Microsoft.Azure.Management.DeviceUpdate.Tests</AssemblyName>
     <VersionPrefix>2020-09-01</VersionPrefix>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -30,7 +30,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CompareBodies = false;
         }
 
-        [Test]
+        [RecordedTest]
         public async Task EncryptDecryptRoundTrip([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep), nameof(EncryptionAlgorithm.RsaOaep256))]EncryptionAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(data, decResult.Plaintext);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task WrapUnwrapRoundTrip([EnumValues(Exclude = new[] { nameof(KeyWrapAlgorithm.A128KW), nameof(KeyWrapAlgorithm.A192KW), nameof(KeyWrapAlgorithm.A256KW) })]KeyWrapAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
@@ -82,8 +82,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(data, decResult.Key);
         }
 
-        [Test]
-        public async Task SignVerifyDataRoundTrip([EnumValues]SignatureAlgorithm algorithm)
+        [RecordedTest]
+        public async Task SignVerifyDataRoundTrip([EnumValues] SignatureAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -124,8 +124,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.True(verifyResult.IsValid);
         }
 
-        [Test]
-        public async Task SignVerifyDataStreamRoundTrip([EnumValues]SignatureAlgorithm algorithm)
+        [RecordedTest]
+        public async Task SignVerifyDataStreamRoundTrip([EnumValues] SignatureAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -174,13 +174,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
 
-        [Test]
-        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
+        [RecordedTest]
+        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
         {
-#if NET461
+#if NET462
             if (algorithm.GetEcKeyCurveName() != default)
             {
-                Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+                Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net462.");
             }
 #endif
 
@@ -217,7 +217,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsTrue(verifyResult.IsValid);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task LocalSignVerifyRoundTripOnFramework([EnumValues(nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512))]SignatureAlgorithm algorithm)
         {
 #if !NETFRAMEWORK
@@ -251,13 +251,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsTrue(verifyResult.IsValid);
         }
 
-        [Test]
-        public async Task SignLocalVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })]SignatureAlgorithm algorithm)
+        [RecordedTest]
+        public async Task SignLocalVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
         {
-#if NET461
+#if NET462
             if (algorithm.GetEcKeyCurveName() != default)
             {
-                Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net461.");
+                Assert.Ignore("Creating JsonWebKey with ECDsa is not supported on net462.");
             }
 #endif
 
@@ -294,7 +294,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsTrue(verifyResult.IsValid);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task SignLocalVerifyRoundTripFramework([EnumValues(nameof(SignatureAlgorithm.PS256), nameof(SignatureAlgorithm.PS384), nameof(SignatureAlgorithm.PS512))]SignatureAlgorithm algorithm)
         {
 #if !NETFRAMEWORK
@@ -328,7 +328,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.IsTrue(verifyResult.IsValid);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task EncryptLocalDecryptOnKeyVault([EnumValues(nameof(EncryptionAlgorithm.Rsa15), nameof(EncryptionAlgorithm.RsaOaep), nameof(EncryptionAlgorithm.RsaOaep256))] EncryptionAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
@@ -355,7 +355,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task EncryptDecryptFromKeyClient()
         {
             KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep);
@@ -371,7 +371,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             Assert.AreEqual(plaintext, decryptResult.Plaintext);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task EncryptWithKeyNameReturnsFullKeyId()
         {
             KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep);
@@ -388,6 +388,64 @@ namespace Azure.Security.KeyVault.Keys.Tests
             EncryptResult encrypted = await client.EncryptAsync(EncryptionAlgorithm.RsaOaep, plaintext);
 
             Assert.AreEqual(key.Id.ToString(), encrypted.KeyId);
+        }
+
+        [RecordedTest]
+        public async Task CreateRSAEncryptDecrypt()
+        {
+            EncryptionAlgorithm algorithm = EncryptionAlgorithm.RsaOaep256;
+            KeyVaultKey key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key.Name);
+
+            CryptographyClient client = GetCryptoClient(key.Id);
+            using RSA rsa = await client.CreateRSAAsync();
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+            byte[] ciphertext = rsa.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
+            Assert.AreEqual(plaintext, rsa.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256));
+        }
+
+        [RecordedTest]
+        public async Task CreateRSAEncryptDecryptRemote()
+        {
+            EncryptionAlgorithm algorithm = EncryptionAlgorithm.RsaOaep256;
+            KeyVaultKey key = await CreateTestKey(algorithm);
+            RegisterForCleanup(key.Name);
+
+            CryptographyClient client = GetCryptoClient(key.Id, forceRemote: true);
+            using RSA rsa = await client.CreateRSAAsync();
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+            byte[] ciphertext = rsa.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
+            Assert.AreEqual(plaintext, rsa.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256));
+        }
+
+        [RecordedTest]
+        public async Task CreateRSASignVerify()
+        {
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep256);
+            RegisterForCleanup(key.Name);
+
+            CryptographyClient client = GetCryptoClient(key.Id);
+            using RSA rsa = await client.CreateRSAAsync();
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+            byte[] hash = rsa.SignData(plaintext, 0, plaintext.Length, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
+            Assert.IsTrue(rsa.VerifyData(plaintext, hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pss));
+        }
+
+        [RecordedTest]
+        public async Task CreateRSASignVerifyRemote()
+        {
+            KeyVaultKey key = await CreateTestKey(EncryptionAlgorithm.RsaOaep256);
+            RegisterForCleanup(key.Name);
+
+            CryptographyClient client = GetCryptoClient(key.Id, forceRemote: true);
+            using RSA rsa = await client.CreateRSAAsync();
+
+            byte[] plaintext = Encoding.UTF8.GetBytes("A single block of plaintext");
+            byte[] hash = rsa.SignData(plaintext, 0, plaintext.Length, HashAlgorithmName.SHA256, RSASignaturePadding.Pss);
+            Assert.IsTrue(rsa.VerifyData(plaintext, hash, HashAlgorithmName.SHA256, RSASignaturePadding.Pss));
         }
 
         private async Task<KeyVaultKey> CreateTestKey(EncryptionAlgorithm algorithm)
@@ -461,7 +519,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             return InstrumentClient(new CryptographyClient(key, options));
         }
 
-        private async Task<KeyVaultKey> CreateTestKey(SignatureAlgorithm algorithm)
+        protected async Task<KeyVaultKey> CreateTestKey(SignatureAlgorithm algorithm)
         {
             string keyName = Recording.GenerateId();
 

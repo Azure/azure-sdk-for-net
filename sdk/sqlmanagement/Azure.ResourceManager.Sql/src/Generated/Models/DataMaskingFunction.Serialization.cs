@@ -14,22 +14,22 @@ namespace Azure.ResourceManager.Sql.Models
         public static string ToSerialString(this DataMaskingFunction value) => value switch
         {
             DataMaskingFunction.Default => "Default",
-            DataMaskingFunction.CCN => "CCN",
+            DataMaskingFunction.Ccn => "CCN",
             DataMaskingFunction.Email => "Email",
             DataMaskingFunction.Number => "Number",
-            DataMaskingFunction.SSN => "SSN",
+            DataMaskingFunction.Ssn => "SSN",
             DataMaskingFunction.Text => "Text",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataMaskingFunction value.")
         };
 
         public static DataMaskingFunction ToDataMaskingFunction(this string value)
         {
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return DataMaskingFunction.Default;
-            if (string.Equals(value, "CCN", StringComparison.InvariantCultureIgnoreCase)) return DataMaskingFunction.CCN;
-            if (string.Equals(value, "Email", StringComparison.InvariantCultureIgnoreCase)) return DataMaskingFunction.Email;
-            if (string.Equals(value, "Number", StringComparison.InvariantCultureIgnoreCase)) return DataMaskingFunction.Number;
-            if (string.Equals(value, "SSN", StringComparison.InvariantCultureIgnoreCase)) return DataMaskingFunction.SSN;
-            if (string.Equals(value, "Text", StringComparison.InvariantCultureIgnoreCase)) return DataMaskingFunction.Text;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return DataMaskingFunction.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CCN")) return DataMaskingFunction.Ccn;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Email")) return DataMaskingFunction.Email;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Number")) return DataMaskingFunction.Number;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SSN")) return DataMaskingFunction.Ssn;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Text")) return DataMaskingFunction.Text;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataMaskingFunction value.");
         }
     }

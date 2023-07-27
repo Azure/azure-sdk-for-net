@@ -13,9 +13,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> MySql. </summary>
         MySql,
         /// <summary> SQLServer. </summary>
-        SQLServer,
+        SqlServer,
         /// <summary> SQLAzure. </summary>
-        SQLAzure,
+        SqlAzure,
         /// <summary> Custom. </summary>
         Custom,
         /// <summary> NotificationHub. </summary>
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> ApiHub. </summary>
         ApiHub,
         /// <summary> DocDb. </summary>
-        DocDb,
+        DocDB,
         /// <summary> RedisCache. </summary>
         RedisCache,
         /// <summary> PostgreSQL. </summary>
-        PostgreSQL
+        PostgreSql
     }
 }

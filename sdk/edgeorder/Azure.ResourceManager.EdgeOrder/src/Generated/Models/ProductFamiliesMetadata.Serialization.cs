@@ -11,36 +11,136 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    internal partial class ProductFamiliesMetadata
+    public partial class ProductFamiliesMetadata
     {
         internal static ProductFamiliesMetadata DeserializeProductFamiliesMetadata(JsonElement element)
         {
-            Optional<IReadOnlyList<ProductFamiliesMetadataDetails>> value = default;
-            Optional<string> nextLink = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> displayName = default;
+            Optional<ProductDescription> description = default;
+            Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;
+            Optional<EdgeOrderProductCostInformation> costInformation = default;
+            Optional<ProductAvailabilityInformation> availabilityInformation = default;
+            Optional<HierarchyInformation> hierarchyInformation = default;
+            Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
+            Optional<IReadOnlyList<ProductLine>> productLines = default;
+            Optional<IReadOnlyList<ResourceProviderDetails>> resourceProviderDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ProductFamiliesMetadataDetails> array = new List<ProductFamiliesMetadataDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        array.Add(ProductFamiliesMetadataDetails.DeserializeProductFamiliesMetadataDetails(item));
+                        if (property0.NameEquals("displayName"u8))
+                        {
+                            displayName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            description = ProductDescription.DeserializeProductDescription(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("imageInformation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<EdgeOrderProductImageInformation> array = new List<EdgeOrderProductImageInformation>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(EdgeOrderProductImageInformation.DeserializeEdgeOrderProductImageInformation(item));
+                            }
+                            imageInformation = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("costInformation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("availabilityInformation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("hierarchyInformation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("filterableProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<FilterableProperty> array = new List<FilterableProperty>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FilterableProperty.DeserializeFilterableProperty(item));
+                            }
+                            filterableProperties = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("productLines"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ProductLine> array = new List<ProductLine>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ProductLine.DeserializeProductLine(item));
+                            }
+                            productLines = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceProviderDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResourceProviderDetails> array = new List<ResourceProviderDetails>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Models.ResourceProviderDetails.DeserializeResourceProviderDetails(item));
+                            }
+                            resourceProviderDetails = array;
+                            continue;
+                        }
                     }
-                    value = array;
-                    continue;
-                }
-                if (property.NameEquals("nextLink"))
-                {
-                    nextLink = property.Value.GetString();
                     continue;
                 }
             }
-            return new ProductFamiliesMetadata(Optional.ToList(value), nextLink.Value);
+            return new ProductFamiliesMetadata(displayName.Value, description.Value, Optional.ToList(imageInformation), costInformation.Value, availabilityInformation.Value, hierarchyInformation.Value, Optional.ToList(filterableProperties), Optional.ToList(productLines), Optional.ToList(resourceProviderDetails));
         }
     }
 }

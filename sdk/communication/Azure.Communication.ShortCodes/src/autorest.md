@@ -8,6 +8,7 @@ Run `dotnet msbuild /t:GenerateCode` to generate code.
 input-file:
     -  $(this-folder)/swagger/2021-10-25-preview/swagger.json
 payload-flattening-threshold: 3
+generation1-convenience-client: true
 ```
 
 ### Customizations

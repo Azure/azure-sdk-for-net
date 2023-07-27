@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the MongoDBCollection data model. </summary>
+    /// <summary>
+    /// A class representing the MongoDBCollection data model.
+    /// An Azure Cosmos DB MongoDB collection.
+    /// </summary>
     public partial class MongoDBCollectionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MongoDBCollectionData. </summary>
@@ -30,15 +33,19 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="location"> The location. </param>
         /// <param name="resource"></param>
         /// <param name="options"></param>
-        internal MongoDBCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MongoDBCollectionPropertiesResource resource, MongoDBCollectionPropertiesOptions options) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> Identity for the resource. </param>
+        internal MongoDBCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedMongoDBCollectionResourceInfo resource, MongoDBCollectionPropertiesConfig options, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             Resource = resource;
             Options = options;
+            Identity = identity;
         }
 
         /// <summary> Gets or sets the resource. </summary>
-        public MongoDBCollectionPropertiesResource Resource { get; set; }
+        public ExtendedMongoDBCollectionResourceInfo Resource { get; set; }
         /// <summary> Gets or sets the options. </summary>
-        public MongoDBCollectionPropertiesOptions Options { get; set; }
+        public MongoDBCollectionPropertiesConfig Options { get; set; }
+        /// <summary> Identity for the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

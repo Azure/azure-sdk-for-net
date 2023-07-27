@@ -65,6 +65,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </param>
         /// <param name='resourceGuardProxyName'>
         /// </param>
+        /// <param name='parameters'>
+        /// Request body for operation
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -80,7 +83,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ResourceGuardProxyBaseResource>> PutWithHttpMessagesAsync(string vaultName, string resourceGroupName, string resourceGuardProxyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceGuardProxyBaseResource>> PutWithHttpMessagesAsync(string vaultName, string resourceGroupName, string resourceGuardProxyName, ResourceGuardProxyBaseResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete ResourceGuardProxy under vault
         /// </summary>

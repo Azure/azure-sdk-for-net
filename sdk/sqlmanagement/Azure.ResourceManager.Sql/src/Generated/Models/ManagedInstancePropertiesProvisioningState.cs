@@ -28,6 +28,15 @@ namespace Azure.ResourceManager.Sql.Models
         private const string UnknownValue = "Unknown";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string AcceptedValue = "Accepted";
+        private const string CreatedValue = "Created";
+        private const string DeletedValue = "Deleted";
+        private const string UnrecognizedValue = "Unrecognized";
+        private const string RunningValue = "Running";
+        private const string CanceledValue = "Canceled";
+        private const string NotSpecifiedValue = "NotSpecified";
+        private const string RegisteringValue = "Registering";
+        private const string TimedOutValue = "TimedOut";
 
         /// <summary> Creating. </summary>
         public static ManagedInstancePropertiesProvisioningState Creating { get; } = new ManagedInstancePropertiesProvisioningState(CreatingValue);
@@ -41,6 +50,24 @@ namespace Azure.ResourceManager.Sql.Models
         public static ManagedInstancePropertiesProvisioningState Succeeded { get; } = new ManagedInstancePropertiesProvisioningState(SucceededValue);
         /// <summary> Failed. </summary>
         public static ManagedInstancePropertiesProvisioningState Failed { get; } = new ManagedInstancePropertiesProvisioningState(FailedValue);
+        /// <summary> Accepted. </summary>
+        public static ManagedInstancePropertiesProvisioningState Accepted { get; } = new ManagedInstancePropertiesProvisioningState(AcceptedValue);
+        /// <summary> Created. </summary>
+        public static ManagedInstancePropertiesProvisioningState Created { get; } = new ManagedInstancePropertiesProvisioningState(CreatedValue);
+        /// <summary> Deleted. </summary>
+        public static ManagedInstancePropertiesProvisioningState Deleted { get; } = new ManagedInstancePropertiesProvisioningState(DeletedValue);
+        /// <summary> Unrecognized. </summary>
+        public static ManagedInstancePropertiesProvisioningState Unrecognized { get; } = new ManagedInstancePropertiesProvisioningState(UnrecognizedValue);
+        /// <summary> Running. </summary>
+        public static ManagedInstancePropertiesProvisioningState Running { get; } = new ManagedInstancePropertiesProvisioningState(RunningValue);
+        /// <summary> Canceled. </summary>
+        public static ManagedInstancePropertiesProvisioningState Canceled { get; } = new ManagedInstancePropertiesProvisioningState(CanceledValue);
+        /// <summary> NotSpecified. </summary>
+        public static ManagedInstancePropertiesProvisioningState NotSpecified { get; } = new ManagedInstancePropertiesProvisioningState(NotSpecifiedValue);
+        /// <summary> Registering. </summary>
+        public static ManagedInstancePropertiesProvisioningState Registering { get; } = new ManagedInstancePropertiesProvisioningState(RegisteringValue);
+        /// <summary> TimedOut. </summary>
+        public static ManagedInstancePropertiesProvisioningState TimedOut { get; } = new ManagedInstancePropertiesProvisioningState(TimedOutValue);
         /// <summary> Determines if two <see cref="ManagedInstancePropertiesProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ManagedInstancePropertiesProvisioningState left, ManagedInstancePropertiesProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedInstancePropertiesProvisioningState"/> values are not the same. </summary>

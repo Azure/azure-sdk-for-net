@@ -73,15 +73,19 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="enableFileUploadNotifications">If True, file upload
         /// notifications are enabled.</param>
         /// <param name="comments">IoT hub comments.</param>
+        /// <param name="deviceStreams">The device streams properties of
+        /// iothub.</param>
         /// <param name="features">The capabilities and features enabled for
         /// the IoT hub. Possible values include: 'None',
         /// 'DeviceManagement'</param>
+        /// <param name="encryption">The encryption properties for the IoT
+        /// hub.</param>
         /// <param name="locations">Primary and secondary location for iot
         /// hub</param>
         /// <param name="enableDataResidency">This property when set to true,
         /// will enable data residency, thus, disabling disaster
         /// recovery.</param>
-        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), bool? disableLocalAuth = default(bool?), bool? disableDeviceSAS = default(bool?), bool? disableModuleSAS = default(bool?), bool? restrictOutboundNetworkAccess = default(bool?), IList<string> allowedFqdnList = default(IList<string>), string publicNetworkAccess = default(string), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), NetworkRuleSetProperties networkRuleSets = default(NetworkRuleSetProperties), string minTlsVersion = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), string features = default(string), IList<IotHubLocationDescription> locations = default(IList<IotHubLocationDescription>), bool? enableDataResidency = default(bool?))
+        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), bool? disableLocalAuth = default(bool?), bool? disableDeviceSAS = default(bool?), bool? disableModuleSAS = default(bool?), bool? restrictOutboundNetworkAccess = default(bool?), IList<string> allowedFqdnList = default(IList<string>), string publicNetworkAccess = default(string), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), NetworkRuleSetProperties networkRuleSets = default(NetworkRuleSetProperties), string minTlsVersion = default(string), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), IotHubPropertiesDeviceStreams deviceStreams = default(IotHubPropertiesDeviceStreams), string features = default(string), EncryptionPropertiesDescription encryption = default(EncryptionPropertiesDescription), IList<IotHubLocationDescription> locations = default(IList<IotHubLocationDescription>), bool? enableDataResidency = default(bool?), RootCertificateProperties rootCertificate = default(RootCertificateProperties))
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
@@ -104,9 +108,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
             EnableFileUploadNotifications = enableFileUploadNotifications;
             CloudToDevice = cloudToDevice;
             Comments = comments;
+            DeviceStreams = deviceStreams;
             Features = features;
+            Encryption = encryption;
             Locations = locations;
             EnableDataResidency = enableDataResidency;
+            RootCertificate = rootCertificate;
             CustomInit();
         }
 
@@ -259,11 +266,23 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string Comments { get; set; }
 
         /// <summary>
+        /// Gets or sets the device streams properties of iothub.
+        /// </summary>
+        [JsonProperty(PropertyName = "deviceStreams")]
+        public IotHubPropertiesDeviceStreams DeviceStreams { get; set; }
+
+        /// <summary>
         /// Gets or sets the capabilities and features enabled for the IoT hub.
         /// Possible values include: 'None', 'DeviceManagement'
         /// </summary>
         [JsonProperty(PropertyName = "features")]
         public string Features { get; set; }
+
+        /// <summary>
+        /// Gets or sets the encryption properties for the IoT hub.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryption")]
+        public EncryptionPropertiesDescription Encryption { get; set; }
 
         /// <summary>
         /// Gets primary and secondary location for iot hub
@@ -277,6 +296,11 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "enableDataResidency")]
         public bool? EnableDataResidency { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "rootCertificate")]
+        public RootCertificateProperties RootCertificate { get; set; }
 
         /// <summary>
         /// Validate the object.

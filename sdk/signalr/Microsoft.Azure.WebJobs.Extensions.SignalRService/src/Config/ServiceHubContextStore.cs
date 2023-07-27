@@ -3,10 +3,10 @@
 
 using System;
 using System.Collections.Concurrent;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Management;
+using Microsoft.Extensions.Options;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
@@ -14,17 +14,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         private readonly ConcurrentDictionary<string, (Lazy<Task<IServiceHubContext>> Lazy, IServiceHubContext Value)> _store = new(StringComparer.OrdinalIgnoreCase);
         private readonly ConcurrentDictionary<string, Lazy<Task<object>>> _stronglyTypedStore = new(StringComparer.OrdinalIgnoreCase);
-        private readonly IServiceEndpointManager _endpointManager;
         private readonly ServiceManager _serviceManager;
-
-        public AccessKey[] AccessKeys => _endpointManager.Endpoints.Keys.Select(endpoint => endpoint.AccessKey).ToArray();
 
         public IServiceManager ServiceManager => _serviceManager as IServiceManager;
 
-        public ServiceHubContextStore(IServiceEndpointManager endpointManager, ServiceManager serviceManager)
+        public IOptionsMonitor<SignatureValidationOptions> SignatureValidationOptions { get; }
+
+        public ServiceHubContextStore(IOptionsMonitor<SignatureValidationOptions> signatureValidationOptions, ServiceManager serviceManager)
         {
+            SignatureValidationOptions = signatureValidationOptions;
             _serviceManager = serviceManager;
-            _endpointManager = endpointManager;
         }
 
         public async ValueTask<ServiceHubContext<T>> GetAsync<T>(string hubName) where T : class

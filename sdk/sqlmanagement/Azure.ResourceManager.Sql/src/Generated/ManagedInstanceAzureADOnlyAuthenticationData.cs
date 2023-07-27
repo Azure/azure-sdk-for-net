@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstanceAzureADOnlyAuthentication data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstanceAzureADOnlyAuthentication data model.
+    /// Azure Active Directory only authentication.
+    /// </summary>
     public partial class ManagedInstanceAzureADOnlyAuthenticationData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceAzureADOnlyAuthenticationData. </summary>
@@ -23,13 +26,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="azureADOnlyAuthentication"> Azure Active Directory only Authentication enabled. </param>
-        internal ManagedInstanceAzureADOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? azureADOnlyAuthentication) : base(id, name, resourceType, systemData)
+        /// <param name="isAzureADOnlyAuthenticationEnabled"> Azure Active Directory only Authentication enabled. </param>
+        internal ManagedInstanceAzureADOnlyAuthenticationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isAzureADOnlyAuthenticationEnabled) : base(id, name, resourceType, systemData)
         {
-            AzureADOnlyAuthentication = azureADOnlyAuthentication;
+            IsAzureADOnlyAuthenticationEnabled = isAzureADOnlyAuthenticationEnabled;
         }
 
         /// <summary> Azure Active Directory only Authentication enabled. </summary>
-        public bool? AzureADOnlyAuthentication { get; set; }
+        public bool? IsAzureADOnlyAuthenticationEnabled { get; set; }
     }
 }

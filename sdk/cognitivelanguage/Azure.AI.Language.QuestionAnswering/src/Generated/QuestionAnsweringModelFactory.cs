@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    /// <summary> Model factory for read-only models. </summary>
+    /// <summary> Model factory for models. </summary>
     public static partial class QuestionAnsweringModelFactory
     {
         /// <summary> Initializes a new instance of AnswersResult. </summary>
@@ -31,7 +31,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="source"> Source of QnA result. </param>
         /// <param name="metadata"> Metadata associated with the answer, useful to categorize or filter question answers. </param>
         /// <param name="dialog"> Dialog associated with Answer. </param>
-        /// <param name="shortAnswer"> Answer span object of QnA with respect to user&apos;s question. </param>
+        /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
         /// <returns> A new <see cref="QuestionAnswering.KnowledgeBaseAnswer"/> instance for mocking. </returns>
         public static KnowledgeBaseAnswer KnowledgeBaseAnswer(IEnumerable<string> questions = null, string answer = null, double? confidence = null, int? qnaId = null, string source = null, IReadOnlyDictionary<string, string> metadata = null, KnowledgeBaseAnswerDialog dialog = null, AnswerSpan shortAnswer = null)
         {
@@ -87,7 +87,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="answer"> Answer. </param>
         /// <param name="confidence"> answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> record ID. </param>
-        /// <param name="shortAnswer"> Answer span object with respect to user&apos;s question. </param>
+        /// <param name="shortAnswer"> Answer span object with respect to user's question. </param>
         /// <param name="offset"> The sentence offset from the start of the document. </param>
         /// <param name="length"> The length of the sentence. </param>
         /// <returns> A new <see cref="QuestionAnswering.TextAnswer"/> instance for mocking. </returns>

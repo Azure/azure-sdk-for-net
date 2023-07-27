@@ -6,13 +6,15 @@
 #nullable disable
 
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the TopLevelDomain data model. </summary>
-    public partial class TopLevelDomainData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the TopLevelDomain data model.
+    /// A top level domain object.
+    /// </summary>
+    public partial class TopLevelDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of TopLevelDomainData. </summary>
         public TopLevelDomainData()
@@ -24,14 +26,17 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="isDomainPrivacySupported"> If &lt;code&gt;true&lt;/code&gt;, then the top level domain supports domain privacy; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="kind"> Kind of resource. </param>
-        /// <param name="privacy"> If &lt;code&gt;true&lt;/code&gt;, then the top level domain supports domain privacy; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal TopLevelDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, bool? privacy) : base(id, name, resourceType, systemData, kind)
+        internal TopLevelDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isDomainPrivacySupported, string kind) : base(id, name, resourceType, systemData)
         {
-            Privacy = privacy;
+            IsDomainPrivacySupported = isDomainPrivacySupported;
+            Kind = kind;
         }
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the top level domain supports domain privacy; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? Privacy { get; set; }
+        public bool? IsDomainPrivacySupported { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

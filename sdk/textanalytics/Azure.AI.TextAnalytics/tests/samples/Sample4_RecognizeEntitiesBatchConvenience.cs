@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Samples
@@ -13,33 +12,34 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void RecognizeEntitiesBatchConvenience()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            #region Snippet:Sample4_RecognizeEntitiesBatchConvenience
+            string documentA =
+                "We love this trail and make the trip every year. The views are breathtaking and well worth the hike!"
+                + " Yesterday was foggy though, so we missed the spectacular views. We tried again today and it was"
+                + " amazing. Everyone in my family liked the trail although it was too challenging for the less"
+                + " athletic among us. Not necessarily recommended for small children. A hotel close to the trail"
+                + " offers services for childcare in case you want that.";
 
-            #region Snippet:TextAnalyticsSample4RecognizeEntitiesConvenience
-            string documentA = @"We love this trail and make the trip every year. The views are breathtaking and well
-                                worth the hike! Yesterday was foggy though, so we missed the spectacular views.
-                                We tried again today and it was amazing. Everyone in my family liked the trail although
-                                it was too challenging for the less athletic among us.
-                                Not necessarily recommended for small children.
-                                A hotel close to the trail offers services for childcare in case you want that.";
+            string documentB =
+                "Nos hospedamos en el Hotel Foo la semana pasada por nuestro aniversario. La gerencia sabía de nuestra"
+                + " celebración y me ayudaron a tenerle una sorpresa a mi pareja. La habitación estaba limpia y"
+                + " decorada como yo había pedido. Una gran experiencia. El próximo año volveremos.";
 
-            string documentB = @"Last week we stayed at Hotel Foo to celebrate our anniversary. The staff knew about
-                                our anniversary so they helped me organize a little surprise for my partner.
-                                The room was clean and with the decoration I requested. It was perfect!";
-
-            string documentC = @"That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo.
-                                They had great amenities that included an indoor pool, a spa, and a bar.
-                                The spa offered couples massages which were really good. 
-                                The spa was clean and felt very peaceful. Overall the whole experience was great.
-                                We will definitely come back.";
+            string documentC =
+                "That was the best day of my life! We went on a 4 day trip where we stayed at Hotel Foo. They had"
+                + " great amenities that included an indoor pool, a spa, and a bar. The spa offered couples massages"
+                + " which were really good. The spa was clean and felt very peaceful. Overall the whole experience was"
+                + " great. We will definitely come back.";
 
             string documentD = string.Empty;
 
-            var documents = new List<string>
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
                 documentA,
                 documentB,
@@ -47,41 +47,40 @@ namespace Azure.AI.TextAnalytics.Samples
                 documentD
             };
 
-            Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(documents);
+            Response<RecognizeEntitiesResultCollection> response = client.RecognizeEntitiesBatch(batchedDocuments);
             RecognizeEntitiesResultCollection entititesPerDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Named Entity Recognition\" Model, version: \"{entititesPerDocuments.ModelVersion}\"");
-            Console.WriteLine("");
+            Console.WriteLine($"Recognize Entities, model version: \"{entititesPerDocuments.ModelVersion}\"");
+            Console.WriteLine();
 
-            foreach (RecognizeEntitiesResult entitiesInDocument in entititesPerDocuments)
+            foreach (RecognizeEntitiesResult documentResult in entititesPerDocuments)
             {
-                Console.WriteLine($"On document with Text: \"{documents[i++]}\"");
-                Console.WriteLine("");
+                Console.WriteLine($"Result for document with Text = \"{batchedDocuments[i++]}\"");
 
-                if (entitiesInDocument.HasError)
+                if (documentResult.HasError)
                 {
-                    Console.WriteLine("  Error!");
-                    Console.WriteLine($"  Document error code: {entitiesInDocument.Error.ErrorCode}.");
-                    Console.WriteLine($"  Message: {entitiesInDocument.Error.Message}");
+                    Console.WriteLine($"  Error!");
+                    Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                    Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                    Console.WriteLine();
+                    continue;
                 }
-                else
-                {
-                    Console.WriteLine($"  Recognized the following {entitiesInDocument.Entities.Count()} entities:");
 
-                    foreach (CategorizedEntity entity in entitiesInDocument.Entities)
-                    {
-                        Console.WriteLine($"    Text: {entity.Text}");
-                        Console.WriteLine($"    Offset: {entity.Offset}");
-                        Console.WriteLine($"    Length: {entity.Length}");
-                        Console.WriteLine($"    Category: {entity.Category}");
-                        if (!string.IsNullOrEmpty(entity.SubCategory))
-                            Console.WriteLine($"    SubCategory: {entity.SubCategory}");
-                        Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
-                        Console.WriteLine("");
-                    }
+                Console.WriteLine($"  Recognized {documentResult.Entities.Count} entities:");
+
+                foreach (CategorizedEntity entity in documentResult.Entities)
+                {
+                    Console.WriteLine($"    Text: {entity.Text}");
+                    Console.WriteLine($"    Offset: {entity.Offset}");
+                    Console.WriteLine($"    Length: {entity.Length}");
+                    Console.WriteLine($"    Category: {entity.Category}");
+                    if (!string.IsNullOrEmpty(entity.SubCategory))
+                        Console.WriteLine($"    SubCategory: {entity.SubCategory}");
+                    Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+                    Console.WriteLine();
                 }
-                Console.WriteLine("");
+                Console.WriteLine();
             }
             #endregion
         }

@@ -16,6 +16,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static DeletedStorageBundle DeserializeDeletedStorageBundle(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryId = default;
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             Optional<DateTimeOffset> deletedDate = default;
@@ -28,76 +32,71 @@ namespace Azure.Security.KeyVault.Storage.Models
             Optional<IReadOnlyDictionary<string, string>> tags = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryId"))
+                if (property.NameEquals("recoveryId"u8))
                 {
                     recoveryId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scheduledPurgeDate"))
+                if (property.NameEquals("scheduledPurgeDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    scheduledPurgeDate = property.Value.GetDateTimeOffset("U");
+                    scheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
-                if (property.NameEquals("deletedDate"))
+                if (property.NameEquals("deletedDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    deletedDate = property.Value.GetDateTimeOffset("U");
+                    deletedDate = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activeKeyName"))
+                if (property.NameEquals("activeKeyName"u8))
                 {
                     activeKeyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("autoRegenerateKey"))
+                if (property.NameEquals("autoRegenerateKey"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoRegenerateKey = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("regenerationPeriod"))
+                if (property.NameEquals("regenerationPeriod"u8))
                 {
                     regenerationPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     attributes = StorageAccountAttributes.DeserializeStorageAccountAttributes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

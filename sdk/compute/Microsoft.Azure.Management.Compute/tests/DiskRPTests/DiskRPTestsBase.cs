@@ -123,7 +123,7 @@ namespace Compute.Tests.DiskRPTests
 
         }
 
-        protected void PremiumDisk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string tier = null, bool? burstingEnabled = null, string location = null, IList<string> zones = null)
+        protected void PremiumDisk_CRUD_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string tier = null, bool? burstingEnabled = null, string location = null, IList<string> zones = null, bool? isPerformancePlus = null)
         {
             using (MockContext context = MockContext.Start(this.GetType(), methodName))
             {
@@ -140,6 +140,7 @@ namespace Compute.Tests.DiskRPTests
                 };
                 disk.Tier = tier;
                 disk.BurstingEnabled = burstingEnabled;
+                disk.CreationData.PerformancePlus = isPerformancePlus;
 
                 try
                 {
@@ -161,12 +162,20 @@ namespace Compute.Tests.DiskRPTests
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.Equal(tier, diskOut.Tier);
                     Assert.Equal(burstingEnabled, diskOut.BurstingEnabled);
+                    if (burstingEnabled == true)
+                    {
+                        Assert.NotNull(diskOut.BurstingEnabledTime);
+                    }
 
                     // Get
                     diskOut = m_CrpClient.Disks.Get(rgName, diskName);
                     Validate(disk, diskOut, DiskRPLocation);
                     Assert.Equal(tier, diskOut.Tier);
                     Assert.Equal(burstingEnabled, diskOut.BurstingEnabled);
+                    if (burstingEnabled == true)
+                    {
+                        Assert.NotNull(diskOut.BurstingEnabledTime);
+                    }
 
                     // Get disk access
                     AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
@@ -215,7 +224,6 @@ namespace Compute.Tests.DiskRPTests
                     m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
-
         }
 
         protected void SSDZRSDisk_CRUD_Execute(string diskCreateOption, string accountType, string methodName, int? diskSizeGB = null, string tier = "E4", string location = null)
@@ -1613,6 +1621,173 @@ namespace Compute.Tests.DiskRPTests
                 }
             }
         }
+
+        
+        protected void Disk_CRUD_WithDiskControllerType_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                // Data
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+                IList<string> zones = null;
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
+                disk.SupportedCapabilities = new SupportedCapabilities { DiskControllerTypes = "SCSI" };
+
+                try
+                {
+                    // **********
+                    // SETUP
+                    // **********
+                    // Create resource group, unless create option is import in which case resource group will be created with vm,
+                    // or copy in which case the resource group will be created with the original disk.
+                    if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
+                    {
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    }
+
+                    // **********
+                    // TEST
+                    // **********
+                    // Put disk with SCSI diskControllerTypes
+                    Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.NotNull(diskOut.SupportedCapabilities);
+                    Assert.Equal("SCSI", diskOut.SupportedCapabilities.DiskControllerTypes);
+
+                    // Get disk access
+                    AccessUri accessUri = m_CrpClient.Disks.GrantAccess(rgName, diskName, AccessDataDefault);
+                    Assert.NotNull(accessUri.AccessSAS);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Patch
+                    const string tagKey = "tagKey";
+                    var updatedisk = new DiskUpdate
+                    {
+                        Tags = new Dictionary<string, string>() { { tagKey, "tagvalue" } },
+                        SupportedCapabilities = new SupportedCapabilities { DiskControllerTypes = "SCSI, NVMe" }
+                    };
+                    diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.NotNull(diskOut.SupportedCapabilities);
+                    Assert.Equal("SCSI, NVMe", diskOut.SupportedCapabilities.DiskControllerTypes);
+
+                    // End disk access
+                    m_CrpClient.Disks.RevokeAccess(rgName, diskName);
+
+                    // Delete
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+
+                    try
+                    {
+                        // Ensure it was really deleted
+                        m_CrpClient.Disks.Get(rgName, diskName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
+                }
+                finally
+                {
+                    // Delete resource group
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+       
+        protected void Disk_OptimizeFrequentAttach_Execute(string diskCreateOption, string methodName, int? diskSizeGB = null, string location = null)
+        {
+            using (MockContext context = MockContext.Start(this.GetType(), methodName))
+            {
+                EnsureClientsInitialized(context);
+                DiskRPLocation = location ?? DiskRPLocation;
+
+                // Data
+                var rgName = TestUtilities.GenerateName(TestPrefix);
+                var diskName = TestUtilities.GenerateName(DiskNamePrefix);
+               // m_CrpClient.Disks.RevokeAccess(rgName, diskName);
+                IList<string> zones = null;
+                Disk disk = GenerateDefaultDisk(diskCreateOption, rgName, diskSizeGB, zones, location);
+                disk.OptimizedForFrequentAttach = true;
+
+                try
+                {
+                    // **********
+                    // SETUP
+                    // **********
+                    // Create resource group, unless create option is import in which case resource group will be created with vm,
+                    // or copy in which case the resource group will be created with the original disk.
+                    if (diskCreateOption != DiskCreateOption.Import && diskCreateOption != DiskCreateOption.Copy)
+                    {
+                        m_ResourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = DiskRPLocation });
+                    }
+
+                    // **********
+                    // TEST
+                    // **********
+                    // Put disk with SCSI diskControllerTypes
+                    Disk diskOut = m_CrpClient.Disks.CreateOrUpdate(rgName, diskName, disk);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.True(diskOut.OptimizedForFrequentAttach);
+
+
+                    // Patch
+                    const string tagKey = "tagKey";
+                    var updatedisk = new DiskUpdate
+                    {
+                        OptimizedForFrequentAttach = false
+                    };
+                    diskOut = m_CrpClient.Disks.Update(rgName, diskName, updatedisk);
+                    Validate(disk, diskOut, DiskRPLocation);
+
+                    // Get
+                    diskOut = m_CrpClient.Disks.Get(rgName, diskName);
+                    Validate(disk, diskOut, DiskRPLocation);
+                    Assert.NotNull(diskOut.SupportedCapabilities);
+                    Assert.False(diskOut.OptimizedForFrequentAttach);
+
+                    // Delete
+                    m_CrpClient.Disks.Delete(rgName, diskName);
+
+                    try
+                    {
+                        // Ensure it was really deleted
+                        m_CrpClient.Disks.Get(rgName, diskName);
+                        Assert.False(true);
+                    }
+                    catch (CloudException ex)
+                    {
+                        Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
+                    }
+                }
+                finally
+                {
+                    // Delete resource group
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }       
+        }
+        
         #endregion
 
         #region Generation
@@ -1705,8 +1880,8 @@ namespace Compute.Tests.DiskRPTests
 
         protected DiskEncryptionSet GenerateDefaultDiskEncryptionSet(string location, string encryptionType = EncryptionType.EncryptionAtRestWithCustomerKey, bool? rotationToLatestKeyVersionEnabled = null)
         {
-            string testVaultId = @"/subscriptions/0296790d-427c-48ca-b204-8b729bbd8670/resourcegroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/KeyVaultforTest";
-            string encryptionKeyUri = @"https://keyvaultfortest.vault.azure.net/keys/KeyforTest/d2312bdc83184b77ae469668c5595e53";
+            string testVaultId = @"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/KVforDiskSDKTest";
+            string encryptionKeyUri = @"https://kvfordisksdktest.vault.azure.net/keys/swaggerkey/b53970d8a07b46cea5cde581aec69070";
 
             var des = new DiskEncryptionSet
             {
@@ -2021,6 +2196,7 @@ namespace Compute.Tests.DiskRPTests
             Assert.Equal(creationDataExp.SourceUri, creationDataAct.SourceUri);
             Assert.Equal(creationDataExp.SourceResourceId, creationDataAct.SourceResourceId);
             Assert.Equal(creationDataExp.StorageAccountId, creationDataAct.StorageAccountId);
+            Assert.Equal(creationDataExp.PerformancePlus, creationDataAct.PerformancePlus);
 
             // Image reference
             ImageDiskReference imgRefExp = creationDataExp.GalleryImageReference ?? creationDataExp.ImageReference;

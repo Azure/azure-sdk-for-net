@@ -21,21 +21,20 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of VirtualNetworkDnsForwardingRuleset. </summary>
         /// <param name="id"> DNS Forwarding Ruleset Resource ID. </param>
         /// <param name="virtualNetworkLink"> The reference to the virtual network link. </param>
-        internal VirtualNetworkDnsForwardingRuleset(string id, WritableSubResource virtualNetworkLink)
+        internal VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id, WritableSubResource virtualNetworkLink)
         {
             Id = id;
             VirtualNetworkLink = virtualNetworkLink;
         }
 
         /// <summary> DNS Forwarding Ruleset Resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> The reference to the virtual network link. </summary>
         internal WritableSubResource VirtualNetworkLink { get; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier VirtualNetworkLinkId
         {
-            get => VirtualNetworkLink.Id;
-            set => VirtualNetworkLink.Id = value;
+            get => VirtualNetworkLink?.Id;
         }
     }
 }

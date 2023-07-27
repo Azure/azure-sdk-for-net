@@ -12,9 +12,9 @@ namespace Azure.AI.MetricsAdvisor.Tests
 {
     public class MetricFeedbackLiveTests : MetricsAdvisorLiveTestBase
     {
-        private const string ExpectedRegion = "Cairo";
+        private const string ExpectedDim1 = "JPN";
 
-        private const string ExpectedCategory = "Shoes Handbags & Sunglasses";
+        private const string ExpectedDim2 = "JP";
 
         public MetricFeedbackLiveTests(bool isAsync) : base(isAsync)
         {
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient(useTokenCredential);
 
-            var dimensions = new Dictionary<string, string>() { { "region", ExpectedRegion }, { "category", ExpectedCategory } };
+            var dimensions = new Dictionary<string, string>() { { "Dim1", ExpectedDim1 }, { "Dim2", ExpectedDim2 } };
             var dimensionKey = new DimensionKey(dimensions);
 
             var feedbackToAdd = new MetricAnomalyFeedback(MetricId, dimensionKey, CreatedFeedbackStartTime, CreatedFeedbackEndTime, AnomalyValue.AutoDetect);
@@ -58,7 +58,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensions = new Dictionary<string, string>() { { "region", ExpectedRegion }, { "category", ExpectedCategory } };
+            var dimensions = new Dictionary<string, string>() { { "Dim1", ExpectedDim1 }, { "Dim2", ExpectedDim2 } };
             var dimensionKey = new DimensionKey(dimensions);
 
             var feedbackToAdd = new MetricAnomalyFeedback(MetricId, dimensionKey, CreatedFeedbackStartTime, CreatedFeedbackEndTime, AnomalyValue.AutoDetect)
@@ -88,7 +88,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensions = new Dictionary<string, string>() { { "region", ExpectedRegion }, { "category", ExpectedCategory } };
+            var dimensions = new Dictionary<string, string>() { { "Dim1", ExpectedDim1 }, { "Dim2", ExpectedDim2 } };
             var dimensionKey = new DimensionKey(dimensions);
 
             var feedbackToAdd = new MetricChangePointFeedback(MetricId, dimensionKey, CreatedFeedbackStartTime, CreatedFeedbackEndTime, ChangePointValue.AutoDetect);
@@ -118,7 +118,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensions = new Dictionary<string, string>() { { "region", ExpectedRegion }, { "category", ExpectedCategory } };
+            var dimensions = new Dictionary<string, string>() { { "Dim1", ExpectedDim1 }, { "Dim2", ExpectedDim2 } };
             var dimensionKey = new DimensionKey(dimensions);
 
             var comment = "Feedback created in a .NET test.";
@@ -145,7 +145,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensions = new Dictionary<string, string>() { { "region", ExpectedRegion }, { "category", ExpectedCategory } };
+            var dimensions = new Dictionary<string, string>() { { "Dim1", ExpectedDim1 }, { "Dim2", ExpectedDim2 } };
             var dimensionKey = new DimensionKey(dimensions);
 
             var comment = "Feedback created in a .NET test.";
@@ -176,7 +176,7 @@ namespace Azure.AI.MetricsAdvisor.Tests
         {
             MetricsAdvisorClient client = GetMetricsAdvisorClient();
 
-            var dimensions = new Dictionary<string, string>() { { "region", ExpectedRegion }, { "category", ExpectedCategory } };
+            var dimensions = new Dictionary<string, string>() { { "Dim1", ExpectedDim1 }, { "Dim2", ExpectedDim2 } };
             var dimensionKey = new DimensionKey(dimensions);
 
             var periodValue = 10;
@@ -272,10 +272,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             // The sampling time range was chosen in a way to make sure there'll be feedback returned by the
             // service call. Changing these values can make this test fail.
 
-            DateTimeOffset feedbackSamplingStartTime = DateTimeOffset.Parse("2021-10-01T00:00:00Z");
-            DateTimeOffset feedbackSamplingEndTime = DateTimeOffset.Parse("2021-11-20T00:00:00Z");
+            DateTimeOffset feedbackSamplingStartTime = DateTimeOffset.Parse("2022-01-01T00:00:00Z");
+            DateTimeOffset feedbackSamplingEndTime = DateTimeOffset.Parse("2022-04-17T00:00:00Z");
 
-            var dimensions = new Dictionary<string, string>() { { "region", "Karachi" } };
+            var dimensions = new Dictionary<string, string>() { { "Dim1", "USD" } };
             var options = new GetAllFeedbackOptions()
             {
                 Filter = new FeedbackFilter()
@@ -308,8 +308,8 @@ namespace Azure.AI.MetricsAdvisor.Tests
 
                 ValidateGroupKey(dimensionKeyFilter);
 
-                Assert.That(dimensionKeyFilter.TryGetValue("region", out string region));
-                Assert.That(region, Is.EqualTo("Karachi"));
+                Assert.That(dimensionKeyFilter.TryGetValue("Dim1", out string dim1));
+                Assert.That(dim1, Is.EqualTo("USD"));
 
                 Assert.That(feedback.FeedbackKind, Is.EqualTo(MetricFeedbackKind.Anomaly));
 
@@ -344,10 +344,10 @@ namespace Azure.AI.MetricsAdvisor.Tests
             Assert.That(dimensionFilter, Is.Not.Null);
 
             Assert.That(Count(dimensionFilter), Is.EqualTo(2));
-            Assert.That(dimensionFilter.TryGetValue("region", out string region));
-            Assert.That(dimensionFilter.TryGetValue("category", out string category));
-            Assert.That(region, Is.EqualTo(ExpectedRegion));
-            Assert.That(category, Is.EqualTo(ExpectedCategory));
+            Assert.That(dimensionFilter.TryGetValue("Dim1", out string dim1));
+            Assert.That(dimensionFilter.TryGetValue("Dim2", out string dim2));
+            Assert.That(dim1, Is.EqualTo(ExpectedDim1));
+            Assert.That(dim2, Is.EqualTo(ExpectedDim2));
         }
     }
 }

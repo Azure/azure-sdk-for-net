@@ -63,24 +63,47 @@ Console.WriteLine($"Token: {token}");
 Console.WriteLine($"Expires On: {expiresOn}");
 ```
 
-## Exchange an AAD access token of a Teams User for a Communication Identity access token
+It's also possible to create a Communication Identity access token by customizing the expiration time. Validity period of the token must be within [1,24] hours range. If not provided, the default value of 24 hours will be used.
 
-The `CommunicationIdentityClient` can be used to exchange an AAD access token of a Teams user for a new Communication Identity access token with a matching expiration time.
+```C# Snippet:CreateCommunicationTokenWithCustomExpiration
+TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
+Response<AccessToken> tokenResponse = client.GetToken(user, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+string token = tokenResponse.Value.Token;
+DateTimeOffset expiresOn = tokenResponse.Value.ExpiresOn;
+Console.WriteLine($"Token: {token}");
+Console.WriteLine($"Expires On: {expiresOn}");
+```
+
+## Creating a user and a token with custom expiration in the same request
+
+You can create user and token in the same request. You can specify expiration time for the token. The token can be configured to expire in as little as one hour or as long as 24 hours. The default expiration time is 24 hours.
+
+```C# Snippet:CreateCommunicationUserAndTokenWithCustomExpiration
+TimeSpan tokenExpiresIn = TimeSpan.FromHours(1);
+Response<CommunicationUserIdentifierAndToken> response = client.CreateUserAndToken(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn);
+var (user, token) = response.Value;
+Console.WriteLine($"User id: {user.Id}");
+Console.WriteLine($"Token: {token.Token}");
+```
+
+
+## Exchange an Azure AD access token of a Teams User for a Communication Identity access token
+
+The `CommunicationIdentityClient` can be used to exchange an Azure AD access token of a Teams user for a new Communication Identity access token with a matching expiration time.
+
+The `GetTokenForTeamsUser` function accepts the following parameters wrapped into the `GetTokenForTeamsUserOptions` option bag:
+- `teamsUserAadToken` Azure Active Directory access token of a Teams user
+- `clientId` Client ID of an Azure AD application to be verified against the appId claim in the Azure AD access token
+- `userObjectId` Object ID of an Azure AD user (Teams User) to be verified against the OID claim in the Azure AD access token
 
 ```C# Snippet:GetTokenForTeamsUser
-Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(teamsToken);
+Response<AccessToken> tokenResponse = client.GetTokenForTeamsUser(new GetTokenForTeamsUserOptions(teamsUserAadToken, clientId, userObjectId));
 string token = tokenResponse.Value.Token;
 Console.WriteLine($"Token: {token}");
 ```
 
-<!--
-To see the full example source files, see:
-* [Generate user token][GenerateUserTokenCode]
--->
-
 <!-- LINKS -->
 <!--[scopes](https://github.com/mikben/azure-docs-pr/blob/release-project-spool/articles/project-spool/concepts/identity-model.md)
 [ReadMe](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Administration/samples/ReadMe.md)
-[GenerateUserTokenCode](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Administration/tests/samples/Sample1_CommunicationIdentityClient.cs)
 
  -->

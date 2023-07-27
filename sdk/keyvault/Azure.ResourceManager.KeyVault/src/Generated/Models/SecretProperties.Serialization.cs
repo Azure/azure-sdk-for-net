@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.KeyVault.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             if (Optional.IsDefined(ContentType))
             {
-                writer.WritePropertyName("contentType");
+                writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
             if (Optional.IsDefined(Attributes))
             {
-                writer.WritePropertyName("attributes");
+                writer.WritePropertyName("attributes"u8);
                 writer.WriteObjectValue(Attributes);
             }
             writer.WriteEndObject();
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         internal static SecretProperties DeserializeSecretProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             Optional<string> contentType = default;
             Optional<SecretAttributes> attributes = default;
@@ -43,37 +47,35 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<string> secretUriWithVersion = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentType"))
+                if (property.NameEquals("contentType"u8))
                 {
                     contentType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("attributes"))
+                if (property.NameEquals("attributes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     attributes = SecretAttributes.DeserializeSecretAttributes(property.Value);
                     continue;
                 }
-                if (property.NameEquals("secretUri"))
+                if (property.NameEquals("secretUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        secretUri = null;
                         continue;
                     }
                     secretUri = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("secretUriWithVersion"))
+                if (property.NameEquals("secretUriWithVersion"u8))
                 {
                     secretUriWithVersion = property.Value.GetString();
                     continue;

@@ -8,11 +8,10 @@ using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
-    public partial class FormRecognizerSamples : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
         /// This sample demonstrates the differences in output that arise when BeginRecognizeCustomForms
         /// is called with custom models trained with fixed vs. dynamic table tags.
@@ -28,12 +27,12 @@ namespace Azure.AI.FormRecognizer.Samples
         /// A conceptual explanation of using table tags to train your custom form model can be found in the
         /// service documentation: https://docs.microsoft.com/azure/cognitive-services/form-recognizer/supervised-table-tags
 
-        [Test]
+        [RecordedTest]
         public async Task OutputModelsTrainedWithFixedRowsTables()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.TableFixedRowsContainerSasUrlV2;
+            string trainingFileUrl = TestEnvironment.TableFixedRowsContainerSasUrl;
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("label_table_fixed_rows1.pdf");
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -96,12 +95,12 @@ namespace Azure.AI.FormRecognizer.Samples
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task OutputModelsTrainedWithDynamicRowsTables()
         {
             string endpoint = TestEnvironment.Endpoint;
             string apiKey = TestEnvironment.ApiKey;
-            string trainingFileUrl = TestEnvironment.TableDynamicRowsContainerSasUrlV2;
+            string trainingFileUrl = TestEnvironment.TableDynamicRowsContainerSasUrl;
             string formFilePath = FormRecognizerTestEnvironment.CreatePath("label_table_dynamic_rows1.pdf");
 
             FormRecognizerClient client = new FormRecognizerClient(new Uri(endpoint), new AzureKeyCredential(apiKey));

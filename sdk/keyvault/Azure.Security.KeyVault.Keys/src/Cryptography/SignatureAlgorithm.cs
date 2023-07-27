@@ -35,52 +35,52 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
-        /// Gets an RSA SHA-256 <see cref="SignatureAlgorithm"/>.
+        /// Gets an RSA SHA-256 <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm RS256 { get; } = new SignatureAlgorithm(RS256Value);
 
         /// <summary>
-        /// Gets an RSA SHA-384  <see cref="SignatureAlgorithm"/>.
+        /// Gets an RSA SHA-384  <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm RS384 { get; } = new SignatureAlgorithm(RS384Value);
 
         /// <summary>
-        /// Gets an RSA SHA-512  <see cref="SignatureAlgorithm"/>.
+        /// Gets an RSA SHA-512  <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm RS512 { get; } = new SignatureAlgorithm(RS512Value);
 
         /// <summary>
-        /// Gets an RSASSA-PSS using SHA-256 and MGF1 with SHA-256 <see cref="SignatureAlgorithm"/>.
+        /// Gets an RSASSA-PSS using SHA-256 and MGF1 with SHA-256 <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm PS256 { get; } = new SignatureAlgorithm(PS256Value);
 
         /// <summary>
-        /// Gets an RSASSA-PSS using SHA-384 and MGF1 with SHA-384 <see cref="SignatureAlgorithm"/>.
+        /// Gets an RSASSA-PSS using SHA-384 and MGF1 with SHA-384 <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm PS384 { get; } = new SignatureAlgorithm(PS384Value);
 
         /// <summary>
-        /// Gets an RSASSA-PSS using SHA-512 and MGF1 with SHA-512 <see cref="SignatureAlgorithm"/>.
+        /// Gets an RSASSA-PSS using SHA-512 and MGF1 with SHA-512 <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm PS512 { get; } = new SignatureAlgorithm(PS512Value);
 
         /// <summary>
-        /// Gets an ECDSA with a P-256 curve <see cref="SignatureAlgorithm"/>.
+        /// Gets an ECDSA with a P-256 curve <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm ES256 { get; } = new SignatureAlgorithm(ES256Value);
 
         /// <summary>
-        /// Gets an ECDSA with a P-384 curve <see cref="SignatureAlgorithm"/>.
+        /// Gets an ECDSA with a P-384 curve <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm ES384 { get; } = new SignatureAlgorithm(ES384Value);
 
         /// <summary>
-        /// Gets an ECDSA with a P-521 curve <see cref="SignatureAlgorithm"/>.
+        /// Gets an ECDSA with a P-521 curve <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm ES512 { get; } = new SignatureAlgorithm(ES512Value);
 
         /// <summary>
-        /// Gets an ECDSA with a secp256k1 curve <see cref="SignatureAlgorithm"/>.
+        /// Gets an ECDSA with a secp256k1 curve <see cref="SignatureAlgorithm"/> as described in <see href="https://tools.ietf.org/html/rfc7518"/>.
         /// </summary>
         public static SignatureAlgorithm ES256K { get; } = new SignatureAlgorithm(ES256KValue);
 
@@ -119,6 +119,46 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         /// <inheritdoc/>
         public override string ToString() => _value;
+
+        internal static SignatureAlgorithm FromHashAlgorithmName(HashAlgorithmName algorithm, RSASignaturePadding padding)
+        {
+            if (padding == RSASignaturePadding.Pkcs1)
+            {
+                if (algorithm == HashAlgorithmName.SHA256)
+                {
+                    return RS256;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA384)
+                {
+                    return RS384;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA512)
+                {
+                    return RS512;
+                }
+            }
+            else if (padding == RSASignaturePadding.Pss)
+            {
+                if (algorithm == HashAlgorithmName.SHA256)
+                {
+                    return PS256;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA384)
+                {
+                    return PS384;
+                }
+
+                if (algorithm == HashAlgorithmName.SHA512)
+                {
+                    return PS512;
+                }
+            }
+
+            throw new NotSupportedException($"Hash algorithm {algorithm} with {padding} padding is not supported");
+        }
 
         internal HashAlgorithm GetHashAlgorithm()
         {

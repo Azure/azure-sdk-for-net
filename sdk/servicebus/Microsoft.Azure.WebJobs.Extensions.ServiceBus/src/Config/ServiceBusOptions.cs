@@ -131,10 +131,44 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public Func<ProcessErrorEventArgs, Task> ProcessErrorAsync { get; set; }
 
         /// <summary>
+        /// Optional handler that can be set to be notified when a new session is about to be processed.
+        /// </summary>
+        public Func<ProcessSessionEventArgs, Task> SessionInitializingAsync { get; set; }
+
+        /// <summary>
+        /// Optional handler that can be set to be notified when a session is about to be closed for processing.
+        /// </summary>
+        public Func<ProcessSessionEventArgs, Task> SessionClosingAsync { get; set; }
+
+        /// <summary>
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
         /// a batch of messages. The default value is 1000.
         /// </summary>
         public int MaxMessageBatchSize { get; set; } = 1000;
+
+        /// <summary>
+        /// Gets or sets the minimum number of messages desired for a batch. This setting applies only to functions that
+        /// receive multiple messages. This value must be less than <see cref="MaxMessageBatchSize"/> and is used in
+        /// conjunction with <see cref="MaxBatchWaitTime"/>. If <see cref="MaxBatchWaitTime"/> passes and less than
+        /// <see cref="MinMessageBatchSize"/> has been received, the function will be invoked with a partial batch.
+        /// Default 1.
+        /// </summary>
+        /// <remarks>
+        /// The minimum size is not a strict guarantee, as a partial batch will be dispatched if a full batch cannot be
+        /// prepared before the <see cref="MaxBatchWaitTime"/> has elapsed.
+        /// </remarks>
+        public int MinMessageBatchSize { get; set; } = 1;
+
+        /// <summary>
+        /// Gets or sets the maximum time that the trigger should wait to fill a batch before invoking the function.
+        /// This is only considered when <see cref="MinMessageBatchSize"/> is set to larger than 1 and is otherwise unused.
+        /// If less than <see cref="MinMessageBatchSize" /> messages were available before the wait time elapses, the function
+        /// will be invoked with a partial batch. This value should be no longer then 50% of the entity message lock duration.
+        /// Therefore, the maximum allowed value is 2 minutes and 30 seconds.
+        /// Otherwise, you may get lock exceptions when messages are pulled from the cache.
+        /// The default value is 30 seconds.
+        /// </summary>
+        public TimeSpan MaxBatchWaitTime { get; set; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
         /// Gets or sets the maximum amount of time to wait for a message to be received for the
@@ -191,6 +225,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
                 { nameof(MaxMessageBatchSize), MaxMessageBatchSize },
+                { nameof(MinMessageBatchSize), MinMessageBatchSize },
+                { nameof(MaxBatchWaitTime), MaxBatchWaitTime },
                 { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty },
                 { nameof(EnableCrossEntityTransactions), EnableCrossEntityTransactions }
             };
@@ -200,9 +236,28 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         internal async Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
         {
-            if (ProcessErrorAsync != null)
+            var processErrorAsync = ProcessErrorAsync;
+            if (processErrorAsync != null)
             {
-                await ProcessErrorAsync(args).ConfigureAwait(false);
+                await processErrorAsync(args).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task SessionInitializingHandler(ProcessSessionEventArgs args)
+        {
+            var sessionInitializingAsync = SessionInitializingAsync;
+            if (sessionInitializingAsync != null)
+            {
+                await sessionInitializingAsync(args).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task SessionClosingHandler(ProcessSessionEventArgs args)
+        {
+            var sessionClosingAsync = SessionClosingAsync;
+            if (sessionClosingAsync != null)
+            {
+                await sessionClosingAsync(args).ConfigureAwait(false);
             }
         }
 

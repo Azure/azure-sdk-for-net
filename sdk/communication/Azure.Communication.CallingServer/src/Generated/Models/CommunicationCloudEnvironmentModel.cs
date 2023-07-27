@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication
 {
-    /// <summary> The cloud that the identifier belongs to. </summary>
+    /// <summary> The CommunicationCloudEnvironmentModel. </summary>
     internal readonly partial struct CommunicationCloudEnvironmentModel : IEquatable<CommunicationCloudEnvironmentModel>
     {
         private readonly string _value;

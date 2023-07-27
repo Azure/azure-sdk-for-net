@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.TextAnalytics.Models;
+using Azure.AI.TextAnalytics.ServiceClients;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -16,13 +17,24 @@ namespace Azure.AI.TextAnalytics
     /// <summary> Pageable operation class for analyzing multiple actions using long running operation. </summary>
     public class AnalyzeActionsOperation : PageableOperation<AnalyzeActionsResult>, IOperation<AsyncPageable<AnalyzeActionsResult>>
     {
-        /// <summary>Provides communication with the Text Analytics Azure Cognitive Service through its REST API.</summary>
-        private readonly TextAnalyticsRestClient _serviceClient;
+        internal readonly IDictionary<string, int> _idToIndexMap;
 
+        private readonly string _jobId;
+        private readonly bool? _showStats;
+        private readonly ServiceClient _serviceClient;
+        private readonly ClientDiagnostics _diagnostics;
         private readonly OperationInternal<AsyncPageable<AnalyzeActionsResult>> _operationInternal;
 
-        /// <summary>Provides tools for exception creation in case of failure.</summary>
-        private readonly ClientDiagnostics _diagnostics;
+        private int _actionsTotal;
+        private int _actionsFailed;
+        private int _actionSucceeded;
+        private int _actionsInProgress;
+        private DateTimeOffset _createdOn;
+        private DateTimeOffset? _expiresOn;
+        private DateTimeOffset _lastModified;
+        private string _displayName;
+        private TextAnalyticsOperationStatus _status;
+        private Page<AnalyzeActionsResult> _firstPage;
 
         /// <summary>
         /// Total actions failed in the operation
@@ -50,7 +62,7 @@ namespace Azure.AI.TextAnalytics
         public virtual DateTimeOffset CreatedOn => _createdOn;
 
         /// <summary>
-        /// Display Name of the operation
+        /// Display Name of the operation.
         /// </summary>
         public virtual string DisplayName => _displayName;
 
@@ -76,11 +88,6 @@ namespace Azure.AI.TextAnalytics
         public override string Id { get; }
 
         /// <summary>
-        /// Provides the input to be part of AnalyzeOperation class
-        /// </summary>
-        internal readonly IDictionary<string, int> _idToIndexMap;
-
-        /// <summary>
         /// Final result of the long-running operation.
         /// </summary>
         /// <remarks>
@@ -89,36 +96,10 @@ namespace Azure.AI.TextAnalytics
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override AsyncPageable<AnalyzeActionsResult> Value => _operationInternal.Value;
 
-        private int _actionsTotal;
-        private int _actionsFailed;
-        private int _actionSucceeded;
-        private int _actionsInProgress;
-        private DateTimeOffset _createdOn;
-        private DateTimeOffset? _expiresOn;
-        private DateTimeOffset _lastModified;
-        private TextAnalyticsOperationStatus _status;
-        private string _displayName;
-
         /// <summary>
         /// Returns true if the long-running operation has completed.
         /// </summary>
         public override bool HasCompleted => _operationInternal.HasCompleted;
-
-        /// <summary>
-        /// Provides the results for the first page.
-        /// </summary>
-        private Page<AnalyzeActionsResult> _firstPage;
-
-        /// <summary>
-        /// Represents the desire of the user to request statistics.
-        /// This is used in every GET request.
-        /// </summary>
-        private readonly bool? _showStats;
-
-        /// <summary>
-        /// Represents the job Id the service assigned to the operation.
-        /// </summary>
-        private readonly string _jobId;
 
         /// <summary>
         /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
@@ -130,6 +111,8 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
+        /// <exception cref="ArgumentException"><paramref name="operationId"/> is an empty string or does not represent a valid continuation token from the <see cref="Id"/> property returned on the original operation.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="operationId"/> or <paramref name="client"/> is null.</exception>
         public AnalyzeActionsOperation(string operationId, TextAnalyticsClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -149,9 +132,9 @@ namespace Azure.AI.TextAnalytics
             }
 
             Id = operationId;
-            _serviceClient = client._serviceRestClient;
-            _diagnostics = client._clientDiagnostics;
-            _operationInternal = new OperationInternal<AsyncPageable<AnalyzeActionsResult>>(_diagnostics, this, rawResponse: null);
+            _serviceClient = client.ServiceClient;
+            _diagnostics = _serviceClient.Diagnostics;
+            _operationInternal = new OperationInternal<AsyncPageable<AnalyzeActionsResult>>(this, _diagnostics, rawResponse: null);
         }
 
         /// <summary>
@@ -162,17 +145,15 @@ namespace Azure.AI.TextAnalytics
         /// <param name="operationLocation">The address of the long-running operation. It can be obtained from the response headers upon starting the operation.</param>
         /// <param name="idToIndexMap"></param>
         /// <param name="showStats"></param>
-        internal AnalyzeActionsOperation(TextAnalyticsRestClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
+        internal AnalyzeActionsOperation(ServiceClient serviceClient, ClientDiagnostics diagnostics, string operationLocation, IDictionary<string, int> idToIndexMap, bool? showStats = default)
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
             _idToIndexMap = idToIndexMap;
             _showStats = showStats;
-            _operationInternal = new OperationInternal<AsyncPageable<AnalyzeActionsResult>>(_diagnostics, this, rawResponse: null);
+            _operationInternal = new OperationInternal<AsyncPageable<AnalyzeActionsResult>>(this, _diagnostics, rawResponse: null);
 
-            // TODO: Add validation here
-            // https://github.com/Azure/azure-sdk-for-net/issues/11505
-            _jobId = operationLocation.Split('/').Last();
+            _jobId = operationLocation.Split('/').Last().Split('?')[0];
 
             Id = OperationContinuationToken.Serialize(_jobId, idToIndexMap, showStats);
         }
@@ -245,6 +226,23 @@ namespace Azure.AI.TextAnalytics
             await _operationInternal.WaitForCompletionAsync(pollingInterval, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
+        /// Cancels a pending or running <see cref="AnalyzeActionsOperation"/>.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="NotSupportedException">Cancellation not supported by API versions v3.0, v3.1.</exception>
+        public virtual void Cancel(CancellationToken cancellationToken = default) =>
+            _serviceClient.CancelAnalyzeActionsJob(_jobId, cancellationToken);
+
+        /// <summary>
+        /// Cancels a pending or running <see cref="AnalyzeActionsOperation"/>.
+        /// </summary>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="Task"/> to track the service request.</returns>
+        /// <exception cref="NotSupportedException">Cancellation not supported by API versions v3.0, v3.1.</exception>
+        public virtual async Task CancelAsync(CancellationToken cancellationToken = default) =>
+            await _serviceClient.CancelAnalyzeActionsJobAsync(_jobId, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// Gets the final result of the long-running operation asynchronously.
         /// </summary>
         /// <remarks>
@@ -270,13 +268,10 @@ namespace Azure.AI.TextAnalytics
 
             Page<AnalyzeActionsResult> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = _serviceClient.AnalyzeStatusNextPage(nextLink, cancellationToken);
-
-                    AnalyzeActionsResult result = Transforms.ConvertToAnalyzeActionsResult(jobState.Value, _idToIndexMap);
-                    return Page.FromValues(new List<AnalyzeActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
+                    Response<AnalyzeTextJobStatusResult> response = _serviceClient.AnalyzeStatusNextPage(nextLink, pageSizeHint, _idToIndexMap, cancellationToken);
+                    return Page.FromValues(new List<AnalyzeActionsResult>() { response.Value.Result }, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception)
                 {
@@ -287,17 +282,53 @@ namespace Azure.AI.TextAnalytics
             return PageableHelpers.CreateEnumerable(_ => _firstPage, NextPageFunc);
         }
 
+        async ValueTask<OperationState<AsyncPageable<AnalyzeActionsResult>>> IOperation<AsyncPageable<AnalyzeActionsResult>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        {
+            Response<AnalyzeTextJobStatusResult> response = async
+                ? await _serviceClient.AnalyzeStatusAsync(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken).ConfigureAwait(false)
+                : _serviceClient.AnalyzeStatus(_jobId, _showStats, null, null, _idToIndexMap, cancellationToken);
+
+            _displayName = response.Value.DisplayName;
+            _createdOn = response.Value.CreatedOn;
+            _expiresOn = response.Value.ExpiresOn;
+            _lastModified = response.Value.LastModifiedOn;
+            _status = response.Value.Status;
+            _actionsFailed = response.Value.ActionsFailed;
+            _actionsInProgress = response.Value.AcionsInProgress;
+            _actionSucceeded = response.Value.AcionsSucceeded;
+            _actionsTotal = response.Value.ActionsTotal;
+
+            Response rawResponse = response.GetRawResponse();
+
+            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded)
+            {
+                string nextLink = response.Value.NextLink;
+                _firstPage = Page.FromValues(new List<AnalyzeActionsResult>() { response.Value.Result }, nextLink, rawResponse);
+
+                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
+            }
+
+            if (response.Value.Status == TextAnalyticsOperationStatus.Running || response.Value.Status == TextAnalyticsOperationStatus.NotStarted || response.Value.Status == TextAnalyticsOperationStatus.Cancelling)
+            {
+                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
+            }
+
+            if (response.Value.Status == TextAnalyticsOperationStatus.Cancelled)
+            {
+                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, new RequestFailedException("The operation was canceled so no value is available."));
+            }
+
+            return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, new RequestFailedException(rawResponse));
+        }
+
         private AsyncPageable<AnalyzeActionsResult> CreateOperationValueAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<AnalyzeActionsResult>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                //diagnostics scope?
                 try
                 {
-                    Response<AnalyzeJobState> jobState = await _serviceClient.AnalyzeStatusNextPageAsync(nextLink, cancellationToken).ConfigureAwait(false);
-
-                    AnalyzeActionsResult result = Transforms.ConvertToAnalyzeActionsResult(jobState.Value, _idToIndexMap);
-                    return Page.FromValues(new List<AnalyzeActionsResult>() { result }, jobState.Value.NextLink, jobState.GetRawResponse());
+                    Response<AnalyzeTextJobStatusResult> response = await _serviceClient.AnalyzeStatusNextPageAsync(nextLink, pageSizeHint, _idToIndexMap, cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(new List<AnalyzeActionsResult>() { response.Value.Result }, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception)
                 {
@@ -306,57 +337,6 @@ namespace Azure.AI.TextAnalytics
             }
 
             return PageableHelpers.CreateAsyncEnumerable(_ => Task.FromResult(_firstPage), NextPageFunc);
-        }
-
-        async ValueTask<OperationState<AsyncPageable<AnalyzeActionsResult>>> IOperation<AsyncPageable<AnalyzeActionsResult>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
-        {
-            Response<AnalyzeJobState> response = async
-                ? await _serviceClient.AnalyzeStatusAsync(_jobId, _showStats, null, null, cancellationToken).ConfigureAwait(false)
-                : _serviceClient.AnalyzeStatus(_jobId, _showStats, null, null, cancellationToken);
-
-            // Add lock to avoid race condition?
-            _displayName = response.Value.DisplayName;
-            _createdOn = response.Value.CreatedDateTime;
-            _expiresOn = response.Value.ExpirationDateTime;
-            _lastModified = response.Value.LastUpdateDateTime;
-            _status = response.Value.Status;
-            _actionsFailed = response.Value.Tasks.Failed;
-            _actionsInProgress = response.Value.Tasks.InProgress;
-            _actionSucceeded = response.Value.Tasks.Completed;
-            _actionsTotal = response.Value.Tasks.Total;
-
-            Response rawResponse = response.GetRawResponse();
-
-            if (response.Value.Status == TextAnalyticsOperationStatus.Failed)
-            {
-                if (CheckIfGenericError(response.Value))
-                {
-                    RequestFailedException requestFailedException = await ClientCommon.CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.Errors).ConfigureAwait(false);
-                    return OperationState<AsyncPageable<AnalyzeActionsResult>>.Failure(rawResponse, requestFailedException);
-                }
-            }
-
-            if (response.Value.Status == TextAnalyticsOperationStatus.Succeeded ||
-                response.Value.Status == TextAnalyticsOperationStatus.Failed)
-            {
-                string nextLink = response.Value.NextLink;
-                AnalyzeActionsResult value = Transforms.ConvertToAnalyzeActionsResult(response.Value, _idToIndexMap);
-                _firstPage = Page.FromValues(new List<AnalyzeActionsResult>() { value }, nextLink, rawResponse);
-
-                return OperationState<AsyncPageable<AnalyzeActionsResult>>.Success(rawResponse, CreateOperationValueAsync(CancellationToken.None));
-            }
-
-            return OperationState<AsyncPageable<AnalyzeActionsResult>>.Pending(rawResponse);
-        }
-
-        private static bool CheckIfGenericError(AnalyzeJobState jobState)
-        {
-            foreach (TextAnalyticsErrorInternal error in jobState.Errors)
-            {
-                if (string.IsNullOrEmpty(error.Target))
-                    return true;
-            }
-            return false;
         }
     }
 }

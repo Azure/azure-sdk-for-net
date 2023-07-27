@@ -11,7 +11,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Subnet and it&apos;s custom security rules. </summary>
+    /// <summary> Subnet and it's custom security rules. </summary>
     public partial class SubnetAssociation
     {
         /// <summary> Initializes a new instance of SubnetAssociation. </summary>
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of SubnetAssociation. </summary>
         /// <param name="id"> Subnet ID. </param>
         /// <param name="securityRules"> Collection of custom security rules. </param>
-        internal SubnetAssociation(string id, IReadOnlyList<SecurityRuleData> securityRules)
+        internal SubnetAssociation(ResourceIdentifier id, IReadOnlyList<SecurityRuleData> securityRules)
         {
             Id = id;
             SecurityRules = securityRules;
         }
 
         /// <summary> Subnet ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Collection of custom security rules. </summary>
         public IReadOnlyList<SecurityRuleData> SecurityRules { get; }
     }

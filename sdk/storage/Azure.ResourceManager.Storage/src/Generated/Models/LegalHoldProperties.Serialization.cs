@@ -15,41 +15,42 @@ namespace Azure.ResourceManager.Storage.Models
     {
         internal static LegalHoldProperties DeserializeLegalHoldProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> hasLegalHold = default;
-            Optional<IReadOnlyList<TagProperty>> tags = default;
+            Optional<IReadOnlyList<LegalHoldTag>> tags = default;
             Optional<ProtectedAppendWritesHistory> protectedAppendWritesHistory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hasLegalHold"))
+                if (property.NameEquals("hasLegalHold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasLegalHold = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<TagProperty> array = new List<TagProperty>();
+                    List<LegalHoldTag> array = new List<LegalHoldTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagProperty.DeserializeTagProperty(item));
+                        array.Add(LegalHoldTag.DeserializeLegalHoldTag(item));
                     }
                     tags = array;
                     continue;
                 }
-                if (property.NameEquals("protectedAppendWritesHistory"))
+                if (property.NameEquals("protectedAppendWritesHistory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectedAppendWritesHistory = ProtectedAppendWritesHistory.DeserializeProtectedAppendWritesHistory(property.Value);

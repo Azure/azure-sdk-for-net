@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> The content type of a call recording. </summary>
-    public enum RecordingContent
+    /// <summary> The content type of call recording. </summary>
+    public readonly partial struct RecordingContent : IEquatable<RecordingContent>
     {
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="RecordingContent"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecordingContent(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string AudioValue = "audio";
+        private const string AudioVideoValue = "audioVideo";
+
         /// <summary> audio. </summary>
-        Audio,
+        public static RecordingContent Audio { get; } = new RecordingContent(AudioValue);
         /// <summary> audioVideo. </summary>
-        AudioVideo
+        public static RecordingContent AudioVideo { get; } = new RecordingContent(AudioVideoValue);
+        /// <summary> Determines if two <see cref="RecordingContent"/> values are the same. </summary>
+        public static bool operator ==(RecordingContent left, RecordingContent right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="RecordingContent"/> values are not the same. </summary>
+        public static bool operator !=(RecordingContent left, RecordingContent right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="RecordingContent"/>. </summary>
+        public static implicit operator RecordingContent(string value) => new RecordingContent(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is RecordingContent other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(RecordingContent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

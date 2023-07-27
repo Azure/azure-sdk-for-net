@@ -18,56 +18,56 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DatabaseType))
             {
-                writer.WritePropertyName("databaseType");
+                writer.WritePropertyName("databaseType"u8);
                 writer.WriteStringValue(DatabaseType.Value.ToString());
             }
             if (Optional.IsDefined(SyncAgentId))
             {
-                writer.WritePropertyName("syncAgentId");
+                writer.WritePropertyName("syncAgentId"u8);
                 writer.WriteStringValue(SyncAgentId);
             }
             if (Optional.IsDefined(SqlServerDatabaseId))
             {
-                writer.WritePropertyName("sqlServerDatabaseId");
+                writer.WritePropertyName("sqlServerDatabaseId"u8);
                 writer.WriteStringValue(SqlServerDatabaseId.Value);
             }
             if (Optional.IsDefined(SyncMemberAzureDatabaseResourceId))
             {
-                writer.WritePropertyName("syncMemberAzureDatabaseResourceId");
+                writer.WritePropertyName("syncMemberAzureDatabaseResourceId"u8);
                 writer.WriteStringValue(SyncMemberAzureDatabaseResourceId);
             }
             if (Optional.IsDefined(UsePrivateLinkConnection))
             {
-                writer.WritePropertyName("usePrivateLinkConnection");
+                writer.WritePropertyName("usePrivateLinkConnection"u8);
                 writer.WriteBooleanValue(UsePrivateLinkConnection.Value);
             }
             if (Optional.IsDefined(ServerName))
             {
-                writer.WritePropertyName("serverName");
+                writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
             if (Optional.IsDefined(DatabaseName))
             {
-                writer.WritePropertyName("databaseName");
+                writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
             if (Optional.IsDefined(UserName))
             {
-                writer.WritePropertyName("userName");
+                writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
             if (Optional.IsDefined(Password))
             {
-                writer.WritePropertyName("password");
+                writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
             if (Optional.IsDefined(SyncDirection))
             {
-                writer.WritePropertyName("syncDirection");
+                writer.WritePropertyName("syncDirection"u8);
                 writer.WriteStringValue(SyncDirection.Value.ToString());
             }
             writer.WriteEndObject();
@@ -76,14 +76,18 @@ namespace Azure.ResourceManager.Sql
 
         internal static SyncMemberData DeserializeSyncMemberData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<SyncMemberDbType> databaseType = default;
-            Optional<string> syncAgentId = default;
+            Optional<ResourceIdentifier> syncAgentId = default;
             Optional<Guid> sqlServerDatabaseId = default;
-            Optional<string> syncMemberAzureDatabaseResourceId = default;
+            Optional<ResourceIdentifier> syncMemberAzureDatabaseResourceId = default;
             Optional<bool> usePrivateLinkConnection = default;
             Optional<string> privateEndpointName = default;
             Optional<string> serverName = default;
@@ -94,27 +98,31 @@ namespace Azure.ResourceManager.Sql
             Optional<SyncMemberState> syncState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -123,86 +131,89 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("databaseType"))
+                        if (property0.NameEquals("databaseType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             databaseType = new SyncMemberDbType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("syncAgentId"))
-                        {
-                            syncAgentId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sqlServerDatabaseId"))
+                        if (property0.NameEquals("syncAgentId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            syncAgentId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("sqlServerDatabaseId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             sqlServerDatabaseId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("syncMemberAzureDatabaseResourceId"))
-                        {
-                            syncMemberAzureDatabaseResourceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("usePrivateLinkConnection"))
+                        if (property0.NameEquals("syncMemberAzureDatabaseResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            syncMemberAzureDatabaseResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("usePrivateLinkConnection"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             usePrivateLinkConnection = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("privateEndpointName"))
+                        if (property0.NameEquals("privateEndpointName"u8))
                         {
                             privateEndpointName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverName"))
+                        if (property0.NameEquals("serverName"u8))
                         {
                             serverName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("databaseName"))
+                        if (property0.NameEquals("databaseName"u8))
                         {
                             databaseName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("userName"))
+                        if (property0.NameEquals("userName"u8))
                         {
                             userName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("password"))
+                        if (property0.NameEquals("password"u8))
                         {
                             password = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("syncDirection"))
+                        if (property0.NameEquals("syncDirection"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             syncDirection = new SyncDirection(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("syncState"))
+                        if (property0.NameEquals("syncState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             syncState = new SyncMemberState(property0.Value.GetString());
@@ -212,7 +223,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SyncMemberData(id, name, type, systemData, Optional.ToNullable(databaseType), syncAgentId.Value, Optional.ToNullable(sqlServerDatabaseId), syncMemberAzureDatabaseResourceId.Value, Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serverName.Value, databaseName.Value, userName.Value, password.Value, Optional.ToNullable(syncDirection), Optional.ToNullable(syncState));
+            return new SyncMemberData(id, name, type, systemData.Value, Optional.ToNullable(databaseType), syncAgentId.Value, Optional.ToNullable(sqlServerDatabaseId), syncMemberAzureDatabaseResourceId.Value, Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serverName.Value, databaseName.Value, userName.Value, password.Value, Optional.ToNullable(syncDirection), Optional.ToNullable(syncState));
         }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using System.Threading;
@@ -11,10 +12,10 @@ using Azure.Core;
 namespace Azure.Security.ConfidentialLedger
 {
     /// <summary>
-    /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry(Azure.Core.RequestContent,string,bool,Azure.RequestContext)"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync(Azure.Core.RequestContent,string,bool,Azure.RequestContext)"/>
+    /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync"/>
     /// until completion.
     /// </summary>
-    public class PostLedgerEntryOperation : Operation, IOperation
+    internal class PostLedgerEntryOperation : Operation, IOperation
     {
         private readonly ConfidentialLedgerClient _client;
         private OperationInternal _operationInternal;
@@ -27,12 +28,12 @@ namespace Azure.Security.ConfidentialLedger
         /// </summary>
         /// <param name="client"> Tje <see cref="ConfidentialLedgerClient"/>. </param>
         /// <param name="transactionId"> The transaction id from a previous call to
-        /// <see cref="ConfidentialLedgerClient.PostLedgerEntry(Azure.Core.RequestContent,string,bool,Azure.RequestContext)"/>.</param>
+        /// <see cref="ConfidentialLedgerClient.PostLedgerEntry"/>.</param>
         public PostLedgerEntryOperation(ConfidentialLedgerClient client, string transactionId)
         {
             _client = client;
             Id = transactionId;
-            _operationInternal = new(_client.ClientDiagnostics, this, rawResponse: null, nameof(PostLedgerEntryOperation));
+            _operationInternal = new(this, _client.ClientDiagnostics, rawResponse: null, nameof(PostLedgerEntryOperation));
         }
 
         /// <summary>
@@ -61,15 +62,10 @@ namespace Azure.Security.ConfidentialLedger
                     .ConfigureAwait(false)
                 : _client.GetTransactionStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
-            _operationInternal.RawResponse = statusResponse;
-
             if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
-                var error = new ResponseError(null, exceptionMessage);
-                var ex = async
-                    ? await _client.ClientDiagnostics.CreateRequestFailedExceptionAsync(statusResponse, error).ConfigureAwait(false)
-                    : _client.ClientDiagnostics.CreateRequestFailedException(statusResponse, error);
-                return OperationState.Failure(GetRawResponse(), new RequestFailedException(exceptionMessage, ex));
+                var ex = new RequestFailedException(statusResponse, null, new PostLedgerEntryRequestFailedDetailsParser(exceptionMessage));
+                return OperationState.Failure(statusResponse, new RequestFailedException(exceptionMessage, ex));
             }
 
             string status = JsonDocument.Parse(statusResponse.Content)
@@ -90,5 +86,21 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <inheritdoc />
         public override bool HasCompleted => _operationInternal.HasCompleted;
+
+        private class PostLedgerEntryRequestFailedDetailsParser : RequestFailedDetailsParser
+        {
+            private readonly string _message;
+
+            public PostLedgerEntryRequestFailedDetailsParser(string message)
+            {
+                _message = message;
+            }
+            public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)
+            {
+                error = new ResponseError(null, _message);
+                data = null;
+                return true;
+            }
+        }
     }
 }

@@ -15,18 +15,22 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static ProductConfiguration DeserializeProductConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayName = default;
             Optional<ProductDescription> description = default;
-            Optional<IReadOnlyList<ImageInformation>> imageInformation = default;
-            Optional<CostInformation> costInformation = default;
-            Optional<AvailabilityInformation> availabilityInformation = default;
+            Optional<IReadOnlyList<EdgeOrderProductImageInformation>> imageInformation = default;
+            Optional<EdgeOrderProductCostInformation> costInformation = default;
+            Optional<ProductAvailabilityInformation> availabilityInformation = default;
             Optional<HierarchyInformation> hierarchyInformation = default;
             Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
             Optional<IReadOnlyList<ProductSpecification>> specifications = default;
             Optional<ProductDimensions> dimensions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -35,71 +39,65 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("displayName"))
+                        if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             description = ProductDescription.DeserializeProductDescription(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("imageInformation"))
+                        if (property0.NameEquals("imageInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ImageInformation> array = new List<ImageInformation>();
+                            List<EdgeOrderProductImageInformation> array = new List<EdgeOrderProductImageInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.ImageInformation.DeserializeImageInformation(item));
+                                array.Add(EdgeOrderProductImageInformation.DeserializeEdgeOrderProductImageInformation(item));
                             }
                             imageInformation = array;
                             continue;
                         }
-                        if (property0.NameEquals("costInformation"))
+                        if (property0.NameEquals("costInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            costInformation = CostInformation.DeserializeCostInformation(property0.Value);
+                            costInformation = EdgeOrderProductCostInformation.DeserializeEdgeOrderProductCostInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("availabilityInformation"))
+                        if (property0.NameEquals("availabilityInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availabilityInformation = AvailabilityInformation.DeserializeAvailabilityInformation(property0.Value);
+                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hierarchyInformation"))
+                        if (property0.NameEquals("hierarchyInformation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("filterableProperties"))
+                        if (property0.NameEquals("filterableProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<FilterableProperty> array = new List<FilterableProperty>();
@@ -110,11 +108,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             filterableProperties = array;
                             continue;
                         }
-                        if (property0.NameEquals("specifications"))
+                        if (property0.NameEquals("specifications"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ProductSpecification> array = new List<ProductSpecification>();
@@ -125,11 +122,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             specifications = array;
                             continue;
                         }
-                        if (property0.NameEquals("dimensions"))
+                        if (property0.NameEquals("dimensions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dimensions = ProductDimensions.DeserializeProductDimensions(property0.Value);

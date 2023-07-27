@@ -2,137 +2,77 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.Conversations
 {
-    /// <summary>
-    /// The <see cref="ConversationAnalysisClient"/> allows you analyze conversations.
-    /// </summary>
-    public class ConversationAnalysisClient
+    /// <remarks>
+    /// See <see href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime"/> for more information about models you can pass to this client.
+    /// </remarks>
+    /// <seealso href="https://learn.microsoft.com/rest/api/language/2023-04-01/conversation-analysis-runtime"/>
+    public partial class ConversationAnalysisClient
     {
-        internal const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-
-        private readonly ConversationAnalysisRestClient _analysisRestClient;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConversationAnalysisClient"/> class.
-        /// </summary>
-        /// <param name="endpoint">The Conversation Analysis endpoint on which to operate.</param>
-        /// <param name="credential">An <see cref="AzureKeyCredential"/> used to authenticate requests to the <paramref name="endpoint"/>.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, null)
+        /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new ConversationsClientOptions())
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConversationAnalysisClient"/> class.
-        /// </summary>
-        /// <param name="endpoint">The Conversation Analysis endpoint on which to operate.</param>
-        /// <param name="credential">An <see cref="AzureKeyCredential"/> used to authenticate requests to the <paramref name="endpoint"/>.</param>
-        /// <param name="options">Optional <see cref="ConversationAnalysisClientOptions"/> to customize requests sent to the endpoint.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> or <paramref name="credential"/> is null.</exception>
-        public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential, ConversationAnalysisClientOptions options)
+        /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationAnalysisClient(Uri endpoint, AzureKeyCredential credential, ConversationsClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new ConversationsClientOptions();
 
-            Endpoint = endpoint;
-            options ??= new ConversationAnalysisClientOptions();
+            ClientDiagnostics = new ClientDiagnostics(options, suppressNestedClientActivities: true);
 
-            Diagnostics = new ClientDiagnostics(options);
-            Pipeline = HttpPipelineBuilder.Build(
-                options,
-                new AzureKeyCredentialPolicy(credential, AuthorizationHeader));
+            // BUGBUG: https://github.com/Azure/azure-sdk-for-net/issues/29506
+            _keyCredential = credential;
 
-            _analysisRestClient = new(Diagnostics, Pipeline, Endpoint, options.Version);
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
-        /// <summary>
-        /// Protected constructor to allow mocking.
-        /// </summary>
-        protected ConversationAnalysisClient()
+        /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationAnalysisClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new ConversationsClientOptions())
         {
         }
 
-        /// <summary>
-        /// Get the service endpoint for this client.
-        /// </summary>
-        public virtual Uri Endpoint { get; }
-
-        /// <summary>
-        /// Gets the <see cref="ClientDiagnostics"/> for this client.
-        /// </summary>
-        private protected virtual ClientDiagnostics Diagnostics { get; }
-
-        /// <summary>
-        /// Gets the <see cref="HttpPipeline"/> for this client.
-        /// </summary>
-        private protected virtual HttpPipeline Pipeline { get; }
-
-        /// <summary>Analyzes a conversational utterance.</summary>
-        /// <param name="utterance">The conversation utterance to be analyzed.</param>
-        /// <param name="project">The <see cref="ConversationsProject"/> used for conversation analysis.</param>
-        /// <param name="options">Optional <see cref="AnalyzeConversationOptions"/> with additional query options.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="project"/> or <paramref name="utterance"/> is null.</exception>
-        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual async Task<Response<AnalyzeConversationResult>> AnalyzeConversationAsync(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
+        /// <summary> Initializes a new instance of ConversationAnalysisClient. </summary>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public ConversationAnalysisClient(Uri endpoint, TokenCredential credential, ConversationsClientOptions options)
         {
-            Argument.AssertNotNull(project, nameof(project));
-            Argument.AssertNotNull(utterance, nameof(utterance));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new ConversationsClientOptions();
 
-            options = options ?? new();
-            options.Utterance = utterance;
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? ConversationsAudience.AzurePublicCloud : options.Audience)}/.default";
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
-            scope.AddAttribute("projectName", project.ProjectName);
-            scope.AddAttribute("deploymentName", project.DeploymentName);
-            scope.Start();
-
-            try
-            {
-                return await _analysisRestClient.AnalyzeConversationAsync(project.ProjectName, project.DeploymentName, options, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
-        /// <summary>Analyzes a conversational utterance.</summary>
-        /// <param name="utterance">The conversation utterance to be analyzed.</param>
-        /// <param name="project">The <see cref="ConversationsProject"/> used for conversation analysis.</param>
-        /// <param name="options">Optional <see cref="AnalyzeConversationOptions"/> with additional query options.</param>
-        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> to cancel the request.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="project"/> or <paramref name="utterance"/> is null.</exception>
-        /// <exception cref="RequestFailedException">The service returned an error. The exception contains details of the service error.</exception>
-        public virtual Response<AnalyzeConversationResult> AnalyzeConversation(string utterance, ConversationsProject project, AnalyzeConversationOptions options = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(project, nameof(project));
-            Argument.AssertNotNull(utterance, nameof(utterance));
-
-            options = options ?? new();
-            options.Utterance = utterance;
-
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(ConversationAnalysisClient)}.{nameof(AnalyzeConversation)}");
-            scope.AddAttribute("projectName", project.ProjectName);
-            scope.AddAttribute("deploymentName", project.DeploymentName);
-            scope.Start();
-
-            try
-            {
-                return _analysisRestClient.AnalyzeConversation(project.ProjectName, project.DeploymentName, options, cancellationToken);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+        /// <summary>
+        /// Gets the service endpoint for this client.
+        /// </summary>
+        public virtual Uri Endpoint => _endpoint;
     }
 }

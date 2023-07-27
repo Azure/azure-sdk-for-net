@@ -14,25 +14,27 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static OrchestrationServiceSummary DeserializeOrchestrationServiceSummary(JsonElement element)
         {
-            Optional<OrchestrationServiceNames> serviceName = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<OrchestrationServiceName> serviceName = default;
             Optional<OrchestrationServiceState> serviceState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("serviceName"))
+                if (property.NameEquals("serviceName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serviceName = new OrchestrationServiceNames(property.Value.GetString());
+                    serviceName = new OrchestrationServiceName(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("serviceState"))
+                if (property.NameEquals("serviceState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serviceState = new OrchestrationServiceState(property.Value.GetString());

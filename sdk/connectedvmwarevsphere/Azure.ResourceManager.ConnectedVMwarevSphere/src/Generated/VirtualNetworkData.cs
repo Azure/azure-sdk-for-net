@@ -9,10 +9,14 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing the VirtualNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualNetwork data model.
+    /// Define the virtualNetwork.
+    /// </summary>
     public partial class VirtualNetworkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkData. </summary>

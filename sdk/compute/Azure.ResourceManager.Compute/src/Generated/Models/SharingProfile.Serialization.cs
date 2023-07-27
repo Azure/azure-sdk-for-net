@@ -16,35 +16,43 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Permissions))
+            if (Optional.IsDefined(Permission))
             {
-                writer.WritePropertyName("permissions");
-                writer.WriteStringValue(Permissions.Value.ToString());
+                writer.WritePropertyName("permissions"u8);
+                writer.WriteStringValue(Permission.Value.ToString());
+            }
+            if (Optional.IsDefined(CommunityGalleryInfo))
+            {
+                writer.WritePropertyName("communityGalleryInfo"u8);
+                writer.WriteObjectValue(CommunityGalleryInfo);
             }
             writer.WriteEndObject();
         }
 
         internal static SharingProfile DeserializeSharingProfile(JsonElement element)
         {
-            Optional<GallerySharingPermissionTypes> permissions = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<GallerySharingPermissionType> permissions = default;
             Optional<IReadOnlyList<SharingProfileGroup>> groups = default;
+            Optional<CommunityGalleryInfo> communityGalleryInfo = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("permissions"))
+                if (property.NameEquals("permissions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    permissions = new GallerySharingPermissionTypes(property.Value.GetString());
+                    permissions = new GallerySharingPermissionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groups"))
+                if (property.NameEquals("groups"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SharingProfileGroup> array = new List<SharingProfileGroup>();
@@ -55,8 +63,17 @@ namespace Azure.ResourceManager.Compute.Models
                     groups = array;
                     continue;
                 }
+                if (property.NameEquals("communityGalleryInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    communityGalleryInfo = CommunityGalleryInfo.DeserializeCommunityGalleryInfo(property.Value);
+                    continue;
+                }
             }
-            return new SharingProfile(Optional.ToNullable(permissions), Optional.ToList(groups));
+            return new SharingProfile(Optional.ToNullable(permissions), Optional.ToList(groups), communityGalleryInfo.Value);
         }
     }
 }

@@ -138,10 +138,10 @@ namespace AzureRedisCache.Tests.InMemoryTests
         {
             RedisManagementClient client = Utility.GetRedisManagementClient(null, null, HttpStatusCode.Conflict);
             Assert.Throws<ErrorResponseException>(() => client.Redis.CheckNameAvailability(parameters: new CheckNameAvailabilityParameters
-                                                                                    {
-                                                                                        Name = "cachename",
-                                                                                        Type = "Microsoft.Cache/Redis"
-                                                                                    }));
+            {
+                Name = "cachename",
+                Type = "Microsoft.Cache/Redis"
+            }));
         }
 
         [Fact]
@@ -238,7 +238,7 @@ namespace AzureRedisCache.Tests.InMemoryTests
                             ""capacity"": 1
                         },
 		            ""redisVersion"" : ""2.8"",
-                    ""redisConfiguration"": {""maxmemory-policy"": ""allkeys-lru""},
+                    ""redisConfiguration"": {""maxmemory-policy"": ""allkeys-lru"",""preferred-data-persistence-auth-method"": ""ManagedIdentity"",""aof-backup-enabled"":""Enabled"",""zonal-configuration"":""zonalconfig"",""authnotrequired"":""Enabled""},
 		            ""accessKeys"" : {
 			            ""primaryKey"" : ""aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa="",
 			            ""secondaryKey"" : ""bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=""
@@ -279,12 +279,16 @@ namespace AzureRedisCache.Tests.InMemoryTests
                                                                                     Family = SkuFamily.C,
                                                                                     Capacity = 1
                                                                                 },
-                                                                                RedisConfiguration = new RedisCommonPropertiesRedisConfiguration(){
-                                                                                    MaxmemoryPolicy = "allkeys-lru"
+                                                                                RedisConfiguration = new RedisCommonPropertiesRedisConfiguration()
+                                                                                {
+                                                                                    MaxmemoryPolicy = "allkeys-lru",
+                                                                                    AofBackupEnabled = "True",
+                                                                                    PreferredDataPersistenceAuthMethod = "ManagedIdentity",
+                                                                                    Authnotrequired = "Enabled"
                                                                                 },
                                                                                 MinimumTlsVersion = TlsVersion.OneFullStopTwo,
                                                                                 ReplicasPerMaster = 2
-                                                                            });
+                                                                            }); ;
 
             Assert.Equal("/subscriptions/a559b6fd-3a84-40bb-a450-b0db5ed37dfe/resourceGroups/HydraTest07152014/providers/Microsoft.Cache/Redis/hydraradiscache", response.Id);
             Assert.Equal("North Europe", response.Location);
@@ -297,6 +301,10 @@ namespace AzureRedisCache.Tests.InMemoryTests
             Assert.Equal(1, response.Sku.Capacity);
             Assert.Equal("2.8", response.RedisVersion);
             Assert.Equal("allkeys-lru", response.RedisConfiguration.MaxmemoryPolicy);
+            Assert.Equal("ManagedIdentity", response.RedisConfiguration.PreferredDataPersistenceAuthMethod);
+            Assert.Equal("Enabled", response.RedisConfiguration.AofBackupEnabled);
+            Assert.Equal("zonalconfig", response.RedisConfiguration.ZonalConfiguration);
+            Assert.Equal("Enabled", response.RedisConfiguration.Authnotrequired);
 
             Assert.Equal("hydraradiscache.cache.icbbvt.windows-int.net", response.HostName);
             Assert.Equal(6379, response.Port);

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -18,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="typeProperties"/> is null. </exception>
         public CustomDataSourceLinkedService(object typeProperties)
         {
-            if (typeProperties == null)
-            {
-                throw new ArgumentNullException(nameof(typeProperties));
-            }
+            Argument.AssertNotNull(typeProperties, nameof(typeProperties));
 
             TypeProperties = typeProperties;
             Type = "CustomDataSource";

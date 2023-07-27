@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of SchemaGroupListResult. </summary>
         internal SchemaGroupListResult()
         {
-            Value = new ChangeTrackingList<SchemaGroupData>();
+            Value = new ChangeTrackingList<EventHubsSchemaGroupData>();
         }
 
         /// <summary> Initializes a new instance of SchemaGroupListResult. </summary>
         /// <param name="value"> Result of the List SchemaGroups operation. </param>
         /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of Schema Groups. </param>
-        internal SchemaGroupListResult(IReadOnlyList<SchemaGroupData> value, string nextLink)
+        internal SchemaGroupListResult(IReadOnlyList<EventHubsSchemaGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Result of the List SchemaGroups operation. </summary>
-        public IReadOnlyList<SchemaGroupData> Value { get; }
+        public IReadOnlyList<EventHubsSchemaGroupData> Value { get; }
         /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of Schema Groups. </summary>
         public string NextLink { get; }
     }

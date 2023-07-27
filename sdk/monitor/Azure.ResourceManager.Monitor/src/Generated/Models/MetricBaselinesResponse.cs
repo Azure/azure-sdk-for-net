@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of MetricBaselinesResponse. </summary>
         internal MetricBaselinesResponse()
         {
-            Value = new ChangeTrackingList<SingleMetricBaseline>();
+            Value = new ChangeTrackingList<MonitorSingleMetricBaseline>();
         }
 
         /// <summary> Initializes a new instance of MetricBaselinesResponse. </summary>
         /// <param name="value"> The list of metric baselines. </param>
-        internal MetricBaselinesResponse(IReadOnlyList<SingleMetricBaseline> value)
+        internal MetricBaselinesResponse(IReadOnlyList<MonitorSingleMetricBaseline> value)
         {
             Value = value;
         }
 
         /// <summary> The list of metric baselines. </summary>
-        public IReadOnlyList<SingleMetricBaseline> Value { get; }
+        public IReadOnlyList<MonitorSingleMetricBaseline> Value { get; }
     }
 }

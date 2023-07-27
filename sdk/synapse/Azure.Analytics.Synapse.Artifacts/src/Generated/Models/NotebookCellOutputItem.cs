@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> For output_type=stream, determines the name of stream (stdout / stderr). </param>
         /// <param name="executionCount"> Execution sequence number. </param>
         /// <param name="outputType"> Execution, display, or stream outputs. </param>
-        /// <param name="text"> For output_type=stream, the stream&apos;s text output, represented as a string or an array of strings. </param>
+        /// <param name="text"> For output_type=stream, the stream's text output, represented as a string or an array of strings. </param>
         /// <param name="data"> Output data. Use MIME type as key, and content as value. </param>
         /// <param name="metadata"> Metadata for the output item. </param>
         internal NotebookCellOutputItem(string name, int? executionCount, CellOutputType outputType, object text, object data, object metadata)
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public int? ExecutionCount { get; set; }
         /// <summary> Execution, display, or stream outputs. </summary>
         public CellOutputType OutputType { get; set; }
-        /// <summary> For output_type=stream, the stream&apos;s text output, represented as a string or an array of strings. </summary>
+        /// <summary> For output_type=stream, the stream's text output, represented as a string or an array of strings. </summary>
         public object Text { get; set; }
         /// <summary> Output data. Use MIME type as key, and content as value. </summary>
         public object Data { get; set; }

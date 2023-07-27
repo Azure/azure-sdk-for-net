@@ -6,13 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Storage Analytics metrics for file service. </summary>
     public partial class ShareMetrics
     {
-
         /// <summary> Initializes a new instance of ShareMetrics. </summary>
         /// <param name="version"> The version of Storage Analytics to configure. </param>
         /// <param name="enabled"> Indicates whether metrics are enabled for the File service. </param>

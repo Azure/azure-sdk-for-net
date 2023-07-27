@@ -43,7 +43,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// The pose's translation.
         /// </summary>
-        public System.Numerics.Vector3 Translation { get => TranslationWrapper; }
+        public System.Numerics.Vector3 Translation { get => (System.Numerics.Vector3)TranslationWrapper; }
 
         [CodeGenMember("Rotation")]
         internal readonly Quaternion RotationWrapper;

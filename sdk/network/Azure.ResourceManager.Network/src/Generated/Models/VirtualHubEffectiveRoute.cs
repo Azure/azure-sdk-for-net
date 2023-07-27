@@ -11,13 +11,28 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The effective route configured on the virtual hub or specified resource. </summary>
-    internal partial class VirtualHubEffectiveRoute
+    public partial class VirtualHubEffectiveRoute
     {
         /// <summary> Initializes a new instance of VirtualHubEffectiveRoute. </summary>
         internal VirtualHubEffectiveRoute()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             NextHops = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of VirtualHubEffectiveRoute. </summary>
+        /// <param name="addressPrefixes"> The list of address prefixes. </param>
+        /// <param name="nextHops"> The list of next hops. </param>
+        /// <param name="nextHopType"> The type of the next hop. </param>
+        /// <param name="asPath"> The ASPath of this route. </param>
+        /// <param name="routeOrigin"> The origin of this route. </param>
+        internal VirtualHubEffectiveRoute(IReadOnlyList<string> addressPrefixes, IReadOnlyList<string> nextHops, string nextHopType, string asPath, string routeOrigin)
+        {
+            AddressPrefixes = addressPrefixes;
+            NextHops = nextHops;
+            NextHopType = nextHopType;
+            AsPath = asPath;
+            RouteOrigin = routeOrigin;
         }
 
         /// <summary> The list of address prefixes. </summary>

@@ -17,35 +17,42 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static PartnerRegionInfo DeserializePartnerRegionInfo(JsonElement element)
         {
-            Optional<string> location = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
             Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("replicationRole"))
+                if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("replicationRole"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     replicationRole = new InstanceFailoverGroupReplicationRole(property.Value.GetString());
                     continue;
                 }
             }
-            return new PartnerRegionInfo(location.Value, Optional.ToNullable(replicationRole));
+            return new PartnerRegionInfo(Optional.ToNullable(location), Optional.ToNullable(replicationRole));
         }
     }
 }

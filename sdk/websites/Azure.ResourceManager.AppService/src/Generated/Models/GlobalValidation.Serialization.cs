@@ -16,24 +16,24 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RequireAuthentication))
+            if (Optional.IsDefined(IsAuthenticationRequired))
             {
-                writer.WritePropertyName("requireAuthentication");
-                writer.WriteBooleanValue(RequireAuthentication.Value);
+                writer.WritePropertyName("requireAuthentication"u8);
+                writer.WriteBooleanValue(IsAuthenticationRequired.Value);
             }
             if (Optional.IsDefined(UnauthenticatedClientAction))
             {
-                writer.WritePropertyName("unauthenticatedClientAction");
+                writer.WritePropertyName("unauthenticatedClientAction"u8);
                 writer.WriteStringValue(UnauthenticatedClientAction.Value.ToSerialString());
             }
             if (Optional.IsDefined(RedirectToProvider))
             {
-                writer.WritePropertyName("redirectToProvider");
+                writer.WritePropertyName("redirectToProvider"u8);
                 writer.WriteStringValue(RedirectToProvider);
             }
             if (Optional.IsCollectionDefined(ExcludedPaths))
             {
-                writer.WritePropertyName("excludedPaths");
+                writer.WritePropertyName("excludedPaths"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExcludedPaths)
                 {
@@ -46,42 +46,43 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static GlobalValidation DeserializeGlobalValidation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> requireAuthentication = default;
             Optional<UnauthenticatedClientActionV2> unauthenticatedClientAction = default;
             Optional<string> redirectToProvider = default;
             Optional<IList<string>> excludedPaths = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("requireAuthentication"))
+                if (property.NameEquals("requireAuthentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requireAuthentication = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("unauthenticatedClientAction"))
+                if (property.NameEquals("unauthenticatedClientAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unauthenticatedClientAction = property.Value.GetString().ToUnauthenticatedClientActionV2();
                     continue;
                 }
-                if (property.NameEquals("redirectToProvider"))
+                if (property.NameEquals("redirectToProvider"u8))
                 {
                     redirectToProvider = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("excludedPaths"))
+                if (property.NameEquals("excludedPaths"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

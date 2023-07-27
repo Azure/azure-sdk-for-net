@@ -34,24 +34,24 @@ namespace Azure.Data.Tables.Samples
 
             #region Snippet:TablesSample2CreateDictionaryEntity
             // Make a dictionary entity by defining a <see cref="TableEntity">.
-            var entity = new TableEntity(partitionKey, rowKey)
+            var tableEntity = new TableEntity(partitionKey, rowKey)
             {
                 { "Product", "Marker Set" },
                 { "Price", 5.00 },
                 { "Quantity", 21 }
             };
 
-            Console.WriteLine($"{entity.RowKey}: {entity["Product"]} costs ${entity.GetDouble("Price")}.");
+            Console.WriteLine($"{tableEntity.RowKey}: {tableEntity["Product"]} costs ${tableEntity.GetDouble("Price")}.");
             #endregion
 
             #region Snippet:TablesSample2AddEntity
             // Add the newly created entity.
-            tableClient.AddEntity(entity);
+            tableClient.AddEntity(tableEntity);
             #endregion
 
             #region Snippet:TablesMigrationUpsertEntity
             // Upsert the newly created entity.
-            tableClient.UpsertEntity(entity);
+            tableClient.UpsertEntity(tableEntity);
             #endregion
 
             #region Snippet:TablesSample2CreateStronglyTypedEntity
@@ -65,7 +65,7 @@ namespace Azure.Data.Tables.Samples
                 Quantity = 50
             };
 
-            Console.WriteLine($"{entity.RowKey}: {strongEntity.Product} costs ${strongEntity.Price}.");
+            Console.WriteLine($"{tableEntity.RowKey}: {strongEntity.Product} costs ${strongEntity.Price}.");
             #endregion
 
             #region Snippet:TablesMigrationCreateEntity
@@ -100,9 +100,7 @@ namespace Azure.Data.Tables.Samples
             tableClient.DeleteEntity(partitionKey, rowKey);
             #endregion
 
-            #region Snippet:TablesSample2DeleteTableWithTableClient
             tableClient.Delete();
-            #endregion
         }
 
         #region Snippet:TablesSample2DefineStronglyTypedEntity

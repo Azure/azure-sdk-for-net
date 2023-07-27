@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             ServiceBusReceivedMessage message = ServiceBusModelFactory.ServiceBusReceivedMessage(new BinaryData(input));
 
             // Return a single message. Doesn't support multiple dispatch
-            return ServiceBusTriggerInput.CreateSingle(message, null, null);
+            return ServiceBusTriggerInput.CreateSingle(message, null, null, null);
         }
 
         // Single instance: Core --> Message
@@ -59,6 +59,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
             SafeAddValue(() => bindingData.Add("MessageActions", value.MessageActions));
             SafeAddValue(() => bindingData.Add("SessionActions", value.MessageActions));
+            SafeAddValue(() => bindingData.Add("ReceiveActions", value.ReceiveActions));
             SafeAddValue(() => bindingData.Add("Client", value.Client));
 
             if (value.IsSingleDispatch)
@@ -95,11 +96,16 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             AddBindingContractMember(contract, "ApplicationProperties", typeof(IDictionary<string, object>), isSingleDispatch);
             // for backcompat
             AddBindingContractMember(contract, "UserProperties", typeof(IDictionary<string, object>), isSingleDispatch);
+            AddBindingContractMember(contract, "SessionId", typeof(string), isSingleDispatch);
+            AddBindingContractMember(contract, "ReplyToSessionId", typeof(string), isSingleDispatch);
+            AddBindingContractMember(contract, "PartitionKey", typeof(string), isSingleDispatch);
+            AddBindingContractMember(contract, "TransactionPartitionKey", typeof(string), isSingleDispatch);
 
             contract.Add("MessageReceiver", typeof(ServiceBusMessageActions));
             contract.Add("MessageSession", typeof(ServiceBusSessionMessageActions));
             contract.Add("MessageActions", typeof(ServiceBusMessageActions));
             contract.Add("SessionActions", typeof(ServiceBusSessionMessageActions));
+            contract.Add("ReceiveActions", typeof(ServiceBusReceiveActions));
             contract.Add("Client", typeof(ServiceBusClient));
             return contract;
         }
@@ -122,6 +128,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             var subjects = new string[length];
             var correlationIds = new string[length];
             var applicationProperties = new IDictionary<string, object>[length];
+            var sessionIds = new string[length];
+            var replyToSessionIds = new string[length];
+            var partitionKeys = new string[length];
+            var transactionPartitionKeys = new string[length];
 
             SafeAddValue(() => bindingData.Add("DeliveryCountArray", deliveryCounts));
             SafeAddValue(() => bindingData.Add("DeadLetterSourceArray", deadLetterSources));
@@ -142,6 +152,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add("ApplicationPropertiesArray", applicationProperties));
             // for backcompat
             SafeAddValue(() => bindingData.Add("UserPropertiesArray", applicationProperties));
+            SafeAddValue(() => bindingData.Add("SessionIdArray", sessionIds));
+            SafeAddValue(() => bindingData.Add("ReplyToSessionIdArray", replyToSessionIds));
+            SafeAddValue(() => bindingData.Add("PartitionKeyArray", partitionKeys));
+            SafeAddValue(() => bindingData.Add("TransactionPartitionKeyArray", partitionKeys));
             for (int i = 0; i < messages.Length; i++)
             {
                 deliveryCounts[i] = messages[i].DeliveryCount;
@@ -159,6 +173,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 subjects[i] = messages[i].Subject;
                 correlationIds[i] = messages[i].CorrelationId;
                 applicationProperties[i] = messages[i].ApplicationProperties.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                sessionIds[i] = messages[i].SessionId;
+                replyToSessionIds[i] = messages[i].ReplyToSessionId;
+                partitionKeys[i] = messages[i].PartitionKey;
+                transactionPartitionKeys[i] = messages[i].TransactionPartitionKey;
             }
         }
 
@@ -185,6 +203,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
             SafeAddValue(() => bindingData.Add(nameof(value.ApplicationProperties), value.ApplicationProperties));
             // for backcompat
             SafeAddValue(() => bindingData.Add("UserProperties", value.ApplicationProperties));
+            SafeAddValue(() => bindingData.Add(nameof(value.SessionId), value.SessionId));
+            SafeAddValue(() => bindingData.Add(nameof(value.ReplyToSessionId), value.ReplyToSessionId));
+            SafeAddValue(() => bindingData.Add(nameof(value.PartitionKey), value.PartitionKey));
+            SafeAddValue(() => bindingData.Add(nameof(value.TransactionPartitionKey), value.TransactionPartitionKey));
         }
 
         private static void SafeAddValue(Action addValue)

@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Storage.Models
         {
             Name = name;
             Locations = new ChangeTrackingList<string>();
-            Capabilities = new ChangeTrackingList<SKUCapability>();
-            Restrictions = new ChangeTrackingList<Restriction>();
+            Capabilities = new ChangeTrackingList<StorageSkuCapability>();
+            Restrictions = new ChangeTrackingList<StorageSkuRestriction>();
         }
 
         /// <summary> Initializes a new instance of StorageSkuInformation. </summary>
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
-        /// <param name="resourceType"> The type of the resource, usually it is &apos;storageAccounts&apos;. </param>
+        /// <param name="resourceType"> The type of the resource, usually it is 'storageAccounts'. </param>
         /// <param name="kind"> Indicates the type of storage account. </param>
         /// <param name="locations"> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </param>
         /// <param name="capabilities"> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </param>
         /// <param name="restrictions"> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </param>
-        internal StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IReadOnlyList<string> locations, IReadOnlyList<SKUCapability> capabilities, IReadOnlyList<Restriction> restrictions)
+        internal StorageSkuInformation(StorageSkuName name, StorageSkuTier? tier, string resourceType, StorageKind? kind, IReadOnlyList<string> locations, IReadOnlyList<StorageSkuCapability> capabilities, IReadOnlyList<StorageSkuRestriction> restrictions)
         {
             Name = name;
             Tier = tier;
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageSkuName Name { get; }
         /// <summary> The SKU tier. This is based on the SKU name. </summary>
         public StorageSkuTier? Tier { get; }
-        /// <summary> The type of the resource, usually it is &apos;storageAccounts&apos;. </summary>
+        /// <summary> The type of the resource, usually it is 'storageAccounts'. </summary>
         public string ResourceType { get; }
         /// <summary> Indicates the type of storage account. </summary>
         public StorageKind? Kind { get; }
         /// <summary> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </summary>
         public IReadOnlyList<string> Locations { get; }
         /// <summary> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
-        public IReadOnlyList<SKUCapability> Capabilities { get; }
+        public IReadOnlyList<StorageSkuCapability> Capabilities { get; }
         /// <summary> The restrictions because of which SKU cannot be used. This is empty if there are no restrictions. </summary>
-        public IReadOnlyList<Restriction> Restrictions { get; }
+        public IReadOnlyList<StorageSkuRestriction> Restrictions { get; }
     }
 }

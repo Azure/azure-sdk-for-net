@@ -4,3 +4,12 @@ T:System.Runtime.CompilerServices.CompilerGeneratedAttribute
 T:System.Runtime.CompilerServices.NullableContextAttribute
 T:System.Runtime.CompilerServices.NullableAttribute
 T:Azure.Core.CodeGenSuppressAttribute
+T:Azure.Core.CodeGenModelAttribute
+T:Azure.Core.CodeGenMemberAttribute
+T:Azure.Core.PropertyReferenceTypeAttribute
+T:Azure.Core.CodeGenTypeAttribute
+T:Azure.Core.CodeGenClientAttribute
+T:Azure.Core.CodeGenMemberSerializationAttribute
+T:Azure.Core.CodeGenMemberSerializationHooksAttribute
+T:Azure.Core.CodeGenSuppressAttribute
+T:Azure.Core.CodeGenSuppressTypeAttribute

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -50,6 +51,12 @@ namespace Azure.AI.TextAnalytics.Tests
         private static readonly List<string> s_document2ExpectedOutput = new List<string>
         {
             "111000025"
+        };
+
+        private static readonly Dictionary<string, List<string>> s_expectedBatchOutput = new()
+        {
+            { "0", s_document1ExpectedOutput },
+            { "1", s_document2ExpectedOutput },
         };
 
         [RecordedTest]
@@ -149,13 +156,8 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizePiiEntitiesBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
+            Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchConvenienceDocuments);
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "0", s_document1ExpectedOutput },
-                { "1", s_document2ExpectedOutput },
-            };
 
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
@@ -164,13 +166,8 @@ namespace Azure.AI.TextAnalytics.Tests
         public async Task RecognizePiiEntitiesBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
+            Dictionary<string, List<string>> expectedOutput = s_expectedBatchOutput;
             RecognizePiiEntitiesResultCollection results = await client.RecognizePiiEntitiesBatchAsync(s_batchConvenienceDocuments, "en", new RecognizePiiEntitiesOptions { IncludeStatistics = true });
-
-            var expectedOutput = new Dictionary<string, List<string>>()
-            {
-                { "0", s_document1ExpectedOutput },
-                { "1", s_document2ExpectedOutput },
-            };
 
             ValidateBatchDocumentsResult(results, expectedOutput, includeStatistics: true);
         }
@@ -237,8 +234,10 @@ namespace Azure.AI.TextAnalytics.Tests
             ValidateBatchDocumentsResult(results, expectedOutput);
         }
 
-        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V3_2_Preview_2)]
         [RecordedTest]
+        [RetryOnInternalServerError]
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        [Ignore("LRO not implemented")]
         public async Task RecognizePiiEntitiesWithMultipleActions()
         {
             TextAnalyticsClient client = GetClient();
@@ -298,7 +297,10 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateBatchDocumentsResult(RecognizePiiEntitiesResultCollection results, Dictionary<string, List<string>> minimumExpectedOutput, bool includeStatistics = default)
+        private void ValidateBatchDocumentsResult(
+            RecognizePiiEntitiesResultCollection results,
+            Dictionary<string, List<string>> minimumExpectedOutput,
+            bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -313,27 +315,26 @@ namespace Azure.AI.TextAnalytics.Tests
             else
                 Assert.IsNull(results.Statistics);
 
-            foreach (RecognizePiiEntitiesResult entitiesInDocument in results)
+            foreach (RecognizePiiEntitiesResult result in results)
             {
-                Assert.That(entitiesInDocument.Id, Is.Not.Null.And.Not.Empty);
-
-                Assert.False(entitiesInDocument.HasError);
+                Assert.That(result.Id, Is.Not.Null.And.Not.Empty);
+                Assert.False(result.HasError);
 
                 //Even though statistics are not asked for, TA 5.0.0 shipped with Statistics default always present.
-                Assert.IsNotNull(entitiesInDocument.Statistics);
+                Assert.IsNotNull(result.Statistics);
 
                 if (includeStatistics)
                 {
-                    Assert.GreaterOrEqual(entitiesInDocument.Statistics.CharacterCount, 0);
-                    Assert.Greater(entitiesInDocument.Statistics.TransactionCount, 0);
+                    Assert.GreaterOrEqual(result.Statistics.CharacterCount, 0);
+                    Assert.Greater(result.Statistics.TransactionCount, 0);
                 }
                 else
                 {
-                    Assert.AreEqual(0, entitiesInDocument.Statistics.CharacterCount);
-                    Assert.AreEqual(0, entitiesInDocument.Statistics.TransactionCount);
+                    Assert.AreEqual(0, result.Statistics.CharacterCount);
+                    Assert.AreEqual(0, result.Statistics.TransactionCount);
                 }
 
-                ValidateInDocumenResult(entitiesInDocument.Entities, minimumExpectedOutput[entitiesInDocument.Id]);
+                ValidateInDocumenResult(result.Entities, minimumExpectedOutput[result.Id]);
             }
         }
     }

@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VCPUs))
+            if (Optional.IsDefined(VCpus))
             {
-                writer.WritePropertyName("vCPUs");
-                writer.WriteObjectValue(VCPUs);
+                writer.WritePropertyName("vCPUs"u8);
+                writer.WriteObjectValue(VCpus);
             }
             if (Optional.IsDefined(Memory))
             {
-                writer.WritePropertyName("memory");
+                writer.WritePropertyName("memory"u8);
                 writer.WriteObjectValue(Memory);
             }
             writer.WriteEndObject();
@@ -30,32 +30,34 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element)
         {
-            Optional<ResourceRange> vcpUs = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceRange> vCpus = default;
             Optional<ResourceRange> memory = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vCPUs"))
+                if (property.NameEquals("vCPUs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vcpUs = ResourceRange.DeserializeResourceRange(property.Value);
+                    vCpus = ResourceRange.DeserializeResourceRange(property.Value);
                     continue;
                 }
-                if (property.NameEquals("memory"))
+                if (property.NameEquals("memory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memory = ResourceRange.DeserializeResourceRange(property.Value);
                     continue;
                 }
             }
-            return new RecommendedMachineConfiguration(vcpUs.Value, memory.Value);
+            return new RecommendedMachineConfiguration(vCpus.Value, memory.Value);
         }
     }
 }

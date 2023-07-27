@@ -428,11 +428,10 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// Sets the OS state of the virtual machine to generalized. It is recommended
-            /// to sysprep the virtual machine before performing this operation.
-            /// &lt;br&gt;For Windows, please refer to [Create a managed image of a
-            /// generalized VM in
-            /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
-            /// Linux, please refer to [How to create an image of a virtual machine or
+            /// to sysprep the virtual machine before performing this operation. For
+            /// Windows, please refer to [Create a managed image of a generalized VM in
+            /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).
+            /// For Linux, please refer to [How to create an image of a virtual machine or
             /// VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image).
             /// </summary>
             /// <param name='operations'>
@@ -451,11 +450,10 @@ namespace Microsoft.Azure.Management.Compute
 
             /// <summary>
             /// Sets the OS state of the virtual machine to generalized. It is recommended
-            /// to sysprep the virtual machine before performing this operation.
-            /// &lt;br&gt;For Windows, please refer to [Create a managed image of a
-            /// generalized VM in
-            /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).&lt;br&gt;For
-            /// Linux, please refer to [How to create an image of a virtual machine or
+            /// to sysprep the virtual machine before performing this operation. For
+            /// Windows, please refer to [Create a managed image of a generalized VM in
+            /// Azure](https://docs.microsoft.com/azure/virtual-machines/windows/capture-image-resource).
+            /// For Linux, please refer to [How to create an image of a virtual machine or
             /// VHD](https://docs.microsoft.com/azure/virtual-machines/linux/capture-image).
             /// </summary>
             /// <param name='operations'>
@@ -490,9 +488,15 @@ namespace Microsoft.Azure.Management.Compute
             /// value is 'virtualMachineScaleSet/id' eq
             /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
             /// </param>
-            public static IPage<VirtualMachine> List(this IVirtualMachinesOperations operations, string resourceGroupName, string filter = default(string))
+            /// <param name='expand'>
+            /// The expand expression to apply on operation. 'instanceView' enables
+            /// fetching run time status of all Virtual Machines, this can only be
+            /// specified if a valid $filter option is specified. Possible values include:
+            /// 'instanceView'
+            /// </param>
+            public static IPage<VirtualMachine> List(this IVirtualMachinesOperations operations, string resourceGroupName, string filter = default(string), string expand = default(string))
             {
-                return operations.ListAsync(resourceGroupName, filter).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, filter, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -510,12 +514,18 @@ namespace Microsoft.Azure.Management.Compute
             /// value is 'virtualMachineScaleSet/id' eq
             /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
             /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on operation. 'instanceView' enables
+            /// fetching run time status of all Virtual Machines, this can only be
+            /// specified if a valid $filter option is specified. Possible values include:
+            /// 'instanceView'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachine>> ListAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachine>> ListAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string filter = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, filter, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -537,9 +547,15 @@ namespace Microsoft.Azure.Management.Compute
             /// value is 'virtualMachineScaleSet/id' eq
             /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
             /// </param>
-            public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations, string statusOnly = default(string), string filter = default(string))
+            /// <param name='expand'>
+            /// The expand expression to apply on operation. 'instanceView' enables
+            /// fetching run time status of all Virtual Machines, this can only be
+            /// specified if a valid $filter option is specified. Possible values include:
+            /// 'instanceView'
+            /// </param>
+            public static IPage<VirtualMachine> ListAll(this IVirtualMachinesOperations operations, string statusOnly = default(string), string filter = default(string), string expand = default(string))
             {
-                return operations.ListAllAsync(statusOnly, filter).GetAwaiter().GetResult();
+                return operations.ListAllAsync(statusOnly, filter, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -558,12 +574,18 @@ namespace Microsoft.Azure.Management.Compute
             /// value is 'virtualMachineScaleSet/id' eq
             /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'
             /// </param>
+            /// <param name='expand'>
+            /// The expand expression to apply on operation. 'instanceView' enables
+            /// fetching run time status of all Virtual Machines, this can only be
+            /// specified if a valid $filter option is specified. Possible values include:
+            /// 'instanceView'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string statusOnly = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<VirtualMachine>> ListAllAsync(this IVirtualMachinesOperations operations, string statusOnly = default(string), string filter = default(string), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(statusOnly, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(statusOnly, filter, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -813,8 +835,13 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Reimages the virtual machine which has an ephemeral OS disk back to its
-            /// initial state.
+            /// Reimages (upgrade the operating system) a virtual machine which don't have
+            /// a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the
+            /// virtual machine is reset to initial state. NOTE: The retaining of old OS
+            /// disk depends on the value of deleteOption of OS disk. If deleteOption is
+            /// detach, the old OS disk will be preserved after reimage. If deleteOption is
+            /// delete, the old OS disk will be deleted after reimage. The deleteOption of
+            /// the OS disk should be updated accordingly before performing the reimage.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -825,19 +852,22 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Reimage Virtual Machine operation.
             /// </param>
-            public static void Reimage(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?))
+            public static void Reimage(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters))
             {
-                operations.ReimageAsync(resourceGroupName, vmName, tempDisk).GetAwaiter().GetResult();
+                operations.ReimageAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Reimages the virtual machine which has an ephemeral OS disk back to its
-            /// initial state.
+            /// Reimages (upgrade the operating system) a virtual machine which don't have
+            /// a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the
+            /// virtual machine is reset to initial state. NOTE: The retaining of old OS
+            /// disk depends on the value of deleteOption of OS disk. If deleteOption is
+            /// detach, the old OS disk will be preserved after reimage. If deleteOption is
+            /// delete, the old OS disk will be deleted after reimage. The deleteOption of
+            /// the OS disk should be updated accordingly before performing the reimage.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -848,17 +878,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Reimage Virtual Machine operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ReimageAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ReimageAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.ReimageWithHttpMessagesAsync(resourceGroupName, vmName, tempDisk, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.ReimageWithHttpMessagesAsync(resourceGroupName, vmName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -876,8 +904,8 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='sasUriExpirationTimeInMinutes'>
             /// Expiration duration in minutes for the SAS URIs with a value between 1 to
-            /// 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be
-            /// generated with a default expiration duration of 120 minutes.
+            /// 1440 minutes. **Note:** If not specified, SAS URIs will be generated with a
+            /// default expiration duration of 120 minutes.
             /// </param>
             public static RetrieveBootDiagnosticsDataResult RetrieveBootDiagnosticsData(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, int? sasUriExpirationTimeInMinutes = default(int?))
             {
@@ -899,8 +927,8 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='sasUriExpirationTimeInMinutes'>
             /// Expiration duration in minutes for the SAS URIs with a value between 1 to
-            /// 1440 minutes. &lt;br&gt;&lt;br&gt;NOTE: If not specified, SAS URIs will be
-            /// generated with a default expiration duration of 120 minutes.
+            /// 1440 minutes. **Note:** If not specified, SAS URIs will be generated with a
+            /// default expiration duration of 120 minutes.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1590,8 +1618,13 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Reimages the virtual machine which has an ephemeral OS disk back to its
-            /// initial state.
+            /// Reimages (upgrade the operating system) a virtual machine which don't have
+            /// a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the
+            /// virtual machine is reset to initial state. NOTE: The retaining of old OS
+            /// disk depends on the value of deleteOption of OS disk. If deleteOption is
+            /// detach, the old OS disk will be preserved after reimage. If deleteOption is
+            /// delete, the old OS disk will be deleted after reimage. The deleteOption of
+            /// the OS disk should be updated accordingly before performing the reimage.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1602,19 +1635,22 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Reimage Virtual Machine operation.
             /// </param>
-            public static void BeginReimage(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?))
+            public static void BeginReimage(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters))
             {
-                operations.BeginReimageAsync(resourceGroupName, vmName, tempDisk).GetAwaiter().GetResult();
+                operations.BeginReimageAsync(resourceGroupName, vmName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Reimages the virtual machine which has an ephemeral OS disk back to its
-            /// initial state.
+            /// Reimages (upgrade the operating system) a virtual machine which don't have
+            /// a ephemeral OS disk, for virtual machines who have a ephemeral OS disk the
+            /// virtual machine is reset to initial state. NOTE: The retaining of old OS
+            /// disk depends on the value of deleteOption of OS disk. If deleteOption is
+            /// detach, the old OS disk will be preserved after reimage. If deleteOption is
+            /// delete, the old OS disk will be deleted after reimage. The deleteOption of
+            /// the OS disk should be updated accordingly before performing the reimage.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1625,17 +1661,15 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmName'>
             /// The name of the virtual machine.
             /// </param>
-            /// <param name='tempDisk'>
-            /// Specifies whether to reimage temp disk. Default value: false. Note: This
-            /// temp disk reimage parameter is only supported for VM/VMSS with Ephemeral OS
-            /// disk.
+            /// <param name='parameters'>
+            /// Parameters supplied to the Reimage Virtual Machine operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginReimageAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, bool? tempDisk = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginReimageAsync(this IVirtualMachinesOperations operations, string resourceGroupName, string vmName, VirtualMachineReimageParameters parameters = default(VirtualMachineReimageParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginReimageWithHttpMessagesAsync(resourceGroupName, vmName, tempDisk, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginReimageWithHttpMessagesAsync(resourceGroupName, vmName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

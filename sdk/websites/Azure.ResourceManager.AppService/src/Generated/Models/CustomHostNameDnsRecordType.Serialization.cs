@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static CustomHostNameDnsRecordType ToCustomHostNameDnsRecordType(this string value)
         {
-            if (string.Equals(value, "CName", StringComparison.InvariantCultureIgnoreCase)) return CustomHostNameDnsRecordType.CName;
-            if (string.Equals(value, "A", StringComparison.InvariantCultureIgnoreCase)) return CustomHostNameDnsRecordType.A;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CName")) return CustomHostNameDnsRecordType.CName;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "A")) return CustomHostNameDnsRecordType.A;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CustomHostNameDnsRecordType value.");
         }
     }

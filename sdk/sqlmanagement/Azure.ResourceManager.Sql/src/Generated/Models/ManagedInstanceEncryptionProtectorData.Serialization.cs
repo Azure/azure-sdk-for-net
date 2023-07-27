@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Sql
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerKeyName))
             {
-                writer.WritePropertyName("serverKeyName");
+                writer.WritePropertyName("serverKeyName"u8);
                 writer.WriteStringValue(ServerKeyName);
             }
             if (Optional.IsDefined(ServerKeyType))
             {
-                writer.WritePropertyName("serverKeyType");
+                writer.WritePropertyName("serverKeyType"u8);
                 writer.WriteStringValue(ServerKeyType.Value.ToString());
             }
-            if (Optional.IsDefined(AutoRotationEnabled))
+            if (Optional.IsDefined(IsAutoRotationEnabled))
             {
-                writer.WritePropertyName("autoRotationEnabled");
-                writer.WriteBooleanValue(AutoRotationEnabled.Value);
+                writer.WritePropertyName("autoRotationEnabled"u8);
+                writer.WriteBooleanValue(IsAutoRotationEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -41,44 +41,52 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedInstanceEncryptionProtectorData DeserializeManagedInstanceEncryptionProtectorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> serverKeyName = default;
-            Optional<ServerKeyType> serverKeyType = default;
+            Optional<SqlServerKeyType> serverKeyType = default;
             Optional<Uri> uri = default;
             Optional<string> thumbprint = default;
             Optional<bool> autoRotationEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -87,41 +95,38 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serverKeyName"))
+                        if (property0.NameEquals("serverKeyName"u8))
                         {
                             serverKeyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serverKeyType"))
+                        if (property0.NameEquals("serverKeyType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            serverKeyType = new ServerKeyType(property0.Value.GetString());
+                            serverKeyType = new SqlServerKeyType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("uri"))
+                        if (property0.NameEquals("uri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                uri = null;
                                 continue;
                             }
                             uri = new Uri(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("thumbprint"))
+                        if (property0.NameEquals("thumbprint"u8))
                         {
                             thumbprint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("autoRotationEnabled"))
+                        if (property0.NameEquals("autoRotationEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoRotationEnabled = property0.Value.GetBoolean();
@@ -131,7 +136,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new ManagedInstanceEncryptionProtectorData(id, name, type, systemData, kind.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled));
+            return new ManagedInstanceEncryptionProtectorData(id, name, type, systemData.Value, kind.Value, serverKeyName.Value, Optional.ToNullable(serverKeyType), uri.Value, thumbprint.Value, Optional.ToNullable(autoRotationEnabled));
         }
     }
 }

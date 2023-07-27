@@ -8,34 +8,23 @@ namespace Azure.Messaging.EventGrid.Tests
 {
     public class EventGridTestEnvironment : TestEnvironment
     {
-        public const string TopicKeyEnvironmentVariableName = "EVENT_GRID_TOPIC_KEY";
-        public const string TopicEndpointEnvironmentVariableName = "EVENT_GRID_TOPIC_ENDPOINT";
+        public string TopicHost => GetRecordedVariable("EVENT_GRID_TOPIC_ENDPOINT");
+        public string TopicKey => GetRecordedVariable("EVENT_GRID_TOPIC_KEY", options => options.IsSecret(SanitizedValue.Base64));
 
-        public const string DomainKeyEnvironmentVariableName = "EVENT_GRID_DOMAIN_KEY";
-        public const string DomainEndpointEnvironmentVariableName = "EVENT_GRID_DOMAIN_ENDPOINT";
+        public string DomainHost => GetRecordedVariable("EVENT_GRID_DOMAIN_ENDPOINT");
+        public string DomainKey => GetRecordedVariable("EVENT_GRID_DOMAIN_KEY", options => options.IsSecret(SanitizedValue.Base64));
 
-        public const string CloudEventDomainKeyEnvironmentVariableName = "EVENT_GRID_CLOUD_EVENT_DOMAIN_KEY";
-        public const string CloudEventDomainEndpointEnvironmentVariableName = "EVENT_GRID_CLOUD_EVENT_DOMAIN_ENDPOINT";
+        public string CloudEventDomainHost => GetRecordedVariable("EVENT_GRID_CLOUD_EVENT_DOMAIN_ENDPOINT");
+        public string CloudEventDomainKey => GetRecordedVariable("EVENT_GRID_CLOUD_EVENT_DOMAIN_KEY", options => options.IsSecret(SanitizedValue.Base64));
 
-        public const string CloudEventTopicKeyEnvironmentVariableName = "EVENT_GRID_CLOUD_EVENT_TOPIC_KEY";
-        public const string CloudEventTopicEndpointEnvironmentVariableName = "EVENT_GRID_CLOUD_EVENT_TOPIC_ENDPOINT";
+        public string CloudEventTopicHost => GetRecordedVariable("EVENT_GRID_CLOUD_EVENT_TOPIC_ENDPOINT");
+        public string CloudEventTopicKey => GetRecordedVariable("EVENT_GRID_CLOUD_EVENT_TOPIC_KEY", options => options.IsSecret(SanitizedValue.Base64));
 
-        public const string CustomEventTopicKeyEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY";
-        public const string CustomEventTopicEndpointEnvironmentVariableName = "EVENT_GRID_CUSTOM_EVENT_TOPIC_ENDPOINT";
+        public string CustomEventTopicHost => GetRecordedVariable("EVENT_GRID_CUSTOM_EVENT_TOPIC_ENDPOINT");
+        public string CustomEventTopicKey => GetRecordedVariable("EVENT_GRID_CUSTOM_EVENT_TOPIC_KEY", options => options.IsSecret(SanitizedValue.Base64));
 
-        public string TopicHost => GetRecordedVariable(TopicEndpointEnvironmentVariableName);
-        public string TopicKey => GetRecordedVariable(TopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
-
-        public string DomainHost => GetRecordedVariable(DomainEndpointEnvironmentVariableName);
-        public string DomainKey => GetRecordedVariable(DomainKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
-
-        public string CloudEventDomainHost => GetRecordedVariable(CloudEventDomainEndpointEnvironmentVariableName);
-        public string CloudEventDomainKey => GetRecordedVariable(CloudEventDomainKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
-
-        public string CloudEventTopicHost => GetRecordedVariable(CloudEventTopicEndpointEnvironmentVariableName);
-        public string CloudEventTopicKey => GetRecordedVariable(CloudEventTopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
-
-        public string CustomEventTopicHost => GetRecordedVariable(CustomEventTopicEndpointEnvironmentVariableName);
-        public string CustomEventTopicKey => GetRecordedVariable(CustomEventTopicKeyEnvironmentVariableName, options => options.IsSecret(SanitizedValue.Base64));
+        public string PartnerNamespaceHost => GetRecordedVariable("EVENT_GRID_PARTNER_NAMESPACE_ENDPOINT");
+        public string PartnerNamespaceKey => GetRecordedVariable("EVENT_GRID_PARTNER_NAMESPACE_KEY", options => options.IsSecret(SanitizedValue.Base64));
+        public string PartnerChannelName => GetRecordedVariable("EVENT_GRID_PARTNER_CHANNEL_NAME");
     }
 }

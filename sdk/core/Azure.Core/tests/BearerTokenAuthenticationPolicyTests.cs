@@ -677,6 +677,7 @@ namespace Azure.Core.Tests
 
         [Test]
         [Retry(3)] //https://github.com/Azure/azure-sdk-for-net/issues/21005
+        [NonParallelizable]
         public async Task BearerTokenAuthenticationPolicy_BackgroundRefreshCancelledAndLogs()
         {
             var requestMre = new ManualResetEventSlim(true);
@@ -704,7 +705,7 @@ namespace Azure.Core.Tests
                 },
                 IsAsync);
 
-            AzureEventSourceListener listener = new((args, text) =>
+            using AzureEventSourceListener listener = new((args, text) =>
             {
                 TestContext.WriteLine(text);
                 if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))
@@ -733,6 +734,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        [NonParallelizable]
         [Retry(3)] //https://github.com/Azure/azure-sdk-for-net/issues/21005
         public async Task BearerTokenAuthenticationPolicy_BackgroundRefreshFailsAndLogs()
         {
@@ -760,7 +762,7 @@ namespace Azure.Core.Tests
                 },
                 IsAsync);
 
-            AzureEventSourceListener listener = new((args, text) =>
+            using AzureEventSourceListener listener = new((args, text) =>
             {
                 TestContext.WriteLine(text);
                 if (args.EventName == "BackgroundRefreshFailed" && text.Contains(msg))
@@ -785,6 +787,122 @@ namespace Azure.Core.Tests
             await SendGetRequest(transport, policy, uri: new Uri("https://example.com/4/AfterRefresh"));
 
             Assert.IsTrue(logged);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_SwitchedTenants()
+        {
+            var responses = new[]
+            {
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net"""),
+
+                new MockResponse(200),
+                new MockResponse(200),
+
+                // Moved tenants.
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47"", resource=""https://vault.azure.net""")
+                    .WithJson("""
+                    {
+                        "error": {
+                            "code": "Unauthorized",
+                            "message": "AKV10032: Invalid issuer. Expected one of https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/, https://sts.windows.net/f8cdef31-a31e-4b4a-93e4-5f571e91255a/, https://sts.windows.net/e2d54eb5-3869-4f70-8578-dee5fc7331f4/, https://sts.windows.net/33e01921-4d64-4f8c-a055-5bdaffd5e33d/, https://sts.windows.net/975f013f-7f24-47e8-a7d3-abc4752bf346/, found https://sts.windows.net/96be4b7a-defb-4dc2-a31f-49ee6145d5ab/."
+                        }
+                    }
+                    """),
+
+                new MockResponse(200),
+            };
+
+            var transport = CreateMockTransport(responses);
+
+            string tenantId = null;
+            int callCount = 0;
+            var credential = new TokenCredentialStub((r, c) =>
+            {
+                tenantId = r.TenantId;
+                Interlocked.Increment(ref callCount);
+
+                return new(Guid.NewGuid().ToString(), DateTimeOffset.Now.AddHours(2));
+            }, IsAsync);
+            var policy = new ChallengeBasedAuthenticationTestPolicy(credential, "scope");
+
+            await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
+            Assert.AreEqual("de763a21-49f7-4b08-a8e1-52c8fbc103b4", tenantId);
+            // This is initially 2 because the pipeline tries to pre-authenticate, then again when the test policy authenticates on a 401.
+            Assert.AreEqual(2, callCount);
+
+            await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
+            Assert.AreEqual("de763a21-49f7-4b08-a8e1-52c8fbc103b4", tenantId);
+            Assert.AreEqual(2, callCount);
+
+            await SendGetRequest(transport, policy, uri: new("https://example.com/1/Original"));
+            Assert.AreEqual("72f988bf-86f1-41af-91ab-2d7cd011db47", tenantId);
+            // An additional call to TokenCredential.GetTokenAsync is expected now that the tenant has changed.
+            Assert.AreEqual(3, callCount);
+        }
+
+        private class ChallengeBasedAuthenticationTestPolicy : BearerTokenAuthenticationPolicy
+        {
+            public string TenantId { get; private set; }
+
+            private readonly ConcurrentQueue<string> _tenantIds = new(
+                new[]
+                {
+                    "de763a21-49f7-4b08-a8e1-52c8fbc103b4",
+                    "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                });
+
+            public ChallengeBasedAuthenticationTestPolicy(TokenCredential credential, string scope) : base(credential, scope)
+            {
+            }
+
+            protected override void AuthorizeRequest(HttpMessage message) =>
+                AuthorizeRequestAsync(message, false).EnsureCompleted();
+
+            protected override async ValueTask AuthorizeRequestAsync(HttpMessage message) =>
+                await AuthorizeRequestAsync(message, true).ConfigureAwait(false);
+
+            private async ValueTask AuthorizeRequestAsync(HttpMessage message, bool isAsync)
+            {
+                if (!message.Request.Headers.Contains(HttpHeader.Names.Authorization))
+                {
+                    TokenRequestContext context = new(new[] { "scope" });
+                    if (isAsync)
+                    {
+                        await AuthenticateAndAuthorizeRequestAsync(message, context);
+                    }
+                    else
+                    {
+                        AuthenticateAndAuthorizeRequest(message, context);
+                    }
+                }
+            }
+
+            protected override bool AuthorizeRequestOnChallenge(HttpMessage message) =>
+                AuthorizeRequestOnChallengeAsync(message, false).EnsureCompleted();
+
+            protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message) =>
+                await AuthorizeRequestOnChallengeAsync(message, true).ConfigureAwait(false);
+
+            private async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message, bool isAsync)
+            {
+                Assert.IsTrue(_tenantIds.TryDequeue(out string tenantId));
+                TenantId = tenantId;
+
+                TokenRequestContext context = new(new[] { "scope" }, tenantId: tenantId);
+                if (isAsync)
+                {
+                    await AuthenticateAndAuthorizeRequestAsync(message, context);
+                }
+                else
+                {
+                    AuthenticateAndAuthorizeRequest(message, context);
+                }
+
+                return true;
+            }
         }
 
         private class TokenCredentialStub : TokenCredential

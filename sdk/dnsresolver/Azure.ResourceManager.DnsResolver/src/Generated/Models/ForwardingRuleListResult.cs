@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of ForwardingRuleListResult. </summary>
         internal ForwardingRuleListResult()
         {
-            Value = new ChangeTrackingList<ForwardingRuleData>();
+            Value = new ChangeTrackingList<DnsForwardingRuleData>();
         }
 
         /// <summary> Initializes a new instance of ForwardingRuleListResult. </summary>
         /// <param name="value"> Enumeration of the forwarding rules. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal ForwardingRuleListResult(IReadOnlyList<ForwardingRuleData> value, string nextLink)
+        internal ForwardingRuleListResult(IReadOnlyList<DnsForwardingRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Enumeration of the forwarding rules. </summary>
-        public IReadOnlyList<ForwardingRuleData> Value { get; }
+        public IReadOnlyList<DnsForwardingRuleData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }

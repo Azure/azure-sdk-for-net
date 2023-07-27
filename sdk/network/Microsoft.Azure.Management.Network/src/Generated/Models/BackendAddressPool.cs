@@ -54,13 +54,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// backend address pool resource. Possible values include:
         /// 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
+        /// <param name="drainPeriodInSeconds">Amount of seconds Load Balancer
+        /// waits for before sending RESET to client and backend
+        /// address.</param>
+        /// <param name="virtualNetwork">A reference to a virtual
+        /// network.</param>
         /// <param name="name">The name of the resource that is unique within
         /// the set of backend address pools used by the load balancer. This
         /// name can be used to access the resource.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Type of the resource.</param>
-        public BackendAddressPool(string id = default(string), string location = default(string), IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default(IList<GatewayLoadBalancerTunnelInterface>), IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default(IList<LoadBalancerBackendAddress>), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundRule = default(SubResource), IList<SubResource> outboundRules = default(IList<SubResource>), IList<SubResource> inboundNatRules = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string), string type = default(string))
+        public BackendAddressPool(string id = default(string), string location = default(string), IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces = default(IList<GatewayLoadBalancerTunnelInterface>), IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses = default(IList<LoadBalancerBackendAddress>), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundRule = default(SubResource), IList<SubResource> outboundRules = default(IList<SubResource>), IList<SubResource> inboundNatRules = default(IList<SubResource>), string provisioningState = default(string), int? drainPeriodInSeconds = default(int?), SubResource virtualNetwork = default(SubResource), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             Location = location;
@@ -72,6 +77,8 @@ namespace Microsoft.Azure.Management.Network.Models
             OutboundRules = outboundRules;
             InboundNatRules = inboundNatRules;
             ProvisioningState = provisioningState;
+            DrainPeriodInSeconds = drainPeriodInSeconds;
+            VirtualNetwork = virtualNetwork;
             Name = name;
             Etag = etag;
             Type = type;
@@ -143,6 +150,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets amount of seconds Load Balancer waits for before
+        /// sending RESET to client and backend address.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.drainPeriodInSeconds")]
+        public int? DrainPeriodInSeconds { get; set; }
+
+        /// <summary>
+        /// Gets or sets a reference to a virtual network.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.virtualNetwork")]
+        public SubResource VirtualNetwork { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within the set

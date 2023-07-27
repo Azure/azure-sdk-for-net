@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for List all recommendations for a subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListAsync(string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListAsync(string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for List all recommendations for a subscription. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> List(string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> List(string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -270,11 +270,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="hostingEnvironmentName"> Name of the hosting environment. </param>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListHistoryForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListHistoryForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="hostingEnvironmentName"> Name of the hosting environment. </param>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListHistoryForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListHistoryForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -317,9 +317,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="hostingEnvironmentName"> Name of the app. </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListRecommendedRulesForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListRecommendedRulesForHostingEnvironmentAsync(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -377,9 +377,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -392,11 +392,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="hostingEnvironmentName"> Name of the app. </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListRecommendedRulesForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListRecommendedRulesForHostingEnvironment(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -408,9 +408,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentName"> Name of the hosting environment. </param>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
-        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="hostingEnvironmentName"> Name of the hosting environment. </param>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
-        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -780,11 +780,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListHistoryForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListHistoryForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -796,9 +796,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -811,11 +811,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListHistoryForWebApp(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListHistoryForWebApp(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -827,9 +827,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -871,11 +871,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListRecommendedRulesForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListRecommendedRulesForWebAppAsync(string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -887,9 +887,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -902,11 +902,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListRecommendedRulesForWebApp(string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListRecommendedRulesForWebApp(string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -918,9 +918,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1102,7 +1102,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
-        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="name"> Name of the recommendation. </param>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
-        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
+        /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don't need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="siteName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1259,11 +1259,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListNextPageAsync(string nextLink, string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1274,9 +1274,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1288,11 +1288,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListNextPage(string nextLink, string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListNextPage(string nextLink, string subscriptionId, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1303,9 +1303,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1333,11 +1333,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="hostingEnvironmentName"> Name of the hosting environment. </param>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListHistoryForHostingEnvironmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListHistoryForHostingEnvironmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1350,9 +1350,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1366,11 +1366,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="hostingEnvironmentName"> Name of the hosting environment. </param>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListHistoryForHostingEnvironmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListHistoryForHostingEnvironmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1383,9 +1383,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1413,11 +1413,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="hostingEnvironmentName"> Name of the app. </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListRecommendedRulesForHostingEnvironmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListRecommendedRulesForHostingEnvironmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1430,9 +1430,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1446,11 +1446,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="hostingEnvironmentName"> Name of the app. </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="hostingEnvironmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListRecommendedRulesForHostingEnvironmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListRecommendedRulesForHostingEnvironmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1463,9 +1463,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1493,11 +1493,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListHistoryForWebAppNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListHistoryForWebAppNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1510,9 +1510,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1526,11 +1526,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="expiredOnly"> Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The default is &lt;code&gt;true&lt;/code&gt;, which returns only expired recommendations. </param>
-        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos; and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[PT1H|PT1M|P1D]. </param>
+        /// <param name="filter"> Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[PT1H|PT1M|P1D]. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListHistoryForWebAppNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListHistoryForWebAppNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1543,9 +1543,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1573,11 +1573,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RecommendationCollection>> ListRecommendedRulesForWebAppNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceRecommendationListResult>> ListRecommendedRulesForWebAppNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1590,9 +1590,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1606,11 +1606,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="siteName"> Name of the app. </param>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
-        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq &apos;Api&apos; or channel eq &apos;Notification&apos;. </param>
+        /// <param name="filter"> Return only channels specified in the filter. Filter is specified by using OData syntax. Example: $filter=channel eq 'Api' or channel eq 'Notification'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RecommendationCollection> ListRecommendedRulesForWebAppNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AppServiceRecommendationListResult> ListRecommendedRulesForWebAppNextPage(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1623,9 +1623,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        RecommendationCollection value = default;
+                        AppServiceRecommendationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RecommendationCollection.DeserializeRecommendationCollection(document.RootElement);
+                        value = AppServiceRecommendationListResult.DeserializeAppServiceRecommendationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

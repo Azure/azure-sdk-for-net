@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DnsServers))
             {
-                writer.WritePropertyName("dnsServers");
+                writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsServers)
                 {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             if (Optional.IsDefined(InternalDnsNameLabel))
             {
-                writer.WritePropertyName("internalDnsNameLabel");
+                writer.WritePropertyName("internalDnsNameLabel"u8);
                 writer.WriteStringValue(InternalDnsNameLabel);
             }
             writer.WriteEndObject();
@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkInterfaceDnsSettings DeserializeNetworkInterfaceDnsSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> dnsServers = default;
             Optional<IReadOnlyList<string>> appliedDnsServers = default;
             Optional<string> internalDnsNameLabel = default;
@@ -43,11 +47,10 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> internalDomainNameSuffix = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("dnsServers"))
+                if (property.NameEquals("dnsServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -58,11 +61,10 @@ namespace Azure.ResourceManager.Network.Models
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("appliedDnsServers"))
+                if (property.NameEquals("appliedDnsServers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -73,17 +75,17 @@ namespace Azure.ResourceManager.Network.Models
                     appliedDnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("internalDnsNameLabel"))
+                if (property.NameEquals("internalDnsNameLabel"u8))
                 {
                     internalDnsNameLabel = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("internalFqdn"))
+                if (property.NameEquals("internalFqdn"u8))
                 {
                     internalFqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("internalDomainNameSuffix"))
+                if (property.NameEquals("internalDomainNameSuffix"u8))
                 {
                     internalDomainNameSuffix = property.Value.GetString();
                     continue;

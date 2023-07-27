@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,72 +15,76 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static PartitionUsage DeserializePartitionUsage(JsonElement element)
         {
-            Optional<string> partitionId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Guid> partitionId = default;
             Optional<string> partitionKeyRangeId = default;
-            Optional<UnitType> unit = default;
-            Optional<MetricName> name = default;
+            Optional<CosmosDBMetricUnitType> unit = default;
+            Optional<CosmosDBMetricName> name = default;
             Optional<string> quotaPeriod = default;
             Optional<long> limit = default;
             Optional<long> currentValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionId"))
+                if (property.NameEquals("partitionId"u8))
                 {
-                    partitionId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partitionId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("partitionKeyRangeId"))
+                if (property.NameEquals("partitionKeyRangeId"u8))
                 {
                     partitionKeyRangeId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("unit"))
+                if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new UnitType(property.Value.GetString());
+                    unit = new CosmosDBMetricUnitType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = MetricName.DeserializeMetricName(property.Value);
+                    name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
                     continue;
                 }
-                if (property.NameEquals("quotaPeriod"))
+                if (property.NameEquals("quotaPeriod"u8))
                 {
                     quotaPeriod = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("limit"))
+                if (property.NameEquals("limit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("currentValue"))
+                if (property.NameEquals("currentValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetInt64();
                     continue;
                 }
             }
-            return new PartitionUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), partitionId.Value, partitionKeyRangeId.Value);
+            return new PartitionUsage(Optional.ToNullable(unit), name.Value, quotaPeriod.Value, Optional.ToNullable(limit), Optional.ToNullable(currentValue), Optional.ToNullable(partitionId), partitionKeyRangeId.Value);
         }
     }
 }

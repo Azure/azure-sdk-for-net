@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -16,33 +15,24 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NetworkResourceData. </summary>
         public NetworkResourceData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of NetworkResourceData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        internal NetworkResourceData(string id, string name, string resourceType, string location, IDictionary<string, string> tags)
+        internal NetworkResourceData(ResourceIdentifier id, string name, ResourceType? resourceType)
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
-            Location = location;
-            Tags = tags;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Resource name. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> Resource type. </summary>
-        public string ResourceType { get; }
-        /// <summary> Resource location. </summary>
-        public string Location { get; set; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        public ResourceType? ResourceType { get; }
     }
 }

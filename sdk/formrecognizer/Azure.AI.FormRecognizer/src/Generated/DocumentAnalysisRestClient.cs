@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -20,7 +21,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     internal partial class DocumentAnalysisRestClient
     {
         private readonly HttpPipeline _pipeline;
-        private readonly string _endpoint;
+        private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -28,22 +30,27 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentAnalysisRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="endpoint"> Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="endpoint"/> is null. </exception>
-        public DocumentAnalysisRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint)
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for
+        /// example: https://westus2.api.cognitive.microsoft.com).
+        /// </param>
+        /// <param name="apiVersion"> Api Version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
+        public DocumentAnalysisRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-02-28-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
+            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, ContentType1 contentType, string pages, string locale, StringIndexType? stringIndexType, Stream analyzeRequest)
+        internal HttpMessage CreateDocumentModelsAnalyzeDocumentRequest(string modelId, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, AnalyzeDocumentRequest analyzeRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
@@ -60,97 +67,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
             }
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            if (analyzeRequest != null)
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (features != null && Optional.IsCollectionDefined(features))
             {
-                request.Headers.Add("Content-Type", contentType.ToSerialString());
-                request.Content = RequestContent.Create(analyzeRequest);
+                uri.AppendQueryDelimited("features", features, ",", true);
             }
-            return message;
-        }
-
-        /// <summary> Analyzes document with model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
-        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
-        /// <param name="analyzeRequest"> Analyze request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders>> AnalyzeDocumentAsync(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
-        {
-            if (modelId == null)
+            if (queryFields != null && Optional.IsCollectionDefined(queryFields))
             {
-                throw new ArgumentNullException(nameof(modelId));
+                uri.AppendQueryDelimited("queryFields", queryFields, ",", true);
             }
-
-            using var message = CreateAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, analyzeRequest);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
-            }
-        }
-
-        /// <summary> Analyzes document with model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="contentType"> Upload file type. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
-        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
-        /// <param name="analyzeRequest"> Analyze request parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders> AnalyzeDocument(string modelId, ContentType1 contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
-        {
-            if (modelId == null)
-            {
-                throw new ArgumentNullException(nameof(modelId));
-            }
-
-            using var message = CreateAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, analyzeRequest);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, string pages, string locale, StringIndexType? stringIndexType, AnalyzeDocumentRequest analyzeRequest)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
-            uri.AppendRaw("/formrecognizer", false);
-            uri.AppendPath("/documentModels/", false);
-            uri.AppendPath(modelId, true);
-            uri.AppendPath(":analyze", false);
-            if (pages != null)
-            {
-                uri.AppendQuery("pages", pages, true);
-            }
-            if (locale != null)
-            {
-                uri.AppendQuery("locale", locale, true);
-            }
-            if (stringIndexType != null)
-            {
-                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
-            }
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (analyzeRequest != null)
@@ -163,84 +88,297 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Analyzes document with model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <summary> Analyze document. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders>> AnalyzeDocumentAsync(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
+        /// <remarks> Analyzes document with document model. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
                 throw new ArgumentNullException(nameof(modelId));
             }
 
-            using var message = CreateAnalyzeDocumentRequest(modelId, pages, locale, stringIndexType, analyzeRequest);
+            using var message = CreateDocumentModelsAnalyzeDocumentRequest(modelId, pages, locale, stringIndexType, features, queryFields, analyzeRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
+            var headers = new DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Analyzes document with model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <summary> Analyze document. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisAnalyzeDocumentHeaders> AnalyzeDocument(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
+        /// <remarks> Analyzes document with document model. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, AnalyzeDocumentRequest analyzeRequest = null, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
                 throw new ArgumentNullException(nameof(modelId));
             }
 
-            using var message = CreateAnalyzeDocumentRequest(modelId, pages, locale, stringIndexType, analyzeRequest);
+            using var message = CreateDocumentModelsAnalyzeDocumentRequest(modelId, pages, locale, stringIndexType, features, queryFields, analyzeRequest);
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentAnalysisAnalyzeDocumentHeaders(message.Response);
+            var headers = new DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetAnalyzeDocumentResultRequest(string modelId, string resultId)
+        internal HttpMessage CreateDocumentModelsAnalyzeDocumentRequest(string modelId, InternalContentType contentType, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, Stream analyzeRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":analyze", false);
+            if (pages != null)
+            {
+                uri.AppendQuery("pages", pages, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (features != null && Optional.IsCollectionDefined(features))
+            {
+                uri.AppendQueryDelimited("features", features, ",", true);
+            }
+            if (queryFields != null && Optional.IsCollectionDefined(queryFields))
+            {
+                uri.AppendQueryDelimited("queryFields", queryFields, ",", true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (analyzeRequest != null)
+            {
+                request.Headers.Add("Content-Type", contentType.ToSerialString());
+                request.Content = RequestContent.Create(analyzeRequest);
+            }
+            return message;
+        }
+
+        /// <summary> Analyze document. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <remarks> Analyzes document with document model. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, InternalContentType contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+
+            using var message = CreateDocumentModelsAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, features, queryFields, analyzeRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Analyze document. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <remarks> Analyzes document with document model. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, InternalContentType contentType, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, Stream analyzeRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+
+            using var message = CreateDocumentModelsAnalyzeDocumentRequest(modelId, contentType, pages, locale, stringIndexType, features, queryFields, analyzeRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDocumentModelsAnalyzeDocumentRequest(string modelId, string pages, string locale, StringIndexType? stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, string analyzeRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentModels/", false);
+            uri.AppendPath(modelId, true);
+            uri.AppendPath(":analyze", false);
+            if (pages != null)
+            {
+                uri.AppendQuery("pages", pages, true);
+            }
+            if (locale != null)
+            {
+                uri.AppendQuery("locale", locale, true);
+            }
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (features != null && Optional.IsCollectionDefined(features))
+            {
+                uri.AppendQueryDelimited("features", features, ",", true);
+            }
+            if (queryFields != null && Optional.IsCollectionDefined(queryFields))
+            {
+                uri.AppendQueryDelimited("queryFields", queryFields, ",", true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (analyzeRequest != null)
+            {
+                request.Headers.Add("Content-Type", "text/html");
+                request.Content = new StringRequestContent(analyzeRequest);
+            }
+            return message;
+        }
+
+        /// <summary> Analyze document. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <remarks> Analyzes document with document model. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders>> DocumentModelsAnalyzeDocumentAsync(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, string analyzeRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+
+            using var message = CreateDocumentModelsAnalyzeDocumentRequest(modelId, pages, locale, stringIndexType, features, queryFields, analyzeRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Analyze document. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <remarks> Analyzes document with document model. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders> DocumentModelsAnalyzeDocument(string modelId, string pages = null, string locale = null, StringIndexType? stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, string analyzeRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (modelId == null)
+            {
+                throw new ArgumentNullException(nameof(modelId));
+            }
+
+            using var message = CreateDocumentModelsAnalyzeDocumentRequest(modelId, pages, locale, stringIndexType, features, queryFields, analyzeRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DocumentAnalysisDocumentModelsAnalyzeDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDocumentModelsGetAnalyzeResultRequest(string modelId, string resultId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath("/analyzeResults/", false);
             uri.AppendPath(resultId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets the result of document analysis. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Get analyze result. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="resultId"> Analyze operation result ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="resultId"/> is null. </exception>
-        public async Task<Response<AnalyzeResultOperation>> GetAnalyzeDocumentResultAsync(string modelId, string resultId, CancellationToken cancellationToken = default)
+        /// <remarks> Gets the result of document analysis. </remarks>
+        public async Task<Response<AnalyzeResultOperation>> DocumentModelsGetAnalyzeResultAsync(string modelId, string resultId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -251,7 +389,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 throw new ArgumentNullException(nameof(resultId));
             }
 
-            using var message = CreateGetAnalyzeDocumentResultRequest(modelId, resultId);
+            using var message = CreateDocumentModelsGetAnalyzeResultRequest(modelId, resultId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -263,16 +401,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets the result of document analysis. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Get analyze result. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="resultId"> Analyze operation result ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="resultId"/> is null. </exception>
-        public Response<AnalyzeResultOperation> GetAnalyzeDocumentResult(string modelId, string resultId, CancellationToken cancellationToken = default)
+        /// <remarks> Gets the result of document analysis. </remarks>
+        public Response<AnalyzeResultOperation> DocumentModelsGetAnalyzeResult(string modelId, string resultId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -283,7 +422,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 throw new ArgumentNullException(nameof(resultId));
             }
 
-            using var message = CreateGetAnalyzeDocumentResultRequest(modelId, resultId);
+            using var message = CreateDocumentModelsGetAnalyzeResultRequest(modelId, resultId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -295,20 +434,20 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateBuildDocumentModelRequest(BuildDocumentModelRequest buildRequest)
+        internal HttpMessage CreateDocumentModelsBuildModelRequest(BuildDocumentModelRequest buildRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:build", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -318,62 +457,64 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Builds a custom document analysis model. </summary>
+        /// <summary> Build document model. </summary>
         /// <param name="buildRequest"> Building request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisBuildDocumentModelHeaders>> BuildDocumentModelAsync(BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Builds a custom document analysis model. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsBuildModelHeaders>> DocumentModelsBuildModelAsync(BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
         {
             if (buildRequest == null)
             {
                 throw new ArgumentNullException(nameof(buildRequest));
             }
 
-            using var message = CreateBuildDocumentModelRequest(buildRequest);
+            using var message = CreateDocumentModelsBuildModelRequest(buildRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentAnalysisBuildDocumentModelHeaders(message.Response);
+            var headers = new DocumentAnalysisDocumentModelsBuildModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Builds a custom document analysis model. </summary>
+        /// <summary> Build document model. </summary>
         /// <param name="buildRequest"> Building request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisBuildDocumentModelHeaders> BuildDocumentModel(BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Builds a custom document analysis model. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisDocumentModelsBuildModelHeaders> DocumentModelsBuildModel(BuildDocumentModelRequest buildRequest, CancellationToken cancellationToken = default)
         {
             if (buildRequest == null)
             {
                 throw new ArgumentNullException(nameof(buildRequest));
             }
 
-            using var message = CreateBuildDocumentModelRequest(buildRequest);
+            using var message = CreateDocumentModelsBuildModelRequest(buildRequest);
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentAnalysisBuildDocumentModelHeaders(message.Response);
+            var headers = new DocumentAnalysisDocumentModelsBuildModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateComposeDocumentModelRequest(ComposeDocumentModelRequest composeRequest)
+        internal HttpMessage CreateDocumentModelsComposeModelRequest(ComposeDocumentModelRequest composeRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:compose", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -383,62 +524,64 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Creates a new model from document types of existing models. </summary>
+        /// <summary> Compose document model. </summary>
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisComposeDocumentModelHeaders>> ComposeDocumentModelAsync(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Creates a new document model from document types of existing document models. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsComposeModelHeaders>> DocumentModelsComposeModelAsync(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
         {
             if (composeRequest == null)
             {
                 throw new ArgumentNullException(nameof(composeRequest));
             }
 
-            using var message = CreateComposeDocumentModelRequest(composeRequest);
+            using var message = CreateDocumentModelsComposeModelRequest(composeRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentAnalysisComposeDocumentModelHeaders(message.Response);
+            var headers = new DocumentAnalysisDocumentModelsComposeModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Creates a new model from document types of existing models. </summary>
+        /// <summary> Compose document model. </summary>
         /// <param name="composeRequest"> Compose request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="composeRequest"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisComposeDocumentModelHeaders> ComposeDocumentModel(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Creates a new document model from document types of existing document models. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisDocumentModelsComposeModelHeaders> DocumentModelsComposeModel(ComposeDocumentModelRequest composeRequest, CancellationToken cancellationToken = default)
         {
             if (composeRequest == null)
             {
                 throw new ArgumentNullException(nameof(composeRequest));
             }
 
-            using var message = CreateComposeDocumentModelRequest(composeRequest);
+            using var message = CreateDocumentModelsComposeModelRequest(composeRequest);
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentAnalysisComposeDocumentModelHeaders(message.Response);
+            var headers = new DocumentAnalysisDocumentModelsComposeModelHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateAuthorizeCopyDocumentModelRequest(AuthorizeCopyRequest authorizeCopyRequest)
+        internal HttpMessage CreateDocumentModelsAuthorizeModelCopyRequest(AuthorizeCopyRequest authorizeCopyRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels:authorizeCopy", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -448,72 +591,74 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Generates authorization to copy a model to this location with specified modelId and optional description. </summary>
+        /// <summary> Generate copy authorization. </summary>
         /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
-        public async Task<Response<CopyAuthorization>> AuthorizeCopyDocumentModelAsync(AuthorizeCopyRequest authorizeCopyRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Generates authorization to copy a document model to this location with specified modelId and optional description. </remarks>
+        public async Task<Response<DocumentModelCopyAuthorization>> DocumentModelsAuthorizeModelCopyAsync(AuthorizeCopyRequest authorizeCopyRequest, CancellationToken cancellationToken = default)
         {
             if (authorizeCopyRequest == null)
             {
                 throw new ArgumentNullException(nameof(authorizeCopyRequest));
             }
 
-            using var message = CreateAuthorizeCopyDocumentModelRequest(authorizeCopyRequest);
+            using var message = CreateDocumentModelsAuthorizeModelCopyRequest(authorizeCopyRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CopyAuthorization value = default;
+                        DocumentModelCopyAuthorization value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CopyAuthorization.DeserializeCopyAuthorization(document.RootElement);
+                        value = DocumentModelCopyAuthorization.DeserializeDocumentModelCopyAuthorization(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Generates authorization to copy a model to this location with specified modelId and optional description. </summary>
+        /// <summary> Generate copy authorization. </summary>
         /// <param name="authorizeCopyRequest"> Authorize copy request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizeCopyRequest"/> is null. </exception>
-        public Response<CopyAuthorization> AuthorizeCopyDocumentModel(AuthorizeCopyRequest authorizeCopyRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Generates authorization to copy a document model to this location with specified modelId and optional description. </remarks>
+        public Response<DocumentModelCopyAuthorization> DocumentModelsAuthorizeModelCopy(AuthorizeCopyRequest authorizeCopyRequest, CancellationToken cancellationToken = default)
         {
             if (authorizeCopyRequest == null)
             {
                 throw new ArgumentNullException(nameof(authorizeCopyRequest));
             }
 
-            using var message = CreateAuthorizeCopyDocumentModelRequest(authorizeCopyRequest);
+            using var message = CreateDocumentModelsAuthorizeModelCopyRequest(authorizeCopyRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CopyAuthorization value = default;
+                        DocumentModelCopyAuthorization value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CopyAuthorization.DeserializeCopyAuthorization(document.RootElement);
+                        value = DocumentModelCopyAuthorization.DeserializeDocumentModelCopyAuthorization(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCopyDocumentModelToRequest(string modelId, CopyAuthorization copyToRequest)
+        internal HttpMessage CreateDocumentModelsCopyModelToRequest(string modelId, DocumentModelCopyAuthorization copyToRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
             uri.AppendPath(":copyTo", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -523,12 +668,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Copies model to the target resource, region, and modelId. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Copy document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="copyToRequest"> Copy to request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
-        public async Task<ResponseWithHeaders<DocumentAnalysisCopyDocumentModelToHeaders>> CopyDocumentModelToAsync(string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Copies document model to the target resource, region, and modelId. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentModelsCopyModelToHeaders>> DocumentModelsCopyModelToAsync(string modelId, DocumentModelCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -539,24 +685,25 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 throw new ArgumentNullException(nameof(copyToRequest));
             }
 
-            using var message = CreateCopyDocumentModelToRequest(modelId, copyToRequest);
+            using var message = CreateDocumentModelsCopyModelToRequest(modelId, copyToRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new DocumentAnalysisCopyDocumentModelToHeaders(message.Response);
+            var headers = new DocumentAnalysisDocumentModelsCopyModelToHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Copies model to the target resource, region, and modelId. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Copy document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="copyToRequest"> Copy to request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="copyToRequest"/> is null. </exception>
-        public ResponseWithHeaders<DocumentAnalysisCopyDocumentModelToHeaders> CopyDocumentModelTo(string modelId, CopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
+        /// <remarks> Copies document model to the target resource, region, and modelId. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisDocumentModelsCopyModelToHeaders> DocumentModelsCopyModelTo(string modelId, DocumentModelCopyAuthorization copyToRequest, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
@@ -567,38 +714,39 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 throw new ArgumentNullException(nameof(copyToRequest));
             }
 
-            using var message = CreateCopyDocumentModelToRequest(modelId, copyToRequest);
+            using var message = CreateDocumentModelsCopyModelToRequest(modelId, copyToRequest);
             _pipeline.Send(message, cancellationToken);
-            var headers = new DocumentAnalysisCopyDocumentModelToHeaders(message.Response);
+            var headers = new DocumentAnalysisDocumentModelsCopyModelToHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetOperationsRequest()
+        internal HttpMessage CreateMiscellaneousListOperationsRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Lists all operations. </summary>
+        /// <summary> List operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GetOperationsResponse>> GetOperationsAsync(CancellationToken cancellationToken = default)
+        /// <remarks> Lists all operations. </remarks>
+        public async Task<Response<GetOperationsResponse>> MiscellaneousListOperationsAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetOperationsRequest();
+            using var message = CreateMiscellaneousListOperationsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -610,15 +758,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Lists all operations. </summary>
+        /// <summary> List operations. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GetOperationsResponse> GetOperations(CancellationToken cancellationToken = default)
+        /// <remarks> Lists all operations. </remarks>
+        public Response<GetOperationsResponse> MiscellaneousListOperations(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetOperationsRequest();
+            using var message = CreateMiscellaneousListOperationsRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -630,327 +779,917 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetOperationRequest(string operationId)
+        internal HttpMessage CreateMiscellaneousGetOperationRequest(string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/operations/", false);
             uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets operation info. </summary>
+        /// <summary> Get operation. </summary>
         /// <param name="operationId"> Unique operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public async Task<Response<ModelOperation>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        /// <remarks> Gets operation info. </remarks>
+        public async Task<Response<OperationDetails>> MiscellaneousGetOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var message = CreateGetOperationRequest(operationId);
+            using var message = CreateMiscellaneousGetOperationRequest(operationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ModelOperation value = default;
+                        OperationDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ModelOperation.DeserializeModelOperation(document.RootElement);
+                        value = OperationDetails.DeserializeOperationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets operation info. </summary>
+        /// <summary> Get operation. </summary>
         /// <param name="operationId"> Unique operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public Response<ModelOperation> GetOperation(string operationId, CancellationToken cancellationToken = default)
+        /// <remarks> Gets operation info. </remarks>
+        public Response<OperationDetails> MiscellaneousGetOperation(string operationId, CancellationToken cancellationToken = default)
         {
             if (operationId == null)
             {
                 throw new ArgumentNullException(nameof(operationId));
             }
 
-            using var message = CreateGetOperationRequest(operationId);
+            using var message = CreateMiscellaneousGetOperationRequest(operationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ModelOperation value = default;
+                        OperationDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ModelOperation.DeserializeModelOperation(document.RootElement);
+                        value = OperationDetails.DeserializeOperationDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetModelsRequest()
+        internal HttpMessage CreateDocumentModelsListModelsRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List all models. </summary>
+        /// <summary> List document models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GetModelsResponse>> GetModelsAsync(CancellationToken cancellationToken = default)
+        /// <remarks> List all document models. </remarks>
+        public async Task<Response<GetDocumentModelsResponse>> DocumentModelsListModelsAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetModelsRequest();
+            using var message = CreateDocumentModelsListModelsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetModelsResponse value = default;
+                        GetDocumentModelsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetModelsResponse.DeserializeGetModelsResponse(document.RootElement);
+                        value = GetDocumentModelsResponse.DeserializeGetDocumentModelsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> List all models. </summary>
+        /// <summary> List document models. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GetModelsResponse> GetModels(CancellationToken cancellationToken = default)
+        /// <remarks> List all document models. </remarks>
+        public Response<GetDocumentModelsResponse> DocumentModelsListModels(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetModelsRequest();
+            using var message = CreateDocumentModelsListModelsRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetModelsResponse value = default;
+                        GetDocumentModelsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetModelsResponse.DeserializeGetModelsResponse(document.RootElement);
+                        value = GetDocumentModelsResponse.DeserializeGetDocumentModelsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetModelRequest(string modelId)
+        internal HttpMessage CreateDocumentModelsGetModelRequest(string modelId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets detailed model information. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Get document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<Response<DocumentModel>> GetModelAsync(string modelId, CancellationToken cancellationToken = default)
+        /// <remarks> Gets detailed document model information. </remarks>
+        public async Task<Response<DocumentModelDetails>> DocumentModelsGetModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
                 throw new ArgumentNullException(nameof(modelId));
             }
 
-            using var message = CreateGetModelRequest(modelId);
+            using var message = CreateDocumentModelsGetModelRequest(modelId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DocumentModel value = default;
+                        DocumentModelDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DocumentModel.DeserializeDocumentModel(document.RootElement);
+                        value = DocumentModelDetails.DeserializeDocumentModelDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets detailed model information. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Get document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public Response<DocumentModel> GetModel(string modelId, CancellationToken cancellationToken = default)
+        /// <remarks> Gets detailed document model information. </remarks>
+        public Response<DocumentModelDetails> DocumentModelsGetModel(string modelId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
                 throw new ArgumentNullException(nameof(modelId));
             }
 
-            using var message = CreateGetModelRequest(modelId);
+            using var message = CreateDocumentModelsGetModelRequest(modelId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DocumentModel value = default;
+                        DocumentModelDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DocumentModel.DeserializeDocumentModel(document.RootElement);
+                        value = DocumentModelDetails.DeserializeDocumentModelDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateDeleteModelRequest(string modelId)
+        internal HttpMessage CreateDocumentModelsDeleteModelRequest(string modelId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/documentModels/", false);
             uri.AppendPath(modelId, true);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Deletes model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Delete document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public async Task<Response> DeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
+        /// <remarks> Deletes document model. </remarks>
+        public async Task<Response> DocumentModelsDeleteModelAsync(string modelId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
                 throw new ArgumentNullException(nameof(modelId));
             }
 
-            using var message = CreateDeleteModelRequest(modelId);
+            using var message = CreateDocumentModelsDeleteModelRequest(modelId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Deletes model. </summary>
-        /// <param name="modelId"> Unique model name. </param>
+        /// <summary> Delete document model. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        public Response DeleteModel(string modelId, CancellationToken cancellationToken = default)
+        /// <remarks> Deletes document model. </remarks>
+        public Response DocumentModelsDeleteModel(string modelId, CancellationToken cancellationToken = default)
         {
             if (modelId == null)
             {
                 throw new ArgumentNullException(nameof(modelId));
             }
 
-            using var message = CreateDeleteModelRequest(modelId);
+            using var message = CreateDocumentModelsDeleteModelRequest(modelId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetInfoRequest()
+        internal HttpMessage CreateDocumentClassifiersBuildClassifierRequest(BuildDocumentClassifierRequest buildRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers:build", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(buildRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Build document classifier. </summary>
+        /// <param name="buildRequest"> Building request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
+        /// <remarks> Builds a custom document classifier. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentClassifiersBuildClassifierHeaders>> DocumentClassifiersBuildClassifierAsync(BuildDocumentClassifierRequest buildRequest, CancellationToken cancellationToken = default)
+        {
+            if (buildRequest == null)
+            {
+                throw new ArgumentNullException(nameof(buildRequest));
+            }
+
+            using var message = CreateDocumentClassifiersBuildClassifierRequest(buildRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DocumentAnalysisDocumentClassifiersBuildClassifierHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Build document classifier. </summary>
+        /// <param name="buildRequest"> Building request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildRequest"/> is null. </exception>
+        /// <remarks> Builds a custom document classifier. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisDocumentClassifiersBuildClassifierHeaders> DocumentClassifiersBuildClassifier(BuildDocumentClassifierRequest buildRequest, CancellationToken cancellationToken = default)
+        {
+            if (buildRequest == null)
+            {
+                throw new ArgumentNullException(nameof(buildRequest));
+            }
+
+            using var message = CreateDocumentClassifiersBuildClassifierRequest(buildRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DocumentAnalysisDocumentClassifiersBuildClassifierHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDocumentClassifiersListClassifiersRequest()
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> List document classifiers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all document classifiers. </remarks>
+        public async Task<Response<GetDocumentClassifiersResponse>> DocumentClassifiersListClassifiersAsync(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDocumentClassifiersListClassifiersRequest();
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetDocumentClassifiersResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GetDocumentClassifiersResponse.DeserializeGetDocumentClassifiersResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List document classifiers. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> List all document classifiers. </remarks>
+        public Response<GetDocumentClassifiersResponse> DocumentClassifiersListClassifiers(CancellationToken cancellationToken = default)
+        {
+            using var message = CreateDocumentClassifiersListClassifiersRequest();
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetDocumentClassifiersResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GetDocumentClassifiersResponse.DeserializeGetDocumentClassifiersResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDocumentClassifiersGetClassifierRequest(string classifierId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get document classifier. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <remarks> Gets detailed document classifier information. </remarks>
+        public async Task<Response<DocumentClassifierDetails>> DocumentClassifiersGetClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+
+            using var message = CreateDocumentClassifiersGetClassifierRequest(classifierId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DocumentClassifierDetails value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = DocumentClassifierDetails.DeserializeDocumentClassifierDetails(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get document classifier. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <remarks> Gets detailed document classifier information. </remarks>
+        public Response<DocumentClassifierDetails> DocumentClassifiersGetClassifier(string classifierId, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+
+            using var message = CreateDocumentClassifiersGetClassifierRequest(classifierId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        DocumentClassifierDetails value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = DocumentClassifierDetails.DeserializeDocumentClassifierDetails(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDocumentClassifiersDeleteClassifierRequest(string classifierId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Delete document classifier. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <remarks> Deletes document classifier. </remarks>
+        public async Task<Response> DocumentClassifiersDeleteClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+
+            using var message = CreateDocumentClassifiersDeleteClassifierRequest(classifierId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Delete document classifier. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <remarks> Deletes document classifier. </remarks>
+        public Response DocumentClassifiersDeleteClassifier(string classifierId, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+
+            using var message = CreateDocumentClassifiersDeleteClassifierRequest(classifierId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDocumentClassifiersClassifyDocumentRequest(string classifierId, StringIndexType? stringIndexType, ClassifyDocumentRequest classifyRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath(":analyze", false);
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (classifyRequest != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(classifyRequest);
+                request.Content = content;
+            }
+            return message;
+        }
+
+        /// <summary> Classify document. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="classifyRequest"> Classify request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <remarks> Classifies document with document classifier. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, StringIndexType? stringIndexType = null, ClassifyDocumentRequest classifyRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+
+            using var message = CreateDocumentClassifiersClassifyDocumentRequest(classifierId, stringIndexType, classifyRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Classify document. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="classifyRequest"> Classify request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <remarks> Classifies document with document classifier. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, StringIndexType? stringIndexType = null, ClassifyDocumentRequest classifyRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+
+            using var message = CreateDocumentClassifiersClassifyDocumentRequest(classifierId, stringIndexType, classifyRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDocumentClassifiersClassifyDocumentRequest(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType, Stream classifyRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath(":analyze", false);
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (classifyRequest != null)
+            {
+                request.Headers.Add("Content-Type", contentType.ToSerialString());
+                request.Content = RequestContent.Create(classifyRequest);
+            }
+            return message;
+        }
+
+        /// <summary> Classify document. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="classifyRequest"> Classify request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <remarks> Classifies document with document classifier. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType = null, Stream classifyRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+
+            using var message = CreateDocumentClassifiersClassifyDocumentRequest(classifierId, contentType, stringIndexType, classifyRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Classify document. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="contentType"> Upload file type. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="classifyRequest"> Classify request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <remarks> Classifies document with document classifier. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, InternalContentType contentType, StringIndexType? stringIndexType = null, Stream classifyRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+
+            using var message = CreateDocumentClassifiersClassifyDocumentRequest(classifierId, contentType, stringIndexType, classifyRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDocumentClassifiersClassifyDocumentRequest(string classifierId, StringIndexType? stringIndexType, string classifyRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath(":analyze", false);
+            if (stringIndexType != null)
+            {
+                uri.AppendQuery("stringIndexType", stringIndexType.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            if (classifyRequest != null)
+            {
+                request.Headers.Add("Content-Type", "text/html");
+                request.Content = new StringRequestContent(classifyRequest);
+            }
+            return message;
+        }
+
+        /// <summary> Classify document. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="classifyRequest"> Classify request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <remarks> Classifies document with document classifier. </remarks>
+        public async Task<ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders>> DocumentClassifiersClassifyDocumentAsync(string classifierId, StringIndexType? stringIndexType = null, string classifyRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+
+            using var message = CreateDocumentClassifiersClassifyDocumentRequest(classifierId, stringIndexType, classifyRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Classify document. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="classifyRequest"> Classify request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> is null. </exception>
+        /// <remarks> Classifies document with document classifier. </remarks>
+        public ResponseWithHeaders<DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders> DocumentClassifiersClassifyDocument(string classifierId, StringIndexType? stringIndexType = null, string classifyRequest = null, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+
+            using var message = CreateDocumentClassifiersClassifyDocumentRequest(classifierId, stringIndexType, classifyRequest);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new DocumentAnalysisDocumentClassifiersClassifyDocumentHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return ResponseWithHeaders.FromValue(headers, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDocumentClassifiersGetClassifyResultRequest(string classifierId, string resultId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendPath("/documentClassifiers/", false);
+            uri.AppendPath(classifierId, true);
+            uri.AppendPath("/analyzeResults/", false);
+            uri.AppendPath(resultId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Get document classifier result. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="resultId"/> is null. </exception>
+        /// <remarks> Gets the result of document classifier. </remarks>
+        public async Task<Response<AnalyzeResultOperation>> DocumentClassifiersGetClassifyResultAsync(string classifierId, string resultId, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+            if (resultId == null)
+            {
+                throw new ArgumentNullException(nameof(resultId));
+            }
+
+            using var message = CreateDocumentClassifiersGetClassifyResultRequest(classifierId, resultId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AnalyzeResultOperation value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AnalyzeResultOperation.DeserializeAnalyzeResultOperation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get document classifier result. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="resultId"/> is null. </exception>
+        /// <remarks> Gets the result of document classifier. </remarks>
+        public Response<AnalyzeResultOperation> DocumentClassifiersGetClassifyResult(string classifierId, string resultId, CancellationToken cancellationToken = default)
+        {
+            if (classifierId == null)
+            {
+                throw new ArgumentNullException(nameof(classifierId));
+            }
+            if (resultId == null)
+            {
+                throw new ArgumentNullException(nameof(resultId));
+            }
+
+            using var message = CreateDocumentClassifiersGetClassifyResultRequest(classifierId, resultId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AnalyzeResultOperation value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AnalyzeResultOperation.DeserializeAnalyzeResultOperation(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateMiscellaneousGetResourceInfoRequest()
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendPath("/info", false);
-            uri.AppendQuery("api-version", "2022-01-30-preview", true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Return basic info about the current resource. </summary>
+        /// <summary> Get resource info. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<GetInfoResponse>> GetInfoAsync(CancellationToken cancellationToken = default)
+        /// <remarks> Return information about the current resource. </remarks>
+        public async Task<Response<ServiceResourceDetails>> MiscellaneousGetResourceInfoAsync(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetInfoRequest();
+            using var message = CreateMiscellaneousGetResourceInfoRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetInfoResponse value = default;
+                        ServiceResourceDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetInfoResponse.DeserializeGetInfoResponse(document.RootElement);
+                        value = ServiceResourceDetails.DeserializeServiceResourceDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Return basic info about the current resource. </summary>
+        /// <summary> Get resource info. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<GetInfoResponse> GetInfo(CancellationToken cancellationToken = default)
+        /// <remarks> Return information about the current resource. </remarks>
+        public Response<ServiceResourceDetails> MiscellaneousGetResourceInfo(CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetInfoRequest();
+            using var message = CreateMiscellaneousGetResourceInfoRequest();
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetInfoResponse value = default;
+                        ServiceResourceDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetInfoResponse.DeserializeGetInfoResponse(document.RootElement);
+                        value = ServiceResourceDetails.DeserializeServiceResourceDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetOperationsNextPageRequest(string nextLink)
+        internal HttpMessage CreateMiscellaneousListOperationsNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -958,18 +1697,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> Lists all operations. </summary>
+        /// <summary> List operations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<GetOperationsResponse>> GetOperationsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <remarks> Lists all operations. </remarks>
+        public async Task<Response<GetOperationsResponse>> MiscellaneousListOperationsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetOperationsNextPageRequest(nextLink);
+            using var message = CreateMiscellaneousListOperationsNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -981,22 +1721,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Lists all operations. </summary>
+        /// <summary> List operations. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<GetOperationsResponse> GetOperationsNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <remarks> Lists all operations. </remarks>
+        public Response<GetOperationsResponse> MiscellaneousListOperationsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetOperationsNextPageRequest(nextLink);
+            using var message = CreateMiscellaneousListOperationsNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1008,17 +1749,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetModelsNextPageRequest(string nextLink)
+        internal HttpMessage CreateDocumentModelsListModelsNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_endpoint, false);
+            uri.Reset(_endpoint);
             uri.AppendRaw("/formrecognizer", false);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
@@ -1026,57 +1767,129 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return message;
         }
 
-        /// <summary> List all models. </summary>
+        /// <summary> List document models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<GetModelsResponse>> GetModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        /// <remarks> List all document models. </remarks>
+        public async Task<Response<GetDocumentModelsResponse>> DocumentModelsListModelsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetModelsNextPageRequest(nextLink);
+            using var message = CreateDocumentModelsListModelsNextPageRequest(nextLink);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetModelsResponse value = default;
+                        GetDocumentModelsResponse value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetModelsResponse.DeserializeGetModelsResponse(document.RootElement);
+                        value = GetDocumentModelsResponse.DeserializeGetDocumentModelsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> List all models. </summary>
+        /// <summary> List document models. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<GetModelsResponse> GetModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
+        /// <remarks> List all document models. </remarks>
+        public Response<GetDocumentModelsResponse> DocumentModelsListModelsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
             {
                 throw new ArgumentNullException(nameof(nextLink));
             }
 
-            using var message = CreateGetModelsNextPageRequest(nextLink);
+            using var message = CreateDocumentModelsListModelsNextPageRequest(nextLink);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        GetModelsResponse value = default;
+                        GetDocumentModelsResponse value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetModelsResponse.DeserializeGetModelsResponse(document.RootElement);
+                        value = GetDocumentModelsResponse.DeserializeGetDocumentModelsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDocumentClassifiersListClassifiersNextPageRequest(string nextLink)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/formrecognizer", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> List document classifiers. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all document classifiers. </remarks>
+        public async Task<Response<GetDocumentClassifiersResponse>> DocumentClassifiersListClassifiersNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateDocumentClassifiersListClassifiersNextPageRequest(nextLink);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetDocumentClassifiersResponse value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = GetDocumentClassifiersResponse.DeserializeGetDocumentClassifiersResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> List document classifiers. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> List all document classifiers. </remarks>
+        public Response<GetDocumentClassifiersResponse> DocumentClassifiersListClassifiersNextPage(string nextLink, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+
+            using var message = CreateDocumentClassifiersListClassifiersNextPageRequest(nextLink);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        GetDocumentClassifiersResponse value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = GetDocumentClassifiersResponse.DeserializeGetDocumentClassifiersResponse(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

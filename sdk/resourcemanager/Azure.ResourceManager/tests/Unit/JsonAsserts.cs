@@ -45,7 +45,8 @@ namespace Azure.ResourceManager.Tests
                 serializable.Write(writer);
             }
 
-            return JsonDocument.Parse(memoryStream.ToArray()).RootElement;
+            using var jsonDocument = JsonDocument.Parse(memoryStream.ToArray());
+            return jsonDocument.RootElement;
         }
     }
 }

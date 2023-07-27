@@ -9,59 +9,57 @@ using System.Threading.Tasks;
 
 namespace Azure.Messaging.ServiceBus.Primitives
 {
-#pragma warning disable CA1001 // Types that own disposable fields should be disposable
-    internal sealed class ConcurrentExpiringSet<TKey>
-#pragma warning restore CA1001 // Types that own disposable fields should be disposable
+    internal sealed class ConcurrentExpiringSet<TKey> : IDisposable
     {
-        public readonly ConcurrentDictionary<TKey, DateTimeOffset> dictionary;
+        private readonly ConcurrentDictionary<TKey, DateTimeOffset> _dictionary;
 
-        public readonly ICollection<KeyValuePair<TKey, DateTimeOffset>> dictionaryAsCollection;
+        private readonly ICollection<KeyValuePair<TKey, DateTimeOffset>> _dictionaryAsCollection;
 
-        public readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
+        private readonly CancellationTokenSource _tokenSource = new();
 
-        public volatile TaskCompletionSource<bool> cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+        private volatile TaskCompletionSource<bool> _cleanupTaskCompletionSource = new(TaskCreationOptions.RunContinuationsAsynchronously);
 
-        public int closeSignaled;
+        private int _disposeSignaled;
 
-        public bool closed;
+        public bool IsDisposed { get; private set; }
 
-        public static readonly TimeSpan delayBetweenCleanups = TimeSpan.FromSeconds(30);
+        private static readonly TimeSpan DelayBetweenCleanups = TimeSpan.FromSeconds(30);
 
         public ConcurrentExpiringSet()
         {
-            dictionary = new ConcurrentDictionary<TKey, DateTimeOffset>();
-            dictionaryAsCollection = dictionary;
-            _ = CollectExpiredEntriesAsync(tokenSource.Token);
+            _dictionary = new ConcurrentDictionary<TKey, DateTimeOffset>();
+            _dictionaryAsCollection = _dictionary;
+            _ = CollectExpiredEntriesAsync(_tokenSource.Token);
         }
 
         public void AddOrUpdate(TKey key, DateTimeOffset expiration)
         {
-            ThrowIfClosed();
+            ThrowIfDisposed();
 
-            dictionary[key] = expiration;
-            cleanupTaskCompletionSource.TrySetResult(true);
+            _dictionary[key] = expiration;
+            _cleanupTaskCompletionSource.TrySetResult(true);
         }
 
         public bool Contains(TKey key)
         {
-            ThrowIfClosed();
+            ThrowIfDisposed();
 
-            return dictionary.TryGetValue(key, out var expiration) && expiration > DateTimeOffset.UtcNow;
+            return _dictionary.TryGetValue(key, out var expiration) && expiration > DateTimeOffset.UtcNow;
         }
 
-        public void Close()
+        public void Dispose()
         {
-            if (Interlocked.Exchange(ref closeSignaled, 1) != 0)
+            if (Interlocked.Exchange(ref _disposeSignaled, 1) != 0)
             {
                 return;
             }
 
-            closed = true;
+            IsDisposed = true;
 
-            tokenSource.Cancel();
-            cleanupTaskCompletionSource.TrySetCanceled();
-            dictionary.Clear();
-            tokenSource.Dispose();
+            _tokenSource.Cancel();
+            _cleanupTaskCompletionSource.TrySetCanceled();
+            _dictionary.Clear();
+            _tokenSource.Dispose();
         }
 
         public async Task CollectExpiredEntriesAsync(CancellationToken token)
@@ -70,8 +68,8 @@ namespace Azure.Messaging.ServiceBus.Primitives
             {
                 try
                 {
-                    await cleanupTaskCompletionSource.Task.ConfigureAwait(false);
-                    await Task.Delay(delayBetweenCleanups, token).ConfigureAwait(false);
+                    await _cleanupTaskCompletionSource.Task.ConfigureAwait(false);
+                    await Task.Delay(DelayBetweenCleanups, token).ConfigureAwait(false);
                 }
                 catch (OperationCanceledException)
                 {
@@ -80,26 +78,26 @@ namespace Azure.Messaging.ServiceBus.Primitives
 
                 var isEmpty = true;
                 var utcNow = DateTimeOffset.UtcNow;
-                foreach (var kvp in dictionary)
+                foreach (var kvp in _dictionary)
                 {
                     isEmpty = false;
                     var expiration = kvp.Value;
                     if (utcNow > expiration)
                     {
-                        dictionaryAsCollection.Remove(kvp);
+                        _dictionaryAsCollection.Remove(kvp);
                     }
                 }
 
                 if (isEmpty)
                 {
-                    cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                    _cleanupTaskCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 }
             }
         }
 
-        public void ThrowIfClosed()
+        private void ThrowIfDisposed()
         {
-            if (closed)
+            if (IsDisposed)
             {
                 throw new ObjectDisposedException($"ConcurrentExpiringSet has already been closed. Please create a new set instead.");
             }

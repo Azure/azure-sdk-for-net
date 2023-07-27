@@ -11,15 +11,17 @@ namespace Azure.AI.Translation.Document
         /// <summary>
         /// Initializes an instance of <see cref="TranslationFilterOrder"/>.
         /// </summary>
-        public TranslationFilterOrder(TranslationFilterProperty property, bool asc = true)
+        public TranslationFilterOrder(TranslationFilterProperty property, bool ascending = true)
         {
-            Asc = asc;
+            Ascending = ascending;
             Property = property;
         }
         /// <summary>
         /// Sort results ascendingly if true, or descendingly if false.
+        /// Default value is true.
         /// </summary>
-        internal bool Asc { get; set; }
+        public bool Ascending { get; set; } = true;
+
         /// <summary>
         /// See <see cref="TranslationFilterProperty"/> for list of properties supported.
         /// </summary>
@@ -43,7 +45,7 @@ namespace Azure.AI.Translation.Document
             }
 
             // sorting direction
-            var direction = Asc ? "Asc" : "Desc";
+            var direction = Ascending ? "Asc" : "Desc";
 
             return $"{property} {direction}";
         }

@@ -6,14 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the IPAllocation data model. </summary>
-    public partial class IPAllocationData : NetworkResourceData
+    /// <summary>
+    /// A class representing the IPAllocation data model.
+    /// IpAllocation resource.
+    /// </summary>
+    public partial class IPAllocationData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of IPAllocationData. </summary>
         public IPAllocationData()
@@ -30,18 +34,18 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> The Subnet that using the prefix of this IpAllocation resource. </param>
         /// <param name="virtualNetwork"> The VirtualNetwork that using the prefix of this IpAllocation resource. </param>
-        /// <param name="typePropertiesType"> The type for the IpAllocation. </param>
+        /// <param name="ipAllocationType"> The type for the IpAllocation. </param>
         /// <param name="prefix"> The address prefix for the IpAllocation. </param>
         /// <param name="prefixLength"> The address prefix length for the IpAllocation. </param>
         /// <param name="prefixType"> The address prefix Type for the IpAllocation. </param>
         /// <param name="ipamAllocationId"> The IPAM allocation ID. </param>
         /// <param name="allocationTags"> IpAllocation tags. </param>
-        internal IPAllocationData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, WritableSubResource subnet, WritableSubResource virtualNetwork, IPAllocationType? typePropertiesType, string prefix, int? prefixLength, IPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags) : base(id, name, resourceType, location, tags)
+        internal IPAllocationData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, WritableSubResource subnet, WritableSubResource virtualNetwork, NetworkIPAllocationType? ipAllocationType, string prefix, int? prefixLength, NetworkIPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags) : base(id, name, resourceType, location, tags)
         {
-            Etag = etag;
+            ETag = etag;
             Subnet = subnet;
             VirtualNetwork = virtualNetwork;
-            TypePropertiesType = typePropertiesType;
+            IPAllocationType = ipAllocationType;
             Prefix = prefix;
             PrefixLength = prefixLength;
             PrefixType = prefixType;
@@ -50,14 +54,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> The Subnet that using the prefix of this IpAllocation resource. </summary>
         internal WritableSubResource Subnet { get; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId
         {
-            get => Subnet.Id;
-            set => Subnet.Id = value;
+            get => Subnet?.Id;
         }
 
         /// <summary> The VirtualNetwork that using the prefix of this IpAllocation resource. </summary>
@@ -65,18 +68,17 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier VirtualNetworkId
         {
-            get => VirtualNetwork.Id;
-            set => VirtualNetwork.Id = value;
+            get => VirtualNetwork?.Id;
         }
 
         /// <summary> The type for the IpAllocation. </summary>
-        public IPAllocationType? TypePropertiesType { get; set; }
+        public NetworkIPAllocationType? IPAllocationType { get; set; }
         /// <summary> The address prefix for the IpAllocation. </summary>
         public string Prefix { get; set; }
         /// <summary> The address prefix length for the IpAllocation. </summary>
         public int? PrefixLength { get; set; }
         /// <summary> The address prefix Type for the IpAllocation. </summary>
-        public IPVersion? PrefixType { get; set; }
+        public NetworkIPVersion? PrefixType { get; set; }
         /// <summary> The IPAM allocation ID. </summary>
         public string IpamAllocationId { get; set; }
         /// <summary> IpAllocation tags. </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The information about next hop from the specified VM. </summary>
@@ -18,8 +20,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of NextHopResult. </summary>
         /// <param name="nextHopType"> Next hop type. </param>
         /// <param name="nextHopIPAddress"> Next hop IP Address. </param>
-        /// <param name="routeTableId"> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string &apos;System Route&apos;. </param>
-        internal NextHopResult(NextHopType? nextHopType, string nextHopIPAddress, string routeTableId)
+        /// <param name="routeTableId"> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string 'System Route'. </param>
+        internal NextHopResult(NextHopType? nextHopType, string nextHopIPAddress, ResourceIdentifier routeTableId)
         {
             NextHopType = nextHopType;
             NextHopIPAddress = nextHopIPAddress;
@@ -30,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
         public NextHopType? NextHopType { get; }
         /// <summary> Next hop IP Address. </summary>
         public string NextHopIPAddress { get; }
-        /// <summary> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string &apos;System Route&apos;. </summary>
-        public string RouteTableId { get; }
+        /// <summary> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string 'System Route'. </summary>
+        public ResourceIdentifier RouteTableId { get; }
     }
 }

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="requestedDatabaseDtuGuarantee"> The requested per database DTU guarantee. </param>
         /// <param name="requestedDatabaseDtuCap"> The requested per database DTU cap. </param>
         /// <param name="requestedDtuGuarantee"> The requested DTU guarantee. </param>
-        internal ElasticPoolActivity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, DateTimeOffset? endOn, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, int? requestedDatabaseDtuMax, int? requestedDatabaseDtuMin, int? requestedDtu, string requestedElasticPoolName, long? requestedStorageLimitInGB, string elasticPoolName, string serverName, DateTimeOffset? startOn, string state, int? requestedStorageLimitInMB, int? requestedDatabaseDtuGuarantee, int? requestedDatabaseDtuCap, int? requestedDtuGuarantee) : base(id, name, resourceType, systemData)
+        internal ElasticPoolActivity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DateTimeOffset? endOn, int? errorCode, string errorMessage, int? errorSeverity, string operation, Guid? operationId, int? percentComplete, int? requestedDatabaseDtuMax, int? requestedDatabaseDtuMin, int? requestedDtu, string requestedElasticPoolName, long? requestedStorageLimitInGB, string elasticPoolName, string serverName, DateTimeOffset? startOn, string state, int? requestedStorageLimitInMB, int? requestedDatabaseDtuGuarantee, int? requestedDatabaseDtuCap, int? requestedDtuGuarantee) : base(id, name, resourceType, systemData)
         {
             Location = location;
             EndOn = endOn;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The geo-location where the resource lives. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> The time the operation finished (ISO8601 format). </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> The error code if available. </summary>

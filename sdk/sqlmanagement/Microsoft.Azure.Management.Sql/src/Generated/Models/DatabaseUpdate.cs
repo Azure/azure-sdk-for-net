@@ -151,8 +151,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// availability. Not applicable to a Hyperscale database within an
         /// elastic pool.</param>
         /// <param name="secondaryType">The secondary type of the database if
-        /// it is a secondary.  Valid values are Geo and Named. Possible values
-        /// include: 'Geo', 'Named'</param>
+        /// it is a secondary.  Valid values are Geo, Named and Standby.
+        /// Possible values include: 'Geo', 'Named', 'Standby'</param>
         /// <param name="currentSku">The name and tier of the SKU.</param>
         /// <param name="autoPauseDelay">Time in minutes after which database
         /// is automatically paused. A value of -1 means that automatic pause
@@ -182,11 +182,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// for this database.</param>
         /// <param name="federatedClientId">The Client id used for cross tenant
         /// per database CMK scenario</param>
-        /// <param name="primaryDelegatedIdentityClientId">The Primary
-        /// Delegated Identity Client id used for per database CMK - for
-        /// internal use only</param>
         /// <param name="tags">Resource tags.</param>
-        public DatabaseUpdate(Sku sku = default(Sku), DatabaseIdentity identity = default(DatabaseIdentity), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string), bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?), System.Guid? federatedClientId = default(System.Guid?), System.Guid? primaryDelegatedIdentityClientId = default(System.Guid?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DatabaseUpdate(Sku sku = default(Sku), DatabaseIdentity identity = default(DatabaseIdentity), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), int? highAvailabilityReplicaCount = default(int?), string secondaryType = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), string currentBackupStorageRedundancy = default(string), string requestedBackupStorageRedundancy = default(string), double? minCapacity = default(double?), System.DateTime? pausedDate = default(System.DateTime?), System.DateTime? resumedDate = default(System.DateTime?), string maintenanceConfigurationId = default(string), bool? isLedgerOn = default(bool?), bool? isInfraEncryptionEnabled = default(bool?), System.Guid? federatedClientId = default(System.Guid?), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             Identity = identity;
@@ -228,7 +225,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             IsLedgerOn = isLedgerOn;
             IsInfraEncryptionEnabled = isInfraEncryptionEnabled;
             FederatedClientId = federatedClientId;
-            PrimaryDelegatedIdentityClientId = primaryDelegatedIdentityClientId;
             Tags = tags;
             CustomInit();
         }
@@ -477,8 +473,8 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets the secondary type of the database if it is a
-        /// secondary.  Valid values are Geo and Named. Possible values
-        /// include: 'Geo', 'Named'
+        /// secondary.  Valid values are Geo, Named and Standby. Possible
+        /// values include: 'Geo', 'Named', 'Standby'
         /// </summary>
         [JsonProperty(PropertyName = "properties.secondaryType")]
         public string SecondaryType { get; set; }
@@ -562,13 +558,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.federatedClientId")]
         public System.Guid? FederatedClientId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Primary Delegated Identity Client id used for per
-        /// database CMK - for internal use only
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.primaryDelegatedIdentityClientId")]
-        public System.Guid? PrimaryDelegatedIdentityClientId { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

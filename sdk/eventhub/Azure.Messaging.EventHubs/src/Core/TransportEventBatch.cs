@@ -43,6 +43,12 @@ namespace Azure.Messaging.EventHubs.Core
         public abstract int Count { get; }
 
         /// <summary>
+        ///   The first sequence number of the batch; if not sequenced, <c>null</c>.
+        /// </summary>
+        ///
+        public abstract int? StartingSequenceNumber { get; }
+
+        /// <summary>
         ///   Attempts to add an event to the batch, ensuring that the size
         ///   of the batch does not exceed its maximum.
         /// </summary>
@@ -69,6 +75,29 @@ namespace Azure.Messaging.EventHubs.Core
         /// <returns>The set of events as an enumerable of the requested type.</returns>
         ///
         public abstract IReadOnlyCollection<T> AsReadOnlyCollection<T>();
+
+        /// <summary>
+        ///   Assigns message sequence numbers and publisher metadata to the batch in
+        ///   order to prepare it to be sent when certain features, such as idempotent retries,
+        ///   are active.
+        /// </summary>
+        ///
+        /// <param name="lastSequenceNumber">The sequence number assigned to the event that was most recently published to the associated partition successfully.</param>
+        /// <param name="producerGroupId">The identifier of the producer group for which publishing is being performed.</param>
+        /// <param name="ownerLevel">TThe owner level for which publishing is being performed.</param>
+        ///
+        /// <returns>The last sequence number applied to the batch.</returns>
+        ///
+        public abstract int ApplyBatchSequencing(int lastSequenceNumber,
+                                                 long? producerGroupId,
+                                                 short? ownerLevel);
+
+        /// <summary>
+        ///   Resets the batch to remove sequencing information and publisher metadata assigned
+        ///    by <see cref="ApplyBatchSequencing" />.
+        /// </summary>
+        ///
+        public abstract void ResetBatchSequencing();
 
         /// <summary>
         ///   Performs the task needed to clean up resources used by the <see cref="TransportEventBatch" />.

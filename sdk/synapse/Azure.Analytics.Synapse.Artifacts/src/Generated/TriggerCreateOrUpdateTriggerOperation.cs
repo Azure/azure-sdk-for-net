@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Creates or updates a trigger. </summary>
     public partial class TriggerCreateOrUpdateTriggerOperation : Operation<TriggerResource>, IOperationSource<TriggerResource>
     {
-        private readonly OperationInternals<TriggerResource> _operation;
+        private readonly OperationInternal<TriggerResource> _operation;
 
         /// <summary> Initializes a new instance of TriggerCreateOrUpdateTriggerOperation for mocking. </summary>
         protected TriggerCreateOrUpdateTriggerOperation()
@@ -28,11 +28,14 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal TriggerCreateOrUpdateTriggerOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals<TriggerResource>(this, clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "TriggerCreateOrUpdateTriggerOperation");
+            IOperation<TriggerResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            _operation = new OperationInternal<TriggerResource>(nextLinkOperation, clientDiagnostics, response, "TriggerCreateOrUpdateTriggerOperation");
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+#pragma warning disable CA1822
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override TriggerResource Value => _operation.Value;
@@ -44,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         public override bool HasValue => _operation.HasValue;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);

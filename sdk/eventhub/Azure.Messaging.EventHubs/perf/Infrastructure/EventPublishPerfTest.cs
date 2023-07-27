@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
-using Azure.Test.Perf;
 
 namespace Azure.Messaging.EventHubs.Perf
 {
@@ -51,19 +50,21 @@ namespace Azure.Messaging.EventHubs.Perf
         {
             await base.GlobalSetupAsync().ConfigureAwait(false);
 
-            s_scope = await EventHubScope.CreateAsync(4).ConfigureAwait(false);
+            s_scope = await EventHubScope.CreateAsync(Options.PartitionCount).ConfigureAwait(false);
             s_producer = new EventHubProducerClient(TestEnvironment.EventHubsConnectionString, s_scope.EventHubName);
             s_eventBody = EventGenerator.CreateRandomBody(Options.BodySize);
         }
 
+        /// <summary>
+        ///   Performs the tasks needed to initialize and set up the environment for the test scenario.
+        ///   This setup will take place once for each instance, running after the global setup has
+        ///   completed.
+        /// </summary>
+        ///
         public override async Task SetupAsync()
         {
             await base.SetupAsync();
-
             _sendOptions = await CreateSendOptions(s_producer).ConfigureAwait(false);
-
-            // Publish an empty event to force the connection and link to be established.
-            await s_producer.SendAsync(new[] { new EventData(Array.Empty<byte>()) }, _sendOptions).ConfigureAwait(false);
         }
 
         /// <summary>

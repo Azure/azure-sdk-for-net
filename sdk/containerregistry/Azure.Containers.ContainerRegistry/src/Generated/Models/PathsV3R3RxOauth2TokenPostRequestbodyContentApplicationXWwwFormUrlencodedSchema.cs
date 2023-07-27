@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -18,20 +19,11 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="acrRefreshToken"> Must be a valid ACR refresh token. </param>
         /// <param name="grantType"> Grant type is expected to be refresh_token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="acrRefreshToken"/> is null. </exception>
-        internal PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string scope, string acrRefreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken)
+        internal PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string scope, string acrRefreshToken, TokenGrantType grantType)
         {
-            if (service == null)
-            {
-                throw new ArgumentNullException(nameof(service));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (acrRefreshToken == null)
-            {
-                throw new ArgumentNullException(nameof(acrRefreshToken));
-            }
+            Argument.AssertNotNull(service, nameof(service));
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(acrRefreshToken, nameof(acrRefreshToken));
 
             Service = service;
             Scope = scope;

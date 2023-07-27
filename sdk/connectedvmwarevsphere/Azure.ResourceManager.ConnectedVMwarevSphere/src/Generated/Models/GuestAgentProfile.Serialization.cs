@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
@@ -22,54 +23,55 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static GuestAgentProfile DeserializeGuestAgentProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vmUuid = default;
-            Optional<StatusTypes> status = default;
+            Optional<StatusType> status = default;
             Optional<DateTimeOffset> lastStatusChange = default;
             Optional<string> agentVersion = default;
-            Optional<IReadOnlyList<ErrorDetail>> errorDetails = default;
+            Optional<IReadOnlyList<ResponseError>> errorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vmUuid"))
+                if (property.NameEquals("vmUuid"u8))
                 {
                     vmUuid = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new StatusTypes(property.Value.GetString());
+                    status = new StatusType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastStatusChange"))
+                if (property.NameEquals("lastStatusChange"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastStatusChange = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("agentVersion"))
+                if (property.NameEquals("agentVersion"u8))
                 {
                     agentVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorDetails"))
+                if (property.NameEquals("errorDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ErrorDetail> array = new List<ErrorDetail>();
+                    List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetail.DeserializeErrorDetail(item));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
                     }
                     errorDetails = array;
                     continue;

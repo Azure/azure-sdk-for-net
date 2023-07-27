@@ -6,10 +6,10 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Maintenance</PackageId>
     <Description>Microsoft Azure Maintenance Management Library</Description>
-    <Version>1.4.0-preview</Version>
+    <Version>1.6.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.Maintenance</AssemblyName>
     <PackageTags>Microsoft Azure Maintenance Management;Maintenance;</PackageTags>
-    <PackageReleaseNotes>Provides capabilities to manage Platform and Resource maintenance on Azure resources. This version supports all capabilities in the 2021-09-01-preview version along with changes to support for VM patching maintenance.</PackageReleaseNotes>
+    <PackageReleaseNotes>Provides capabilities to manage Platform and Resource maintenance on Azure resources. This version supports all capabilities in the 2023-04-01 version.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>

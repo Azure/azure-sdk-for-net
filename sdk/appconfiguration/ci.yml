@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/appconfiguration/
+    exclude:
+    - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
 
 pr:
   branches:
@@ -20,17 +22,16 @@ pr:
   paths:
     include:
     - sdk/appconfiguration/
-    - sdk/resourcemanager/
+    exclude:
+    - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration/
 
 # These comments should stay.
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: appconfiguration
     ArtifactName: packages
     Artifacts:
     - name: Azure.Data.AppConfiguration
       safeName: AzureDataAppConfiguration
-    - name: Azure.ResourceManager.AppConfiguration
-      safeName: AzureResourceManagerAppConfiguration

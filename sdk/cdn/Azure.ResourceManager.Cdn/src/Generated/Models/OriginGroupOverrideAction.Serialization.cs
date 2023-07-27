@@ -15,25 +15,29 @@ namespace Azure.ResourceManager.Cdn.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("parameters");
-            writer.WriteObjectValue(Parameters);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("parameters"u8);
+            writer.WriteObjectValue(Properties);
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToString());
             writer.WriteEndObject();
         }
 
         internal static OriginGroupOverrideAction DeserializeOriginGroupOverrideAction(JsonElement element)
         {
-            OriginGroupOverrideActionParameters parameters = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            OriginGroupOverrideActionProperties parameters = default;
             DeliveryRuleActionType name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parameters"))
+                if (property.NameEquals("parameters"u8))
                 {
-                    parameters = OriginGroupOverrideActionParameters.DeserializeOriginGroupOverrideActionParameters(property.Value);
+                    parameters = OriginGroupOverrideActionProperties.DeserializeOriginGroupOverrideActionProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = new DeliveryRuleActionType(property.Value.GetString());
                     continue;

@@ -6,34 +6,29 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The DocumentError. </summary>
+    /// <summary> Contains details of errors encountered during a job execution. </summary>
     internal partial class DocumentError
     {
         /// <summary> Initializes a new instance of DocumentError. </summary>
-        /// <param name="id"> Document Id. </param>
-        /// <param name="error"> Document Error. </param>
+        /// <param name="id"> The ID of the input document. </param>
+        /// <param name="error"> Error encountered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="error"/> is null. </exception>
-        internal DocumentError(string id, TextAnalyticsErrorInternal error)
+        public DocumentError(string id, Error error)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(error, nameof(error));
 
             Id = id;
             Error = error;
         }
 
-        /// <summary> Document Id. </summary>
-        public string Id { get; }
-        /// <summary> Document Error. </summary>
-        public TextAnalyticsErrorInternal Error { get; }
+        /// <summary> The ID of the input document. </summary>
+        public string Id { get; set; }
+        /// <summary> Error encountered. </summary>
+        public Error Error { get; set; }
     }
 }

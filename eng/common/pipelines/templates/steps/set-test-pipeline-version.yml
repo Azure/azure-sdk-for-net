@@ -1,5 +1,6 @@
 parameters:
   PackageName: ''
+  PackageNames: ''
   ServiceDirectory: ''
   TestPipeline: false
 
@@ -7,9 +8,12 @@ steps:
 - ${{ if eq(parameters.TestPipeline, 'true') }}:
     - task: PowerShell@2
       displayName: Prep template pipeline for release
-      condition: and(succeeded(), ne(variables['Skip.SetTestPipelineVersion'], 'true')) 
+      condition: and(succeeded(), ne(variables['Skip.SetTestPipelineVersion'], 'true'))
       inputs:
-        pwsh: true
         workingDirectory: $(Build.SourcesDirectory)
         filePath: $(Build.SourcesDirectory)/eng/common/scripts/SetTestPipelineVersion.ps1
-        arguments: '-BuildID $(Build.BuildId) -PackageName ${{ parameters.PackageName }} -ServiceDirectory ${{ parameters.ServiceDirectory }}'
+        arguments: >
+          -BuildID $(Build.BuildId)
+          -PackageNames '${{ coalesce(parameters.PackageName, parameters.PackageNames) }}'
+          -ServiceDirectory '${{ parameters.ServiceDirectory }}'
+        pwsh: true

@@ -18,13 +18,15 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         private ServiceBusTriggerInput() { }
 
+        public ServiceBusReceiveActions ReceiveActions { get; set; }
+
         public ServiceBusMessageActions MessageActions { get; set; }
 
         public ServiceBusClient Client { get; set; }
 
         public ServiceBusReceivedMessage[] Messages { get; set; }
 
-        public static ServiceBusTriggerInput CreateSingle(ServiceBusReceivedMessage message, ServiceBusMessageActions actions, ServiceBusClient client)
+        public static ServiceBusTriggerInput CreateSingle(ServiceBusReceivedMessage message, ServiceBusMessageActions messageActions, ServiceBusReceiveActions receiveActions, ServiceBusClient client)
         {
             return new ServiceBusTriggerInput
             {
@@ -33,29 +35,25 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                       message
                 },
                 _isSingleDispatch = true,
-                MessageActions = actions,
+                MessageActions = messageActions,
+                ReceiveActions = receiveActions,
                 Client = client
             };
         }
 
-        public static ServiceBusTriggerInput CreateBatch(ServiceBusReceivedMessage[] messages, ServiceBusMessageActions actions, ServiceBusClient client)
+        public static ServiceBusTriggerInput CreateBatch(ServiceBusReceivedMessage[] messages, ServiceBusMessageActions messageActions, ServiceBusReceiveActions receiveActions, ServiceBusClient client)
         {
             return new ServiceBusTriggerInput
             {
                 Messages = messages,
                 _isSingleDispatch = false,
-                MessageActions = actions,
+                MessageActions = messageActions,
+                ReceiveActions = receiveActions,
                 Client = client
             };
         }
 
-        public bool IsSingleDispatch
-        {
-            get
-            {
-                return _isSingleDispatch;
-            }
-        }
+        public bool IsSingleDispatch => _isSingleDispatch;
 
         public TriggeredFunctionData GetTriggerFunctionData()
         {

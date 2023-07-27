@@ -5,12 +5,17 @@
 
 #nullable disable
 
+using Azure;
+using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the ExpressRouteCircuitAuthorization data model. </summary>
-    public partial class ExpressRouteCircuitAuthorizationData : SubResource
+    /// <summary>
+    /// A class representing the ExpressRouteCircuitAuthorization data model.
+    /// Authorization in an ExpressRouteCircuit resource.
+    /// </summary>
+    public partial class ExpressRouteCircuitAuthorizationData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationData. </summary>
         public ExpressRouteCircuitAuthorizationData()
@@ -19,33 +24,27 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationData. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within a resource group. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="authorizationKey"> The authorization key. </param>
         /// <param name="authorizationUseStatus"> The authorization use status. </param>
         /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
-        internal ExpressRouteCircuitAuthorizationData(string id, string name, string etag, string resourceType, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, ProvisioningState? provisioningState) : base(id)
+        internal ExpressRouteCircuitAuthorizationData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string authorizationKey, AuthorizationUseStatus? authorizationUseStatus, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             AuthorizationKey = authorizationKey;
             AuthorizationUseStatus = authorizationUseStatus;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> The name of the resource that is unique within a resource group. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> The authorization key. </summary>
         public string AuthorizationKey { get; set; }
         /// <summary> The authorization use status. </summary>
         public AuthorizationUseStatus? AuthorizationUseStatus { get; set; }
         /// <summary> The provisioning state of the authorization resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

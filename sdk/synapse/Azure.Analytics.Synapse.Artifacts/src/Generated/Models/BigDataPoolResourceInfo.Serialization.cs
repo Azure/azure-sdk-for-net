@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -30,68 +30,68 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningState");
+                writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(AutoScale))
             {
-                writer.WritePropertyName("autoScale");
+                writer.WritePropertyName("autoScale"u8);
                 writer.WriteObjectValue(AutoScale);
             }
             if (Optional.IsDefined(CreationDate))
             {
-                writer.WritePropertyName("creationDate");
+                writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreationDate.Value, "O");
             }
             if (Optional.IsDefined(AutoPause))
             {
-                writer.WritePropertyName("autoPause");
+                writer.WritePropertyName("autoPause"u8);
                 writer.WriteObjectValue(AutoPause);
             }
             if (Optional.IsDefined(IsComputeIsolationEnabled))
             {
-                writer.WritePropertyName("isComputeIsolationEnabled");
+                writer.WritePropertyName("isComputeIsolationEnabled"u8);
                 writer.WriteBooleanValue(IsComputeIsolationEnabled.Value);
             }
             if (Optional.IsDefined(SessionLevelPackagesEnabled))
             {
-                writer.WritePropertyName("sessionLevelPackagesEnabled");
+                writer.WritePropertyName("sessionLevelPackagesEnabled"u8);
                 writer.WriteBooleanValue(SessionLevelPackagesEnabled.Value);
             }
             if (Optional.IsDefined(CacheSize))
             {
-                writer.WritePropertyName("cacheSize");
+                writer.WritePropertyName("cacheSize"u8);
                 writer.WriteNumberValue(CacheSize.Value);
             }
             if (Optional.IsDefined(DynamicExecutorAllocation))
             {
-                writer.WritePropertyName("dynamicExecutorAllocation");
+                writer.WritePropertyName("dynamicExecutorAllocation"u8);
                 writer.WriteObjectValue(DynamicExecutorAllocation);
             }
             if (Optional.IsDefined(SparkEventsFolder))
             {
-                writer.WritePropertyName("sparkEventsFolder");
+                writer.WritePropertyName("sparkEventsFolder"u8);
                 writer.WriteStringValue(SparkEventsFolder);
             }
             if (Optional.IsDefined(NodeCount))
             {
-                writer.WritePropertyName("nodeCount");
+                writer.WritePropertyName("nodeCount"u8);
                 writer.WriteNumberValue(NodeCount.Value);
             }
             if (Optional.IsDefined(LibraryRequirements))
             {
-                writer.WritePropertyName("libraryRequirements");
+                writer.WritePropertyName("libraryRequirements"u8);
                 writer.WriteObjectValue(LibraryRequirements);
             }
             if (Optional.IsCollectionDefined(CustomLibraries))
             {
-                writer.WritePropertyName("customLibraries");
+                writer.WritePropertyName("customLibraries"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomLibraries)
                 {
@@ -101,27 +101,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsDefined(SparkConfigProperties))
             {
-                writer.WritePropertyName("sparkConfigProperties");
+                writer.WritePropertyName("sparkConfigProperties"u8);
                 writer.WriteObjectValue(SparkConfigProperties);
             }
             if (Optional.IsDefined(SparkVersion))
             {
-                writer.WritePropertyName("sparkVersion");
+                writer.WritePropertyName("sparkVersion"u8);
                 writer.WriteStringValue(SparkVersion);
             }
             if (Optional.IsDefined(DefaultSparkLogFolder))
             {
-                writer.WritePropertyName("defaultSparkLogFolder");
+                writer.WritePropertyName("defaultSparkLogFolder"u8);
                 writer.WriteStringValue(DefaultSparkLogFolder);
             }
             if (Optional.IsDefined(NodeSize))
             {
-                writer.WritePropertyName("nodeSize");
+                writer.WritePropertyName("nodeSize"u8);
                 writer.WriteStringValue(NodeSize.Value.ToString());
             }
             if (Optional.IsDefined(NodeSizeFamily))
             {
-                writer.WritePropertyName("nodeSizeFamily");
+                writer.WritePropertyName("nodeSizeFamily"u8);
                 writer.WriteStringValue(NodeSizeFamily.Value.ToString());
             }
             writer.WriteEndObject();
@@ -130,6 +130,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static BigDataPoolResourceInfo DeserializeBigDataPoolResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             string location = default;
             Optional<string> id = default;
@@ -155,11 +159,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<DateTimeOffset> lastSucceededTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -170,27 +173,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
                     location = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -199,111 +202,101 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("autoScale"))
+                        if (property0.NameEquals("autoScale"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoScale = AutoScaleProperties.DeserializeAutoScaleProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("creationDate"))
+                        if (property0.NameEquals("creationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("autoPause"))
+                        if (property0.NameEquals("autoPause"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoPause = AutoPauseProperties.DeserializeAutoPauseProperties(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("isComputeIsolationEnabled"))
+                        if (property0.NameEquals("isComputeIsolationEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isComputeIsolationEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("sessionLevelPackagesEnabled"))
+                        if (property0.NameEquals("sessionLevelPackagesEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sessionLevelPackagesEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("cacheSize"))
+                        if (property0.NameEquals("cacheSize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cacheSize = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("dynamicExecutorAllocation"))
+                        if (property0.NameEquals("dynamicExecutorAllocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dynamicExecutorAllocation = DynamicExecutorAllocation.DeserializeDynamicExecutorAllocation(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("sparkEventsFolder"))
+                        if (property0.NameEquals("sparkEventsFolder"u8))
                         {
                             sparkEventsFolder = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeCount"))
+                        if (property0.NameEquals("nodeCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nodeCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("libraryRequirements"))
+                        if (property0.NameEquals("libraryRequirements"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             libraryRequirements = LibraryRequirements.DeserializeLibraryRequirements(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("customLibraries"))
+                        if (property0.NameEquals("customLibraries"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<LibraryInfo> array = new List<LibraryInfo>();
@@ -314,51 +307,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             customLibraries = array;
                             continue;
                         }
-                        if (property0.NameEquals("sparkConfigProperties"))
+                        if (property0.NameEquals("sparkConfigProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sparkConfigProperties = LibraryRequirements.DeserializeLibraryRequirements(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("sparkVersion"))
+                        if (property0.NameEquals("sparkVersion"u8))
                         {
                             sparkVersion = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("defaultSparkLogFolder"))
+                        if (property0.NameEquals("defaultSparkLogFolder"u8))
                         {
                             defaultSparkLogFolder = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("nodeSize"))
+                        if (property0.NameEquals("nodeSize"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nodeSize = new NodeSize(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("nodeSizeFamily"))
+                        if (property0.NameEquals("nodeSizeFamily"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             nodeSizeFamily = new NodeSizeFamily(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("lastSucceededTimestamp"))
+                        if (property0.NameEquals("lastSucceededTimestamp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastSucceededTimestamp = property0.Value.GetDateTimeOffset("O");

@@ -15,26 +15,29 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static ResourceUsageListResult DeserializeResourceUsageListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ResourceUsage>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<CdnUsage>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ResourceUsage> array = new List<ResourceUsage>();
+                    List<CdnUsage> array = new List<CdnUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceUsage.DeserializeResourceUsage(item));
+                        array.Add(CdnUsage.DeserializeCdnUsage(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

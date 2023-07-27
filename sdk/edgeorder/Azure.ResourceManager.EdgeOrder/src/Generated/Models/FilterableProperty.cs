@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -18,12 +19,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supportedValues"/> is null. </exception>
-        public FilterableProperty(SupportedFilterTypes supportedFilterType, IEnumerable<string> supportedValues)
+        public FilterableProperty(SupportedFilterType supportedFilterType, IEnumerable<string> supportedValues)
         {
-            if (supportedValues == null)
-            {
-                throw new ArgumentNullException(nameof(supportedValues));
-            }
+            Argument.AssertNotNull(supportedValues, nameof(supportedValues));
 
             SupportedFilterType = supportedFilterType;
             SupportedValues = supportedValues.ToList();
@@ -32,14 +30,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of FilterableProperty. </summary>
         /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
-        internal FilterableProperty(SupportedFilterTypes supportedFilterType, IList<string> supportedValues)
+        internal FilterableProperty(SupportedFilterType supportedFilterType, IList<string> supportedValues)
         {
             SupportedFilterType = supportedFilterType;
             SupportedValues = supportedValues;
         }
 
         /// <summary> Type of product filter. </summary>
-        public SupportedFilterTypes SupportedFilterType { get; set; }
+        public SupportedFilterType SupportedFilterType { get; set; }
         /// <summary> Values to be filtered. </summary>
         public IList<string> SupportedValues { get; }
     }

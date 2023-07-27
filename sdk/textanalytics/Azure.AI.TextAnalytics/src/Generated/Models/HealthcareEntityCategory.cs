@@ -22,85 +22,115 @@ namespace Azure.AI.TextAnalytics
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string BodyStructureValue = "BODY_STRUCTURE";
-        private const string AGEValue = "AGE";
-        private const string GenderValue = "GENDER";
-        private const string ExaminationNameValue = "EXAMINATION_NAME";
-        private const string DateValue = "DATE";
-        private const string DirectionValue = "DIRECTION";
-        private const string FrequencyValue = "FREQUENCY";
-        private const string MeasurementValueValue = "MEASUREMENT_VALUE";
-        private const string MeasurementUnitValue = "MEASUREMENT_UNIT";
-        private const string RelationalOperatorValue = "RELATIONAL_OPERATOR";
-        private const string TimeValue = "TIME";
-        private const string GeneORProteinValue = "GENE_OR_PROTEIN";
-        private const string VariantValue = "VARIANT";
-        private const string AdministrativeEventValue = "ADMINISTRATIVE_EVENT";
-        private const string CareEnvironmentValue = "CARE_ENVIRONMENT";
-        private const string HealthcareProfessionValue = "HEALTHCARE_PROFESSION";
-        private const string DiagnosisValue = "DIAGNOSIS";
-        private const string SymptomORSignValue = "SYMPTOM_OR_SIGN";
-        private const string ConditionQualifierValue = "CONDITION_QUALIFIER";
-        private const string MedicationClassValue = "MEDICATION_CLASS";
-        private const string MedicationNameValue = "MEDICATION_NAME";
-        private const string DosageValue = "DOSAGE";
-        private const string MedicationFormValue = "MEDICATION_FORM";
-        private const string MedicationRouteValue = "MEDICATION_ROUTE";
-        private const string FamilyRelationValue = "FAMILY_RELATION";
-        private const string TreatmentNameValue = "TREATMENT_NAME";
+        private const string BodyStructureValue = "BodyStructure";
+        private const string AgeValue = "Age";
+        private const string GenderValue = "Gender";
+        private const string EthnicityValue = "Ethnicity";
+        private const string ExaminationNameValue = "ExaminationName";
+        private const string DateValue = "Date";
+        private const string DirectionValue = "Direction";
+        private const string FrequencyValue = "Frequency";
+        private const string MeasurementValueValue = "MeasurementValue";
+        private const string MeasurementUnitValue = "MeasurementUnit";
+        private const string RelationalOperatorValue = "RelationalOperator";
+        private const string TimeValue = "Time";
+        private const string CourseValue = "Course";
+        private const string GeneOrProteinValue = "GeneOrProtein";
+        private const string VariantValue = "Variant";
+        private const string ExpressionValue = "Expression";
+        private const string MutationTypeValue = "MutationType";
+        private const string AdministrativeEventValue = "AdministrativeEvent";
+        private const string CareEnvironmentValue = "CareEnvironment";
+        private const string HealthcareProfessionValue = "HealthcareProfession";
+        private const string DiagnosisValue = "Diagnosis";
+        private const string SymptomOrSignValue = "SymptomOrSign";
+        private const string ConditionQualifierValue = "ConditionQualifier";
+        private const string ConditionScaleValue = "ConditionScale";
+        private const string MedicationClassValue = "MedicationClass";
+        private const string MedicationNameValue = "MedicationName";
+        private const string DosageValue = "Dosage";
+        private const string MedicationFormValue = "MedicationForm";
+        private const string MedicationRouteValue = "MedicationRoute";
+        private const string FamilyRelationValue = "FamilyRelation";
+        private const string TreatmentNameValue = "TreatmentName";
+        private const string AllergenValue = "Allergen";
+        private const string EmploymentValue = "Employment";
+        private const string LivingStatusValue = "LivingStatus";
+        private const string SubstanceUseValue = "SubstanceUse";
+        private const string SubstanceUseAmountValue = "SubstanceUseAmount";
 
-        /// <summary> BODY_STRUCTURE. </summary>
+        /// <summary> BodyStructure. </summary>
         public static HealthcareEntityCategory BodyStructure { get; } = new HealthcareEntityCategory(BodyStructureValue);
-        /// <summary> AGE. </summary>
-        public static HealthcareEntityCategory AGE { get; } = new HealthcareEntityCategory(AGEValue);
-        /// <summary> GENDER. </summary>
+        /// <summary> Age. </summary>
+        public static HealthcareEntityCategory Age { get; } = new HealthcareEntityCategory(AgeValue);
+        /// <summary> Gender. </summary>
         public static HealthcareEntityCategory Gender { get; } = new HealthcareEntityCategory(GenderValue);
-        /// <summary> EXAMINATION_NAME. </summary>
+        /// <summary> Ethnicity. </summary>
+        public static HealthcareEntityCategory Ethnicity { get; } = new HealthcareEntityCategory(EthnicityValue);
+        /// <summary> ExaminationName. </summary>
         public static HealthcareEntityCategory ExaminationName { get; } = new HealthcareEntityCategory(ExaminationNameValue);
-        /// <summary> DATE. </summary>
+        /// <summary> Date. </summary>
         public static HealthcareEntityCategory Date { get; } = new HealthcareEntityCategory(DateValue);
-        /// <summary> DIRECTION. </summary>
+        /// <summary> Direction. </summary>
         public static HealthcareEntityCategory Direction { get; } = new HealthcareEntityCategory(DirectionValue);
-        /// <summary> FREQUENCY. </summary>
+        /// <summary> Frequency. </summary>
         public static HealthcareEntityCategory Frequency { get; } = new HealthcareEntityCategory(FrequencyValue);
-        /// <summary> MEASUREMENT_VALUE. </summary>
+        /// <summary> MeasurementValue. </summary>
         public static HealthcareEntityCategory MeasurementValue { get; } = new HealthcareEntityCategory(MeasurementValueValue);
-        /// <summary> MEASUREMENT_UNIT. </summary>
+        /// <summary> MeasurementUnit. </summary>
         public static HealthcareEntityCategory MeasurementUnit { get; } = new HealthcareEntityCategory(MeasurementUnitValue);
-        /// <summary> RELATIONAL_OPERATOR. </summary>
+        /// <summary> RelationalOperator. </summary>
         public static HealthcareEntityCategory RelationalOperator { get; } = new HealthcareEntityCategory(RelationalOperatorValue);
-        /// <summary> TIME. </summary>
+        /// <summary> Time. </summary>
         public static HealthcareEntityCategory Time { get; } = new HealthcareEntityCategory(TimeValue);
-        /// <summary> GENE_OR_PROTEIN. </summary>
-        public static HealthcareEntityCategory GeneORProtein { get; } = new HealthcareEntityCategory(GeneORProteinValue);
-        /// <summary> VARIANT. </summary>
+        /// <summary> Course. </summary>
+        public static HealthcareEntityCategory Course { get; } = new HealthcareEntityCategory(CourseValue);
+        /// <summary> GeneOrProtein. </summary>
+        public static HealthcareEntityCategory GeneOrProtein { get; } = new HealthcareEntityCategory(GeneOrProteinValue);
+        /// <summary> Variant. </summary>
         public static HealthcareEntityCategory Variant { get; } = new HealthcareEntityCategory(VariantValue);
-        /// <summary> ADMINISTRATIVE_EVENT. </summary>
+        /// <summary> Expression. </summary>
+        public static HealthcareEntityCategory Expression { get; } = new HealthcareEntityCategory(ExpressionValue);
+        /// <summary> MutationType. </summary>
+        public static HealthcareEntityCategory MutationType { get; } = new HealthcareEntityCategory(MutationTypeValue);
+        /// <summary> AdministrativeEvent. </summary>
         public static HealthcareEntityCategory AdministrativeEvent { get; } = new HealthcareEntityCategory(AdministrativeEventValue);
-        /// <summary> CARE_ENVIRONMENT. </summary>
+        /// <summary> CareEnvironment. </summary>
         public static HealthcareEntityCategory CareEnvironment { get; } = new HealthcareEntityCategory(CareEnvironmentValue);
-        /// <summary> HEALTHCARE_PROFESSION. </summary>
+        /// <summary> HealthcareProfession. </summary>
         public static HealthcareEntityCategory HealthcareProfession { get; } = new HealthcareEntityCategory(HealthcareProfessionValue);
-        /// <summary> DIAGNOSIS. </summary>
+        /// <summary> Diagnosis. </summary>
         public static HealthcareEntityCategory Diagnosis { get; } = new HealthcareEntityCategory(DiagnosisValue);
-        /// <summary> SYMPTOM_OR_SIGN. </summary>
-        public static HealthcareEntityCategory SymptomORSign { get; } = new HealthcareEntityCategory(SymptomORSignValue);
-        /// <summary> CONDITION_QUALIFIER. </summary>
+        /// <summary> SymptomOrSign. </summary>
+        public static HealthcareEntityCategory SymptomOrSign { get; } = new HealthcareEntityCategory(SymptomOrSignValue);
+        /// <summary> ConditionQualifier. </summary>
         public static HealthcareEntityCategory ConditionQualifier { get; } = new HealthcareEntityCategory(ConditionQualifierValue);
-        /// <summary> MEDICATION_CLASS. </summary>
+        /// <summary> ConditionScale. </summary>
+        public static HealthcareEntityCategory ConditionScale { get; } = new HealthcareEntityCategory(ConditionScaleValue);
+        /// <summary> MedicationClass. </summary>
         public static HealthcareEntityCategory MedicationClass { get; } = new HealthcareEntityCategory(MedicationClassValue);
-        /// <summary> MEDICATION_NAME. </summary>
+        /// <summary> MedicationName. </summary>
         public static HealthcareEntityCategory MedicationName { get; } = new HealthcareEntityCategory(MedicationNameValue);
-        /// <summary> DOSAGE. </summary>
+        /// <summary> Dosage. </summary>
         public static HealthcareEntityCategory Dosage { get; } = new HealthcareEntityCategory(DosageValue);
-        /// <summary> MEDICATION_FORM. </summary>
+        /// <summary> MedicationForm. </summary>
         public static HealthcareEntityCategory MedicationForm { get; } = new HealthcareEntityCategory(MedicationFormValue);
-        /// <summary> MEDICATION_ROUTE. </summary>
+        /// <summary> MedicationRoute. </summary>
         public static HealthcareEntityCategory MedicationRoute { get; } = new HealthcareEntityCategory(MedicationRouteValue);
-        /// <summary> FAMILY_RELATION. </summary>
+        /// <summary> FamilyRelation. </summary>
         public static HealthcareEntityCategory FamilyRelation { get; } = new HealthcareEntityCategory(FamilyRelationValue);
-        /// <summary> TREATMENT_NAME. </summary>
+        /// <summary> TreatmentName. </summary>
         public static HealthcareEntityCategory TreatmentName { get; } = new HealthcareEntityCategory(TreatmentNameValue);
+        /// <summary> Allergen. </summary>
+        public static HealthcareEntityCategory Allergen { get; } = new HealthcareEntityCategory(AllergenValue);
+        /// <summary> Employment. </summary>
+        public static HealthcareEntityCategory Employment { get; } = new HealthcareEntityCategory(EmploymentValue);
+        /// <summary> LivingStatus. </summary>
+        public static HealthcareEntityCategory LivingStatus { get; } = new HealthcareEntityCategory(LivingStatusValue);
+        /// <summary> SubstanceUse. </summary>
+        public static HealthcareEntityCategory SubstanceUse { get; } = new HealthcareEntityCategory(SubstanceUseValue);
+        /// <summary> SubstanceUseAmount. </summary>
+        public static HealthcareEntityCategory SubstanceUseAmount { get; } = new HealthcareEntityCategory(SubstanceUseAmountValue);
         /// <summary> Determines if two <see cref="HealthcareEntityCategory"/> values are the same. </summary>
         public static bool operator ==(HealthcareEntityCategory left, HealthcareEntityCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareEntityCategory"/> values are not the same. </summary>

@@ -6,10 +6,11 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Represents a single block in a block blob.  It describes the block&apos;s ID and size. </summary>
+    /// <summary> Represents a single block in a block blob.  It describes the block's ID and size. </summary>
     public readonly partial struct BlobBlock
     {
         /// <summary> Initializes a new instance of BlobBlock. </summary>
@@ -18,10 +19,7 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal BlobBlock(string name, long sizeLong)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             SizeLong = sizeLong;

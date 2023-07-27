@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,18 +16,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of ArmApplicationArtifact. </summary>
         /// <param name="name"> The managed application artifact name. </param>
         /// <param name="uri"> The managed application artifact blob uri. </param>
-        /// <param name="armApplicationArtifactType"> The managed application artifact type. </param>
+        /// <param name="artifactType"> The managed application artifact type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        internal ArmApplicationArtifact(ArmApplicationArtifactName name, Uri uri, ArmApplicationArtifactType armApplicationArtifactType)
+        internal ArmApplicationArtifact(ArmApplicationArtifactName name, Uri uri, ArmApplicationArtifactType artifactType)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Name = name;
             Uri = uri;
-            ArmApplicationArtifactType = armApplicationArtifactType;
+            ArtifactType = artifactType;
         }
 
         /// <summary> The managed application artifact name. </summary>
@@ -34,6 +32,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The managed application artifact blob uri. </summary>
         public Uri Uri { get; }
         /// <summary> The managed application artifact type. </summary>
-        public ArmApplicationArtifactType ArmApplicationArtifactType { get; }
+        public ArmApplicationArtifactType ArtifactType { get; }
     }
 }

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(OSDisk))
             {
-                writer.WritePropertyName("osDisk");
+                writer.WritePropertyName("osDisk"u8);
                 writer.WriteObjectValue(OSDisk);
             }
             if (Optional.IsCollectionDefined(DataDisks))
             {
-                writer.WritePropertyName("dataDisks");
+                writer.WritePropertyName("dataDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             if (Optional.IsDefined(ZoneResilient))
             {
-                writer.WritePropertyName("zoneResilient");
+                writer.WritePropertyName("zoneResilient"u8);
                 writer.WriteBooleanValue(ZoneResilient.Value);
             }
             writer.WriteEndObject();
@@ -41,26 +41,28 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageStorageProfile DeserializeImageStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ImageOSDisk> osDisk = default;
             Optional<IList<ImageDataDisk>> dataDisks = default;
             Optional<bool> zoneResilient = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("osDisk"))
+                if (property.NameEquals("osDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osDisk = ImageOSDisk.DeserializeImageOSDisk(property.Value);
                     continue;
                 }
-                if (property.NameEquals("dataDisks"))
+                if (property.NameEquals("dataDisks"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ImageDataDisk> array = new List<ImageDataDisk>();
@@ -71,11 +73,10 @@ namespace Azure.ResourceManager.Compute.Models
                     dataDisks = array;
                     continue;
                 }
-                if (property.NameEquals("zoneResilient"))
+                if (property.NameEquals("zoneResilient"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     zoneResilient = property.Value.GetBoolean();

@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> An Ssl predefined policy. </summary>
-    internal partial class ApplicationGatewaySslPredefinedPolicy : SubResource
+    public partial class ApplicationGatewaySslPredefinedPolicy : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
         public ApplicationGatewaySslPredefinedPolicy()
@@ -21,18 +21,16 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewaySslPredefinedPolicy. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the Ssl predefined policy. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="cipherSuites"> Ssl cipher suites to be enabled in the specified order for application gateway. </param>
         /// <param name="minProtocolVersion"> Minimum version of Ssl protocol to be supported on application gateway. </param>
-        internal ApplicationGatewaySslPredefinedPolicy(string id, string name, IList<ApplicationGatewaySslCipherSuite> cipherSuites, ApplicationGatewaySslProtocol? minProtocolVersion) : base(id)
+        internal ApplicationGatewaySslPredefinedPolicy(ResourceIdentifier id, string name, ResourceType? resourceType, IList<ApplicationGatewaySslCipherSuite> cipherSuites, ApplicationGatewaySslProtocol? minProtocolVersion) : base(id, name, resourceType)
         {
-            Name = name;
             CipherSuites = cipherSuites;
             MinProtocolVersion = minProtocolVersion;
         }
 
-        /// <summary> Name of the Ssl predefined policy. </summary>
-        public string Name { get; set; }
         /// <summary> Ssl cipher suites to be enabled in the specified order for application gateway. </summary>
         public IList<ApplicationGatewaySslCipherSuite> CipherSuites { get; }
         /// <summary> Minimum version of Ssl protocol to be supported on application gateway. </summary>

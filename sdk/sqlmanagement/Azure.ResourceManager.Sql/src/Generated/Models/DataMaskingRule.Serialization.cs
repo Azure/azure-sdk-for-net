@@ -16,61 +16,61 @@ namespace Azure.ResourceManager.Sql.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AliasName))
             {
-                writer.WritePropertyName("aliasName");
+                writer.WritePropertyName("aliasName"u8);
                 writer.WriteStringValue(AliasName);
             }
             if (Optional.IsDefined(RuleState))
             {
-                writer.WritePropertyName("ruleState");
+                writer.WritePropertyName("ruleState"u8);
                 writer.WriteStringValue(RuleState.Value.ToSerialString());
             }
             if (Optional.IsDefined(SchemaName))
             {
-                writer.WritePropertyName("schemaName");
+                writer.WritePropertyName("schemaName"u8);
                 writer.WriteStringValue(SchemaName);
             }
             if (Optional.IsDefined(TableName))
             {
-                writer.WritePropertyName("tableName");
+                writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
             if (Optional.IsDefined(ColumnName))
             {
-                writer.WritePropertyName("columnName");
+                writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
             }
             if (Optional.IsDefined(MaskingFunction))
             {
-                writer.WritePropertyName("maskingFunction");
+                writer.WritePropertyName("maskingFunction"u8);
                 writer.WriteStringValue(MaskingFunction.Value.ToSerialString());
             }
             if (Optional.IsDefined(NumberFrom))
             {
-                writer.WritePropertyName("numberFrom");
+                writer.WritePropertyName("numberFrom"u8);
                 writer.WriteStringValue(NumberFrom);
             }
             if (Optional.IsDefined(NumberTo))
             {
-                writer.WritePropertyName("numberTo");
+                writer.WritePropertyName("numberTo"u8);
                 writer.WriteStringValue(NumberTo);
             }
             if (Optional.IsDefined(PrefixSize))
             {
-                writer.WritePropertyName("prefixSize");
+                writer.WritePropertyName("prefixSize"u8);
                 writer.WriteStringValue(PrefixSize);
             }
             if (Optional.IsDefined(SuffixSize))
             {
-                writer.WritePropertyName("suffixSize");
+                writer.WritePropertyName("suffixSize"u8);
                 writer.WriteStringValue(SuffixSize);
             }
             if (Optional.IsDefined(ReplacementString))
             {
-                writer.WritePropertyName("replacementString");
+                writer.WritePropertyName("replacementString"u8);
                 writer.WriteStringValue(ReplacementString);
             }
             writer.WriteEndObject();
@@ -79,13 +79,16 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static DataMaskingRule DeserializeDataMaskingRule(JsonElement element)
         {
-            Optional<string> location = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<AzureLocation> location = default;
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<string> id0 = default;
+            Optional<SystemData> systemData = default;
             Optional<string> aliasName = default;
             Optional<DataMaskingRuleState> ruleState = default;
             Optional<string> schemaName = default;
@@ -99,37 +102,45 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> replacementString = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -138,72 +149,65 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("id"))
-                        {
-                            id0 = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("aliasName"))
+                        if (property0.NameEquals("aliasName"u8))
                         {
                             aliasName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("ruleState"))
+                        if (property0.NameEquals("ruleState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ruleState = property0.Value.GetString().ToDataMaskingRuleState();
                             continue;
                         }
-                        if (property0.NameEquals("schemaName"))
+                        if (property0.NameEquals("schemaName"u8))
                         {
                             schemaName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("tableName"))
+                        if (property0.NameEquals("tableName"u8))
                         {
                             tableName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("columnName"))
+                        if (property0.NameEquals("columnName"u8))
                         {
                             columnName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("maskingFunction"))
+                        if (property0.NameEquals("maskingFunction"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maskingFunction = property0.Value.GetString().ToDataMaskingFunction();
                             continue;
                         }
-                        if (property0.NameEquals("numberFrom"))
+                        if (property0.NameEquals("numberFrom"u8))
                         {
                             numberFrom = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("numberTo"))
+                        if (property0.NameEquals("numberTo"u8))
                         {
                             numberTo = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("prefixSize"))
+                        if (property0.NameEquals("prefixSize"u8))
                         {
                             prefixSize = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("suffixSize"))
+                        if (property0.NameEquals("suffixSize"u8))
                         {
                             suffixSize = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("replacementString"))
+                        if (property0.NameEquals("replacementString"u8))
                         {
                             replacementString = property0.Value.GetString();
                             continue;
@@ -212,7 +216,7 @@ namespace Azure.ResourceManager.Sql.Models
                     continue;
                 }
             }
-            return new DataMaskingRule(id, name, type, systemData, location.Value, kind.Value, id0.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
+            return new DataMaskingRule(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, aliasName.Value, Optional.ToNullable(ruleState), schemaName.Value, tableName.Value, columnName.Value, Optional.ToNullable(maskingFunction), numberFrom.Value, numberTo.Value, prefixSize.Value, suffixSize.Value, replacementString.Value);
         }
     }
 }

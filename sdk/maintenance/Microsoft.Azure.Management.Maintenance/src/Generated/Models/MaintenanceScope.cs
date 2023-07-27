@@ -22,6 +22,11 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// </summary>
         public const string Host = "Host";
         /// <summary>
+        /// This maintenance scope controls the default update maintenance of
+        /// the Azure Resource
+        /// </summary>
+        public const string Resource = "Resource";
+        /// <summary>
         /// This maintenance scope controls os image installation on VM/VMSS
         /// </summary>
         public const string OSImage = "OSImage";

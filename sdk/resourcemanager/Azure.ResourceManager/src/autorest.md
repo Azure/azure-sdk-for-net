@@ -1,4 +1,3 @@
-      $["x-ms-client-name"] = "PatchMode"
 # Generated code configuration
 
 Run `dotnet build /t:GenerateCode` to generate code.
@@ -11,8 +10,13 @@ skip-csproj: true
 model-namespace: false
 public-clients: false
 head-as-boolean: false
-mgmt-debug:
-  show-request-path: true
+modelerfour:
+  lenient-model-deduplication: true
+deserialize-null-collection-as-null-value: true
+
+# mgmt-debug:
+#   show-serialized-names: true
+
 batch:
   - tag: package-common-type
   - tag: package-resources
@@ -29,6 +33,13 @@ namespace: Azure.ResourceManager
 input-file:
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v3/types.json
   - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/be8b6e1fc69e7c2700847d6a9c344c0e204294ce/specification/common-types/resource-management/v4/managedidentity.json
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -53,29 +64,63 @@ rename-rules:
   URI: Uri
 
 directive:
-  - remove-model: "AzureEntityResource"
-  - remove-model: "ProxyResource"
-  - remove-model: "ResourceModelWithAllowedPropertySet"
-  - remove-model: "Identity"
-  - remove-model: "Operation"
-  - remove-model: "OperationListResult"
-  - remove-model: "OperationStatusResult"
-  - remove-model: "locationData"
-  - remove-model: "CheckNameAvailabilityRequest"
-  - remove-model: "CheckNameAvailabilityResponse"
-  - remove-model: "ErrorResponse"
-  - remove-model: "ErrorDetail"
-  - remove-model: "ErrorAdditionalInfo"
   - from: types.json
-    where: $.definitions['Resource']
+    where: $.definitions.Resource
     transform: >
-      $["x-ms-mgmt-referenceType"] = true
+      $["x-ms-mgmt-referenceType"] = true;
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
   - from: types.json
-    where: $.definitions['TrackedResource']
+    where: $.definitions.TrackedResource
     transform: >
-      $["x-ms-mgmt-referenceType"] = true
+      $["x-ms-mgmt-referenceType"] = true;
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
   - from: types.json
-    where: $.definitions.*
+    where: $.definitions.Plan
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.Sku
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.systemData
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+# Workaround for the issue that SystemData lost readonly attribute: https://github.com/Azure/autorest/issues/4269
+  - from: types.json
+    where: $.definitions.systemData.properties.*
+    transform: >
+      $["readOnly"] = true;
+  - from: types.json
+    where: $.definitions.encryptionProperties
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.KeyVaultProperties
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
@@ -87,22 +132,34 @@ directive:
     transform: >
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
-# Workaround for the issue that SystemData lost readonly attribute: https://github.com/Azure/autorest/issues/4269
   - from: types.json
-    where: $.definitions.systemData.properties.*
+    where: $.definitions.OperationStatusResult
     transform: >
-      $["readOnly"] = true
+      $["x-ms-mgmt-propertyReferenceType"] = false;
+      $["x-ms-mgmt-typeReferenceType"] = true;
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
+  - from: types.json
+    where: $.definitions.OperationStatusResult.properties.*
+    transform: >
+      $["readOnly"] = true;
   - from: managedidentity.json
-    where: $.definitions.*
+    where: $.definitions.SystemAssignedServiceIdentity
     transform: >
       $["x-ms-mgmt-propertyReferenceType"] = true;
       $["x-namespace"] = "Azure.ResourceManager.Models";
       $["x-accessibility"] = "public";
       $["x-csharp-formats"] = "json";
       $["x-csharp-usage"] = "model,input,output";
+      $.properties.type["x-ms-client-name"] = "SystemAssignedServiceIdentityType";
   - from: managedidentity.json
-    where: $.definitions.SystemAssignedServiceIdentity.properties.type
-    transform: $["x-ms-client-name"] = "SystemAssignedServiceIdentityType"
+    where: $.definitions.UserAssignedIdentity
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
+      $["x-namespace"] = "Azure.ResourceManager.Models";
+      $["x-accessibility"] = "public";
+      $["x-csharp-formats"] = "json";
+      $["x-csharp-usage"] = "model,input,output";
 ```
 
 ### Tag: package-resources
@@ -114,18 +171,16 @@ output-folder: $(this-folder)/Resources/Generated
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyAssignments.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-04-01/resources.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policyDefinitions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/policySetDefinitions.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2022-06-01/policyAssignments.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/resources.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policyDefinitions.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/policySetDefinitions.json
     # - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/preview/2020-07-01-preview/policyExemptions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2016-09-01/links.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Resources/stable/2021-01-01/subscriptions.json
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/91ac14531f0d05b3d6fcf4a817ea0defde59fe63/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2020-09-01/dataPolicyManifests.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Authorization/stable/2016-09-01/locks.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/subscriptions.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b74978708bb95475562412d4654c00fbcedd9f89/specification/resources/resource-manager/Microsoft.Features/stable/2021-07-01/features.json
 list-exception:
-  - /{linkId}
   - /{resourceId}
 request-path-to-resource-data:
   # subscription does not have name and type
@@ -137,14 +192,12 @@ request-path-to-resource-data:
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/locations
 request-path-to-parent:
-  /{scope}/providers/Microsoft.Resources/links: /{linkId}
   /subscriptions: /subscriptions/{subscriptionId}
   /tenants: /
   /subscriptions/{subscriptionId}/locations: /subscriptions/{subscriptionId}
   /subscriptions/{subscriptionId}/providers: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
   /subscriptions/{subscriptionId}/providers/Microsoft.Features/providers/{resourceProviderNamespace}/features/{featureName}: /subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}
 request-path-to-resource-type:
-  /{linkId}: Microsoft.Resources/links
   /subscriptions/{subscriptionId}/locations: Microsoft.Resources/locations
   /tenants: Microsoft.Resources/tenants
   /: Microsoft.Resources/tenants
@@ -164,7 +217,6 @@ operation-groups-to-omit:
   - AuthorizationOperations
   - ResourceCheck
 override-operation-name:
-  ResourceLinks_ListAtSourceScope: GetAll
   Tags_List: GetAllPredefinedTags
   Tags_DeleteValue: DeletePredefinedTagValue
   Tags_CreateOrUpdateValue: CreateOrUpdatePredefinedTagValue
@@ -180,6 +232,21 @@ override-operation-name:
   ResourceLinks_ListAtSubscription: GetResourceLinks
 
 no-property-type-replacement: ResourceProviderData;ResourceProvider;
+
+operations-to-skip-lro-api-version-override:
+- Tags_CreateOrUpdateAtScope
+- Tags_UpdateAtScope
+- Tags_DeleteAtScope
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+keep-plural-enums:
+  - ResourceTypeAliasPathAttributes
 
 rename-rules:
   CPU: Cpu
@@ -203,8 +270,21 @@ rename-rules:
   SSO: Sso
   URI: Uri
 
+# mgmt-debug:
+#   show-serialized-names: true
+
+rename-mapping:
+  PolicyAssignment.identity: ManagedIdentity
+  Override: PolicyOverride
+  OverrideKind: PolicyOverrideKind
+  Selector: ResourceSelectorExpression
+  SelectorKind: ResourceSelectorKind
+  Location: LocationExpanded
+  ResourcesMoveContent.targetResourceGroup: targetResourceGroupId|arm-id
+
 directive:
   # These methods can be replaced by using other methods in the same operation group, remove for Preview.
+  - remove-operation: PolicyAssignments_UpdateById
   - remove-operation: PolicyAssignments_DeleteById
   - remove-operation: PolicyAssignments_CreateById
   - remove-operation: PolicyAssignments_GetById
@@ -229,6 +309,12 @@ directive:
   - remove-operation: Resources_Get
   - remove-operation: Resources_Delete
   - remove-operation: Providers_RegisterAtManagementGroupScope
+  - remove-operation: Subscriptions_CheckZonePeers
+  - remove-operation: AuthorizationOperations_List
+  - from: swagger-document
+    where: $.definitions.ExtendedLocation
+    transform: >
+      $["x-ms-mgmt-propertyReferenceType"] = true;
   # Deduplicate
   - from: subscriptions.json
     where: '$.paths["/providers/Microsoft.Resources/operations"].get'
@@ -260,8 +346,8 @@ directive:
   - from: subscriptions.json
     where: $.definitions
     transform: >
-      $["OperationListResult"]["x-ms-client-name"] = "SubscriptionOperationListResult";
-      $["Operation"]["x-ms-client-name"] = "SubscriptionOperation";
+      $["OperationListResult"] = undefined;
+      $["Operation"] = undefined;
   - from: features.json
     where: $.definitions
     transform: >
@@ -283,15 +369,17 @@ directive:
   - rename-operation:
       from: Resources_ValidateMoveResources
       to: ResourceGroups_ValidateMoveResources
+  # remove the systemData property because we already included this property in its base class and the type replacement somehow does not work in resourcemanager
+  - from: policyAssignments.json
+    where: $.definitions.PolicyAssignment.properties.systemData
+    transform: return undefined;
+  - from: policyDefinitions.json
+    where: $.definitions.PolicyDefinition.properties.systemData
+    transform: return undefined;
+  - from: policySetDefinitions.json
+    where: $.definitions.PolicySetDefinition.properties.systemData
+    transform: return undefined;
 
-# TODO - remove when Azure.ErrorResponse is marked as PropertyReferenceType
-  - from: types.json
-    where: $.definitions.ErrorResponse
-    transform: $["x-ms-client-name"] = "ResponseError"
-
-  - rename-model:
-      from: Location
-      to: LocationExpanded
   - rename-model:
       from: Provider
       to: ResourceProvider
@@ -329,8 +417,8 @@ directive:
       from: Resource
       to: TrackedResourceExtendedData
   - rename-model:
-      from: ProviderRegistrationRequest
-      to: ResourceProviderRegistrationOptions
+      from: ResourcesMoveInfo
+      to: ResourcesMoveContent
   - from: resources.json
     where: $.definitions.Provider
     transform:
@@ -393,7 +481,7 @@ directive:
           "description": "Gets details about the default tenant.",
           "parameters": [
             {
-              "$ref": "#/parameters/ApiVersionParameter"
+              "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
             }
           ],
           "responses": {
@@ -467,12 +555,12 @@ directive:
 
   - from: resources.json
     where: $.definitions.Identity.properties.type["x-ms-enum"]
-    transform: > 
+    transform: >
       $["name"] = "GenericResourceIdentityType";
       $["modelAsString"] = true;
   - from: resources.json
     where: $.definitions.Identity
-    transform: > 
+    transform: >
       $["required"] = ["type"]
   - from: resources.json
     where: $.definitions.Identity
@@ -606,16 +694,22 @@ title: ManagementClient
 input-file:
     - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/94a37114e8f4067410b52d3b1c75aa6e09180658/specification/managementgroups/resource-manager/Microsoft.Management/stable/2021-04-01/management.json
 request-path-to-parent:
-  /providers/Microsoft.Management/managementGroups: /providers/Microsoft.Management/managementGroups/{groupId}
   /providers/Microsoft.Management/checkNameAvailability: /providers/Microsoft.Management/managementGroups/{groupId}
 operation-positions:
-  /providers/Microsoft.Management/checkNameAvailability: collection
+  ManagementGroups_CheckNameAvailability: collection
 operation-groups-to-omit:
   - HierarchySettings
   - ManagementGroupSubscriptions
   - Entities
   - TenantBackfill
 no-property-type-replacement: DescendantParentGroupInfo
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
 
 rename-rules:
   CPU: Cpu
@@ -638,28 +732,13 @@ rename-rules:
   Ipsec: IPsec
   SSO: Sso
   URI: Uri
-override-operation-name:
-  ManagementGroups_CheckNameAvailability: CheckManagementGroupNameAvailability
 directive:
-  - rename-model:
-      from: PatchManagementGroupRequest
-      to: PatchManagementGroupOptions
-  - rename-model:
-      from: CreateManagementGroupRequest
-      to: CreateManagementGroupOptions
   - rename-model:
       from: CreateManagementGroupChildInfo
       to: ManagementGroupChildOptions
   - rename-model:
       from: CreateParentGroupInfo
       to: ManagementGroupParentCreateOptions
-  - from: management.json
-    where: $.definitions.CheckNameAvailabilityRequest.properties.type
-    transform: >
-      $['x-ms-client-name'] = "ResourceType"
-  - rename-model:
-      from: CheckNameAvailabilityRequest
-      to: ManagementGroupNameAvailabilityOptions
   - rename-operation:
       from: CheckNameAvailability
       to: ManagementGroups_CheckNameAvailability
@@ -669,10 +748,6 @@ directive:
   - rename-operation:
       from: TenantBackfillStatus
       to: TenantBackfill_Status
-  - from: management.json
-    where: $.parameters.CheckNameAvailabilityParameter
-    transform: >
-      $['name'] = "checkNameAvailabilityOptions"
   - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
@@ -744,4 +819,12 @@ directive:
     where: $.definitions.ManagementGroupProperties.properties.tenantId
     transform: >
       $['format'] = "uuid"
+  - from: management.json
+    where: $.definitions
+    transform: >
+      $.CreateManagementGroupRequest.properties.type['x-ms-format'] = 'resource-type';
+      $.CheckNameAvailabilityRequest["x-ms-client-name"] = "ManagementGroupNameAvailabilityContent";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-client-name'] = "ResourceType";
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-constant'] = true;
+      $.CheckNameAvailabilityRequest.properties.type['x-ms-format'] = 'resource-type';
 ```

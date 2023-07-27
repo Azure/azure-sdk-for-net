@@ -15,8 +15,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// Specifies the Linux operating system settings on the virtual machine.
-    /// &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see
-    /// [Linux on Azure-Endorsed
+    /// For a list of supported Linux distributions, see [Linux on
+    /// Azure-Endorsed
     /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).
     /// </summary>
     public partial class LinuxConfiguration
@@ -37,19 +37,22 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="ssh">Specifies the ssh key configuration for a Linux
         /// OS.</param>
         /// <param name="provisionVMAgent">Indicates whether virtual machine
-        /// agent should be provisioned on the virtual machine.
-        /// &lt;br&gt;&lt;br&gt; When this property is not specified in the
-        /// request body, default behavior is to set it to true.  This will
-        /// ensure that VM Agent is installed on the VM so that extensions can
-        /// be added to the VM later.</param>
+        /// agent should be provisioned on the virtual machine. When this
+        /// property is not specified in the request body, default behavior is
+        /// to set it to true. This will ensure that VM Agent is installed on
+        /// the VM so that extensions can be added to the VM later.</param>
         /// <param name="patchSettings">[Preview Feature] Specifies settings
         /// related to VM Guest Patching on Linux.</param>
-        public LinuxConfiguration(bool? disablePasswordAuthentication = default(bool?), SshConfiguration ssh = default(SshConfiguration), bool? provisionVMAgent = default(bool?), LinuxPatchSettings patchSettings = default(LinuxPatchSettings))
+        /// <param name="enableVMAgentPlatformUpdates">Indicates whether
+        /// VMAgent Platform Updates is enabled for the Linux virtual machine.
+        /// Default value is false.</param>
+        public LinuxConfiguration(bool? disablePasswordAuthentication = default(bool?), SshConfiguration ssh = default(SshConfiguration), bool? provisionVMAgent = default(bool?), LinuxPatchSettings patchSettings = default(LinuxPatchSettings), bool? enableVMAgentPlatformUpdates = default(bool?))
         {
             DisablePasswordAuthentication = disablePasswordAuthentication;
             Ssh = ssh;
             ProvisionVMAgent = provisionVMAgent;
             PatchSettings = patchSettings;
+            EnableVMAgentPlatformUpdates = enableVMAgentPlatformUpdates;
             CustomInit();
         }
 
@@ -73,11 +76,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets indicates whether virtual machine agent should be
-        /// provisioned on the virtual machine.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; When this property is not
+        /// provisioned on the virtual machine. When this property is not
         /// specified in the request body, default behavior is to set it to
-        /// true.  This will ensure that VM Agent is installed on the VM so
-        /// that extensions can be added to the VM later.
+        /// true. This will ensure that VM Agent is installed on the VM so that
+        /// extensions can be added to the VM later.
         /// </summary>
         [JsonProperty(PropertyName = "provisionVMAgent")]
         public bool? ProvisionVMAgent { get; set; }
@@ -88,6 +90,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "patchSettings")]
         public LinuxPatchSettings PatchSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether VMAgent Platform Updates is enabled
+        /// for the Linux virtual machine. Default value is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableVMAgentPlatformUpdates")]
+        public bool? EnableVMAgentPlatformUpdates { get; set; }
 
     }
 }

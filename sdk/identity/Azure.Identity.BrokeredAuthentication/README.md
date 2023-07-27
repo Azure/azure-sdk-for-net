@@ -27,8 +27,10 @@ dotnet add package Azure.Identity.BrokeredAuthentication --prerelease
 This example demonstrates configuring the `InteractiveBrowserCredential` with the specialized options type `InteractiveBrowserCredentialBrokerOptions` to enable brokered authentication.
 
 ```C# Snippet:ConfigureInteractiveBrowserToUseBroker
+IntPtr parentWindowHandle = GetForegroundWindow();
+
 // Create an interactive browser credential which will use the system authentication broker
-var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions());
+var credential = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle));
 
 // Use the credential to authenticate a secret client
 var client = new SecretClient(new Uri("https://myvault.vault.azure.net/"), credential);
@@ -141,7 +143,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [vs_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/VsLoginDialog.png
 [azure_cli_login_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AzureCliLogin.png
 [azure_cli_login_device_code_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/AzureCliLoginDeviceCode.png
-[default_azure_credential_authflow_image]: https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/identity/Azure.Identity/images/DefaultAzureCredentialAuthenticationFlow.png
 [ref_DefaultAzureCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [ref_ChainedTokenCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.chainedtokencredential?view=azure-dotnet
 [ref_EnvironmentCredential]: https://docs.microsoft.com/dotnet/api/azure.identity.environmentcredential?view=azure-dotnet

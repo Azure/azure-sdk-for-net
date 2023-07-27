@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> UrlPathMaps give a url path to the backend mapping information for PathBasedRouting. </summary>
-    public partial class ApplicationGatewayUrlPathMap : SubResource
+    public partial class ApplicationGatewayUrlPathMap : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ApplicationGatewayUrlPathMap. </summary>
         public ApplicationGatewayUrlPathMap()
@@ -22,34 +23,30 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of ApplicationGatewayUrlPathMap. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the URL path map that is unique within an Application Gateway. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="defaultBackendAddressPool"> Default backend address pool resource of URL path map. </param>
         /// <param name="defaultBackendHttpSettings"> Default backend http settings resource of URL path map. </param>
         /// <param name="defaultRewriteRuleSet"> Default Rewrite rule set resource of URL path map. </param>
         /// <param name="defaultRedirectConfiguration"> Default redirect configuration resource of URL path map. </param>
+        /// <param name="defaultLoadDistributionPolicy"> Default Load Distribution Policy resource of URL path map. </param>
         /// <param name="pathRules"> Path rule of URL path map resource. </param>
         /// <param name="provisioningState"> The provisioning state of the URL path map resource. </param>
-        internal ApplicationGatewayUrlPathMap(string id, string name, string etag, string resourceType, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, IList<ApplicationGatewayPathRule> pathRules, ProvisioningState? provisioningState) : base(id)
+        internal ApplicationGatewayUrlPathMap(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, WritableSubResource defaultLoadDistributionPolicy, IList<ApplicationGatewayPathRule> pathRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             DefaultBackendAddressPool = defaultBackendAddressPool;
             DefaultBackendHttpSettings = defaultBackendHttpSettings;
             DefaultRewriteRuleSet = defaultRewriteRuleSet;
             DefaultRedirectConfiguration = defaultRedirectConfiguration;
+            DefaultLoadDistributionPolicy = defaultLoadDistributionPolicy;
             PathRules = pathRules;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of the URL path map that is unique within an Application Gateway. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> Default backend address pool resource of URL path map. </summary>
         internal WritableSubResource DefaultBackendAddressPool { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -106,9 +103,23 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
+        /// <summary> Default Load Distribution Policy resource of URL path map. </summary>
+        internal WritableSubResource DefaultLoadDistributionPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DefaultLoadDistributionPolicyId
+        {
+            get => DefaultLoadDistributionPolicy is null ? default : DefaultLoadDistributionPolicy.Id;
+            set
+            {
+                if (DefaultLoadDistributionPolicy is null)
+                    DefaultLoadDistributionPolicy = new WritableSubResource();
+                DefaultLoadDistributionPolicy.Id = value;
+            }
+        }
+
         /// <summary> Path rule of URL path map resource. </summary>
         public IList<ApplicationGatewayPathRule> PathRules { get; }
         /// <summary> The provisioning state of the URL path map resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

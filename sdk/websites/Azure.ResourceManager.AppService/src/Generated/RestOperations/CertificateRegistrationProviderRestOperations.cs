@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CsmOperationCollection>> ListOperationsAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<CsmOperationListResult>> ListOperationsAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateListOperationsRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CsmOperationCollection value = default;
+                        CsmOperationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CsmOperationCollection.DeserializeCsmOperationCollection(document.RootElement);
+                        value = CsmOperationListResult.DeserializeCsmOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Implements Csm operations Api to exposes the list of available Csm Apis under the resource provider. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CsmOperationCollection> ListOperations(CancellationToken cancellationToken = default)
+        public Response<CsmOperationListResult> ListOperations(CancellationToken cancellationToken = default)
         {
             using var message = CreateListOperationsRequest();
             _pipeline.Send(message, cancellationToken);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CsmOperationCollection value = default;
+                        CsmOperationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CsmOperationCollection.DeserializeCsmOperationCollection(document.RootElement);
+                        value = CsmOperationListResult.DeserializeCsmOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<CsmOperationCollection>> ListOperationsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
+        public async Task<Response<CsmOperationListResult>> ListOperationsNextPageAsync(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CsmOperationCollection value = default;
+                        CsmOperationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CsmOperationCollection.DeserializeCsmOperationCollection(document.RootElement);
+                        value = CsmOperationListResult.DeserializeCsmOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<CsmOperationCollection> ListOperationsNextPage(string nextLink, CancellationToken cancellationToken = default)
+        public Response<CsmOperationListResult> ListOperationsNextPage(string nextLink, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        CsmOperationCollection value = default;
+                        CsmOperationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CsmOperationCollection.DeserializeCsmOperationCollection(document.RootElement);
+                        value = CsmOperationListResult.DeserializeCsmOperationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

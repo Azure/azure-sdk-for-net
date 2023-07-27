@@ -14,32 +14,34 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static KnowledgeBaseAnswerPrompt DeserializeKnowledgeBaseAnswerPrompt(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> displayOrder = default;
             Optional<int> qnaId = default;
             Optional<string> displayText = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("displayOrder"))
+                if (property.NameEquals("displayOrder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     displayOrder = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("qnaId"))
+                if (property.NameEquals("qnaId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     qnaId = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("displayText"))
+                if (property.NameEquals("displayText"u8))
                 {
                     displayText = property.Value.GetString();
                     continue;

@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of VaultListResult. </summary>
         internal VaultListResult()
         {
-            Value = new ChangeTrackingList<VaultData>();
+            Value = new ChangeTrackingList<KeyVaultData>();
         }
 
         /// <summary> Initializes a new instance of VaultListResult. </summary>
         /// <param name="value"> The list of vaults. </param>
         /// <param name="nextLink"> The URL to get the next set of vaults. </param>
-        internal VaultListResult(IReadOnlyList<VaultData> value, string nextLink)
+        internal VaultListResult(IReadOnlyList<KeyVaultData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of vaults. </summary>
-        public IReadOnlyList<VaultData> Value { get; }
+        public IReadOnlyList<KeyVaultData> Value { get; }
         /// <summary> The URL to get the next set of vaults. </summary>
         public string NextLink { get; }
     }

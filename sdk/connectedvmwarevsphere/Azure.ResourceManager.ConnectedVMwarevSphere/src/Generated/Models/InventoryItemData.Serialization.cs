@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            writer.WritePropertyName("inventoryType");
+            writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
             if (Optional.IsDefined(ManagedResourceId))
             {
-                writer.WritePropertyName("managedResourceId");
+                writer.WritePropertyName("managedResourceId"u8);
                 writer.WriteStringValue(ManagedResourceId);
             }
             if (Optional.IsDefined(MoRefId))
             {
-                writer.WritePropertyName("moRefId");
+                writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
             if (Optional.IsDefined(MoName))
             {
-                writer.WritePropertyName("moName");
+                writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
             writer.WriteEndObject();
@@ -47,11 +47,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static InventoryItemData DeserializeInventoryItemData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             InventoryType inventoryType = default;
             Optional<string> managedResourceId = default;
             Optional<string> moRefId = default;
@@ -59,32 +63,36 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -93,27 +101,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("inventoryType"))
+                        if (property0.NameEquals("inventoryType"u8))
                         {
                             inventoryType = new InventoryType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("managedResourceId"))
+                        if (property0.NameEquals("managedResourceId"u8))
                         {
                             managedResourceId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("moRefId"))
+                        if (property0.NameEquals("moRefId"u8))
                         {
                             moRefId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("moName"))
+                        if (property0.NameEquals("moName"u8))
                         {
                             moName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
@@ -122,7 +130,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     continue;
                 }
             }
-            return new InventoryItemData(id, name, type, systemData, kind.Value, inventoryType, managedResourceId.Value, moRefId.Value, moName.Value, provisioningState.Value);
+            return new InventoryItemData(id, name, type, systemData.Value, kind.Value, inventoryType, managedResourceId.Value, moRefId.Value, moName.Value, provisioningState.Value);
         }
     }
 }

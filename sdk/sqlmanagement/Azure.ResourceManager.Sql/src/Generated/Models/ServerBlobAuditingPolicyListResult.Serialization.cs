@@ -16,26 +16,29 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServerBlobAuditingPolicyListResult DeserializeServerBlobAuditingPolicyListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServerBlobAuditingPolicyData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<SqlServerBlobAuditingPolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServerBlobAuditingPolicyData> array = new List<ServerBlobAuditingPolicyData>();
+                    List<SqlServerBlobAuditingPolicyData> array = new List<SqlServerBlobAuditingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerBlobAuditingPolicyData.DeserializeServerBlobAuditingPolicyData(item));
+                        array.Add(SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(item));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

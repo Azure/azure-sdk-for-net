@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -18,12 +19,16 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Body))
             {
-                writer.WritePropertyName("body");
-                writer.WriteStringValue(Body);
+                writer.WritePropertyName("body"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Body);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Body.ToString()).RootElement);
+#endif
             }
             if (Optional.IsCollectionDefined(StatusCodes))
             {
-                writer.WritePropertyName("statusCodes");
+                writer.WritePropertyName("statusCodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in StatusCodes)
                 {
@@ -36,20 +41,27 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayProbeHealthResponseMatch DeserializeApplicationGatewayProbeHealthResponseMatch(JsonElement element)
         {
-            Optional<string> body = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<BinaryData> body = default;
             Optional<IList<string>> statusCodes = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("body"))
-                {
-                    body = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("statusCodes"))
+                if (property.NameEquals("body"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    body = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("statusCodes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     List<string> array = new List<string>();

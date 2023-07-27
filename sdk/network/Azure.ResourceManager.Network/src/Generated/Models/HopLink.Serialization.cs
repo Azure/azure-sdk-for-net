@@ -15,46 +15,48 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static HopLink DeserializeHopLink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextHopId = default;
             Optional<string> linkType = default;
-            Optional<IReadOnlyList<ConnectivityIssue>> issues = default;
+            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
             Optional<IReadOnlyDictionary<string, string>> context = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<long> roundTripTimeMin = default;
             Optional<long> roundTripTimeAvg = default;
             Optional<long> roundTripTimeMax = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextHopId"))
+                if (property.NameEquals("nextHopId"u8))
                 {
                     nextHopId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linkType"))
+                if (property.NameEquals("linkType"u8))
                 {
                     linkType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("issues"))
+                if (property.NameEquals("issues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ConnectivityIssue> array = new List<ConnectivityIssue>();
+                    List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssue.DeserializeConnectivityIssue(item));
+                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item));
                     }
                     issues = array;
                     continue;
                 }
-                if (property.NameEquals("context"))
+                if (property.NameEquals("context"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -65,12 +67,16 @@ namespace Azure.ResourceManager.Network.Models
                     context = dictionary;
                     continue;
                 }
-                if (property.NameEquals("resourceId"))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -79,31 +85,28 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("roundTripTimeMin"))
+                        if (property0.NameEquals("roundTripTimeMin"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roundTripTimeMin = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("roundTripTimeAvg"))
+                        if (property0.NameEquals("roundTripTimeAvg"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roundTripTimeAvg = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("roundTripTimeMax"))
+                        if (property0.NameEquals("roundTripTimeMax"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             roundTripTimeMax = property0.Value.GetInt64();

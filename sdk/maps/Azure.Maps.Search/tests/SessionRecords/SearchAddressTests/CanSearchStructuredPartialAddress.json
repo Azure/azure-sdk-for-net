@@ -1,0 +1,94 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/address/structured/json?api-version=1.0\u0026countryCode=NZ\u0026municipality=Closeburn",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-fa9c196703a67422de013d932a9c9301-df389112e8208c09-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "104151ad28871f71aabb91350ecd175e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "833",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 08 Sep 2022 18:56:31 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: A767A56DF32848DA85FA2925988F6672 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:32Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "closeburn",
+          "queryType": "NON_NEAR",
+          "queryTime": 5,
+          "numResults": 1,
+          "offset": 0,
+          "totalResults": 1,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "Geography",
+            "id": "NZ/GEO/p0/567",
+            "score": 2.382011652,
+            "entityType": "Municipality",
+            "address": {
+              "municipality": "Closeburn",
+              "countrySecondarySubdivision": "Otago",
+              "countryTertiarySubdivision": "Queenstown Lakes",
+              "countrySubdivision": "South Island",
+              "countryCode": "NZ",
+              "country": "New Zealand",
+              "countryCodeISO3": "NZL",
+              "freeformAddress": "Closeburn"
+            },
+            "position": {
+              "lat": -45.06073,
+              "lon": 168.56997
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": -44.99284,
+                "lon": 168.54404
+              },
+              "btmRightPoint": {
+                "lat": -45.08264,
+                "lon": 168.59708
+              }
+            },
+            "boundingBox": {
+              "topLeftPoint": {
+                "lat": -44.99284,
+                "lon": 168.54404
+              },
+              "btmRightPoint": {
+                "lat": -45.08264,
+                "lon": 168.59708
+              }
+            },
+            "dataSources": {
+              "geometry": {
+                "id": "00005831-3200-1200-0000-00007d340d53"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "969977636"
+  }
+}

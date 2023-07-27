@@ -13,6 +13,7 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Rest;
 using NUnit.Framework;
