@@ -1137,11 +1137,12 @@ namespace Azure.Core.Serialization
         T Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options);
         System.BinaryData Serialize(Azure.Core.Serialization.ModelSerializerOptions options);
     }
-    public partial interface IXmlModelSerializable : Azure.Core.Serialization.IModelSerializable<object>, Azure.Core.Serialization.IXmlModelSerializable<object>
+    public partial interface IXmlModelSerializable : Azure.Core.Serialization.IModelSerializable, Azure.Core.Serialization.IModelSerializable<object>, Azure.Core.Serialization.IXmlModelSerializable<object>
     {
     }
     public partial interface IXmlModelSerializable<out T> : Azure.Core.Serialization.IModelSerializable<T>
     {
+        T Deserialize(System.Xml.Linq.XElement root, Azure.Core.Serialization.ModelSerializerOptions options);
         void Serialize(System.Xml.XmlWriter writer, Azure.Core.Serialization.ModelSerializerOptions options);
     }
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
