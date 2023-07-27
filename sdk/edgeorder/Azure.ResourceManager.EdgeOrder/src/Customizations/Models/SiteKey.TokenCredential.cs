@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EdgeOrder.Customizations.Models
             armClientOptions.Environment = new ArmEnvironment(new Uri(siteKey.ArmEndPoint), siteKey.ArmEndPoint);
 
             return new ArmClient(credential: siteKey.GenerateTokenCredential(),
-                                defaultSubscriptionId: default,
+                                defaultSubscriptionId: new ResourceIdentifier(siteKey.ResourceId).SubscriptionId,
                                 options: armClientOptions);
         }
     }
