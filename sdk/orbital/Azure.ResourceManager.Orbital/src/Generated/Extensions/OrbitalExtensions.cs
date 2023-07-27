@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Orbital.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Orbital
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.Orbital
     /// <summary> A class to add extension methods to Azure.ResourceManager.Orbital. </summary>
     public static partial class OrbitalExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static OrbitalArmClientMockingExtension GetOrbitalArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new OrbitalArmClientMockingExtension(client);
+            });
+        }
+
+        private static OrbitalResourceGroupMockingExtension GetOrbitalResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new OrbitalResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static OrbitalSubscriptionMockingExtension GetOrbitalSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new OrbitalSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region OrbitalSpacecraftResource
         /// <summary>
         /// Gets an object representing an <see cref="OrbitalSpacecraftResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> Returns a <see cref="OrbitalSpacecraftResource" /> object. </returns>
         public static OrbitalSpacecraftResource GetOrbitalSpacecraftResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OrbitalSpacecraftResource.ValidateResourceId(id);
-                return new OrbitalSpacecraftResource(client, id);
-            }
-            );
+            return GetOrbitalArmClientMockingExtension(client).GetOrbitalSpacecraftResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> Returns a <see cref="OrbitalContactResource" /> object. </returns>
         public static OrbitalContactResource GetOrbitalContactResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OrbitalContactResource.ValidateResourceId(id);
-                return new OrbitalContactResource(client, id);
-            }
-            );
+            return GetOrbitalArmClientMockingExtension(client).GetOrbitalContactResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> Returns a <see cref="OrbitalContactProfileResource" /> object. </returns>
         public static OrbitalContactProfileResource GetOrbitalContactProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OrbitalContactProfileResource.ValidateResourceId(id);
-                return new OrbitalContactProfileResource(client, id);
-            }
-            );
+            return GetOrbitalArmClientMockingExtension(client).GetOrbitalContactProfileResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> Returns a <see cref="AvailableGroundStationResource" /> object. </returns>
         public static AvailableGroundStationResource GetAvailableGroundStationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvailableGroundStationResource.ValidateResourceId(id);
-                return new AvailableGroundStationResource(client, id);
-            }
-            );
+            return GetOrbitalArmClientMockingExtension(client).GetAvailableGroundStationResource(id);
         }
         #endregion
 
@@ -130,7 +104,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An object representing collection of OrbitalSpacecraftResources and their operations over a OrbitalSpacecraftResource. </returns>
         public static OrbitalSpacecraftCollection GetOrbitalSpacecrafts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetOrbitalSpacecrafts();
+            return GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalSpacecrafts();
         }
 
         /// <summary>
@@ -154,7 +128,7 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static async Task<Response<OrbitalSpacecraftResource>> GetOrbitalSpacecraftAsync(this ResourceGroupResource resourceGroupResource, string spacecraftName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetOrbitalSpacecrafts().GetAsync(spacecraftName, cancellationToken).ConfigureAwait(false);
+            return await GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalSpacecraftAsync(spacecraftName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -178,7 +152,7 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static Response<OrbitalSpacecraftResource> GetOrbitalSpacecraft(this ResourceGroupResource resourceGroupResource, string spacecraftName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetOrbitalSpacecrafts().Get(spacecraftName, cancellationToken);
+            return GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalSpacecraft(spacecraftName, cancellationToken);
         }
 
         /// <summary> Gets a collection of OrbitalContactProfileResources in the ResourceGroupResource. </summary>
@@ -186,7 +160,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An object representing collection of OrbitalContactProfileResources and their operations over a OrbitalContactProfileResource. </returns>
         public static OrbitalContactProfileCollection GetOrbitalContactProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetOrbitalContactProfiles();
+            return GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalContactProfiles();
         }
 
         /// <summary>
@@ -210,7 +184,7 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static async Task<Response<OrbitalContactProfileResource>> GetOrbitalContactProfileAsync(this ResourceGroupResource resourceGroupResource, string contactProfileName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetOrbitalContactProfiles().GetAsync(contactProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalContactProfileAsync(contactProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -234,7 +208,7 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static Response<OrbitalContactProfileResource> GetOrbitalContactProfile(this ResourceGroupResource resourceGroupResource, string contactProfileName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetOrbitalContactProfiles().Get(contactProfileName, cancellationToken);
+            return GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalContactProfile(contactProfileName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AvailableGroundStationResources in the SubscriptionResource. </summary>
@@ -242,7 +216,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An object representing collection of AvailableGroundStationResources and their operations over a AvailableGroundStationResource. </returns>
         public static AvailableGroundStationCollection GetAvailableGroundStations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableGroundStations();
+            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetAvailableGroundStations();
         }
 
         /// <summary>
@@ -266,7 +240,7 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static async Task<Response<AvailableGroundStationResource>> GetAvailableGroundStationAsync(this SubscriptionResource subscriptionResource, string groundStationName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetAvailableGroundStations().GetAsync(groundStationName, cancellationToken).ConfigureAwait(false);
+            return await GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetAvailableGroundStationAsync(groundStationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -290,7 +264,7 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static Response<AvailableGroundStationResource> GetAvailableGroundStation(this SubscriptionResource subscriptionResource, string groundStationName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetAvailableGroundStations().Get(groundStationName, cancellationToken);
+            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetAvailableGroundStation(groundStationName, cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +286,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An async collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OrbitalSpacecraftResource> GetOrbitalSpacecraftsAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOrbitalSpacecraftsAsync(skiptoken, cancellationToken);
+            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetOrbitalSpacecraftsAsync(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -334,7 +308,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> A collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OrbitalSpacecraftResource> GetOrbitalSpacecrafts(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOrbitalSpacecrafts(skiptoken, cancellationToken);
+            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetOrbitalSpacecrafts(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -356,7 +330,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An async collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OrbitalContactProfileResource> GetOrbitalContactProfilesAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOrbitalContactProfilesAsync(skiptoken, cancellationToken);
+            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetOrbitalContactProfilesAsync(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -378,7 +352,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> A collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OrbitalContactProfileResource> GetOrbitalContactProfiles(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOrbitalContactProfiles(skiptoken, cancellationToken);
+            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetOrbitalContactProfiles(skiptoken, cancellationToken);
         }
     }
 }
