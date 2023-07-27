@@ -349,23 +349,25 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [Test]
-        public async Task GetRoomsLiveTest_FirstRoomIsNotNull_Succeed()
+        public async Task GetRoomsLiveTest_FirstTwoPagesOfRoomIsNotNull_Succeed()
         {
             // Arrange
             RoomsClient roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
             // First create a room to ensure that the list rooms will not be empty.
             CommunicationRoom createdRoom = await roomsClient.CreateRoomAsync();
-            CommunicationRoom? firstActiveRoom = null;
+            int roomCounter = 0;
             try
             {
                 AsyncPageable<CommunicationRoom> allActiveRooms = roomsClient.GetRoomsAsync();
                 await foreach (CommunicationRoom room in allActiveRooms)
                 {
-                    firstActiveRoom = room;
-                    break;
+                    if (roomCounter > 60)
+                    {
+                        break;
+                    }
+                    ValidateRoom(room);
+                    roomCounter++;
                 }
-
-                ValidateRoom(firstActiveRoom);
             }
             catch (Exception ex)
             {
