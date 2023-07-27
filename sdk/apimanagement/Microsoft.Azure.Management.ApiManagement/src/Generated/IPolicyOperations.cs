@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// definition in the Api Management service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Get the Global policy definition of the Api Management service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Management service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Service.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
