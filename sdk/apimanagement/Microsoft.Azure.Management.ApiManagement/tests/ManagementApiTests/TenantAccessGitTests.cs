@@ -78,7 +78,10 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(getSecretsHttpResponse);
                 Assert.NotNull(getSecretsHttpResponse.Body);
                 Assert.NotNull(getSecretsHttpResponse.Headers.ETag);
-                Assert.NotEqual(secretsResponse.SecondaryKey, getSecretsHttpResponse.Body.SecondaryKey);
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                {
+                    Assert.NotEqual(secretsResponse.SecondaryKey, getSecretsHttpResponse.Body.SecondaryKey);
+                }
             }
         }
     }

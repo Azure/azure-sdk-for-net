@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class TagDescriptionContract : Resource
+    public partial class TagDescriptionContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the TagDescriptionContract class.
