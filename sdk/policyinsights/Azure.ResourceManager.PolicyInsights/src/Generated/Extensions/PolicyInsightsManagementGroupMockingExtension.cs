@@ -12,12 +12,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PolicyInsights;
 using Azure.ResourceManager.PolicyInsights.Models;
 
-namespace Azure.ResourceManager.PolicyInsights
+namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
     /// <summary> A class to add extension methods to ManagementGroupResource. </summary>
-    internal partial class ManagementGroupResourceExtensionClient : ArmResource
+    public partial class PolicyInsightsManagementGroupMockingExtension : ArmResource
     {
         private ClientDiagnostics _policyTrackedResourcesClientDiagnostics;
         private PolicyTrackedResourcesRestOperations _policyTrackedResourcesRestClient;
@@ -28,15 +29,15 @@ namespace Azure.ResourceManager.PolicyInsights
         private ClientDiagnostics _policyRestrictionsClientDiagnostics;
         private PolicyRestrictionsRestOperations _policyRestrictionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResourceExtensionClient"/> class for mocking. </summary>
-        protected ManagementGroupResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsManagementGroupMockingExtension"/> class for mocking. </summary>
+        protected PolicyInsightsManagementGroupMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ManagementGroupResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsManagementGroupMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ManagementGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyInsightsManagementGroupMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForManagementGroupRequest(Id.Name, policyTrackedResourceType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, Id.Name, policyTrackedResourceType, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "ManagementGroupResourceExtensionClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "PolicyInsightsManagementGroupMockingExtension.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForManagementGroupRequest(Id.Name, policyTrackedResourceType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, Id.Name, policyTrackedResourceType, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "ManagementGroupResourceExtensionClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "PolicyInsightsManagementGroupMockingExtension.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForManagementGroupRequest(Id.Name, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, Id.Name, policyEventType, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "ManagementGroupResourceExtensionClient.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "PolicyInsightsManagementGroupMockingExtension.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForManagementGroupRequest(Id.Name, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, Id.Name, policyEventType, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "ManagementGroupResourceExtensionClient.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "PolicyInsightsManagementGroupMockingExtension.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForManagementGroupRequest(Id.Name, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, Id.Name, policyStateType, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "ManagementGroupResourceExtensionClient.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "PolicyInsightsManagementGroupMockingExtension.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForManagementGroupRequest(Id.Name, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForManagementGroupNextPageRequest(nextLink, Id.Name, policyStateType, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "ManagementGroupResourceExtensionClient.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "PolicyInsightsManagementGroupMockingExtension.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.PolicyInsights
         public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForManagementGroupRequest(Id.Name, policyStateSummaryType, policyQuerySettings);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "ManagementGroupResourceExtensionClient.SummarizePolicyStates", "value", null, cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "PolicyInsightsManagementGroupMockingExtension.SummarizePolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +243,7 @@ namespace Azure.ResourceManager.PolicyInsights
         public virtual Pageable<PolicySummary> SummarizePolicyStates(PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForManagementGroupRequest(Id.Name, policyStateSummaryType, policyQuerySettings);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "ManagementGroupResourceExtensionClient.SummarizePolicyStates", "value", null, cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "PolicyInsightsManagementGroupMockingExtension.SummarizePolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -260,9 +261,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CheckPolicyRestrictionsResult>> CheckPolicyRestrictionsAsync(CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.CheckPolicyRestrictions");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("PolicyInsightsManagementGroupMockingExtension.CheckPolicyRestrictions");
             scope.Start();
             try
             {
@@ -291,9 +295,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="content"> The check policy restrictions parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CheckPolicyRestrictionsResult> CheckPolicyRestrictions(CheckManagementGroupPolicyRestrictionsContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.CheckPolicyRestrictions");
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = PolicyRestrictionsClientDiagnostics.CreateScope("PolicyInsightsManagementGroupMockingExtension.CheckPolicyRestrictions");
             scope.Start();
             try
             {
