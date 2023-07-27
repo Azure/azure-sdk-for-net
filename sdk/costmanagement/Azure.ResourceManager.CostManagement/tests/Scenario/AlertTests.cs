@@ -30,7 +30,6 @@ namespace Azure.ResourceManager.CostManagement.Tests
         [RecordedTest]
         public async Task GetAll()
         {
-            using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(System.Diagnostics.Tracing.EventLevel.Verbose);
             var list = await _alertCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
