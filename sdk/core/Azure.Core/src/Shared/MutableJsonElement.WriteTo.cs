@@ -141,93 +141,129 @@ namespace Azure.Core.Json
                 return;
             }
 
-            // This version is not efficient; Proof of concept.
-
-			// TODO: rewrite using Span APIs
             IEnumerable<string> changePaths = _root.Changes.GetChangedProperties(out int maxPathLength);
 
-            // patchPath tracks the path we're on in writing out the PATCH JSON.
+            // patchPath tracks the global path we're on in writing out the PATCH JSON.
             // We only iterate forward through the PATCH JSON.
             Span<char> patchPath = stackalloc char[maxPathLength];
             int patchPathLength = 0;
 
-            // patchElement tracks the element we're currently writing to in the PATCH JSON.
-            // It tracks with patchPath.
+            // patchElement tracks the element we're currently writing into the PATCH JSON.
+            // It should match the element indicated by patchPath.
             MutableJsonElement patchElement = _root.RootElement;
 
             // currentPath tracks the path of the current change we're writing in
-            // this iteration of the loop over changes.
+            // a given iteration of the loop over changes.
             Span<char> currentPath = stackalloc char[maxPathLength];
             int currentPathLength = 0;
 
             // TODO: this breaks for arrays
+
+            // Write the start of the PATCH JSON
             writer.WriteStartObject();
 
-            // foreach unique change on the change list
-            foreach (string changePath in changePaths)
+            foreach (string path in changePaths)
             {
-                string[] segments = changePath.Split(MutableJsonDocument.ChangeTracker.Delimiter);
-                string name = segments[0];
+                ReadOnlySpan<char> changePath = path.AsSpan();
 
-                name.AsSpan().CopyTo(currentPath);
-                currentPathLength = name.Length;
+                CopyTo(currentPath, ref currentPathLength, GetFirstSegment(changePath));
 
-                // If the next change starts in a different one then we were writing to in
+                // If the change we're on starts in a different object than we were writing to in
                 // the last iteration, we need to write the end of any open objects.  Do that now.
-                bool closedObject = false;
-                while (!currentPath.Slice(0, currentPathLength).StartsWith(patchPath.Slice(0, patchPathLength)))
-                {
-                    writer.WriteEndObject();
+                CloseOpenObjects(writer, currentPath, currentPathLength, patchPath, ref patchPathLength, ref patchElement);
 
-                    // Pop path and current
-                    MutableJsonDocument.ChangeTracker.PopProperty(patchPath, ref patchPathLength);
+                // Open any objects that aren't yet open between the first and last path segments
+                // for the change we're writing in this loop iteration.
+                OpenAncestorObjects(writer, changePath, currentPath, ref currentPathLength, patchPath, ref patchPathLength, ref patchElement);
 
-                    closedObject = true;
-                }
+                // Now we're at the last segment of the change path and patchElement points to
+                // the node that contains the change we want to write into the PATCH JSON.
+                ReadOnlySpan<char> segment = GetLastSegment(changePath);
 
-                if (closedObject)
-                {
-                    patchElement = GetPropertyFromRoot(patchPath, patchPathLength);
-                }
-
-                // Move forward on path segments for the change we're writing in this loop iteration
-                int i = 0;
-                for (; i < segments.Length - 1; i++)
-                {
-                    if (i != 0)
-                    {
-                        name = segments[i];
-                        MutableJsonDocument.ChangeTracker.PushProperty(currentPath, ref currentPathLength, name.AsSpan());
-                    }
-
-                    // if we haven't opened this object yet in the PATCH JSON, open it and set
-                    // currentElement to the corresponding element for the object.
-                    if (!patchPath.StartsWith(currentPath) && currentPath.StartsWith(patchPath))
-                    {
-                        writer.WritePropertyName(name);
-                        writer.WriteStartObject();
-
-                        MutableJsonDocument.ChangeTracker.PushProperty(patchPath, ref patchPathLength, name.AsSpan());
-                        patchElement = patchElement.GetProperty(name);
-                        continue;
-                    }
-                }
-
-                // At this point, i should point to the last segment, and we should be in the
-                // right position to write the change we're working on in this loop iteration
-                // into the PATCH JSON. Update the current path and write out the current value.
-                Debug.Assert(segments.Length - 1 == i);
-
-                name = segments[i];
-                MutableJsonDocument.ChangeTracker.PushProperty(currentPath, ref currentPathLength, name.AsSpan());
-
-                writer.WritePropertyName(name);
-                patchElement.GetProperty(name).WriteTo(writer);
+                writer.WritePropertyName(segment);
+                patchElement.GetProperty(segment).WriteTo(writer);
             }
 
             // The above loop will have written out the values of all the elements on the
             // list of changes, but if the last element was multiple levels down the object
             // tree, it may not have written the ends of its ancestor objects.  Do that now.
+            CloseFinalObjects(writer, patchPath, patchPathLength);
+
+            // Write the end of the PATCH JSON.
+            writer.WriteEndObject();
+        }
+        private ReadOnlySpan<char> GetFirstSegment(ReadOnlySpan<char> path)
+        {
+            int idx = path.IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+            return idx == -1 ? path : path.Slice(0, idx);
+        }
+
+        private ReadOnlySpan<char> GetLastSegment(ReadOnlySpan<char> path)
+        {
+            int idx = path.LastIndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+            return idx == -1 ? path : path.Slice(idx + 1);
+        }
+
+        private void CopyTo(Span<char> target, ref int targetLength, ReadOnlySpan<char> value)
+        {
+            Debug.Assert(target.Length >= value.Length);
+
+            value.CopyTo(target);
+            targetLength = value.Length;
+        }
+
+        private void CloseOpenObjects(Utf8JsonWriter writer, ReadOnlySpan<char> currentPath, int currentPathLength, Span<char> patchPath, ref int patchPathLength, ref MutableJsonElement patchElement)
+        {
+            bool closedObject = false;
+            while (!currentPath.Slice(0, currentPathLength).StartsWith(patchPath.Slice(0, patchPathLength)))
+            {
+                writer.WriteEndObject();
+
+                MutableJsonDocument.ChangeTracker.PopProperty(patchPath, ref patchPathLength);
+
+                closedObject = true;
+            }
+
+            if (closedObject)
+            {
+                patchElement = GetPropertyFromRoot(patchPath, patchPathLength);
+            }
+        }
+
+        private MutableJsonElement GetPropertyFromRoot(ReadOnlySpan<char> path, int pathLength)
+        {
+            MutableJsonElement current = _root.RootElement;
+
+            if (pathLength == 0)
+            {
+                return current;
+            }
+
+            int length = pathLength;
+            int start = 0;
+            int end;
+            do
+            {
+                end = path.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                if (end == -1)
+                {
+                    end = length - start;
+                }
+
+                if (end != 0)
+                {
+                    current = current.GetProperty(path.Slice(start, end));
+                }
+
+                start += end + 1;
+            }
+            while (start < length);
+
+            return current;
+        }
+
+        private void CloseFinalObjects(Utf8JsonWriter writer, ReadOnlySpan<char> patchPath, int patchPathLength)
+        {
             int length = patchPathLength;
             int start = 0;
             int end;
@@ -245,26 +281,47 @@ namespace Azure.Core.Json
                 }
 
                 start += end + 1;
-            } while (start < length);
-
-            // Write the end of the PATCH JSON.
-            writer.WriteEndObject();
+            }
+            while (start < length);
         }
 
-        private MutableJsonElement GetPropertyFromRoot(Span<char> path, int pathLength)
+        private void OpenAncestorObjects(Utf8JsonWriter writer, ReadOnlySpan<char> path, Span<char> currentPath, ref int currentPathLength, Span<char> patchPath, ref int patchPathLength, ref MutableJsonElement patchElement)
         {
-            if (pathLength == 0)
-            {
-                return _root.RootElement;
-            }
+            int length = path.Length;
+            int start = 0;
+            int end;
 
-            string[] segments = path.Split(MutableJsonDocument.ChangeTracker.Delimiter);
-            MutableJsonElement current = _root.RootElement;
-            foreach (string segment in segments)
+            do
             {
-                current = current.GetProperty(segment);
+                end = path.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                if (end == -1)
+                {
+                    // skip the last segment
+                    break;
+                }
+
+                // currentPath already holds the first property, so don't push it if we're
+                // still on the first one.
+                if (end != 0 && start != 0)
+                {
+                    MutableJsonDocument.ChangeTracker.PushProperty(currentPath, ref currentPathLength, path.Slice(start), end);
+                }
+
+                // if we haven't opened this object yet in the PATCH JSON, open it and set
+                // currentElement to the corresponding element for the object.
+                if (!patchPath.Slice(0, patchPathLength).StartsWith(currentPath.Slice(0, currentPathLength)) &&
+                    currentPath.Slice(0, currentPathLength).StartsWith(patchPath.Slice(0, patchPathLength)))
+                {
+                    writer.WritePropertyName(path.Slice(start, end));
+                    writer.WriteStartObject();
+
+                    MutableJsonDocument.ChangeTracker.PushProperty(patchPath, ref patchPathLength, path.Slice(start), end);
+                    patchElement = patchElement.GetProperty(path.Slice(start, end));
+                }
+
+                start += end + 1;
             }
-            return current;
+            while (start < length);
         }
     }
 }

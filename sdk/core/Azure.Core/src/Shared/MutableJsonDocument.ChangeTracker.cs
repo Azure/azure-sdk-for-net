@@ -68,6 +68,11 @@ namespace Azure.Core.Json
 
             internal bool TryGetChange(string path, in int lastAppliedChange, out MutableJsonChange change)
             {
+                return TryGetChange(path.AsSpan(), lastAppliedChange, out change);
+            }
+
+            internal bool TryGetChange(ReadOnlySpan<char> path, in int lastAppliedChange, out MutableJsonChange change)
+            {
                 if (_changes == null)
                 {
                     change = default;
@@ -77,7 +82,7 @@ namespace Azure.Core.Json
                 for (int i = _changes!.Count - 1; i > lastAppliedChange; i--)
                 {
                     MutableJsonChange c = _changes[i];
-                    if (c.Path == path)
+                    if (c.Path.AsSpan().SequenceEqual(path))
                     {
                         change = c;
                         return true;
@@ -230,33 +235,21 @@ namespace Azure.Core.Json
                 return string.Concat(path, Delimiter, value);
             }
 
-            internal static void PushProperty(Span<char> path, ref int pathLength, ReadOnlySpan<char> value)
+            internal static void PushProperty(Span<char> path, ref int pathLength, ReadOnlySpan<char> value, int valueLength)
             {
                 // Validate that path is large enough to write value into
-                Debug.Assert(path.Length - pathLength > value.Length);
+                Debug.Assert(path.Length - pathLength >= valueLength);
 
                 if (pathLength == 0)
                 {
-                    value.CopyTo(path);
-                    pathLength = value.Length;
+                    value.Slice(0, valueLength).CopyTo(path);
+                    pathLength = valueLength;
                     return;
                 }
 
                 path[pathLength] = Delimiter;
-                value.CopyTo(path.Slice(pathLength+1));
-                pathLength += value.Length + 1;
-            }
-
-            internal static string PushProperty(string path, ReadOnlySpan<byte> value)
-            {
-                string propertyName = BinaryData.FromBytes(value.ToArray()).ToString();
-
-                if (path.Length == 0)
-                {
-                    return propertyName;
-                }
-
-                return string.Concat(path, Delimiter, propertyName);
+                value.Slice(0, valueLength).CopyTo(path.Slice(pathLength + 1));
+                pathLength += valueLength + 1;
             }
 
             internal static string PopProperty(string path)
@@ -273,7 +266,7 @@ namespace Azure.Core.Json
 
             internal static void PopProperty(Span<char> path, ref int pathLength)
             {
-                int lastDelimiter = path.LastIndexOf(Delimiter);
+                int lastDelimiter = path.Slice(0, pathLength).LastIndexOf(Delimiter);
                 pathLength = lastDelimiter == -1 ? 0 : lastDelimiter;
             }
         }
