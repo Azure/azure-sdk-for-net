@@ -10,6 +10,7 @@ using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ChangeAnalysis.Mocking;
 using Azure.ResourceManager.ChangeAnalysis.Models;
 using Azure.ResourceManager.Resources;
 
@@ -18,51 +19,27 @@ namespace Azure.ResourceManager.ChangeAnalysis
     /// <summary> A class to add extension methods to Azure.ResourceManager.ChangeAnalysis. </summary>
     public static partial class ChangeAnalysisExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ChangeAnalysisResourceGroupMockingExtension GetChangeAnalysisResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ChangeAnalysisResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ChangeAnalysisSubscriptionMockingExtension GetChangeAnalysisSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ChangeAnalysisSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static ChangeAnalysisTenantMockingExtension GetChangeAnalysisTenantMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
+                return new ChangeAnalysisTenantMockingExtension(client, resource.Id);
             });
         }
 
@@ -87,7 +64,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetChangesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetChangesByResourceGroupAsync(startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisResourceGroupMockingExtension(resourceGroupResource).GetChangesByResourceGroupAsync(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -111,7 +88,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetChangesByResourceGroup(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetChangesByResourceGroup(startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisResourceGroupMockingExtension(resourceGroupResource).GetChangesByResourceGroup(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +112,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetChangesBySubscriptionAsync(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetChangesBySubscriptionAsync(startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisSubscriptionMockingExtension(subscriptionResource).GetChangesBySubscriptionAsync(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -159,7 +136,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetChangesBySubscription(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetChangesBySubscription(startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisSubscriptionMockingExtension(subscriptionResource).GetChangesBySubscription(startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -188,7 +165,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetResourceChangesAsync(resourceId, startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisTenantMockingExtension(tenantResource).GetResourceChangesAsync(resourceId, startTime, endTime, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -217,7 +194,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
-            return GetTenantResourceExtensionClient(tenantResource).GetResourceChanges(resourceId, startTime, endTime, skipToken, cancellationToken);
+            return GetChangeAnalysisTenantMockingExtension(tenantResource).GetResourceChanges(resourceId, startTime, endTime, skipToken, cancellationToken);
         }
     }
 }
