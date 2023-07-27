@@ -2281,6 +2281,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// A DirectoryNotFoundException will be thrown if the file
+        /// path to download the blob to doesn't exist.
         /// </remarks>
         public virtual Response DownloadTo(Stream destination) =>
             DownloadTo(destination, CancellationToken.None);
@@ -2298,6 +2300,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// A DirectoryNotFoundException will be thrown if the file
+        /// path to download the blob to doesn't exist.
         /// </remarks>
         public virtual Response DownloadTo(string path) =>
             DownloadTo(path, CancellationToken.None);
@@ -2332,6 +2336,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// A DirectoryNotFoundException will be thrown if the file
+        /// path to download the blob to doesn't exist.
         /// </remarks>
         public virtual async Task<Response> DownloadToAsync(string path) =>
             await DownloadToAsync(path, CancellationToken.None).ConfigureAwait(false);
@@ -2381,6 +2387,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// A DirectoryNotFoundException will be thrown if the file
+        /// path to download the blob to doesn't exist.
         /// </remarks>
         public virtual Response DownloadTo(
             string path,
@@ -2436,6 +2444,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// A DirectoryNotFoundException will be thrown if the file
+        /// path to download the blob to doesn't exist.
         /// </remarks>
         public virtual async Task<Response> DownloadToAsync(
             string path,
@@ -2505,6 +2515,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <remarks>
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
+        /// A DirectoryNotFoundException will be thrown if the file
+        /// path to download the blob to doesn't exist.
         /// </remarks>
         public virtual Response DownloadTo(
             string path,
