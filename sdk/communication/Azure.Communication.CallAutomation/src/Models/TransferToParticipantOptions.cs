@@ -55,5 +55,15 @@ namespace Azure.Communication.CallAutomation
         /// The Custom Context which contains SIP and voip headers
         /// </summary>
         public CustomContext CustomContext { get; }
+
+        /// <summary>
+        /// The callee that being transferred
+        /// </summary>
+        public CommunicationIdentifier Transferee { get; set; }
+
+        /// <summary>
+        /// The callback URI override for this transfer call request.
+        /// </summary>
+        public string CallbackUriOverride { get; set; }
     }
 }

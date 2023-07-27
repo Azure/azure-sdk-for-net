@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.Value)
+                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -47,6 +47,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Initializes a new instance of JobQueue. </summary>
         internal RouterQueue()
         {
+            _labels = new ChangeTrackingDictionary<string, object>();
         }
     }
 }
