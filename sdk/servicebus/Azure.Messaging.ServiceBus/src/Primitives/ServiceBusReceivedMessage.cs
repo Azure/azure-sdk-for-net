@@ -198,7 +198,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Gets or sets the date and time, in UTC, at which the message should be made available to receivers. This property does not control when a message is sent by the
-        /// client.  Sending happens immediately when `SendAsync` is called.  Service Bus will hide the message from receivers until the the requested time.
+        /// client. Sending happens immediately when `SendAsync` is called.  Service Bus will hide the message from receivers until the the requested time.
         /// </summary>
         /// <value>
         /// The date and time, in UTC, at which the message should be available to receivers. This time may not be exact; the actual time depends on the entity's workload and state.
