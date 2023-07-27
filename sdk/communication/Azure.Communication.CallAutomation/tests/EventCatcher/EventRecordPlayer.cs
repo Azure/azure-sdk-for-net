@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventCatcher
         public bool IsRecording { get; private set; }
         public IEnumerable<RecordedServiceBusReceivedMessage> Entries => _recording.Entries;
 
-        public List<string> KeysToSanitize { get; } = new List<string>() { "rawId", "id", "botAppId", "dialogContext", "ivrContext" };
+        public List<string> KeysToSanitize { get; } = new List<string>() { "rawId", "id", "botAppId", "operationContext", "ivrContext" };
 
         public EventRecordPlayer(string sessionFilePath)
         {
