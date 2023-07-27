@@ -230,21 +230,21 @@ namespace Azure.Core.Json
                 return string.Concat(path, Delimiter, value);
             }
 
-            internal static void PushProperty(Span<char> path, ref int pathLength, ReadOnlySpan<char> value)
+            internal static void PushProperty(Span<char> path, ref int pathLength, ReadOnlySpan<char> value, int valueLength)
             {
                 // Validate that path is large enough to write value into
-                Debug.Assert(path.Length - pathLength > value.Length);
+                Debug.Assert(path.Length - pathLength >= valueLength);
 
                 if (pathLength == 0)
                 {
-                    value.CopyTo(path);
-                    pathLength = value.Length;
+                    value.Slice(0, valueLength).CopyTo(path);
+                    pathLength = valueLength;
                     return;
                 }
 
                 path[pathLength] = Delimiter;
-                value.CopyTo(path.Slice(pathLength+1));
-                pathLength += value.Length + 1;
+                value.Slice(0, valueLength).CopyTo(path.Slice(pathLength + 1));
+                pathLength += valueLength + 1;
             }
 
             internal static string PushProperty(string path, ReadOnlySpan<byte> value)

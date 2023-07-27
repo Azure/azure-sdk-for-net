@@ -160,17 +160,26 @@ namespace Azure.Core.Json
             Span<char> currentPath = stackalloc char[maxPathLength];
             int currentPathLength = 0;
 
+            // name is the property name of the current segment we're working with.
+            Span<char> name = stackalloc char[maxPathLength];
+            int nameLength = 0;
+
             // TODO: this breaks for arrays
             writer.WriteStartObject();
 
             // foreach unique change on the change list
             foreach (string changePath in changePaths)
             {
-                string[] segments = changePath.Split(MutableJsonDocument.ChangeTracker.Delimiter);
-                string name = segments[0];
+                int d = changePath.AsSpan().IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                if (d == -1)
+                {
+                    d = changePath.Length;
+                }
+                changePath.AsSpan().Slice(0, d).CopyTo(name);
+                nameLength = d;
 
-                name.AsSpan().CopyTo(currentPath);
-                currentPathLength = name.Length;
+                name.Slice(0, nameLength).CopyTo(currentPath);
+                currentPathLength = nameLength;
 
                 // If the next change starts in a different one then we were writing to in
                 // the last iteration, we need to write the end of any open objects.  Do that now.
@@ -191,13 +200,28 @@ namespace Azure.Core.Json
                 }
 
                 // Move forward on path segments for the change we're writing in this loop iteration
-                int i = 0;
-                for (; i < segments.Length - 1; i++)
+                int l = changePath.Length;
+                int s = 0;
+                int e = changePath.AsSpan().Slice(s).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+
+                do
                 {
-                    if (i != 0)
+                    // set name to next segment
+                    e = changePath.AsSpan().Slice(s).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                    if (e == -1)
                     {
-                        name = segments[i];
-                        MutableJsonDocument.ChangeTracker.PushProperty(currentPath, ref currentPathLength, name.AsSpan());
+                        e = l - s;
+                        // skip the last segment
+                        break;
+                    }
+
+                    // currentPath already holds the first property, so don't push it if we're
+                    // still on the first one.
+                    if (e != 0 && s != 0)
+                    {
+                        changePath.AsSpan().Slice(s, e).CopyTo(name);
+                        nameLength = e;
+                        MutableJsonDocument.ChangeTracker.PushProperty(currentPath, ref currentPathLength, name, nameLength);
                     }
 
                     // if we haven't opened this object yet in the PATCH JSON, open it and set
@@ -205,23 +229,26 @@ namespace Azure.Core.Json
                     if (!patchPath.Slice(0, patchPathLength).StartsWith(currentPath.Slice(0, currentPathLength)) &&
                         currentPath.Slice(0, currentPathLength).StartsWith(patchPath.Slice(0, patchPathLength)))
                     {
-                        writer.WritePropertyName(name);
+                        writer.WritePropertyName(name.Slice(0, nameLength));
                         writer.WriteStartObject();
 
-                        MutableJsonDocument.ChangeTracker.PushProperty(patchPath, ref patchPathLength, name.AsSpan());
-                        patchElement = patchElement.GetProperty(name);
+                        MutableJsonDocument.ChangeTracker.PushProperty(patchPath, ref patchPathLength, name, nameLength);
+                        patchElement = patchElement.GetProperty(GetString(name, s, e));
                         continue;
                     }
+
+                    s += e + 1;
                 }
+                while (s < l);
 
-                // At this point, i should point to the last segment, and we should be in the
-                // right position to write the change we're working on in this loop iteration
-                // into the PATCH JSON. Update the current path and write out the current value.
-                Debug.Assert(segments.Length - 1 == i);
+                // At this point, we're at the last segment and are in right position to write
+                // the change we're working on in this loop iteration into the PATCH JSON.
+                // Update name to the last segment and write out the current value.
+                changePath.AsSpan().Slice(s, e).CopyTo(name);
+                nameLength = e;
 
-                name = segments[i];
-                writer.WritePropertyName(name);
-                patchElement.GetProperty(name).WriteTo(writer);
+                writer.WritePropertyName(name.Slice(0, nameLength));
+                patchElement.GetProperty(GetString(name, 0, nameLength)).WriteTo(writer);
             }
 
             // The above loop will have written out the values of all the elements on the
@@ -272,20 +299,23 @@ namespace Azure.Core.Json
 
                 if (end != 0)
                 {
-                    // TODO: optimize
-#if NET5_0_OR_GREATER
-                    string segment = new string(path.Slice(start, end));
-                    current = current.GetProperty(segment);
-#else
-                    string segment = new string(path.Slice(start, end).ToArray());
-                    current = current.GetProperty(segment);
-#endif
+                    current = current.GetProperty(GetString(path, start, end));
                 }
 
                 start += end + 1;
             } while (start < length);
 
             return current;
+        }
+
+        // TODO: optimize - bypass string use entirely.  Remove this method.
+        private string GetString(ReadOnlySpan<char> value, int start, int end)
+        {
+#if NET5_0_OR_GREATER
+            return new string(value.Slice(start, end));
+#else
+            return new string(value.Slice(start, end).ToArray());
+#endif
         }
     }
 }
