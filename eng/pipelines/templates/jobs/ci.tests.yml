@@ -90,6 +90,11 @@ jobs:
       - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
+      - pwsh: |
+          Write-Host "##vso[task.setvariable variable=PROXY_DEBUG_MODE]true"
+          Get-ChildItem -Recurse -Path $(Build.SourcesDirectory)/sdk/${{ parameters.ServiceDirectory }} -Filter assets.json | ForEach-Object { test-proxy restore -a $_.FullName }
+        displayName: Set proxy variable, disable auto-proxy, restore recordings
+      - template: /eng/common/testproxy/test-proxy-tool.yml
       - script: >-
           dotnet test eng/service.proj
           --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
