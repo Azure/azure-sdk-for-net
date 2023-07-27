@@ -229,6 +229,20 @@ namespace Azure.Communication.Rooms.Tests
         }
 
         [Test]
+        public void CreateRoom_WithPastValidUntil_Fail()
+        {
+            // Arrange;
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var validFrom = DateTime.UtcNow.AddDays(-10);
+            var validUntil = validFrom.AddDays(-20);
+
+            // Act and Assert
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.CreateRoomAsync(validFrom: validFrom, validUntil: validUntil));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+        [Test]
         public void CreateRoom_WithInvalidParticipantMri_Fail()
         {
             // Arrange
@@ -267,6 +281,22 @@ namespace Azure.Communication.Rooms.Tests
 
             // Act and Assert
             validUntil = validFrom.AddDays(200);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, validFrom: validFrom, validUntil: validUntil));
+            Assert.NotNull(ex);
+            Assert.AreEqual(400, ex?.Status);
+        }
+
+         [Test]
+        public async Task UpdateRoom_WithPastValidUntil_Fail()
+        {
+            // Arrange
+            var validFrom = DateTime.UtcNow;
+            var validUntil = validFrom.AddDays(10);
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var createRoomResponse = await roomsClient.CreateRoomAsync(validFrom: validFrom, validUntil: validUntil);
+
+            // Act and Assert
+            validUntil = validFrom.AddDays(-20);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.UpdateRoomAsync(createRoomResponse.Value.Id, validFrom: validFrom, validUntil: validUntil));
             Assert.NotNull(ex);
             Assert.AreEqual(400, ex?.Status);
@@ -622,6 +652,19 @@ namespace Azure.Communication.Rooms.Tests
             // Assert:
             Assert.AreEqual(204, deleteRoomResponse.Status);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.GetRoomAsync(createdRoomId));
+            Assert.NotNull(ex);
+            Assert.AreEqual(404, ex?.Status);
+        }
+
+        [Test]
+        public void DeleteRoomDoesNotExist_Fail()
+        {
+            // Arrange
+            var roomsClient = CreateInstrumentedRoomsClient(RoomsClientOptions.ServiceVersion.V2023_06_14);
+            var ivnalidRoomId = "99437728598278806";
+
+            // Act and Assert:
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.DeleteRoomAsync(ivnalidRoomId));
             Assert.NotNull(ex);
             Assert.AreEqual(404, ex?.Status);
         }
