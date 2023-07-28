@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 new RoutePolicyStatementProperties(7,new StatementConditionProperties()
 {
 RoutePolicyConditionType = RoutePolicyConditionType.Or,
-IPPrefixId = "/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/example-ipPrefix",
+IPPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/example-ipPrefix"),
 IPExtendedCommunityIds =
 {
 new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipExtendedCommunities/example-ipExtendedCommunity")

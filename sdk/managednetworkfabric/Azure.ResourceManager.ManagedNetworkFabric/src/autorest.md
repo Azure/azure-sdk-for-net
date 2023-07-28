@@ -68,8 +68,10 @@ rename-mapping:
   NetworkDevice.properties.networkRackId: -|arm-id
   NetworkTapRule.properties.networkTapId: -|arm-id
   IpCommunityIdList.ipCommunityIds: -|arm-id
+  StatementConditionProperties.ipPrefixId: -|arm-id
   IpExtendedCommunityIdList.ipExtendedCommunityIds: -|arm-id
   TerminalServerConfiguration.networkDeviceId: -|arm-id
+  ExternalNetwork.properties.networkToNetworkInterconnectId: -|arm-id
   NetworkFabricController.properties.workloadManagementNetwork: IsWorkloadManagementNetwork
 
 directive:

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<ResourceIdentifier> exportRoutePolicyId = default;
             Optional<ImportRoutePolicy> importRoutePolicy = default;
             Optional<ExportRoutePolicy> exportRoutePolicy = default;
-            Optional<string> networkToNetworkInterconnectId = default;
+            Optional<ResourceIdentifier> networkToNetworkInterconnectId = default;
             PeeringOption peeringOption = default;
             Optional<L3OptionBProperties> optionBProperties = default;
             Optional<ExternalNetworkPropertiesOptionAProperties> optionAProperties = default;
@@ -160,7 +160,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("networkToNetworkInterconnectId"u8))
                         {
-                            networkToNetworkInterconnectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkToNetworkInterconnectId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("peeringOption"u8))

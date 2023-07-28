@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        internal ExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, string networkToNetworkInterconnectId, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPropertiesOptionAProperties optionAProperties, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
+        internal ExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier networkToNetworkInterconnectId, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkPropertiesOptionAProperties optionAProperties, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
             ImportRoutePolicyId = importRoutePolicyId;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
         public ExportRoutePolicy ExportRoutePolicy { get; set; }
         /// <summary> Gets the networkToNetworkInterconnectId of the resource. </summary>
-        public string NetworkToNetworkInterconnectId { get; }
+        public ResourceIdentifier NetworkToNetworkInterconnectId { get; }
         /// <summary> Peering option list. </summary>
         public PeeringOption PeeringOption { get; set; }
         /// <summary> option B properties object. </summary>
