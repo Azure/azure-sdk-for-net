@@ -6,16 +6,16 @@ The azure-sdk monorepos are growing quickly due to the presence of recordings. D
 
 The script `generate-assets-json.ps1` will execute the initial migration of your recordings from within a language repo to the [assets repo](https://github.com/Azure/azure-sdk-assets) as well as creating the assets.json file for those assets.
 
-The script is [generate-assets-json.ps1](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/testproxy/transition-scripts/generate-assets-json.ps1)
+The script is [generate-assets-json.ps1](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/testproxy/onboarding/generate-assets-json.ps1)
 
 ### Download the transition script locally
 
 ```powershell
-Invoke-WebRequest -OutFile "generate-assets-json.ps1" https://raw.githubusercontent.com/Azure/azure-sdk-tools/main/eng/common/testproxy/transition-scripts/generate-assets-json.ps1
+Invoke-WebRequest -OutFile "generate-assets-json.ps1" https://raw.githubusercontent.com/Azure/azure-sdk-tools/main/eng/common/testproxy/onboarding/generate-assets-json.ps1
 ```
 
 ```bash
-wget https://raw.githubusercontent.com/Azure/azure-sdk-tools/main/eng/common/testproxy/transition-scripts/generate-assets-json.ps1 -o generate-assets-json.ps1
+wget https://raw.githubusercontent.com/Azure/azure-sdk-tools/main/eng/common/testproxy/onboarding/generate-assets-json.ps1 -o generate-assets-json.ps1
 ```
 
 ## Setup
@@ -73,7 +73,7 @@ The location of the automatically restored assets is colloquially referred to as
 
 ## Running the script
 
-[generate-assets-json.ps1](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/testproxy/transition-scripts/generate-assets-json.ps1) is a standalone powershell script with no supporting script requirements. The easiest way to run the script would be to use a one-liner [defined above](#download-the-transition-script-locally) to grab the file directly. **Please ensure you have the newest version of this script before continuing!**
+[generate-assets-json.ps1](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/testproxy/onboarding/generate-assets-json.ps1) is a standalone powershell script with no supporting script requirements. The easiest way to run the script would be to use a one-liner [defined above](#download-the-transition-script-locally) to grab the file directly. **Please ensure you have the newest version of this script before continuing!**
 
 ```powershell
 # if downloading the file singly, cd to the directory containing generate-assets-json.ps1
@@ -124,7 +124,7 @@ This is necessary because the language is used in several places.
 
 1. The AssetsRepoPrefixPath in assets.json is set to the language.
 2. The TagPrefix is set to the `<language>/<ServiceDirectory>` or `<language>/<ServiceDirectory>/<Library>` etc.
-3. The language also used to determine what the [recording directories within a repository are named](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/testproxy/transition-scripts/generate-assets-json.ps1#L47).
+3. The language also used to determine what the [recording directories within a repository are named](https://github.com/Azure/azure-sdk-tools/blob/main/eng/common/testproxy/onboarding/generate-assets-json.ps1#L47).
 
 ## A final note about the initial push
 
