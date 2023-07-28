@@ -7,6 +7,7 @@ using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager.EdgeOrder.Customizations.Models;
 using Azure.ResourceManager.EdgeOrder.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
@@ -46,11 +47,11 @@ namespace Azure.ResourceManager.EdgeOrder
 
             ArmClient armClient = siteKeyObject.CreateArmClient(armClientOptions);
 
-            ResourceIdentifier resourceIdentifier = new ResourceIdentifier(siteKeyObject.ResourceId);
+            ResourceIdentifier bootstrapConfigurationResource = new ResourceIdentifier(siteKeyObject.ResourceId);
 
-            BootstrapConfigurationResource bootstrapConfigurationResource = GetBootstrapConfigurationResource(armClient, resourceIdentifier);
+            var tenantResource = armClient.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
-            return bootstrapConfigurationResource.UploadDeviceArtifacts(serialNumber, deviceMetadataContent, waitUntil, cancellationToken);
+            return tenantResource.UploadDeviceArtifacts(bootstrapConfigurationResource, serialNumber, deviceMetadataContent, waitUntil, cancellationToken);
         }
 
         /// <summary>
@@ -66,12 +67,13 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="bootstrapConfigurationResource"> BootstrapConfigurationResource for extension method. </param>
+        /// <param name="tenantResource"> TenantResource for extension method. </param>
+        /// <param name="bootstrapResource"> bootstrapResource for upload artifact. </param>
         /// <param name="serialNumber"> Device Serial Number. </param>
         /// <param name="deviceMetadataContent"> Device Artifacts content. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static ArmOperation<UploadArtifactsResponse> UploadDeviceArtifacts(this BootstrapConfigurationResource bootstrapConfigurationResource, string serialNumber, string deviceMetadataContent, WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public static ArmOperation<UploadArtifactsResponse> UploadDeviceArtifacts(this TenantResource tenantResource, ResourceIdentifier bootstrapResource, string serialNumber, string deviceMetadataContent, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrWhiteSpace(deviceMetadataContent, nameof(deviceMetadataContent));
             Argument.AssertNotNullOrWhiteSpace(serialNumber, nameof(serialNumber));
@@ -80,7 +82,8 @@ namespace Azure.ResourceManager.EdgeOrder
             var encodedInventoryDetails = Convert.ToBase64String(plainTextBytes);
 
             UploadArtifactsContent uploadArtifactsContent = new UploadArtifactsContent(encodedInventoryDetails, serialNumber);
-            return bootstrapConfigurationResource.ArtifactsUpload(waitUntil, uploadArtifactsContent, cancellationToken);
+
+            return tenantResource.ArtifactsUpload(waitUntil, new Guid(bootstrapResource.SubscriptionId), bootstrapResource.ResourceGroupName, bootstrapResource.Name, uploadArtifactsContent, cancellationToken);
         }
 
         private static void ValidateValidSiteKeyObject(SiteKey siteKeyObject)

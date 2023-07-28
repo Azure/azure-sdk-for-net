@@ -6,29 +6,38 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Address Properties. </summary>
-    public partial class EdgeOrderItemAddressProperties
+    /// <summary> Address Resource. </summary>
+    public partial class EdgeOrderAddress : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of EdgeOrderItemAddressProperties. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderAddress. </summary>
+        /// <param name="location"> The location. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
-        public EdgeOrderItemAddressProperties(EdgeOrderAddressContactDetails contactDetails)
+        public EdgeOrderAddress(AzureLocation location, EdgeOrderAddressContactDetails contactDetails) : base(location)
         {
             Argument.AssertNotNull(contactDetails, nameof(contactDetails));
 
             ContactDetails = contactDetails;
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderItemAddressProperties. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderAddress. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
         /// <param name="provisioningState"> Provisioning state of the Order Item. </param>
-        internal EdgeOrderItemAddressProperties(EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus, ProvisioningState? provisioningState)
+        internal EdgeOrderAddress(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ShippingAddress = shippingAddress;
             ContactDetails = contactDetails;

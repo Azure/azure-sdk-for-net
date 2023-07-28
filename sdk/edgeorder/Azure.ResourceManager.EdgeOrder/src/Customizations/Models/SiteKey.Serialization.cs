@@ -4,7 +4,6 @@
 using System;
 using Azure.Core;
 using System.Text.Json;
-using System.Net.Sockets;
 
 namespace Azure.ResourceManager.EdgeOrder.Customizations.Models
 {
@@ -36,7 +35,6 @@ namespace Azure.ResourceManager.EdgeOrder.Customizations.Models
                 if (property.NameEquals("resourceId"u8))
                 {
                     resourceId = new ResourceIdentifier(property.Value.GetString());
-                    BootstrapConfigurationResource.ValidateResourceId(resourceId);
                 }
                 else if (property.NameEquals("aadEndpoint"u8))
                 {

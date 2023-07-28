@@ -10,31 +10,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
+using Azure.ResourceManager.EdgeOrder.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
     internal class BootstrapConfigurationResourceOperationSource : IOperationSource<BootstrapConfigurationResource>
     {
-        private readonly ArmClient _client;
-
-        internal BootstrapConfigurationResourceOperationSource(ArmClient client)
-        {
-            _client = client;
-        }
-
         BootstrapConfigurationResource IOperationSource<BootstrapConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
-            var data = BootstrapConfigurationResourceData.DeserializeBootstrapConfigurationResourceData(document.RootElement);
-            return new BootstrapConfigurationResource(_client, data);
+            return BootstrapConfigurationResource.DeserializeBootstrapConfigurationResource(document.RootElement);
         }
 
         async ValueTask<BootstrapConfigurationResource> IOperationSource<BootstrapConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = BootstrapConfigurationResourceData.DeserializeBootstrapConfigurationResourceData(document.RootElement);
-            return new BootstrapConfigurationResource(_client, data);
+            return BootstrapConfigurationResource.DeserializeBootstrapConfigurationResource(document.RootElement);
         }
     }
 }

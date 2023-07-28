@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<EdgeOrderShippingAddress> shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
             Optional<EdgeOrderAddressValidationStatus> addressValidationStatus = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shippingAddress"u8))
@@ -59,8 +60,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     addressValidationStatus = new EdgeOrderAddressValidationStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    continue;
+                }
             }
-            return new EdgeOrderItemAddressProperties(shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus));
+            return new EdgeOrderItemAddressProperties(shippingAddress.Value, contactDetails, Optional.ToNullable(addressValidationStatus), Optional.ToNullable(provisioningState));
         }
     }
 }

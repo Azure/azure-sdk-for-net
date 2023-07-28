@@ -10,29 +10,61 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeOrder.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.EdgeOrder. </summary>
-    public static partial class EdgeOrderExtensions
+    /// <summary> A class to add extension methods to TenantResource. </summary>
+    internal partial class TenantResourceExtensionClient : ArmResource
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private ClientDiagnostics _addressesClientDiagnostics;
+        private AddressesRestOperations _addressesRestClient;
+        private ClientDiagnostics _bootstrapConfigurationsClientDiagnostics;
+        private BootstrapConfigurationsRestOperations _bootstrapConfigurationsRestClient;
+        private ClientDiagnostics _productsAndConfigurationsClientDiagnostics;
+        private ProductsAndConfigurationsRestOperations _productsAndConfigurationsRestClient;
+        private ClientDiagnostics _orderItemsClientDiagnostics;
+        private OrderItemsRestOperations _orderItemsRestClient;
+        private ClientDiagnostics _ordersClientDiagnostics;
+        private OrdersRestOperations _ordersRestClient;
+        private ClientDiagnostics _defaultClientDiagnostics;
+        private EdgeOrderManagementRestOperations _defaultRestClient;
+        private ClientDiagnostics _uploadClientDiagnostics;
+        private UploadRestOperations _uploadRestClient;
+
+        /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
+        protected TenantResourceExtensionClient()
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal TenantResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
+        }
+
+        private ClientDiagnostics AddressesClientDiagnostics => _addressesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private AddressesRestOperations AddressesRestClient => _addressesRestClient ??= new AddressesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BootstrapConfigurationsClientDiagnostics => _bootstrapConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BootstrapConfigurationsRestOperations BootstrapConfigurationsRestClient => _bootstrapConfigurationsRestClient ??= new BootstrapConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ProductsAndConfigurationsClientDiagnostics => _productsAndConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ProductsAndConfigurationsRestOperations ProductsAndConfigurationsRestClient => _productsAndConfigurationsRestClient ??= new ProductsAndConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics OrderItemsClientDiagnostics => _orderItemsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private OrderItemsRestOperations OrderItemsRestClient => _orderItemsRestClient ??= new OrderItemsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics OrdersClientDiagnostics => _ordersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private OrdersRestOperations OrdersRestClient => _ordersRestClient ??= new OrdersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private EdgeOrderManagementRestOperations DefaultRestClient => _defaultRestClient ??= new EdgeOrderManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics UploadClientDiagnostics => _uploadClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private UploadRestOperations UploadRestClient => _uploadRestClient ??= new UploadRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
 
         /// <summary>
@@ -48,16 +80,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderAddress" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeOrderAddress> GetAddressesBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderAddress> GetAddressesBySubscriptionAsync(Guid subscriptionId, string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAddressesBySubscriptionAsync(subscriptionId, filter, skipToken, top, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AddressesRestClient.CreateListBySubscriptionRequest(subscriptionId, filter, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AddressesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, filter, skipToken, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EdgeOrderAddress.DeserializeEdgeOrderAddress, AddressesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAddressesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -73,16 +106,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderAddress" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeOrderAddress> GetAddressesBySubscription(this TenantResource tenantResource, Guid subscriptionId, string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderAddress> GetAddressesBySubscription(Guid subscriptionId, string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetAddressesBySubscription(subscriptionId, filter, skipToken, top, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AddressesRestClient.CreateListBySubscriptionRequest(subscriptionId, filter, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AddressesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, filter, skipToken, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EdgeOrderAddress.DeserializeEdgeOrderAddress, AddressesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAddressesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -98,21 +132,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <returns> An async collection of <see cref="EdgeOrderAddress" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeOrderAddress> GetAddressesByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderAddress> GetAddressesByResourceGroupAsync(Guid subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetAddressesByResourceGroupAsync(subscriptionId, resourceGroupName, filter, skipToken, top, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AddressesRestClient.CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, filter, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AddressesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, skipToken, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EdgeOrderAddress.DeserializeEdgeOrderAddress, AddressesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAddressesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -128,21 +159,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of addresses, which provides the next page in the list of addresses. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeOrderAddress" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeOrderAddress> GetAddressesByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderAddress> GetAddressesByResourceGroup(Guid subscriptionId, string resourceGroupName, string filter = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetAddressesByResourceGroup(subscriptionId, resourceGroupName, filter, skipToken, top, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => AddressesRestClient.CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, filter, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AddressesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, skipToken, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EdgeOrderAddress.DeserializeEdgeOrderAddress, AddressesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAddressesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -158,19 +186,24 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
-        public static async Task<Response<EdgeOrderAddress>> GetAddressAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EdgeOrderAddress>> GetAddressAsync(Guid subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetAddressAsync(subscriptionId, resourceGroupName, addressName, cancellationToken).ConfigureAwait(false);
+            using var scope = AddressesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAddress");
+            scope.Start();
+            try
+            {
+                var response = await AddressesRestClient.GetAsync(subscriptionId, resourceGroupName, addressName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -186,19 +219,24 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
-        public static Response<EdgeOrderAddress> GetAddress(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
+        public virtual Response<EdgeOrderAddress> GetAddress(Guid subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetAddress(subscriptionId, resourceGroupName, addressName, cancellationToken);
+            using var scope = AddressesClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetAddress");
+            scope.Start();
+            try
+            {
+                var response = AddressesRestClient.Get(subscriptionId, resourceGroupName, addressName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -215,22 +253,29 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public static async Task<ArmOperation<EdgeOrderAddress>> CreateAddressAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddress addressResource, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeOrderAddress>> CreateAddressAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddress addressResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-            Argument.AssertNotNull(addressResource, nameof(addressResource));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateAddressAsync(waitUntil, subscriptionId, resourceGroupName, addressName, addressResource, cancellationToken).ConfigureAwait(false);
+            using var scope = AddressesClientDiagnostics.CreateScope("TenantResourceExtensionClient.CreateAddress");
+            scope.Start();
+            try
+            {
+                var response = await AddressesRestClient.CreateAsync(subscriptionId, resourceGroupName, addressName, addressResource, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddress>(new EdgeOrderAddressOperationSource(), AddressesClientDiagnostics, Pipeline, AddressesRestClient.CreateCreateRequest(subscriptionId, resourceGroupName, addressName, addressResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -247,22 +292,29 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="addressResource"> Address details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressResource"/> is null. </exception>
-        public static ArmOperation<EdgeOrderAddress> CreateAddress(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddress addressResource, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeOrderAddress> CreateAddress(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddress addressResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-            Argument.AssertNotNull(addressResource, nameof(addressResource));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateAddress(waitUntil, subscriptionId, resourceGroupName, addressName, addressResource, cancellationToken);
+            using var scope = AddressesClientDiagnostics.CreateScope("TenantResourceExtensionClient.CreateAddress");
+            scope.Start();
+            try
+            {
+                var response = AddressesRestClient.Create(subscriptionId, resourceGroupName, addressName, addressResource, cancellationToken);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddress>(new EdgeOrderAddressOperationSource(), AddressesClientDiagnostics, Pipeline, AddressesRestClient.CreateCreateRequest(subscriptionId, resourceGroupName, addressName, addressResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -278,20 +330,28 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteAddressAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAddressAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteAddressAsync(waitUntil, subscriptionId, resourceGroupName, addressName, cancellationToken).ConfigureAwait(false);
+            using var scope = AddressesClientDiagnostics.CreateScope("TenantResourceExtensionClient.DeleteAddress");
+            scope.Start();
+            try
+            {
+                var response = await AddressesRestClient.DeleteAsync(subscriptionId, resourceGroupName, addressName, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation(AddressesClientDiagnostics, Pipeline, AddressesRestClient.CreateDeleteRequest(subscriptionId, resourceGroupName, addressName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -307,20 +367,28 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="addressName"> The name of the address Resource within the specified resource group. address names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
-        public static ArmOperation DeleteAddress(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteAddress(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteAddress(waitUntil, subscriptionId, resourceGroupName, addressName, cancellationToken);
+            using var scope = AddressesClientDiagnostics.CreateScope("TenantResourceExtensionClient.DeleteAddress");
+            scope.Start();
+            try
+            {
+                var response = AddressesRestClient.Delete(subscriptionId, resourceGroupName, addressName, cancellationToken);
+                var operation = new EdgeOrderArmOperation(AddressesClientDiagnostics, Pipeline, AddressesRestClient.CreateDeleteRequest(subscriptionId, resourceGroupName, addressName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -336,7 +404,6 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -344,15 +411,23 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressUpdateParameter"> Address update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressUpdateParameter"/> is null. </exception>
-        public static async Task<ArmOperation<EdgeOrderAddress>> UpdateAddressAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, AddressUpdateParameter addressUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeOrderAddress>> UpdateAddressAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, AddressUpdateParameter addressUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-            Argument.AssertNotNull(addressUpdateParameter, nameof(addressUpdateParameter));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateAddressAsync(waitUntil, subscriptionId, resourceGroupName, addressName, addressUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = AddressesClientDiagnostics.CreateScope("TenantResourceExtensionClient.UpdateAddress");
+            scope.Start();
+            try
+            {
+                var response = await AddressesRestClient.UpdateAsync(subscriptionId, resourceGroupName, addressName, addressUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddress>(new EdgeOrderAddressOperationSource(), AddressesClientDiagnostics, Pipeline, AddressesRestClient.CreateUpdateRequest(subscriptionId, resourceGroupName, addressName, addressUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -368,7 +443,6 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -376,15 +450,23 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="addressUpdateParameter"> Address update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="addressUpdateParameter"/> is null. </exception>
-        public static ArmOperation<EdgeOrderAddress> UpdateAddress(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, AddressUpdateParameter addressUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeOrderAddress> UpdateAddress(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string addressName, AddressUpdateParameter addressUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(addressName, nameof(addressName));
-            Argument.AssertNotNull(addressUpdateParameter, nameof(addressUpdateParameter));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateAddress(waitUntil, subscriptionId, resourceGroupName, addressName, addressUpdateParameter, ifMatch, cancellationToken);
+            using var scope = AddressesClientDiagnostics.CreateScope("TenantResourceExtensionClient.UpdateAddress");
+            scope.Start();
+            try
+            {
+                var response = AddressesRestClient.Update(subscriptionId, resourceGroupName, addressName, addressUpdateParameter, ifMatch, cancellationToken);
+                var operation = new EdgeOrderArmOperation<EdgeOrderAddress>(new EdgeOrderAddressOperationSource(), AddressesClientDiagnostics, Pipeline, AddressesRestClient.CreateUpdateRequest(subscriptionId, resourceGroupName, addressName, addressUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -400,16 +482,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> $filter is supported to filter based on bootstrap configuration properties. Filter supports only equals operation. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of bootstrap configurations, which provides the next page in the list of bootstrap configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BootstrapConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BootstrapConfigurationResource> GetBootstrapConfigurationsBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BootstrapConfigurationResource> GetBootstrapConfigurationsBySubscriptionAsync(Guid subscriptionId, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBootstrapConfigurationsBySubscriptionAsync(subscriptionId, filter, top, skipToken, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BootstrapConfigurationsRestClient.CreateListBySubscriptionRequest(subscriptionId, filter, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BootstrapConfigurationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, filter, top, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BootstrapConfigurationResource.DeserializeBootstrapConfigurationResource, BootstrapConfigurationsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBootstrapConfigurationsBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -425,16 +508,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> $filter is supported to filter based on bootstrap configuration properties. Filter supports only equals operation. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of bootstrap configurations, which provides the next page in the list of bootstrap configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BootstrapConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BootstrapConfigurationResource> GetBootstrapConfigurationsBySubscription(this TenantResource tenantResource, Guid subscriptionId, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BootstrapConfigurationResource> GetBootstrapConfigurationsBySubscription(Guid subscriptionId, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBootstrapConfigurationsBySubscription(subscriptionId, filter, top, skipToken, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BootstrapConfigurationsRestClient.CreateListBySubscriptionRequest(subscriptionId, filter, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BootstrapConfigurationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, filter, top, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BootstrapConfigurationResource.DeserializeBootstrapConfigurationResource, BootstrapConfigurationsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBootstrapConfigurationsBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -450,21 +534,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> $filter is supported to filter based on bootstrap configuration properties. Filter supports only equals operation. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of bootstrap configurations, which provides the next page in the list of bootstrap configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <returns> An async collection of <see cref="BootstrapConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BootstrapConfigurationResource> GetBootstrapConfigurationsByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BootstrapConfigurationResource> GetBootstrapConfigurationsByResourceGroupAsync(Guid subscriptionId, string resourceGroupName, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetBootstrapConfigurationsByResourceGroupAsync(subscriptionId, resourceGroupName, filter, top, skipToken, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BootstrapConfigurationsRestClient.CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, filter, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BootstrapConfigurationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, top, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BootstrapConfigurationResource.DeserializeBootstrapConfigurationResource, BootstrapConfigurationsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBootstrapConfigurationsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -480,21 +561,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> $filter is supported to filter based on bootstrap configuration properties. Filter supports only equals operation. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of bootstrap configurations, which provides the next page in the list of bootstrap configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <returns> A collection of <see cref="BootstrapConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BootstrapConfigurationResource> GetBootstrapConfigurationsByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BootstrapConfigurationResource> GetBootstrapConfigurationsByResourceGroup(Guid subscriptionId, string resourceGroupName, string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetBootstrapConfigurationsByResourceGroup(subscriptionId, resourceGroupName, filter, top, skipToken, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BootstrapConfigurationsRestClient.CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, filter, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BootstrapConfigurationsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, filter, top, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BootstrapConfigurationResource.DeserializeBootstrapConfigurationResource, BootstrapConfigurationsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetBootstrapConfigurationsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -510,19 +588,24 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public static async Task<Response<BootstrapConfigurationResource>> GetBootstrapConfigurationAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BootstrapConfigurationResource>> GetBootstrapConfigurationAsync(Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetBootstrapConfigurationAsync(subscriptionId, resourceGroupName, name, cancellationToken).ConfigureAwait(false);
+            using var scope = BootstrapConfigurationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetBootstrapConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await BootstrapConfigurationsRestClient.GetAsync(subscriptionId, resourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -538,19 +621,24 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public static Response<BootstrapConfigurationResource> GetBootstrapConfiguration(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public virtual Response<BootstrapConfigurationResource> GetBootstrapConfiguration(Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetBootstrapConfiguration(subscriptionId, resourceGroupName, name, cancellationToken);
+            using var scope = BootstrapConfigurationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetBootstrapConfiguration");
+            scope.Start();
+            try
+            {
+                var response = BootstrapConfigurationsRestClient.Get(subscriptionId, resourceGroupName, name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -566,19 +654,24 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public static async Task<Response> DeleteBootstrapConfigurationAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteBootstrapConfigurationAsync(Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteBootstrapConfigurationAsync(subscriptionId, resourceGroupName, name, cancellationToken).ConfigureAwait(false);
+            using var scope = BootstrapConfigurationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.DeleteBootstrapConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await BootstrapConfigurationsRestClient.DeleteAsync(subscriptionId, resourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -594,19 +687,24 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public static Response DeleteBootstrapConfiguration(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public virtual Response DeleteBootstrapConfiguration(Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteBootstrapConfiguration(subscriptionId, resourceGroupName, name, cancellationToken);
+            using var scope = BootstrapConfigurationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.DeleteBootstrapConfiguration");
+            scope.Start();
+            try
+            {
+                var response = BootstrapConfigurationsRestClient.Delete(subscriptionId, resourceGroupName, name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -623,22 +721,29 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="bootstrapConfigurationResource"> Bootstrap configuration details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="bootstrapConfigurationResource"/> is null. </exception>
-        public static async Task<ArmOperation<BootstrapConfigurationResource>> CreateBootstrapConfigurationAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, BootstrapConfigurationResource bootstrapConfigurationResource, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BootstrapConfigurationResource>> CreateBootstrapConfigurationAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, BootstrapConfigurationResource bootstrapConfigurationResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(bootstrapConfigurationResource, nameof(bootstrapConfigurationResource));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateBootstrapConfigurationAsync(waitUntil, subscriptionId, resourceGroupName, name, bootstrapConfigurationResource, cancellationToken).ConfigureAwait(false);
+            using var scope = BootstrapConfigurationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CreateBootstrapConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await BootstrapConfigurationsRestClient.CreateAsync(subscriptionId, resourceGroupName, name, bootstrapConfigurationResource, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation<BootstrapConfigurationResource>(new BootstrapConfigurationResourceOperationSource(), BootstrapConfigurationsClientDiagnostics, Pipeline, BootstrapConfigurationsRestClient.CreateCreateRequest(subscriptionId, resourceGroupName, name, bootstrapConfigurationResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -655,22 +760,29 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="bootstrapConfigurationResource"> Bootstrap configuration details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="bootstrapConfigurationResource"/> is null. </exception>
-        public static ArmOperation<BootstrapConfigurationResource> CreateBootstrapConfiguration(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, BootstrapConfigurationResource bootstrapConfigurationResource, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BootstrapConfigurationResource> CreateBootstrapConfiguration(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, BootstrapConfigurationResource bootstrapConfigurationResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(bootstrapConfigurationResource, nameof(bootstrapConfigurationResource));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateBootstrapConfiguration(waitUntil, subscriptionId, resourceGroupName, name, bootstrapConfigurationResource, cancellationToken);
+            using var scope = BootstrapConfigurationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CreateBootstrapConfiguration");
+            scope.Start();
+            try
+            {
+                var response = BootstrapConfigurationsRestClient.Create(subscriptionId, resourceGroupName, name, bootstrapConfigurationResource, cancellationToken);
+                var operation = new EdgeOrderArmOperation<BootstrapConfigurationResource>(new BootstrapConfigurationResourceOperationSource(), BootstrapConfigurationsClientDiagnostics, Pipeline, BootstrapConfigurationsRestClient.CreateCreateRequest(subscriptionId, resourceGroupName, name, bootstrapConfigurationResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -686,22 +798,26 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="bootstrapConfigurationUpdateParameter"> Bootstrap configuration update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="bootstrapConfigurationUpdateParameter"/> is null. </exception>
-        public static async Task<Response<BootstrapConfigurationResource>> UpdateBootstrapConfigurationAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string name, BootstrapConfigurationUpdateParameter bootstrapConfigurationUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BootstrapConfigurationResource>> UpdateBootstrapConfigurationAsync(Guid subscriptionId, string resourceGroupName, string name, BootstrapConfigurationUpdateParameter bootstrapConfigurationUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(bootstrapConfigurationUpdateParameter, nameof(bootstrapConfigurationUpdateParameter));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateBootstrapConfigurationAsync(subscriptionId, resourceGroupName, name, bootstrapConfigurationUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = BootstrapConfigurationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.UpdateBootstrapConfiguration");
+            scope.Start();
+            try
+            {
+                var response = await BootstrapConfigurationsRestClient.UpdateAsync(subscriptionId, resourceGroupName, name, bootstrapConfigurationUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -717,22 +833,26 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="bootstrapConfigurationUpdateParameter"> Bootstrap configuration update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the job on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="bootstrapConfigurationUpdateParameter"/> is null. </exception>
-        public static Response<BootstrapConfigurationResource> UpdateBootstrapConfiguration(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string name, BootstrapConfigurationUpdateParameter bootstrapConfigurationUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual Response<BootstrapConfigurationResource> UpdateBootstrapConfiguration(Guid subscriptionId, string resourceGroupName, string name, BootstrapConfigurationUpdateParameter bootstrapConfigurationUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(bootstrapConfigurationUpdateParameter, nameof(bootstrapConfigurationUpdateParameter));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateBootstrapConfiguration(subscriptionId, resourceGroupName, name, bootstrapConfigurationUpdateParameter, ifMatch, cancellationToken);
+            using var scope = BootstrapConfigurationsClientDiagnostics.CreateScope("TenantResourceExtensionClient.UpdateBootstrapConfiguration");
+            scope.Start();
+            try
+            {
+                var response = BootstrapConfigurationsRestClient.Update(subscriptionId, resourceGroupName, name, bootstrapConfigurationUpdateParameter, ifMatch, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -748,18 +868,16 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="content"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductConfiguration> GetConfigurationsProductsAndConfigurationsAsync(this TenantResource tenantResource, Guid subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductConfiguration> GetConfigurationsProductsAndConfigurationsAsync(Guid subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetConfigurationsProductsAndConfigurationsAsync(subscriptionId, content, skipToken, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListConfigurationsRequest(subscriptionId, content, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, content, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductConfiguration.DeserializeProductConfiguration, ProductsAndConfigurationsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetConfigurationsProductsAndConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -775,18 +893,16 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="content"> Filters for showing the configurations. </param>
         /// <param name="skipToken"> $skipToken is supported on list of configurations, which provides the next page in the list of configurations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductConfiguration> GetConfigurationsProductsAndConfigurations(this TenantResource tenantResource, Guid subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductConfiguration> GetConfigurationsProductsAndConfigurations(Guid subscriptionId, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetConfigurationsProductsAndConfigurations(subscriptionId, content, skipToken, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListConfigurationsRequest(subscriptionId, content, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListConfigurationsNextPageRequest(nextLink, subscriptionId, content, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductConfiguration.DeserializeProductConfiguration, ProductsAndConfigurationsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetConfigurationsProductsAndConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -802,19 +918,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="content"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductFamily> GetProductFamiliesProductsAndConfigurationsAsync(this TenantResource tenantResource, Guid subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductFamily> GetProductFamiliesProductsAndConfigurationsAsync(Guid subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetProductFamiliesProductsAndConfigurationsAsync(subscriptionId, content, expand, skipToken, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesRequest(subscriptionId, content, expand, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, content, expand, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductFamily.DeserializeProductFamily, ProductsAndConfigurationsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetProductFamiliesProductsAndConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -830,19 +944,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="content"> Filters for showing the product families. </param>
         /// <param name="expand"> $expand is supported on configurations parameter for product, which provides details on the configurations for the product. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families, which provides the next page in the list of product families. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductFamily> GetProductFamiliesProductsAndConfigurations(this TenantResource tenantResource, Guid subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductFamily> GetProductFamiliesProductsAndConfigurations(Guid subscriptionId, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetProductFamiliesProductsAndConfigurations(subscriptionId, content, expand, skipToken, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesRequest(subscriptionId, content, expand, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesNextPageRequest(nextLink, subscriptionId, content, expand, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductFamily.DeserializeProductFamily, ProductsAndConfigurationsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetProductFamiliesProductsAndConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -858,14 +970,15 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProductFamiliesMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProductFamiliesMetadata> GetProductFamiliesMetadataProductsAndConfigurationsAsync(this TenantResource tenantResource, Guid subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ProductFamiliesMetadata> GetProductFamiliesMetadataProductsAndConfigurationsAsync(Guid subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetProductFamiliesMetadataProductsAndConfigurationsAsync(subscriptionId, skipToken, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesMetadataRequest(subscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, subscriptionId, skipToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductFamiliesMetadata.DeserializeProductFamiliesMetadata, ProductsAndConfigurationsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetProductFamiliesMetadataProductsAndConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -881,14 +994,15 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProductFamiliesMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProductFamiliesMetadata> GetProductFamiliesMetadataProductsAndConfigurations(this TenantResource tenantResource, Guid subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<ProductFamiliesMetadata> GetProductFamiliesMetadataProductsAndConfigurations(Guid subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetProductFamiliesMetadataProductsAndConfigurations(subscriptionId, skipToken, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesMetadataRequest(subscriptionId, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProductsAndConfigurationsRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, subscriptionId, skipToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductFamiliesMetadata.DeserializeProductFamiliesMetadata, ProductsAndConfigurationsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetProductFamiliesMetadataProductsAndConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -904,7 +1018,6 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> $filter is supported to filter based on order id and order Item Type. Filter supports only equals operation. </param>
         /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
@@ -912,9 +1025,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EdgeOrderItem" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeOrderItem> GetOrderItemsBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, string filter = null, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderItem> GetOrderItemsBySubscriptionAsync(Guid subscriptionId, string filter = null, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOrderItemsBySubscriptionAsync(subscriptionId, filter, expand, skipToken, top, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrderItemsRestClient.CreateListBySubscriptionRequest(subscriptionId, filter, expand, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrderItemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, filter, expand, skipToken, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EdgeOrderItem.DeserializeEdgeOrderItem, OrderItemsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOrderItemsBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -930,7 +1045,6 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="filter"> $filter is supported to filter based on order id and order Item Type. Filter supports only equals operation. </param>
         /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
@@ -938,9 +1052,11 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EdgeOrderItem" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeOrderItem> GetOrderItemsBySubscription(this TenantResource tenantResource, Guid subscriptionId, string filter = null, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderItem> GetOrderItemsBySubscription(Guid subscriptionId, string filter = null, string expand = null, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOrderItemsBySubscription(subscriptionId, filter, expand, skipToken, top, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrderItemsRestClient.CreateListBySubscriptionRequest(subscriptionId, filter, expand, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrderItemsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, filter, expand, skipToken, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EdgeOrderItem.DeserializeEdgeOrderItem, OrderItemsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOrderItemsBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -956,16 +1072,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> An async collection of <see cref="EdgeOrderItem" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<EdgeOrderItem> GetOrderItemsByResourceGroupAsync(this TenantResource tenantResource, TenantResourceGetOrderItemsByResourceGroupOptions options, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<EdgeOrderItem> GetOrderItemsByResourceGroupAsync(TenantResourceGetOrderItemsByResourceGroupOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetOrderItemsByResourceGroupAsync(options, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrderItemsRestClient.CreateListByResourceGroupRequest(options.SubscriptionId, options.ResourceGroupName, options.Filter, options.Expand, options.SkipToken, options.Top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrderItemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, options.SubscriptionId, options.ResourceGroupName, options.Filter, options.Expand, options.SkipToken, options.Top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EdgeOrderItem.DeserializeEdgeOrderItem, OrderItemsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOrderItemsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -981,16 +1095,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeOrderItem" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<EdgeOrderItem> GetOrderItemsByResourceGroup(this TenantResource tenantResource, TenantResourceGetOrderItemsByResourceGroupOptions options, CancellationToken cancellationToken = default)
+        public virtual Pageable<EdgeOrderItem> GetOrderItemsByResourceGroup(TenantResourceGetOrderItemsByResourceGroupOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetOrderItemsByResourceGroup(options, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrderItemsRestClient.CreateListByResourceGroupRequest(options.SubscriptionId, options.ResourceGroupName, options.Filter, options.Expand, options.SkipToken, options.Top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrderItemsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, options.SubscriptionId, options.ResourceGroupName, options.Filter, options.Expand, options.SkipToken, options.Top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EdgeOrderItem.DeserializeEdgeOrderItem, OrderItemsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOrderItemsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1006,20 +1118,25 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
-        public static async Task<Response<EdgeOrderItem>> GetOrderItemAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EdgeOrderItem>> GetOrderItemAsync(Guid subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetOrderItemAsync(subscriptionId, resourceGroupName, orderItemName, expand, cancellationToken).ConfigureAwait(false);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOrderItem");
+            scope.Start();
+            try
+            {
+                var response = await OrderItemsRestClient.GetAsync(subscriptionId, resourceGroupName, orderItemName, expand, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1035,20 +1152,25 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="expand"> $expand is supported on parent device details, device details, forward shipping details and reverse shipping details parameters. Each of these can be provided as a comma separated list. Parent Device Details for order item provides details on the devices of the product, Device Details for order item provides details on the devices of the child configurations of the product, Forward and Reverse Shipping details provide forward and reverse shipping details respectively. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
-        public static Response<EdgeOrderItem> GetOrderItem(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<EdgeOrderItem> GetOrderItem(Guid subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetOrderItem(subscriptionId, resourceGroupName, orderItemName, expand, cancellationToken);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOrderItem");
+            scope.Start();
+            try
+            {
+                var response = OrderItemsRestClient.Get(subscriptionId, resourceGroupName, orderItemName, expand, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1065,22 +1187,29 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="orderItemResource"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
-        public static async Task<ArmOperation<EdgeOrderItem>> CreateOrderItemAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItem orderItemResource, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeOrderItem>> CreateOrderItemAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItem orderItemResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(orderItemResource, nameof(orderItemResource));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CreateOrderItemAsync(waitUntil, subscriptionId, resourceGroupName, orderItemName, orderItemResource, cancellationToken).ConfigureAwait(false);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CreateOrderItem");
+            scope.Start();
+            try
+            {
+                var response = await OrderItemsRestClient.CreateAsync(subscriptionId, resourceGroupName, orderItemName, orderItemResource, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation<EdgeOrderItem>(new EdgeOrderItemOperationSource(), OrderItemsClientDiagnostics, Pipeline, OrderItemsRestClient.CreateCreateRequest(subscriptionId, resourceGroupName, orderItemName, orderItemResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1097,22 +1226,29 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="orderItemResource"> Order item details from request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemResource"/> is null. </exception>
-        public static ArmOperation<EdgeOrderItem> CreateOrderItem(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItem orderItemResource, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeOrderItem> CreateOrderItem(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItem orderItemResource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(orderItemResource, nameof(orderItemResource));
-
-            return GetTenantResourceExtensionClient(tenantResource).CreateOrderItem(waitUntil, subscriptionId, resourceGroupName, orderItemName, orderItemResource, cancellationToken);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CreateOrderItem");
+            scope.Start();
+            try
+            {
+                var response = OrderItemsRestClient.Create(subscriptionId, resourceGroupName, orderItemName, orderItemResource, cancellationToken);
+                var operation = new EdgeOrderArmOperation<EdgeOrderItem>(new EdgeOrderItemOperationSource(), OrderItemsClientDiagnostics, Pipeline, OrderItemsRestClient.CreateCreateRequest(subscriptionId, resourceGroupName, orderItemName, orderItemResource).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1128,20 +1264,28 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
-        public static async Task<ArmOperation> DeleteOrderItemAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteOrderItemAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).DeleteOrderItemAsync(waitUntil, subscriptionId, resourceGroupName, orderItemName, cancellationToken).ConfigureAwait(false);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.DeleteOrderItem");
+            scope.Start();
+            try
+            {
+                var response = await OrderItemsRestClient.DeleteAsync(subscriptionId, resourceGroupName, orderItemName, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation(OrderItemsClientDiagnostics, Pipeline, OrderItemsRestClient.CreateDeleteRequest(subscriptionId, resourceGroupName, orderItemName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1157,20 +1301,28 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
-        public static ArmOperation DeleteOrderItem(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation DeleteOrderItem(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-
-            return GetTenantResourceExtensionClient(tenantResource).DeleteOrderItem(waitUntil, subscriptionId, resourceGroupName, orderItemName, cancellationToken);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.DeleteOrderItem");
+            scope.Start();
+            try
+            {
+                var response = OrderItemsRestClient.Delete(subscriptionId, resourceGroupName, orderItemName, cancellationToken);
+                var operation = new EdgeOrderArmOperation(OrderItemsClientDiagnostics, Pipeline, OrderItemsRestClient.CreateDeleteRequest(subscriptionId, resourceGroupName, orderItemName).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1186,7 +1338,6 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -1194,15 +1345,23 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemUpdateParameter"> Order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemUpdateParameter"/> is null. </exception>
-        public static async Task<ArmOperation<EdgeOrderItem>> UpdateOrderItemAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, OrderItemUpdateParameter orderItemUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EdgeOrderItem>> UpdateOrderItemAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, OrderItemUpdateParameter orderItemUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(orderItemUpdateParameter, nameof(orderItemUpdateParameter));
-
-            return await GetTenantResourceExtensionClient(tenantResource).UpdateOrderItemAsync(waitUntil, subscriptionId, resourceGroupName, orderItemName, orderItemUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.UpdateOrderItem");
+            scope.Start();
+            try
+            {
+                var response = await OrderItemsRestClient.UpdateAsync(subscriptionId, resourceGroupName, orderItemName, orderItemUpdateParameter, ifMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation<EdgeOrderItem>(new EdgeOrderItemOperationSource(), OrderItemsClientDiagnostics, Pipeline, OrderItemsRestClient.CreateUpdateRequest(subscriptionId, resourceGroupName, orderItemName, orderItemUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1218,7 +1377,6 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -1226,15 +1384,23 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="orderItemUpdateParameter"> Order item update parameters from request body. </param>
         /// <param name="ifMatch"> Defines the If-Match condition. The patch will be performed only if the ETag of the order on the server matches this value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="orderItemUpdateParameter"/> is null. </exception>
-        public static ArmOperation<EdgeOrderItem> UpdateOrderItem(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, OrderItemUpdateParameter orderItemUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeOrderItem> UpdateOrderItem(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, OrderItemUpdateParameter orderItemUpdateParameter, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(orderItemUpdateParameter, nameof(orderItemUpdateParameter));
-
-            return GetTenantResourceExtensionClient(tenantResource).UpdateOrderItem(waitUntil, subscriptionId, resourceGroupName, orderItemName, orderItemUpdateParameter, ifMatch, cancellationToken);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.UpdateOrderItem");
+            scope.Start();
+            try
+            {
+                var response = OrderItemsRestClient.Update(subscriptionId, resourceGroupName, orderItemName, orderItemUpdateParameter, ifMatch, cancellationToken);
+                var operation = new EdgeOrderArmOperation<EdgeOrderItem>(new EdgeOrderItemOperationSource(), OrderItemsClientDiagnostics, Pipeline, OrderItemsRestClient.CreateUpdateRequest(subscriptionId, resourceGroupName, orderItemName, orderItemUpdateParameter, ifMatch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1250,21 +1416,25 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="cancellationReason"/> is null. </exception>
-        public static async Task<Response> CancelOrderItemAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CancelOrderItemAsync(Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CancelOrderItemAsync(subscriptionId, resourceGroupName, orderItemName, cancellationReason, cancellationToken).ConfigureAwait(false);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CancelOrderItem");
+            scope.Start();
+            try
+            {
+                var response = await OrderItemsRestClient.CancelAsync(subscriptionId, resourceGroupName, orderItemName, cancellationReason, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1280,21 +1450,25 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="cancellationReason"/> is null. </exception>
-        public static Response CancelOrderItem(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        public virtual Response CancelOrderItem(Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(cancellationReason, nameof(cancellationReason));
-
-            return GetTenantResourceExtensionClient(tenantResource).CancelOrderItem(subscriptionId, resourceGroupName, orderItemName, cancellationReason, cancellationToken);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.CancelOrderItem");
+            scope.Start();
+            try
+            {
+                var response = OrderItemsRestClient.Cancel(subscriptionId, resourceGroupName, orderItemName, cancellationReason, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1310,22 +1484,29 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="content"> Return order item details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation> ReturnOrderItemAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> ReturnOrderItemAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetTenantResourceExtensionClient(tenantResource).ReturnOrderItemAsync(waitUntil, subscriptionId, resourceGroupName, orderItemName, content, cancellationToken).ConfigureAwait(false);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.ReturnOrderItem");
+            scope.Start();
+            try
+            {
+                var response = await OrderItemsRestClient.ReturnAsync(subscriptionId, resourceGroupName, orderItemName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation(OrderItemsClientDiagnostics, Pipeline, OrderItemsRestClient.CreateReturnRequest(subscriptionId, resourceGroupName, orderItemName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1341,22 +1522,29 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
         /// <param name="content"> Return order item details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation ReturnOrderItem(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation ReturnOrderItem(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).ReturnOrderItem(waitUntil, subscriptionId, resourceGroupName, orderItemName, content, cancellationToken);
+            using var scope = OrderItemsClientDiagnostics.CreateScope("TenantResourceExtensionClient.ReturnOrderItem");
+            scope.Start();
+            try
+            {
+                var response = OrderItemsRestClient.Return(subscriptionId, resourceGroupName, orderItemName, content, cancellationToken);
+                var operation = new EdgeOrderArmOperation(OrderItemsClientDiagnostics, Pipeline, OrderItemsRestClient.CreateReturnRequest(subscriptionId, resourceGroupName, orderItemName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1372,15 +1560,16 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="Models.EdgeOrder" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.EdgeOrder> GetOrdersBySubscriptionAsync(this TenantResource tenantResource, Guid subscriptionId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Models.EdgeOrder> GetOrdersBySubscriptionAsync(Guid subscriptionId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOrdersBySubscriptionAsync(subscriptionId, skipToken, top, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrdersRestClient.CreateListBySubscriptionRequest(subscriptionId, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrdersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, skipToken, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Models.EdgeOrder.DeserializeEdgeOrder, OrdersClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOrdersBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1396,15 +1585,16 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="Models.EdgeOrder" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.EdgeOrder> GetOrdersBySubscription(this TenantResource tenantResource, Guid subscriptionId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<Models.EdgeOrder> GetOrdersBySubscription(Guid subscriptionId, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOrdersBySubscription(subscriptionId, skipToken, top, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrdersRestClient.CreateListBySubscriptionRequest(subscriptionId, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrdersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId, skipToken, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Models.EdgeOrder.DeserializeEdgeOrder, OrdersClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOrdersBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1420,20 +1610,25 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is null. </exception>
-        public static async Task<Response<Models.EdgeOrder>> GetOrderAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Models.EdgeOrder>> GetOrderAsync(Guid subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetOrderAsync(subscriptionId, resourceGroupName, location, orderName, cancellationToken).ConfigureAwait(false);
+            using var scope = OrdersClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOrder");
+            scope.Start();
+            try
+            {
+                var response = await OrdersRestClient.GetAsync(subscriptionId, resourceGroupName, location, orderName, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1449,20 +1644,25 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="orderName"> The name of the order. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is null. </exception>
-        public static Response<Models.EdgeOrder> GetOrder(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
+        public virtual Response<Models.EdgeOrder> GetOrder(Guid subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(orderName, nameof(orderName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetOrder(subscriptionId, resourceGroupName, location, orderName, cancellationToken);
+            using var scope = OrdersClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetOrder");
+            scope.Start();
+            try
+            {
+                var response = OrdersRestClient.Get(subscriptionId, resourceGroupName, location, orderName, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1478,20 +1678,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <returns> An async collection of <see cref="Models.EdgeOrder" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Models.EdgeOrder> GetOrdersByResourceGroupAsync(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Models.EdgeOrder> GetOrdersByResourceGroupAsync(Guid subscriptionId, string resourceGroupName, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetOrdersByResourceGroupAsync(subscriptionId, resourceGroupName, skipToken, top, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrdersRestClient.CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrdersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, skipToken, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Models.EdgeOrder.DeserializeEdgeOrder, OrdersClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOrdersByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1507,20 +1704,17 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="skipToken"> $skipToken is supported on Get list of orders, which provides the next page in the list of orders. </param>
         /// <param name="top"> $top is supported on fetching list of resources. $top=10 means that the first 10 items in the list will be returned to the API caller. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <returns> A collection of <see cref="Models.EdgeOrder" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Models.EdgeOrder> GetOrdersByResourceGroup(this TenantResource tenantResource, Guid subscriptionId, string resourceGroupName, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<Models.EdgeOrder> GetOrdersByResourceGroup(Guid subscriptionId, string resourceGroupName, string skipToken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetOrdersByResourceGroup(subscriptionId, resourceGroupName, skipToken, top, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => OrdersRestClient.CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, skipToken, top);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrdersRestClient.CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, skipToken, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Models.EdgeOrder.DeserializeEdgeOrder, OrdersClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetOrdersByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1536,20 +1730,28 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public static async Task<ArmOperation<TokenResponse>> GetTokenAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TokenResponse>> GetTokenAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetTokenAsync(waitUntil, subscriptionId, resourceGroupName, name, cancellationToken).ConfigureAwait(false);
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetToken");
+            scope.Start();
+            try
+            {
+                var response = await DefaultRestClient.ListTokenAsync(subscriptionId, resourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation<TokenResponse>(new TokenResponseOperationSource(), DefaultClientDiagnostics, Pipeline, DefaultRestClient.CreateListTokenRequest(subscriptionId, resourceGroupName, name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1565,20 +1767,28 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
-        public static ArmOperation<TokenResponse> GetToken(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TokenResponse> GetToken(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetToken(waitUntil, subscriptionId, resourceGroupName, name, cancellationToken);
+            using var scope = DefaultClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetToken");
+            scope.Start();
+            try
+            {
+                var response = DefaultRestClient.ListToken(subscriptionId, resourceGroupName, name, cancellationToken);
+                var operation = new EdgeOrderArmOperation<TokenResponse>(new TokenResponseOperationSource(), DefaultClientDiagnostics, Pipeline, DefaultRestClient.CreateListTokenRequest(subscriptionId, resourceGroupName, name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1594,22 +1804,29 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="content"> Device Artifacts upload request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<ArmOperation<UploadArtifactsResponse>> ArtifactsUploadAsync(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, UploadArtifactsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<UploadArtifactsResponse>> ArtifactsUploadAsync(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, UploadArtifactsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetTenantResourceExtensionClient(tenantResource).ArtifactsUploadAsync(waitUntil, subscriptionId, resourceGroupName, name, content, cancellationToken).ConfigureAwait(false);
+            using var scope = UploadClientDiagnostics.CreateScope("TenantResourceExtensionClient.ArtifactsUpload");
+            scope.Start();
+            try
+            {
+                var response = await UploadRestClient.ArtifactsAsync(subscriptionId, resourceGroupName, name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new EdgeOrderArmOperation<UploadArtifactsResponse>(new UploadArtifactsResponseOperationSource(), UploadClientDiagnostics, Pipeline, UploadRestClient.CreateArtifactsRequest(subscriptionId, resourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -1625,22 +1842,29 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="name"> The name of the bootstrap configuration. </param>
         /// <param name="content"> Device Artifacts upload request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public static ArmOperation<UploadArtifactsResponse> ArtifactsUpload(this TenantResource tenantResource, WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, UploadArtifactsContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<UploadArtifactsResponse> ArtifactsUpload(WaitUntil waitUntil, Guid subscriptionId, string resourceGroupName, string name, UploadArtifactsContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).ArtifactsUpload(waitUntil, subscriptionId, resourceGroupName, name, content, cancellationToken);
+            using var scope = UploadClientDiagnostics.CreateScope("TenantResourceExtensionClient.ArtifactsUpload");
+            scope.Start();
+            try
+            {
+                var response = UploadRestClient.Artifacts(subscriptionId, resourceGroupName, name, content, cancellationToken);
+                var operation = new EdgeOrderArmOperation<UploadArtifactsResponse>(new UploadArtifactsResponseOperationSource(), UploadClientDiagnostics, Pipeline, UploadRestClient.CreateArtifactsRequest(subscriptionId, resourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

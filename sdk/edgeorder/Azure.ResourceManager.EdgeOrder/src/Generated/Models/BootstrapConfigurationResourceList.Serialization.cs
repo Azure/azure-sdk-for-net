@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BootstrapConfigurationResourceData>> value = default;
+            Optional<IReadOnlyList<BootstrapConfigurationResource>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<BootstrapConfigurationResourceData> array = new List<BootstrapConfigurationResourceData>();
+                    List<BootstrapConfigurationResource> array = new List<BootstrapConfigurationResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BootstrapConfigurationResourceData.DeserializeBootstrapConfigurationResourceData(item));
+                        array.Add(BootstrapConfigurationResource.DeserializeBootstrapConfigurationResource(item));
                     }
                     value = array;
                     continue;

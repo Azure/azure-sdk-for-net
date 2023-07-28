@@ -5,25 +5,18 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Details Related To Provision Resource. </summary>
     public partial class ProvisioningDetails
     {
         /// <summary> Initializes a new instance of ProvisioningDetails. </summary>
-        /// <param name="provisioningArmId"> Provisioning Resource Arm ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="provisioningArmId"/> is null. </exception>
-        public ProvisioningDetails(string provisioningArmId)
+        public ProvisioningDetails()
         {
-            Argument.AssertNotNull(provisioningArmId, nameof(provisioningArmId));
-
-            ProvisioningArmId = provisioningArmId;
         }
 
         /// <summary> Initializes a new instance of ProvisioningDetails. </summary>
+        /// <param name="autoProvisioningStatus"> Auto Provisioning Details. </param>
         /// <param name="quantity"> Quantity of the devices. </param>
         /// <param name="provisioningArmId"> Provisioning Resource Arm ID. </param>
         /// <param name="provisioningEndPoint"> Provisioning End Point. </param>
@@ -32,8 +25,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="readyToConnectArmId"> Arc Enabled Resource Arm id. </param>
         /// <param name="managementResourceArmId"> Management Resource ArmId. </param>
         /// <param name="uniqueDeviceIdentifier"> Unique Identity for a Device. </param>
-        internal ProvisioningDetails(int? quantity, string provisioningArmId, string provisioningEndPoint, string serialNumber, string vendorName, string readyToConnectArmId, string managementResourceArmId, string uniqueDeviceIdentifier)
+        internal ProvisioningDetails(AutoProvisioningStatus? autoProvisioningStatus, int? quantity, string provisioningArmId, string provisioningEndPoint, string serialNumber, string vendorName, string readyToConnectArmId, string managementResourceArmId, string uniqueDeviceIdentifier)
         {
+            AutoProvisioningStatus = autoProvisioningStatus;
             Quantity = quantity;
             ProvisioningArmId = provisioningArmId;
             ProvisioningEndPoint = provisioningEndPoint;
@@ -44,6 +38,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             UniqueDeviceIdentifier = uniqueDeviceIdentifier;
         }
 
+        /// <summary> Auto Provisioning Details. </summary>
+        public AutoProvisioningStatus? AutoProvisioningStatus { get; set; }
         /// <summary> Quantity of the devices. </summary>
         public int? Quantity { get; set; }
         /// <summary> Provisioning Resource Arm ID. </summary>

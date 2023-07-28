@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.EdgeOrder;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
@@ -18,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmEdgeOrderModelFactory
     {
-        /// <summary> Initializes a new instance of EdgeOrderAddressData. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderAddress. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,25 +27,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
-        /// <returns> A new <see cref="EdgeOrder.EdgeOrderAddressData"/> instance for mocking. </returns>
-        public static EdgeOrderAddressData EdgeOrderAddressData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, EdgeOrderAddressValidationStatus? addressValidationStatus = null)
+        /// <param name="provisioningState"> Provisioning state of the Order Item. </param>
+        /// <returns> A new <see cref="Models.EdgeOrderAddress"/> instance for mocking. </returns>
+        public static EdgeOrderAddress EdgeOrderAddress(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, EdgeOrderAddressValidationStatus? addressValidationStatus = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EdgeOrderAddressData(id, name, resourceType, systemData, tags, location, shippingAddress, contactDetails, addressValidationStatus);
+            return new EdgeOrderAddress(id, name, resourceType, systemData, tags, location, shippingAddress, contactDetails, addressValidationStatus, provisioningState);
         }
 
         /// <summary> Initializes a new instance of EdgeOrderItemAddressProperties. </summary>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
+        /// <param name="provisioningState"> Provisioning state of the Order Item. </param>
         /// <returns> A new <see cref="Models.EdgeOrderItemAddressProperties"/> instance for mocking. </returns>
-        public static EdgeOrderItemAddressProperties EdgeOrderItemAddressProperties(EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, EdgeOrderAddressValidationStatus? addressValidationStatus = null)
+        public static EdgeOrderItemAddressProperties EdgeOrderItemAddressProperties(EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, EdgeOrderAddressValidationStatus? addressValidationStatus = null, ProvisioningState? provisioningState = null)
         {
-            return new EdgeOrderItemAddressProperties(shippingAddress, contactDetails, addressValidationStatus);
+            return new EdgeOrderItemAddressProperties(shippingAddress, contactDetails, addressValidationStatus, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of BootstrapConfigurationResourceData. </summary>
+        /// <summary> Initializes a new instance of BootstrapConfigurationResource. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -59,12 +60,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="tokenExpiryDate"> Date till the token is valid. </param>
         /// <param name="numberOfDevicesOnboarded"> Represents number of devices onboarded. </param>
         /// <param name="provisioningState"> Provisioning state of the Bootstrap configuration. </param>
-        /// <returns> A new <see cref="EdgeOrder.BootstrapConfigurationResourceData"/> instance for mocking. </returns>
-        public static BootstrapConfigurationResourceData BootstrapConfigurationResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string siteResourceId = null, int maximumNumberOfDevicesToOnboard = default, DateTimeOffset tokenExpiryDate = default, int? numberOfDevicesOnboarded = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.BootstrapConfigurationResource"/> instance for mocking. </returns>
+        public static BootstrapConfigurationResource BootstrapConfigurationResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string siteResourceId = null, int maximumNumberOfDevicesToOnboard = default, DateTimeOffset tokenExpiryDate = default, int? numberOfDevicesOnboarded = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new BootstrapConfigurationResourceData(id, name, resourceType, systemData, tags, location, identity, siteResourceId, maximumNumberOfDevicesToOnboard, tokenExpiryDate, numberOfDevicesOnboarded, provisioningState);
+            return new BootstrapConfigurationResource(id, name, resourceType, systemData, tags, location, identity, siteResourceId, maximumNumberOfDevicesToOnboard, tokenExpiryDate, numberOfDevicesOnboarded, provisioningState);
         }
 
         /// <summary> Initializes a new instance of ProductConfiguration. </summary>
@@ -333,7 +334,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ResourceProviderDetails(resourceProviderNamespace);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderItemData. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderItem. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -345,12 +346,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
         /// <param name="startOn"> Start time of order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
-        /// <returns> A new <see cref="EdgeOrder.EdgeOrderItemData"/> instance for mocking. </returns>
-        public static EdgeOrderItemData EdgeOrderItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, EdgeOrderItemDetails orderItemDetails = null, EdgeOrderItemAddressDetails addressDetails = null, DateTimeOffset? startOn = null, ResourceIdentifier orderId = null)
+        /// <param name="provisioningState"> Provisioning state of the Order Item. </param>
+        /// <returns> A new <see cref="Models.EdgeOrderItem"/> instance for mocking. </returns>
+        public static EdgeOrderItem EdgeOrderItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, EdgeOrderItemDetails orderItemDetails = null, EdgeOrderItemAddressDetails addressDetails = null, DateTimeOffset? startOn = null, ResourceIdentifier orderId = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EdgeOrderItemData(id, name, resourceType, systemData, tags, location, identity, orderItemDetails, addressDetails, startOn, orderId);
+            return new EdgeOrderItem(id, name, resourceType, systemData, tags, location, identity, orderItemDetails, addressDetails, startOn, orderId, provisioningState);
         }
 
         /// <summary> Initializes a new instance of EdgeOrderItemDetails. </summary>
@@ -421,6 +423,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Initializes a new instance of ProvisioningDetails. </summary>
+        /// <param name="autoProvisioningStatus"> Auto Provisioning Details. </param>
         /// <param name="quantity"> Quantity of the devices. </param>
         /// <param name="provisioningArmId"> Provisioning Resource Arm ID. </param>
         /// <param name="provisioningEndPoint"> Provisioning End Point. </param>
@@ -430,9 +433,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="managementResourceArmId"> Management Resource ArmId. </param>
         /// <param name="uniqueDeviceIdentifier"> Unique Identity for a Device. </param>
         /// <returns> A new <see cref="Models.ProvisioningDetails"/> instance for mocking. </returns>
-        public static ProvisioningDetails ProvisioningDetails(int? quantity = null, string provisioningArmId = null, string provisioningEndPoint = null, string serialNumber = null, string vendorName = null, string readyToConnectArmId = null, string managementResourceArmId = null, string uniqueDeviceIdentifier = null)
+        public static ProvisioningDetails ProvisioningDetails(AutoProvisioningStatus? autoProvisioningStatus = null, int? quantity = null, string provisioningArmId = null, string provisioningEndPoint = null, string serialNumber = null, string vendorName = null, string readyToConnectArmId = null, string managementResourceArmId = null, string uniqueDeviceIdentifier = null)
         {
-            return new ProvisioningDetails(quantity, provisioningArmId, provisioningEndPoint, serialNumber, vendorName, readyToConnectArmId, managementResourceArmId, uniqueDeviceIdentifier);
+            return new ProvisioningDetails(autoProvisioningStatus, quantity, provisioningArmId, provisioningEndPoint, serialNumber, vendorName, readyToConnectArmId, managementResourceArmId, uniqueDeviceIdentifier);
         }
 
         /// <summary> Initializes a new instance of ConfigurationDeviceDetails. </summary>
@@ -503,7 +506,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress);
         }
 
-        /// <summary> Initializes a new instance of EdgeOrderData. </summary>
+        /// <summary> Initializes a new instance of EdgeOrder. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -512,13 +515,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="currentStage"> Order current status. </param>
         /// <param name="orderStageHistory"> Order status history. </param>
         /// <param name="orderMode"> Order mode. </param>
-        /// <returns> A new <see cref="EdgeOrder.EdgeOrderData"/> instance for mocking. </returns>
-        public static EdgeOrderData EdgeOrderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ResourceIdentifier> orderItemIds = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderStageHistory = null, OrderMode? orderMode = null)
+        /// <returns> A new <see cref="Models.EdgeOrder"/> instance for mocking. </returns>
+        public static EdgeOrder EdgeOrder(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ResourceIdentifier> orderItemIds = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderStageHistory = null, OrderMode? orderMode = null)
         {
             orderItemIds ??= new List<ResourceIdentifier>();
             orderStageHistory ??= new List<EdgeOrderStageDetails>();
 
-            return new EdgeOrderData(id, name, resourceType, systemData, orderItemIds?.ToList(), currentStage, orderStageHistory?.ToList(), orderMode);
+            return new EdgeOrder(id, name, resourceType, systemData, orderItemIds?.ToList(), currentStage, orderStageHistory?.ToList(), orderMode);
         }
 
         /// <summary> Initializes a new instance of ProductFamiliesMetadata. </summary>

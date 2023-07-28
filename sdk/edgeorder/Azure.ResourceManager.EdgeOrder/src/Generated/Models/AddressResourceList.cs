@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of AddressResourceList. </summary>
         internal AddressResourceList()
         {
-            Value = new ChangeTrackingList<EdgeOrderAddressData>();
+            Value = new ChangeTrackingList<EdgeOrderAddress>();
         }
 
         /// <summary> Initializes a new instance of AddressResourceList. </summary>
         /// <param name="value"> List of address resources. </param>
         /// <param name="nextLink"> Link for the next set of job resources. </param>
-        internal AddressResourceList(IReadOnlyList<EdgeOrderAddressData> value, string nextLink)
+        internal AddressResourceList(IReadOnlyList<EdgeOrderAddress> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of address resources. </summary>
-        public IReadOnlyList<EdgeOrderAddressData> Value { get; }
+        public IReadOnlyList<EdgeOrderAddress> Value { get; }
         /// <summary> Link for the next set of job resources. </summary>
         public string NextLink { get; }
     }

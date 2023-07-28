@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Provisioning state of the Bootstrap configuration. </summary>
+    /// <summary> Provisioning state of the Order Item. </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;

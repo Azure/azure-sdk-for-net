@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EdgeOrderAddressData>> value = default;
+            Optional<IReadOnlyList<EdgeOrderAddress>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +29,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<EdgeOrderAddressData> array = new List<EdgeOrderAddressData>();
+                    List<EdgeOrderAddress> array = new List<EdgeOrderAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderAddressData.DeserializeEdgeOrderAddressData(item));
+                        array.Add(EdgeOrderAddress.DeserializeEdgeOrderAddress(item));
                     }
                     value = array;
                     continue;

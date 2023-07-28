@@ -15,13 +15,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(AutoProvisioningStatus))
+            {
+                writer.WritePropertyName("autoProvisioningStatus"u8);
+                writer.WriteStringValue(AutoProvisioningStatus.Value.ToString());
+            }
             if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            writer.WritePropertyName("provisioningArmId"u8);
-            writer.WriteStringValue(ProvisioningArmId);
+            if (Optional.IsDefined(ProvisioningArmId))
+            {
+                writer.WritePropertyName("provisioningArmId"u8);
+                writer.WriteStringValue(ProvisioningArmId);
+            }
             if (Optional.IsDefined(ProvisioningEndPoint))
             {
                 writer.WritePropertyName("provisioningEndPoint"u8);
@@ -56,8 +64,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
+            Optional<AutoProvisioningStatus> autoProvisioningStatus = default;
             Optional<int> quantity = default;
-            string provisioningArmId = default;
+            Optional<string> provisioningArmId = default;
             Optional<string> provisioningEndPoint = default;
             Optional<string> serialNumber = default;
             Optional<string> vendorName = default;
@@ -66,6 +75,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<string> uniqueDeviceIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("autoProvisioningStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoProvisioningStatus = new AutoProvisioningStatus(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("quantity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -111,7 +129,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new ProvisioningDetails(Optional.ToNullable(quantity), provisioningArmId, provisioningEndPoint.Value, serialNumber.Value, vendorName.Value, readyToConnectArmId.Value, managementResourceArmId.Value, uniqueDeviceIdentifier.Value);
+            return new ProvisioningDetails(Optional.ToNullable(autoProvisioningStatus), Optional.ToNullable(quantity), provisioningArmId.Value, provisioningEndPoint.Value, serialNumber.Value, vendorName.Value, readyToConnectArmId.Value, managementResourceArmId.Value, uniqueDeviceIdentifier.Value);
         }
     }
 }

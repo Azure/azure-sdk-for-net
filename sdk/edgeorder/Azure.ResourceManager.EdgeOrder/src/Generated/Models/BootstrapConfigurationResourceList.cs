@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of BootstrapConfigurationResourceList. </summary>
         internal BootstrapConfigurationResourceList()
         {
-            Value = new ChangeTrackingList<BootstrapConfigurationResourceData>();
+            Value = new ChangeTrackingList<BootstrapConfigurationResource>();
         }
 
         /// <summary> Initializes a new instance of BootstrapConfigurationResourceList. </summary>
         /// <param name="value"> List of bootstrap configuration resources. </param>
         /// <param name="nextLink"> Link for the next set of job resources. </param>
-        internal BootstrapConfigurationResourceList(IReadOnlyList<BootstrapConfigurationResourceData> value, string nextLink)
+        internal BootstrapConfigurationResourceList(IReadOnlyList<BootstrapConfigurationResource> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of bootstrap configuration resources. </summary>
-        public IReadOnlyList<BootstrapConfigurationResourceData> Value { get; }
+        public IReadOnlyList<BootstrapConfigurationResource> Value { get; }
         /// <summary> Link for the next set of job resources. </summary>
         public string NextLink { get; }
     }
