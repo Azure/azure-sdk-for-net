@@ -21,32 +21,32 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public async Task Clusters()
         {
             var clusterName = Recording.GenerateAssetName("cluster");
-            ClusterCollection clusterCollection = ResourceGroupResource.GetClusters();
+            NetworkCloudClusterCollection clusterCollection = ResourceGroupResource.GetNetworkCloudClusters();
 
             // Create
             var createCreds = new AdministrativeCredentials("password","username");
-            ClusterData data = new ClusterData
+            NetworkCloudClusterData data = new NetworkCloudClusterData
             (
                 new AzureLocation(TestEnvironment.Location),
                 new ExtendedLocation(TestEnvironment.ManagerExtendedLocation, "CustomLocation"),
-                new RackDefinition(new ResourceIdentifier(TestEnvironment.SubnetId), "aa1234", "/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Aggregator_sim")
+                new NetworkCloudRackDefinition(new ResourceIdentifier(TestEnvironment.SubnetId), "aa1234", new ResourceIdentifier("/subscriptions/a3eeb848-665a-4dbf-80a4-eb460930fb23/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Aggregator_sim"))
                 {
                     RackLocation = "Foo Datacenter, Floor 3, Aisle 9, Rack 2",
                     AvailabilityZone = "A"
                 },
                 ClusterType.MultiRack,
                 TestEnvironment.ClusterVersion,
-                TestEnvironment.SubnetId
+                new ResourceIdentifier(TestEnvironment.SubnetId)
             )
             {
-                AnalyticsWorkspaceId = TestEnvironment.LawId,
+                AnalyticsWorkspaceId = new ResourceIdentifier(TestEnvironment.LawId),
                 ClusterServicePrincipal = new ServicePrincipalInformation("12345678-1234-1234-1234-123456789012", "00000008-0004-0004-0004-000000000012", "80000000-4000-4000-4000-120000000000"){
                     Password = "password"
                 },
                 ComputeDeploymentThreshold = new ValidationThreshold(ValidationThresholdGrouping.PerCluster, ValidationThresholdType.PercentSuccess, 90),
                 ComputeRackDefinitions =
                 {
-                 new RackDefinition(new ResourceIdentifier(TestEnvironment.SubnetId), "b37m15r1", "/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Compute_DellR750_3C2M_sim")
+                 new NetworkCloudRackDefinition(new ResourceIdentifier(TestEnvironment.SubnetId), "b37m15r1", new ResourceIdentifier("/subscriptions/fca2e8ee-1179-48b8-9532-428ed0873a2e/providers/Microsoft.NetworkCloud/rackSkus/VLab1_4_Compute_DellR750_3C2M_sim"))
                     {
                         BareMetalMachineConfigurationData =
                         {
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Get
             var getResult = await clusterCollection.GetAsync(clusterName);
             Assert.AreEqual(clusterName, getResult.Value.Data.Name);
-            ClusterResource clusterResource = Client.GetClusterResource(getResult.Value.Data.Id);
+            NetworkCloudClusterResource clusterResource = Client.GetNetworkCloudClusterResource(getResult.Value.Data.Id);
 
             // Update
-            ClusterPatch patch = new ClusterPatch()
+            NetworkCloudClusterPatch patch = new NetworkCloudClusterPatch()
             {
                 ClusterLocation = "Foo floor",
                 Tags =
@@ -106,16 +106,16 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual("Foo floor", patchResult.Value.Data.ClusterLocation);
 
             // List by Resource Group
-            var listByResourceGroup = new List<ClusterResource>();
-            await foreach (ClusterResource item in clusterCollection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkCloudClusterResource>();
+            await foreach (NetworkCloudClusterResource item in clusterCollection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
             // List by Subscription
-            var listBySubscription = new List<ClusterResource>();
-            await foreach (ClusterResource item in SubscriptionResource.GetClustersAsync())
+            var listBySubscription = new List<NetworkCloudClusterResource>();
+            await foreach (NetworkCloudClusterResource item in SubscriptionResource.GetNetworkCloudClustersAsync())
             {
                 listBySubscription.Add(item);
             }
