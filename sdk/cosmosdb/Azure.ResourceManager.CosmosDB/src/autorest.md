@@ -120,6 +120,7 @@ override-operation-name:
   RestorableMongodbCollections_List: GetRestorableMongoDBCollections
   RestorableMongodbResources_List: GetAllRestorableMongoDBResourceData
   RestorableSqlResources_List: GetAllRestorableSqlResourceData
+  MongoClusters_CheckNameAvailability: CheckMongoClusterNameAailability
 
 rename-mapping:
   MongoRoleDefinitionGetResults: MongoDBRoleDefinition
