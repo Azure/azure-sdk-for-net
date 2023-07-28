@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             }
         }
 
-        [Event(1, Message = "Failed to configure to an exception: {0}", Level = EventLevel.Error)]
+        [Event(1, Message = "Failed to configure AzureMonitorOptions using the connection string from environment variables due to an exception: {0}", Level = EventLevel.Error)]
         public void ConfigureFailed(string exceptionMessage) => WriteEvent(1, exceptionMessage);
     }
 }
