@@ -145,7 +145,11 @@ namespace Azure.Core.Json
 
             internal MutableJsonChange? GetNextChange(MutableJsonChange? lastChange, out int maxPathLength)
             {
+                // This method gets changes from the list in sorted order by path.
+                // It is intended for use by JSON Merge Patch WriteTo routine.
+
                 maxPathLength = -1;
+
                 if (_changes == null)
                 {
                     // null means there's no next change, we can exit a loop
@@ -161,12 +165,10 @@ namespace Azure.Core.Json
                 {
                     MutableJsonChange c = _changes[i];
 
-                    bool isDescendant = lastChange != null && c.IsDescendant(lastChange.Value.Path);
-
                     if (c.IsGreaterThan(lastChange) &&
-                        // Ignore descendants if its ancestor changed
-                        !isDescendant &&
-                        c.IsLessThan(min))
+                        c.IsLessThan(min) &&
+                        // Ignore descendant if its ancestor changed
+                        !c.IsDescendant(lastChange))
                     {
                         min = c;
                     }

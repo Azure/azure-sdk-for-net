@@ -73,6 +73,16 @@ namespace Azure.Core.Json
             return Path.StartsWith(path, StringComparison.Ordinal);
         }
 
+        internal bool IsDescendant(MutableJsonChange? other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return IsDescendant(other.Value.Path);
+        }
+
         internal bool IsDirectDescendant(string path)
         {
             if (!IsDescendant(path))
