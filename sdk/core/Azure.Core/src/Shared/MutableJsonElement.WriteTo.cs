@@ -183,7 +183,14 @@ namespace Azure.Core.Json
                 ReadOnlySpan<char> segment = GetLastSegment(changePath);
 
                 writer.WritePropertyName(segment);
-                patchElement.GetProperty(segment).WriteTo(writer);
+                if (change.Value.ChangeKind == MutableJsonChangeKind.PropertyRemoval)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    patchElement.GetProperty(segment).WriteTo(writer);
+                }
 
                 change = _root.Changes.GetNextChange(change, out maxPathLength);
             }
