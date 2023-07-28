@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -16,11 +15,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupPatch. </summary>
         public ElasticSanVolumeGroupPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> Type of storage target. </summary>
         public StorageTargetType? ProtocolType { get; set; }
         /// <summary> Type of encryption. </summary>

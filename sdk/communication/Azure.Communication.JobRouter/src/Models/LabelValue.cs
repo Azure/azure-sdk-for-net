@@ -12,30 +12,12 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Generic value wrapper.
     /// </summary>
-    public readonly struct LabelValue : IEquatable<LabelValue>
+    public class LabelValue : IEquatable<LabelValue>
     {
         /// <summary>
         /// Primitive value.
         /// </summary>
         public object Value { get; }
-
-        /// <summary>
-        /// Set value of <see cref="short"/> type.
-        /// </summary>
-        /// <param name="value"></param>
-        public LabelValue(short value)
-        {
-            Value = value;
-        }
-
-        /// <summary>
-        /// Set value of <see cref="ushort"/> type.
-        /// </summary>
-        /// <param name="value"></param>
-        public LabelValue(ushort value)
-        {
-            Value = value;
-        }
 
         /// <summary>
         /// Set value of <see cref="int"/> type.
@@ -47,28 +29,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary>
-        /// Set value of <see cref="uint"/> type.
-        /// </summary>
-        /// <param name="value"></param>
-        public LabelValue(uint value)
-        {
-            Value = value;
-        }
-
-        /// <summary>
         /// Set value of <see cref="long"/> type.
         /// </summary>
         /// <param name="value"></param>
         public LabelValue(long value)
-        {
-            Value = value;
-        }
-
-        /// <summary>
-        /// Set value of <see cref="ulong"/> type.
-        /// </summary>
-        /// <param name="value"></param>
-        public LabelValue(ulong value)
         {
             Value = value;
         }
@@ -87,15 +51,6 @@ namespace Azure.Communication.JobRouter
         /// </summary>
         /// <param name="value"></param>
         public LabelValue(double value)
-        {
-            Value = value;
-        }
-
-        /// <summary>
-        /// Set value of <see cref="char"/> type.
-        /// </summary>
-        /// <param name="value"></param>
-        public LabelValue(char value)
         {
             Value = value;
         }

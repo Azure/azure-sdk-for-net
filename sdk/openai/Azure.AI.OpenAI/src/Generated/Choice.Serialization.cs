@@ -21,8 +21,9 @@ namespace Azure.AI.OpenAI
             }
             string text = default;
             int index = default;
+            Optional<ContentFilterResults> contentFilterResults = default;
             CompletionsLogProbabilityModel logprobs = default;
-            CompletionsFinishReason finishReason = default;
+            CompletionsFinishReason? finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -35,18 +36,37 @@ namespace Azure.AI.OpenAI
                     index = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("content_filter_results"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    contentFilterResults = ContentFilterResults.DeserializeContentFilterResults(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("logprobs"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        logprobs = null;
+                        continue;
+                    }
                     logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value);
                     continue;
                 }
                 if (property.NameEquals("finish_reason"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        finishReason = null;
+                        continue;
+                    }
                     finishReason = new CompletionsFinishReason(property.Value.GetString());
                     continue;
                 }
             }
-            return new Choice(text, index, logprobs, finishReason);
+            return new Choice(text, index, contentFilterResults.Value, logprobs, finishReason);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

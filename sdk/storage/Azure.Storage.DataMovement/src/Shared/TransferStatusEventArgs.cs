@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 using System.Threading;
 
-namespace Azure.Storage.DataMovement.Models
+namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Event Argument for a change in the Transfer Status

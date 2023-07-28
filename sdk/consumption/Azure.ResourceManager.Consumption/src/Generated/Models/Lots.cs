@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Result of listing lot summary.
-    /// Serialized Name: Lots
-    /// </summary>
+    /// <summary> Result of listing lot summary. </summary>
     internal partial class Lots
     {
         /// <summary> Initializes a new instance of Lots. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of Lots. </summary>
-        /// <param name="value">
-        /// The list of lot summary.
-        /// Serialized Name: Lots.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: Lots.nextLink
-        /// </param>
+        /// <param name="value"> The list of lot summary. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal Lots(IReadOnlyList<ConsumptionLotSummary> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of lot summary.
-        /// Serialized Name: Lots.value
-        /// </summary>
+        /// <summary> The list of lot summary. </summary>
         public IReadOnlyList<ConsumptionLotSummary> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: Lots.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

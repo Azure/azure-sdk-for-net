@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Storage.DataMovement.Models;
 using System.Threading.Tasks;
 using System.IO;
 using System.Threading;

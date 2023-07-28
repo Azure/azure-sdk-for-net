@@ -15,6 +15,7 @@ tag: package-dotnet-sdk
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 keep-orphaned-models:
   - ExternalSecuritySolutionKind

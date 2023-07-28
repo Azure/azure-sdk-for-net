@@ -5,7 +5,7 @@ using System;
 using System.IO;
 using Azure.Core;
 
-namespace Azure.Storage.DataMovement.Models.JobPlan
+namespace Azure.Storage.DataMovement.JobPlan
 {
     /// <summary>
     /// Stores the Job Part Header information to resume from.

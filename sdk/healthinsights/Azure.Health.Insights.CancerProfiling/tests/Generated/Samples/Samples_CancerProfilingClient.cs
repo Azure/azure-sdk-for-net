@@ -98,7 +98,7 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
                 },
             };
 
-            var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+            var operation = client.InferCancerProfile(WaitUntil.Completed, RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -208,7 +208,7 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
                 },
             };
 
-            var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data), "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+            var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, RequestContent.Create(data));
 
             BinaryData responseData = operation.Value;
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -287,7 +287,7 @@ namespace Azure.Health.Insights.CancerProfiling.Samples
                     CheckForCancerCase = true,
                 },
             };
-            var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData, "<repeatabilityRequestId>", DateTimeOffset.UtcNow);
+            var operation = await client.InferCancerProfileAsync(WaitUntil.Completed, oncoPhenotypeData);
         }
     }
 }

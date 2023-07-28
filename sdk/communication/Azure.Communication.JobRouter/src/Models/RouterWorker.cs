@@ -11,6 +11,17 @@ namespace Azure.Communication.JobRouter.Models
     [CodeGenModel("RouterWorker")]
     public partial class RouterWorker
     {
+        /// <summary> Initializes a new instance of RouterWorker. </summary>
+        internal RouterWorker()
+        {
+            _queueAssignments = new ChangeTrackingDictionary<string, object>();
+            _labels = new ChangeTrackingDictionary<string, object>();
+            _tags = new ChangeTrackingDictionary<string, object>();
+            _channelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
+            Offers = new ChangeTrackingList<RouterJobOffer>();
+            AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
+        }
+
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
@@ -39,7 +50,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.Value)
+                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -60,7 +71,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key, x => x.Value.Value)
+                    ? Tags?.ToDictionary(x => x.Key, x => x.Value?.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set

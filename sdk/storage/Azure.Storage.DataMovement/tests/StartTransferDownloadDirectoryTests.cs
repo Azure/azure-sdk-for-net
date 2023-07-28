@@ -11,7 +11,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
+using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -71,7 +71,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-            await transfer.AwaitCompletion(tokenSource.Token);
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
 
             await testEventsRaised.AssertContainerCompletedCheck(sourceFiles.Count);
             Assert.IsTrue(transfer.HasCompleted);
@@ -85,7 +85,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             // List all files in the destination local path
-            List<string> destinationFiles = ListFilesInDirectory(destinationLocalPath);
+            List<string> destinationFiles = FileUtil.ListFileNamesRecursive(destinationLocalPath);
             Assert.AreEqual(destinationFiles.Count, sourceFiles.Count);
             destinationFiles.Sort();
             sourceFiles.Sort();
@@ -218,7 +218,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
 
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(StorageTransferStatus.Completed, transfer.TransferStatus);
@@ -428,9 +428,9 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource);
 
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(tokenSource.Token);
+            await transfer.WaitForCompletionAsync(tokenSource.Token);
 
-            IEnumerable<string> destinationFiles = ListFilesInDirectory(destination.DirectoryPath)
+            IEnumerable<string> destinationFiles = FileUtil.ListFileNamesRecursive(destination.DirectoryPath)
                 .Select(f => f.Substring(destination.DirectoryPath.Length + 1).Replace("\\", "/"));
 
             Assert.IsTrue(destinationFiles.OrderBy(f => f).SequenceEqual(files.OrderBy(f => f)));
@@ -510,7 +510,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);
@@ -546,7 +546,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);
@@ -584,7 +584,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);
