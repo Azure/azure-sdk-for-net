@@ -141,7 +141,7 @@ namespace Azure.Core.Json
                 return;
             }
 
-            IEnumerable<string> changePaths = _root.Changes.GetChangedProperties(out int maxPathLength);
+            MutableJsonChange? change = _root.Changes.GetNextChange(null, out int maxPathLength);
 
             // patchPath tracks the global path we're on in writing out the PATCH JSON.
             // We only iterate forward through the PATCH JSON.
@@ -162,9 +162,11 @@ namespace Azure.Core.Json
             // Write the start of the PATCH JSON
             writer.WriteStartObject();
 
-            foreach (string path in changePaths)
+            while (change != null)
             {
-                ReadOnlySpan<char> changePath = path.AsSpan();
+                Debug.WriteLine(change.Value.Path);
+
+                ReadOnlySpan<char> changePath = change.Value.Path.AsSpan();
 
                 CopyTo(currentPath, ref currentPathLength, GetFirstSegment(changePath));
 
@@ -182,6 +184,8 @@ namespace Azure.Core.Json
 
                 writer.WritePropertyName(segment);
                 patchElement.GetProperty(segment).WriteTo(writer);
+
+                change = _root.Changes.GetNextChange(change, out maxPathLength);
             }
 
             // The above loop will have written out the values of all the elements on the

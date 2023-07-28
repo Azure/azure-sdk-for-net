@@ -877,7 +877,7 @@ namespace Azure.Core.Tests
 
             string actual = BinaryData.FromStream(stream).ToString();
 
-            AreEqualJson("""{"a": {"bb": {"cc": 3},"b": {"c": 2}}, "d": {"e": {"f": 4}}}""", actual);
+            AreEqualJson("""{"a": {"b": {"c": 2}, "bb": {"cc": 3}}, "d": {"e": {"f": 4}}}""", actual);
         }
 
         [Test]

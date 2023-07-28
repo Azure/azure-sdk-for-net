@@ -87,6 +87,26 @@ namespace Azure.Core.Json
             return ancestorPathLength == (descendantPathLength - 1);
         }
 
+        internal bool IsLessThan(MutableJsonChange? other)
+        {
+            if (other == null)
+            {
+                return true;
+            }
+
+            return Path.AsSpan().SequenceCompareTo(other.Value.Path.AsSpan()) < 0;
+        }
+
+        internal bool IsGreaterThan(MutableJsonChange? other)
+        {
+            if (other == null)
+            {
+                return true;
+            }
+
+            return Path.AsSpan().SequenceCompareTo(other.Value.Path.AsSpan()) > 0;
+        }
+
         internal string AsString()
         {
             return GetSerializedValue().ToString() ?? "null";

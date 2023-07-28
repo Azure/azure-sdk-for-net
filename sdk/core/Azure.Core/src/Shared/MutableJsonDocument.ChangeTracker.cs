@@ -143,6 +143,38 @@ namespace Azure.Core.Json
                 }
             }
 
+            internal MutableJsonChange? GetNextChange(MutableJsonChange? lastChange, out int maxPathLength)
+            {
+                maxPathLength = -1;
+                if (_changes == null)
+                {
+                    // null means there's no next change, we can exit a loop
+                    return null;
+                }
+
+                MutableJsonChange? min = null;
+
+                // This implementation is based on the assumption that iterating through
+                // list elements is fast.
+                // Iterating backwards means we get the latest change for a given path.
+                for (int i = _changes!.Count - 1; i >= 0; i--)
+                {
+                    MutableJsonChange c = _changes[i];
+
+                    if (c.IsGreaterThan(lastChange) && c.IsLessThan(min))
+                    {
+                        min = c;
+                    }
+
+                    if (c.Path.Length > maxPathLength)
+                    {
+                        maxPathLength = c.Path.Length;
+                    }
+                }
+
+                return min;
+            }
+
             internal IEnumerable<string> GetChangedProperties(out int maxPathLength)
             {
                 maxPathLength = 0;
