@@ -60,6 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             // TODO: other activity kinds
+            // (2023-07) fix before GA
         }
 
         private void ReportRequestDurationMetric(Activity activity)
