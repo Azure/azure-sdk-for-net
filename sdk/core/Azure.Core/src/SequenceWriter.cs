@@ -34,7 +34,12 @@ namespace Azure.Core
             _buffers = Array.Empty<Buffer>();
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Notifies the <see cref="SequenceWriter"/> that bytes bytes were written to the output <see cref="Span{T}"/> or <see cref="Memory{T}"/>.
+        /// You must request a new buffer after calling <see cref="Advance(int)"/> to continue writing more data; you cannot write to a previously acquired buffer.
+        /// </summary>
+        /// <param name="bytesWritten">The number of bytes written to the <see cref="Span{T}"/> or <see cref="Memory{T}"/>.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void Advance(int bytesWritten)
         {
             ref Buffer last = ref _buffers[_count - 1];
@@ -45,7 +50,11 @@ namespace Azure.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns a <see cref="Memory{T}"/> to write to that is at least the requested size, as specified by the <paramref name="sizeHint"/> parameter.
+        /// </summary>
+        /// <param name="sizeHint">The minimum length of the returned <see cref="Memory{T}"/>. If less than 256, a buffer of size 256 will be returned.</param>
+        /// <returns>A memory buffer of at least <paramref name="sizeHint"/> bytes. If <paramref name="sizeHint"/> is less than 256, a buffer of size 256 will be returned.</returns>
         public Memory<byte> GetMemory(int sizeHint = 0)
         {
             if (sizeHint < 256)
@@ -82,7 +91,11 @@ namespace Azure.Core
             return newArray;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns a <see cref="Span{T}"/> to write to that is at least the requested size, as specified by the <paramref name="sizeHint"/> parameter.
+        /// </summary>
+        /// <param name="sizeHint">The minimum length of the returned <see cref="Span{T}"/>. If less than 256, a buffer of size 256 will be returned.</param>
+        /// <returns>A buffer of at least <paramref name="sizeHint"/> bytes. If <paramref name="sizeHint"/> is less than 256, a buffer of size 256 will be returned.</returns>
         public Span<byte> GetSpan(int sizeHint = 0)
         {
             Memory<byte> memory = GetMemory(sizeHint);
