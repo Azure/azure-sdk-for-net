@@ -61,8 +61,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                             // In case if the delete fails, there is a possibility
                             // that the current batch will be transmitted more than once resulting in duplicates.
-                            // TODO: TryDelete returns a boolean, should we log when this occurs?
-                            blob.TryDelete();
+                            var deleteSucceeded = blob.TryDelete();
+                            if (!deleteSucceeded)
+                            {
+                                AzureMonitorExporterEventSource.Log.DeletedFailed();
+                            }
                         }
                         else
                         {
