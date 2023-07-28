@@ -33,14 +33,16 @@ namespace Azure.Monitor.Query.Tests
         private string ENV_MONITOR_ENVIRONMENT = "MONITORENVIRONMENT";
         private string GetEndpoint()
         {
+            // if mode is Playback use DefaultEndpoint
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return GetRecordedVariable("LOGS_ENDPOINT");
+            }
+            // else find endpoing of specific region from pipeline
             string endpoint = "";
             if (regions.TryGetValue(Environment.GetEnvironmentVariable(ENV_MONITOR_ENVIRONMENT), out string region))
             {
                 endpoint = region;
-            }
-            else
-            {
-                endpoint = regions["AzureCloud"];
             }
             return endpoint;
         }
