@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Xunit;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
-    public class AzureMonitorExporterEventSourceTests
+    public class AzureMonitorAspNetCoreEventSourceTests
     {
         /// <summary>
         /// This test uses reflection to invoke every Event method in our EventSource class.
@@ -16,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void EventSourceTest_AzureMonitorExporterEventSource()
         {
-            EventSourceTestHelper.MethodsAreImplementedConsistentlyWithTheirAttributes(AzureMonitorExporterEventSource.Log);
+            EventSourceTestHelper.MethodsAreImplementedConsistentlyWithTheirAttributes(AzureMonitorAspNetCoreEventSource.Log);
         }
     }
 }
