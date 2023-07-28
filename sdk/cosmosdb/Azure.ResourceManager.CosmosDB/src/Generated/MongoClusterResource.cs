@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets a collection of FirewallRuleResources in the MongoCluster. </summary>
         /// <returns> An object representing collection of FirewallRuleResources and their operations over a FirewallRuleResource. </returns>
-        public virtual FirewallRuleCollection GetFirewallRules()
+        public virtual CosmosDBFirewallRuleCollection GetFirewallRules()
         {
-            return GetCachedClient(Client => new FirewallRuleCollection(Client, Id));
+            return GetCachedClient(Client => new CosmosDBFirewallRuleCollection(Client, Id));
         }
 
         /// <summary>

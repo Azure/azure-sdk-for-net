@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal NodeGroupProperties(string sku, long? diskSizeGB, bool? enableHa)
         {
             Sku = sku;
-            DiskSizeGB = diskSizeGB;
+            DiskSizeInGB = diskSizeGB;
             EnableHa = enableHa;
         }
 
         /// <summary> The resource sku for the node group. This defines the size of CPU and memory that is provisioned for each node. Example values: 'M30', 'M40'. </summary>
         public string Sku { get; set; }
         /// <summary> The disk storage size for the node group in GB. Example values: 128, 256, 512, 1024. </summary>
-        public long? DiskSizeGB { get; set; }
+        public long? DiskSizeInGB { get; set; }
         /// <summary> Whether high availability is enabled on the node group. </summary>
         public bool? EnableHa { get; set; }
     }

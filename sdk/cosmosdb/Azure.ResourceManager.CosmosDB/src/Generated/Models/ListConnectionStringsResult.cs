@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ListConnectionStringsResult. </summary>
         internal ListConnectionStringsResult()
         {
-            ConnectionStrings = new ChangeTrackingList<ConnectionString>();
+            ConnectionStrings = new ChangeTrackingList<CosmosDBConnectionString>();
         }
 
         /// <summary> Initializes a new instance of ListConnectionStringsResult. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
-        internal ListConnectionStringsResult(IReadOnlyList<ConnectionString> connectionStrings)
+        internal ListConnectionStringsResult(IReadOnlyList<CosmosDBConnectionString> connectionStrings)
         {
             ConnectionStrings = connectionStrings;
         }
 
         /// <summary> An array that contains the connection strings for a mongo cluster. </summary>
-        public IReadOnlyList<ConnectionString> ConnectionStrings { get; }
+        public IReadOnlyList<CosmosDBConnectionString> ConnectionStrings { get; }
     }
 }

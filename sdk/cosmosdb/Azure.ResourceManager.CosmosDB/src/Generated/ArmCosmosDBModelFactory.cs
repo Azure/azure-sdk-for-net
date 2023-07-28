@@ -1605,18 +1605,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.CheckCosmosDBNameAvailabilityResponse"/> instance for mocking. </returns>
+        public static CheckCosmosDBNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CosmosDBNameUnavailabilityReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+            return new CheckCosmosDBNameAvailabilityResponse(nameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of ListConnectionStringsResult. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
         /// <returns> A new <see cref="Models.ListConnectionStringsResult"/> instance for mocking. </returns>
-        public static ListConnectionStringsResult ListConnectionStringsResult(IEnumerable<ConnectionString> connectionStrings = null)
+        public static ListConnectionStringsResult ListConnectionStringsResult(IEnumerable<CosmosDBConnectionString> connectionStrings = null)
         {
-            connectionStrings ??= new List<ConnectionString>();
+            connectionStrings ??= new List<CosmosDBConnectionString>();
 
             return new ListConnectionStringsResult(connectionStrings?.ToList());
         }
@@ -1624,10 +1624,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of ConnectionString. </summary>
         /// <param name="connectionStringValue"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
-        /// <returns> A new <see cref="Models.ConnectionString"/> instance for mocking. </returns>
-        public static ConnectionString ConnectionString(string connectionStringValue = null, string description = null)
+        /// <returns> A new <see cref="Models.CosmosDBConnectionString"/> instance for mocking. </returns>
+        public static CosmosDBConnectionString ConnectionString(string connectionStringValue = null, string description = null)
         {
-            return new ConnectionString(connectionStringValue, description);
+            return new CosmosDBConnectionString(connectionStringValue, description);
         }
 
         /// <summary> Initializes a new instance of MongoDBRoleDefinitionData. </summary>

@@ -21,22 +21,22 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary>
     /// A class representing a collection of <see cref="FirewallRuleResource" /> and their operations.
     /// Each <see cref="FirewallRuleResource" /> in the collection will belong to the same instance of <see cref="MongoClusterResource" />.
-    /// To get a <see cref="FirewallRuleCollection" /> instance call the GetFirewallRules method from an instance of <see cref="MongoClusterResource" />.
+    /// To get a <see cref="CosmosDBFirewallRuleCollection" /> instance call the GetFirewallRules method from an instance of <see cref="MongoClusterResource" />.
     /// </summary>
-    public partial class FirewallRuleCollection : ArmCollection, IEnumerable<FirewallRuleResource>, IAsyncEnumerable<FirewallRuleResource>
+    public partial class CosmosDBFirewallRuleCollection : ArmCollection, IEnumerable<FirewallRuleResource>, IAsyncEnumerable<FirewallRuleResource>
     {
         private readonly ClientDiagnostics _firewallRuleMongoClustersClientDiagnostics;
         private readonly MongoClustersRestOperations _firewallRuleMongoClustersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="FirewallRuleCollection"/> class for mocking. </summary>
-        protected FirewallRuleCollection()
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBFirewallRuleCollection"/> class for mocking. </summary>
+        protected CosmosDBFirewallRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="FirewallRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBFirewallRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal FirewallRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CosmosDBFirewallRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _firewallRuleMongoClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", FirewallRuleResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(FirewallRuleResource.ResourceType, out string firewallRuleMongoClustersApiVersion);
