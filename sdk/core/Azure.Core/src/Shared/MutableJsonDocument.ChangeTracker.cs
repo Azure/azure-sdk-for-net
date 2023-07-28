@@ -143,21 +143,33 @@ namespace Azure.Core.Json
                 }
             }
 
-            internal IEnumerable<string> GetChangedProperties(out int maxPathLength)
+            internal MutableJsonChange? GetNextChange(MutableJsonChange? lastChange, out int maxPathLength)
             {
-                maxPathLength = 0;
-
-                HashSet<string> unique = new();
+                maxPathLength = -1;
                 if (_changes == null)
                 {
-                    return unique;
+                    // null means there's no next change, we can exit a loop
+                    return null;
                 }
 
-                // Get unique properties
+                MutableJsonChange? min = null;
+
+                // This implementation is based on the assumption that iterating through
+                // list elements is fast.
+                // Iterating backwards means we get the latest change for a given path.
                 for (int i = _changes!.Count - 1; i >= 0; i--)
                 {
                     MutableJsonChange c = _changes[i];
-                    unique.Add(c.Path);
+
+                    bool isDescendant = lastChange != null && c.IsDescendant(lastChange.Value.Path);
+
+                    if (c.IsGreaterThan(lastChange) &&
+                        // Ignore descendants if its ancestor changed
+                        !isDescendant &&
+                        c.IsLessThan(min))
+                    {
+                        min = c;
+                    }
 
                     if (c.Path.Length > maxPathLength)
                     {
@@ -165,34 +177,7 @@ namespace Azure.Core.Json
                     }
                 }
 
-                // Sort them
-                List<string> list = new(unique);
-                list.Sort();
-
-                // Remove descendants if their ancestors changed.
-                if (list.Count > 1)
-                {
-                    // Make a copy we won't mutate
-                    List<string> copy = new(list);
-
-                    string current = copy[0];
-                    for (int i = 1; i < copy.Count; i++)
-                    {
-                        string next = copy[i];
-                        TryGetChange(next, -1, out MutableJsonChange change);
-
-                        if (change.IsDescendant(current))
-                        {
-                            list.Remove(next);
-                        }
-                        else
-                        {
-                            current = next;
-                        }
-                    }
-                }
-
-                return list;
+                return min;
             }
 
             internal bool WasRemoved(string path, int highWaterMark)
