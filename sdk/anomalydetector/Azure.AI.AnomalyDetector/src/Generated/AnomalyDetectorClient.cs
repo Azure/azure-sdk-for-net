@@ -67,6 +67,7 @@ namespace Azure.AI.AnomalyDetector
             _apiVersion = options.Version;
         }
 
+        // The convenience method of this operation is not generated because the convenience method is not turned on in typespec file.
         /// <summary>
         /// [Protocol Method] Detect anomalies for the entire series in batch.
         /// <list type="bullet">
@@ -101,6 +102,7 @@ namespace Azure.AI.AnomalyDetector
             }
         }
 
+        // The convenience method of this operation is not generated because the convenience method is not turned on in typespec file.
         /// <summary>
         /// [Protocol Method] Detect anomalies for the entire series in batch.
         /// <list type="bullet">
