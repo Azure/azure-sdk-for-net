@@ -7,6 +7,7 @@ using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Json
 {
@@ -1053,6 +1054,12 @@ namespace Azure.Core.Json
             if (value is MutableJsonElement mje)
             {
                 mje.EnsureValid();
+            }
+
+            // if value inherits from IModelSerializable, use the ModelSerializer serialize method otherwise use default JsonSerializer
+            if (value is IModelSerializable)
+            {
+                return ModelSerializer.Serialize(value);
             }
 
             // If it's not a special type, we'll serialize it on assignment.

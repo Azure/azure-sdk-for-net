@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 
@@ -60,7 +61,8 @@ namespace Azure.Core.Serialization
                     type == typeof(ETag) ||
                     type == typeof(JsonElement) ||
                     type == typeof(JsonDocument) ||
-                    type == typeof(DynamicData);
+                    type == typeof(DynamicData) ||
+                    DoesImplementIModelSerializable(type);
             }
 
             private static bool IsAllowedCollectionValue<T>(Type type, T value)
@@ -194,6 +196,12 @@ namespace Azure.Core.Serialization
             private static bool IsAnonymousType(Type type)
             {
                 return type.Name.StartsWith("<>f__AnonymousType");
+            }
+
+            // Determines if type inherits from IModelSerializable<T> for any T
+            private static bool DoesImplementIModelSerializable(Type type)
+            {
+                return type.GetInterface(nameof(IModelSerializable)) != null;
             }
         }
     }
