@@ -20,7 +20,7 @@ namespace Azure
     {
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool HasValue => Value != null;
+        public override bool HasValue => true;
 
         /// <inheritdoc />
         public override T Value => Value;
