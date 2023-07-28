@@ -134,5 +134,114 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             Assert.AreEqual(setId, setResource.Id);
             Assert.AreEqual(setData, setResource.Data);
         }
+
+        [Test]
+        public async Task Mocking_PageableResultOnCollection()
+        {
+            #region mocking data
+            var subscriptionId = Guid.NewGuid().ToString();
+            var resourceGroupName = "myRg";
+            var setName1 = "mySet1";
+            var setName2 = "mySet2";
+            var setId1 = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, setName1);
+            var setId2 = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, setName2);
+            var setData1 = ArmComputeModelFactory.AvailabilitySetData(setId1, setName1, platformFaultDomainCount: 10);
+            var setData2 = ArmComputeModelFactory.AvailabilitySetData(setId2, setName2, platformUpdateDomainCount: 20);
+            #endregion
+
+            #region mocking setup
+            var rgMock = new Mock<ResourceGroupResource>();
+            var rgExtensionMock = new Mock<ComputeResourceGroupMockingExtension>();
+            var setMock1 = new Mock<AvailabilitySetResource>();
+            var setMock2 = new Mock<AvailabilitySetResource>();
+            var setCollectionMock = new Mock<AvailabilitySetCollection>();
+            // setup some data in the result
+            setMock1.Setup(set => set.Id).Returns(setId1);
+            setMock1.Setup(set => set.Data).Returns(setData1);
+            setMock2.Setup(set => set.Id).Returns(setId2);
+            setMock2.Setup(set => set.Data).Returns(setData2);
+            // first mock: mock the same method in mocking extension class
+            rgExtensionMock.Setup(e => e.GetAvailabilitySets()).Returns(setCollectionMock.Object);
+            // second mock: mock the GetCachedClient method on the "extendee"
+            rgMock.Setup(rg => rg.GetCachedClient(It.IsAny<Func<ArmClient, ComputeResourceGroupMockingExtension>>())).Returns(rgExtensionMock.Object);
+            // setup the collection
+            var setPageableResult = AsyncPageable<AvailabilitySetResource>.FromPages(new[] { Page<AvailabilitySetResource>.FromValues(new[] { setMock1.Object, setMock2.Object }, null, null) });
+            setCollectionMock.Setup(c => c.GetAllAsync(default)).Returns(setPageableResult);
+            #endregion
+
+            var rg = rgMock.Object;
+            var setCollection = rg.GetAvailabilitySets();
+            var count = 0;
+            await foreach (var set in setCollection.GetAllAsync())
+            {
+                switch (count)
+                {
+                    case 0:
+                        Assert.AreEqual(setId1, set.Id);
+                        Assert.AreEqual(setData1, set.Data);
+                        break;
+                    case 1:
+                        Assert.AreEqual(setId2, set.Id);
+                        Assert.AreEqual(setData2, set.Data);
+                        break;
+                    default:
+                        Assert.Fail("We should only contain 2 items in the result");
+                        break;
+                }
+                count++;
+            }
+        }
+
+        [Test]
+        public async Task Mocking_PageableResultOnExtension()
+        {
+            #region mocking data
+            var subscriptionId = Guid.NewGuid().ToString();
+            var setName1 = "mySet1";
+            var setName2 = "mySet2";
+            var setId1 = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, "myRg1", setName1);
+            var setId2 = AvailabilitySetResource.CreateResourceIdentifier(subscriptionId, "myRg2", setName2);
+            var setData1 = ArmComputeModelFactory.AvailabilitySetData(setId1, setName1, platformFaultDomainCount: 10);
+            var setData2 = ArmComputeModelFactory.AvailabilitySetData(setId2, setName2, platformUpdateDomainCount: 20);
+            #endregion
+
+            #region mocking setup
+            var subsMock = new Mock<SubscriptionResource>();
+            var subsExtensionMock = new Mock<ComputeSubscriptionMockingExtension>();
+            var setMock1 = new Mock<AvailabilitySetResource>();
+            var setMock2 = new Mock<AvailabilitySetResource>();
+            // setup some data in the result
+            setMock1.Setup(set => set.Id).Returns(setId1);
+            setMock1.Setup(set => set.Data).Returns(setData1);
+            setMock2.Setup(set => set.Id).Returns(setId2);
+            setMock2.Setup(set => set.Data).Returns(setData2);
+            // first mock: mock the same method in mocking extension class
+            var setPageableResult = AsyncPageable<AvailabilitySetResource>.FromPages(new[] { Page<AvailabilitySetResource>.FromValues(new[] { setMock1.Object, setMock2.Object }, null, null) });
+            subsExtensionMock.Setup(e => e.GetAvailabilitySetsAsync(null, default)).Returns(setPageableResult);
+            // second mock: mock the GetCachedClient method on the "extendee"
+            subsMock.Setup(rg => rg.GetCachedClient(It.IsAny<Func<ArmClient, ComputeSubscriptionMockingExtension>>())).Returns(subsExtensionMock.Object);
+            #endregion
+
+            var subscription = subsMock.Object;
+            var count = 0;
+            await foreach (var set in subscription.GetAvailabilitySetsAsync())
+            {
+                switch (count)
+                {
+                    case 0:
+                        Assert.AreEqual(setId1, set.Id);
+                        Assert.AreEqual(setData1, set.Data);
+                        break;
+                    case 1:
+                        Assert.AreEqual(setId2, set.Id);
+                        Assert.AreEqual(setData2, set.Data);
+                        break;
+                    default:
+                        Assert.Fail("We should only contain 2 items in the result");
+                        break;
+                }
+                count++;
+            }
+        }
     }
 }
