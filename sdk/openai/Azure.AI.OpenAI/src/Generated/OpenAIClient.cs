@@ -67,17 +67,13 @@ namespace Azure.AI.OpenAI
             return ProtocolOperationHelpers.Convert(response, BatchImageGenerationOperationResponse.FromResponse, ClientDiagnostics, "OpenAIClient.BeginAzureBatchImageGeneration");
         }
 
+        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
         /// <summary>
         /// [Protocol Method] Starts the generation of a batch of images from a text caption
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BeginAzureBatchImageGenerationAsync(WaitUntil,ImageGenerationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -107,17 +103,13 @@ namespace Azure.AI.OpenAI
             }
         }
 
+        // The convenience method of this operation is made internal because this operation directly or indirectly uses a low confident type, for instance, unions, literal types with number values, etc.
         /// <summary>
         /// [Protocol Method] Starts the generation of a batch of images from a text caption
         /// <list type="bullet">
         /// <item>
         /// <description>
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="BeginAzureBatchImageGeneration(WaitUntil,ImageGenerationOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
