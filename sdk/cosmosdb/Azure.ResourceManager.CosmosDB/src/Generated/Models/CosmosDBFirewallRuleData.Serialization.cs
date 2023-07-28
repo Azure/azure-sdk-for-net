@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class FirewallRuleData : IUtf8JsonSerializable
+    public partial class CosmosDBFirewallRuleData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteEndObject();
         }
 
-        internal static FirewallRuleData DeserializeFirewallRuleData(JsonElement element)
+        internal static CosmosDBFirewallRuleData DeserializeCosmosDBFirewallRuleData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new FirewallRuleData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), startIPAddress, endIPAddress);
+            return new CosmosDBFirewallRuleData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), startIPAddress, endIPAddress);
         }
     }
 }

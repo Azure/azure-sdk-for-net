@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckMongoClusterNameAailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckCosmosDBNameAvailabilityResponse>> CheckMongoClusterNameAailabilityAsync(CheckCosmosDBNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckNameAvailabilityResponse> CheckMongoClusterNameAailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckCosmosDBNameAvailabilityResponse> CheckMongoClusterNameAailability(CheckCosmosDBNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

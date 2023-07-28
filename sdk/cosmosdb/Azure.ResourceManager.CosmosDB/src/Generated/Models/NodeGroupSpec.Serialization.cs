@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Optional.IsDefined(DiskSizeGB))
+            if (Optional.IsDefined(DiskSizeInGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
-                writer.WriteNumberValue(DiskSizeGB.Value);
+                writer.WriteNumberValue(DiskSizeInGB.Value);
             }
             if (Optional.IsDefined(EnableHa))
             {

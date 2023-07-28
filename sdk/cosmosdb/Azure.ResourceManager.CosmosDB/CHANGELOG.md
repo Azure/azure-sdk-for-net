@@ -1,17 +1,11 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.4.0-beta.3 (2023-07-31)
 
 ### Features Added
  - Updated Microsoft.DocumentDB RP API version to `2023-03-15-preview`
  - Adds support for Database partition merge operation.
  - Adds support for Materialized view in Collections.
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.4.0-beta.2 (2023-05-29)
 
 ### Features Added

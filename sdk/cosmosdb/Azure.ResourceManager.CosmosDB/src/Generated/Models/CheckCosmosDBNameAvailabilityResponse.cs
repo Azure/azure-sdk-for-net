@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The check availability result. </summary>
-    public partial class CheckNameAvailabilityResponse
+    public partial class CheckCosmosDBNameAvailabilityResponse
     {
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
-        internal CheckNameAvailabilityResponse()
+        /// <summary> Initializes a new instance of CheckCosmosDBNameAvailabilityResponse. </summary>
+        internal CheckCosmosDBNameAvailabilityResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of CheckCosmosDBNameAvailabilityResponse. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        internal CheckNameAvailabilityResponse(bool? nameAvailable, CheckNameAvailabilityReason? reason, string message)
+        internal CheckCosmosDBNameAvailabilityResponse(bool? nameAvailable, CosmosDBNameUnavailableReason? reason, string message)
         {
             NameAvailable = nameAvailable;
             Reason = reason;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Indicates if the resource name is available. </summary>
         public bool? NameAvailable { get; }
         /// <summary> The reason why the given name is not available. </summary>
-        public CheckNameAvailabilityReason? Reason { get; }
+        public CosmosDBNameUnavailableReason? Reason { get; }
         /// <summary> Detailed reason why the given name is available. </summary>
         public string Message { get; }
     }

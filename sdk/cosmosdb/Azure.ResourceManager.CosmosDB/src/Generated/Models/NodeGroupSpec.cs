@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of NodeGroupSpec. </summary>
         /// <param name="sku"> The resource sku for the node group. This defines the size of CPU and memory that is provisioned for each node. Example values: 'M30', 'M40'. </param>
-        /// <param name="diskSizeGB"> The disk storage size for the node group in GB. Example values: 128, 256, 512, 1024. </param>
+        /// <param name="diskSizeInGB"> The disk storage size for the node group in GB. Example values: 128, 256, 512, 1024. </param>
         /// <param name="enableHa"> Whether high availability is enabled on the node group. </param>
         /// <param name="kind"> The node type deployed in the node group. </param>
         /// <param name="nodeCount"> The number of nodes in the node group. </param>
-        internal NodeGroupSpec(string sku, long? diskSizeGB, bool? enableHa, NodeKind? kind, int? nodeCount) : base(sku, diskSizeGB, enableHa)
+        internal NodeGroupSpec(string sku, long? diskSizeInGB, bool? enableHa, NodeKind? kind, int? nodeCount) : base(sku, diskSizeInGB, enableHa)
         {
             Kind = kind;
             NodeCount = nodeCount;

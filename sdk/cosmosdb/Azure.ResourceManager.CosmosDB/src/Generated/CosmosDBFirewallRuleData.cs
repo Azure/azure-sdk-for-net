@@ -13,16 +13,16 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing the FirewallRule data model.
+    /// A class representing the CosmosDBFirewallRule data model.
     /// Represents a mongo cluster firewall rule.
     /// </summary>
-    public partial class FirewallRuleData : ResourceData
+    public partial class CosmosDBFirewallRuleData : ResourceData
     {
-        /// <summary> Initializes a new instance of FirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of CosmosDBFirewallRuleData. </summary>
         /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
-        public FirewallRuleData(string startIPAddress, string endIPAddress)
+        public CosmosDBFirewallRuleData(string startIPAddress, string endIPAddress)
         {
             Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
             Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
             EndIPAddress = endIPAddress;
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of CosmosDBFirewallRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        internal FirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBProvisioningState? provisioningState, string startIPAddress, string endIPAddress) : base(id, name, resourceType, systemData)
+        internal CosmosDBFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBProvisioningState? provisioningState, string startIPAddress, string endIPAddress) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             StartIPAddress = startIPAddress;

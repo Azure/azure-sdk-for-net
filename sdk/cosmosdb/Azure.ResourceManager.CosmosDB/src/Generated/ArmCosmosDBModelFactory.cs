@@ -1587,7 +1587,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new MongoClusterData(id, name, resourceType, systemData, tags, location, createMode, restoreParameters, administratorLogin, administratorLoginPassword, serverVersion, connectionString, earliestRestoreTime, provisioningState, clusterStatus, nodeGroupSpecs?.ToList());
         }
 
-        /// <summary> Initializes a new instance of FirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of CosmosDBFirewallRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1595,20 +1595,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        /// <returns> A new <see cref="CosmosDB.FirewallRuleData"/> instance for mocking. </returns>
-        public static FirewallRuleData FirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBProvisioningState? provisioningState = null, string startIPAddress = null, string endIPAddress = null)
+        /// <returns> A new <see cref="CosmosDB.CosmosDBFirewallRuleData"/> instance for mocking. </returns>
+        public static CosmosDBFirewallRuleData CosmosDBFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBProvisioningState? provisioningState = null, string startIPAddress = null, string endIPAddress = null)
         {
-            return new FirewallRuleData(id, name, resourceType, systemData, provisioningState, startIPAddress, endIPAddress);
+            return new CosmosDBFirewallRuleData(id, name, resourceType, systemData, provisioningState, startIPAddress, endIPAddress);
         }
 
-        /// <summary> Initializes a new instance of CheckNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of CheckCosmosDBNameAvailabilityResponse. </summary>
         /// <param name="nameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool? nameAvailable = null, CheckNameAvailabilityReason? reason = null, string message = null)
+        /// <returns> A new <see cref="Models.CheckCosmosDBNameAvailabilityResponse"/> instance for mocking. </returns>
+        public static CheckCosmosDBNameAvailabilityResponse CheckCosmosDBNameAvailabilityResponse(bool? nameAvailable = null, CosmosDBNameUnavailableReason? reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message);
+            return new CheckCosmosDBNameAvailabilityResponse(nameAvailable, reason, message);
         }
 
         /// <summary> Initializes a new instance of ListConnectionStringsResult. </summary>

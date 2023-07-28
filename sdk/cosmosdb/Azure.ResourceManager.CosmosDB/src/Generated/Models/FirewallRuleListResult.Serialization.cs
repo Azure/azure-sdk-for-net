@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<FirewallRuleData>> value = default;
+            Optional<IReadOnlyList<CosmosDBFirewallRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<FirewallRuleData> array = new List<FirewallRuleData>();
+                    List<CosmosDBFirewallRuleData> array = new List<CosmosDBFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallRuleData.DeserializeFirewallRuleData(item));
+                        array.Add(CosmosDBFirewallRuleData.DeserializeCosmosDBFirewallRuleData(item));
                     }
                     value = array;
                     continue;

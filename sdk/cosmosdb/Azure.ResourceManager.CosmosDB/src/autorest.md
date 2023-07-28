@@ -301,6 +301,11 @@ rename-mapping:
   PrivilegeResource.db: DBName
   MinimalTlsVersion: CosmosDBMinimalTlsVersion
   BackupResource: CassandraClusterBackupResource
+  CheckNameAvailabilityRequest: CheckCosmosDBNameAvailabilityContent
+  CheckNameAvailabilityResponse: CheckCosmosDBNameAvailabilityResponse
+  CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
+  NodeGroupProperties.diskSizeGB: DiskSizeInGB
+
 
 prepend-rp-prefix:
 - UniqueKey
@@ -335,11 +340,10 @@ prepend-rp-prefix:
 - PublicNetworkAccess
 - SpatialType
 - ContainerPartitionKey
-- FirewallRuleCollection
+- FirewallRule
 - Status
 - ProvisioningState
 - Type
-- CheckNameAvailabilityContent
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData
