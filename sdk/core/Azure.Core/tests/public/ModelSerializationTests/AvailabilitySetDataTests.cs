@@ -3,19 +3,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ResourceManager.Compute;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class AvailabilitySetDataTests : ModelTests<AvailabilitySetData>
     {
+        [Test]
+        public void ThisShouldFail()
+        {
+            throw new Exception("I'm failing on purpose");
+        }
+
         protected override string WirePayload => "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"location\":\"eastus\",\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"sku\":{\"name\":\"Classic\",\"extraSku\":\"extraSku\"},\"extraRoot\":\"extraRoot\"}";
 
         protected override string JsonPayload => WirePayload;
