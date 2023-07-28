@@ -39,7 +39,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="CreateOrUpdateFilterAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrUpdateFilterAsync with required parameters and parse the result.
+This sample shows how to call CreateOrUpdateFilterAsync and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -47,12 +47,12 @@ var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", c
 
 var data = new {};
 
-Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateFilterAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateFilterAsync with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -69,7 +69,7 @@ var data = new {
     },
 };
 
-Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -81,7 +81,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="CreateOrUpdateFilter(RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrUpdateFilter with required parameters and parse the result.
+This sample shows how to call CreateOrUpdateFilter and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -89,12 +89,12 @@ var client = new PurviewScanClient(endpoint, "<dataSourceName>", "<scanName>", c
 
 var data = new {};
 
-Response response = client.CreateOrUpdateFilter(RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateFilter with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateFilter with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -111,7 +111,7 @@ var data = new {
     },
 };
 
-Response response = client.CreateOrUpdateFilter(RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());

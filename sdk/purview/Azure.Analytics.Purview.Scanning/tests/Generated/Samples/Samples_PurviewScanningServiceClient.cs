@@ -308,7 +308,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "AzureSubscription",
             };
 
-            Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -339,7 +339,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 scanRulesetType = "Custom",
             };
 
-            Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -363,7 +363,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 kind = "AzureSubscription",
             };
 
-            Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -394,7 +394,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 scanRulesetType = "Custom",
             };
 
-            Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());

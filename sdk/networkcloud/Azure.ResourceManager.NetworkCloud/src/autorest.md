@@ -48,12 +48,6 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
-  # The core library Azure.ResourceManager has been generated when the subscriptionId was not marked as an uuid.
-  # v5 of common-types defines `subscriptionId` as `guid` format and needs to be removed in order to generate valid code.
-  - from: types.json
-    where: $.parameters.SubscriptionIdParameter
-    transform: >
-      delete $['format'];
   - from: networkcloud.json
     where: $.definitions
     transform:
@@ -72,11 +66,6 @@ directive:
         'principalId',
         'applicationId'
       ];
-  # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem
-  - from: v5/types.json
-    where: $.definitions
-    transform: >
-      delete $.Resource.properties.id.format;
   # `delete` transformations are to remove APIs/methods that result in Access Denied for end users.
   - remove-operation: BareMetalMachines_CreateOrUpdate
   - remove-operation: BareMetalMachines_Delete

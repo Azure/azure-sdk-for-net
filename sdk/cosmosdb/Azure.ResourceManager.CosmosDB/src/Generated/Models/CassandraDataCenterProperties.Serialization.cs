@@ -77,6 +77,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("authenticationMethodLdapProperties"u8);
                 writer.WriteObjectValue(AuthenticationMethodLdapProperties);
             }
+            if (Optional.IsDefined(Deallocated))
+            {
+                writer.WritePropertyName("deallocated"u8);
+                writer.WriteBooleanValue(Deallocated.Value);
+            }
+            if (Optional.IsDefined(ProvisionError))
+            {
+                writer.WritePropertyName("provisionError"u8);
+                writer.WriteObjectValue(ProvisionError);
+            }
             writer.WriteEndObject();
         }
 
@@ -99,6 +109,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> diskCapacity = default;
             Optional<bool> availabilityZone = default;
             Optional<AuthenticationMethodLdapProperties> authenticationMethodLdapProperties = default;
+            Optional<bool> deallocated = default;
+            Optional<CassandraError> provisionError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -211,8 +223,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     authenticationMethodLdapProperties = AuthenticationMethodLdapProperties.DeserializeAuthenticationMethodLdapProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("deallocated"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deallocated = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("provisionError"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisionError = CassandraError.DeserializeCassandraError(property.Value);
+                    continue;
+                }
             }
-            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone), authenticationMethodLdapProperties.Value);
+            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone), authenticationMethodLdapProperties.Value, Optional.ToNullable(deallocated), provisionError.Value);
         }
     }
 }

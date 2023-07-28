@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
-        public Uri AzureCognitiveServicesEndpointUrl { get; set; }
+        public Uri AzureCognitiveServicesEndpointUri { get; set; }
 
         /// <summary>
         /// The Custom Context which contains SIP and voip headers.
