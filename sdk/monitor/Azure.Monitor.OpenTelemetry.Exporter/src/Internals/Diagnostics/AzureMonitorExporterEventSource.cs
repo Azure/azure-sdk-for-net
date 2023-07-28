@@ -352,5 +352,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(35, Message = "Failed to deserialize response from ingestion due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
         public void FailedToDeserializeIngestionResponse(string exceptionMessage) => WriteEvent(35, exceptionMessage);
+
+        [Event(36, Message = "Version string exceeds expected length. This is only for internal telemetry and can safely be ignored. Type Name: {0}. Version: {1}", Level = EventLevel.Verbose)]
+        public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(36, typeName, value);
     }
 }

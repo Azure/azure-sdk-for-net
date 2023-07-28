@@ -23,7 +23,7 @@ namespace Azure
         /// <summary>
         /// Gets the value returned by the service. Accessing this property will throw if <see cref="HasValue"/> is false.
         /// </summary>
-        public abstract T Value { get; }
+        public abstract T? Value { get; }
 
         /// <summary>
         /// Returns the HTTP response returned by the service.

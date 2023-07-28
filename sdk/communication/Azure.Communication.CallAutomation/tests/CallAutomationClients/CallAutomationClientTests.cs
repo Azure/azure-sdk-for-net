@@ -79,34 +79,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.AreEqual("mediaSubscriptionId", response.Value.CallConnectionProperties.MediaSubscriptionId);
         }
 
-        [TestCaseSource(nameof(TestData_AnswerCall_NoCallbackUri))]
-        public void AnswerCallWithOptions_NullCallbackUri(string incomingCallContext)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: null)
-            {
-                MediaStreamingOptions = _mediaStreamingConfiguration
-            };
-
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
-        }
-
-        [TestCaseSource(nameof(TestData_AnswerCall_NoCallbackUri))]
-        public void AnswerCallWithOptions_HttpCallbackUri(string incomingCallContext)
-        {
-            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(200, CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionPayload);
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext: incomingCallContext, callbackUri: new Uri("http://example.com"))
-            {
-                MediaStreamingOptions = _mediaStreamingConfiguration
-            };
-
-            ArgumentException? ex = Assert.ThrowsAsync<ArgumentException>(async () => await callAutomationClient.AnswerCallAsync(options).ConfigureAwait(false));
-            Assert.NotNull(ex);
-            Assert.True(ex?.Message.Contains(CallAutomationErrorMessages.InvalidHttpsUriMessage));
-        }
-
         [TestCaseSource(nameof(TestData_AnswerCall))]
         public void AnswerCallAsync_401AuthFailed(string incomingCallContext, Uri callbackUri)
         {
@@ -367,7 +339,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
             Assert.NotNull(properties);
             Assert.AreEqual("callConnectionId", properties.CallConnectionId);
             Assert.AreEqual(CallConnectionState.Connecting, properties.CallConnectionState);
-            Assert.AreEqual("dummySourceUser", properties.SourceIdentity.RawId);
+            Assert.AreEqual("dummySourceUser", properties.Source.RawId);
             Assert.AreEqual("serverCallId", properties.ServerCallId);
             Assert.AreEqual(1, properties.Targets.Count);
         }

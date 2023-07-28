@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// content items' properties, validation rules, and constraints.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// constraints.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -86,13 +86,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// the `c-` prefix. Built-in content types can't be modified.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
         /// <param name='contentTypeId'>
         /// Content type identifier.
+        /// </param>
+        /// <param name='parameters'>
+        /// Create or update parameters.
         /// </param>
         /// <param name='ifMatch'>
         /// ETag of the Entity. Not required when creating an entity, but
@@ -113,7 +116,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ContentTypeContract,ContentTypeCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string contentTypeId, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ContentTypeContract,ContentTypeCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string contentTypeId, ContentTypeContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Removes the specified developer portal's content type. Content
         /// types describe content items' properties, validation rules, and
@@ -121,7 +124,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// the `c-` prefix) can't be removed.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

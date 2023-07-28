@@ -44,5 +44,12 @@ namespace Azure.ResourceManager.CosmosDB
         {
             return GetCachedClient(Client => new CassandraClusterCollection(Client, Id));
         }
+
+        /// <summary> Gets a collection of MongoClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MongoClusterResources and their operations over a MongoClusterResource. </returns>
+        public virtual MongoClusterCollection GetMongoClusters()
+        {
+            return GetCachedClient(Client => new MongoClusterCollection(Client, Id));
+        }
     }
 }
