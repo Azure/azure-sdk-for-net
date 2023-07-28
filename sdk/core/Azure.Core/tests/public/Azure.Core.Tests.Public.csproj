@@ -3,6 +3,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>false</IsTestSupportProject>
   </PropertyGroup>
 
   <ItemGroup>
