@@ -14,7 +14,7 @@ using System.Collections.Generic;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    internal class XmlModelForCombinedInterface : IXmlSerializable, IXmlModelSerializable<XmlModelForCombinedInterface>, IXmlModelSerializable
+    internal class XmlModelForCombinedInterface : IXmlSerializable, IModelXmlSerializable<XmlModelForCombinedInterface>
     {
         public XmlModelForCombinedInterface() { }
 
@@ -45,10 +45,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
             Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
 
-        void IXmlModelSerializable<XmlModelForCombinedInterface>.Serialize(XmlWriter writer, ModelSerializerOptions options)
+        void IModelXmlSerializable<XmlModelForCombinedInterface>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
             if (options.Format != ModelSerializerFormat.Wire)
-                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IXmlModelSerializable)} interface");
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IModelXmlSerializable<XmlModelForCombinedInterface>)} interface");
 
             Serialize(writer, options, null);
         }
@@ -165,14 +165,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
-        void IXmlModelSerializable<object>.Serialize(XmlWriter writer, ModelSerializerOptions options) => ((IXmlModelSerializable<XmlModelForCombinedInterface>)this).Serialize(writer, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<XmlModelForCombinedInterface>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<XmlModelForCombinedInterface>)this).Serialize(options);
-
-        XmlModelForCombinedInterface IXmlModelSerializable<XmlModelForCombinedInterface>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(root, options);
-
-        object IXmlModelSerializable<object>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(root, options);
+        XmlModelForCombinedInterface IModelXmlSerializable<XmlModelForCombinedInterface>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(root, options);
     }
 }

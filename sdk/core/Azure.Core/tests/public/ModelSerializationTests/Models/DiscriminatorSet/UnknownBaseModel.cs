@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IJsonModelSerializable<UnknownBaseModel>, IJsonModelSerializable
+    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IModelJsonSerializable<UnknownBaseModel>
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -29,9 +29,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             RawData = rawData;
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<UnknownBaseModel>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UnknownBaseModel>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        void IJsonModelSerializable<UnknownBaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<UnknownBaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -96,20 +96,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return DeserializeUnknownBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        UnknownBaseModel IJsonModelSerializable<UnknownBaseModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        UnknownBaseModel IModelJsonSerializable<UnknownBaseModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeUnknownBaseModel(doc.RootElement, options);
         }
 
         BinaryData IModelSerializable<UnknownBaseModel>.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<UnknownBaseModel>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<UnknownBaseModel>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<UnknownBaseModel>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<UnknownBaseModel>)this).Serialize(options);
     }
 }

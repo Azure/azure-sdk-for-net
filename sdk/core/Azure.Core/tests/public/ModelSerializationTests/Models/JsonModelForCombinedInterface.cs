@@ -11,7 +11,7 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal class JsonModelForCombinedInterface : IUtf8JsonSerializable, IJsonModelSerializable<JsonModelForCombinedInterface>, IJsonModelSerializable
+    internal class JsonModelForCombinedInterface : IUtf8JsonSerializable, IModelJsonSerializable<JsonModelForCombinedInterface>
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -45,7 +45,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string Value { get; set; }
         public string ReadOnlyProperty { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<JsonModelForCombinedInterface>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JsonModelForCombinedInterface>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
         internal static JsonModelForCombinedInterface DeserializeJsonModelForCombinedInterface(JsonElement element, ModelSerializerOptions? options = default)
         {
@@ -82,7 +82,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new JsonModelForCombinedInterface(key, value, readOnlyProperty, rawData);
         }
 
-        void IJsonModelSerializable<JsonModelForCombinedInterface>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<JsonModelForCombinedInterface>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -117,7 +117,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return DeserializeJsonModelForCombinedInterface(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        JsonModelForCombinedInterface IJsonModelSerializable<JsonModelForCombinedInterface>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        JsonModelForCombinedInterface IModelJsonSerializable<JsonModelForCombinedInterface>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeJsonModelForCombinedInterface(doc.RootElement, options);
@@ -127,13 +127,5 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         {
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<JsonModelForCombinedInterface>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<JsonModelForCombinedInterface>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<JsonModelForCombinedInterface>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<JsonModelForCombinedInterface>)this).Serialize(options);
     }
 }

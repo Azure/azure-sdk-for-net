@@ -14,9 +14,9 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ResourceTypeAlias : IUtf8JsonSerializable, IJsonModelSerializable<ResourceTypeAlias>, IJsonModelSerializable
+    public partial class ResourceTypeAlias : IUtf8JsonSerializable, IModelJsonSerializable<ResourceTypeAlias>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ResourceTypeAlias>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeAlias>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
         internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element, ModelSerializerOptions? options = default)
         {
@@ -89,7 +89,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return new ResourceTypeAlias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value);
         }
 
-        void IJsonModelSerializable<ResourceTypeAlias>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<ResourceTypeAlias>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -142,7 +142,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public Optional<ResourceTypeAliasPathMetadata> DefaultMetadata { get; set; }
         }
 
-        ResourceTypeAlias IJsonModelSerializable<ResourceTypeAlias>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ResourceTypeAlias IModelJsonSerializable<ResourceTypeAlias>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             if (!reader.TryDeserialize<ResourceTypeAliasProperties>(options, SetProperty, out var properties))
                 return null;
@@ -213,13 +213,5 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
         {
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ResourceTypeAlias>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ResourceTypeAlias>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ResourceTypeAlias>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ResourceTypeAlias>)this).Serialize(options);
     }
 }

@@ -27,10 +27,10 @@ namespace Azure.Core
         /// <summary>
         /// Initializes a new instance of <see cref="SequenceWriter"/>.
         /// </summary>
-        /// <param name="bufferSize">The max size of each buffer segment.</param>
-        public SequenceWriter(int bufferSize = 4096)
+        /// <param name="segmentSize">The size of each buffer segment.</param>
+        public SequenceWriter(int segmentSize = 4096)
         {
-            _bufferSize = bufferSize;
+            _bufferSize = segmentSize;
             _buffers = Array.Empty<Buffer>();
         }
 

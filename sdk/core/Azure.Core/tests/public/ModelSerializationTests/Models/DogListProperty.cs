@@ -13,7 +13,7 @@ using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     [JsonConverter(typeof(DogListPropertyConverter))]
-    public class DogListProperty : Animal, IJsonModelSerializable<DogListProperty>, IUtf8JsonSerializable, IJsonModelSerializable
+    public class DogListProperty : Animal, IModelJsonSerializable<DogListProperty>, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
         public IList<string> FoodConsumed { get; private set; }
@@ -47,9 +47,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<DogListProperty>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DogListProperty>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        void IJsonModelSerializable<DogListProperty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<DogListProperty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -156,7 +156,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             public override void Write(Utf8JsonWriter writer, DogListProperty value, JsonSerializerOptions options)
             {
-                ((IJsonModelSerializable)value).Serialize(writer, GetOptions(options));
+                ((IModelJsonSerializable<DogListProperty>)value).Serialize(writer, GetOptions(options));
             }
 
             private ModelSerializerOptions GetOptions(JsonSerializerOptions options)
@@ -172,20 +172,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeDogListProperty(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        DogListProperty IJsonModelSerializable<DogListProperty>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        DogListProperty IModelJsonSerializable<DogListProperty>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeDogListProperty(doc.RootElement, options);
         }
 
         BinaryData IModelSerializable<DogListProperty>.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<DogListProperty>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<DogListProperty>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<DogListProperty>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<DogListProperty>)this).Serialize(options);
     }
 }

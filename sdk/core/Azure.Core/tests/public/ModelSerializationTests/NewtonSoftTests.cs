@@ -42,11 +42,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 {
                     ContractResolver = new IgnoreReadOnlyPropertiesResolver()
                 };
-                options.UnknownTypeSerializationFallback = type => type.Equals(typeof(Animal)) ? new NewtonsoftJsonObjectSerializer(settings) : null;
+                options.GenericTypeSerializerCreator = type => type.Equals(typeof(Animal)) ? new NewtonsoftJsonObjectSerializer(settings) : null;
             }
             else
             {
-                options.UnknownTypeSerializationFallback = type => type.Equals(typeof(Animal)) ? new NewtonsoftJsonObjectSerializer() : null;
+                options.GenericTypeSerializerCreator = type => type.Equals(typeof(Animal)) ? new NewtonsoftJsonObjectSerializer() : null;
             }
 
             var model = ModelSerializer.Deserialize<Animal>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);

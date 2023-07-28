@@ -12,7 +12,7 @@ namespace Azure.Core.Serialization
     /// Add
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-    public class ModelJsonConverter : JsonConverter<IJsonModelSerializable>
+    public class ModelJsonConverter : JsonConverter<IModelJsonSerializable<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
@@ -54,10 +54,10 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         /// <exception cref="NotSupportedException"></exception>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override IJsonModelSerializable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IModelJsonSerializable<object> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            return (IJsonModelSerializable)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, Options);
+            return (IModelJsonSerializable<object>)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, Options);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Azure.Core.Serialization
         /// <param name="value"></param>
         /// <param name="options"></param>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override void Write(Utf8JsonWriter writer, IJsonModelSerializable value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IModelJsonSerializable<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             value.Serialize(writer, Options);
