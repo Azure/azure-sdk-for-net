@@ -68,16 +68,16 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<IList<EgressEndpoint>> additionalEgressEndpoints = default;
-            Optional<IReadOnlyList<string>> associatedResourceIds = default;
-            Optional<string> clusterId = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> associatedResourceIds = default;
+            Optional<ResourceIdentifier> clusterId = default;
             Optional<CloudServicesNetworkDetailedStatus> detailedStatus = default;
             Optional<string> detailedStatusMessage = default;
             Optional<CloudServicesNetworkEnableDefaultEgressEndpoint> enableDefaultEgressEndpoints = default;
             Optional<IReadOnlyList<EgressEndpoint>> enabledEgressEndpoints = default;
-            Optional<IReadOnlyList<string>> hybridAksClustersAssociatedIds = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> hybridAksClustersAssociatedIds = default;
             Optional<string> interfaceName = default;
             Optional<CloudServicesNetworkProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<string>> virtualMachinesAssociatedIds = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> virtualMachinesAssociatedIds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -157,17 +157,28 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             associatedResourceIds = array;
                             continue;
                         }
                         if (property0.NameEquals("clusterId"u8))
                         {
-                            clusterId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            clusterId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("detailedStatus"u8))
@@ -213,10 +224,17 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             hybridAksClustersAssociatedIds = array;
                             continue;
@@ -241,10 +259,17 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             virtualMachinesAssociatedIds = array;
                             continue;

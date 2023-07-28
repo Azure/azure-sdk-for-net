@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.NetworkCloud
 
             ExtendedLocation = extendedLocation;
             AdditionalEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
-            AssociatedResourceIds = new ChangeTrackingList<string>();
+            AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
             EnabledEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
-            HybridAksClustersAssociatedIds = new ChangeTrackingList<string>();
-            VirtualMachinesAssociatedIds = new ChangeTrackingList<string>();
+            HybridAksClustersAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
+            VirtualMachinesAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of CloudServicesNetworkData. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="interfaceName"> The name of the interface that will be present in the virtual machine to represent this network. </param>
         /// <param name="provisioningState"> The provisioning state of the cloud services network. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this cloud services network. </param>
-        internal CloudServicesNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IList<EgressEndpoint> additionalEgressEndpoints, IReadOnlyList<string> associatedResourceIds, string clusterId, CloudServicesNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, IReadOnlyList<EgressEndpoint> enabledEgressEndpoints, IReadOnlyList<string> hybridAksClustersAssociatedIds, string interfaceName, CloudServicesNetworkProvisioningState? provisioningState, IReadOnlyList<string> virtualMachinesAssociatedIds) : base(id, name, resourceType, systemData, tags, location)
+        internal CloudServicesNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IList<EgressEndpoint> additionalEgressEndpoints, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, CloudServicesNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, IReadOnlyList<EgressEndpoint> enabledEgressEndpoints, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, string interfaceName, CloudServicesNetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             AdditionalEgressEndpoints = additionalEgressEndpoints;
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> The list of egress endpoints. This allows for connection from a Hybrid AKS cluster to the specified endpoint. </summary>
         public IList<EgressEndpoint> AdditionalEgressEndpoints { get; }
         /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
-        public IReadOnlyList<string> AssociatedResourceIds { get; }
+        public IReadOnlyList<ResourceIdentifier> AssociatedResourceIds { get; }
         /// <summary> The resource ID of the Network Cloud cluster this cloud services network is associated with. </summary>
-        public string ClusterId { get; }
+        public ResourceIdentifier ClusterId { get; }
         /// <summary> The more detailed status of the cloud services network. </summary>
         public CloudServicesNetworkDetailedStatus? DetailedStatus { get; }
         /// <summary> The descriptive message about the current detailed status. </summary>
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> The full list of additional and default egress endpoints that are currently enabled. </summary>
         public IReadOnlyList<EgressEndpoint> EnabledEgressEndpoints { get; }
         /// <summary> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource IDs that are associated with this cloud services network. </summary>
-        public IReadOnlyList<string> HybridAksClustersAssociatedIds { get; }
+        public IReadOnlyList<ResourceIdentifier> HybridAksClustersAssociatedIds { get; }
         /// <summary> The name of the interface that will be present in the virtual machine to represent this network. </summary>
         public string InterfaceName { get; }
         /// <summary> The provisioning state of the cloud services network. </summary>
         public CloudServicesNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this cloud services network. </summary>
-        public IReadOnlyList<string> VirtualMachinesAssociatedIds { get; }
+        public IReadOnlyList<ResourceIdentifier> VirtualMachinesAssociatedIds { get; }
     }
 }

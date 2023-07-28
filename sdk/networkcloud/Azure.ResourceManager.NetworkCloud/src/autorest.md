@@ -14,6 +14,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 # 'tenantId': 'uuid' cannot be used globally as it break our list clusters API where tenantId sometimes is an empty string
 format-by-name-rules:
   'ETag': 'etag'
@@ -22,56 +25,108 @@ format-by-name-rules:
   '*Uris': 'Uri'
 
 rename-mapping:
-  ImageRepositoryCredentials.registryUrl: registryUriString
+  AgentOptions: NetworkCloudAgentConfiguration
+  BareMetalMachine.properties.associatedResourceIds: -|arm-id
+  BareMetalMachine.properties.clusterId: -|arm-id
+  BareMetalMachine.properties.rackId: -|arm-id
+  BareMetalMachine.properties.oamIpv4Address: -|ip-address
   BareMetalMachineConfigurationData: BareMetalMachineConfiguration 
-  ClusterMetricsConfigurationData.collectionInterval: collectionIntervalInSeconds
-  StorageApplianceConfigurationData: StorageApplianceConfiguration 
-  AgentOptions: AgentConfig
-  # The supportExpiryDate in cluster response does not conform to date-time format. This field will continue to be a string in the current stable api version.
-  # ClusterAvailableUpgradeVersion.supportExpiryDate: -|date-time
-  # ClusterAvailableVersion.supportExpiryDate: -|date-time
-  ClusterData.supportExpiryDate: -|date-time 
-  BareMetalMachineData.clusterId: -|arm-id
-  BareMetalMachineData.machineSkuId: -|arm-id
-  BareMetalMachineData.rackId: -|arm-id
-  BareMetalMachineKeySetData.azureGroupId: -|arm-id
-  BmcKeySetData.azureGroupId: -|arm-id
-  CloudServicesNetworkData.clusterId: -|arm-id 
-  CloudServicesNetworkData.hybridAksClustersAssociatedIds: -|arm-id 
-  ClusterData.analyticsWorkspaceId: -|arm-id 
-  ClusterData.clusterManagerId: -|arm-id 
-  ClusterData.networkFabricId: -|arm-id 
-  ClusterManagerData.analyticsWorkspaceId: -|arm-id 
-  ClusterManagerData.fabricControllerId: -|arm-id 
-  ConsoleData.virtualMachineAccessId: -|arm-id 
-  KubernetesClusterData.clusterId: -|arm-id 
-  KubernetesClusterData.connectedClusterId: -|arm-id 
-  L2NetworkData.associatedResourceIds: -|arm-id 
-  L2NetworkData.clusterId: -|arm-id 
-  L2NetworkData.l2IsolationDomainId: -|arm-id 
-  L3NetworkData.clusterId: -|arm-id 
-  L3NetworkData.l2IsolationDomainId: -|arm-id
-  RackData.clusterId: -|arm-id 
-  RackData.rackSkuId: -|arm-id 
-  StorageApplianceData.clusterId: -|arm-id 
-  StorageApplianceData.rackId: -|arm-id 
-  StorageApplianceData.storageApplianceSkuId: -|arm-id 
-  TrunkedNetworkData.clusterId: -|arm-id 
-  TrunkedNetworkData.isolationDomainIds: -|arm-id 
-  VirtualMachineData.bareMetalMachineId: -|arm-id 
-  VirtualMachineData.clusterId: -|arm-id 
-  L2NetworkAttachmentConfiguration.networkId: -|arm-id 
-  L3NetworkAttachmentConfiguration.networkId: -|arm-id 
-  NetworkConfiguration.cloudServicesNetworkId: -|arm-id 
-  NetworkConfiguration.cniNetworkId: -|arm-id 
-  RackDefinition.networkRackId: -|arm-id 
-  TrunkedNetworkAttachmentConfiguration.networkId: -|arm-id 
-  # 'applicationId','principalId','tenantId' cannot be used globally as it break our list clusters API where tenantId,applicationId,principalId are sometimes an empty string
-  # ServicePrincipalInformation.applicationId: -|uuid
-  # ServicePrincipalInformation.principalId: -|uuid 
-  # ServicePrincipalInformation.tenantId: -|uuid
+  BareMetalMachineKeySet.properties.expiration: ExpireOn
+  BareMetalMachineKeySet.properties.jumpHostsAllowed: -|ip-address
+  BareMetalMachineKeySet.properties.lastValidation: LastValidatedOn
+  BareMetalMachineKeySetPatchParameters.properties.expiration: ExpireOn
+  BareMetalMachineKeySetPatchParameters.properties.jumpHostsAllowed: -|ip-address
+  BmcKeySet.properties.expiration: ExpireOn
+  BmcKeySet.properties.lastValidation: LastValidatedOn
+  BmcKeySetPatchParameters.properties.expiration: ExpireOn
+  BootstrapProtocol.PXE: Pxe
+  Cluster.properties.analyticsWorkspaceId: -|arm-id
+  Cluster.properties.clusterManagerId: -|arm-id
+  Cluster.properties.networkFabricId: -|arm-id
+  Cluster.properties.supportExpiryDate: SupportExpireOn|date-time
+  Cluster.properties.workloadResourceIds: -|arm-id
+  ClusterAvailableUpgradeVersion.supportExpiryDate: SupportExpireOn|date-time
+  ClusterManager.properties.analyticsWorkspaceId: -|arm-id
+  ClusterManager.properties.fabricControllerId: -|arm-id
+  CloudServicesNetwork.properties.clusterId: -|arm-id
+  CloudServicesNetwork.properties.associatedResourceIds: -|arm-id
+  CloudServicesNetwork.properties.virtualMachinesAssociatedIds: -|arm-id
+  CloudServicesNetwork.properties.hybridAksClustersAssociatedIds: -|arm-id
+  Console: NetworkCloudVirtualMachineConsole
+  Console.properties.expiration: ExpireOn
+  Console.properties.privateLinkServiceId: -|arm-id
+  Console.properties.virtualMachineAccessId: -|uuid
+  ConsolePatchParameters.properties.expiration: ExpireOn
+  ImageRepositoryCredentials.registryUrl: registryUriString
+  KubernetesCluster.properties.attachedNetworkIds: -|arm-id
+  KubernetesCluster.properties.clusterId: -|arm-id
+  KubernetesCluster.properties.connectedClusterId: -|arm-id
+  L2Network.properties.associatedResourceIds: -|arm-id
+  L2Network.properties.clusterId: -|arm-id
+  L2Network.properties.hybridAksClustersAssociatedIds: -|arm-id
+  L2Network.properties.l2IsolationDomainId: -|arm-id
+  L2Network.properties.virtualMachinesAssociatedIds: -|arm-id
+  L2NetworkAttachmentConfiguration.networkId: -|arm-id
+  L3Network.properties.associatedResourceIds: -|arm-id
+  L3Network.properties.clusterId: -|arm-id
+  L3Network.properties.hybridAksClustersAssociatedIds: -|arm-id
+  L3Network.properties.l3IsolationDomainId: -|arm-id
+  L3Network.properties.virtualMachinesAssociatedIds: -|arm-id
+  L3NetworkAttachmentConfiguration.networkId: -|arm-id
+  NetworkConfiguration: KubernetesClusterNetworkConfiguration
+  NetworkConfiguration.cloudServicesNetworkId: -|arm-id
+  NetworkConfiguration.cniNetworkId: -|arm-id
+  NetworkConfiguration.dnsServiceIp: -|ip-address
+  OsDisk.diskSizeGB: DiskSizeInGB
+  Rack.properties.clusterId: -|arm-id
+  Rack.properties.rackSkuId: -|arm-id
+  RackDefinition.networkRackId: -|arm-id
+  RackDefinition.rackSkuId: -|arm-id
+  StorageAppliance.properties.clusterId: -|arm-id
+  StorageAppliance.properties.managementIpv4Address: -|ip-address
+  StorageAppliance.properties.rackId: -|arm-id
+  StorageApplianceConfigurationData: StorageApplianceConfiguration
+  StorageProfile.volumeAttachments: -|arm-id
+  TrunkedNetwork.properties.clusterId: -|arm-id
+  TrunkedNetwork.properties.hybridAksClustersAssociatedIds: -|arm-id
+  TrunkedNetwork.properties.virtualMachinesAssociatedIds: -|arm-id
+  TrunkedNetwork.properties.isolationDomainIds: -|arm-id
+  TrunkedNetworkAttachmentConfiguration.networkId: -|arm-id
+  VirtualMachine.properties.bareMetalMachineId: -|arm-id
+  VirtualMachine.properties.clusterId: -|arm-id
+  VirtualMachine.properties.volumes: -|arm-id
+  VirtualMachine.properties.memorySizeGB: MemorySizeInGB
+  VirtualMachinePlacementHint.resourceId: -|arm-id
+  Volume.properties.sizeMiB: SizeInMiB
 
+models-to-treat-empty-string-as-null:
+  - NetworkCloudClusterManagerData
 
+prepend-rp-prefix:
+  - AadConfiguration
+  - AgentPool
+  - AgentPoolMode
+  - BareMetalMachine
+  - BareMetalMachineKeySet
+  - BmcKeySet
+  - Cluster
+  - ClusterManager
+  - ClusterMetricsConfiguration
+  - KubernetesCluster
+  - L2Network
+  - L3Network
+  - NetworkInterface
+  - Nic
+  - OSDisk
+  - Rack
+  - RackDefinition
+  - RackSku
+  - SshPublicKey
+  - StorageAppliance
+  - StorageProfile
+  - TrunkedNetwork
+  - VirtualMachine
+  - Volume
 
 rename-rules:
   CPU: Cpu

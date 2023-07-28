@@ -29,16 +29,16 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             // Create ResourceIds
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceIdentifier kubernetesClusterResourceId = KubernetesClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, kubernetesClusterName);
+            ResourceIdentifier kubernetesClusterResourceId = NetworkCloudKubernetesClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, kubernetesClusterName);
 
             // Create ResourceGroup Object and KubernetesClusterCollection Object
             ResourceGroupResource resourceGroupResource = Client.GetResourceGroupResource(resourceGroupResourceId);
-            KubernetesClusterCollection collection = resourceGroupResource.GetKubernetesClusters();
+            NetworkCloudKubernetesClusterCollection collection = resourceGroupResource.GetNetworkCloudKubernetesClusters();
 
             // Create KubernetesClusterData Variables
-            NetworkConfiguration networkConfiguration = new NetworkConfiguration(cloudServicesNetworkId, l3NetworkId)
+            KubernetesClusterNetworkConfiguration networkConfiguration = new KubernetesClusterNetworkConfiguration(cloudServicesNetworkId, l3NetworkId)
             {
-                DnsServiceIP = "10.96.0.10",
+                DnsServiceIP = System.Net.IPAddress.Parse("10.96.0.10"),
                 PodCidrs = { "10.244.0.0/16" },
                 ServiceCidrs = { "10.96.0.0/16" },
                 BgpServiceLoadBalancerConfiguration = new BgpServiceLoadBalancerConfiguration()
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 AdminUsername = "fakesuser",
                 SshPublicKeys =
                 {
-                    new SshPublicKey(SshPublicKey)
+                    new NetworkCloudSshPublicKey(SshPublicKey)
                 },
             };
 
             InitialAgentPoolConfiguration[] initialAgentPoolConfigurationsArray = new InitialAgentPoolConfiguration[]
             {
-                new InitialAgentPoolConfiguration(1, AgentPoolMode.System, "agentPoolConfig", "NC_G4_v1")
+                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "agentPoolConfig", "NC_G4_v1")
                 {
-                    AgentOptions = new AgentConfig(4)
+                    AgentOptions = new NetworkCloudAgentConfiguration(4)
                     {
                         HugepagesSize = HugepagesSize.OneG,
                     },
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             };
 
             // Create KubernetesCluster
-            KubernetesClusterData createData = new KubernetesClusterData(
+            NetworkCloudKubernetesClusterData createData = new NetworkCloudKubernetesClusterData(
                 TestEnvironment.Location,
                 new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"),
                 new ControlPlaneNodeConfiguration(1, "NC_G4_v1")
@@ -108,35 +108,35 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration(new AzureLocation("East US"), kubernetesClusterName + "-MRG")
             };
 
-            ArmOperation<KubernetesClusterResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, createData);
+            ArmOperation<NetworkCloudKubernetesClusterResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, createData);
             Assert.AreEqual(createResult.Value.Data.Name, kubernetesClusterName);
 
             // Get KubernetesCluster
-            KubernetesClusterResource kubernetesCluster = Client.GetKubernetesClusterResource(kubernetesClusterResourceId);
-            KubernetesClusterResource getResult = await kubernetesCluster.GetAsync();
+            NetworkCloudKubernetesClusterResource kubernetesCluster = Client.GetNetworkCloudKubernetesClusterResource(kubernetesClusterResourceId);
+            NetworkCloudKubernetesClusterResource getResult = await kubernetesCluster.GetAsync();
             Assert.AreEqual(createResult.Value.Data.Name, kubernetesClusterName);
 
             // Update KubernetesCluster
-            KubernetesClusterPatch updateData = new KubernetesClusterPatch()
+            NetworkCloudKubernetesClusterPatch updateData = new NetworkCloudKubernetesClusterPatch()
             {
                 ControlPlaneNodeCount = 3,
                 KubernetesVersion = "1.25.4-1",
                 Tags = { { "test", "patch" } },
             };
-            ArmOperation<KubernetesClusterResource> updateResult = await kubernetesCluster.UpdateAsync(WaitUntil.Completed, updateData);
+            ArmOperation<NetworkCloudKubernetesClusterResource> updateResult = await kubernetesCluster.UpdateAsync(WaitUntil.Completed, updateData);
             Assert.AreEqual(updateResult.Value.Data.Tags["test"], "patch");
 
             // Get KubernetesClusters by Resource Group
-            var listByResourceGroupResult = new List<KubernetesClusterResource>();
-            await foreach (KubernetesClusterResource kubernetesClusterResource in collection.GetAllAsync())
+            var listByResourceGroupResult = new List<NetworkCloudKubernetesClusterResource>();
+            await foreach (NetworkCloudKubernetesClusterResource kubernetesClusterResource in collection.GetAllAsync())
             {
                 listByResourceGroupResult.Add(kubernetesClusterResource);
             }
             Assert.IsNotEmpty(listByResourceGroupResult);
 
             // Get KubernetesClusters by Subscription
-            var listBySubscriptionResult = new List<KubernetesClusterResource>();
-            await foreach (KubernetesClusterResource kubernetesClusterResource in SubscriptionResource.GetKubernetesClustersAsync())
+            var listBySubscriptionResult = new List<NetworkCloudKubernetesClusterResource>();
+            await foreach (NetworkCloudKubernetesClusterResource kubernetesClusterResource in SubscriptionResource.GetNetworkCloudKubernetesClustersAsync())
             {
                 listBySubscriptionResult.Add(kubernetesClusterResource);
             }
