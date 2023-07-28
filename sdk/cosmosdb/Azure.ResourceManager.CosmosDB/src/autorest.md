@@ -344,6 +344,7 @@ prepend-rp-prefix:
 - Status
 - ProvisioningState
 - Type
+- ConnectionString
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData
