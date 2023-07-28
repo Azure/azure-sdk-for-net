@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading.Tasks;
 
@@ -56,6 +57,11 @@ namespace Azure.Core.Pipeline
             }
         }
 
+#if NET6_0_OR_GREATER
+        [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(HttpMessage))]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency.")]
+#else
+#endif
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
 #if NETCOREAPP2_1
