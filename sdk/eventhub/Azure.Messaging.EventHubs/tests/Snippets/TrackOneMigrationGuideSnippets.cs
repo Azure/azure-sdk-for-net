@@ -1,32 +1,33 @@
-﻿// Copyright (c) Microsoft. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Tests;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using NUnit.Framework;
 
 namespace Microsoft.Azure.EventHubs.Tests.Snippets
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.EventHubs.Processor;
-    using Microsoft.IdentityModel.Clients.ActiveDirectory;
-    using Xunit;
-
     /// <summary>
-    ///   The suite of tests defining the snippets used in the migration guide
-    ///   illustrating concepts from Microsoft.Azure.EventHubs and
-    ///   Azure.Messaging.EventHubs in a side-by-side manner.
+    ///   The suite of tests defining the T1 snippets used in the Event Hubs
+    ///   migration guides.
     /// </summary>
     ///
-    [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "Example assignments needed for snippet output content.")]
-    public class MigrationGuideSnippets
+    [TestFixture]
+    [Category(TestCategory.Live)]
+    [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
+    public class TrackOneMigrationGuideSnippets
     {
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
         public void CreateWithConnectionString()
         {
             #region Snippet:EventHubs_Migrate_T1_CreateWithConnectionString
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
 #else
-            var connectionString = TestUtility.EventHubsConnectionString;
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = "fake";
 #endif
 
@@ -48,9 +49,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             client.Close();
         }
 
-        [Fact(Skip = "Manual run only")]
-        [LiveTest]
-        [DisplayTestMethodName]
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
         public async Task CreateWithAzureActiveDirectory()
         {
             await using var scope = await EventHubScope.CreateAsync(1);
@@ -64,11 +67,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             var aadAppId = "<< THE AZURE ACTIVE DIRECTORY APPLICATION ID TO REQUEST A TOKEN FOR >>";
             var aadAppSecret = "<< THE AZURE ACTIVE DIRECTORY SECRET TO USE FOR THE TOKEN >>";
 #else
-            var fullyQualifiedNamespace = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString).Endpoint.ToString();
+            var fullyQualifiedNamespace = EventHubsTestEnvironment.Instance.FullyQualifiedNamespace;
             var eventHubName = scope.EventHubName;
-            var authority = "";     // Needed for manual run
-            var aadAppId = "";      // Needed for manual run
-            var aadAppSecret = "";  // Needed for manual run
+            var authority = EventHubsTestEnvironment.Instance.AuthorityHostUrl;
+            var aadAppId = EventHubsTestEnvironment.Instance.ClientId;
+            var aadAppSecret = EventHubsTestEnvironment.Instance.ClientSecret;
 #endif
 
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback =
@@ -82,7 +85,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
                 };
 
             EventHubClient client = EventHubClient.CreateWithAzureActiveDirectory(
-                new Uri(fullyQualifiedNamespace),
+                new Uri($"sb://{ fullyQualifiedNamespace }"),
                 eventHubName,
                 authCallback,
                 authority);
@@ -92,21 +95,21 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             client.Close();
         }
 
-        [Fact(Skip = "Manual run only")]
-        [LiveTest]
-        [DisplayTestMethodName]
-        public async Task CreateWithManagedIdentity()
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        /// <remarks>
+        ///   This is intentionally NOT decorated as a test method, as it requires a managed identity to
+        ///   be configured, which local development environments will not have.
+        /// </remarks>
+        ///
+        public void CreateWithManagedIdentity()
         {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
             #region Snippet:EventHubs_Migrate_T1_ManagedIdentity
-#if SNIPPET
+
             var fullyQualifiedNamespace = "<< NAMESPACE (likely similar to {your-namespace}.servicebus.windows.net) >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
-#else
-            var fullyQualifiedNamespace = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString).Endpoint.ToString();
-            var eventHubName = scope.EventHubName;
-#endif
 
             EventHubClient client = EventHubClient.CreateWithManagedIdentity(
                 new Uri(fullyQualifiedNamespace),
@@ -117,9 +120,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             client.Close();
         }
 
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
         public async Task PublishWithAutomaticRouting()
         {
             await using var scope = await EventHubScope.CreateAsync(1);
@@ -129,7 +134,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
 #else
-            var connectionString = TestUtility.EventHubsConnectionString;
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
 
@@ -162,9 +167,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             #endregion
         }
 
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
         public async Task PublishWithAPartitionKey()
         {
             await using var scope = await EventHubScope.CreateAsync(1);
@@ -174,7 +181,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
 #else
-            var connectionString = TestUtility.EventHubsConnectionString;
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
 
@@ -212,9 +219,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             #endregion
         }
 
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
         public async Task PublishToSpecificPartition()
         {
             await using var scope = await EventHubScope.CreateAsync(1);
@@ -224,7 +233,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
 #else
-            var connectionString = TestUtility.EventHubsConnectionString;
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
 #endif
 
@@ -262,9 +271,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             #endregion
         }
 
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
+        /// <summary>
+        ///   Performs basic smoke test validation of the contained snippet.
+        /// </summary>
+        ///
+        [Test]
         public async Task ReadFromSpecificPartition()
         {
             await using var scope = await EventHubScope.CreateAsync(1);
@@ -275,7 +286,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
             var eventHubName = "<< NAME OF THE EVENT HUB >>";
             var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
 #else
-            var connectionString = TestUtility.EventHubsConnectionString;
+            var connectionString = EventHubsTestEnvironment.Instance.EventHubsConnectionString;
             var eventHubName = scope.EventHubName;
             var consumerGroup = PartitionReceiver.DefaultConsumerGroupName;
 #endif
@@ -293,9 +304,12 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
 
                 IEnumerable<EventData> events = await receiver.ReceiveAsync(50);
 
-                foreach (var eventData in events)
+                if (events != null)
                 {
-                   Debug.WriteLine($"Read event of length { eventData.Body.Count } from { firstPartition }");
+                    foreach (var eventData in events)
+                    {
+                       Debug.WriteLine($"Read event of length { eventData.Body.Count } from { firstPartition }");
+                    }
                 }
             }
             finally
@@ -306,113 +320,5 @@ namespace Microsoft.Azure.EventHubs.Tests.Snippets
 
             #endregion
         }
-
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
-        public async Task BasicEventProcessorHost()
-        {
-            await using var scope = await EventHubScope.CreateAsync(1);
-
-            #region Snippet:EventHubs_Migrate_T1_BasicEventProcessorHost
-#if SNIPPET
-            var storageConnectionString = "<< CONNECTION STRING FOR THE STORAGE ACCOUNT >>";
-            var blobContainerName = "<< NAME OF THE BLOB CONTAINER >>";
-
-            var eventHubsConnectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";
-            var eventHubName = "<< NAME OF THE EVENT HUB >>";
-            var consumerGroup = "<< NAME OF THE EVENT HUB CONSUMER GROUP >>";
-#else
-            var storageConnectionString = TestUtility.StorageConnectionString;
-            var blobContainerName = "migragionsample";
-
-            var eventHubsConnectionString = TestUtility.EventHubsConnectionString;
-            var eventHubName = scope.EventHubName;
-            var consumerGroup = PartitionReceiver.DefaultConsumerGroupName;
-#endif
-
-            var eventProcessorHost = new EventProcessorHost(
-                eventHubName,
-                consumerGroup,
-                eventHubsConnectionString,
-                storageConnectionString,
-                blobContainerName);
-
-            try
-            {
-                // Registering the processor class will also signal the
-                // host to begin processing events.
-
-                await eventProcessorHost.RegisterEventProcessorAsync<SimpleEventProcessor>();
-
-                // The processor runs in the background, to allow it to process,
-                // this example will wait for 30 seconds and then trigger
-                // cancellation.
-
-                using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-                await Task.Delay(Timeout.Infinite, cancellationSource.Token);
-            }
-            catch (TaskCanceledException)
-            {
-                // This is expected when the cancellation token is
-                // signaled.
-            }
-            finally
-            {
-                // Unregistering the processor class will signal the
-                // host to stop processing.
-
-                await eventProcessorHost.UnregisterEventProcessorAsync();
-            }
-
-            #endregion
-        }
     }
-
-    #region Snippet:EventHubs_Migrate_T1_SimpleEventProcessor
-
-    public class SimpleEventProcessor : IEventProcessor
-    {
-        public Task CloseAsync(PartitionContext context, CloseReason reason)
-        {
-             Debug.WriteLine($"Partition '{context.PartitionId}' is closing.");
-             return Task.CompletedTask;
-        }
-
-        public Task OpenAsync(PartitionContext context)
-        {
-            Debug.WriteLine($"Partition: '{context.PartitionId}' was initialized.");
-            return Task.CompletedTask;
-        }
-
-        public Task ProcessErrorAsync(PartitionContext context, Exception error)
-        {
-            Debug.WriteLine(
-                $"Error for partition: {context.PartitionId}, " +
-                $"Error: {error.Message}");
-
-            return Task.CompletedTask;
-        }
-
-        public Task ProcessEventsAsync(PartitionContext context, IEnumerable<EventData> messages)
-        {
-            foreach (var eventData in messages)
-            {
-                var data = Encoding.UTF8.GetString(
-                    eventData.Body.Array,
-                    eventData.Body.Offset,
-                    eventData.Body.Count);
-
-                Debug.WriteLine(
-                    $"Event received for partition: '{context.PartitionId}', " +
-                    $"Data: '{data}'");
-            }
-
-            return Task.CompletedTask;
-        }
-    }
-
-    #endregion
 }

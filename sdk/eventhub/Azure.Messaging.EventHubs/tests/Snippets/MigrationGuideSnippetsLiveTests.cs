@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Identity;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
@@ -18,10 +17,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
     [Category(TestCategory.DisallowVisualStudioLiveUnitTesting)]
     public class MigrationGuideSnippetsLiveTests
     {
-        /// <summary>
-        ///   Performs basic smoke test validation of the contained snippet.
-        /// </summary>
-        ///
         [Test]
         public void CreateWithConnectionString()
         {
