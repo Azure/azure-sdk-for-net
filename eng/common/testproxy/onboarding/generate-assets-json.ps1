@@ -308,18 +308,17 @@ Function Invoke-ProxyCommand {
 # Get the shorthash directory under PROXY_ASSETS_FOLDER
 Function Get-AssetsRoot {
   param(
-    [string] $AssetsJsonFile
+    [string] $AssetsJsonFile,
+    [string] $TestProxyExe
   )
   $repoRoot = Get-Repo-Root
   $relPath = [IO.Path]::GetRelativePath($repoRoot, $AssetsJsonFile).Replace("`\", "/")
   $assetsJsonDirectory = Split-Path $relPath
-  $breadcrumbFile = Join-Path $repoRoot ".assets" ".breadcrumb"
 
-  $breadcrumbString = Get-Content $breadcrumbFile | Where-Object { $_.StartsWith($relPath) }
-  $assetRepo = $breadcrumbString.Split(";")[1]
-  $assetsPrefix = (Get-Content $AssetsJsonFile | Out-String | ConvertFrom-Json).AssetsRepoPrefixPath
+  [array] $output = & "$TestProxyExe" config locate -a "$relPath" --storage-location="$repoRoot"
+  $assetsDirectory = $output[-1]
 
-  return Join-Path $repoRoot ".assets" $assetRepo $assetsPrefix $assetsJsonDirectory
+  return Join-Path $assetsDirectory $assetsJsonDirectory
 }
 
 Function Move-AssetsFromLangRepo {
@@ -405,7 +404,7 @@ if ($InitialPush) {
     $CommandArgs = "restore --assets-json-path $assetsJsonRelPath"
     Invoke-ProxyCommand -TestProxyExe $TestProxyExe -CommandArgs $CommandArgs -TargetDirectory $repoRoot
 
-    $assetsRoot = (Get-AssetsRoot -AssetsJsonFile $assetsJsonFile)
+    $assetsRoot = (Get-AssetsRoot -AssetsJsonFile $assetsJsonFile -TestProxyExe $TestProxyExe)
     Write-Host "assetsRoot=$assetsRoot"
 
     Move-AssetsFromLangRepo -AssetsRoot $assetsRoot
