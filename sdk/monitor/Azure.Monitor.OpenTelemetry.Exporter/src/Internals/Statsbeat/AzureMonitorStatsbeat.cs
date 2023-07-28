@@ -110,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     new Measurement<int>(1,
                         new("rp", _resourceProvider),
                         new("rpId", _resourceProviderId),
-                        new("attach", s_hasSdkPrefix ? "codeless" : "sdk"),
+                        new("attach", s_hasSdkPrefix ? "IntegratedAuto" : "Manual"),
                         new("cikey", _customer_Ikey),
                         new("runtimeVersion", s_runtimeVersion),
                         new("language", "dotnet"),
