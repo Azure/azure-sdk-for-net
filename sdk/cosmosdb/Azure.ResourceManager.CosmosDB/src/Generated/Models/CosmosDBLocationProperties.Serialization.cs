@@ -25,17 +25,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<string> status = default;
             Optional<bool> supportsAvailabilityZone = default;
             Optional<bool> isResidencyRestricted = default;
             Optional<IReadOnlyList<CosmosDBBackupStorageRedundancy>> backupStorageRedundancies = default;
+            Optional<bool> isSubscriptionRegionAccessAllowedForRegular = default;
+            Optional<bool> isSubscriptionRegionAccessAllowedForAz = default;
+            Optional<CosmosDBStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"u8))
-                {
-                    status = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("supportsAvailabilityZone"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -68,8 +65,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     backupStorageRedundancies = array;
                     continue;
                 }
+                if (property.NameEquals("isSubscriptionRegionAccessAllowedForRegular"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSubscriptionRegionAccessAllowedForRegular = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("isSubscriptionRegionAccessAllowedForAz"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSubscriptionRegionAccessAllowedForAz = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new CosmosDBStatus(property.Value.GetString());
+                    continue;
+                }
             }
-            return new CosmosDBLocationProperties(status.Value, Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), Optional.ToList(backupStorageRedundancies));
+            return new CosmosDBLocationProperties(Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), Optional.ToList(backupStorageRedundancies), Optional.ToNullable(isSubscriptionRegionAccessAllowedForRegular), Optional.ToNullable(isSubscriptionRegionAccessAllowedForAz), Optional.ToNullable(status));
         }
     }
 }
