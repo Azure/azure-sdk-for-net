@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.Network.Tests.Mock
+namespace Azure.ResourceManager.PolicyInsights.Tests.Mock
 {
     public class MockingPatternValidationTests
     {
