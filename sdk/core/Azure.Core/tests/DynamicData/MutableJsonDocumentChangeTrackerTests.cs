@@ -60,10 +60,10 @@ namespace Azure.Core.Tests
                 change = changeTracker.GetNextChange(change, out length);
             }
 
-            Assert.AreEqual(3, changes.Count);
+            // Note, descendants are ignored
+            Assert.AreEqual(2, changes.Count);
             Assert.AreEqual("a", changes[0].Path);
-            Assert.AreEqual($"a{delimiter}a", changes[1].Path);
-            Assert.AreEqual("b", changes[2].Path);
+            Assert.AreEqual("b", changes[1].Path);
         }
 
         #region Helpers

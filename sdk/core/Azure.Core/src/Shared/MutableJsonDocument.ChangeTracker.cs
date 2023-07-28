@@ -161,7 +161,12 @@ namespace Azure.Core.Json
                 {
                     MutableJsonChange c = _changes[i];
 
-                    if (c.IsGreaterThan(lastChange) && c.IsLessThan(min))
+                    bool isDescendant = lastChange != null && c.IsDescendant(lastChange.Value.Path);
+
+                    if (c.IsGreaterThan(lastChange) &&
+                        // Ignore descendants if its ancestor changed
+                        !isDescendant &&
+                        c.IsLessThan(min))
                     {
                         min = c;
                     }
@@ -173,58 +178,6 @@ namespace Azure.Core.Json
                 }
 
                 return min;
-            }
-
-            internal IEnumerable<string> GetChangedProperties(out int maxPathLength)
-            {
-                maxPathLength = 0;
-
-                HashSet<string> unique = new();
-                if (_changes == null)
-                {
-                    return unique;
-                }
-
-                // Get unique properties
-                for (int i = _changes!.Count - 1; i >= 0; i--)
-                {
-                    MutableJsonChange c = _changes[i];
-                    unique.Add(c.Path);
-
-                    if (c.Path.Length > maxPathLength)
-                    {
-                        maxPathLength = c.Path.Length;
-                    }
-                }
-
-                // Sort them
-                List<string> list = new(unique);
-                list.Sort();
-
-                // Remove descendants if their ancestors changed.
-                if (list.Count > 1)
-                {
-                    // Make a copy we won't mutate
-                    List<string> copy = new(list);
-
-                    string current = copy[0];
-                    for (int i = 1; i < copy.Count; i++)
-                    {
-                        string next = copy[i];
-                        TryGetChange(next, -1, out MutableJsonChange change);
-
-                        if (change.IsDescendant(current))
-                        {
-                            list.Remove(next);
-                        }
-                        else
-                        {
-                            current = next;
-                        }
-                    }
-                }
-
-                return list;
             }
 
             internal bool WasRemoved(string path, int highWaterMark)
