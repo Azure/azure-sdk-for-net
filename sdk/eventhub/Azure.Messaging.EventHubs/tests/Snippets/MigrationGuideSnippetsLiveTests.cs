@@ -3,6 +3,7 @@
 
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Producer;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventHubs.Tests.Snippets
