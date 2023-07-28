@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBConnectionString
+    public partial class ConnectionString
     {
-        internal static CosmosDBConnectionString DeserializeConnectionString(JsonElement element)
+        internal static ConnectionString DeserializeConnectionString(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBConnectionString(connectionString.Value, description.Value);
+            return new ConnectionString(connectionString.Value, description.Value);
         }
     }
 }

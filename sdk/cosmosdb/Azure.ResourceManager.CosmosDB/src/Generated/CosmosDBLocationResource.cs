@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckCosmosDBNameAvailabilityResponse>> CheckNameAvailabilityMongoClusterAsync(CheckCosmosDBNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckMongoClusterNameAailabilityAsync(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _mongoClustersClientDiagnostics.CreateScope("CosmosDBLocationResource.CheckNameAvailabilityMongoCluster");
+            using var scope = _mongoClustersClientDiagnostics.CreateScope("CosmosDBLocationResource.CheckMongoClusterNameAailability");
             scope.Start();
             try
             {
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="content"> The required parameters for checking if resource name is available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckCosmosDBNameAvailabilityResponse> CheckNameAvailabilityMongoCluster(CheckCosmosDBNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CheckNameAvailabilityResponse> CheckMongoClusterNameAailability(CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _mongoClustersClientDiagnostics.CreateScope("CosmosDBLocationResource.CheckNameAvailabilityMongoCluster");
+            using var scope = _mongoClustersClientDiagnostics.CreateScope("CosmosDBLocationResource.CheckMongoClusterNameAailability");
             scope.Start();
             try
             {

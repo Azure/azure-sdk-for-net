@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBConnectionString>> connectionStrings = default;
+            Optional<IReadOnlyList<ConnectionString>> connectionStrings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionStrings"u8))
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<CosmosDBConnectionString> array = new List<CosmosDBConnectionString>();
+                    List<ConnectionString> array = new List<ConnectionString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBConnectionString.DeserializeConnectionString(item));
+                        array.Add(ConnectionString.DeserializeConnectionString(item));
                     }
                     connectionStrings = array;
                     continue;
