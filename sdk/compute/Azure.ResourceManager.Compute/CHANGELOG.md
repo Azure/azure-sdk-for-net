@@ -3,6 +3,8 @@
 ## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
+- Disk RP to `2023-01-02`
+    - Added new property class `FileFormat` to `GrantAccess` class
 
 ### Breaking Changes
 
