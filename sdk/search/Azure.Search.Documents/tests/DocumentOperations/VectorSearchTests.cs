@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Tests
                    null,
                    new SearchOptions
                    {
-                       Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
+                       Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                        Select = { "hotelId", "hotelName" }
                    });
 
@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Tests
                     null,
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
+                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
                     });
@@ -85,7 +85,7 @@ namespace Azure.Search.Documents.Tests
                     "Top hotels in town",
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
+                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName" },
                     });
 
@@ -107,7 +107,7 @@ namespace Azure.Search.Documents.Tests
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
+                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
                         Select = { "hotelId", "hotelName", "description", "category" },
                         QueryType = SearchQueryType.Semantic,
                         QueryLanguage = QueryLanguage.EnUs,
@@ -157,8 +157,8 @@ namespace Azure.Search.Documents.Tests
                 },
             };
 
-           SearchIndexClient indexClient = resources.GetIndexClient();
-           await indexClient.CreateIndexAsync(index);
+            SearchIndexClient indexClient = resources.GetIndexClient();
+            await indexClient.CreateIndexAsync(index);
 
             // Upload data
             SearchDocument document = new SearchDocument
