@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new AccessControlListData(id, name, resourceType, systemData, tags, location, annotation, configurationType, aclsUri, matchConfigurations?.ToList(), dynamicMatchConfigurations?.ToList(), lastSyncedOn, configurationState, provisioningState, administrativeState);
         }
 
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
+        /// <summary> Initializes a new instance of NetworkFabricErrorResponse. </summary>
         /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(ResponseError error = null)
+        /// <returns> A new <see cref="Models.NetworkFabricErrorResponse"/> instance for mocking. </returns>
+        public static NetworkFabricErrorResponse NetworkFabricErrorResponse(ResponseError error = null)
         {
-            return new ErrorResponse(error);
+            return new NetworkFabricErrorResponse(error);
         }
 
         /// <summary> Initializes a new instance of CommonPostActionResponseForStateUpdate. </summary>

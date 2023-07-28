@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ErrorResponse
+    public partial class NetworkFabricErrorResponse
     {
-        internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
+        internal static NetworkFabricErrorResponse DeserializeNetworkFabricErrorResponse(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new ErrorResponse(error.Value);
+            return new NetworkFabricErrorResponse(error.Value);
         }
     }
 }

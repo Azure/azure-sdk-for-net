@@ -11,7 +11,7 @@ using Azure;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The response of the action validate configuration. </summary>
-    public partial class ValidateConfigurationResponse : ErrorResponse
+    public partial class ValidateConfigurationResponse : NetworkFabricErrorResponse
     {
         /// <summary> Initializes a new instance of ValidateConfigurationResponse. </summary>
         internal ValidateConfigurationResponse()

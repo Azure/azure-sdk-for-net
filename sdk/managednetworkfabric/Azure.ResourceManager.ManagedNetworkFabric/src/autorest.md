@@ -54,6 +54,9 @@ rename-mapping:
   Extension: StaticRouteConfigurationExtension
   GatewayType: InternetGatewayType
   FabricSkuType: NetworkFabricSkuType
+  Encapsulation: NetworkFabricEncapsulation
+  EncapsulationType: NetworkFabricEncapsulationType
+  ErrorResponse: NetworkFabricErrorResponse
   InterfaceType: NetworkDeviceInterfaceType
   NetworkInterfacePatch: NetworkDeviceInterfacePatch
   NetworkInterfacesList: NetworkDeviceInterfacesList

@@ -10,7 +10,7 @@ using Azure;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Common response for the state updates. </summary>
-    public partial class CommonPostActionResponseForStateUpdate : ErrorResponse
+    public partial class CommonPostActionResponseForStateUpdate : NetworkFabricErrorResponse
     {
         /// <summary> Initializes a new instance of CommonPostActionResponseForStateUpdate. </summary>
         internal CommonPostActionResponseForStateUpdate()

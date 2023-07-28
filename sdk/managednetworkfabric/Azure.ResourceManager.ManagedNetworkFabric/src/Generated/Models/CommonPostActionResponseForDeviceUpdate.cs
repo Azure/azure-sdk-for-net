@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Common response for device updates. </summary>
-    public partial class CommonPostActionResponseForDeviceUpdate : ErrorResponse
+    public partial class CommonPostActionResponseForDeviceUpdate : NetworkFabricErrorResponse
     {
         /// <summary> Initializes a new instance of CommonPostActionResponseForDeviceUpdate. </summary>
         internal CommonPostActionResponseForDeviceUpdate()

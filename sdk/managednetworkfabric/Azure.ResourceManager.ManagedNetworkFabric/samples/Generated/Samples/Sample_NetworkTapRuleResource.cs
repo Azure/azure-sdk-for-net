@@ -88,7 +88,7 @@ MatchConditions =
 {
 new NetworkTapRuleMatchCondition()
 {
-EncapsulationType = EncapsulationType.None,
+EncapsulationType = NetworkFabricEncapsulationType.None,
 PortCondition = new PortCondition(Layer4Protocol.TCP)
 {
 PortType = PortConditionType.SourcePort,

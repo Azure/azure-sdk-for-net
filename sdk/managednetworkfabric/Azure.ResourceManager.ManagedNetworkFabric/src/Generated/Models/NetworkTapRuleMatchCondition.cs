@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
         /// <param name="encapsulationType"> Encapsulation Type. </param>
         /// <param name="portCondition"> Defines the port condition that needs to be matched. </param>
-        internal NetworkTapRuleMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, EncapsulationType? encapsulationType, PortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition)
+        internal NetworkTapRuleMatchCondition(IList<string> protocolTypes, VlanMatchCondition vlanMatchCondition, IPMatchCondition ipCondition, NetworkFabricEncapsulationType? encapsulationType, PortCondition portCondition) : base(protocolTypes, vlanMatchCondition, ipCondition)
         {
             EncapsulationType = encapsulationType;
             PortCondition = portCondition;
         }
 
         /// <summary> Encapsulation Type. </summary>
-        public EncapsulationType? EncapsulationType { get; set; }
+        public NetworkFabricEncapsulationType? EncapsulationType { get; set; }
         /// <summary> Defines the port condition that needs to be matched. </summary>
         public PortCondition PortCondition { get; set; }
     }

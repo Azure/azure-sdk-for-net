@@ -1403,7 +1403,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.CommonPostActionResponseForDeviceUpdate CommonPostActionResponseForDeviceUpdate(Azure.ResponseError error = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState?), System.Collections.Generic.IEnumerable<string> successfulDevices = null, System.Collections.Generic.IEnumerable<string> failedDevices = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.CommonPostActionResponseForStateUpdate CommonPostActionResponseForStateUpdate(Azure.ResponseError error = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.ControllerServices ControllerServices(System.Collections.Generic.IEnumerable<string> ipv4AddressSpaces = null, System.Collections.Generic.IEnumerable<string> ipv6AddressSpaces = null) { throw null; }
-        public static Azure.ResourceManager.ManagedNetworkFabric.Models.ErrorResponse ErrorResponse(Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.ExternalNetworkData ExternalNetworkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string annotation = null, Azure.Core.ResourceIdentifier importRoutePolicyId = null, Azure.Core.ResourceIdentifier exportRoutePolicyId = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy importRoutePolicy = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy exportRoutePolicy = null, string networkToNetworkInterconnectId = null, Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption peeringOption = default(Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption), Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties optionBProperties = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPropertiesOptionAProperties optionAProperties = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState?), Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState?), Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchPropertiesOptionAProperties ExternalNetworkPatchPropertiesOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = default(int?), int? vlanId = default(int?), long? fabricASN = default(long?), long? peerASN = default(long?), Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration bfdConfiguration = null, Azure.Core.ResourceIdentifier ingressAclId = null, Azure.Core.ResourceIdentifier egressAclId = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPropertiesOptionAProperties ExternalNetworkPropertiesOptionAProperties(string primaryIPv4Prefix = null, string primaryIPv6Prefix = null, string secondaryIPv4Prefix = null, string secondaryIPv6Prefix = null, int? mtu = default(int?), int? vlanId = default(int?), long? fabricASN = default(long?), long? peerASN = default(long?), Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration bfdConfiguration = null, Azure.Core.ResourceIdentifier ingressAclId = null, Azure.Core.ResourceIdentifier egressAclId = null) { throw null; }
@@ -1423,6 +1422,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData NetworkDeviceSkuData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string model = null, string manufacturer = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties> supportedVersions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName> supportedRoleTypes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceInterfaceProperties> interfaces = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData NetworkFabricControllerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string annotation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation> infrastructureExpressRouteConnections = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation> workloadExpressRouteConnections = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ControllerServices infrastructureServices = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ControllerServices workloadServices = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkFabricIds = null, bool? isWorkloadManagementNetwork = default(bool?), Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = default(Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> tenantInternetGatewayIds = null, string ipv4AddressSpace = null, string ipv6AddressSpace = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU? nfcSku = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU?), Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData NetworkFabricData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string annotation = null, string networkFabricSku = null, string fabricVersion = null, System.Collections.Generic.IEnumerable<string> routerIds = null, Azure.Core.ResourceIdentifier networkFabricControllerId = null, int? rackCount = default(int?), int serverCountPerRack = 0, string ipv4Prefix = null, string ipv6Prefix = null, long fabricASN = (long)0, Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration terminalServerConfiguration = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties managementNetworkConfiguration = null, System.Collections.Generic.IEnumerable<string> racks = null, System.Collections.Generic.IEnumerable<string> l2IsolationDomains = null, System.Collections.Generic.IEnumerable<string> l3IsolationDomains = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState? configurationState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState?), Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState?), Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeState? administrativeState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeState?)) { throw null; }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResponse NetworkFabricErrorResponse(Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData NetworkFabricSkuData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType? typePropertiesType = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType?), int? maxComputeRacks = default(int?), int? maximumServerCount = default(int?), System.Collections.Generic.IEnumerable<string> supportedVersions = null, string details = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData NetworkPacketBrokerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.Core.ResourceIdentifier networkFabricId = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkDeviceIds = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> sourceInterfaceIds = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkTapIds = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> neighborGroupIds = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData NetworkRackData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string annotation = null, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType? networkRackType = default(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType?), Azure.Core.ResourceIdentifier networkFabricId = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> networkDevices = null, Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetworkFabric.Models.ProvisioningState?)) { throw null; }
@@ -1510,14 +1510,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public System.Collections.Generic.IList<string> ProtocolTypes { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition VlanMatchCondition { get { throw null; } set { } }
     }
-    public partial class CommonPostActionResponseForDeviceUpdate : Azure.ResourceManager.ManagedNetworkFabric.Models.ErrorResponse
+    public partial class CommonPostActionResponseForDeviceUpdate : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResponse
     {
         internal CommonPostActionResponseForDeviceUpdate() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState? ConfigurationState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> FailedDevices { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SuccessfulDevices { get { throw null; } }
     }
-    public partial class CommonPostActionResponseForStateUpdate : Azure.ResourceManager.ManagedNetworkFabric.Models.ErrorResponse
+    public partial class CommonPostActionResponseForStateUpdate : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResponse
     {
         internal CommonPostActionResponseForStateUpdate() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState? ConfigurationState { get { throw null; } }
@@ -1677,47 +1677,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.EnableDisableState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.EnableDisableState left, Azure.ResourceManager.ManagedNetworkFabric.Models.EnableDisableState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Encapsulation : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.Encapsulation>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Encapsulation(string value) { throw null; }
-        public static Azure.ResourceManager.ManagedNetworkFabric.Models.Encapsulation GRE { get { throw null; } }
-        public static Azure.ResourceManager.ManagedNetworkFabric.Models.Encapsulation None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.Encapsulation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.Encapsulation left, Azure.ResourceManager.ManagedNetworkFabric.Models.Encapsulation right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.Encapsulation (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.Encapsulation left, Azure.ResourceManager.ManagedNetworkFabric.Models.Encapsulation right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EncapsulationType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.EncapsulationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EncapsulationType(string value) { throw null; }
-        public static Azure.ResourceManager.ManagedNetworkFabric.Models.EncapsulationType GTPv1 { get { throw null; } }
-        public static Azure.ResourceManager.ManagedNetworkFabric.Models.EncapsulationType None { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.EncapsulationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.EncapsulationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.EncapsulationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.EncapsulationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.EncapsulationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.EncapsulationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ErrorResponse
-    {
-        internal ErrorResponse() { }
-        public Azure.ResponseError Error { get { throw null; } }
     }
     public partial class ExportRoutePolicy
     {
@@ -2013,7 +1972,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public partial class IsolationDomainProperties
     {
         public IsolationDomainProperties() { }
-        public Azure.ResourceManager.ManagedNetworkFabric.Models.Encapsulation? Encapsulation { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulation? Encapsulation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> NeighborGroupIds { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2234,6 +2193,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkFabricEncapsulation : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulation>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkFabricEncapsulation(string value) { throw null; }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulation GRE { get { throw null; } }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulation None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulation other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulation left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulation right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulation (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulation left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulation right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetworkFabricEncapsulationType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetworkFabricEncapsulationType(string value) { throw null; }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulationType GTPv1 { get { throw null; } }
+        public static Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulationType None { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulationType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class NetworkFabricErrorResponse
+    {
+        internal NetworkFabricErrorResponse() { }
+        public Azure.ResponseError Error { get { throw null; } }
+    }
     public partial class NetworkFabricPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
     {
         public NetworkFabricPatch() { }
@@ -2345,7 +2345,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public partial class NetworkTapRuleMatchCondition : Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions
     {
         public NetworkTapRuleMatchCondition() { }
-        public Azure.ResourceManager.ManagedNetworkFabric.Models.EncapsulationType? EncapsulationType { get { throw null; } set { } }
+        public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricEncapsulationType? EncapsulationType { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.PortCondition PortCondition { get { throw null; } set { } }
     }
     public partial class NetworkTapRuleMatchConfiguration
@@ -2799,7 +2799,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public ValidateConfigurationProperties() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateAction? ValidateAction { get { throw null; } set { } }
     }
-    public partial class ValidateConfigurationResponse : Azure.ResourceManager.ManagedNetworkFabric.Models.ErrorResponse
+    public partial class ValidateConfigurationResponse : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResponse
     {
         internal ValidateConfigurationResponse() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ConfigurationState? ConfigurationState { get { throw null; } }

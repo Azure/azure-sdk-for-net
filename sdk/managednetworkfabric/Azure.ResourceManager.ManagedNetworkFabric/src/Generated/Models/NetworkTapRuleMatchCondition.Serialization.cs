@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<EncapsulationType> encapsulationType = default;
+            Optional<NetworkFabricEncapsulationType> encapsulationType = default;
             Optional<PortCondition> portCondition = default;
             Optional<IList<string>> protocolTypes = default;
             Optional<VlanMatchCondition> vlanMatchCondition = default;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    encapsulationType = new EncapsulationType(property.Value.GetString());
+                    encapsulationType = new NetworkFabricEncapsulationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("portCondition"u8))

@@ -10,16 +10,16 @@ using Azure;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Common error response for all Azure Resource Manager APIs to return error details for failed operations. (This also follows the OData error response format.). </summary>
-    public partial class ErrorResponse
+    public partial class NetworkFabricErrorResponse
     {
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
-        internal ErrorResponse()
+        /// <summary> Initializes a new instance of NetworkFabricErrorResponse. </summary>
+        internal NetworkFabricErrorResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorResponse. </summary>
+        /// <summary> Initializes a new instance of NetworkFabricErrorResponse. </summary>
         /// <param name="error"> The error object. </param>
-        internal ErrorResponse(ResponseError error)
+        internal NetworkFabricErrorResponse(ResponseError error)
         {
             Error = error;
         }
