@@ -164,8 +164,6 @@ namespace Azure.Core.Json
 
             while (change != null)
             {
-                Debug.WriteLine(change.Value.Path);
-
                 ReadOnlySpan<char> changePath = change.Value.Path.AsSpan();
 
                 CopyTo(currentPath, ref currentPathLength, GetFirstSegment(changePath));
@@ -192,7 +190,7 @@ namespace Azure.Core.Json
                     patchElement.GetProperty(segment).WriteTo(writer);
                 }
 
-                change = _root.Changes.GetNextChange(change, out maxPathLength);
+                change = _root.Changes.GetNextChange(change, out _);
             }
 
             // The above loop will have written out the values of all the elements on the
