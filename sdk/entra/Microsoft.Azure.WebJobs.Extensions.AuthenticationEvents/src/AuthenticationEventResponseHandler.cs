@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 if (result == null)
                 {
-                    throw new ArgumentNullException("AuthenticationEventResponseHandler", AuthenticationEventResource.Ex_Invalid_Return);
+                    throw new ResponseValidationException(AuthenticationEventResource.Ex_Invalid_Return);
                 }
 
                 if (result is AuthenticationEventResponse action)
