@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InternetGatewayRuleData>> value = default;
+            Optional<IReadOnlyList<NetworkFabricInternetGatewayRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<InternetGatewayRuleData> array = new List<InternetGatewayRuleData>();
+                    List<NetworkFabricInternetGatewayRuleData> array = new List<NetworkFabricInternetGatewayRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InternetGatewayRuleData.DeserializeInternetGatewayRuleData(item));
+                        array.Add(NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(item));
                     }
                     value = array;
                     continue;

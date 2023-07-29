@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Destination. </summary>
-    public partial class NetworkTapPropertiesDestinationsItem : DestinationProperties
+    public partial class NetworkTapPropertiesDestinationsItem : NetworkTapDestinationProperties
     {
         /// <summary> Initializes a new instance of NetworkTapPropertiesDestinationsItem. </summary>
         public NetworkTapPropertiesDestinationsItem()
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="destinationId"> The destination Id. ARM Resource ID of either NNI or Internal Networks. </param>
         /// <param name="isolationDomainProperties"> Isolation Domain Properties. </param>
         /// <param name="destinationTapRuleId"> ARM Resource ID of destination Tap Rule that contains match configurations. </param>
-        internal NetworkTapPropertiesDestinationsItem(string name, DestinationType? destinationType, ResourceIdentifier destinationId, IsolationDomainProperties isolationDomainProperties, ResourceIdentifier destinationTapRuleId) : base(name, destinationType, destinationId, isolationDomainProperties, destinationTapRuleId)
+        internal NetworkTapPropertiesDestinationsItem(string name, NetworkTapDestinationType? destinationType, ResourceIdentifier destinationId, IsolationDomainProperties isolationDomainProperties, ResourceIdentifier destinationTapRuleId) : base(name, destinationType, destinationId, isolationDomainProperties, destinationTapRuleId)
         {
         }
     }

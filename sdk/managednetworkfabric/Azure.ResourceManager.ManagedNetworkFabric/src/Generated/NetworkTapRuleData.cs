@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        internal NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ConfigurationType? configurationType, Uri tapRulesUri, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, ResourceIdentifier networkTapId, PollingIntervalInSecond? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, ConfigurationState? configurationState, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, IList<NetworkTapRuleMatchConfiguration> matchConfigurations, IList<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, ResourceIdentifier networkTapId, PollingIntervalInSecond? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             ConfigurationType = configurationType;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Input method to configure Network Tap Rule. </summary>
-        public ConfigurationType? ConfigurationType { get; set; }
+        public NetworkFabricConfigurationType? ConfigurationType { get; set; }
         /// <summary> Network Tap Rules file URL. </summary>
         public Uri TapRulesUri { get; set; }
         /// <summary> List of match configurations. </summary>
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> The last sync timestamp. </summary>
         public DateTimeOffset? LastSyncedOn { get; }
         /// <summary> Configuration state of the resource. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> Administrative state of the resource. </summary>
-        public AdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
     }
 }

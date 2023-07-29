@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
         /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDeviceIds, IReadOnlyList<ResourceIdentifier> sourceInterfaceIds, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> neighborGroupIds, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkPacketBrokerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDeviceIds, IReadOnlyList<ResourceIdentifier> sourceInterfaceIds, IReadOnlyList<ResourceIdentifier> networkTapIds, IReadOnlyList<ResourceIdentifier> neighborGroupIds, NetworkFabricProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             NetworkFabricId = networkFabricId;
             NetworkDeviceIds = networkDeviceIds;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> List of neighbor group IDs configured on NPB. </summary>
         public IReadOnlyList<ResourceIdentifier> NeighborGroupIds { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

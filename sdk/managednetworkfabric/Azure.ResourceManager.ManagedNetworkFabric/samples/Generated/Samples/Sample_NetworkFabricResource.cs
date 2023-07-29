@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                 ServerCountPerRack = 10,
                 IPv4Prefix = "10.18.0.0/17",
                 IPv6Prefix = "3FFE:FFFF:0:CD40::/60",
-                FabricASN = 12345,
+                FabricAsn = 12345,
                 TerminalServerConfiguration = new NetworkFabricPatchablePropertiesTerminalServerConfiguration()
                 {
                     PrimaryIPv4Prefix = "10.0.0.12/30",
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 },
                             },
                         },
-                        OptionAProperties = new VpnConfigurationPatchablePropertiesOptionAProperties()
+                        OptionAProperties = new VpnConfigurationPatchableOptionAProperties()
                         {
                             PrimaryIPv4Prefix = "10.0.0.12/30",
                             PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                             SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                             Mtu = 1501,
                             VlanId = 3001,
-                            PeerASN = 1235,
+                            PeerAsn = 1235,
                             BfdConfiguration = new BfdConfiguration()
                             {
                                 IntervalInMilliSeconds = 300,
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 },
                             },
                         },
-                        OptionAProperties = new VpnConfigurationPatchablePropertiesOptionAProperties()
+                        OptionAProperties = new VpnConfigurationPatchableOptionAProperties()
                         {
                             PrimaryIPv4Prefix = "10.0.0.14/30",
                             PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/126",
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
                             SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
                             Mtu = 1500,
                             VlanId = 3000,
-                            PeerASN = 61234,
+                            PeerAsn = 61234,
                             BfdConfiguration = new BfdConfiguration()
                             {
                                 IntervalInMilliSeconds = 300,
@@ -289,8 +289,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            ArmOperation<CommonPostActionResponseForDeviceUpdate> lro = await networkFabric.ProvisionAsync(WaitUntil.Completed);
-            CommonPostActionResponseForDeviceUpdate result = lro.Value;
+            ArmOperation<DeviceUpdateCommonPostActionResult> lro = await networkFabric.ProvisionAsync(WaitUntil.Completed);
+            DeviceUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -317,8 +317,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            ArmOperation<CommonPostActionResponseForDeviceUpdate> lro = await networkFabric.DeprovisionAsync(WaitUntil.Completed);
-            CommonPostActionResponseForDeviceUpdate result = lro.Value;
+            ArmOperation<DeviceUpdateCommonPostActionResult> lro = await networkFabric.DeprovisionAsync(WaitUntil.Completed);
+            DeviceUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -345,12 +345,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            UpdateVersion body = new UpdateVersion()
+            NetworkFabricUpdateVersionContent content = new NetworkFabricUpdateVersionContent()
             {
                 Version = "version1",
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkFabric.UpgradeAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.UpgradeAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -377,8 +377,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkFabric.RefreshConfigurationAsync(WaitUntil.Completed);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.RefreshConfigurationAsync(WaitUntil.Completed);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -405,16 +405,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Enable,
+                State = AdministrativeEnableState.Enable,
                 ResourceIds =
 {
-""
+new ResourceIdentifier("")
 },
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkFabric.UpdateWorkloadManagementBfdConfigurationAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.UpdateWorkloadManagementBfdConfigurationAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -441,16 +441,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Enable,
+                State = AdministrativeEnableState.Enable,
                 ResourceIds =
 {
-""
+new ResourceIdentifier("")
 },
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkFabric.UpdateInfraManagementBfdConfigurationAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.UpdateInfraManagementBfdConfigurationAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -477,12 +477,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            ValidateConfigurationProperties body = new ValidateConfigurationProperties()
+            ValidateConfigurationContent content = new ValidateConfigurationContent()
             {
-                ValidateAction = ValidateAction.Cabling,
+                ValidateAction = NetworkFabricValidateAction.Cabling,
             };
-            ArmOperation<ValidateConfigurationResponse> lro = await networkFabric.ValidateConfigurationAsync(WaitUntil.Completed, body);
-            ValidateConfigurationResponse result = lro.Value;
+            ArmOperation<ValidateConfigurationResult> lro = await networkFabric.ValidateConfigurationAsync(WaitUntil.Completed, content);
+            ValidateConfigurationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -509,8 +509,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            ArmOperation<ValidateConfigurationResponse> lro = await networkFabric.GetTopologyAsync(WaitUntil.Completed);
-            ValidateConfigurationResponse result = lro.Value;
+            ArmOperation<ValidateConfigurationResult> lro = await networkFabric.GetTopologyAsync(WaitUntil.Completed);
+            ValidateConfigurationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -537,8 +537,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkFabricResource networkFabric = client.GetNetworkFabricResource(networkFabricResourceId);
 
             // invoke the operation
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkFabric.CommitConfigurationAsync(WaitUntil.Completed);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabric.CommitConfigurationAsync(WaitUntil.Completed);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

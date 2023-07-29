@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of IsolationDomainProperties. </summary>
         /// <param name="encapsulation"> Type of encapsulation. </param>
         /// <param name="neighborGroupIds"> List of Neighbor Group IDs. </param>
-        internal IsolationDomainProperties(Encapsulation? encapsulation, IList<ResourceIdentifier> neighborGroupIds)
+        internal IsolationDomainProperties(IsolationDomainEncapsulationType? encapsulation, IList<ResourceIdentifier> neighborGroupIds)
         {
             Encapsulation = encapsulation;
             NeighborGroupIds = neighborGroupIds;
         }
 
         /// <summary> Type of encapsulation. </summary>
-        public Encapsulation? Encapsulation { get; set; }
+        public IsolationDomainEncapsulationType? Encapsulation { get; set; }
         /// <summary> List of Neighbor Group IDs. </summary>
         public IList<ResourceIdentifier> NeighborGroupIds { get; }
     }

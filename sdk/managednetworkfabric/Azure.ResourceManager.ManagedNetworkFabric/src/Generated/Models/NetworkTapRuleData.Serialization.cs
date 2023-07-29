@@ -91,16 +91,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
-            Optional<ConfigurationType> configurationType = default;
+            Optional<NetworkFabricConfigurationType> configurationType = default;
             Optional<Uri> tapRulesUrl = default;
             Optional<IList<NetworkTapRuleMatchConfiguration>> matchConfigurations = default;
             Optional<IList<CommonDynamicMatchConfiguration>> dynamicMatchConfigurations = default;
             Optional<ResourceIdentifier> networkTapId = default;
             Optional<PollingIntervalInSecond> pollingIntervalInSeconds = default;
             Optional<DateTimeOffset> lastSyncedTime = default;
-            Optional<ConfigurationState> configurationState = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<AdministrativeState> administrativeState = default;
+            Optional<NetworkFabricConfigurationState> configurationState = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationType = new ConfigurationType(property0.Value.GetString());
+                            configurationType = new NetworkFabricConfigurationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tapRulesUrl"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new ConfigurationState(property0.Value.GetString());
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrativeState"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
                             continue;
                         }
                     }

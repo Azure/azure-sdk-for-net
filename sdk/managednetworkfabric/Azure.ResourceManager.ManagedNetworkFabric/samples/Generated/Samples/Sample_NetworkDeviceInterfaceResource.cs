@@ -138,16 +138,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkDeviceInterfaceResource networkDeviceInterface = client.GetNetworkDeviceInterfaceResource(networkDeviceInterfaceResourceId);
 
             // invoke the operation
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Enable,
+                State = AdministrativeEnableState.Enable,
                 ResourceIds =
 {
-""
+new ResourceIdentifier("")
 },
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkDeviceInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkDeviceInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

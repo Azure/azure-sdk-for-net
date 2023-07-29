@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of IPPrefixesListResult. </summary>
         internal IPPrefixesListResult()
         {
-            Value = new ChangeTrackingList<IPPrefixData>();
+            Value = new ChangeTrackingList<NetworkFabricIPPrefixData>();
         }
 
         /// <summary> Initializes a new instance of IPPrefixesListResult. </summary>
         /// <param name="value"> List of IP Prefix resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal IPPrefixesListResult(IReadOnlyList<IPPrefixData> value, string nextLink)
+        internal IPPrefixesListResult(IReadOnlyList<NetworkFabricIPPrefixData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of IP Prefix resources. </summary>
-        public IReadOnlyList<IPPrefixData> Value { get; }
+        public IReadOnlyList<NetworkFabricIPPrefixData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

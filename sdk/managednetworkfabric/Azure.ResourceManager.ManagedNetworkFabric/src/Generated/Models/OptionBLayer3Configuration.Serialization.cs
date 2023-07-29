@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PeerASN))
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerASN.Value);
+                writer.WriteNumberValue(PeerAsn.Value);
             }
             if (Optional.IsDefined(VlanId))
             {
@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<long> peerASN = default;
+            Optional<long> peerAsn = default;
             Optional<int> vlanId = default;
-            Optional<long> fabricASN = default;
+            Optional<long> fabricAsn = default;
             Optional<string> primaryIPv4Prefix = default;
             Optional<string> primaryIPv6Prefix = default;
             Optional<string> secondaryIPv4Prefix = default;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    peerASN = property.Value.GetInt64();
+                    peerAsn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("vlanId"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    fabricASN = property.Value.GetInt64();
+                    fabricAsn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("primaryIpv4Prefix"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new OptionBLayer3Configuration(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Optional.ToNullable(peerASN), Optional.ToNullable(vlanId), Optional.ToNullable(fabricASN));
+            return new OptionBLayer3Configuration(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, Optional.ToNullable(peerAsn), Optional.ToNullable(vlanId), Optional.ToNullable(fabricAsn));
         }
     }
 }

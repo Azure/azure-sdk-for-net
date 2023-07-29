@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipv6Address"> IPv6Address of the interface. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
-        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, string ipv4Address, string ipv6Address, ProvisioningState? provisioningState, AdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
+        internal NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, IPAddress ipv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState) : base(id, name, resourceType, systemData)
         {
             Annotation = annotation;
             PhysicalIdentifier = physicalIdentifier;
@@ -56,12 +57,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> The Interface Type. Example: Management/Data. </summary>
         public NetworkDeviceInterfaceType? InterfaceType { get; }
         /// <summary> IPv4Address of the interface. </summary>
-        public string IPv4Address { get; }
+        public IPAddress IPv4Address { get; }
         /// <summary> IPv6Address of the interface. </summary>
         public string IPv6Address { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
         /// <summary> Administrative state of the resource. </summary>
-        public AdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
     }
 }

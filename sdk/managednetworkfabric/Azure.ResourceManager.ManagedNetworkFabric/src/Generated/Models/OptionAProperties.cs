@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of OptionAProperties. </summary>
         /// <param name="mtu"> MTU to use for option A peering. </param>
         /// <param name="vlanId"> Vlan Id.Example : 501. </param>
-        /// <param name="peerASN"> Peer ASN number.Example : 28. </param>
+        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
-        internal OptionAProperties(int? mtu, int? vlanId, long? peerASN, BfdConfiguration bfdConfiguration)
+        internal OptionAProperties(int? mtu, int? vlanId, long? peerAsn, BfdConfiguration bfdConfiguration)
         {
             Mtu = mtu;
             VlanId = vlanId;
-            PeerASN = peerASN;
+            PeerAsn = peerAsn;
             BfdConfiguration = bfdConfiguration;
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Vlan Id.Example : 501. </summary>
         public int? VlanId { get; set; }
         /// <summary> Peer ASN number.Example : 28. </summary>
-        public long? PeerASN { get; set; }
+        public long? PeerAsn { get; set; }
         /// <summary> BFD Configuration properties. </summary>
         public BfdConfiguration BfdConfiguration { get; set; }
     }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<ResourceIdentifier> networkToNetworkInterconnectId = default;
             Optional<PeeringOption> peeringOption = default;
             Optional<OptionBProperties> optionBProperties = default;
-            Optional<VpnConfigurationPatchablePropertiesOptionAProperties> optionAProperties = default;
+            Optional<VpnConfigurationPatchableOptionAProperties> optionAProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkToNetworkInterconnectId"u8))
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionAProperties = VpnConfigurationPatchablePropertiesOptionAProperties.DeserializeVpnConfigurationPatchablePropertiesOptionAProperties(property.Value);
+                    optionAProperties = VpnConfigurationPatchableOptionAProperties.DeserializeVpnConfigurationPatchableOptionAProperties(property.Value);
                     continue;
                 }
             }

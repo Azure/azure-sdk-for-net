@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateUpgradeRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateVersion body)
+        internal HttpMessage CreateUpgradeRequest(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricUpdateVersionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -645,9 +645,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -656,18 +656,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
-        /// <param name="body"> Network Fabric properties to update. </param>
+        /// <param name="content"> Network Fabric properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpgradeAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateVersion body, CancellationToken cancellationToken = default)
+        public async Task<Response> UpgradeAsync(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, networkFabricName, body);
+            using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -683,18 +683,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
-        /// <param name="body"> Network Fabric properties to update. </param>
+        /// <param name="content"> Network Fabric properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Upgrade(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateVersion body, CancellationToken cancellationToken = default)
+        public Response Upgrade(string subscriptionId, string resourceGroupName, string networkFabricName, NetworkFabricUpdateVersionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, networkFabricName, body);
+            using var message = CreateUpgradeRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateUpdateWorkloadManagementBfdConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeState body)
+        internal HttpMessage CreateUpdateWorkloadManagementBfdConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -795,9 +795,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -806,18 +806,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateWorkloadManagementBfdConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateWorkloadManagementBfdConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateWorkloadManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, body);
+            using var message = CreateUpdateWorkloadManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -833,18 +833,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateWorkloadManagementBfdConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public Response UpdateWorkloadManagementBfdConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateWorkloadManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, body);
+            using var message = CreateUpdateWorkloadManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateUpdateInfraManagementBfdConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeState body)
+        internal HttpMessage CreateUpdateInfraManagementBfdConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -874,9 +874,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -885,18 +885,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateInfraManagementBfdConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateInfraManagementBfdConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateInfraManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, body);
+            using var message = CreateUpdateInfraManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -912,18 +912,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateInfraManagementBfdConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public Response UpdateInfraManagementBfdConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateInfraManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, body);
+            using var message = CreateUpdateInfraManagementBfdConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateValidateConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationProperties body)
+        internal HttpMessage CreateValidateConfigurationRequest(string subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -953,9 +953,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -964,18 +964,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
-        /// <param name="body"> Validate configuration properties. </param>
+        /// <param name="content"> Validate configuration properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ValidateConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationProperties body, CancellationToken cancellationToken = default)
+        public async Task<Response> ValidateConfigurationAsync(string subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, body);
+            using var message = CreateValidateConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -991,18 +991,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkFabricName"> Name of the Network Fabric. </param>
-        /// <param name="body"> Validate configuration properties. </param>
+        /// <param name="content"> Validate configuration properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkFabricName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="networkFabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ValidateConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationProperties body, CancellationToken cancellationToken = default)
+        public Response ValidateConfiguration(string subscriptionId, string resourceGroupName, string networkFabricName, ValidateConfigurationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkFabricName, nameof(networkFabricName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateValidateConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, body);
+            using var message = CreateValidateConfigurationRequest(subscriptionId, resourceGroupName, networkFabricName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

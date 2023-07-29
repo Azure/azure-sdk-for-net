@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkToNetworkInterconnectName = "example-nni";
-            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData(BooleanEnumProperty.True)
+            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData(NetworkFabricBooleanValue.True)
             {
                 NniType = NniType.CE,
                 IsManagementType = IsManagementType.True,
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkDevices/example-networkDevice/networkInterfaces/example-networkInterface")
 },
                 },
-                OptionBLayer3Configuration = new NetworkToNetworkInterconnectPropertiesOptionBLayer3Configuration()
+                OptionBLayer3Configuration = new NetworkToNetworkInterconnectOptionBLayer3Configuration()
                 {
-                    PeerASN = 61234,
+                    PeerAsn = 61234,
                     VlanId = 1234,
                     PrimaryIPv4Prefix = "10.0.0.12/30",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",

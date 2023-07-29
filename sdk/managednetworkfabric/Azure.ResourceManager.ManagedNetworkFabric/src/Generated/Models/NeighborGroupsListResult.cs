@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NeighborGroupsListResult. </summary>
         internal NeighborGroupsListResult()
         {
-            Value = new ChangeTrackingList<NeighborGroupData>();
+            Value = new ChangeTrackingList<NetworkFabricNeighborGroupData>();
         }
 
         /// <summary> Initializes a new instance of NeighborGroupsListResult. </summary>
         /// <param name="value"> List of Neighbor Group resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal NeighborGroupsListResult(IReadOnlyList<NeighborGroupData> value, string nextLink)
+        internal NeighborGroupsListResult(IReadOnlyList<NetworkFabricNeighborGroupData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Neighbor Group resources. </summary>
-        public IReadOnlyList<NeighborGroupData> Value { get; }
+        public IReadOnlyList<NetworkFabricNeighborGroupData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

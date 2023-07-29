@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="ipv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
         /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
-        internal NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, ControllerServices infrastructureServices, ControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, bool? isWorkloadManagementNetwork, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerServices infrastructureServices, NetworkFabricControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IReadOnlyList<ResourceIdentifier> networkFabricIds, bool? isWorkloadManagementNetwork, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, NetworkFabricProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             InfrastructureExpressRouteConnections = infrastructureExpressRouteConnections;
@@ -74,9 +74,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </summary>
         public IList<ExpressRouteConnectionInformation> WorkloadExpressRouteConnections { get; }
         /// <summary> InfrastructureServices IP ranges. </summary>
-        public ControllerServices InfrastructureServices { get; }
+        public NetworkFabricControllerServices InfrastructureServices { get; }
         /// <summary> WorkloadServices IP ranges. </summary>
-        public ControllerServices WorkloadServices { get; }
+        public NetworkFabricControllerServices WorkloadServices { get; }
         /// <summary> Managed Resource Group configuration properties. </summary>
         public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
         /// <summary> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </summary>
@@ -94,6 +94,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Network Fabric Controller SKU. </summary>
         public NetworkFabricControllerSKU? NfcSku { get; set; }
         /// <summary> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

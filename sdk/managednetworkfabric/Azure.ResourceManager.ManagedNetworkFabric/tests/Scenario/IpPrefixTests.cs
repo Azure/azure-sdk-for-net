@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"Entered into the IpPrefix tests....");
             TestContext.Out.WriteLine($"Provided IpPrefixName name : {TestEnvironment.IpPrefixName}");
 
-            ResourceIdentifier ipPrefixResourceId = IPPrefixResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.IpPrefixName);
+            ResourceIdentifier ipPrefixResourceId = NetworkFabricIPPrefixResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.IpPrefixName);
             TestContext.Out.WriteLine($"IpPrefixResourceId: {ipPrefixResourceId}");
 
             // Get the collection of this IpPrefix
-            IPPrefixCollection collection = ResourceGroupResource.GetIPPrefixes();
+            NetworkFabricIPPrefixCollection collection = ResourceGroupResource.GetNetworkFabricIPPrefixes();
 
             TestContext.Out.WriteLine($"IpPrefix Test started.....");
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            IPPrefixData data = new IPPrefixData(new AzureLocation(TestEnvironment.Location))
+            NetworkFabricIPPrefixData data = new NetworkFabricIPPrefixData(new AzureLocation(TestEnvironment.Location))
             {
                 Annotation = "annotation",
                 IPPrefixRules =
@@ -51,23 +51,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     ["keyID"] = "KeyValue",
                 },
             };
-            ArmOperation<IPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpPrefixName, data);
-            IPPrefixResource createResult = lro.Value;
+            ArmOperation<NetworkFabricIPPrefixResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpPrefixName, data);
+            NetworkFabricIPPrefixResource createResult = lro.Value;
             Assert.AreEqual(TestEnvironment.IpPrefixName, createResult.Data.Name);
 
-            IPPrefixResource ipPrefix = Client.GetIPPrefixResource(ipPrefixResourceId);
+            NetworkFabricIPPrefixResource ipPrefix = Client.GetNetworkFabricIPPrefixResource(ipPrefixResourceId);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            IPPrefixResource getResult = await ipPrefix.GetAsync();
+            NetworkFabricIPPrefixResource getResult = await ipPrefix.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
             Assert.AreEqual(TestEnvironment.IpPrefixName, getResult.Data.Name);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<IPPrefixResource>();
-            IPPrefixCollection collectionOp = ResourceGroupResource.GetIPPrefixes();
-            await foreach (IPPrefixResource item in collectionOp.GetAllAsync())
+            var listByResourceGroup = new List<NetworkFabricIPPrefixResource>();
+            NetworkFabricIPPrefixCollection collectionOp = ResourceGroupResource.GetNetworkFabricIPPrefixes();
+            await foreach (NetworkFabricIPPrefixResource item in collectionOp.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }

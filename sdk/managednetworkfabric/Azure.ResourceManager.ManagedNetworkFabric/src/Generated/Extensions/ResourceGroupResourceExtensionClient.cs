@@ -31,67 +31,67 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AccessControlListResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AccessControlListResources and their operations over a AccessControlListResource. </returns>
-        public virtual AccessControlListCollection GetAccessControlLists()
+        /// <summary> Gets a collection of NetworkFabricAccessControlListResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricAccessControlListResources and their operations over a NetworkFabricAccessControlListResource. </returns>
+        public virtual NetworkFabricAccessControlListCollection GetNetworkFabricAccessControlLists()
         {
-            return GetCachedClient(Client => new AccessControlListCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFabricAccessControlListCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of InternetGatewayResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of InternetGatewayResources and their operations over a InternetGatewayResource. </returns>
-        public virtual InternetGatewayCollection GetInternetGateways()
+        /// <summary> Gets a collection of NetworkFabricInternetGatewayResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricInternetGatewayResources and their operations over a NetworkFabricInternetGatewayResource. </returns>
+        public virtual NetworkFabricInternetGatewayCollection GetNetworkFabricInternetGateways()
         {
-            return GetCachedClient(Client => new InternetGatewayCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFabricInternetGatewayCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of InternetGatewayRuleResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of InternetGatewayRuleResources and their operations over a InternetGatewayRuleResource. </returns>
-        public virtual InternetGatewayRuleCollection GetInternetGatewayRules()
+        /// <summary> Gets a collection of NetworkFabricInternetGatewayRuleResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricInternetGatewayRuleResources and their operations over a NetworkFabricInternetGatewayRuleResource. </returns>
+        public virtual NetworkFabricInternetGatewayRuleCollection GetNetworkFabricInternetGatewayRules()
         {
-            return GetCachedClient(Client => new InternetGatewayRuleCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFabricInternetGatewayRuleCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of IPCommunityResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IPCommunityResources and their operations over a IPCommunityResource. </returns>
-        public virtual IPCommunityCollection GetIPCommunities()
+        /// <summary> Gets a collection of NetworkFabricIPCommunityResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricIPCommunityResources and their operations over a NetworkFabricIPCommunityResource. </returns>
+        public virtual NetworkFabricIPCommunityCollection GetNetworkFabricIPCommunities()
         {
-            return GetCachedClient(Client => new IPCommunityCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFabricIPCommunityCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of IPExtendedCommunityResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IPExtendedCommunityResources and their operations over a IPExtendedCommunityResource. </returns>
-        public virtual IPExtendedCommunityCollection GetIPExtendedCommunities()
+        /// <summary> Gets a collection of NetworkFabricIPExtendedCommunityResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricIPExtendedCommunityResources and their operations over a NetworkFabricIPExtendedCommunityResource. </returns>
+        public virtual NetworkFabricIPExtendedCommunityCollection GetNetworkFabricIPExtendedCommunities()
         {
-            return GetCachedClient(Client => new IPExtendedCommunityCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFabricIPExtendedCommunityCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of IPPrefixResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of IPPrefixResources and their operations over a IPPrefixResource. </returns>
-        public virtual IPPrefixCollection GetIPPrefixes()
+        /// <summary> Gets a collection of NetworkFabricIPPrefixResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricIPPrefixResources and their operations over a NetworkFabricIPPrefixResource. </returns>
+        public virtual NetworkFabricIPPrefixCollection GetNetworkFabricIPPrefixes()
         {
-            return GetCachedClient(Client => new IPPrefixCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFabricIPPrefixCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of L2IsolationDomainResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of L2IsolationDomainResources and their operations over a L2IsolationDomainResource. </returns>
-        public virtual L2IsolationDomainCollection GetL2IsolationDomains()
+        /// <summary> Gets a collection of NetworkFabricL2IsolationDomainResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricL2IsolationDomainResources and their operations over a NetworkFabricL2IsolationDomainResource. </returns>
+        public virtual NetworkFabricL2IsolationDomainCollection GetNetworkFabricL2IsolationDomains()
         {
-            return GetCachedClient(Client => new L2IsolationDomainCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFabricL2IsolationDomainCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of L3IsolationDomainResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of L3IsolationDomainResources and their operations over a L3IsolationDomainResource. </returns>
-        public virtual L3IsolationDomainCollection GetL3IsolationDomains()
+        /// <summary> Gets a collection of NetworkFabricL3IsolationDomainResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricL3IsolationDomainResources and their operations over a NetworkFabricL3IsolationDomainResource. </returns>
+        public virtual NetworkFabricL3IsolationDomainCollection GetNetworkFabricL3IsolationDomains()
         {
-            return GetCachedClient(Client => new L3IsolationDomainCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFabricL3IsolationDomainCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of NeighborGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NeighborGroupResources and their operations over a NeighborGroupResource. </returns>
-        public virtual NeighborGroupCollection GetNeighborGroups()
+        /// <summary> Gets a collection of NetworkFabricNeighborGroupResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricNeighborGroupResources and their operations over a NetworkFabricNeighborGroupResource. </returns>
+        public virtual NetworkFabricNeighborGroupCollection GetNetworkFabricNeighborGroups()
         {
-            return GetCachedClient(Client => new NeighborGroupCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFabricNeighborGroupCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NetworkDeviceResources in the ResourceGroupResource. </summary>
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return GetCachedClient(Client => new NetworkTapCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of RoutePolicyResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of RoutePolicyResources and their operations over a RoutePolicyResource. </returns>
-        public virtual RoutePolicyCollection GetRoutePolicies()
+        /// <summary> Gets a collection of NetworkFabricRoutePolicyResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkFabricRoutePolicyResources and their operations over a NetworkFabricRoutePolicyResource. </returns>
+        public virtual NetworkFabricRoutePolicyCollection GetNetworkFabricRoutePolicies()
         {
-            return GetCachedClient(Client => new RoutePolicyCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkFabricRoutePolicyCollection(Client, Id));
         }
     }
 }

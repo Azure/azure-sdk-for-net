@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             }
         }
 
-        internal HttpMessage CreateUpdateAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeState body)
+        internal HttpMessage CreateUpdateAdministrativeStateRequest(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeStateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -468,9 +468,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -480,19 +480,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkDeviceName"> Name of the Network Device. </param>
         /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAdministrativeStateAsync(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, body);
+            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -509,19 +509,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="networkDeviceName"> Name of the Network Device. </param>
         /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
-        /// <param name="body"> Request payload. </param>
+        /// <param name="content"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/>, <paramref name="networkInterfaceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkDeviceName"/> or <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateAdministrativeState(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeState body, CancellationToken cancellationToken = default)
+        public Response UpdateAdministrativeState(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName, UpdateAdministrativeStateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkDeviceName, nameof(networkDeviceName));
             Argument.AssertNotNullOrEmpty(networkInterfaceName, nameof(networkInterfaceName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, body);
+            using var message = CreateUpdateAdministrativeStateRequest(subscriptionId, resourceGroupName, networkDeviceName, networkInterfaceName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

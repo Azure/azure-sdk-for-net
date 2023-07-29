@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<ResourceIdentifier> networkToNetworkInterconnectId = default;
-            Optional<AdministrativeState> administrativeState = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             PeeringOption peeringOption = default;
             Optional<OptionBProperties> optionBProperties = default;
-            Optional<VpnConfigurationPropertiesOptionAProperties> optionAProperties = default;
+            Optional<VpnConfigurationOptionAProperties> optionAProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkToNetworkInterconnectId"u8))
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    administrativeState = new AdministrativeState(property.Value.GetString());
+                    administrativeState = new NetworkFabricAdministrativeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("peeringOption"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    optionAProperties = VpnConfigurationPropertiesOptionAProperties.DeserializeVpnConfigurationPropertiesOptionAProperties(property.Value);
+                    optionAProperties = VpnConfigurationOptionAProperties.DeserializeVpnConfigurationOptionAProperties(property.Value);
                     continue;
                 }
             }

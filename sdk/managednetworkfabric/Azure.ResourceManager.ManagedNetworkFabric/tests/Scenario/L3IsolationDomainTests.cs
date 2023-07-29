@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"Entered into the L3IsolationDomain tests....");
             TestContext.Out.WriteLine($"Provided L3IsolationDomains name : {TestEnvironment.L3IsolationDomainName}");
 
-            ResourceIdentifier l3IsolationDomainResourceId = L3IsolationDomainResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.L3IsolationDomainName);
+            ResourceIdentifier l3IsolationDomainResourceId = NetworkFabricL3IsolationDomainResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.L3IsolationDomainName);
             TestContext.Out.WriteLine($"l3IsolationDomainResourceId: {l3IsolationDomainResourceId}");
 
             TestContext.Out.WriteLine($"L3IsolationDomains Test started.....");
 
-            L3IsolationDomainCollection collection = ResourceGroupResource.GetL3IsolationDomains();
+            NetworkFabricL3IsolationDomainCollection collection = ResourceGroupResource.GetNetworkFabricL3IsolationDomains();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            L3IsolationDomainData data = new L3IsolationDomainData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.Provisioned_NF_ID))
+            NetworkFabricL3IsolationDomainData data = new NetworkFabricL3IsolationDomainData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.Provisioned_NF_ID))
             {
                 Annotation = "annotation",
                 RedistributeConnectedSubnets = RedistributeConnectedSubnet.True,
@@ -54,22 +54,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     ["keyID"] = "KeyValue",
                 },
             };
-            ArmOperation<L3IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.L3IsolationDomainName, data);
-            L3IsolationDomainResource createResult = lro.Value;
+            ArmOperation<NetworkFabricL3IsolationDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.L3IsolationDomainName, data);
+            NetworkFabricL3IsolationDomainResource createResult = lro.Value;
             Assert.AreEqual(createResult.Data.Name, TestEnvironment.L3IsolationDomainName);
 
-            L3IsolationDomainResource l3IsolationDomain = Client.GetL3IsolationDomainResource(l3IsolationDomainResourceId);
+            NetworkFabricL3IsolationDomainResource l3IsolationDomain = Client.GetNetworkFabricL3IsolationDomainResource(l3IsolationDomainResourceId);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            L3IsolationDomainResource getResult = await l3IsolationDomain.GetAsync();
+            NetworkFabricL3IsolationDomainResource getResult = await l3IsolationDomain.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
             Assert.AreEqual(getResult.Data.Name, TestEnvironment.L3IsolationDomainName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<L3IsolationDomainResource>();
-            await foreach (L3IsolationDomainResource item in collection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkFabricL3IsolationDomainResource>();
+            await foreach (NetworkFabricL3IsolationDomainResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }
@@ -81,20 +81,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             Assert.IsTrue(deleteResponse.HasCompleted);
 
             // Update Admin State
-            L3IsolationDomainResource l3IsolationDomainForPostAction = Client.GetL3IsolationDomainResource(new ResourceIdentifier(TestEnvironment.Existing_L3ISD_ID));
+            NetworkFabricL3IsolationDomainResource l3IsolationDomainForPostAction = Client.GetNetworkFabricL3IsolationDomainResource(new ResourceIdentifier(TestEnvironment.Existing_L3ISD_ID));
             TestContext.Out.WriteLine($"POST started.....");
 
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Enable,
+                State = AdministrativeEnableState.Enable,
             };
-            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
 
-            body = new UpdateAdministrativeState()
+            content = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Disable,
+                State = AdministrativeEnableState.Disable,
             };
-            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            await l3IsolationDomainForPostAction.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
         }
     }
 }

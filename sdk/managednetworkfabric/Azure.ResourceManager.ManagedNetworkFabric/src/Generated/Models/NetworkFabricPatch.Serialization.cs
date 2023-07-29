@@ -53,10 +53,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("ipv6Prefix"u8);
                 writer.WriteStringValue(IPv6Prefix);
             }
-            if (Optional.IsDefined(FabricASN))
+            if (Optional.IsDefined(FabricAsn))
             {
                 writer.WritePropertyName("fabricASN"u8);
-                writer.WriteNumberValue(FabricASN.Value);
+                writer.WriteNumberValue(FabricAsn.Value);
             }
             if (Optional.IsDefined(TerminalServerConfiguration))
             {

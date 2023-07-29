@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
         /// <param name="networkDevices"> List of network device ARM resource IDs. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDevices, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkRackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkRackType? networkRackType, ResourceIdentifier networkFabricId, IReadOnlyList<ResourceIdentifier> networkDevices, NetworkFabricProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Annotation = annotation;
             NetworkRackType = networkRackType;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> List of network device ARM resource IDs. </summary>
         public IReadOnlyList<ResourceIdentifier> NetworkDevices { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

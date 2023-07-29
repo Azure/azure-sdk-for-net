@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Defines the port condition that needs to be matched. </summary>
-    public partial class AccessControlListPortCondition : PortCondition
+    public partial class AccessControlListPortCondition : NetworkFabricPortCondition
     {
         /// <summary> Initializes a new instance of AccessControlListPortCondition. </summary>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ports"> List of the Ports that need to be matched. </param>
         /// <param name="portGroupNames"> List of the port Group Names that to be matched. </param>
         /// <param name="flags"> List of protocol flags that needs to be matched. </param>
-        internal AccessControlListPortCondition(PortConditionType? portType, Layer4Protocol layer4Protocol, IList<string> ports, IList<string> portGroupNames, IList<string> flags) : base(portType, layer4Protocol, ports, portGroupNames)
+        internal AccessControlListPortCondition(NetworkFabricPortType? portType, Layer4Protocol layer4Protocol, IList<string> ports, IList<string> portGroupNames, IList<string> flags) : base(portType, layer4Protocol, ports, portGroupNames)
         {
             Flags = flags;
         }

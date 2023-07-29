@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, InternetGatewayRuleData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, NetworkFabricInternetGatewayRuleData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="internetGatewayRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, InternetGatewayRuleData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, NetworkFabricInternetGatewayRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="internetGatewayRuleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, InternetGatewayRuleData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, NetworkFabricInternetGatewayRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InternetGatewayRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkFabricInternetGatewayRuleData>> GetAsync(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -154,13 +154,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case 200:
                     {
-                        InternetGatewayRuleData value = default;
+                        NetworkFabricInternetGatewayRuleData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = InternetGatewayRuleData.DeserializeInternetGatewayRuleData(document.RootElement);
+                        value = NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((InternetGatewayRuleData)null, message.Response);
+                    return Response.FromValue((NetworkFabricInternetGatewayRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InternetGatewayRuleData> Get(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        public Response<NetworkFabricInternetGatewayRuleData> Get(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -185,19 +185,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case 200:
                     {
-                        InternetGatewayRuleData value = default;
+                        NetworkFabricInternetGatewayRuleData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = InternetGatewayRuleData.DeserializeInternetGatewayRuleData(document.RootElement);
+                        value = NetworkFabricInternetGatewayRuleData.DeserializeNetworkFabricInternetGatewayRuleData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((InternetGatewayRuleData)null, message.Response);
+                    return Response.FromValue((NetworkFabricInternetGatewayRuleData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, InternetGatewayRulePatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, NetworkFabricInternetGatewayRulePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="internetGatewayRuleName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, InternetGatewayRulePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, NetworkFabricInternetGatewayRulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="internetGatewayRuleName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, InternetGatewayRulePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string internetGatewayRuleName, NetworkFabricInternetGatewayRulePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         {
             // get the collection of this L2Isolation
 
-            L2IsolationDomainCollection collection = ResourceGroupResource.GetL2IsolationDomains();
+            NetworkFabricL2IsolationDomainCollection collection = ResourceGroupResource.GetNetworkFabricL2IsolationDomains();
 
             TestContext.Out.WriteLine($"Entered into the L2Isolation Domain tests....");
 
             TestContext.Out.WriteLine($"Provided NetworkFabric Id : {TestEnvironment.Provisioned_NF_ID}");
 
-            ResourceIdentifier l2DomainResourceId = L2IsolationDomainResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupResource.Id.Name, TestEnvironment.L2IsolationDomainName);
+            ResourceIdentifier l2DomainResourceId = NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceGroupResource.Id.Name, TestEnvironment.L2IsolationDomainName);
 
             TestContext.Out.WriteLine($"l2DomainResourceId: {l2DomainResourceId}");
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            L2IsolationDomainData data = new L2IsolationDomainData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.Provisioned_NF_ID), 1000)
+            NetworkFabricL2IsolationDomainData data = new NetworkFabricL2IsolationDomainData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.Provisioned_NF_ID), 1000)
             {
                 Annotation = "annotation",
                 Mtu = 7000,
@@ -47,22 +47,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
             };
 
-            ArmOperation<L2IsolationDomainResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.L2IsolationDomainName, data);
+            ArmOperation<NetworkFabricL2IsolationDomainResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.L2IsolationDomainName, data);
             Assert.AreEqual(createResult.Value.Data.Name, TestEnvironment.L2IsolationDomainName);
 
-            L2IsolationDomainResource l2IsolationDomain = Client.GetL2IsolationDomainResource(l2DomainResourceId);
+            NetworkFabricL2IsolationDomainResource l2IsolationDomain = Client.GetNetworkFabricL2IsolationDomainResource(l2DomainResourceId);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            L2IsolationDomainResource getResult = await l2IsolationDomain.GetAsync();
+            NetworkFabricL2IsolationDomainResource getResult = await l2IsolationDomain.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
             Assert.AreEqual(getResult.Data.Name, TestEnvironment.L2IsolationDomainName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<L2IsolationDomainResource>();
-            L2IsolationDomainCollection collectionOp = ResourceGroupResource.GetL2IsolationDomains();
-            await foreach (L2IsolationDomainResource item in collectionOp.GetAllAsync())
+            var listByResourceGroup = new List<NetworkFabricL2IsolationDomainResource>();
+            NetworkFabricL2IsolationDomainCollection collectionOp = ResourceGroupResource.GetNetworkFabricL2IsolationDomains();
+            await foreach (NetworkFabricL2IsolationDomainResource item in collectionOp.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Update Admin State
             TestContext.Out.WriteLine($"POST started.....");
-            UpdateAdministrativeState triggerEnable = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent triggerEnable = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Enable
+                State = AdministrativeEnableState.Enable
             };
-            ArmOperation<CommonPostActionResponseForDeviceUpdate> test = await l2IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, triggerEnable);
+            ArmOperation<DeviceUpdateCommonPostActionResult> test = await l2IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, triggerEnable);
 
-            UpdateAdministrativeState triggerDisable = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent triggerDisable = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Disable
+                State = AdministrativeEnableState.Disable
             };
             test = await l2IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, triggerDisable);
 

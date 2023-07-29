@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="supportedVersions"> List of supported Network Fabric SKU versions. </param>
         /// <param name="details"> URL providing detailed configuration of the fabric SKU. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkFabricSkuType? typePropertiesType, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkFabricSkuType? typePropertiesType, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, NetworkFabricProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             TypePropertiesType = typePropertiesType;
             MaxComputeRacks = maxComputeRacks;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> URL providing detailed configuration of the fabric SKU. </summary>
         public string Details { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

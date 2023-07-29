@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         public async Task InternalNetworks()
         {
             ResourceIdentifier l3IsolationDomainId = new ResourceIdentifier(TestEnvironment.Existing_L3ISD_ID);
-            L3IsolationDomainResource l3IsolationDomain = Client.GetL3IsolationDomainResource(l3IsolationDomainId);
+            NetworkFabricL3IsolationDomainResource l3IsolationDomain = Client.GetNetworkFabricL3IsolationDomainResource(l3IsolationDomainId);
             TestContext.Out.WriteLine($"Entered into the InternalNetwork tests....");
             TestContext.Out.WriteLine($"Provided InternalNetworks name : {TestEnvironment.InternalNetworkName}");
 
             l3IsolationDomain = await l3IsolationDomain.GetAsync();
 
-            ResourceIdentifier internalNetworkResourceId = InternalNetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, l3IsolationDomain.Data.Name, TestEnvironment.InternalNetworkName);
+            ResourceIdentifier internalNetworkResourceId = NetworkFabricInternalNetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, l3IsolationDomain.Data.Name, TestEnvironment.InternalNetworkName);
             TestContext.Out.WriteLine($"internalNetworkResourceId: {internalNetworkResourceId}");
-            InternalNetworkResource internalNetwork = Client.GetInternalNetworkResource(internalNetworkResourceId);
+            NetworkFabricInternalNetworkResource internalNetwork = Client.GetNetworkFabricInternalNetworkResource(internalNetworkResourceId);
 
             TestContext.Out.WriteLine($"InternalNetwork Test started.....");
 
-            InternalNetworkCollection collection = l3IsolationDomain.GetInternalNetworks();
+            NetworkFabricInternalNetworkCollection collection = l3IsolationDomain.GetNetworkFabricInternalNetworks();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            InternalNetworkData data = new InternalNetworkData(755)
+            NetworkFabricInternalNetworkData data = new NetworkFabricInternalNetworkData(755)
             {
                 Annotation = "annotation",
                 Mtu = 1500,
@@ -51,17 +51,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
                 IsMonitoringEnabled = IsMonitoringEnabled.True,
                 Extension = StaticRouteConfigurationExtension.NoExtension,
-                BgpConfiguration = new InternalNetworkPropertiesBgpConfiguration()
+                BgpConfiguration = new InternalNetworkBgpConfiguration()
                 {
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,
                         Multiplier = 5,
                     },
-                    DefaultRouteOriginate = BooleanEnumProperty.True,
+                    DefaultRouteOriginate = NetworkFabricBooleanValue.True,
                     AllowAS = 10,
                     AllowASOverride = AllowASOverride.Enable,
-                    PeerASN = 61234,
+                    PeerAsn = 61234,
                     IPv4ListenRangePrefixes =
                     {
                         "100.0.0.0/25"
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     },
                     Annotation = "annotation",
                 },
-                StaticRouteConfiguration = new InternalNetworkPropertiesStaticRouteConfiguration()
+                StaticRouteConfiguration = new InternalNetworkStaticRouteConfiguration()
                 {
                     Extension = StaticRouteConfigurationExtension.NoExtension,
                     BfdConfiguration = new BfdConfiguration()
@@ -89,20 +89,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     },
                 },
             };
-            ArmOperation<InternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.InternalNetworkName, data);
-            InternalNetworkResource createResult = lro.Value;
+            ArmOperation<NetworkFabricInternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.InternalNetworkName, data);
+            NetworkFabricInternalNetworkResource createResult = lro.Value;
             Assert.AreEqual(createResult.Data.Name, TestEnvironment.InternalNetworkName);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            InternalNetworkResource getResult = await internalNetwork.GetAsync();
+            NetworkFabricInternalNetworkResource getResult = await internalNetwork.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
             Assert.AreEqual(getResult.Data.Name, TestEnvironment.InternalNetworkName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<InternalNetworkResource>();
-            await foreach (InternalNetworkResource item in collection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkFabricInternalNetworkResource>();
+            await foreach (NetworkFabricInternalNetworkResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }

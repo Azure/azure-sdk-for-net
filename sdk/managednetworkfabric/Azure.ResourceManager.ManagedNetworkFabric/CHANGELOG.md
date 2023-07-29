@@ -1,25 +1,25 @@
 # Release History
 
 ## 1.0.0 (2023-07-28)
-This release is the first stable release of the Managed Network Fabric library.
 
+This release is the first stable release of the Managed Network Fabric library.
 
 ### Features Added
 
-This version supports the following new resources:
-
-- InternetGateyways
-- InternetGatewayRules
-- NetworkTap
-- NetworkTapRules
-- NetworkPacketBroker
-- NeighborGroup
+- Upgraded API version to 2023-06-15, which supports the following new resources:
+    - InternetGateyways
+    - InternetGatewayRules
+    - NetworkTap
+    - NetworkTapRules
+    - NetworkPacketBroker
+    - NeighborGroup
 
 ### Breaking Changes
 
 - Supported new parameters and removed deprecated parameters in all existing resources.
 - Supported new post actions in the existing resources.
 - Removed some post actions that are not needed.
+- Prepended `NetworkFabric` prefix to all single / simple model names.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
 - Corrected the name of interval / duration properties / parameters that end with units.
 - Optimized the name of some models and functions.

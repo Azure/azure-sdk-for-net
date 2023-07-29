@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties. </param>
         /// <param name="optionAProperties"> option A properties. </param>
-        internal VpnConfigurationPatchableProperties(ResourceIdentifier networkToNetworkInterconnectId, PeeringOption? peeringOption, OptionBProperties optionBProperties, VpnConfigurationPatchablePropertiesOptionAProperties optionAProperties)
+        internal VpnConfigurationPatchableProperties(ResourceIdentifier networkToNetworkInterconnectId, PeeringOption? peeringOption, OptionBProperties optionBProperties, VpnConfigurationPatchableOptionAProperties optionAProperties)
         {
             NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
             PeeringOption = peeringOption;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> option B properties. </summary>
         public OptionBProperties OptionBProperties { get; set; }
         /// <summary> option A properties. </summary>
-        public VpnConfigurationPatchablePropertiesOptionAProperties OptionAProperties { get; set; }
+        public VpnConfigurationPatchableOptionAProperties OptionAProperties { get; set; }
     }
 }

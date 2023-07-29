@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of InternetGatewaysListResult. </summary>
         internal InternetGatewaysListResult()
         {
-            Value = new ChangeTrackingList<InternetGatewayData>();
+            Value = new ChangeTrackingList<NetworkFabricInternetGatewayData>();
         }
 
         /// <summary> Initializes a new instance of InternetGatewaysListResult. </summary>
         /// <param name="value"> Displays list of Internet Gateway resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal InternetGatewaysListResult(IReadOnlyList<InternetGatewayData> value, string nextLink)
+        internal InternetGatewaysListResult(IReadOnlyList<NetworkFabricInternetGatewayData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Displays list of Internet Gateway resources. </summary>
-        public IReadOnlyList<InternetGatewayData> Value { get; }
+        public IReadOnlyList<NetworkFabricInternetGatewayData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

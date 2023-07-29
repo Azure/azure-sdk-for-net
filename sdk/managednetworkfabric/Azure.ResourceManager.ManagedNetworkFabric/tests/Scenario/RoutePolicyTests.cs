@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"Entered into the RoutePolicy tests....");
             TestContext.Out.WriteLine($"Provided TestEnvironment.RoutePolicyName name : {TestEnvironment.RoutePolicyName}");
 
-            ResourceIdentifier routePolicyResourceId = RoutePolicyResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.RoutePolicyName);
+            ResourceIdentifier routePolicyResourceId = NetworkFabricRoutePolicyResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.RoutePolicyName);
             TestContext.Out.WriteLine($"routePolicyResourceId: {routePolicyResourceId}");
 
             TestContext.Out.WriteLine($"RoutePolicy Test started.....");
 
-            RoutePolicyCollection collection = ResourceGroupResource.GetRoutePolicies();
+            NetworkFabricRoutePolicyCollection collection = ResourceGroupResource.GetNetworkFabricRoutePolicies();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
 
-            RoutePolicyData data = new RoutePolicyData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
+            NetworkFabricRoutePolicyData data = new NetworkFabricRoutePolicyData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
             {
                 Annotation = "annotation",
                 Statements =
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         new StatementConditionProperties()
                         {
                             RoutePolicyConditionType = RoutePolicyConditionType.Or,
-                            IPPrefixId = "/subscriptions/9531faa8-8c39-4165-b033-48697fe943db/resourceGroups/nfa-tool-ts-clisdktest-GA-nfcrg071323/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipPrefix071423",
+                            IPPrefixId = new ResourceIdentifier("/subscriptions/9531faa8-8c39-4165-b033-48697fe943db/resourceGroups/nfa-tool-ts-clisdktest-GA-nfcrg071323/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipPrefix071423"),
                         },
                         new StatementActionProperties(RoutePolicyActionType.Deny)
                         {
@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     ["keyID"] = "keyValue",
                 },
             };
-            ArmOperation<RoutePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.RoutePolicyName, data);
-            RoutePolicyResource createResult = lro.Value;
+            ArmOperation<NetworkFabricRoutePolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.RoutePolicyName, data);
+            NetworkFabricRoutePolicyResource createResult = lro.Value;
             Assert.AreEqual(createResult.Data.Name, TestEnvironment.RoutePolicyName);
 
-            RoutePolicyResource routePolicy = Client.GetRoutePolicyResource(routePolicyResourceId);
+            NetworkFabricRoutePolicyResource routePolicy = Client.GetNetworkFabricRoutePolicyResource(routePolicyResourceId);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            RoutePolicyResource getResult = await routePolicy.GetAsync();
+            NetworkFabricRoutePolicyResource getResult = await routePolicy.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
             Assert.AreEqual(getResult.Data.Name, TestEnvironment.RoutePolicyName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<RoutePolicyResource>();
-            await foreach (RoutePolicyResource item in collection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkFabricRoutePolicyResource>();
+            await foreach (NetworkFabricRoutePolicyResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }

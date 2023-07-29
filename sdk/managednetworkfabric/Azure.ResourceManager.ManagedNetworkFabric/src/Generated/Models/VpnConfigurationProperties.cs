@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties. </param>
         /// <param name="optionAProperties"> option A properties. </param>
-        internal VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId, AdministrativeState? administrativeState, PeeringOption peeringOption, OptionBProperties optionBProperties, VpnConfigurationPropertiesOptionAProperties optionAProperties)
+        internal VpnConfigurationProperties(ResourceIdentifier networkToNetworkInterconnectId, NetworkFabricAdministrativeState? administrativeState, PeeringOption peeringOption, OptionBProperties optionBProperties, VpnConfigurationOptionAProperties optionAProperties)
         {
             NetworkToNetworkInterconnectId = networkToNetworkInterconnectId;
             AdministrativeState = administrativeState;
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> ARM Resource ID of the Network To Network Interconnect. </summary>
         public ResourceIdentifier NetworkToNetworkInterconnectId { get; set; }
         /// <summary> Administrative state of the resource. </summary>
-        public AdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState { get; }
         /// <summary> Peering option list. </summary>
         public PeeringOption PeeringOption { get; set; }
         /// <summary> option B properties. </summary>
         public OptionBProperties OptionBProperties { get; set; }
         /// <summary> option A properties. </summary>
-        public VpnConfigurationPropertiesOptionAProperties OptionAProperties { get; set; }
+        public VpnConfigurationOptionAProperties OptionAProperties { get; set; }
     }
 }

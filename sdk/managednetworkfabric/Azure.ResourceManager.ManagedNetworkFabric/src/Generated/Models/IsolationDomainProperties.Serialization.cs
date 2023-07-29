@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<Encapsulation> encapsulation = default;
+            Optional<IsolationDomainEncapsulationType> encapsulation = default;
             Optional<IList<ResourceIdentifier>> neighborGroupIds = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    encapsulation = new Encapsulation(property.Value.GetString());
+                    encapsulation = new IsolationDomainEncapsulationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("neighborGroupIds"u8))

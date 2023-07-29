@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<RoutePolicyConditionType> type = default;
-            Optional<string> ipPrefixId = default;
+            Optional<ResourceIdentifier> ipPrefixId = default;
             Optional<IList<ResourceIdentifier>> ipExtendedCommunityIds = default;
             Optional<IList<ResourceIdentifier>> ipCommunityIds = default;
             foreach (var property in element.EnumerateObject())
@@ -82,7 +82,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("ipPrefixId"u8))
                 {
-                    ipPrefixId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipPrefixId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipExtendedCommunityIds"u8))

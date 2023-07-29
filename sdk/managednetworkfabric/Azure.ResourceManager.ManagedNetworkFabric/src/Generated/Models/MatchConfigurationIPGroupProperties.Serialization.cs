@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<IPAddressType> ipAddressType = default;
+            Optional<NetworkFabricIPAddressType> ipAddressType = default;
             Optional<IList<string>> ipPrefixes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipAddressType = new IPAddressType(property.Value.GetString());
+                    ipAddressType = new NetworkFabricIPAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipPrefixes"u8))

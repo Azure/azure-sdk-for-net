@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Optional<string> matchConfigurationName = default;
             Optional<long> sequenceNumber = default;
-            Optional<IPAddressType> ipAddressType = default;
+            Optional<NetworkFabricIPAddressType> ipAddressType = default;
             Optional<IList<NetworkTapRuleMatchCondition>> matchConditions = default;
             Optional<IList<NetworkTapRuleAction>> actions = default;
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    ipAddressType = new IPAddressType(property.Value.GetString());
+                    ipAddressType = new NetworkFabricIPAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("matchConditions"u8))

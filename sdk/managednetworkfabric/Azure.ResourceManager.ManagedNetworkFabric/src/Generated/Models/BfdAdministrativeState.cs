@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
-        private const string MATValue = "MAT";
-        private const string RMAValue = "RMA";
+        private const string MatValue = "MAT";
+        private const string RmaValue = "RMA";
 
         /// <summary> Enabled. </summary>
         public static BfdAdministrativeState Enabled { get; } = new BfdAdministrativeState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static BfdAdministrativeState Disabled { get; } = new BfdAdministrativeState(DisabledValue);
         /// <summary> MAT. </summary>
-        public static BfdAdministrativeState MAT { get; } = new BfdAdministrativeState(MATValue);
+        public static BfdAdministrativeState Mat { get; } = new BfdAdministrativeState(MatValue);
         /// <summary> RMA. </summary>
-        public static BfdAdministrativeState RMA { get; } = new BfdAdministrativeState(RMAValue);
+        public static BfdAdministrativeState Rma { get; } = new BfdAdministrativeState(RmaValue);
         /// <summary> Determines if two <see cref="BfdAdministrativeState"/> values are the same. </summary>
         public static bool operator ==(BfdAdministrativeState left, BfdAdministrativeState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="BfdAdministrativeState"/> values are not the same. </summary>

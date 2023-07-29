@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        /// <param name="peerASN"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
+        /// <param name="peerAsn"> ASN of PE devices for CE/PE connectivity.Example : 28. </param>
         /// <param name="vlanId"> VLAN for CE/PE Layer 3 connectivity.Example : 501. </param>
-        /// <param name="fabricASN"> ASN of CE devices for CE/PE connectivity. </param>
-        internal OptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerASN, int? vlanId, long? fabricASN) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix)
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        internal OptionBLayer3Configuration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, long? peerAsn, int? vlanId, long? fabricAsn) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix)
         {
-            PeerASN = peerASN;
+            PeerAsn = peerAsn;
             VlanId = vlanId;
-            FabricASN = fabricASN;
+            FabricAsn = fabricAsn;
         }
 
         /// <summary> ASN of PE devices for CE/PE connectivity.Example : 28. </summary>
-        public long? PeerASN { get; set; }
+        public long? PeerAsn { get; set; }
         /// <summary> VLAN for CE/PE Layer 3 connectivity.Example : 501. </summary>
         public int? VlanId { get; set; }
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
-        public long? FabricASN { get; }
+        public long? FabricAsn { get; }
     }
 }

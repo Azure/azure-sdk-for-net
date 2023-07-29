@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of IPExtendedCommunityListResult. </summary>
         internal IPExtendedCommunityListResult()
         {
-            Value = new ChangeTrackingList<IPExtendedCommunityData>();
+            Value = new ChangeTrackingList<NetworkFabricIPExtendedCommunityData>();
         }
 
         /// <summary> Initializes a new instance of IPExtendedCommunityListResult. </summary>
         /// <param name="value"> List of IP Extended Communities resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal IPExtendedCommunityListResult(IReadOnlyList<IPExtendedCommunityData> value, string nextLink)
+        internal IPExtendedCommunityListResult(IReadOnlyList<NetworkFabricIPExtendedCommunityData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of IP Extended Communities resources. </summary>
-        public IReadOnlyList<IPExtendedCommunityData> Value { get; }
+        public IReadOnlyList<NetworkFabricIPExtendedCommunityData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

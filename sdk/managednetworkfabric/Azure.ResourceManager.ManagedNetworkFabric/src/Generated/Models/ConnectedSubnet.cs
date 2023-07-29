@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Connected Subnet properties. </summary>
-    public partial class ConnectedSubnet : AnnotationResource
+    public partial class ConnectedSubnet : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of ConnectedSubnet. </summary>
         /// <param name="prefix"> Prefix of the Connected Subnet. </param>

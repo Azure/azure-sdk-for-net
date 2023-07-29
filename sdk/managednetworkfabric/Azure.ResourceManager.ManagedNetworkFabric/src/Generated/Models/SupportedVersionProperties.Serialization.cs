@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<string> version = default;
             Optional<string> vendorOSVersion = default;
             Optional<string> vendorFirmwareVersion = default;
-            Optional<BooleanEnumProperty> isDefault = default;
+            Optional<NetworkFabricBooleanValue> isDefault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    isDefault = new BooleanEnumProperty(property.Value.GetString());
+                    isDefault = new NetworkFabricBooleanValue(property.Value.GetString());
                     continue;
                 }
             }

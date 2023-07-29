@@ -49,210 +49,210 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 return new SubscriptionResourceExtensionClient(client, scope);
             });
         }
-        #region AccessControlListResource
+        #region NetworkFabricAccessControlListResource
         /// <summary>
-        /// Gets an object representing an <see cref="AccessControlListResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AccessControlListResource.CreateResourceIdentifier" /> to create an <see cref="AccessControlListResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricAccessControlListResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricAccessControlListResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricAccessControlListResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AccessControlListResource" /> object. </returns>
-        public static AccessControlListResource GetAccessControlListResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricAccessControlListResource" /> object. </returns>
+        public static NetworkFabricAccessControlListResource GetNetworkFabricAccessControlListResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AccessControlListResource.ValidateResourceId(id);
-                return new AccessControlListResource(client, id);
+                NetworkFabricAccessControlListResource.ValidateResourceId(id);
+                return new NetworkFabricAccessControlListResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InternetGatewayResource
+        #region NetworkFabricInternetGatewayResource
         /// <summary>
-        /// Gets an object representing an <see cref="InternetGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InternetGatewayResource.CreateResourceIdentifier" /> to create an <see cref="InternetGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricInternetGatewayResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricInternetGatewayResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricInternetGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InternetGatewayResource" /> object. </returns>
-        public static InternetGatewayResource GetInternetGatewayResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricInternetGatewayResource" /> object. </returns>
+        public static NetworkFabricInternetGatewayResource GetNetworkFabricInternetGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                InternetGatewayResource.ValidateResourceId(id);
-                return new InternetGatewayResource(client, id);
+                NetworkFabricInternetGatewayResource.ValidateResourceId(id);
+                return new NetworkFabricInternetGatewayResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InternetGatewayRuleResource
+        #region NetworkFabricInternetGatewayRuleResource
         /// <summary>
-        /// Gets an object representing an <see cref="InternetGatewayRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InternetGatewayRuleResource.CreateResourceIdentifier" /> to create an <see cref="InternetGatewayRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricInternetGatewayRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricInternetGatewayRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricInternetGatewayRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InternetGatewayRuleResource" /> object. </returns>
-        public static InternetGatewayRuleResource GetInternetGatewayRuleResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricInternetGatewayRuleResource" /> object. </returns>
+        public static NetworkFabricInternetGatewayRuleResource GetNetworkFabricInternetGatewayRuleResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                InternetGatewayRuleResource.ValidateResourceId(id);
-                return new InternetGatewayRuleResource(client, id);
+                NetworkFabricInternetGatewayRuleResource.ValidateResourceId(id);
+                return new NetworkFabricInternetGatewayRuleResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IPCommunityResource
+        #region NetworkFabricIPCommunityResource
         /// <summary>
-        /// Gets an object representing an <see cref="IPCommunityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPCommunityResource.CreateResourceIdentifier" /> to create an <see cref="IPCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricIPCommunityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricIPCommunityResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricIPCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPCommunityResource" /> object. </returns>
-        public static IPCommunityResource GetIPCommunityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricIPCommunityResource" /> object. </returns>
+        public static NetworkFabricIPCommunityResource GetNetworkFabricIPCommunityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IPCommunityResource.ValidateResourceId(id);
-                return new IPCommunityResource(client, id);
+                NetworkFabricIPCommunityResource.ValidateResourceId(id);
+                return new NetworkFabricIPCommunityResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IPExtendedCommunityResource
+        #region NetworkFabricIPExtendedCommunityResource
         /// <summary>
-        /// Gets an object representing an <see cref="IPExtendedCommunityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPExtendedCommunityResource.CreateResourceIdentifier" /> to create an <see cref="IPExtendedCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricIPExtendedCommunityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricIPExtendedCommunityResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricIPExtendedCommunityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPExtendedCommunityResource" /> object. </returns>
-        public static IPExtendedCommunityResource GetIPExtendedCommunityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricIPExtendedCommunityResource" /> object. </returns>
+        public static NetworkFabricIPExtendedCommunityResource GetNetworkFabricIPExtendedCommunityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IPExtendedCommunityResource.ValidateResourceId(id);
-                return new IPExtendedCommunityResource(client, id);
+                NetworkFabricIPExtendedCommunityResource.ValidateResourceId(id);
+                return new NetworkFabricIPExtendedCommunityResource(client, id);
             }
             );
         }
         #endregion
 
-        #region IPPrefixResource
+        #region NetworkFabricIPPrefixResource
         /// <summary>
-        /// Gets an object representing an <see cref="IPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IPPrefixResource.CreateResourceIdentifier" /> to create an <see cref="IPPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricIPPrefixResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricIPPrefixResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricIPPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IPPrefixResource" /> object. </returns>
-        public static IPPrefixResource GetIPPrefixResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricIPPrefixResource" /> object. </returns>
+        public static NetworkFabricIPPrefixResource GetNetworkFabricIPPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                IPPrefixResource.ValidateResourceId(id);
-                return new IPPrefixResource(client, id);
+                NetworkFabricIPPrefixResource.ValidateResourceId(id);
+                return new NetworkFabricIPPrefixResource(client, id);
             }
             );
         }
         #endregion
 
-        #region L2IsolationDomainResource
+        #region NetworkFabricL2IsolationDomainResource
         /// <summary>
-        /// Gets an object representing a <see cref="L2IsolationDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="L2IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="L2IsolationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricL2IsolationDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricL2IsolationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="L2IsolationDomainResource" /> object. </returns>
-        public static L2IsolationDomainResource GetL2IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricL2IsolationDomainResource" /> object. </returns>
+        public static NetworkFabricL2IsolationDomainResource GetNetworkFabricL2IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                L2IsolationDomainResource.ValidateResourceId(id);
-                return new L2IsolationDomainResource(client, id);
+                NetworkFabricL2IsolationDomainResource.ValidateResourceId(id);
+                return new NetworkFabricL2IsolationDomainResource(client, id);
             }
             );
         }
         #endregion
 
-        #region L3IsolationDomainResource
+        #region NetworkFabricL3IsolationDomainResource
         /// <summary>
-        /// Gets an object representing a <see cref="L3IsolationDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="L3IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="L3IsolationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricL3IsolationDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricL3IsolationDomainResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricL3IsolationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="L3IsolationDomainResource" /> object. </returns>
-        public static L3IsolationDomainResource GetL3IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricL3IsolationDomainResource" /> object. </returns>
+        public static NetworkFabricL3IsolationDomainResource GetNetworkFabricL3IsolationDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                L3IsolationDomainResource.ValidateResourceId(id);
-                return new L3IsolationDomainResource(client, id);
+                NetworkFabricL3IsolationDomainResource.ValidateResourceId(id);
+                return new NetworkFabricL3IsolationDomainResource(client, id);
             }
             );
         }
         #endregion
 
-        #region InternalNetworkResource
+        #region NetworkFabricInternalNetworkResource
         /// <summary>
-        /// Gets an object representing an <see cref="InternalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InternalNetworkResource.CreateResourceIdentifier" /> to create an <see cref="InternalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricInternalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricInternalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricInternalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InternalNetworkResource" /> object. </returns>
-        public static InternalNetworkResource GetInternalNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricInternalNetworkResource" /> object. </returns>
+        public static NetworkFabricInternalNetworkResource GetNetworkFabricInternalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                InternalNetworkResource.ValidateResourceId(id);
-                return new InternalNetworkResource(client, id);
+                NetworkFabricInternalNetworkResource.ValidateResourceId(id);
+                return new NetworkFabricInternalNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ExternalNetworkResource
+        #region NetworkFabricExternalNetworkResource
         /// <summary>
-        /// Gets an object representing an <see cref="ExternalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExternalNetworkResource.CreateResourceIdentifier" /> to create an <see cref="ExternalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricExternalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricExternalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricExternalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExternalNetworkResource" /> object. </returns>
-        public static ExternalNetworkResource GetExternalNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricExternalNetworkResource" /> object. </returns>
+        public static NetworkFabricExternalNetworkResource GetNetworkFabricExternalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ExternalNetworkResource.ValidateResourceId(id);
-                return new ExternalNetworkResource(client, id);
+                NetworkFabricExternalNetworkResource.ValidateResourceId(id);
+                return new NetworkFabricExternalNetworkResource(client, id);
             }
             );
         }
         #endregion
 
-        #region NeighborGroupResource
+        #region NetworkFabricNeighborGroupResource
         /// <summary>
-        /// Gets an object representing a <see cref="NeighborGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NeighborGroupResource.CreateResourceIdentifier" /> to create a <see cref="NeighborGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricNeighborGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricNeighborGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricNeighborGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NeighborGroupResource" /> object. </returns>
-        public static NeighborGroupResource GetNeighborGroupResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricNeighborGroupResource" /> object. </returns>
+        public static NetworkFabricNeighborGroupResource GetNetworkFabricNeighborGroupResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                NeighborGroupResource.ValidateResourceId(id);
-                return new NeighborGroupResource(client, id);
+                NetworkFabricNeighborGroupResource.ValidateResourceId(id);
+                return new NetworkFabricNeighborGroupResource(client, id);
             }
             );
         }
@@ -467,31 +467,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
         #endregion
 
-        #region RoutePolicyResource
+        #region NetworkFabricRoutePolicyResource
         /// <summary>
-        /// Gets an object representing a <see cref="RoutePolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoutePolicyResource.CreateResourceIdentifier" /> to create a <see cref="RoutePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkFabricRoutePolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkFabricRoutePolicyResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFabricRoutePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoutePolicyResource" /> object. </returns>
-        public static RoutePolicyResource GetRoutePolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkFabricRoutePolicyResource" /> object. </returns>
+        public static NetworkFabricRoutePolicyResource GetNetworkFabricRoutePolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RoutePolicyResource.ValidateResourceId(id);
-                return new RoutePolicyResource(client, id);
+                NetworkFabricRoutePolicyResource.ValidateResourceId(id);
+                return new NetworkFabricRoutePolicyResource(client, id);
             }
             );
         }
         #endregion
 
-        /// <summary> Gets a collection of AccessControlListResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkFabricAccessControlListResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of AccessControlListResources and their operations over a AccessControlListResource. </returns>
-        public static AccessControlListCollection GetAccessControlLists(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkFabricAccessControlListResources and their operations over a NetworkFabricAccessControlListResource. </returns>
+        public static NetworkFabricAccessControlListCollection GetNetworkFabricAccessControlLists(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAccessControlLists();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricAccessControlLists();
         }
 
         /// <summary>
@@ -513,9 +513,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AccessControlListResource>> GetAccessControlListAsync(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkFabricAccessControlListResource>> GetNetworkFabricAccessControlListAsync(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAccessControlLists().GetAsync(accessControlListName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkFabricAccessControlLists().GetAsync(accessControlListName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -537,41 +537,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="accessControlListName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessControlListName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AccessControlListResource> GetAccessControlList(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
+        public static Response<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlList(this ResourceGroupResource resourceGroupResource, string accessControlListName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAccessControlLists().Get(accessControlListName, cancellationToken);
+            return resourceGroupResource.GetNetworkFabricAccessControlLists().Get(accessControlListName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of InternetGatewayResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkFabricInternetGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of InternetGatewayResources and their operations over a InternetGatewayResource. </returns>
-        public static InternetGatewayCollection GetInternetGateways(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkFabricInternetGatewayResources and their operations over a NetworkFabricInternetGatewayResource. </returns>
+        public static NetworkFabricInternetGatewayCollection GetNetworkFabricInternetGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetInternetGateways();
-        }
-
-        /// <summary>
-        /// Implements Gateway GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>InternetGateways_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<InternetGatewayResource>> GetInternetGatewayAsync(this ResourceGroupResource resourceGroupResource, string internetGatewayName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetInternetGateways().GetAsync(internetGatewayName, cancellationToken).ConfigureAwait(false);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricInternetGateways();
         }
 
         /// <summary>
@@ -593,17 +569,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<InternetGatewayResource> GetInternetGateway(this ResourceGroupResource resourceGroupResource, string internetGatewayName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkFabricInternetGatewayResource>> GetNetworkFabricInternetGatewayAsync(this ResourceGroupResource resourceGroupResource, string internetGatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetInternetGateways().Get(internetGatewayName, cancellationToken);
+            return await resourceGroupResource.GetNetworkFabricInternetGateways().GetAsync(internetGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of InternetGatewayRuleResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Implements Gateway GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/internetGateways/{internetGatewayName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>InternetGateways_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of InternetGatewayRuleResources and their operations over a InternetGatewayRuleResource. </returns>
-        public static InternetGatewayRuleCollection GetInternetGatewayRules(this ResourceGroupResource resourceGroupResource)
+        /// <param name="internetGatewayName"> Name of the Internet Gateway. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="internetGatewayName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateway(this ResourceGroupResource resourceGroupResource, string internetGatewayName, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetInternetGatewayRules();
+            return resourceGroupResource.GetNetworkFabricInternetGateways().Get(internetGatewayName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkFabricInternetGatewayRuleResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkFabricInternetGatewayRuleResources and their operations over a NetworkFabricInternetGatewayRuleResource. </returns>
+        public static NetworkFabricInternetGatewayRuleCollection GetNetworkFabricInternetGatewayRules(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricInternetGatewayRules();
         }
 
         /// <summary>
@@ -625,9 +625,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<InternetGatewayRuleResource>> GetInternetGatewayRuleAsync(this ResourceGroupResource resourceGroupResource, string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkFabricInternetGatewayRuleResource>> GetNetworkFabricInternetGatewayRuleAsync(this ResourceGroupResource resourceGroupResource, string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetInternetGatewayRules().GetAsync(internetGatewayRuleName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkFabricInternetGatewayRules().GetAsync(internetGatewayRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -649,41 +649,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="internetGatewayRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internetGatewayRuleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<InternetGatewayRuleResource> GetInternetGatewayRule(this ResourceGroupResource resourceGroupResource, string internetGatewayRuleName, CancellationToken cancellationToken = default)
+        public static Response<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRule(this ResourceGroupResource resourceGroupResource, string internetGatewayRuleName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetInternetGatewayRules().Get(internetGatewayRuleName, cancellationToken);
+            return resourceGroupResource.GetNetworkFabricInternetGatewayRules().Get(internetGatewayRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IPCommunityResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkFabricIPCommunityResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IPCommunityResources and their operations over a IPCommunityResource. </returns>
-        public static IPCommunityCollection GetIPCommunities(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkFabricIPCommunityResources and their operations over a NetworkFabricIPCommunityResource. </returns>
+        public static NetworkFabricIPCommunityCollection GetNetworkFabricIPCommunities(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPCommunities();
-        }
-
-        /// <summary>
-        /// Implements an IP Community GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpCommunities_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipCommunityName"> Name of the IP Community. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<IPCommunityResource>> GetIPCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetIPCommunities().GetAsync(ipCommunityName, cancellationToken).ConfigureAwait(false);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricIPCommunities();
         }
 
         /// <summary>
@@ -705,17 +681,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<IPCommunityResource> GetIPCommunity(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkFabricIPCommunityResource>> GetNetworkFabricIPCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIPCommunities().Get(ipCommunityName, cancellationToken);
+            return await resourceGroupResource.GetNetworkFabricIPCommunities().GetAsync(ipCommunityName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of IPExtendedCommunityResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Implements an IP Community GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipCommunities/{ipCommunityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpCommunities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IPExtendedCommunityResources and their operations over a IPExtendedCommunityResource. </returns>
-        public static IPExtendedCommunityCollection GetIPExtendedCommunities(this ResourceGroupResource resourceGroupResource)
+        /// <param name="ipCommunityName"> Name of the IP Community. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunity(this ResourceGroupResource resourceGroupResource, string ipCommunityName, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPExtendedCommunities();
+            return resourceGroupResource.GetNetworkFabricIPCommunities().Get(ipCommunityName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkFabricIPExtendedCommunityResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkFabricIPExtendedCommunityResources and their operations over a NetworkFabricIPExtendedCommunityResource. </returns>
+        public static NetworkFabricIPExtendedCommunityCollection GetNetworkFabricIPExtendedCommunities(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricIPExtendedCommunities();
         }
 
         /// <summary>
@@ -737,9 +737,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<IPExtendedCommunityResource>> GetIPExtendedCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkFabricIPExtendedCommunityResource>> GetNetworkFabricIPExtendedCommunityAsync(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetIPExtendedCommunities().GetAsync(ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkFabricIPExtendedCommunities().GetAsync(ipExtendedCommunityName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -761,41 +761,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="ipExtendedCommunityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<IPExtendedCommunityResource> GetIPExtendedCommunity(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
+        public static Response<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunity(this ResourceGroupResource resourceGroupResource, string ipExtendedCommunityName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIPExtendedCommunities().Get(ipExtendedCommunityName, cancellationToken);
+            return resourceGroupResource.GetNetworkFabricIPExtendedCommunities().Get(ipExtendedCommunityName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of IPPrefixResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkFabricIPPrefixResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of IPPrefixResources and their operations over a IPPrefixResource. </returns>
-        public static IPPrefixCollection GetIPPrefixes(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkFabricIPPrefixResources and their operations over a NetworkFabricIPPrefixResource. </returns>
+        public static NetworkFabricIPPrefixCollection GetNetworkFabricIPPrefixes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetIPPrefixes();
-        }
-
-        /// <summary>
-        /// Implements IP Prefix GET method.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IpPrefixes_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<IPPrefixResource>> GetIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetIPPrefixes().GetAsync(ipPrefixName, cancellationToken).ConfigureAwait(false);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricIPPrefixes();
         }
 
         /// <summary>
@@ -817,17 +793,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<IPPrefixResource> GetIPPrefix(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkFabricIPPrefixResource>> GetNetworkFabricIPPrefixAsync(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetIPPrefixes().Get(ipPrefixName, cancellationToken);
+            return await resourceGroupResource.GetNetworkFabricIPPrefixes().GetAsync(ipPrefixName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of L2IsolationDomainResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Implements IP Prefix GET method.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/{ipPrefixName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpPrefixes_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of L2IsolationDomainResources and their operations over a L2IsolationDomainResource. </returns>
-        public static L2IsolationDomainCollection GetL2IsolationDomains(this ResourceGroupResource resourceGroupResource)
+        /// <param name="ipPrefixName"> Name of the IP Prefix. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ipPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefix(this ResourceGroupResource resourceGroupResource, string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetL2IsolationDomains();
+            return resourceGroupResource.GetNetworkFabricIPPrefixes().Get(ipPrefixName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkFabricL2IsolationDomainResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkFabricL2IsolationDomainResources and their operations over a NetworkFabricL2IsolationDomainResource. </returns>
+        public static NetworkFabricL2IsolationDomainCollection GetNetworkFabricL2IsolationDomains(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricL2IsolationDomains();
         }
 
         /// <summary>
@@ -849,9 +849,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<L2IsolationDomainResource>> GetL2IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkFabricL2IsolationDomainResource>> GetNetworkFabricL2IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetL2IsolationDomains().GetAsync(l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkFabricL2IsolationDomains().GetAsync(l2IsolationDomainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -873,41 +873,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="l2IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<L2IsolationDomainResource> GetL2IsolationDomain(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
+        public static Response<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomain(this ResourceGroupResource resourceGroupResource, string l2IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetL2IsolationDomains().Get(l2IsolationDomainName, cancellationToken);
+            return resourceGroupResource.GetNetworkFabricL2IsolationDomains().Get(l2IsolationDomainName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of L3IsolationDomainResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkFabricL3IsolationDomainResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of L3IsolationDomainResources and their operations over a L3IsolationDomainResource. </returns>
-        public static L3IsolationDomainCollection GetL3IsolationDomains(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkFabricL3IsolationDomainResources and their operations over a NetworkFabricL3IsolationDomainResource. </returns>
+        public static NetworkFabricL3IsolationDomainCollection GetNetworkFabricL3IsolationDomains(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetL3IsolationDomains();
-        }
-
-        /// <summary>
-        /// Retrieves details of this L3 Isolation Domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>L3IsolationDomains_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<L3IsolationDomainResource>> GetL3IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetL3IsolationDomains().GetAsync(l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricL3IsolationDomains();
         }
 
         /// <summary>
@@ -929,17 +905,41 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<L3IsolationDomainResource> GetL3IsolationDomain(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkFabricL3IsolationDomainResource>> GetNetworkFabricL3IsolationDomainAsync(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetL3IsolationDomains().Get(l3IsolationDomainName, cancellationToken);
+            return await resourceGroupResource.GetNetworkFabricL3IsolationDomains().GetAsync(l3IsolationDomainName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of NeighborGroupResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Retrieves details of this L3 Isolation Domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>L3IsolationDomains_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of NeighborGroupResources and their operations over a NeighborGroupResource. </returns>
-        public static NeighborGroupCollection GetNeighborGroups(this ResourceGroupResource resourceGroupResource)
+        /// <param name="l3IsolationDomainName"> Name of the L3 Isolation Domain. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="l3IsolationDomainName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomain(this ResourceGroupResource resourceGroupResource, string l3IsolationDomainName, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNeighborGroups();
+            return resourceGroupResource.GetNetworkFabricL3IsolationDomains().Get(l3IsolationDomainName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkFabricNeighborGroupResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of NetworkFabricNeighborGroupResources and their operations over a NetworkFabricNeighborGroupResource. </returns>
+        public static NetworkFabricNeighborGroupCollection GetNetworkFabricNeighborGroups(this ResourceGroupResource resourceGroupResource)
+        {
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricNeighborGroups();
         }
 
         /// <summary>
@@ -961,9 +961,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<NeighborGroupResource>> GetNeighborGroupAsync(this ResourceGroupResource resourceGroupResource, string neighborGroupName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkFabricNeighborGroupResource>> GetNetworkFabricNeighborGroupAsync(this ResourceGroupResource resourceGroupResource, string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNeighborGroups().GetAsync(neighborGroupName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkFabricNeighborGroups().GetAsync(neighborGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -985,9 +985,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="neighborGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="neighborGroupName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<NeighborGroupResource> GetNeighborGroup(this ResourceGroupResource resourceGroupResource, string neighborGroupName, CancellationToken cancellationToken = default)
+        public static Response<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroup(this ResourceGroupResource resourceGroupResource, string neighborGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNeighborGroups().Get(neighborGroupName, cancellationToken);
+            return resourceGroupResource.GetNetworkFabricNeighborGroups().Get(neighborGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkDeviceResources in the ResourceGroupResource. </summary>
@@ -1382,12 +1382,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return resourceGroupResource.GetNetworkTaps().Get(networkTapName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RoutePolicyResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkFabricRoutePolicyResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of RoutePolicyResources and their operations over a RoutePolicyResource. </returns>
-        public static RoutePolicyCollection GetRoutePolicies(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkFabricRoutePolicyResources and their operations over a NetworkFabricRoutePolicyResource. </returns>
+        public static NetworkFabricRoutePolicyCollection GetNetworkFabricRoutePolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRoutePolicies();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkFabricRoutePolicies();
         }
 
         /// <summary>
@@ -1409,9 +1409,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RoutePolicyResource>> GetRoutePolicyAsync(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkFabricRoutePolicyResource>> GetNetworkFabricRoutePolicyAsync(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetRoutePolicies().GetAsync(routePolicyName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkFabricRoutePolicies().GetAsync(routePolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1433,9 +1433,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentException"> <paramref name="routePolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routePolicyName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RoutePolicyResource> GetRoutePolicy(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
+        public static Response<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicy(this ResourceGroupResource resourceGroupResource, string routePolicyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetRoutePolicies().Get(routePolicyName, cancellationToken);
+            return resourceGroupResource.GetNetworkFabricRoutePolicies().Get(routePolicyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkDeviceSkuResources in the SubscriptionResource. </summary>
@@ -1565,10 +1565,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccessControlListResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AccessControlListResource> GetAccessControlListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricAccessControlListResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlListsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccessControlListsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricAccessControlListsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1586,10 +1586,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccessControlListResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AccessControlListResource> GetAccessControlLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricAccessControlListResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlLists(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccessControlLists(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricAccessControlLists(cancellationToken);
         }
 
         /// <summary>
@@ -1607,10 +1607,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InternetGatewayResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<InternetGatewayResource> GetInternetGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricInternetGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetInternetGatewaysAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricInternetGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1628,10 +1628,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InternetGatewayResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<InternetGatewayResource> GetInternetGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricInternetGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetInternetGateways(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricInternetGateways(cancellationToken);
         }
 
         /// <summary>
@@ -1649,10 +1649,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InternetGatewayRuleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<InternetGatewayRuleResource> GetInternetGatewayRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricInternetGatewayRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetInternetGatewayRulesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricInternetGatewayRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1670,10 +1670,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InternetGatewayRuleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<InternetGatewayRuleResource> GetInternetGatewayRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricInternetGatewayRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetInternetGatewayRules(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricInternetGatewayRules(cancellationToken);
         }
 
         /// <summary>
@@ -1691,10 +1691,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IPCommunityResource> GetIPCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricIPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPCommunitiesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricIPCommunitiesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1712,10 +1712,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IPCommunityResource> GetIPCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricIPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPCommunities(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricIPCommunities(cancellationToken);
         }
 
         /// <summary>
@@ -1733,10 +1733,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IPExtendedCommunityResource> GetIPExtendedCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricIPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPExtendedCommunitiesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricIPExtendedCommunitiesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1754,10 +1754,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IPExtendedCommunityResource> GetIPExtendedCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricIPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPExtendedCommunities(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricIPExtendedCommunities(cancellationToken);
         }
 
         /// <summary>
@@ -1775,10 +1775,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IPPrefixResource> GetIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefixesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPPrefixesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricIPPrefixesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1796,10 +1796,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IPPrefixResource> GetIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefixes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetIPPrefixes(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricIPPrefixes(cancellationToken);
         }
 
         /// <summary>
@@ -1817,10 +1817,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="L2IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<L2IsolationDomainResource> GetL2IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricL2IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL2IsolationDomainsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricL2IsolationDomainsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1838,10 +1838,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="L2IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<L2IsolationDomainResource> GetL2IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricL2IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL2IsolationDomains(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricL2IsolationDomains(cancellationToken);
         }
 
         /// <summary>
@@ -1859,10 +1859,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="L3IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<L3IsolationDomainResource> GetL3IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricL3IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL3IsolationDomainsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricL3IsolationDomainsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1880,10 +1880,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="L3IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<L3IsolationDomainResource> GetL3IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricL3IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetL3IsolationDomains(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricL3IsolationDomains(cancellationToken);
         }
 
         /// <summary>
@@ -1901,10 +1901,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NeighborGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NeighborGroupResource> GetNeighborGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricNeighborGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNeighborGroupsAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricNeighborGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1922,10 +1922,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NeighborGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NeighborGroupResource> GetNeighborGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricNeighborGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNeighborGroups(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricNeighborGroups(cancellationToken);
         }
 
         /// <summary>
@@ -2237,10 +2237,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoutePolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<RoutePolicyResource> GetRoutePoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkFabricRoutePolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePoliciesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRoutePoliciesAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricRoutePoliciesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2258,10 +2258,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoutePolicyResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<RoutePolicyResource> GetRoutePolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkFabricRoutePolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicies(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRoutePolicies(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkFabricRoutePolicies(cancellationToken);
         }
     }
 }

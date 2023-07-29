@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<int> maximumServerCount = default;
             Optional<IReadOnlyList<string>> supportedVersions = default;
             Optional<string> details = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

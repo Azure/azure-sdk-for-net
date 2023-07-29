@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> annotation = default;
             Optional<IList<ExpressRouteConnectionInformation>> infrastructureExpressRouteConnections = default;
             Optional<IList<ExpressRouteConnectionInformation>> workloadExpressRouteConnections = default;
-            Optional<ControllerServices> infrastructureServices = default;
-            Optional<ControllerServices> workloadServices = default;
+            Optional<NetworkFabricControllerServices> infrastructureServices = default;
+            Optional<NetworkFabricControllerServices> workloadServices = default;
             Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
             Optional<IReadOnlyList<ResourceIdentifier>> networkFabricIds = default;
             Optional<bool> workloadManagementNetwork = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> ipv4AddressSpace = default;
             Optional<string> ipv6AddressSpace = default;
             Optional<NetworkFabricControllerSKU> nfcSku = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            infrastructureServices = ControllerServices.DeserializeControllerServices(property0.Value);
+                            infrastructureServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workloadServices"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            workloadServices = ControllerServices.DeserializeControllerServices(property0.Value);
+                            workloadServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

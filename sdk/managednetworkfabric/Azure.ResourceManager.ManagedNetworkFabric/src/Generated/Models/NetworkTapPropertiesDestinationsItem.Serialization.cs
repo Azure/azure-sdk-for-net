@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<string> name = default;
-            Optional<DestinationType> destinationType = default;
+            Optional<NetworkTapDestinationType> destinationType = default;
             Optional<ResourceIdentifier> destinationId = default;
             Optional<IsolationDomainProperties> isolationDomainProperties = default;
             Optional<ResourceIdentifier> destinationTapRuleId = default;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    destinationType = new DestinationType(property.Value.GetString());
+                    destinationType = new NetworkTapDestinationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("destinationId"u8))

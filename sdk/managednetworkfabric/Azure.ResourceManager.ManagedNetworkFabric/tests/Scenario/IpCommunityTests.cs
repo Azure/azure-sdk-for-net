@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"Entered into the IP Community tests....");
             TestContext.Out.WriteLine($"Provided IP CommunityName name : {TestEnvironment.IpCommunityName}");
 
-            ResourceIdentifier ipCommunityResourceId = IPCommunityResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.IpCommunityName);
+            ResourceIdentifier ipCommunityResourceId = NetworkFabricIPCommunityResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.IpCommunityName);
             TestContext.Out.WriteLine($"IpCommunityResourceId: {ipCommunityResourceId}");
 
             // Get the collection of this IpCommunity
-            IPCommunityCollection collection = ResourceGroupResource.GetIPCommunities();
+            NetworkFabricIPCommunityCollection collection = ResourceGroupResource.GetNetworkFabricIPCommunities();
 
             TestContext.Out.WriteLine($"IpCommunity Test started.....");
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            IPCommunityData data = new IPCommunityData(new AzureLocation(TestEnvironment.Location))
+            NetworkFabricIPCommunityData data = new NetworkFabricIPCommunityData(new AzureLocation(TestEnvironment.Location))
             {
                 Annotation = "annotation",
                 IPCommunityRules =
@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
             };
 
-            ArmOperation<IPCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpCommunityName, data);
-            IPCommunityResource createResult = lro.Value;
-            IPCommunityResource ipCommunity = Client.GetIPCommunityResource(ipCommunityResourceId);
+            ArmOperation<NetworkFabricIPCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpCommunityName, data);
+            NetworkFabricIPCommunityResource createResult = lro.Value;
+            NetworkFabricIPCommunityResource ipCommunity = Client.GetNetworkFabricIPCommunityResource(ipCommunityResourceId);
             Assert.AreEqual(createResult.Data.Name, TestEnvironment.IpCommunityName);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            IPCommunityResource getResult = await ipCommunity.GetAsync();
+            NetworkFabricIPCommunityResource getResult = await ipCommunity.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
             Assert.AreEqual(getResult.Data.Name, TestEnvironment.IpCommunityName);
 
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<IPCommunityResource>();
-            IPCommunityCollection collectionOp = ResourceGroupResource.GetIPCommunities();
-            await foreach (IPCommunityResource item in collectionOp.GetAllAsync())
+            var listByResourceGroup = new List<NetworkFabricIPCommunityResource>();
+            NetworkFabricIPCommunityCollection collectionOp = ResourceGroupResource.GetNetworkFabricIPCommunities();
+            await foreach (NetworkFabricIPCommunityResource item in collectionOp.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }

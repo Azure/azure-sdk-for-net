@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkTapRulePatch patch = new NetworkTapRulePatch()
             {
                 Annotation = "annotation",
-                ConfigurationType = ConfigurationType.File,
+                ConfigurationType = NetworkFabricConfigurationType.File,
                 TapRulesUri = new Uri("https://microsoft.com/amdsdx"),
                 MatchConfigurations =
 {
@@ -83,15 +83,15 @@ new NetworkTapRuleMatchConfiguration()
 {
 MatchConfigurationName = "config1",
 SequenceNumber = 10,
-IPAddressType = IPAddressType.IPv4,
+IPAddressType = NetworkFabricIPAddressType.IPv4,
 MatchConditions =
 {
 new NetworkTapRuleMatchCondition()
 {
-EncapsulationType = EncapsulationType.None,
-PortCondition = new PortCondition(Layer4Protocol.TCP)
+EncapsulationType = NetworkTapEncapsulationType.None,
+PortCondition = new NetworkFabricPortCondition(Layer4Protocol.Tcp)
 {
-PortType = PortConditionType.SourcePort,
+PortType = NetworkFabricPortType.SourcePort,
 Ports =
 {
 "100"
@@ -141,7 +141,7 @@ new NetworkTapRuleAction()
 {
 TapRuleActionType = TapRuleActionType.Goto,
 Truncate = "100",
-IsTimestampEnabled = BooleanEnumProperty.True,
+IsTimestampEnabled = NetworkFabricBooleanValue.True,
 DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup"),
 MatchConfigurationName = "match1",
 }
@@ -157,7 +157,7 @@ IPGroups =
 new MatchConfigurationIPGroupProperties()
 {
 Name = "example-ipGroup1",
-IPAddressType = IPAddressType.IPv4,
+IPAddressType = NetworkFabricIPAddressType.IPv4,
 IPPrefixes =
 {
 "10.10.10.10/30"
@@ -284,16 +284,16 @@ Ports =
             NetworkTapRuleResource networkTapRule = client.GetNetworkTapRuleResource(networkTapRuleResourceId);
 
             // invoke the operation
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Enable,
+                State = AdministrativeEnableState.Enable,
                 ResourceIds =
 {
-""
+new ResourceIdentifier("")
 },
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkTapRule.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkTapRule.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -320,8 +320,8 @@ Ports =
             NetworkTapRuleResource networkTapRule = client.GetNetworkTapRuleResource(networkTapRuleResourceId);
 
             // invoke the operation
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkTapRule.ResyncAsync(WaitUntil.Completed);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkTapRule.ResyncAsync(WaitUntil.Completed);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -348,8 +348,8 @@ Ports =
             NetworkTapRuleResource networkTapRule = client.GetNetworkTapRuleResource(networkTapRuleResourceId);
 
             // invoke the operation
-            ArmOperation<ValidateConfigurationResponse> lro = await networkTapRule.ValidateConfigurationAsync(WaitUntil.Completed);
-            ValidateConfigurationResponse result = lro.Value;
+            ArmOperation<ValidateConfigurationResult> lro = await networkTapRule.ValidateConfigurationAsync(WaitUntil.Completed);
+            ValidateConfigurationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

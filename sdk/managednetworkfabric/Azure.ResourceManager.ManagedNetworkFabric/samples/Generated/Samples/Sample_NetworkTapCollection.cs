@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 new NetworkTapPropertiesDestinationsItem()
 {
 Name = "example-destinaionName",
-DestinationType = DestinationType.IsolationDomain,
+DestinationType = NetworkTapDestinationType.IsolationDomain,
 DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsloationDomains/example-l3Domain/internalNetworks/example-internalNetwork"),
 IsolationDomainProperties = new IsolationDomainProperties()
 {
-Encapsulation = Encapsulation.None,
+Encapsulation = IsolationDomainEncapsulationType.None,
 NeighborGroupIds =
 {
 new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup")

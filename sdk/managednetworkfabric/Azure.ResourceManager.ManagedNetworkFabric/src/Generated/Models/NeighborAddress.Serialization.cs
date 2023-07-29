@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<string> address = default;
-            Optional<ConfigurationState> configurationState = default;
+            Optional<NetworkFabricConfigurationState> configurationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    configurationState = new ConfigurationState(property.Value.GetString());
+                    configurationState = new NetworkFabricConfigurationState(property.Value.GetString());
                     continue;
                 }
             }

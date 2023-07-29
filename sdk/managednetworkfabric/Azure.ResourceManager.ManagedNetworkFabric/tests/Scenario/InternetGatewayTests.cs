@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             ResourceGroupResource resourceGroupResource = Client.GetResourceGroupResource(resourceGroupResourceId);
 
             // get the collection of this InternetGatewayResource
-            InternetGatewayCollection collection = resourceGroupResource.GetInternetGateways();
+            NetworkFabricInternetGatewayCollection collection = resourceGroupResource.GetNetworkFabricInternetGateways();
 
             // invoke the operation and iterate over the result
-            await foreach (InternetGatewayResource item in collection.GetAllAsync())
+            await foreach (NetworkFabricInternetGatewayResource item in collection.GetAllAsync())
             {
-                InternetGatewayData resourceData = item.Data;
+                NetworkFabricInternetGatewayData resourceData = item.Data;
             }
 
             Console.WriteLine($"Succeeded");

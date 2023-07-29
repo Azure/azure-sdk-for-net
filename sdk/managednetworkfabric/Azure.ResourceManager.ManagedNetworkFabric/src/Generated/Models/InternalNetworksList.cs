@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of InternalNetworksList. </summary>
         internal InternalNetworksList()
         {
-            Value = new ChangeTrackingList<InternalNetworkData>();
+            Value = new ChangeTrackingList<NetworkFabricInternalNetworkData>();
         }
 
         /// <summary> Initializes a new instance of InternalNetworksList. </summary>
         /// <param name="value"> List of Internal Network resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal InternalNetworksList(IReadOnlyList<InternalNetworkData> value, string nextLink)
+        internal InternalNetworksList(IReadOnlyList<NetworkFabricInternalNetworkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Internal Network resources. </summary>
-        public IReadOnlyList<InternalNetworkData> Value { get; }
+        public IReadOnlyList<NetworkFabricInternalNetworkData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

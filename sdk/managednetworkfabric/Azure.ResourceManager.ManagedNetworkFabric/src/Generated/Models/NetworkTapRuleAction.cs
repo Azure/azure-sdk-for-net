@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="isTimestampEnabled"> The parameter to enable or disable the timestamp. </param>
         /// <param name="destinationId"> Destination Id. The ARM resource Id may be either Network To Network Interconnect or NeighborGroup. </param>
         /// <param name="matchConfigurationName"> The name of the match configuration. This is used when Goto type is provided. If Goto type is selected and no match configuration name is provided. It goes to next configuration. </param>
-        internal NetworkTapRuleAction(TapRuleActionType? tapRuleActionType, string truncate, BooleanEnumProperty? isTimestampEnabled, ResourceIdentifier destinationId, string matchConfigurationName)
+        internal NetworkTapRuleAction(TapRuleActionType? tapRuleActionType, string truncate, NetworkFabricBooleanValue? isTimestampEnabled, ResourceIdentifier destinationId, string matchConfigurationName)
         {
             TapRuleActionType = tapRuleActionType;
             Truncate = truncate;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Truncate. 0 indicates do not truncate. </summary>
         public string Truncate { get; set; }
         /// <summary> The parameter to enable or disable the timestamp. </summary>
-        public BooleanEnumProperty? IsTimestampEnabled { get; set; }
+        public NetworkFabricBooleanValue? IsTimestampEnabled { get; set; }
         /// <summary> Destination Id. The ARM resource Id may be either Network To Network Interconnect or NeighborGroup. </summary>
         public ResourceIdentifier DestinationId { get; set; }
         /// <summary> The name of the match configuration. This is used when Goto type is provided. If Goto type is selected and no match configuration name is provided. It goes to next configuration. </summary>

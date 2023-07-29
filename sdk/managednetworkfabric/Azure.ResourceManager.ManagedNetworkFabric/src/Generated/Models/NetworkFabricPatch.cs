@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </summary>
         public string IPv6Prefix { get; set; }
         /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
-        public long? FabricASN { get; set; }
+        public long? FabricAsn { get; set; }
         /// <summary> Network and credentials configuration already applied to terminal server. </summary>
         public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration { get; set; }
         /// <summary> Configuration to be used to setup the management network. </summary>

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Model = model;
             SupportedVersions = new ChangeTrackingList<SupportedVersionProperties>();
             SupportedRoleTypes = new ChangeTrackingList<NetworkDeviceRoleName>();
-            Interfaces = new ChangeTrackingList<DeviceInterfaceProperties>();
+            Interfaces = new ChangeTrackingList<NetworkDeviceInterfaceProperties>();
         }
 
         /// <summary> Initializes a new instance of NetworkDeviceSkuData. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="supportedRoleTypes"> Available roles for the network device. </param>
         /// <param name="interfaces"> List of network device interfaces. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IList<SupportedVersionProperties> supportedVersions, IList<NetworkDeviceRoleName> supportedRoleTypes, IList<DeviceInterfaceProperties> interfaces, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal NetworkDeviceSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string model, string manufacturer, IList<SupportedVersionProperties> supportedVersions, IList<NetworkDeviceRoleName> supportedRoleTypes, IList<NetworkDeviceInterfaceProperties> interfaces, NetworkFabricProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Model = model;
             Manufacturer = manufacturer;
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <summary> Available roles for the network device. </summary>
         public IList<NetworkDeviceRoleName> SupportedRoleTypes { get; }
         /// <summary> List of network device interfaces. </summary>
-        public IList<DeviceInterfaceProperties> Interfaces { get; }
+        public IList<NetworkDeviceInterfaceProperties> Interfaces { get; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

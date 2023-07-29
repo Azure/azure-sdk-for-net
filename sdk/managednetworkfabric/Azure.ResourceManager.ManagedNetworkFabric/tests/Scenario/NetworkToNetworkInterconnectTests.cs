@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
 
-            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData(BooleanEnumProperty.True)
+            NetworkToNetworkInterconnectData data = new NetworkToNetworkInterconnectData(NetworkFabricBooleanValue.True)
             {
                 NniType = NniType.CE,
                 IsManagementType = IsManagementType.True,
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 {
                     Mtu = 1500
                 },
-                OptionBLayer3Configuration = new NetworkToNetworkInterconnectPropertiesOptionBLayer3Configuration()
+                OptionBLayer3Configuration = new NetworkToNetworkInterconnectOptionBLayer3Configuration()
                 {
-                    PeerASN = 61234,
+                    PeerAsn = 61234,
                     VlanId = 1234,
                     PrimaryIPv4Prefix = "10.0.0.12/30",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",

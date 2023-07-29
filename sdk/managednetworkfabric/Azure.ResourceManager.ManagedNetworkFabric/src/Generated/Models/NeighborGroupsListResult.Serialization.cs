@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<NeighborGroupData>> value = default;
+            Optional<IReadOnlyList<NetworkFabricNeighborGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<NeighborGroupData> array = new List<NeighborGroupData>();
+                    List<NetworkFabricNeighborGroupData> array = new List<NetworkFabricNeighborGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborGroupData.DeserializeNeighborGroupData(item));
+                        array.Add(NetworkFabricNeighborGroupData.DeserializeNetworkFabricNeighborGroupData(item));
                     }
                     value = array;
                     continue;

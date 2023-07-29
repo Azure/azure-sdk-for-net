@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            RebootProperties body = new RebootProperties()
+            NetworkDeviceRebootContent content = new NetworkDeviceRebootContent()
             {
-                RebootType = RebootType.GracefulRebootWithZTP,
+                RebootType = NetworkDeviceRebootType.GracefulRebootWithZtp,
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkDevice.RebootAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkDevice.RebootAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -205,8 +205,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkDevice.RefreshConfigurationAsync(WaitUntil.Completed);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkDevice.RefreshConfigurationAsync(WaitUntil.Completed);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -233,16 +233,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            UpdateDeviceAdministrativeState body = new UpdateDeviceAdministrativeState()
+            UpdateDeviceAdministrativeStateContent content = new UpdateDeviceAdministrativeStateContent()
             {
-                State = DeviceAdministrativeState.RMA,
+                State = NetworkDeviceAdministrativeState.Rma,
                 ResourceIds =
 {
-""
+new ResourceIdentifier("")
 },
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkDevice.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkDevice.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -269,12 +269,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             NetworkDeviceResource networkDevice = client.GetNetworkDeviceResource(networkDeviceResourceId);
 
             // invoke the operation
-            UpdateVersion body = new UpdateVersion()
+            NetworkFabricUpdateVersionContent content = new NetworkFabricUpdateVersionContent()
             {
                 Version = "1.0.0",
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkDevice.UpgradeAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkDevice.UpgradeAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

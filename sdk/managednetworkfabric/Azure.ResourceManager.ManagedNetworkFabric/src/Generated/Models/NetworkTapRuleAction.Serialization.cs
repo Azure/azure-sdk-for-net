@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Optional<TapRuleActionType> type = default;
             Optional<string> truncate = default;
-            Optional<BooleanEnumProperty> isTimestampEnabled = default;
+            Optional<NetworkFabricBooleanValue> isTimestampEnabled = default;
             Optional<ResourceIdentifier> destinationId = default;
             Optional<string> matchConfigurationName = default;
             foreach (var property in element.EnumerateObject())
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    isTimestampEnabled = new BooleanEnumProperty(property.Value.GetString());
+                    isTimestampEnabled = new NetworkFabricBooleanValue(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("destinationId"u8))

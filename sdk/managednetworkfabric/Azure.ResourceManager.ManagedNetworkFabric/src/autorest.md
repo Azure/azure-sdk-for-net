@@ -8,13 +8,14 @@ csharp: true
 library-name: Azure.ResourceManager.ManagedNetworkFabric
 namespace: Azure.ResourceManager.ManagedNetworkFabric
 require: https://github.com/Azure/azure-rest-api-specs/blob/0691ac4b0e05c8ca3bde2f8a33f036c12282fa25/specification/managednetworkfabric/resource-manager/readme.md
+#tag: package-2023-06-15
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-# mgmt-debug:
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -46,46 +47,100 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  MAT: Mat
+  RMA: Rma
+  GRE: Gre
+  ASN: Asn
+  TCP: Tcp
+  UDP: Udp
+  NPB: Npb
+  ZTP: Ztp
 
 rename-mapping:
+  AccessControlList: NetworkFabricAccessControlList
+  AccessControlListsListResult: AccessControlListsResult
+  ExternalNetwork: NetworkFabricExternalNetwork
+  ExternalNetwork.properties.networkToNetworkInterconnectId: -|arm-id
+  InternalNetwork: NetworkFabricInternalNetwork
+  InternetGateway: NetworkFabricInternetGateway
+  InternetGateway.properties.ipv4Address: -|ip-address
+  InternetGatewayRule: NetworkFabricInternetGatewayRule
+  InternetGatewayRule.properties.internetGatewayIds: -|arm-id
+  IpCommunity: NetworkFabricIpCommunity
+  IpExtendedCommunity: NetworkFabricIpExtendedCommunity
+  IpPrefix: NetworkFabricIpPrefix
+  L2IsolationDomain: NetworkFabricL2IsolationDomain
+  L3IsolationDomain: NetworkFabricL3IsolationDomain
+  NeighborGroup: NetworkFabricNeighborGroup
+  NetworkDevice.properties.managementIpv4Address: -|ip-address
+  NetworkInterface.properties.ipv4Address: -|ip-address
+  RoutePolicy: NetworkFabricRoutePolicy
   NetworkInterface: NetworkDeviceInterface
   Action: InternetGatewayRuleAction
+  AddressFamilyTypeL: NetworkFabricAddressFamilyType
+  AdministrativeState: NetworkFabricAdministrativeState
+  AnnotationResource: AnnotationResourceProperties
+  BooleanEnumProperty: NetworkFabricBooleanValue
+  CommonPostActionResponseForDeviceUpdate: DeviceUpdateCommonPostActionResult
+  CommonPostActionResponseForStateUpdate: StateUpdateCommonPostActionResult
+  ConfigurationState: NetworkFabricConfigurationState
+  ConfigurationType: NetworkFabricConfigurationType
   Condition: IPPrefixRuleCondition
+  ControllerServices: NetworkFabricControllerServices
+  DestinationProperties: NetworkTapDestinationProperties
+  DestinationType: NetworkTapDestinationType
+  DeviceAdministrativeState: NetworkDeviceAdministrativeState
+  DeviceInterfaceProperties: NetworkDeviceInterfaceProperties
+  EnableDisableOnResources: UpdateAdministrativeStateOnResources
+  EnableDisableOnResources.resourceIds: -|arm-id
+  EnableDisableState: AdministrativeEnableState
+  Encapsulation: IsolationDomainEncapsulationType
+  EncapsulationType: NetworkTapEncapsulationType
+  ErrorResponse: NetworkFabricErrorResult
   Extension: StaticRouteConfigurationExtension
+  ExternalNetworkPatchPropertiesOptionAProperties: ExternalNetworkPatchOptionAProperties
+  ExternalNetworkPropertiesOptionAProperties: ExternalNetworkOptionAProperties
+  InternalNetworkPropertiesBgpConfiguration: InternalNetworkBgpConfiguration
+  InternalNetworkPropertiesStaticRouteConfiguration: InternalNetworkStaticRouteConfiguration
+  IpCommunityIdList.ipCommunityIds: -|arm-id
+  IpExtendedCommunityIdList.ipExtendedCommunityIds: -|arm-id
   GatewayType: InternetGatewayType
   FabricSkuType: NetworkFabricSkuType
   InterfaceType: NetworkDeviceInterfaceType
+  IpGroupProperties: MatchConfigurationIPGroupProperties
+  IPAddressType: NetworkFabricIPAddressType
+  NeighborGroupDestination.ipv4Addresses: -|ip-address
+  NetworkDevice.properties.networkRackId: -|arm-id
+  NetworkFabricController.properties.workloadManagementNetwork: IsWorkloadManagementNetwork
   NetworkInterfacePatch: NetworkDeviceInterfacePatch
   NetworkInterfacesList: NetworkDeviceInterfacesList
-  IpGroupProperties: MatchConfigurationIPGroupProperties
+  NetworkTapRule.properties.networkTapId: -|arm-id
+  NetworkToNetworkInterconnectPropertiesOptionBLayer3Configuration: NetworkToNetworkInterconnectOptionBLayer3Configuration
   NfcSku: NetworkFabricControllerSKU
   PollingType: NetworkTapPollingType
-  PortType: PortConditionType
+  PortCondition: NetworkFabricPortCondition
+  PortType: NetworkFabricPortType
   PrefixType: IPMatchConditionPrefixType
-  NetworkDevice.properties.networkRackId: -|arm-id
-  NetworkTapRule.properties.networkTapId: -|arm-id
-  IpCommunityIdList.ipCommunityIds: -|arm-id
-  IpExtendedCommunityIdList.ipExtendedCommunityIds: -|arm-id
+  ProvisioningState: NetworkFabricProvisioningState
+  RebootProperties: NetworkDeviceRebootContent
+  RebootType: NetworkDeviceRebootType
+  RuleProperties: InternetGatewayRules
+  StatementConditionProperties.ipPrefixId: -|arm-id
   TerminalServerConfiguration.networkDeviceId: -|arm-id
-  NetworkFabricController.properties.workloadManagementNetwork: IsWorkloadManagementNetwork
+  UpdateAdministrativeState: UpdateAdministrativeStateContent
+  UpdateDeviceAdministrativeState: UpdateDeviceAdministrativeStateContent
+  UpdateVersion: NetworkFabricUpdateVersionContent
+  ValidateAction: NetworkFabricValidateAction
+  ValidateConfigurationProperties: ValidateConfigurationContent
+  ValidateConfigurationResponse: ValidateConfigurationResult
+  VpnConfigurationPatchablePropertiesOptionAProperties: VpnConfigurationPatchableOptionAProperties
+  VpnConfigurationPropertiesOptionAProperties: VpnConfigurationOptionAProperties
 
 directive:
   - from: NetworkFabricControllers.json
     where: $.definitions
     transform:
       $.ExpressRouteConnectionInformation.required =  [ 'expressRouteCircuitId' ];
-
-  # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem
-  - from: v5/types.json
-    where: $.definitions
-    transform: >
-      delete $.Resource.properties.id.format;
-
-  - from: v5/types.json
-    where: $.parameters
-    transform: >
-      delete $.SubscriptionIdParameter.format;
-
   # Removing the operations that are not allowed for the end users.
   - remove-operation: InternetGateways_Delete
   - remove-operation: InternetGateways_Create

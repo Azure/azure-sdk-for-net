@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -76,11 +77,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> networkDeviceSku = default;
             Optional<NetworkDeviceRole> networkDeviceRole = default;
             Optional<ResourceIdentifier> networkRackId = default;
-            Optional<string> managementIPv4Address = default;
+            Optional<IPAddress> managementIPv4Address = default;
             Optional<string> managementIPv6Address = default;
-            Optional<ConfigurationState> configurationState = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<AdministrativeState> administrativeState = default;
+            Optional<NetworkFabricConfigurationState> configurationState = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -180,7 +181,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("managementIpv4Address"u8))
                         {
-                            managementIPv4Address = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            managementIPv4Address = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("managementIpv6Address"u8))
@@ -194,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new ConfigurationState(property0.Value.GetString());
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -203,7 +208,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrativeState"u8))
@@ -212,7 +217,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
                             continue;
                         }
                     }

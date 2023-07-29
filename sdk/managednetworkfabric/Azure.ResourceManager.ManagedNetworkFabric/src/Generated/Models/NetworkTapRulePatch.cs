@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
         /// <summary> Input method to configure Network Tap Rule. </summary>
-        public ConfigurationType? ConfigurationType { get; set; }
+        public NetworkFabricConfigurationType? ConfigurationType { get; set; }
         /// <summary> Network Tap Rules file URL. </summary>
         public Uri TapRulesUri { get; set; }
         /// <summary> List of match configurations. </summary>

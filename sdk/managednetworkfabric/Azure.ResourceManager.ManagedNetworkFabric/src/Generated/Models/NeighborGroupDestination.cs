@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -16,21 +17,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NeighborGroupDestination. </summary>
         public NeighborGroupDestination()
         {
-            IPv4Addresses = new ChangeTrackingList<string>();
+            IPv4Addresses = new ChangeTrackingList<IPAddress>();
             IPv6Addresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of NeighborGroupDestination. </summary>
         /// <param name="ipv4Addresses"> Array of IPv4 Addresses. </param>
         /// <param name="ipv6Addresses"> Array of IPv6 Addresses. </param>
-        internal NeighborGroupDestination(IList<string> ipv4Addresses, IList<string> ipv6Addresses)
+        internal NeighborGroupDestination(IList<IPAddress> ipv4Addresses, IList<string> ipv6Addresses)
         {
             IPv4Addresses = ipv4Addresses;
             IPv6Addresses = ipv6Addresses;
         }
 
         /// <summary> Array of IPv4 Addresses. </summary>
-        public IList<string> IPv4Addresses { get; }
+        public IList<IPAddress> IPv4Addresses { get; }
         /// <summary> Array of IPv6 Addresses. </summary>
         public IList<string> IPv6Addresses { get; }
     }

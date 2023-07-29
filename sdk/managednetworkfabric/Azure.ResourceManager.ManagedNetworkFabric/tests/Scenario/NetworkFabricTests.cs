@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                 },
                             },
                         },
-                        OptionAProperties = new VpnConfigurationPropertiesOptionAProperties()
+                        OptionAProperties = new VpnConfigurationOptionAProperties()
                         {
                             PrimaryIPv4Prefix = "10.0.0.12/30",
                             PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                             SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                             Mtu = 1501,
                             VlanId = 3001,
-                            PeerASN = 1235,
+                            PeerAsn = 1235,
                             BfdConfiguration = new BfdConfiguration()
                             {
                                 IntervalInMilliSeconds = 300,
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                 },
                             },
                         },
-                        OptionAProperties = new VpnConfigurationPropertiesOptionAProperties()
+                        OptionAProperties = new VpnConfigurationOptionAProperties()
                         {
                             PrimaryIPv4Prefix = "10.0.0.14/30",
                             PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/127",
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                             SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/127",
                             Mtu = 1500,
                             VlanId = 3000,
-                            PeerASN = 61234,
+                            PeerAsn = 61234,
                             BfdConfiguration = new BfdConfiguration()
                             {
                                 IntervalInMilliSeconds = 300,
@@ -165,13 +165,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // provision
             TestContext.Out.WriteLine($"POST - Provision started.....");
-            ArmOperation<CommonPostActionResponseForDeviceUpdate> triggerProvision = await networkFabric.ProvisionAsync(WaitUntil.Completed);
-            CommonPostActionResponseForDeviceUpdate triggerProvisionResult = triggerProvision.Value;
+            ArmOperation<DeviceUpdateCommonPostActionResult> triggerProvision = await networkFabric.ProvisionAsync(WaitUntil.Completed);
+            DeviceUpdateCommonPostActionResult triggerProvisionResult = triggerProvision.Value;
             Console.WriteLine(triggerProvisionResult);
 
             // Deprovision
             TestContext.Out.WriteLine($"POST - Deprovision started.....");
-            ArmOperation<CommonPostActionResponseForDeviceUpdate> deProvisionResponse = await networkFabric.DeprovisionAsync(WaitUntil.Completed);
+            ArmOperation<DeviceUpdateCommonPostActionResult> deProvisionResponse = await networkFabric.DeprovisionAsync(WaitUntil.Completed);
             Console.WriteLine(triggerProvisionResult);
 
             // Delete

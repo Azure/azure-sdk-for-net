@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("vlanId"u8);
                 writer.WriteNumberValue(VlanId.Value);
             }
-            if (Optional.IsDefined(PeerASN))
+            if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerASN"u8);
-                writer.WriteNumberValue(PeerASN.Value);
+                writer.WriteNumberValue(PeerAsn.Value);
             }
             if (Optional.IsDefined(BfdConfiguration))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Optional<int> mtu = default;
             Optional<int> vlanId = default;
-            Optional<long> peerASN = default;
+            Optional<long> peerAsn = default;
             Optional<BfdConfiguration> bfdConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    peerASN = property.Value.GetInt64();
+                    peerAsn = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("bfdConfiguration"u8))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new OptionAProperties(Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(peerASN), bfdConfiguration.Value);
+            return new OptionAProperties(Optional.ToNullable(mtu), Optional.ToNullable(vlanId), Optional.ToNullable(peerAsn), bfdConfiguration.Value);
         }
     }
 }

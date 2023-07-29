@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of NeighborAddress. </summary>
         /// <param name="address"> IP Address. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
-        internal NeighborAddress(string address, ConfigurationState? configurationState)
+        internal NeighborAddress(string address, NetworkFabricConfigurationState? configurationState)
         {
             Address = address;
             ConfigurationState = configurationState;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> IP Address. </summary>
         public string Address { get; set; }
         /// <summary> Configuration state of the resource. </summary>
-        public ConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
     }
 }

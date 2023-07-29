@@ -85,7 +85,7 @@ new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/reso
                 },
                 OptionBLayer3Configuration = new OptionBLayer3Configuration()
                 {
-                    PeerASN = 2345,
+                    PeerAsn = 2345,
                     VlanId = 1235,
                     PrimaryIPv4Prefix = "20.0.0.12/29",
                     PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
@@ -188,16 +188,16 @@ new StaticRouteProperties("4FFE:FFFF:0:CD30::ac/127",new string[]
             NetworkToNetworkInterconnectResource networkToNetworkInterconnect = client.GetNetworkToNetworkInterconnectResource(networkToNetworkInterconnectResourceId);
 
             // invoke the operation
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Enable,
+                State = AdministrativeEnableState.Enable,
                 ResourceIds =
 {
-""
+new ResourceIdentifier("")
 },
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkToNetworkInterconnect.UpdateNpbStaticRouteBfdAdministrativeStateAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkToNetworkInterconnect.UpdateNpbStaticRouteBfdAdministrativeStateAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -225,16 +225,16 @@ new StaticRouteProperties("4FFE:FFFF:0:CD30::ac/127",new string[]
             NetworkToNetworkInterconnectResource networkToNetworkInterconnect = client.GetNetworkToNetworkInterconnectResource(networkToNetworkInterconnectResourceId);
 
             // invoke the operation
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Enable,
+                State = AdministrativeEnableState.Enable,
                 ResourceIds =
 {
-""
+new ResourceIdentifier("")
 },
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkToNetworkInterconnect.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkToNetworkInterconnect.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

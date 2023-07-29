@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         {
             TestContext.Out.WriteLine($"Provided  IpExtendedCommunityName name : {TestEnvironment.IpExtendedCommunityName}");
 
-            ResourceIdentifier ipExtendedCommunityResourceId = IPExtendedCommunityResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.IpExtendedCommunityName);
+            ResourceIdentifier ipExtendedCommunityResourceId = NetworkFabricIPExtendedCommunityResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.IpExtendedCommunityName);
             TestContext.Out.WriteLine($"ipExtendedCommunityResourceId: {ipExtendedCommunityResourceId}");
 
             // Get the collection of this IpExtendedCommunity
-            IPExtendedCommunityCollection collection = ResourceGroupResource.GetIPExtendedCommunities();
+            NetworkFabricIPExtendedCommunityCollection collection = ResourceGroupResource.GetNetworkFabricIPExtendedCommunities();
 
             TestContext.Out.WriteLine($"IpExtendedCommunityTest started.....");
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            IPExtendedCommunityData data = new IPExtendedCommunityData(new AzureLocation(TestEnvironment.Location), new IPExtendedCommunityRule[] { new IPExtendedCommunityRule(CommunityActionType.Permit, 4155123341, new string[] { "1234:2345" }) })
+            NetworkFabricIPExtendedCommunityData data = new NetworkFabricIPExtendedCommunityData(new AzureLocation(TestEnvironment.Location), new IPExtendedCommunityRule[] { new IPExtendedCommunityRule(CommunityActionType.Permit, 4155123341, new string[] { "1234:2345" }) })
             {
                 Annotation = "annotation",
                 Tags =
@@ -42,23 +42,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
             };
 
-            ArmOperation<IPExtendedCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpExtendedCommunityName, data);
-            IPExtendedCommunityResource createResult = lro.Value;
+            ArmOperation<NetworkFabricIPExtendedCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpExtendedCommunityName, data);
+            NetworkFabricIPExtendedCommunityResource createResult = lro.Value;
             Assert.AreEqual(createResult.Data.Name, TestEnvironment.IpExtendedCommunityName);
 
-            IPExtendedCommunityResource ipExtendedCommunity = Client.GetIPExtendedCommunityResource(ipExtendedCommunityResourceId);
+            NetworkFabricIPExtendedCommunityResource ipExtendedCommunity = Client.GetNetworkFabricIPExtendedCommunityResource(ipExtendedCommunityResourceId);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            IPExtendedCommunityResource getResult = await ipExtendedCommunity.GetAsync();
+            NetworkFabricIPExtendedCommunityResource getResult = await ipExtendedCommunity.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
             Assert.AreEqual(getResult.Data.Name, TestEnvironment.IpExtendedCommunityName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<IPExtendedCommunityResource>();
-            IPExtendedCommunityCollection collectionOp = ResourceGroupResource.GetIPExtendedCommunities();
-            await foreach (IPExtendedCommunityResource item in collectionOp.GetAllAsync())
+            var listByResourceGroup = new List<NetworkFabricIPExtendedCommunityResource>();
+            NetworkFabricIPExtendedCommunityCollection collectionOp = ResourceGroupResource.GetNetworkFabricIPExtendedCommunities();
+            await foreach (NetworkFabricIPExtendedCommunityResource item in collectionOp.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }

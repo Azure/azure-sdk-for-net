@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="name"> IP Group name. </param>
         /// <param name="ipAddressType"> IP Address type. </param>
         /// <param name="ipPrefixes"> List of IP Prefixes. </param>
-        internal MatchConfigurationIPGroupProperties(string name, IPAddressType? ipAddressType, IList<string> ipPrefixes)
+        internal MatchConfigurationIPGroupProperties(string name, NetworkFabricIPAddressType? ipAddressType, IList<string> ipPrefixes)
         {
             Name = name;
             IPAddressType = ipAddressType;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> IP Group name. </summary>
         public string Name { get; set; }
         /// <summary> IP Address type. </summary>
-        public IPAddressType? IPAddressType { get; set; }
+        public NetworkFabricIPAddressType? IPAddressType { get; set; }
         /// <summary> List of IP Prefixes. </summary>
         public IList<string> IPPrefixes { get; }
     }

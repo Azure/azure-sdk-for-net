@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 new NetworkTapPatchableParametersDestinationsItem()
 {
 Name = "example-destinaionName",
-DestinationType = DestinationType.IsolationDomain,
+DestinationType = NetworkTapDestinationType.IsolationDomain,
 DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/l3IsloationDomains/example-l3Domain/internalNetworks/example-internalNetwork"),
 IsolationDomainProperties = new IsolationDomainProperties()
 {
-Encapsulation = Encapsulation.None,
+Encapsulation = IsolationDomainEncapsulationType.None,
 NeighborGroupIds =
 {
 new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup")
@@ -190,16 +190,16 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
             NetworkTapResource networkTap = client.GetNetworkTapResource(networkTapResourceId);
 
             // invoke the operation
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Enable,
+                State = AdministrativeEnableState.Enable,
                 ResourceIds =
 {
-""
+new ResourceIdentifier("")
 },
             };
-            ArmOperation<CommonPostActionResponseForDeviceUpdate> lro = await networkTap.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForDeviceUpdate result = lro.Value;
+            ArmOperation<DeviceUpdateCommonPostActionResult> lro = await networkTap.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
+            DeviceUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -226,8 +226,8 @@ DestinationTapRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxx
             NetworkTapResource networkTap = client.GetNetworkTapResource(networkTapResourceId);
 
             // invoke the operation
-            ArmOperation<CommonPostActionResponseForStateUpdate> lro = await networkTap.ResyncAsync(WaitUntil.Completed);
-            CommonPostActionResponseForStateUpdate result = lro.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkTap.ResyncAsync(WaitUntil.Completed);
+            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

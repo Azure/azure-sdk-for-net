@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of InternetGatewayRulesListResult. </summary>
         internal InternetGatewayRulesListResult()
         {
-            Value = new ChangeTrackingList<InternetGatewayRuleData>();
+            Value = new ChangeTrackingList<NetworkFabricInternetGatewayRuleData>();
         }
 
         /// <summary> Initializes a new instance of InternetGatewayRulesListResult. </summary>
         /// <param name="value"> List of Internet Gateway Rule resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal InternetGatewayRulesListResult(IReadOnlyList<InternetGatewayRuleData> value, string nextLink)
+        internal InternetGatewayRulesListResult(IReadOnlyList<NetworkFabricInternetGatewayRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Internet Gateway Rule resources. </summary>
-        public IReadOnlyList<InternetGatewayRuleData> Value { get; }
+        public IReadOnlyList<NetworkFabricInternetGatewayRuleData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

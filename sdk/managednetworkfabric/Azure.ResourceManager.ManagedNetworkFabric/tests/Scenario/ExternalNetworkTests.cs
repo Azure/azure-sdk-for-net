@@ -21,24 +21,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         public async Task ExternalNetworks()
         {
             ResourceIdentifier l3IsolationDomainId = new ResourceIdentifier(TestEnvironment.Existing_L3ISD_ID);
-            L3IsolationDomainResource l3IsolationDomain = Client.GetL3IsolationDomainResource(l3IsolationDomainId);
+            NetworkFabricL3IsolationDomainResource l3IsolationDomain = Client.GetNetworkFabricL3IsolationDomainResource(l3IsolationDomainId);
 
             TestContext.Out.WriteLine($"Entered into the ExternalNetwork tests....");
             TestContext.Out.WriteLine($"Provided ExternalNetwork name : {TestEnvironment.ExternalNetworkName}");
 
             l3IsolationDomain = await l3IsolationDomain.GetAsync();
 
-            ResourceIdentifier externalNetworkResourceId = ExternalNetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, l3IsolationDomain.Data.Name, TestEnvironment.ExternalNetworkName);
+            ResourceIdentifier externalNetworkResourceId = NetworkFabricExternalNetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, l3IsolationDomain.Data.Name, TestEnvironment.ExternalNetworkName);
             TestContext.Out.WriteLine($"externalNetworkResourceId: {externalNetworkResourceId}");
-            ExternalNetworkResource externalNetwork = Client.GetExternalNetworkResource(externalNetworkResourceId);
+            NetworkFabricExternalNetworkResource externalNetwork = Client.GetNetworkFabricExternalNetworkResource(externalNetworkResourceId);
 
             TestContext.Out.WriteLine($"ExternalNetwork Test started.....");
 
-            ExternalNetworkCollection collection = l3IsolationDomain.GetExternalNetworks();
+            NetworkFabricExternalNetworkCollection collection = l3IsolationDomain.GetNetworkFabricExternalNetworks();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            ExternalNetworkData data = new ExternalNetworkData(PeeringOption.OptionA)
+            NetworkFabricExternalNetworkData data = new NetworkFabricExternalNetworkData(PeeringOption.OptionA)
             {
                 Annotation = "annotation",
                 OptionBProperties = new L3OptionBProperties()
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                         },
                     },
                 },
-                OptionAProperties = new ExternalNetworkPropertiesOptionAProperties()
+                OptionAProperties = new ExternalNetworkOptionAProperties()
                 {
                     Mtu = 1500,
                     VlanId = 1001,
-                    PeerASN = 65047,
+                    PeerAsn = 65047,
                     BfdConfiguration = new BfdConfiguration()
                     {
                         IntervalInMilliSeconds = 300,
@@ -79,20 +79,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     SecondaryIPv6Prefix = "3FFE:FFFF:0:CD30::a4/127",
                 },
             };
-            ArmOperation<ExternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.ExternalNetworkName, data);
-            ExternalNetworkResource createResult = lro.Value;
+            ArmOperation<NetworkFabricExternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.ExternalNetworkName, data);
+            NetworkFabricExternalNetworkResource createResult = lro.Value;
             Assert.AreEqual(createResult.Data.Name, TestEnvironment.ExternalNetworkName);
 
             // Get
             TestContext.Out.WriteLine($"GET started.....");
-            ExternalNetworkResource getResult = await externalNetwork.GetAsync();
+            NetworkFabricExternalNetworkResource getResult = await externalNetwork.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
             Assert.AreEqual(getResult.Data.Name, TestEnvironment.ExternalNetworkName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<ExternalNetworkResource>();
-            await foreach (ExternalNetworkResource item in collection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkFabricExternalNetworkResource>();
+            await foreach (NetworkFabricExternalNetworkResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }

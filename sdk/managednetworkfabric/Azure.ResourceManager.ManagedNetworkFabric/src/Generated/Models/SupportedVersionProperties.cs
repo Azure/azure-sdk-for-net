@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="vendorOSVersion"> Operating system version. </param>
         /// <param name="vendorFirmwareVersion"> Firmware version. </param>
         /// <param name="isDefault"> If true newly provisioned Fabric will use this device version by default to bootstrap the network devices for the first time. </param>
-        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, BooleanEnumProperty? isDefault)
+        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, NetworkFabricBooleanValue? isDefault)
         {
             Version = version;
             VendorOSVersion = vendorOSVersion;
@@ -35,6 +35,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Firmware version. </summary>
         public string VendorFirmwareVersion { get; set; }
         /// <summary> If true newly provisioned Fabric will use this device version by default to bootstrap the network devices for the first time. </summary>
-        public BooleanEnumProperty? IsDefault { get; set; }
+        public NetworkFabricBooleanValue? IsDefault { get; set; }
     }
 }

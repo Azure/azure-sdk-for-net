@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<NetworkRackType> networkRackType = default;
             ResourceIdentifier networkFabricId = default;
             Optional<IReadOnlyList<ResourceIdentifier>> networkDevices = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

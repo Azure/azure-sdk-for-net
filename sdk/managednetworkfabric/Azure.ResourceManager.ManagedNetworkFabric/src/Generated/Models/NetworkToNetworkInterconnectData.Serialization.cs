@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<SystemData> systemData = default;
             Optional<NniType> nniType = default;
             Optional<IsManagementType> isManagementType = default;
-            BooleanEnumProperty useOptionB = default;
+            NetworkFabricBooleanValue useOptionB = default;
             Optional<Layer2Configuration> layer2Configuration = default;
-            Optional<NetworkToNetworkInterconnectPropertiesOptionBLayer3Configuration> optionBLayer3Configuration = default;
+            Optional<NetworkToNetworkInterconnectOptionBLayer3Configuration> optionBLayer3Configuration = default;
             Optional<NpbStaticRouteConfiguration> npbStaticRouteConfiguration = default;
             Optional<ImportRoutePolicyInformation> importRoutePolicy = default;
             Optional<ExportRoutePolicyInformation> exportRoutePolicy = default;
             Optional<ResourceIdentifier> egressAclId = default;
             Optional<ResourceIdentifier> ingressAclId = default;
-            Optional<ConfigurationState> configurationState = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<AdministrativeState> administrativeState = default;
+            Optional<NetworkFabricConfigurationState> configurationState = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         }
                         if (property0.NameEquals("useOptionB"u8))
                         {
-                            useOptionB = new BooleanEnumProperty(property0.Value.GetString());
+                            useOptionB = new NetworkFabricBooleanValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("layer2Configuration"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            optionBLayer3Configuration = NetworkToNetworkInterconnectPropertiesOptionBLayer3Configuration.DeserializeNetworkToNetworkInterconnectPropertiesOptionBLayer3Configuration(property0.Value);
+                            optionBLayer3Configuration = NetworkToNetworkInterconnectOptionBLayer3Configuration.DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("npbStaticRouteConfiguration"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            configurationState = new ConfigurationState(property0.Value.GetString());
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("administrativeState"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            administrativeState = new AdministrativeState(property0.Value.GetString());
+                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
                             continue;
                         }
                     }

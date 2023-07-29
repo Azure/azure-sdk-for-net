@@ -53,19 +53,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
-            UpdateAdministrativeState body = new UpdateAdministrativeState()
+            UpdateAdministrativeStateContent cotnent = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Disable
+                State = AdministrativeEnableState.Disable
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> disableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
-            CommonPostActionResponseForStateUpdate result = disableAdminStateResponse.Value;
+            ArmOperation<StateUpdateCommonPostActionResult> disableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, cotnent);
+            StateUpdateCommonPostActionResult result = disableAdminStateResponse.Value;
             TestContext.WriteLine($"Succeeded: {result}");
 
-            body = new UpdateAdministrativeState()
+            cotnent = new UpdateAdministrativeStateContent()
             {
-                State = EnableDisableState.Enable
+                State = AdministrativeEnableState.Enable
             };
-            ArmOperation<CommonPostActionResponseForStateUpdate> enableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, body);
+            ArmOperation<StateUpdateCommonPostActionResult> enableAdminStateResponse = await networkInterface.UpdateAdministrativeStateAsync(WaitUntil.Completed, cotnent);
             result = enableAdminStateResponse.Value;
             TestContext.WriteLine($"Succeeded: {result}");
         }
