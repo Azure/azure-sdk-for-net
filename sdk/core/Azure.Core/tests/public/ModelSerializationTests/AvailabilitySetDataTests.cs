@@ -3,13 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ResourceManager.Compute;
-using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
