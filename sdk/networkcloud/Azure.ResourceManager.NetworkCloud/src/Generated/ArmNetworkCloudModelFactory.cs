@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new HardwareValidationStatus(lastValidationOn, result);
         }
 
-        /// <summary> Initializes a new instance of CloudServicesNetworkData. </summary>
+        /// <summary> Initializes a new instance of NetworkCloudCloudServicesNetworkData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="interfaceName"> The name of the interface that will be present in the virtual machine to represent this network. </param>
         /// <param name="provisioningState"> The provisioning state of the cloud services network. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this cloud services network. </param>
-        /// <returns> A new <see cref="NetworkCloud.CloudServicesNetworkData"/> instance for mocking. </returns>
-        public static CloudServicesNetworkData CloudServicesNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, IEnumerable<EgressEndpoint> additionalEgressEndpoints = null, IEnumerable<ResourceIdentifier> associatedResourceIds = null, ResourceIdentifier clusterId = null, CloudServicesNetworkDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = null, IEnumerable<EgressEndpoint> enabledEgressEndpoints = null, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds = null, string interfaceName = null, CloudServicesNetworkProvisioningState? provisioningState = null, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds = null)
+        /// <returns> A new <see cref="NetworkCloud.NetworkCloudCloudServicesNetworkData"/> instance for mocking. </returns>
+        public static NetworkCloudCloudServicesNetworkData NetworkCloudCloudServicesNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, IEnumerable<EgressEndpoint> additionalEgressEndpoints = null, IEnumerable<ResourceIdentifier> associatedResourceIds = null, ResourceIdentifier clusterId = null, CloudServicesNetworkDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints = null, IEnumerable<EgressEndpoint> enabledEgressEndpoints = null, IEnumerable<ResourceIdentifier> hybridAksClustersAssociatedIds = null, string interfaceName = null, CloudServicesNetworkProvisioningState? provisioningState = null, IEnumerable<ResourceIdentifier> virtualMachinesAssociatedIds = null)
         {
             tags ??= new Dictionary<string, string>();
             additionalEgressEndpoints ??= new List<EgressEndpoint>();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             hybridAksClustersAssociatedIds ??= new List<ResourceIdentifier>();
             virtualMachinesAssociatedIds ??= new List<ResourceIdentifier>();
 
-            return new CloudServicesNetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, additionalEgressEndpoints?.ToList(), associatedResourceIds?.ToList(), clusterId, detailedStatus, detailedStatusMessage, enableDefaultEgressEndpoints, enabledEgressEndpoints?.ToList(), hybridAksClustersAssociatedIds?.ToList(), interfaceName, provisioningState, virtualMachinesAssociatedIds?.ToList());
+            return new NetworkCloudCloudServicesNetworkData(id, name, resourceType, systemData, tags, location, extendedLocation, additionalEgressEndpoints?.ToList(), associatedResourceIds?.ToList(), clusterId, detailedStatus, detailedStatusMessage, enableDefaultEgressEndpoints, enabledEgressEndpoints?.ToList(), hybridAksClustersAssociatedIds?.ToList(), interfaceName, provisioningState, virtualMachinesAssociatedIds?.ToList());
         }
 
         /// <summary> Initializes a new instance of NetworkCloudClusterManagerData. </summary>

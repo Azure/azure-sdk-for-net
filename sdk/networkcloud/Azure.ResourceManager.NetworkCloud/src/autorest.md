@@ -110,6 +110,7 @@ prepend-rp-prefix:
   - BareMetalMachine
   - BareMetalMachineKeySet
   - BmcKeySet
+  - CloudServicesNetwork
   - Cluster
   - ClusterManager
   - ClusterMetricsConfiguration

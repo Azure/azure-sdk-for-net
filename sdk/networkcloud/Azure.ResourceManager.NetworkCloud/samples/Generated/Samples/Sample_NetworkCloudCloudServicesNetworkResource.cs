@@ -17,12 +17,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
-    public partial class Sample_CloudServicesNetworkResource
+    public partial class Sample_NetworkCloudCloudServicesNetworkResource
     {
         // List cloud services networks for subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCloudServicesNetworks_ListCloudServicesNetworksForSubscription()
+        public async Task GetNetworkCloudCloudServicesNetworks_ListCloudServicesNetworksForSubscription()
         {
             // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2023-07-01/examples/CloudServicesNetworks_ListBySubscription.json
             // this example is just showing the usage of "CloudServicesNetworks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CloudServicesNetworkResource item in subscriptionResource.GetCloudServicesNetworksAsync())
+            await foreach (NetworkCloudCloudServicesNetworkResource item in subscriptionResource.GetNetworkCloudCloudServicesNetworksAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CloudServicesNetworkData resourceData = item.Data;
+                NetworkCloudCloudServicesNetworkData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -64,20 +64,20 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CloudServicesNetworkResource created on azure
-            // for more information of creating CloudServicesNetworkResource, please refer to the document of CloudServicesNetworkResource
+            // this example assumes you already have this NetworkCloudCloudServicesNetworkResource created on azure
+            // for more information of creating NetworkCloudCloudServicesNetworkResource, please refer to the document of NetworkCloudCloudServicesNetworkResource
             string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string cloudServicesNetworkName = "cloudServicesNetworkName";
-            ResourceIdentifier cloudServicesNetworkResourceId = CloudServicesNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServicesNetworkName);
-            CloudServicesNetworkResource cloudServicesNetwork = client.GetCloudServicesNetworkResource(cloudServicesNetworkResourceId);
+            ResourceIdentifier networkCloudCloudServicesNetworkResourceId = NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServicesNetworkName);
+            NetworkCloudCloudServicesNetworkResource networkCloudCloudServicesNetwork = client.GetNetworkCloudCloudServicesNetworkResource(networkCloudCloudServicesNetworkResourceId);
 
             // invoke the operation
-            CloudServicesNetworkResource result = await cloudServicesNetwork.GetAsync();
+            NetworkCloudCloudServicesNetworkResource result = await networkCloudCloudServicesNetwork.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CloudServicesNetworkData resourceData = result.Data;
+            NetworkCloudCloudServicesNetworkData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CloudServicesNetworkResource created on azure
-            // for more information of creating CloudServicesNetworkResource, please refer to the document of CloudServicesNetworkResource
+            // this example assumes you already have this NetworkCloudCloudServicesNetworkResource created on azure
+            // for more information of creating NetworkCloudCloudServicesNetworkResource, please refer to the document of NetworkCloudCloudServicesNetworkResource
             string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string cloudServicesNetworkName = "cloudServicesNetworkName";
-            ResourceIdentifier cloudServicesNetworkResourceId = CloudServicesNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServicesNetworkName);
-            CloudServicesNetworkResource cloudServicesNetwork = client.GetCloudServicesNetworkResource(cloudServicesNetworkResourceId);
+            ResourceIdentifier networkCloudCloudServicesNetworkResourceId = NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServicesNetworkName);
+            NetworkCloudCloudServicesNetworkResource networkCloudCloudServicesNetwork = client.GetNetworkCloudCloudServicesNetworkResource(networkCloudCloudServicesNetworkResourceId);
 
             // invoke the operation
-            await cloudServicesNetwork.DeleteAsync(WaitUntil.Completed);
+            await networkCloudCloudServicesNetwork.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
@@ -122,16 +122,16 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CloudServicesNetworkResource created on azure
-            // for more information of creating CloudServicesNetworkResource, please refer to the document of CloudServicesNetworkResource
+            // this example assumes you already have this NetworkCloudCloudServicesNetworkResource created on azure
+            // for more information of creating NetworkCloudCloudServicesNetworkResource, please refer to the document of NetworkCloudCloudServicesNetworkResource
             string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
             string resourceGroupName = "resourceGroupName";
             string cloudServicesNetworkName = "cloudServicesNetworkName";
-            ResourceIdentifier cloudServicesNetworkResourceId = CloudServicesNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServicesNetworkName);
-            CloudServicesNetworkResource cloudServicesNetwork = client.GetCloudServicesNetworkResource(cloudServicesNetworkResourceId);
+            ResourceIdentifier networkCloudCloudServicesNetworkResourceId = NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServicesNetworkName);
+            NetworkCloudCloudServicesNetworkResource networkCloudCloudServicesNetwork = client.GetNetworkCloudCloudServicesNetworkResource(networkCloudCloudServicesNetworkResourceId);
 
             // invoke the operation
-            CloudServicesNetworkPatch patch = new CloudServicesNetworkPatch()
+            NetworkCloudCloudServicesNetworkPatch patch = new NetworkCloudCloudServicesNetworkPatch()
             {
                 Tags =
 {
@@ -150,12 +150,12 @@ Port = 443,
 },
                 EnableDefaultEgressEndpoints = CloudServicesNetworkEnableDefaultEgressEndpoint.False,
             };
-            ArmOperation<CloudServicesNetworkResource> lro = await cloudServicesNetwork.UpdateAsync(WaitUntil.Completed, patch);
-            CloudServicesNetworkResource result = lro.Value;
+            ArmOperation<NetworkCloudCloudServicesNetworkResource> lro = await networkCloudCloudServicesNetwork.UpdateAsync(WaitUntil.Completed, patch);
+            NetworkCloudCloudServicesNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CloudServicesNetworkData resourceData = result.Data;
+            NetworkCloudCloudServicesNetworkData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

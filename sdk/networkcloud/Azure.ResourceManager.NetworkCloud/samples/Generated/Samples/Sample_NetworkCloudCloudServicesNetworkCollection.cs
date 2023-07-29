@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
 {
-    public partial class Sample_CloudServicesNetworkCollection
+    public partial class Sample_NetworkCloudCloudServicesNetworkCollection
     {
         // List cloud services networks for resource group
         [NUnit.Framework.Test]
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CloudServicesNetworkResource
-            CloudServicesNetworkCollection collection = resourceGroupResource.GetCloudServicesNetworks();
+            // get the collection of this NetworkCloudCloudServicesNetworkResource
+            NetworkCloudCloudServicesNetworkCollection collection = resourceGroupResource.GetNetworkCloudCloudServicesNetworks();
 
             // invoke the operation and iterate over the result
-            await foreach (CloudServicesNetworkResource item in collection.GetAllAsync())
+            await foreach (NetworkCloudCloudServicesNetworkResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CloudServicesNetworkData resourceData = item.Data;
+                NetworkCloudCloudServicesNetworkData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CloudServicesNetworkResource
-            CloudServicesNetworkCollection collection = resourceGroupResource.GetCloudServicesNetworks();
+            // get the collection of this NetworkCloudCloudServicesNetworkResource
+            NetworkCloudCloudServicesNetworkCollection collection = resourceGroupResource.GetNetworkCloudCloudServicesNetworks();
 
             // invoke the operation
             string cloudServicesNetworkName = "cloudServicesNetworkName";
-            CloudServicesNetworkResource result = await collection.GetAsync(cloudServicesNetworkName);
+            NetworkCloudCloudServicesNetworkResource result = await collection.GetAsync(cloudServicesNetworkName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CloudServicesNetworkData resourceData = result.Data;
+            NetworkCloudCloudServicesNetworkData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CloudServicesNetworkResource
-            CloudServicesNetworkCollection collection = resourceGroupResource.GetCloudServicesNetworks();
+            // get the collection of this NetworkCloudCloudServicesNetworkResource
+            NetworkCloudCloudServicesNetworkCollection collection = resourceGroupResource.GetNetworkCloudCloudServicesNetworks();
 
             // invoke the operation
             string cloudServicesNetworkName = "cloudServicesNetworkName";
@@ -139,12 +139,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this CloudServicesNetworkResource
-            CloudServicesNetworkCollection collection = resourceGroupResource.GetCloudServicesNetworks();
+            // get the collection of this NetworkCloudCloudServicesNetworkResource
+            NetworkCloudCloudServicesNetworkCollection collection = resourceGroupResource.GetNetworkCloudCloudServicesNetworks();
 
             // invoke the operation
             string cloudServicesNetworkName = "cloudServicesNetworkName";
-            CloudServicesNetworkData data = new CloudServicesNetworkData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"))
+            NetworkCloudCloudServicesNetworkData data = new NetworkCloudCloudServicesNetworkData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"))
             {
                 AdditionalEgressEndpoints =
 {
@@ -163,12 +163,12 @@ Port = 443,
 ["key2"] = "myvalue2",
 },
             };
-            ArmOperation<CloudServicesNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServicesNetworkName, data);
-            CloudServicesNetworkResource result = lro.Value;
+            ArmOperation<NetworkCloudCloudServicesNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudServicesNetworkName, data);
+            NetworkCloudCloudServicesNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CloudServicesNetworkData resourceData = result.Data;
+            NetworkCloudCloudServicesNetworkData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

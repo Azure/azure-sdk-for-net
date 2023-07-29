@@ -68,20 +68,20 @@ namespace Azure.ResourceManager.NetworkCloud
         }
         #endregion
 
-        #region CloudServicesNetworkResource
+        #region NetworkCloudCloudServicesNetworkResource
         /// <summary>
-        /// Gets an object representing a <see cref="CloudServicesNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CloudServicesNetworkResource.CreateResourceIdentifier" /> to create a <see cref="CloudServicesNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudCloudServicesNetworkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudCloudServicesNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CloudServicesNetworkResource" /> object. </returns>
-        public static CloudServicesNetworkResource GetCloudServicesNetworkResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetworkCloudCloudServicesNetworkResource" /> object. </returns>
+        public static NetworkCloudCloudServicesNetworkResource GetNetworkCloudCloudServicesNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CloudServicesNetworkResource.ValidateResourceId(id);
-                return new CloudServicesNetworkResource(client, id);
+                NetworkCloudCloudServicesNetworkResource.ValidateResourceId(id);
+                return new NetworkCloudCloudServicesNetworkResource(client, id);
             }
             );
         }
@@ -447,12 +447,12 @@ namespace Azure.ResourceManager.NetworkCloud
             return resourceGroupResource.GetNetworkCloudBareMetalMachines().Get(bareMetalMachineName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CloudServicesNetworkResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of NetworkCloudCloudServicesNetworkResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of CloudServicesNetworkResources and their operations over a CloudServicesNetworkResource. </returns>
-        public static CloudServicesNetworkCollection GetCloudServicesNetworks(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of NetworkCloudCloudServicesNetworkResources and their operations over a NetworkCloudCloudServicesNetworkResource. </returns>
+        public static NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCloudServicesNetworks();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudCloudServicesNetworks();
         }
 
         /// <summary>
@@ -474,9 +474,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CloudServicesNetworkResource>> GetCloudServicesNetworkAsync(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
+        public static async Task<Response<NetworkCloudCloudServicesNetworkResource>> GetNetworkCloudCloudServicesNetworkAsync(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCloudServicesNetworks().GetAsync(cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetNetworkCloudCloudServicesNetworks().GetAsync(cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -498,9 +498,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CloudServicesNetworkResource> GetCloudServicesNetwork(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
+        public static Response<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetwork(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCloudServicesNetworks().Get(cloudServicesNetworkName, cancellationToken);
+            return resourceGroupResource.GetNetworkCloudCloudServicesNetworks().Get(cloudServicesNetworkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudClusterManagerResources in the ResourceGroupResource. </summary>
@@ -1176,10 +1176,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CloudServicesNetworkResource> GetCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCloudServicesNetworksAsync(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudCloudServicesNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1197,10 +1197,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CloudServicesNetworkResource> GetCloudServicesNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCloudServicesNetworks(cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudCloudServicesNetworks(cancellationToken);
         }
 
         /// <summary>

@@ -108,6 +108,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("crossSubscriptionTargetManagedInstanceId"u8);
                 writer.WriteStringValue(CrossSubscriptionTargetManagedInstanceId);
             }
+            if (Optional.IsDefined(IsLedgerOn))
+            {
+                writer.WritePropertyName("isLedgerOn"u8);
+                writer.WriteBooleanValue(IsLedgerOn.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

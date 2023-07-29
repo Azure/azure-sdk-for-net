@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.NetworkCloud
             return GetCachedClient(Client => new NetworkCloudBareMetalMachineCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of CloudServicesNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CloudServicesNetworkResources and their operations over a CloudServicesNetworkResource. </returns>
-        public virtual CloudServicesNetworkCollection GetCloudServicesNetworks()
+        /// <summary> Gets a collection of NetworkCloudCloudServicesNetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudCloudServicesNetworkResources and their operations over a NetworkCloudCloudServicesNetworkResource. </returns>
+        public virtual NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworks()
         {
-            return GetCachedClient(Client => new CloudServicesNetworkCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudCloudServicesNetworkCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NetworkCloudClusterManagerResources in the ResourceGroupResource. </summary>

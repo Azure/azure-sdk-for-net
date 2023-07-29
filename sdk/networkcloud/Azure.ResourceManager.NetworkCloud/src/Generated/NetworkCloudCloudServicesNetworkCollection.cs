@@ -20,28 +20,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CloudServicesNetworkResource" /> and their operations.
-    /// Each <see cref="CloudServicesNetworkResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="CloudServicesNetworkCollection" /> instance call the GetCloudServicesNetworks method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> and their operations.
+    /// Each <see cref="NetworkCloudCloudServicesNetworkResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="NetworkCloudCloudServicesNetworkCollection" /> instance call the GetNetworkCloudCloudServicesNetworks method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class CloudServicesNetworkCollection : ArmCollection, IEnumerable<CloudServicesNetworkResource>, IAsyncEnumerable<CloudServicesNetworkResource>
+    public partial class NetworkCloudCloudServicesNetworkCollection : ArmCollection, IEnumerable<NetworkCloudCloudServicesNetworkResource>, IAsyncEnumerable<NetworkCloudCloudServicesNetworkResource>
     {
-        private readonly ClientDiagnostics _cloudServicesNetworkClientDiagnostics;
-        private readonly CloudServicesNetworksRestOperations _cloudServicesNetworkRestClient;
+        private readonly ClientDiagnostics _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics;
+        private readonly CloudServicesNetworksRestOperations _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CloudServicesNetworkCollection"/> class for mocking. </summary>
-        protected CloudServicesNetworkCollection()
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudCloudServicesNetworkCollection"/> class for mocking. </summary>
+        protected NetworkCloudCloudServicesNetworkCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CloudServicesNetworkCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkCloudCloudServicesNetworkCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal CloudServicesNetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetworkCloudCloudServicesNetworkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cloudServicesNetworkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", CloudServicesNetworkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CloudServicesNetworkResource.ResourceType, out string cloudServicesNetworkApiVersion);
-            _cloudServicesNetworkRestClient = new CloudServicesNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cloudServicesNetworkApiVersion);
+            _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudCloudServicesNetworkResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetworkCloudCloudServicesNetworkResource.ResourceType, out string networkCloudCloudServicesNetworkCloudServicesNetworksApiVersion);
+            _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient = new CloudServicesNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudCloudServicesNetworkCloudServicesNetworksApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CloudServicesNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudServicesNetworkName, CloudServicesNetworkData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudCloudServicesNetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudServicesNetworkClientDiagnostics.CreateScope("CloudServicesNetworkCollection.CreateOrUpdate");
+            using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cloudServicesNetworkRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<CloudServicesNetworkResource>(new CloudServicesNetworkOperationSource(Client), _cloudServicesNetworkClientDiagnostics, Pipeline, _cloudServicesNetworkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkOperationSource(Client), _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CloudServicesNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string cloudServicesNetworkName, CloudServicesNetworkData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudCloudServicesNetworkResource> CreateOrUpdate(WaitUntil waitUntil, string cloudServicesNetworkName, NetworkCloudCloudServicesNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cloudServicesNetworkClientDiagnostics.CreateScope("CloudServicesNetworkCollection.CreateOrUpdate");
+            using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cloudServicesNetworkRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, data, cancellationToken);
-                var operation = new NetworkCloudArmOperation<CloudServicesNetworkResource>(new CloudServicesNetworkOperationSource(Client), _cloudServicesNetworkClientDiagnostics, Pipeline, _cloudServicesNetworkRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, data, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudCloudServicesNetworkResource>(new NetworkCloudCloudServicesNetworkOperationSource(Client), _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -152,18 +152,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
-        public virtual async Task<Response<CloudServicesNetworkResource>> GetAsync(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkCloudCloudServicesNetworkResource>> GetAsync(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
-            using var scope = _cloudServicesNetworkClientDiagnostics.CreateScope("CloudServicesNetworkCollection.Get");
+            using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cloudServicesNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
+                var response = await _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudServicesNetworkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudCloudServicesNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -189,18 +189,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cloudServicesNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudServicesNetworkName"/> is null. </exception>
-        public virtual Response<CloudServicesNetworkResource> Get(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkCloudCloudServicesNetworkResource> Get(string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
-            using var scope = _cloudServicesNetworkClientDiagnostics.CreateScope("CloudServicesNetworkCollection.Get");
+            using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.Get");
             scope.Start();
             try
             {
-                var response = _cloudServicesNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, cancellationToken);
+                var response = _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CloudServicesNetworkResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudCloudServicesNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -223,12 +223,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CloudServicesNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServicesNetworkRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServicesNetworkRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServicesNetworkResource(Client, CloudServicesNetworkData.DeserializeCloudServicesNetworkData(e)), _cloudServicesNetworkClientDiagnostics, Pipeline, "CloudServicesNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudCloudServicesNetworkResource(Client, NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(e)), _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, "NetworkCloudCloudServicesNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,12 +245,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CloudServicesNetworkResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudCloudServicesNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServicesNetworkRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cloudServicesNetworkRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServicesNetworkResource(Client, CloudServicesNetworkData.DeserializeCloudServicesNetworkData(e)), _cloudServicesNetworkClientDiagnostics, Pipeline, "CloudServicesNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudCloudServicesNetworkResource(Client, NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(e)), _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, "NetworkCloudCloudServicesNetworkCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
-            using var scope = _cloudServicesNetworkClientDiagnostics.CreateScope("CloudServicesNetworkCollection.Exists");
+            using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cloudServicesNetworkRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNullOrEmpty(cloudServicesNetworkName, nameof(cloudServicesNetworkName));
 
-            using var scope = _cloudServicesNetworkClientDiagnostics.CreateScope("CloudServicesNetworkCollection.Exists");
+            using var scope = _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics.CreateScope("NetworkCloudCloudServicesNetworkCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cloudServicesNetworkRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, cancellationToken: cancellationToken);
+                var response = _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudServicesNetworkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        IEnumerator<CloudServicesNetworkResource> IEnumerable<CloudServicesNetworkResource>.GetEnumerator()
+        IEnumerator<NetworkCloudCloudServicesNetworkResource> IEnumerable<NetworkCloudCloudServicesNetworkResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CloudServicesNetworkResource> IAsyncEnumerable<CloudServicesNetworkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetworkCloudCloudServicesNetworkResource> IAsyncEnumerable<NetworkCloudCloudServicesNetworkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> CloudServicesNetworkPatchParameters represents the body of the request to patch the cloud services network. </summary>
-    public partial class CloudServicesNetworkPatch
+    public partial class NetworkCloudCloudServicesNetworkPatch
     {
-        /// <summary> Initializes a new instance of CloudServicesNetworkPatch. </summary>
-        public CloudServicesNetworkPatch()
+        /// <summary> Initializes a new instance of NetworkCloudCloudServicesNetworkPatch. </summary>
+        public NetworkCloudCloudServicesNetworkPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             AdditionalEgressEndpoints = new ChangeTrackingList<EgressEndpoint>();
