@@ -673,7 +673,8 @@
       "words": [
         "evpn",
         "mbps",
-        "gshut"
+        "gshut",
+        "dscp"
       ]
     },
     {
