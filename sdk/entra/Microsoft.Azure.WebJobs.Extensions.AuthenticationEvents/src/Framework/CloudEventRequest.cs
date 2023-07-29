@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Text.Json.Serialization;
 
@@ -17,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <summary>Gets or sets the source.</summary>
         /// <value>The source.</value>
         [JsonPropertyName("source")]
-        [NotNull]
+        [Required]
         public string Source { get; set; }
 
         /// <summary>Gets or sets the cloud event data type.</summary>
