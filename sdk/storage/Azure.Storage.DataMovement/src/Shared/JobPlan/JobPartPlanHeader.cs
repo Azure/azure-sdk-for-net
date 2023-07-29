@@ -209,9 +209,9 @@ namespace Azure.Storage.DataMovement.JobPlan
         // jobStatus_doNotUse represents the current status of JobPartPlan
         // jobStatus_doNotUse is a private member whose value can be accessed by Status and SetJobStatus
         // jobStatus_doNotUse should not be directly accessed anywhere except by the Status and SetJobStatus
-        public StorageTransferStatus AtomicJobStatus;
+        public DataTransferStatus AtomicJobStatus;
 
-        public StorageTransferStatus AtomicPartStatus;
+        public DataTransferStatus AtomicPartStatus;
 
         internal JobPartPlanHeader(
             string version,
@@ -244,8 +244,8 @@ namespace Azure.Storage.DataMovement.JobPlan
             JobPartDeleteSnapshotsOption deleteSnapshotsOption,
             JobPartPermanentDeleteOption permanentDeleteOption,
             JobPartPlanRehydratePriorityType rehydratePriorityType,
-            StorageTransferStatus atomicJobStatus,
-            StorageTransferStatus atomicPartStatus)
+            DataTransferStatus atomicJobStatus,
+            DataTransferStatus atomicPartStatus)
         {
             // Version String size verification
             Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -822,11 +822,11 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             // AtomicJobStatus
             byte atomicJobStatusByte = reader.ReadByte();
-            StorageTransferStatus atomicJobStatus = (StorageTransferStatus)atomicJobStatusByte;
+            DataTransferStatus atomicJobStatus = (DataTransferStatus)atomicJobStatusByte;
 
             // AtomicPartStatus
             byte atomicPartStatusByte = reader.ReadByte();
-            StorageTransferStatus atomicPartStatus = (StorageTransferStatus)atomicPartStatusByte;
+            DataTransferStatus atomicPartStatus = (DataTransferStatus)atomicPartStatusByte;
 
             JobPartPlanDestinationBlob dstBlobData = new JobPartPlanDestinationBlob(
                 blobType: blobType,

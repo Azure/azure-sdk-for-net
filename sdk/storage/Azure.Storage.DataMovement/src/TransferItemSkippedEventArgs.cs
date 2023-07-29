@@ -9,20 +9,20 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Event Argument for a change in the Transfer Status
     /// </summary>
-    public class TransferSkippedEventArgs : StorageTransferEventArgs
+    public class TransferItemSkippedEventArgs : DataTransferEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="StorageResourceSingle"/> that was the source resource for the transfer.
+        /// Gets the <see cref="StorageResourceItem"/> that was the source resource for the transfer.
         /// </summary>
-        public StorageResourceSingle SourceResource { get; }
+        public StorageResourceItem SourceResource { get; }
 
         /// <summary>
-        /// Gets the <see cref="StorageResourceSingle"/> that was the destination resource for the transfer.
+        /// Gets the <see cref="StorageResourceItem"/> that was the destination resource for the transfer.
         /// </summary>
-        public StorageResourceSingle DestinationResource { get; }
+        public StorageResourceItem DestinationResource { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TransferFailedEventArgs"/>.
+        /// Initializes a new instance of the <see cref="TransferItemFailedEventArgs"/>.
         /// </summary>
         /// <param name="transferId"></param>
         /// <param name="sourceResource"></param>
@@ -44,10 +44,10 @@ namespace Azure.Storage.DataMovement
         /// Thrown if <paramref name="sourceResource"/> is empty or null.
         /// Thrown if <paramref name="destinationResource"/> is empty or null.
         /// </exception>
-        public TransferSkippedEventArgs(
+        public TransferItemSkippedEventArgs(
             string transferId,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base(transferId, isRunningSynchronously, cancellationToken)

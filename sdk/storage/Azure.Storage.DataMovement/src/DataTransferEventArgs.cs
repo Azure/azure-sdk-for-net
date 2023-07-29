@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Event Arguments for any Storage Transfer Event Handler.
     /// </summary>
-    public abstract class StorageTransferEventArgs : SyncAsyncEventArgs
+    public abstract class DataTransferEventArgs : SyncAsyncEventArgs
     {
         /// <summary>
         /// Job ID.
@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement
         public string TransferId { get; internal set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StorageTransferEventArgs"/>.
+        /// Initializes a new instance of the <see cref="DataTransferEventArgs"/>.
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
         /// <param name="isRunningSynchronously">
@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement
         /// <exception cref="System.ArgumentNullException">
         /// Thrown if <paramref name="transferId"/> is empty or null.
         /// </exception>
-        protected StorageTransferEventArgs(
+        protected DataTransferEventArgs(
             string transferId,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)

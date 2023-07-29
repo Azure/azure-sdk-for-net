@@ -4,14 +4,14 @@
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Storage Resource Item properties returned by <see cref="TransferManager.GetTransfersAsync(StorageTransferStatus[])"/>
+    /// Storage Resource Item properties returned by <see cref="TransferManager.GetTransfersAsync(DataTransferStatus[])"/>
     /// </summary>
     public class DataTransferProperties
     {
         /// <summary>
         /// Contains the checkpointer information to rehydrate the StorageResource from.
         /// </summary>
-        public virtual TransferCheckpointerOptions Checkpointer { get; internal set; }
+        public virtual TransferCheckpointStoreOptions Checkpointer { get; internal set; }
 
         /// <summary>
         /// Contains the transfer ID which to rehydrate the StorageResource from.

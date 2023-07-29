@@ -21,7 +21,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines the current Transfer Status of the Data Transfer.
         /// </summary>
-        public StorageTransferStatus TransferStatus => _state.Status;
+        public DataTransferStatus TransferStatus => _state.Status;
 
         /// <summary>
         /// DataTransfer Identification.
@@ -50,11 +50,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="id">The transfer ID of the transfer object.</param>
         /// <param name="transferManager">Reference to the transfer manager running this transfer.</param>
-        /// <param name="status">The Transfer Status of the Transfer. See <see cref="StorageTransferStatus"/>.</param>
+        /// <param name="status">The Transfer Status of the Transfer. See <see cref="DataTransferStatus"/>.</param>
         internal DataTransfer(
             string id,
             TransferManager transferManager,
-            StorageTransferStatus status = StorageTransferStatus.Queued)
+            DataTransferStatus status = DataTransferStatus.Queued)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(transferManager, nameof(transferManager));
@@ -65,7 +65,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Ensures completion of the DataTransfer and attempts to get result
         /// </summary>
-        public void EnsureCompleted(CancellationToken cancellationToken = default)
+        public void WaitForCompletion(CancellationToken cancellationToken = default)
         {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
             WaitForCompletionAsync(cancellationToken).GetAwaiter().GetResult();
@@ -90,7 +90,7 @@ namespace Azure.Storage.DataMovement
         ///
         /// Will return true if the pause has taken place.
         /// </returns>
-        public virtual async Task PauseIfRunningAsync(CancellationToken cancellationToken = default)
+        public virtual async Task PauseAsync(CancellationToken cancellationToken = default)
         {
             await _state.PauseIfRunningAsync(cancellationToken).ConfigureAwait(false);
         }

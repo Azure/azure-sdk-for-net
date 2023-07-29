@@ -8,9 +8,9 @@ using Azure.Core;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// <see cref="TransferOptions"/> is used to provide options for a transfer.
+    /// <see cref="DataTransferOptions"/> is used to provide options for a transfer.
     /// </summary>
-    public class TransferOptions : IEquatable<TransferOptions>
+    public class DataTransferOptions : IEquatable<DataTransferOptions>
     {
         /// <summary>
         /// The maximum length of a network transfer in bytes.
@@ -32,9 +32,9 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Optional. An <see cref="IProgress{StorageTransferProgress}"/> for tracking progress of the transfer.
-        /// See <see cref="StorageTransferProgress"/> for details on what is tracked.
+        /// See <see cref="DataTransferProgress"/> for details on what is tracked.
         /// </summary>
-        public IProgress<StorageTransferProgress> ProgressHandler { get; set; }
+        public IProgress<DataTransferProgress> ProgressHandler { get; set; }
 
         /// <summary>
         /// Optional. Options for changing behavior of the ProgressHandler.
@@ -67,7 +67,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static bool operator ==(TransferOptions left, TransferOptions right) => left.Equals(right);
+        public static bool operator ==(DataTransferOptions left, DataTransferOptions right) => left.Equals(right);
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -76,7 +76,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static bool operator !=(TransferOptions left, TransferOptions right) => !(left == right);
+        public static bool operator !=(DataTransferOptions left, DataTransferOptions right) => !(left == right);
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -84,28 +84,28 @@ namespace Azure.Storage.DataMovement
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool Equals(TransferOptions obj)
+        public bool Equals(DataTransferOptions obj)
             => MaximumTransferChunkSize == obj?.MaximumTransferChunkSize
             && InitialTransferSize == obj?.InitialTransferSize;
 
         /// <summary>
-        /// Optional <see cref="StorageResourceCreateMode"/> to configure overwrite
-        /// behavior. Will default to <see cref="StorageResourceCreateMode.Overwrite"/>.
+        /// Optional <see cref="StorageResourceCreationPreference"/> to configure overwrite
+        /// behavior. Will default to <see cref="StorageResourceCreationPreference.OverwriteIfExists"/>.
         /// </summary>
-        public StorageResourceCreateMode CreateMode { get; set; }
+        public StorageResourceCreationPreference CreationPreference { get; set; }
 
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.
         /// </summary>
-        public event SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatus;
-        internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatus;
+        public event SyncAsyncEventHandler<TransferStatusEventArgs> TransferStatusChanged;
+        internal SyncAsyncEventHandler<TransferStatusEventArgs> GetTransferStatus() => TransferStatusChanged;
 
         /// <summary>
         /// If the transfer has any failed events that occur the event will get added to this handler.
         /// </summary>
-        public event SyncAsyncEventHandler<TransferFailedEventArgs> TransferFailed;
+        public event SyncAsyncEventHandler<TransferItemFailedEventArgs> ItemTransferFailed;
 
-        internal SyncAsyncEventHandler<TransferFailedEventArgs> GetFailed() => TransferFailed;
+        internal SyncAsyncEventHandler<TransferItemFailedEventArgs> GetFailed() => ItemTransferFailed;
 
         /// <summary>
         /// If a single transfer within the resource container gets transferred successfully the event
@@ -113,16 +113,16 @@ namespace Azure.Storage.DataMovement
         ///
         /// Only applies to container transfers, not single resource transfers.
         /// </summary>
-        public event SyncAsyncEventHandler<SingleTransferCompletedEventArgs> SingleTransferCompleted;
-        internal SyncAsyncEventHandler<SingleTransferCompletedEventArgs> GetCompleted() => SingleTransferCompleted;
+        public event SyncAsyncEventHandler<TransferItemCompletedEventArgs> ItemTransferCompleted;
+        internal SyncAsyncEventHandler<TransferItemCompletedEventArgs> GetCompleted() => ItemTransferCompleted;
 
         /// <summary>
         /// If the transfer has any skipped events that occur the event will get added to this handler.
         /// Skipped transfer occur during Transfer due to no overwrite allowed as specified in
-        /// <see cref="CreateMode"/>
+        /// <see cref="CreationPreference"/>
         /// </summary>
-        public event SyncAsyncEventHandler<TransferSkippedEventArgs> TransferSkipped;
+        public event SyncAsyncEventHandler<TransferItemSkippedEventArgs> ItemTransferSkipped;
 
-        internal SyncAsyncEventHandler<TransferSkippedEventArgs> GetSkipped() => TransferSkipped;
+        internal SyncAsyncEventHandler<TransferItemSkippedEventArgs> GetSkipped() => ItemTransferSkipped;
     }
 }

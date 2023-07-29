@@ -8,14 +8,14 @@ using System.Text;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Defines the recommended Transfer Type of the <see cref="StorageResourceSingle"/>.
+    /// Defines the recommended Transfer Type of the <see cref="StorageResourceItem"/>.
     /// </summary>
-    public enum TransferType
+    public enum DataTransferOrder
     {
         /// <summary>
-        /// Recommended Transfer type is concurrent transfer for each chunk.
+        /// Recommended Transfer type is unordered transfer for each chunk.
         /// </summary>
-        Concurrent = 0,
+        Unordered = 0,
 
         /// <summary>
         /// Recommended Transfer type is sequential transfer for each chunk.

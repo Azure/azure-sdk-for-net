@@ -18,12 +18,12 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal ServiceToServiceTransferJob(
             DataTransfer dataTransfer,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource,
-            TransferOptions transferOptions,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer CheckPointFolderPath,
-            ErrorHandlingBehavior errorHandling,
+            DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
             : base(dataTransfer,
@@ -45,10 +45,10 @@ namespace Azure.Storage.DataMovement
             DataTransfer dataTransfer,
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
-            TransferOptions transferOptions,
+            DataTransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingBehavior errorHandling,
+            DataTransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
             : base(dataTransfer,
@@ -69,7 +69,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>An IEnumerable that contains the job parts</returns>
         public override async IAsyncEnumerable<JobPartInternal> ProcessJobToJobPartAsync()
         {
-            await OnJobStatusChangedAsync(StorageTransferStatus.InProgress).ConfigureAwait(false);
+            await OnJobStatusChangedAsync(DataTransferStatus.InProgress).ConfigureAwait(false);
             int partNumber = 0;
 
             if (_jobParts.Count == 0)
@@ -108,9 +108,9 @@ namespace Azure.Storage.DataMovement
                 bool isFinalPartFound = false;
                 foreach (JobPartInternal part in _jobParts)
                 {
-                    if (part.JobPartStatus != StorageTransferStatus.Completed)
+                    if (part.JobPartStatus != DataTransferStatus.Completed)
                     {
-                        part.JobPartStatus = StorageTransferStatus.Queued;
+                        part.JobPartStatus = DataTransferStatus.Queued;
                         yield return part;
 
                         if (part.IsFinalPart)
@@ -192,8 +192,8 @@ namespace Azure.Storage.DataMovement
                             part = await ServiceToServiceJobPart.CreateJobPartAsync(
                                 job: this,
                                 partNumber: partNumber,
-                                sourceResource: (StorageResourceSingle)lastResource,
-                                destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName),
+                                sourceResource: (StorageResourceItem)lastResource,
+                                destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName),
                                 isFinalPart: false).ConfigureAwait(false);
                             AppendJobPart(part);
                         }
@@ -224,8 +224,8 @@ namespace Azure.Storage.DataMovement
                     lastPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                             job: this,
                             partNumber: partNumber,
-                            sourceResource: (StorageResourceSingle)lastResource,
-                            destinationResource: _destinationResourceContainer.GetChildStorageResource(lastSourceName),
+                            sourceResource: (StorageResourceItem)lastResource,
+                            destinationResource: _destinationResourceContainer.GetStorageResourceReference(lastSourceName),
                             isFinalPart: true).ConfigureAwait(false);
                     AppendJobPart(lastPart);
                 }

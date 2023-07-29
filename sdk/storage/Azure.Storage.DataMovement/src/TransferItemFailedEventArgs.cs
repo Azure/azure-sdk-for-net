@@ -9,17 +9,17 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Event Argument for Failed Single Blob Upload Transfers
     /// </summary>
-    public class TransferFailedEventArgs : StorageTransferEventArgs
+    public class TransferItemFailedEventArgs : DataTransferEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="StorageResourceSingle"/> that was the source resource for the transfer.
+        /// Gets the <see cref="StorageResourceItem"/> that was the source resource for the transfer.
         /// </summary>
-        public StorageResourceSingle SourceResource { get; }
+        public StorageResourceItem SourceResource { get; }
 
         /// <summary>
-        /// Gets the <see cref="StorageResourceSingle"/> that was the destination resource for the transfer.
+        /// Gets the <see cref="StorageResourceItem"/> that was the destination resource for the transfer.
         /// </summary>
-        public StorageResourceSingle DestinationResource { get; }
+        public StorageResourceItem DestinationResource { get; }
 
         /// <summary>
         /// Gets the <see cref="Exception"/> that was thrown during the job.
@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement
         public Exception Exception { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TransferFailedEventArgs"/>.
+        /// Initializes a new instance of the <see cref="TransferItemFailedEventArgs"/>.
         /// </summary>
         /// <param name="transferId"></param>
         /// <param name="sourceResource"></param>
@@ -50,10 +50,10 @@ namespace Azure.Storage.DataMovement
         /// Thrown if <paramref name="sourceResource"/> is empty or null.
         /// Thrown if <paramref name="destinationResource"/> is empty or null.
         /// </exception>
-        public TransferFailedEventArgs(
+        public TransferItemFailedEventArgs(
             string transferId,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
             Exception exception,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)

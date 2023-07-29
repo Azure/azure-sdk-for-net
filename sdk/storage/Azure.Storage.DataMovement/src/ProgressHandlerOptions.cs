@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement
     public class ProgressHandlerOptions
     {
         /// <summary>
-        /// Set to true to populate BytesTransferred of <see cref="StorageTransferProgress"/> in
+        /// Set to true to populate BytesTransferred of <see cref="DataTransferProgress"/> in
         /// progress reports. Set to false to not track BytesTransferred (value will be null).
         /// Default value is false.
         /// </summary>

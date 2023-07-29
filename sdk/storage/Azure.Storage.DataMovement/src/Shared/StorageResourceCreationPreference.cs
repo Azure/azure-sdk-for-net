@@ -10,18 +10,8 @@ namespace Azure.Storage.DataMovement
     /// Defines how creating a transfer file resource should go
     /// if the resource already exists or does not exist.
     /// </summary>
-    public enum StorageResourceCreateMode
+    public enum StorageResourceCreationPreference
     {
-        /// <summary>
-        /// Default. If specified to this value, it will default to <see cref="StorageResourceCreateMode.Fail"/>.
-        /// </summary>
-        None = default,
-
-        /// <summary>
-        /// Overwrites the file if it already exists. No error will be thrown.
-        /// </summary>
-        Overwrite = 1,
-
         /// <summary>
         /// If the file/blob already exists in the destination path, a failure will be thrown.
         /// All parallel downloads in progress will finish, but no further
@@ -30,15 +20,20 @@ namespace Azure.Storage.DataMovement
         /// If ErrorHandlingOptions.ContinueOnFailure is enabled, then this will get overrided
         /// and the transfer will complete regardless of failure.
         /// </summary>
-        Fail = 2,
+        FailIfExists = 0,
+
+        /// <summary>
+        /// Overwrites the file if it already exists. No error will be thrown.
+        /// </summary>
+        OverwriteIfExists = 1,
 
         /// <summary>
         /// If the file/blob already exists in the destination path, no failure will be thrown.
         /// The file will simply be skipped over and other parallel downloads in progress
         /// will finish and the rest of the files in the directory to download will continue.
         ///
-        /// If ErrorHandlingOptions.StopOnAllFailures is set, the download will still be skipped.
+        /// If ErrorHandlingOptions.StopOnAnyFailures is set, the download will still be skipped.
         /// </summary>
-        Skip = 3,
+        SkipIfExists = 2,
     }
 }

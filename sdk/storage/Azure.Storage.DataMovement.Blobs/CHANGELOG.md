@@ -21,6 +21,11 @@
     - `*BlobStorageResource.GetPropertiesAsync`
     - `*BlobStorageResource.ReadStreamAsync`
     - `*BlobStorageResource.WriteFromStreamAsync`
+- [BREAKING CHANGE] Renamed `BlobStorageResourceProvider.MakeResourceAsync` to `BlobStorageResourceProvider.CreateResourceAsync`
+- [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.DirectoryPrefix` to `BlobDirectoryPrefix`
+- [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.ResourceOptions` to `BlobOptions`
+- [BREAKING CHANGE] Moved `BlobContainerClientTransferOptions` to the `Azure.Storage.DataMovement.Blobs` namespace
+
 ### Bugs Fixed
 
 ### Other Changes

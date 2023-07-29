@@ -65,7 +65,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
-            mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointerOptions(checkpointerPath));
+            mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointStoreOptions(checkpointerPath));
             mock.Setup(p => p.SourcePath).Returns(sourcePath);
             mock.Setup(p => p.DestinationPath).Returns(destinationPath);
             mock.Setup(p => p.SourceTypeId).Returns(sourceResourceId);
@@ -154,7 +154,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 return null;
             }
-            return getSource ? sourceProvider.MakeResource() : destinationProvider.MakeResource();
+            return getSource ? sourceProvider.CreateResource() : destinationProvider.CreateResource();
         }
 
         [Test]
@@ -194,7 +194,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 RehydrateApi.ResourceStaticApi => LocalFileStorageResource.RehydrateResource(transferProperties, isSource),
                 RehydrateApi.ProviderInstance => (LocalFileStorageResource)new LocalStorageResourceProvider(
-                    transferProperties, isSource, isFolder: false).MakeResource(),
+                    transferProperties, isSource, isFolder: false).CreateResource(),
                 RehydrateApi.PublicStaticApi => (LocalFileStorageResource)LocalStorageResourcesInlineTryGet(
                     transferProperties, isSource),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
@@ -250,7 +250,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 RehydrateApi.ResourceStaticApi => LocalDirectoryStorageResourceContainer.RehydrateResource(transferProperties, isSource),
                 RehydrateApi.ProviderInstance => (LocalDirectoryStorageResourceContainer)new LocalStorageResourceProvider(
-                    transferProperties, isSource, isFolder: true).MakeResource(),
+                    transferProperties, isSource, isFolder: true).CreateResource(),
                 RehydrateApi.PublicStaticApi => (LocalDirectoryStorageResourceContainer)LocalStorageResourcesInlineTryGet(
                     transferProperties, isSource),
                 _ => throw new ArgumentException("Unrecognized test parameter"),

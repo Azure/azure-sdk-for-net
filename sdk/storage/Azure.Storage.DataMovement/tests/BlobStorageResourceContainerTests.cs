@@ -65,7 +65,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string directoryName = "directoryName";
             BlobContainerClient blobContainerClient = new BlobContainerClient(uri);
             BlobStorageResourceContainer storageResource =
-                new BlobStorageResourceContainer(blobContainerClient, new() { DirectoryPrefix = "directoryName" });
+                new BlobStorageResourceContainer(blobContainerClient, new() { BlobDirectoryPrefix = "directoryName" });
 
             // Assert
             Assert.AreEqual(uri, storageResource.Uri);
@@ -82,7 +82,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             string folderName = "foo";
             BlobStorageResourceContainer storageResourceContainer =
-                new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = folderName });
+                new BlobStorageResourceContainer(test.Container, new() { BlobDirectoryPrefix = folderName });
 
             var resources = new List<StorageResource>();
 
@@ -104,9 +104,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             string prefix = "foo";
             StorageResourceContainer containerResource =
-                new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = prefix });
+                new BlobStorageResourceContainer(test.Container, new() { BlobDirectoryPrefix = prefix });
 
-            StorageResourceSingle resource = containerResource.GetChildStorageResource("bar");
+            StorageResourceItem resource = containerResource.GetStorageResourceReference("bar");
 
             // Assert
             StorageResourceProperties properties = await resource.GetPropertiesAsync();

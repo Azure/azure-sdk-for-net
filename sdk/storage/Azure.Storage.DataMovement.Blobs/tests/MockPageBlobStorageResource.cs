@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task<StorageResourceProperties> MockGetPropertiesAsync(CancellationToken cancellationToken = default)
             => await base.GetPropertiesAsync(cancellationToken);
 
-        public async Task<ReadStreamStorageResourceResult> MockReadStreamAsync(
+        public async Task<StorageResourceReadStreamResult> MockReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default)

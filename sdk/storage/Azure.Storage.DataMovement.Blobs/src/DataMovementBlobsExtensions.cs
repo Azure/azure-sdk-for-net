@@ -62,9 +62,9 @@ namespace Azure.Storage.DataMovement.Blobs
                 lastAccessed: blobProperties.LastAccessed);
         }
 
-        internal static ReadStreamStorageResourceResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
+        internal static StorageResourceReadStreamResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
         {
-            return new ReadStreamStorageResourceResult(
+            return new StorageResourceReadStreamResult(
                 content: result.Content,
                 contentRange: result.Details.ContentRange,
                 acceptRanges: result.Details.AcceptRanges,
@@ -131,7 +131,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static AppendBlobStorageResourceOptions ToAppendBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new AppendBlobStorageResourceOptions(options?.ResourceOptions);
+            return new AppendBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
@@ -211,7 +211,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static BlockBlobStorageResourceOptions ToBlockBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new BlockBlobStorageResourceOptions(options?.ResourceOptions);
+            return new BlockBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
@@ -334,7 +334,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal static PageBlobStorageResourceOptions ToPageBlobStorageResourceOptions(
             this BlobStorageResourceContainerOptions options)
         {
-            return new PageBlobStorageResourceOptions(options?.ResourceOptions);
+            return new PageBlobStorageResourceOptions(options?.BlobOptions);
         }
 
         internal static BlobDownloadOptions ToBlobDownloadOptions(
@@ -506,8 +506,8 @@ namespace Azure.Storage.DataMovement.Blobs
                 cancellationToken).ConfigureAwait(false);
             BlobStorageResourceContainerOptions options = new()
             {
-                DirectoryPrefix = directoryPrefix,
-                ResourceOptions = baseOptions,
+                BlobDirectoryPrefix = directoryPrefix,
+                BlobOptions = baseOptions,
             };
 
             return options;
