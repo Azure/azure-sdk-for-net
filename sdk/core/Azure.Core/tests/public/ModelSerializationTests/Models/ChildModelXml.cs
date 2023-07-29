@@ -60,9 +60,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndElement();
         }
 
-        internal static ChildModelXml DeserializeChildModelXml(XElement element, ModelSerializerOptions? options = default)
+        internal static ChildModelXml DeserializeChildModelXml(XElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             string value = default;
             string readonlyProperty = default;
@@ -77,9 +77,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new ChildModelXml(value, readonlyProperty);
         }
 
-        internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             string childValue = default;
             string childReadOnlyProperty = default;

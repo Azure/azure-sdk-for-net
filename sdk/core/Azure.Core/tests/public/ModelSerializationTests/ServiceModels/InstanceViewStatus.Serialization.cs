@@ -51,9 +51,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelSerializerOptions? options = default)
+        internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

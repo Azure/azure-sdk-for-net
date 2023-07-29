@@ -70,9 +70,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions? options = default)
+        internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
@@ -88,16 +88,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
                 if (property.NameEquals("modelA"u8))
                 {
-                    modelA = CatReadOnlyProperty.DeserializeCatReadOnlyProperty(property.Value, options.Value);
+                    modelA = CatReadOnlyProperty.DeserializeCatReadOnlyProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modelC"u8))
                 {
-                    modelC = DeserializeT(property.Value, options.Value);
+                    modelC = DeserializeT(property.Value, options);
                     continue;
                 }
 
-                if (options.Value.Format == ModelSerializerFormat.Json)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an modelC property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

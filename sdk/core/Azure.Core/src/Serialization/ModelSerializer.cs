@@ -20,13 +20,13 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
-            var serializer = options.Value.GenericTypeSerializerCreator is not null ? options.Value.GenericTypeSerializerCreator(typeof(T)) : null;
+            var serializer = options.GenericTypeSerializerCreator is not null ? options.GenericTypeSerializerCreator(typeof(T)) : null;
             if (serializer is not null)
                 return serializer.Serialize(model);
 
-            return model.Serialize(options.Value);
+            return model.Serialize(options);
         }
 
         /// <summary>
@@ -37,17 +37,17 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize(object model, ModelSerializerOptions? options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             var iModel = model as IModelSerializable<object>;
             if (iModel is null)
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable<object>)}");
 
-            var serializer = options.Value.GenericTypeSerializerCreator is not null ? options.Value.GenericTypeSerializerCreator(model.GetType()) : null;
+            var serializer = options.GenericTypeSerializerCreator is not null ? options.GenericTypeSerializerCreator(model.GetType()) : null;
             if (serializer is not null)
                 return serializer.Serialize(model);
 
-            return iModel.Serialize(options.Value);
+            return iModel.Serialize(options);
         }
 
         /// <summary>
@@ -56,15 +56,15 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable<T>
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
-            var genericDeserialize = GenericDeserialize(data, typeof(T), options.Value);
+            var genericDeserialize = GenericDeserialize(data, typeof(T), options);
             if (genericDeserialize is not null)
                 return (T)genericDeserialize;
 
             var model = Activator.CreateInstance(typeof(T), true) as IModelSerializable<T>;
 
-            return model!.Deserialize(data, options.Value);
+            return model!.Deserialize(data, options);
         }
 
         /// <summary>
@@ -77,15 +77,15 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException"></exception>
         public static object Deserialize(BinaryData data, Type returnType, ModelSerializerOptions? options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
-            var genericDeserialize = GenericDeserialize(data, returnType, options.Value);
+            var genericDeserialize = GenericDeserialize(data, returnType, options);
             if (genericDeserialize is not null)
                 return genericDeserialize;
 
             var model = Activator.CreateInstance(returnType, true) as IModelSerializable<object>;
 
-            return model!.Deserialize(data, options.Value);
+            return model!.Deserialize(data, options);
         }
 
         private static object? GenericDeserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)

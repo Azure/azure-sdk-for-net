@@ -19,9 +19,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
 {
     public partial class ResourceProviderData : IUtf8JsonSerializable, IModelJsonSerializable<ResourceProviderData>
     {
-        public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelSerializerOptions? options = default)
+        public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

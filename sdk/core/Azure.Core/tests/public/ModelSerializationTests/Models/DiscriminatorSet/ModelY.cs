@@ -68,9 +68,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelY DeserializeModelY(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ModelY DeserializeModelY(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,7 +97,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     yProperty = property.Value.GetString();
                     continue;
                 }
-                if (options.Value.Format == ModelSerializerFormat.Json)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

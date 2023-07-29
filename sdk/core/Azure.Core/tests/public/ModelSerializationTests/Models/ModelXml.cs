@@ -101,9 +101,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        public static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions? options = default)
+        public static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             string key = default;
             string value = default;
@@ -141,9 +141,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
-        internal static ModelXml DeserializeModelXml(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ModelXml DeserializeModelXml(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             string key = default;
             string value = default;

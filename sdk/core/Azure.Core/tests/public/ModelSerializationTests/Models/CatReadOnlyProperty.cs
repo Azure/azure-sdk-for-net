@@ -67,9 +67,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions? options = default)
+        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             double weight = default;
             string name = "";
@@ -106,7 +106,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     hasWhiskers = property.Value.GetBoolean();
                     continue;
                 }
-                if (options.Value.Format == ModelSerializerFormat.Json)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

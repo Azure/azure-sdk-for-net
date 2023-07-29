@@ -18,9 +18,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderResourceType>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item, options.Value));
+                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item, options));
                     }
                     aliases = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     List<ZoneMapping> array = new List<ZoneMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ZoneMapping.DeserializeZoneMapping(item, options.Value));
+                        array.Add(ZoneMapping.DeserializeZoneMapping(item, options));
                     }
                     zoneMappings = array;
                     continue;
