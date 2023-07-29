@@ -238,11 +238,11 @@ namespace Azure.Core
 
             public override void Dispose() => _writer.Dispose();
 
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => _writer.WriteTo(stream, cancellation);
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => _writer.CopyTo(stream, cancellation);
 
             public override bool TryComputeLength(out long length) => _writer.TryComputeLength(out length);
 
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await _writer.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await _writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
         }
 
         private sealed class ArrayContent : RequestContent

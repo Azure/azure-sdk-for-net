@@ -157,7 +157,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.Flush();
             sequenceWriter.TryComputeLength(out var length);
             var stream = new MemoryStream((int)length);
-            sequenceWriter.WriteTo(stream, default);
+            sequenceWriter.CopyTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
@@ -177,7 +177,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.Flush();
             sequenceWriter.TryComputeLength(out var length);
             var stream = new MemoryStream((int)length);
-            sequenceWriter.WriteTo(stream, default);
+            sequenceWriter.CopyTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 

@@ -722,12 +722,12 @@ namespace Azure.Core
     {
         public SequenceWriter(int segmentSize = 4096) { }
         public void Advance(int bytesWritten) { }
+        public void CopyTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
+        public System.Threading.Tasks.Task CopyToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
         public void Dispose() { }
         public System.Memory<byte> GetMemory(int sizeHint = 0) { throw null; }
         public System.Span<byte> GetSpan(int sizeHint = 0) { throw null; }
         public bool TryComputeLength(out long length) { throw null; }
-        public void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
-        public System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
     }
     public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
     {
