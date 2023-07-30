@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Security
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for APICollectionOperations.
+    /// Extension methods for APICollectionsOperations.
     /// </summary>
-    public static partial class APICollectionOperationsExtensions
+    public static partial class APICollectionsOperationsExtensions
     {
             /// <summary>
             /// Gets a list of Azure API Management APIs that have been onboarded to
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static IPage<ApiCollectionResponse> List(this IAPICollectionOperations operations, string resourceGroupName, string serviceName)
+            public static IPage<ApiCollection> List(this IAPICollectionsOperations operations, string resourceGroupName, string serviceName)
             {
                 return operations.ListAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
             }
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApiCollectionResponse>> ListAsync(this IAPICollectionOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApiCollection>> ListAsync(this IAPICollectionsOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Security
             /// Microsoft.Security provider namespace. This string matches the Azure API
             /// Management API name.
             /// </param>
-            public static ApiCollectionResponse Get(this IAPICollectionOperations operations, string resourceGroupName, string serviceName, string apiCollectionId)
+            public static ApiCollection Get(this IAPICollectionsOperations operations, string resourceGroupName, string serviceName, string apiCollectionId)
             {
                 return operations.GetAsync(resourceGroupName, serviceName, apiCollectionId).GetAwaiter().GetResult();
             }
@@ -137,12 +137,133 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApiCollectionResponse> GetAsync(this IAPICollectionOperations operations, string resourceGroupName, string serviceName, string apiCollectionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApiCollection> GetAsync(this IAPICollectionsOperations operations, string resourceGroupName, string serviceName, string apiCollectionId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, apiCollectionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Onboard an Azure API Management API to Defender for APIs
+            /// </summary>
+            /// <remarks>
+            /// Onboard an Azure API Management API to Defender for APIs. The system will
+            /// start monitoring the operations within the Azure Management API for
+            /// intrusive behaviors and provide alerts for attacks that have been detected.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiCollectionId'>
+            /// A string representing the apiCollections resource within the
+            /// Microsoft.Security provider namespace. This string matches the Azure API
+            /// Management API name.
+            /// </param>
+            public static ApiCollection Create(this IAPICollectionsOperations operations, string resourceGroupName, string serviceName, string apiCollectionId)
+            {
+                return operations.CreateAsync(resourceGroupName, serviceName, apiCollectionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Onboard an Azure API Management API to Defender for APIs
+            /// </summary>
+            /// <remarks>
+            /// Onboard an Azure API Management API to Defender for APIs. The system will
+            /// start monitoring the operations within the Azure Management API for
+            /// intrusive behaviors and provide alerts for attacks that have been detected.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiCollectionId'>
+            /// A string representing the apiCollections resource within the
+            /// Microsoft.Security provider namespace. This string matches the Azure API
+            /// Management API name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiCollection> CreateAsync(this IAPICollectionsOperations operations, string resourceGroupName, string serviceName, string apiCollectionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, serviceName, apiCollectionId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Offboard an Azure API Management API from Defender for APIs
+            /// </summary>
+            /// <remarks>
+            /// Offboard an Azure API Management API from Defender for APIs. The system
+            /// will stop monitoring the operations within the Azure API Management API for
+            /// intrusive behaviors.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiCollectionId'>
+            /// A string representing the apiCollections resource within the
+            /// Microsoft.Security provider namespace. This string matches the Azure API
+            /// Management API name.
+            /// </param>
+            public static void Delete(this IAPICollectionsOperations operations, string resourceGroupName, string serviceName, string apiCollectionId)
+            {
+                operations.DeleteAsync(resourceGroupName, serviceName, apiCollectionId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Offboard an Azure API Management API from Defender for APIs
+            /// </summary>
+            /// <remarks>
+            /// Offboard an Azure API Management API from Defender for APIs. The system
+            /// will stop monitoring the operations within the Azure API Management API for
+            /// intrusive behaviors.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the user's subscription. The name is
+            /// case insensitive.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiCollectionId'>
+            /// A string representing the apiCollections resource within the
+            /// Microsoft.Security provider namespace. This string matches the Azure API
+            /// Management API name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IAPICollectionsOperations operations, string resourceGroupName, string serviceName, string apiCollectionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, apiCollectionId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -162,7 +283,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ApiCollectionResponse> ListNext(this IAPICollectionOperations operations, string nextPageLink)
+            public static IPage<ApiCollection> ListNext(this IAPICollectionsOperations operations, string nextPageLink)
             {
                 return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
@@ -187,7 +308,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApiCollectionResponse>> ListNextAsync(this IAPICollectionOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApiCollection>> ListNextAsync(this IAPICollectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

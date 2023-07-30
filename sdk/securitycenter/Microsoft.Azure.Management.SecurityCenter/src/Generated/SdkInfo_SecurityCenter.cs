@@ -19,9 +19,7 @@ namespace Microsoft.Azure.Management.Security
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("ApiManagement", "APICollection", "2022-11-20-preview"),
-                new Tuple<string, string, string>("ApiManagement", "APICollectionOffboarding", "2022-11-20-preview"),
-                new Tuple<string, string, string>("ApiManagement", "APICollectionOnboarding", "2022-11-20-preview"),
+                new Tuple<string, string, string>("ApiManagement", "APICollections", "2022-11-20-preview"),
                 new Tuple<string, string, string>("Security", "AdaptiveApplicationControls", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdaptiveNetworkHardenings", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "AdvancedThreatProtection", "2019-01-01"),

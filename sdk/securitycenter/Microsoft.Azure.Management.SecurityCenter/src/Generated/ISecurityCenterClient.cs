@@ -211,19 +211,9 @@ namespace Microsoft.Azure.Management.Security
         ISecurityConnectorApplicationOperations SecurityConnectorApplication { get; }
 
         /// <summary>
-        /// Gets the IAPICollectionOperations.
+        /// Gets the IAPICollectionsOperations.
         /// </summary>
-        IAPICollectionOperations APICollection { get; }
-
-        /// <summary>
-        /// Gets the IAPICollectionOnboardingOperations.
-        /// </summary>
-        IAPICollectionOnboardingOperations APICollectionOnboarding { get; }
-
-        /// <summary>
-        /// Gets the IAPICollectionOffboardingOperations.
-        /// </summary>
-        IAPICollectionOffboardingOperations APICollectionOffboarding { get; }
+        IAPICollectionsOperations APICollections { get; }
 
         /// <summary>
         /// Gets the IDefenderForStorageOperations.

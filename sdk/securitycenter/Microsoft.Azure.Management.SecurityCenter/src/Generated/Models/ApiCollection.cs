@@ -21,18 +21,18 @@ namespace Microsoft.Azure.Management.Security.Models
     /// An API collection as represented by Defender for APIs.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ApiCollectionResponse : Resource
+    public partial class ApiCollection : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the ApiCollectionResponse class.
+        /// Initializes a new instance of the ApiCollection class.
         /// </summary>
-        public ApiCollectionResponse()
+        public ApiCollection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApiCollectionResponse class.
+        /// Initializes a new instance of the ApiCollection class.
         /// </summary>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// Management API.</param>
         /// <param name="additionalData">Additional data regarding the API
         /// collection.</param>
-        public ApiCollectionResponse(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string displayName = default(string), IDictionary<string, string> additionalData = default(IDictionary<string, string>))
+        public ApiCollection(string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData), string displayName = default(string), IDictionary<string, string> additionalData = default(IDictionary<string, string>))
             : base(id, name, type, systemData)
         {
             DisplayName = displayName;

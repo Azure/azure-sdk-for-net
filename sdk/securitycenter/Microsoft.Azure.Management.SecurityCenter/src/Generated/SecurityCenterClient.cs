@@ -214,19 +214,9 @@ namespace Microsoft.Azure.Management.Security
         public virtual ISecurityConnectorApplicationOperations SecurityConnectorApplication { get; private set; }
 
         /// <summary>
-        /// Gets the IAPICollectionOperations.
+        /// Gets the IAPICollectionsOperations.
         /// </summary>
-        public virtual IAPICollectionOperations APICollection { get; private set; }
-
-        /// <summary>
-        /// Gets the IAPICollectionOnboardingOperations.
-        /// </summary>
-        public virtual IAPICollectionOnboardingOperations APICollectionOnboarding { get; private set; }
-
-        /// <summary>
-        /// Gets the IAPICollectionOffboardingOperations.
-        /// </summary>
-        public virtual IAPICollectionOffboardingOperations APICollectionOffboarding { get; private set; }
+        public virtual IAPICollectionsOperations APICollections { get; private set; }
 
         /// <summary>
         /// Gets the IDefenderForStorageOperations.
@@ -665,9 +655,7 @@ namespace Microsoft.Azure.Management.Security
             Application = new ApplicationOperations(this);
             SecurityConnectorApplications = new SecurityConnectorApplicationsOperations(this);
             SecurityConnectorApplication = new SecurityConnectorApplicationOperations(this);
-            APICollection = new APICollectionOperations(this);
-            APICollectionOnboarding = new APICollectionOnboardingOperations(this);
-            APICollectionOffboarding = new APICollectionOffboardingOperations(this);
+            APICollections = new APICollectionsOperations(this);
             DefenderForStorage = new DefenderForStorageOperations(this);
             SecurityOperators = new SecurityOperatorsOperations(this);
             SqlVulnerabilityAssessmentBaselineRules = new SqlVulnerabilityAssessmentBaselineRulesOperations(this);
