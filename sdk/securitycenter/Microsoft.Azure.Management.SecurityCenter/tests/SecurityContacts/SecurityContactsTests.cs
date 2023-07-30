@@ -48,8 +48,8 @@ namespace SecurityCenter.Tests
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var securityContacts = securityCenterClient.SecurityContacts.List();
-                ValidateSecurityContacts(securityContacts);
+                var securityContactsList = securityCenterClient.SecurityContacts.List();
+                ValidateSecurityContacts(securityContactsList);
             }
         }
 
@@ -104,11 +104,11 @@ namespace SecurityCenter.Tests
 
         #region Validations
 
-        private void ValidateSecurityContacts(IPage<SecurityContact> securityContactPage)
+        private void ValidateSecurityContacts(SecurityContactList securityContactsList)
         {
-            Assert.True(securityContactPage.IsAny());
+            Assert.NotNull(securityContactsList.Value);
 
-            securityContactPage.ForEach(ValidateSecurityContact);
+            securityContactsList.Value.ForEach(ValidateSecurityContact);
         }
 
         private void ValidateSecurityContact(SecurityContact securityContact)
