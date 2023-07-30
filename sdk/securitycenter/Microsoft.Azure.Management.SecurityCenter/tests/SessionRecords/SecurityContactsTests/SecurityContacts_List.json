@@ -7,16 +7,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "df97b8be-89d9-474c-8d15-6e3799080ca0"
+          "077d1d70-a1d6-4148-950b-005520878c09"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.47601",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -36,13 +36,13 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "26f8c5eb-5630-4bf8-b9e9-7af97588fb81"
+          "b817d3ad-dfc6-4536-9ec3-4797707f5499"
         ],
         "x-ms-correlation-request-id": [
-          "26f8c5eb-5630-4bf8-b9e9-7af97588fb81"
+          "b817d3ad-dfc6-4536-9ec3-4797707f5499"
         ],
         "x-ms-routing-request-id": [
-          "GERMANYWESTCENTRAL:20221027T101324Z:26f8c5eb-5630-4bf8-b9e9-7af97588fb81"
+          "FRANCESOUTH:20230730T124756Z:b817d3ad-dfc6-4536-9ec3-4797707f5499"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,10 +51,10 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 27 Oct 2022 10:13:24 GMT"
+          "Sun, 30 Jul 2023 12:47:55 GMT"
         ],
         "Content-Length": [
-          "417"
+          "407"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -63,7 +63,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"properties\": {\r\n      \"notificationsByRole\": {\r\n        \"state\": \"Off\",\r\n        \"roles\": []\r\n      },\r\n      \"emails\": \"barbra2@contoso.com\",\r\n      \"phone\": \"\",\r\n      \"alertNotifications\": {\r\n        \"state\": \"Off\",\r\n        \"minimalSeverity\": \"\"\r\n      }\r\n    },\r\n    \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/securityContacts/default\",\r\n    \"name\": \"default\",\r\n    \"type\": \"Microsoft.Security/securityContacts\",\r\n    \"etag\": \"\\\"fa0070a3-0000-0d00-0000-635a57230000\\\"\",\r\n    \"location\": \"West Europe\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"properties\": {\r\n      \"notificationsByRole\": {\r\n        \"state\": \"On\",\r\n        \"roles\": [\r\n          \"Owner\"\r\n        ]\r\n      },\r\n      \"emails\": \"\",\r\n      \"phone\": \"\",\r\n      \"alertNotifications\": {\r\n        \"state\": \"On\",\r\n        \"minimalSeverity\": \"High\"\r\n      }\r\n    },\r\n    \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/securityContacts/default\",\r\n    \"name\": \"default\",\r\n    \"type\": \"Microsoft.Security/securityContacts\",\r\n    \"etag\": \"\\\"8600a2d1-0000-0d00-0000-64c5872e0000\\\"\",\r\n    \"location\": \"West Europe\"\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],

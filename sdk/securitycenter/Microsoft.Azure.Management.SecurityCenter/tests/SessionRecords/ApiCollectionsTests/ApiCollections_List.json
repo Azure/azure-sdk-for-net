@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/apicollectionstests/providers/Microsoft.ApiManagement/service/demoApimService2/providers/Microsoft.Security/apiCollections?api-version=2022-11-20-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Jlc291cmNlR3JvdXBzL2FwaWNvbGxlY3Rpb25zdGVzdHMvcHJvdmlkZXJzL01pY3Jvc29mdC5BcGlNYW5hZ2VtZW50L3NlcnZpY2UvZGVtb0FwaW1TZXJ2aWNlMi9wcm92aWRlcnMvTWljcm9zb2Z0LlNlY3VyaXR5L2FwaUNvbGxlY3Rpb25zP2FwaS12ZXJzaW9uPTIwMjItMTEtMjAtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7891d933-204e-4f48-8044-277b83f6a0ba"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/6.0.2023.32017",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "01ea31f0-94ff-4391-b584-a02c496355b0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "mise-correlation-id": [
+          "ad101720-fa50-46a5-97f3-5e838a1815e1"
+        ],
+        "traceparent": [
+          "00-8a3f75f647966b7c4519bbd1a5c8e50d-07321f2c1ae2152b-00"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-correlation-request-id": [
+          "01ea31f0-94ff-4391-b584-a02c496355b0"
+        ],
+        "x-ms-routing-request-id": [
+          "FRANCESOUTH:20230730T201957Z:01ea31f0-94ff-4391-b584-a02c496355b0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Sun, 30 Jul 2023 20:19:57 GMT"
+        ],
+        "Content-Length": [
+          "538"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/apicollectionstests/providers/Microsoft.ApiManagement/service/demoapimservice2/providers/Microsoft.Security/apiCollections/echo-api\",\r\n      \"name\": \"echo-api\",\r\n      \"type\": \"microsoft.security/apicollections\",\r\n      \"properties\": {\r\n        \"displayName\": \"Echo API\",\r\n        \"additionalData\": {\r\n          \"apiManagementApiId\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/resourceGroups/apicollectionstests/providers/Microsoft.ApiManagement/service/demoapimservice2/apis/echo-api\"\r\n        }\r\n      }\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
+  }
+}

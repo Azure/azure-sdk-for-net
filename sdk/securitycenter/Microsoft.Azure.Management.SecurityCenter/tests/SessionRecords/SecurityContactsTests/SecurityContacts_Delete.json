@@ -7,16 +7,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "723f0548-0965-4f83-9dce-0f6b0b2ee786"
+          "bdd7936b-b317-4546-9eb9-d74342c50f0d"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.700.22.47601",
+          "FxVersion/6.0.2023.32017",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22621",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/3.0.0.0"
+          "OSVersion/Microsoft.Windows.10.0.19045",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/4.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -36,13 +36,13 @@
           "Kestrel"
         ],
         "x-ms-request-id": [
-          "1b992366-9488-463a-a3ac-231676f9241e"
+          "c92e43c2-c074-42bd-9c7d-d94a5fcb60d7"
         ],
         "x-ms-correlation-request-id": [
-          "1b992366-9488-463a-a3ac-231676f9241e"
+          "c92e43c2-c074-42bd-9c7d-d94a5fcb60d7"
         ],
         "x-ms-routing-request-id": [
-          "GERMANYWESTCENTRAL:20221027T100023Z:1b992366-9488-463a-a3ac-231676f9241e"
+          "FRANCESOUTH:20230730T124758Z:c92e43c2-c074-42bd-9c7d-d94a5fcb60d7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -51,7 +51,7 @@
           "nosniff"
         ],
         "Date": [
-          "Thu, 27 Oct 2022 10:00:23 GMT"
+          "Sun, 30 Jul 2023 12:47:57 GMT"
         ],
         "Content-Length": [
           "2"
@@ -68,7 +68,5 @@
     }
   ],
   "Names": {},
-  "Variables": {
-    "SubscriptionId": "487bb485-b5b0-471e-9c0d-10717612f869"
-  }
+  "Variables": {}
 }
