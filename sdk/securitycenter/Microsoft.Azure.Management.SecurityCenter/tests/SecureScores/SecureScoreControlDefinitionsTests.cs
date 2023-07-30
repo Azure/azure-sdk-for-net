@@ -7,7 +7,7 @@ using SecurityCenter.Tests.Helpers;
 using System.Net;
 using Xunit;
 
-namespace Microsoft.Azure.Management.SecurityCenter.Tests.SecureScores
+namespace SecurityCenter.Tests
 {
     public class SecureScoreControlDefinitionsTests : TestBase
     {

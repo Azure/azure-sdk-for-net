@@ -9,7 +9,7 @@ using SecurityCenter.Tests.Helpers;
 using System.Net;
 using Xunit;
 
-namespace Microsoft.Azure.Management.SecurityCenter.Tests.RegulatoryCompliance
+namespace SecurityCenter.Tests
 {
     public class RegulatoryComplianceControlsTests : TestBase
     {
