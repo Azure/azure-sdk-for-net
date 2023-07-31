@@ -70,15 +70,11 @@ ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
 ```
 ### Create a thread with metadata
 ```C# Snippet: Snippet:Azure_Communication_Chat_Tests_Samples_CreateThreadWithMetadata_KeyConcepts
-
-    var createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
-
-    createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
-    createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
-
-    CreateChatThreadResult createChatThreadResultWithMetadata = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
-
-    ChatThreadProperties chatThreadWithMetada = createChatThreadResultWithMetadata.ChatThread;
+CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
+createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
+createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
+CreateChatThreadResult createChatThreadResultWithMetadata = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
+ChatThreadProperties chatThreadWithMetada = createChatThreadResultWithMetadata.ChatThread;
 ```
 ### Get a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts
@@ -98,6 +94,14 @@ Once you initialized a `ChatThreadClient` class, you can do the following chat o
 ### Update a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
 chatThreadClient.UpdateTopic(topic: "Launch meeting");
+```
+
+### Update a thread metadata
+```C# Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
+UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
+updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
+await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
+#endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThreadMetadata
 ```
 
 ### Send a message
