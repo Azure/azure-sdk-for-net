@@ -65,16 +65,13 @@ Once you initialized a `ChatClient` class, you can do the following chat operati
 
 ### Create a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
-CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
-ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
-```
-### Create a thread with metadata
-```C# Snippet: Snippet:Azure_Communication_Chat_Tests_Samples_CreateThreadWithMetadata_KeyConcepts
 CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
 createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
 createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
-CreateChatThreadResult createChatThreadResultWithMetadata = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
-ChatThreadProperties chatThreadWithMetada = createChatThreadResultWithMetadata.ChatThread;
+
+createChatThreadOptions.Participants.Add(new ChatParticipant(await communicationIdentityClient.CreateUserAsync()));
+CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
+ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
 ```
 ### Get a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts
@@ -98,10 +95,7 @@ chatThreadClient.UpdateTopic(topic: "Launch meeting");
 
 ### Update a thread metadata
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
-UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
-updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
-await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
-#endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThreadMetadata
+chatThreadClient.UpdateTopic(topic: "Launch meeting");
 ```
 
 ### Send a message
@@ -235,7 +229,10 @@ Use `UpdateTopic` to update the chat thread topic.
 - `topic` is used to describe the updated topic for the thread.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
-await chatThreadClient.UpdateTopicAsync(topic: "new topic !");
+UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
+updateChatThreadPropertiesOptions.Topic = "new topic !";
+updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
+await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
 ```
 
 ## Message Operations

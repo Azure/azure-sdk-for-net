@@ -52,14 +52,11 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetThreads
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
-            await chatThreadClient.UpdateTopicAsync(topic: "new topic !");
-            #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
-
-            #region Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThreadMetadata
             UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
+            updateChatThreadPropertiesOptions.Topic = "new topic !";
             updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
             await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
-            #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThreadMetadata
+            #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_DeleteThread
             await chatClient.DeleteChatThreadAsync(threadId);
