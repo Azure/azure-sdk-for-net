@@ -39,6 +39,9 @@ namespace Azure.Core
             JsonWriter = new Utf8JsonWriter(_gzip);
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
+#endif
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
         {
 #if NETFRAMEWORK
@@ -57,6 +60,9 @@ namespace Azure.Core
 #endif
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
+#endif
         public override void WriteTo(Stream stream, CancellationToken cancellation)
         {
             //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30691
