@@ -574,6 +574,9 @@ namespace Azure.ResourceManager.Dns
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsMXRecordResource> GetDnsMXRecord(string mxRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsMXRecordResource>> GetDnsMXRecordAsync(string mxRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsMXRecordCollection GetDnsMXRecords() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Dns.DnsNaptrRecordResource> GetDnsNaptrRecord(string naptrRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsNaptrRecordResource>> GetDnsNaptrRecordAsync(string naptrRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Dns.DnsNaptrRecordCollection GetDnsNaptrRecords() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dns.DnsNSRecordResource> GetDnsNSRecord(string nsRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dns.DnsNSRecordResource>> GetDnsNSRecordAsync(string nsRecordName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dns.DnsNSRecordCollection GetDnsNSRecords() { throw null; }

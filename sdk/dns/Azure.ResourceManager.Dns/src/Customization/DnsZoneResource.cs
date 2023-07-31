@@ -400,6 +400,57 @@ namespace Azure.ResourceManager.Dns
             return GetDnsMXRecords().Get(mxRecordName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of DnsNaptrRecordResources in the DnsZone. </summary>
+        /// <returns> An object representing collection of DnsNaptrRecordResources and their operations over a DnsNaptrRecordResource. </returns>
+        public virtual DnsNaptrRecordCollection GetDnsNaptrRecords()
+        {
+            return GetCachedClient(Client => new DnsNaptrRecordCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a record set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{naptrRecordName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecordSets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="naptrRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="naptrRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DnsNaptrRecordResource>> GetDnsNaptrRecordAsync(string naptrRecordName, CancellationToken cancellationToken = default)
+        {
+            return await GetDnsNaptrRecords().GetAsync(naptrRecordName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a record set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{naptrRecordName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecordSets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="naptrRecordName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="naptrRecordName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DnsNaptrRecordResource> GetDnsNaptrRecord(string naptrRecordName, CancellationToken cancellationToken = default)
+        {
+            return GetDnsNaptrRecords().Get(naptrRecordName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of DnsNSRecordResources in the DnsZone. </summary>
         /// <returns> An object representing collection of DnsNSRecordResources and their operations over a DnsNSRecordResource. </returns>
         public virtual DnsNSRecordCollection GetDnsNSRecords()
