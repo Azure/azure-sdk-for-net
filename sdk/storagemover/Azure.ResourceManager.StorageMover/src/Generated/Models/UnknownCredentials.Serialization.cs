@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class Credentials : IUtf8JsonSerializable
+    internal partial class UnknownCredentials : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,20 +20,22 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteEndObject();
         }
 
-        internal static Credentials DeserializeCredentials(JsonElement element)
+        internal static UnknownCredentials DeserializeUnknownCredentials(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            CredentialType type = "Unknown";
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("type"u8))
                 {
-                    case "AzureKeyVaultSmb": return AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(element);
+                    type = new CredentialType(property.Value.GetString());
+                    continue;
                 }
             }
-            return UnknownCredentials.DeserializeUnknownCredentials(element);
+            return new UnknownCredentials(type);
         }
     }
 }

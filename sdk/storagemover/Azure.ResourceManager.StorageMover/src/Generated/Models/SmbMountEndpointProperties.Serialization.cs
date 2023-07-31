@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
             string host = default;
             string shareName = default;
-            Optional<Credentials> credentials = default;
+            Optional<AzureKeyVaultSmbCredentials> credentials = default;
             EndpointType endpointType = default;
             Optional<string> description = default;
             Optional<StorageMoverProvisioningState> provisioningState = default;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    credentials = Credentials.DeserializeCredentials(property.Value);
+                    credentials = AzureKeyVaultSmbCredentials.DeserializeAzureKeyVaultSmbCredentials(property.Value);
                     continue;
                 }
                 if (property.NameEquals("endpointType"u8))

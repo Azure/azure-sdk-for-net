@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
         /// <param name="shareName"> The name of the SMB share being exported from the server. </param>
-        /// <param name="credentials"> The secrets URIs which store the required credentials to access the SMB share. </param>
-        internal SmbMountEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, string host, string shareName, Credentials credentials) : base(endpointType, description, provisioningState)
+        /// <param name="credentials"> The Azure Key Vault secret URIs which store the required credentials to access the SMB share. </param>
+        internal SmbMountEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, string host, string shareName, AzureKeyVaultSmbCredentials credentials) : base(endpointType, description, provisioningState)
         {
             Host = host;
             ShareName = shareName;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public string Host { get; set; }
         /// <summary> The name of the SMB share being exported from the server. </summary>
         public string ShareName { get; set; }
-        /// <summary> The secrets URIs which store the required credentials to access the SMB share. </summary>
-        public Credentials Credentials { get; set; }
+        /// <summary> The Azure Key Vault secret URIs which store the required credentials to access the SMB share. </summary>
+        public AzureKeyVaultSmbCredentials Credentials { get; set; }
     }
 }

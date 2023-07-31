@@ -5,30 +5,28 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The secrets URIs which store the credentials. </summary>
-    public partial class Credentials
+    /// <summary>
+    /// The Credentials.
+    /// Please note <see cref="Credentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureKeyVaultSmbCredentials"/>.
+    /// </summary>
+    public abstract partial class Credentials
     {
         /// <summary> Initializes a new instance of Credentials. </summary>
-        /// <param name="usernameUri"> The secret URI which stores the username. </param>
-        /// <param name="passwordUri"> The secret URI which stores the password. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="usernameUri"/> or <paramref name="passwordUri"/> is null. </exception>
-        public Credentials(Uri usernameUri, Uri passwordUri)
+        protected Credentials()
         {
-            Argument.AssertNotNull(usernameUri, nameof(usernameUri));
-            Argument.AssertNotNull(passwordUri, nameof(passwordUri));
-
-            UsernameUri = usernameUri;
-            PasswordUri = passwordUri;
         }
 
-        /// <summary> The secret URI which stores the username. </summary>
-        public Uri UsernameUri { get; set; }
-        /// <summary> The secret URI which stores the password. </summary>
-        public Uri PasswordUri { get; set; }
+        /// <summary> Initializes a new instance of Credentials. </summary>
+        /// <param name="credentialType"> The Credentials type. </param>
+        internal Credentials(CredentialType credentialType)
+        {
+            CredentialType = credentialType;
+        }
+
+        /// <summary> The Credentials type. </summary>
+        internal CredentialType CredentialType { get; set; }
     }
 }

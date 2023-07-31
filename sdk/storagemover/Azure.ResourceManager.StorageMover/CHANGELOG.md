@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Upgrade to API version 2023-07-01-preview
+- Added support for SMB endpoint and SMB file share endpoint.
+
 ### Breaking Changes
 
 ### Bugs Fixed

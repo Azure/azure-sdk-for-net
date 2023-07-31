@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             EndpointType = EndpointType.SmbMount;
         }
 
-        /// <summary> The secrets URIs which store the required credentials to access the SMB share. Use empty string to clean-up existing value. </summary>
-        public CredentialsUpdate Credentials { get; set; }
+        /// <summary> The Azure Key Vault secret URIs which store the required credentials to access the SMB share. </summary>
+        public AzureKeyVaultSmbCredentials Credentials { get; set; }
     }
 }
