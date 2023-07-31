@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ApiProfile : IUtf8JsonSerializable, IModelJsonSerializable<ApiProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         internal static ApiProfile DeserializeApiProfile(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

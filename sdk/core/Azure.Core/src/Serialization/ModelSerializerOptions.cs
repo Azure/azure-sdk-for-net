@@ -13,7 +13,7 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// Default options for serializing models into the format the Azure serivce is expecting.
         /// </summary>
-        public static readonly ModelSerializerOptions DefaultServiceOptions = new ModelSerializerOptions(ModelSerializerFormat.Wire, true);
+        public static readonly ModelSerializerOptions DefaultWireOptions = new ModelSerializerOptions(ModelSerializerFormat.Wire, true);
 
         private bool _isFrozen;
         private Func<Type, ObjectSerializer>? _genericTypeSerializerCreator;

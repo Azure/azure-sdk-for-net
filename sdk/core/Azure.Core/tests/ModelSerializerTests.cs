@@ -13,7 +13,7 @@ namespace Azure.Core.Tests.ModelSerializationTests
         [Test]
         public void ValidateFrozenInstance()
         {
-            ModelSerializerOptions frozen = ModelSerializerOptions.DefaultServiceOptions;
+            ModelSerializerOptions frozen = ModelSerializerOptions.DefaultWireOptions;
             ModelSerializerOptions nonFrozen = new ModelSerializerOptions();
 
             Assert.Throws<InvalidOperationException>(() => frozen.GenericTypeSerializerCreator = type => null);

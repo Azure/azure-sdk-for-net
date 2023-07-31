@@ -31,17 +31,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public int XProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ModelX>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ModelX>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         public static implicit operator RequestContent(ModelX modelX)
         {
-            return RequestContent.Create(modelX, ModelSerializerOptions.DefaultServiceOptions);
+            return RequestContent.Create(modelX, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelX(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeModelX(jsonDocument.RootElement, ModelSerializerOptions.DefaultServiceOptions);
+            return DeserializeModelX(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         void IModelJsonSerializable<ModelX>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
@@ -79,7 +79,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static ModelX DeserializeModelX(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

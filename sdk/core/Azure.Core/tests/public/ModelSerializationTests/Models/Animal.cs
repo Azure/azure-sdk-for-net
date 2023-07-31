@@ -47,7 +47,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Animal>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Animal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         void IModelJsonSerializable<Animal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -84,7 +84,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         internal static Animal DeserializeAnimal(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             double weight = default;
             string name = "";

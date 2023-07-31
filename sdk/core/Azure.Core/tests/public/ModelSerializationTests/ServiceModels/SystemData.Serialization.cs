@@ -18,7 +18,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
     [JsonConverter(typeof(SystemDataConverter))]
     public partial class SystemData : IUtf8JsonSerializable, IModelJsonSerializable<SystemData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SystemData>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SystemData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         void IModelJsonSerializable<SystemData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
 
         internal static SystemData DeserializeSystemData(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -180,7 +180,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
             public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeSystemData(document.RootElement, ModelSerializerOptions.DefaultServiceOptions);
+                return DeserializeSystemData(document.RootElement, ModelSerializerOptions.DefaultWireOptions);
             }
         }
 

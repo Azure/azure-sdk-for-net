@@ -39,7 +39,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             Assert.Throws(Is.InstanceOf<JsonException>(), () => ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(WirePayload)), jsonOptions));
 
-            ModelSerializerOptions wireOptions = ModelSerializerOptions.DefaultServiceOptions;
+            ModelSerializerOptions wireOptions = ModelSerializerOptions.DefaultWireOptions;
             Assert.Throws<XmlException>(() => ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), wireOptions));
         }
 

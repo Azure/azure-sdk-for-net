@@ -93,7 +93,7 @@ namespace Azure.Core
         /// <param name="model">The <see cref="IModelSerializable{T}"/> to serialize.</param>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(IModelSerializable<object> model, ModelSerializerOptions? options = default) => new ModelSerializableContent(model, options ?? ModelSerializerOptions.DefaultServiceOptions);
+        public static RequestContent Create(IModelSerializable<object> model, ModelSerializerOptions? options = default) => new ModelSerializableContent(model, options ?? ModelSerializerOptions.DefaultWireOptions);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.

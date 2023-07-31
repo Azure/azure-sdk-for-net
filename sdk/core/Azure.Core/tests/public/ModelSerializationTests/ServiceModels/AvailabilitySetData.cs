@@ -25,13 +25,13 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 
         public static implicit operator RequestContent(AvailabilitySetData availabilitySetData)
         {
-            return RequestContent.Create(availabilitySetData, ModelSerializerOptions.DefaultServiceOptions);
+            return RequestContent.Create(availabilitySetData, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator AvailabilitySetData(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelSerializerOptions.DefaultServiceOptions);
+            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         /// <summary> Initializes a new instance of AvailabilitySetData. </summary>

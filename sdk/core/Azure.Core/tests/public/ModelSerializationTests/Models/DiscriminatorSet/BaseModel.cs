@@ -17,13 +17,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
     {
         public static implicit operator RequestContent(BaseModel baseModel)
         {
-            return RequestContent.Create(baseModel, ModelSerializerOptions.DefaultServiceOptions);
+            return RequestContent.Create(baseModel, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator BaseModel(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeBaseModel(jsonDocument.RootElement, ModelSerializerOptions.DefaultServiceOptions);
+            return DeserializeBaseModel(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string Kind { get; internal set; }
         public string Name { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BaseModel>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BaseModel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         void IModelJsonSerializable<BaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static BaseModel DeserializeBaseModel(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {

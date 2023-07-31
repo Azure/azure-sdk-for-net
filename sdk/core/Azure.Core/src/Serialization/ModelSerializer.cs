@@ -23,7 +23,7 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             return model.Serialize(options);
         }
@@ -36,7 +36,7 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static BinaryData Serialize(object model, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             var iModel = model as IModelSerializable<object>;
             if (iModel is null)
@@ -51,7 +51,7 @@ namespace Azure.Core.Serialization
         /// <returns></returns>
         public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             return GetInstance<T>().Deserialize(data, options);
         }
@@ -66,7 +66,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException"></exception>
         public static object Deserialize(BinaryData data, Type returnType, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             return GetInstance(returnType).Deserialize(data, options);
         }
@@ -79,7 +79,7 @@ namespace Azure.Core.Serialization
         /// <returns>A binary representation of the serialized model.</returns>
         public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             using var writer = new SequenceWriter();
             using var jsonWriter = new Utf8JsonWriter(writer);
             model.Serialize(jsonWriter, options);
@@ -98,7 +98,7 @@ namespace Azure.Core.Serialization
         /// <returns>A binary representation of the serialized model.</returns>
         public static BinaryData ConvertToBinaryData(IModelXmlSerializable<object> model, ModelSerializerOptions? options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
             using MemoryStream stream = new MemoryStream();
             using XmlWriter writer = XmlWriter.Create(stream);
             model.Serialize(writer, options);
