@@ -8,4 +8,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Usage", "AZC0002: Client method should have cancellationToken as the last optional parameter (both name and it being optional matters", Justification = "")]
+[assembly: SuppressMessage("Usage", "AZC0001: Namespace 'Azure.Temp.Batch.Models' shouldn't contain public types. Use one of the following pre-approved namespace groups (https://azure.github.io/azure-sdk/registered_namespaces.html): Azure.AI, Azure.Analytics, Azure.Communication, Azure.Containers, Azure.Core.Expressions, Azure.Data, Azure.DigitalTwins, Azure.Identity, Azure.IoT, Azure.Learn, Azure.Management, Azure.Media, Azure.Messaging, Azure.MixedReality, Azure.Monitor, Azure.ResourceManager, Azure.Search, Azure.Security, Azure.Storage, Azure.Template, Microsoft.Extensions.Azure", Justification = "")]
+[assembly: SuppressMessage("Usage", "AZC0012: Single word class names are too generic and have high chance of collision with BCL types or types from other libraries", Justification = "")]
