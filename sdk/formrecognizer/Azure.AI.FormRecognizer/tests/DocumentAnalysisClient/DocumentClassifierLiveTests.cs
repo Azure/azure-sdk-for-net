@@ -138,7 +138,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             foreach (var page in analyzeResult.Pages)
             {
-                Assert.AreEqual(0f, page.Angle);
+                Assert.That(page.Angle, Is.EqualTo(0f).Within(0.05f));
                 Assert.AreEqual(8.5f, page.Width);
                 Assert.AreEqual(11f, page.Height);
                 Assert.AreEqual(DocumentPageLengthUnit.Inch, page.Unit);

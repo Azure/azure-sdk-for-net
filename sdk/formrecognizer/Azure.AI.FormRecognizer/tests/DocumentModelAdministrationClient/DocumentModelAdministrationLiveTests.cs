@@ -264,7 +264,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(ServiceVersionString, model.ApiVersion);
             Assert.Greater(model.CreatedOn, startTime);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 Assert.Greater(model.ExpiresOn, model.CreatedOn);
             }
