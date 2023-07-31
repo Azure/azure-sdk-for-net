@@ -119,6 +119,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeZoneMapping(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ZoneMapping>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<ZoneMapping>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

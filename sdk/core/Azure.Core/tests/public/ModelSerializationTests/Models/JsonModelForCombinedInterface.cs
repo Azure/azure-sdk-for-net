@@ -123,6 +123,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return DeserializeJsonModelForCombinedInterface(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<JsonModelForCombinedInterface>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<JsonModelForCombinedInterface>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

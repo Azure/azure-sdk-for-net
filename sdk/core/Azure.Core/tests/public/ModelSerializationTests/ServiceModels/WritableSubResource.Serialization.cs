@@ -109,6 +109,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             }
         }
 
-        BinaryData IModelSerializable<WritableSubResource>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<WritableSubResource>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

@@ -161,6 +161,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeResourceTypeAliasPath(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ResourceTypeAliasPath>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<ResourceTypeAliasPath>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

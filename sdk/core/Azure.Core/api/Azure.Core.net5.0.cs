@@ -17,8 +17,6 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
-        public static System.BinaryData ToBinaryData(this Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
-        public static System.BinaryData ToBinaryData(this Azure.Core.Serialization.IModelXmlSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1155,6 +1153,8 @@ namespace Azure.Core.Serialization
     }
     public static partial class ModelSerializer
     {
+        public static System.BinaryData ConvertToBinaryData(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
+        public static System.BinaryData ConvertToBinaryData(Azure.Core.Serialization.IModelXmlSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : class, Azure.Core.Serialization.IModelSerializable<T> { throw null; }
         public static System.BinaryData Serialize(object model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }

@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using System.Xml;
 
 namespace Azure.Core.Serialization
 {
@@ -86,6 +89,41 @@ namespace Azure.Core.Serialization
             var model = Activator.CreateInstance(returnType, true) as IModelSerializable<object>;
 
             return model!.Deserialize(data, options);
+        }
+
+        /// <summary>
+        /// Converts an <see cref="IModelJsonSerializable{T}"/> into a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>A binary representation of the serialized model.</returns>
+        public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            using var writer = new SequenceWriter();
+            using var jsonWriter = new Utf8JsonWriter(writer);
+            model.Serialize(jsonWriter, options);
+            jsonWriter.Flush();
+            writer.TryComputeLength(out var length);
+            using var stream = new MemoryStream((int)length);
+            writer.CopyTo(stream, default);
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+        }
+
+        /// <summary>
+        /// Converts an <see cref="IModelXmlSerializable{T}"/> into a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>A binary representation of the serialized model.</returns>
+        public static BinaryData ConvertToBinaryData(IModelXmlSerializable<object> model, ModelSerializerOptions? options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            model.Serialize(writer, options);
+            writer.Flush();
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
         private static object? GenericDeserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)

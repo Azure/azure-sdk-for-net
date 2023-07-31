@@ -134,7 +134,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<T>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<T>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -150,7 +150,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<object>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<object>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -166,7 +166,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<T>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<T>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -183,7 +183,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<T>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<T>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -199,7 +199,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<object>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<object>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -215,7 +215,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<object>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<object>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)

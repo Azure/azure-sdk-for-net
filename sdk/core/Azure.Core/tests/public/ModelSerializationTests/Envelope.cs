@@ -145,7 +145,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeEnvelope(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<Envelope<T>>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<Envelope<T>>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
         #endregion
     }
 }

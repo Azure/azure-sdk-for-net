@@ -132,6 +132,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return DeserializeModelX(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ModelX>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<ModelX>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

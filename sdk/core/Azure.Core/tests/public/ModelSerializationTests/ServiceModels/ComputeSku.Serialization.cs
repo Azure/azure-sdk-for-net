@@ -123,6 +123,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             return DeserializeComputeSku(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ComputeSku>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<ComputeSku>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }
