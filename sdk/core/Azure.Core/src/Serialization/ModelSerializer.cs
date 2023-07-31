@@ -3,7 +3,7 @@
 
 using System;
 using System.IO;
-using System.Reflection;
+using System.Linq;
 using System.Text.Json;
 using System.Xml;
 
@@ -49,7 +49,7 @@ namespace Azure.Core.Serialization
         /// Serialize a XML model. Todo: collapse this method when working - need compile check over runtime
         /// </summary>
         /// <returns></returns>
-        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable<T>
+        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
             options ??= ModelSerializerOptions.DefaultServiceOptions;
 
@@ -106,7 +106,7 @@ namespace Azure.Core.Serialization
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
-        private static object? GenericDeserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
+        private static IModelSerializable<object> GetInstance(Type returnType)
         {
             var model = GetObjectInstance(returnType) as IModelSerializable<object>;
             if (model is null)
@@ -114,7 +114,7 @@ namespace Azure.Core.Serialization
             return model;
         }
 
-        private static IModelSerializable<T> GetInstance<T>()
+        private static IModelSerializable<T> GetInstance<T>() where T : IModelSerializable<T>
         {
             var model = GetObjectInstance(typeof(T)) as IModelSerializable<T>;
             if (model is null)
