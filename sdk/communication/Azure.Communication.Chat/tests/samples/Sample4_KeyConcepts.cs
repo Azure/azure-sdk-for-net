@@ -40,6 +40,17 @@ namespace Azure.Communication.Chat.Tests.samples
             chatThreadClient.UpdateTopic(topic: "Launch meeting");
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
 
+            #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThreadWithMetadata_KeyConcepts
+            var createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
+
+            createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
+            createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
+
+            CreateChatThreadResult createChatThreadResultWithMetadata = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
+
+            ChatThreadProperties chatThreadWithMetada = createChatThreadResultWithMetadata.ChatThread;
+            #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThreadWithMetadata_KeyConcepts
+
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts
             //@@ChatThread chatThread = chatClient.GetChatThread(chatThread.Id);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts

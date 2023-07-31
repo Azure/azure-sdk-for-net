@@ -68,6 +68,18 @@ Once you initialized a `ChatClient` class, you can do the following chat operati
 CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
 ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
 ```
+### Create a thread with metadata
+```C# Snippet: Snippet:Azure_Communication_Chat_Tests_Samples_CreateThreadWithMetadata_KeyConcepts
+
+    var createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
+
+    createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
+    createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
+
+    CreateChatThreadResult createChatThreadResultWithMetadata = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
+
+    ChatThreadProperties chatThreadWithMetada = createChatThreadResultWithMetadata.ChatThread;
+```
 ### Get a thread
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts
 ChatThread chatThread = chatClient.GetChatThread(chatThread.Id);

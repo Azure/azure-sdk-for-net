@@ -63,7 +63,7 @@ namespace Azure.Communication.Chat
             try
             {
                 idempotencyToken ??= Guid.NewGuid().ToString();
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(topic, idempotencyToken, participants.Select(x => x.ToChatParticipantInternal()), null,cancellationToken).ConfigureAwait(false);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(topic, participants.Select(x => x.ToChatParticipantInternal()), null,cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -84,7 +84,7 @@ namespace Azure.Communication.Chat
             try
             {
                 options.IdempotencyToken ??= Guid.NewGuid().ToString();
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(options.Topic, options.IdempotencyToken, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata, cancellationToken).ConfigureAwait(false);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = await _chatRestClient.CreateChatThreadAsync(options.Topic, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
@@ -94,6 +94,7 @@ namespace Azure.Communication.Chat
             }
         }
 
+        /// <summary>Creates a ChatThreadClient asynchronously. <see cref="ChatThreadClient"/>.</summary>
         /// <param name = "options" > CreateChatThread Options</param>
         /// <param name="cancellationToken">The cancellation token for the task.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -104,7 +105,7 @@ namespace Azure.Communication.Chat
             try
             {
                 options.IdempotencyToken ??= Guid.NewGuid().ToString();
-                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(options.Topic, options.IdempotencyToken, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata, cancellationToken);
+                Response<CreateChatThreadResultInternal> createChatThreadResultInternal = _chatRestClient.CreateChatThread(options.Topic, options.Participants.Select(x => x.ToChatParticipantInternal()), options.Metadata, cancellationToken);
                 return Response.FromValue(new CreateChatThreadResult(createChatThreadResultInternal.Value), createChatThreadResultInternal.GetRawResponse());
             }
             catch (Exception ex)
