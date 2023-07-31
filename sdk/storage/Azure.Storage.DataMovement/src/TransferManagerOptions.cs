@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Storage.DataMovement
@@ -41,5 +42,19 @@ namespace Azure.Storage.DataMovement
         /// Gets the transfer manager diagnostic options.
         /// </summary>
         public DiagnosticsOptions Diagnostics => ClientOptions.Diagnostics;
+
+        internal List<StorageResourceRehydrator> StorageResourceRehydrators = new()
+        {
+            new FileSystemStorageResourceRehydrator()
+        };
+
+        /// <summary>
+        /// Adds a rehydrator for transfer resume.
+        /// </summary>
+        public void AddRehydrator(StorageResourceRehydrator rehydrator)
+        {
+            StorageResourceRehydrators.RemoveAll(r => r.TypeId == rehydrator.TypeId);
+            StorageResourceRehydrators.Add(rehydrator);
+        }
     }
 }

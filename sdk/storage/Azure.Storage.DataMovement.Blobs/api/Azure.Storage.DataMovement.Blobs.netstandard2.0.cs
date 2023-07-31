@@ -44,6 +44,10 @@ namespace Azure.Storage.DataMovement.Blobs
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions DestinationConditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions SourceConditions { get { throw null; } set { } }
     }
+    public static partial class AzureStorageCredentialSupplierExtensions
+    {
+        public static Azure.Storage.DataMovement.StorageResourceRehydrator GetBlobStorageResourceRehydrator(this Azure.Storage.DataMovement.AzureStorageCredentialSupplier credSupplier) { throw null; }
+    }
     public partial class BlobStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
         public BlobStorageResourceContainer(Azure.Storage.Blobs.BlobContainerClient blobContainerClient, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { }

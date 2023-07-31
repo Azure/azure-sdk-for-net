@@ -1,5 +1,15 @@
 namespace Azure.Storage.DataMovement
 {
+    public partial class AzureStorageCredentialSupplier
+    {
+        public AzureStorageCredentialSupplier() { }
+        public Azure.Storage.DataMovement.AzureStorageCredentialSupplier.GetSasCredential SasCredential { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.AzureStorageCredentialSupplier.GetSharedKeyCredential SharedKeyCredential { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.AzureStorageCredentialSupplier.GetTokenCredential TokenCredential { get { throw null; } set { } }
+        public delegate System.Threading.Tasks.Task<Azure.AzureSasCredential> GetSasCredential(string uri);
+        public delegate System.Threading.Tasks.Task<Azure.Storage.StorageSharedKeyCredential> GetSharedKeyCredential(string uri);
+        public delegate System.Threading.Tasks.Task<Azure.Core.TokenCredential> GetTokenCredential(string uri);
+    }
     public partial class DataTransfer
     {
         internal DataTransfer() { }
@@ -115,6 +125,13 @@ namespace Azure.Storage.DataMovement
         public StorageResourceProperties(System.DateTimeOffset lastModified, System.DateTimeOffset createdOn, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, long blobSequenceNumber, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope, string versionId, bool isLatestVersion, System.DateTimeOffset expiresOn, System.DateTimeOffset lastAccessed) { }
         public StorageResourceProperties(System.DateTimeOffset lastModified, System.DateTimeOffset createdOn, long contentLength, System.DateTimeOffset lastAccessed) { }
     }
+    public abstract partial class StorageResourceRehydrator
+    {
+        protected StorageResourceRehydrator() { }
+        protected internal abstract string TypeId { get; }
+        protected internal abstract Azure.Storage.DataMovement.StorageResource GetDestinationResource(Azure.Storage.DataMovement.DataTransferProperties props);
+        protected internal abstract Azure.Storage.DataMovement.StorageResource GetSourceResource(Azure.Storage.DataMovement.DataTransferProperties props);
+    }
     public abstract partial class StorageResourceSingle : Azure.Storage.DataMovement.StorageResource
     {
         protected StorageResourceSingle() { }
@@ -194,6 +211,7 @@ namespace Azure.Storage.DataMovement
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Storage.DataMovement.ErrorHandlingBehavior ErrorHandling { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
+        public void AddRehydrator(Azure.Storage.DataMovement.StorageResourceRehydrator rehydrator) { }
     }
     public partial class TransferOptions : System.IEquatable<Azure.Storage.DataMovement.TransferOptions>
     {
