@@ -19,4 +19,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
   </ItemGroup>
+
+  <!-- Shared source from Exporter -->
+  <ItemGroup>
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
+  </ItemGroup>
 </Project>
