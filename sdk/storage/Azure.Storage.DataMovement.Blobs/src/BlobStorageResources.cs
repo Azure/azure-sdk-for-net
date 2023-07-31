@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// Utilities for storage resources with Azure Blob Storage.
     /// </summary>
-    public static class BlobStorageResources
+    internal static class BlobStorageResources
     {
         internal enum ResourceType
         {

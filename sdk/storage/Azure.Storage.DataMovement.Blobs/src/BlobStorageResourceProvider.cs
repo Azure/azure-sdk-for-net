@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// Provider for a <see cref="StorageResource"/> configured for an Azure Blob Storage resource.
     /// </summary>
-    public class BlobStorageResourceProvider
+    internal class BlobStorageResourceProvider
     {
         internal DataTransferProperties Properties { get; }
         internal bool MakesSource { get; }

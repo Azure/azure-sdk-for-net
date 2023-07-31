@@ -8,7 +8,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Provider for a <see cref="StorageResource"/> configured for the local filesystem.
     /// </summary>
-    public class LocalStorageResourceProvider
+    internal class LocalStorageResourceProvider
     {
         private readonly DataTransferProperties _properties;
         private readonly bool _asSource;

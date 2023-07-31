@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Utilities for storage resources with local filesystems.
     /// </summary>
-    public static class LocalStorageResources
+    internal static class LocalStorageResources
     {
         /// <summary>
         /// Gets a resource provider to rehydrate a local filesystem source resource based on the given transfer info.
