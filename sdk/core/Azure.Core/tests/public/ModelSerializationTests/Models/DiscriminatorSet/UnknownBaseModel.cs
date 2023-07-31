@@ -3,17 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core.Serialization;
-using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IModelJsonSerializable<UnknownBaseModel>
+    internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IModelJsonSerializable<BaseModel>
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -29,9 +24,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             RawData = rawData;
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<UnknownBaseModel>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
-        void IModelJsonSerializable<UnknownBaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<BaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -59,49 +54,19 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownBaseModel DeserializeUnknownBaseModel(JsonElement element, ModelSerializerOptions options = default)
-        {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+        internal static BaseModel DeserializeUnknownBaseModel(JsonElement element, ModelSerializerOptions options = default) => DeserializeBaseModel(element, options);
 
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            string kind = default;
-            Optional<string> name = default;
-            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (options.Format == ModelSerializerFormat.Json)
-                {
-                    //this means it's an unknown property we got
-                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            return new UnknownBaseModel(kind, name, rawData);
-        }
-
-        UnknownBaseModel IModelSerializable<UnknownBaseModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        BaseModel IModelSerializable<BaseModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             return DeserializeUnknownBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        UnknownBaseModel IModelJsonSerializable<UnknownBaseModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BaseModel IModelJsonSerializable<BaseModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeUnknownBaseModel(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<UnknownBaseModel>.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
+        BinaryData IModelSerializable<BaseModel>.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
     }
 }

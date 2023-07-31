@@ -16,14 +16,7 @@ namespace Azure.Core.Serialization
         public static readonly ModelSerializerOptions DefaultServiceOptions = new ModelSerializerOptions(ModelSerializerFormat.Wire, true);
 
         private bool _isFrozen;
-        private ObjectSerializerFactory? _genericTypeSerializerCreator;
-
-        /// <summary>
-        /// Delegate to specify a specific <see cref="ObjectSerializer"/> for a given <see cref="Type"/>.
-        /// </summary>
-        /// <param name="type">The <see cref="Type"/> to look up.</param>
-        /// <returns></returns>
-        public delegate ObjectSerializer? ObjectSerializerFactory(Type type);
+        private Func<Type, ObjectSerializer>? _genericTypeSerializerCreator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class. Defaults to format <see cref="ModelSerializerFormat.Json"/>.
@@ -51,7 +44,7 @@ namespace Azure.Core.Serialization
         /// Gets or sets a factory method that returns an <see cref="ObjectSerializer"/> based on the provided <see cref="Type"/>.
         /// Should return null if the type is not supported.
         /// </summary>
-        public ObjectSerializerFactory? GenericTypeSerializerCreator
+        public Func<Type, ObjectSerializer>? GenericTypeSerializerCreator
         {
             get
             {

@@ -1193,8 +1193,7 @@ namespace Azure.Core.Serialization
         public ModelSerializerOptions() { }
         public ModelSerializerOptions(Azure.Core.Serialization.ModelSerializerFormat format) { }
         public Azure.Core.Serialization.ModelSerializerFormat Format { get { throw null; } }
-        public Azure.Core.Serialization.ModelSerializerOptions.ObjectSerializerFactory? GenericTypeSerializerCreator { get { throw null; } set { } }
-        public delegate Azure.Core.Serialization.ObjectSerializer? ObjectSerializerFactory(System.Type type);
+        public System.Func<System.Type, Azure.Core.Serialization.ObjectSerializer>? GenericTypeSerializerCreator { get { throw null; } set { } }
     }
     public abstract partial class ObjectSerializer
     {
