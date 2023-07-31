@@ -12,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// A buffer writer which writes large sequences of data into smaller shared buffers.
     /// </summary>
-    public sealed class SequenceWriter : IBufferWriter<byte>, IDisposable
+    internal sealed class SequenceWriter : IBufferWriter<byte>, IDisposable
     {
         private struct Buffer
         {

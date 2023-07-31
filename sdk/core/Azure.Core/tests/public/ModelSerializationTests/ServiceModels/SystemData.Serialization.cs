@@ -184,9 +184,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
             }
         }
 
-        BinaryData IModelSerializable<SystemData>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
+        BinaryData IModelSerializable<SystemData>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
     }
 }

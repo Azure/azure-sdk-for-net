@@ -126,8 +126,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeCatReadOnlyProperty(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<CatReadOnlyProperty>.Serialize(ModelSerializerOptions options) =>
-            ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
+        BinaryData IModelSerializable<CatReadOnlyProperty>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
 
         #endregion
     }
