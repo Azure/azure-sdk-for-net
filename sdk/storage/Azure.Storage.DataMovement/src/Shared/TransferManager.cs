@@ -335,7 +335,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>
         /// Asynchronous enumerable of data transafers as they are resumed.
         /// </returns>
-        public virtual IAsyncEnumerable<DataTransfer> ResumeAllTransfers(TransferOptions transferOptions = default)
+        public virtual IAsyncEnumerable<DataTransfer> ResumeAllTransfersAsync(TransferOptions transferOptions = default)
         {
             throw new NotImplementedException();
         }
