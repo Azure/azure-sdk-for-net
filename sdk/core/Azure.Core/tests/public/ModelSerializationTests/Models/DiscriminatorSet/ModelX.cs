@@ -31,17 +31,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public int XProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ModelX>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ModelX>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         public static implicit operator RequestContent(ModelX modelX)
         {
-            return new Utf8JsonDelayedRequestContent(modelX, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            return RequestContent.Create(modelX, ModelSerializerOptions.DefaultServiceOptions);
         }
 
         public static explicit operator ModelX(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeModelX(jsonDocument.RootElement, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            return DeserializeModelX(jsonDocument.RootElement, ModelSerializerOptions.DefaultServiceOptions);
         }
 
         void IModelJsonSerializable<ModelX>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);

@@ -15,7 +15,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ProviderExtendedLocation : IUtf8JsonSerializable, IModelJsonSerializable<ProviderExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderExtendedLocation>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderExtendedLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelSerializerOptions options = default)
         {

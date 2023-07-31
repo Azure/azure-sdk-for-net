@@ -38,16 +38,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public static explicit operator DogListProperty(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeDogListProperty(jsonDocument.RootElement, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            return DeserializeDogListProperty(jsonDocument.RootElement, ModelSerializerOptions.DefaultServiceOptions);
         }
 
         public static implicit operator RequestContent(DogListProperty dog)
         {
-            return new Utf8JsonDelayedRequestContent(dog, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            return RequestContent.Create(dog, ModelSerializerOptions.DefaultServiceOptions);
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DogListProperty>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DogListProperty>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         void IModelJsonSerializable<DogListProperty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -164,7 +164,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                return modelConverter is not null ? modelConverter.Options : new ModelSerializerOptions(ModelSerializerFormat.Wire);
+                return modelConverter is not null ? modelConverter.Options : ModelSerializerOptions.DefaultServiceOptions;
             }
         }
         DogListProperty IModelSerializable<DogListProperty>.Deserialize(BinaryData data, ModelSerializerOptions options)

@@ -43,7 +43,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string ReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
+            Serialize(writer, ModelSerializerOptions.DefaultServiceOptions, nameHint);
 
         void IModelXmlSerializable<XmlModelForCombinedInterface>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {

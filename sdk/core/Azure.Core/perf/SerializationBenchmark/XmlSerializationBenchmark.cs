@@ -42,7 +42,7 @@ namespace Azure.Core.Perf
             _model = ModelSerializer.Deserialize<T>(_data);
             _response = new MockResponse(200);
             _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_xml));
-            _options = new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            _options = ModelSerializerOptions.DefaultServiceOptions;
             _element = XElement.Parse(_xml);
         }
 

@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    public class ModelXml : IXmlSerializable, IModelXmlSerializable<ModelXml>
+    public class ModelXml : IXmlSerializable, IModelXmlSerializable<ModelXml>, IModelJsonSerializable<ModelXml>
     {
         internal ModelXml() { }
 
@@ -45,17 +45,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static implicit operator RequestContent(ModelXml modelXml)
         {
-            return new Utf8XmlDelayedRequestContent(modelXml, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            return RequestContent.Create(modelXml, ModelSerializerOptions.DefaultServiceOptions);
         }
 
         public static explicit operator ModelXml(Response response)
         {
-            return DeserializeModelXml(XElement.Load(response.ContentStream), new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultServiceOptions);
         }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultServiceOptions, nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultServiceOptions, nameHint);
 
         void IModelXmlSerializable<ModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
@@ -192,5 +192,20 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         }
 
         ModelXml IModelXmlSerializable<ModelXml>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeModelXml(root, options);
+
+        void IModelJsonSerializable<ModelXml>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            if (options.Format != ModelSerializerFormat.Json)
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Json}' format when calling the {nameof(IModelJsonSerializable<ModelXml>)} interface");
+            Serialize(writer, options);
+        }
+
+        ModelXml IModelJsonSerializable<ModelXml>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (options.Format != ModelSerializerFormat.Json)
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Json}' format when calling the {nameof(IModelJsonSerializable<ModelXml>)} interface");
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeModelXml(doc.RootElement, options);
+        }
     }
 }

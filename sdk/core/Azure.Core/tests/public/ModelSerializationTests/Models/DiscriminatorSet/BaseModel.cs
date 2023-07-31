@@ -17,13 +17,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
     {
         public static implicit operator RequestContent(BaseModel baseModel)
         {
-            return new Utf8JsonDelayedRequestContent(baseModel, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            return RequestContent.Create(baseModel, ModelSerializerOptions.DefaultServiceOptions);
         }
 
         public static explicit operator BaseModel(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeBaseModel(jsonDocument.RootElement, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            return DeserializeBaseModel(jsonDocument.RootElement, ModelSerializerOptions.DefaultServiceOptions);
         }
 
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
@@ -31,7 +31,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string Kind { get; internal set; }
         public string Name { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BaseModel>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BaseModel>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         void IModelJsonSerializable<BaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 

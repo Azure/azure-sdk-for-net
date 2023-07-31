@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
+            Serialize(writer, ModelSerializerOptions.DefaultServiceOptions, nameHint);
 
         void IModelXmlSerializable<ChildModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
@@ -151,7 +151,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         ChildModelXml IModelXmlSerializable<ChildModelXml>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeChildModelXml(root, options);
     }
