@@ -330,6 +330,30 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
+        /// Resumes all resumable transfers.
+        /// </summary>
+        /// <returns>
+        /// Asynchronous enumerable of data transafers as they are resumed.
+        /// </returns>
+        public virtual IAsyncEnumerable<DataTransfer> ResumeAllTransfers(TransferOptions transferOptions = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Resumes a given transfer.
+        /// </summary>
+        /// <returns>
+        /// The resumed transfer.
+        /// </returns>
+        public virtual Task<DataTransfer> ResumeTransferAsync(
+            string transferId,
+            TransferOptions transferOptions = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Resumes a transfer that has been paused or is in a completed state with failed or skipped transfers.
         /// </summary>
         /// <param name="transferId">The transfer ID of the transfer attempting to be resumed.</param>
@@ -341,7 +365,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>Returns a <see cref="DataTransfer"/> for tracking this transfer.</returns>
-        public virtual async Task<DataTransfer> ResumeTransferAsync(
+        internal virtual async Task<DataTransfer> ResumeTransferAsync(
             string transferId,
             StorageResource sourceResource,
             StorageResource destinationResource,
