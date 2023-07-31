@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 
 namespace Azure.Core.Serialization
@@ -22,10 +24,6 @@ namespace Azure.Core.Serialization
         {
             options ??= ModelSerializerOptions.DefaultServiceOptions;
 
-            var serializer = options.GenericTypeSerializerCreator is not null ? options.GenericTypeSerializerCreator(typeof(T)) : null;
-            if (serializer is not null)
-                return serializer.Serialize(model);
-
             return model.Serialize(options);
         }
 
@@ -43,10 +41,6 @@ namespace Azure.Core.Serialization
             if (iModel is null)
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable<object>)}");
 
-            var serializer = options.GenericTypeSerializerCreator is not null ? options.GenericTypeSerializerCreator(model.GetType()) : null;
-            if (serializer is not null)
-                return serializer.Serialize(model);
-
             return iModel.Serialize(options);
         }
 
@@ -58,13 +52,7 @@ namespace Azure.Core.Serialization
         {
             options ??= ModelSerializerOptions.DefaultServiceOptions;
 
-            var genericDeserialize = GenericDeserialize(data, typeof(T), options);
-            if (genericDeserialize is not null)
-                return (T)genericDeserialize;
-
-            var model = Activator.CreateInstance(typeof(T), true) as IModelSerializable<T>;
-
-            return model!.Deserialize(data, options);
+            return GetInstance<T>().Deserialize(data, options);
         }
 
         /// <summary>
@@ -79,45 +67,34 @@ namespace Azure.Core.Serialization
         {
             options ??= ModelSerializerOptions.DefaultServiceOptions;
 
-            var genericDeserialize = GenericDeserialize(data, returnType, options);
-            if (genericDeserialize is not null)
-                return genericDeserialize;
-
-            var model = Activator.CreateInstance(returnType, true) as IModelSerializable<object>;
-
-            return model!.Deserialize(data, options);
+            return GetInstance(returnType).Deserialize(data, options);
         }
 
-        private static object? GenericDeserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
+        private static IModelSerializable<object> GetInstance(Type returnType)
         {
-            var serializer = options.GenericTypeSerializerCreator is not null ? options.GenericTypeSerializerCreator(typeToConvert) : null;
-            if (serializer is not null)
-            {
-                var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);
-                return obj ?? throw new InvalidOperationException();
-            }
-
-            if (typeToConvert.IsAbstract)
-                return DeserializeObject(data, typeToConvert, options);
-
-            return null;
+            var model = GetObjectInstance(returnType) as IModelSerializable<object>;
+            if (model is null)
+                throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IModelSerializable<object>)}");
+            return model;
         }
 
-        private static readonly Type[] _combinedDeserializeMethodParameters = new Type[] { typeof(BinaryData), typeof(ModelSerializerOptions) };
-
-        internal static object DeserializeObject(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
+        private static IModelSerializable<T> GetInstance<T>()
         {
-            var classNameInMethod = typeToConvert.Name.AsSpan();
-            int backtickIndex = classNameInMethod.IndexOf('`');
-            if (backtickIndex != -1)
-                classNameInMethod = classNameInMethod.Slice(0, backtickIndex);
-            var methodName = $"Deserialize{classNameInMethod.ToString()}";
+            var model = GetObjectInstance(typeof(T)) as IModelSerializable<T>;
+            if (model is null)
+                throw new InvalidOperationException($"{typeof(T).Name} does not implement {nameof(IModelSerializable<T>)}");
+            return model;
+        }
 
-            var method = typeToConvert.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static, null, _combinedDeserializeMethodParameters, null);
-            if (method is null)
-                throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
-
-            return method.Invoke(null, new object[] { data, options })!;
+        private static object GetObjectInstance(Type returnType)
+        {
+            var typeToActivate = returnType.IsAbstract ? returnType.Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{returnType.Name}") : returnType;
+            if (typeToActivate is null)
+                throw new InvalidOperationException($"Unable to find type Unknown{returnType.Name} in assembly {returnType.Assembly.FullName}.");
+            var obj = Activator.CreateInstance(typeToActivate, true);
+            if (obj is null)
+                throw new InvalidOperationException($"Unable to create instance of {typeToActivate.Name}.");
+            return obj;
         }
     }
 }

@@ -29,6 +29,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         protected abstract Func<T, RequestContent> ToRequestContent { get; }
         protected abstract Func<Response, T> FromResponse { get; }
 
+        protected virtual Func<Type, ObjectSerializer> GetObjectSerializerFactory(ModelSerializerFormat format) => null;
+
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithModelSerializer(string format)
@@ -167,13 +169,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         [Test]
         public void RoundTripWithCast()
-            => RoundTripTest(ModelSerializerFormat.Wire, new CastStrategy<T>(ToRequestContent, FromResponse));
+        {
+            //cast does not work without options
+            if (!typeof(T).IsGenericType)
+                RoundTripTest(ModelSerializerFormat.Wire, new CastStrategy<T>(ToRequestContent, FromResponse));
+        }
 
         protected void RoundTripTest(ModelSerializerFormat format, RoundTripStrategy<T> strategy)
         {
             string serviceResponse = format == ModelSerializerFormat.Json ? JsonPayload : WirePayload;
 
             ModelSerializerOptions options = new ModelSerializerOptions(format);
+            options.GenericTypeSerializerCreator = GetObjectSerializerFactory(format);
 
             var expectedSerializedString = GetExpectedResult(format);
 
