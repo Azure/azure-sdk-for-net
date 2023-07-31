@@ -95,6 +95,7 @@ namespace Microsoft.Extensions.Azure
             var certificateStoreName = configuration["clientCertificateStoreName"];
             var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
             var additionallyAllowedTenants = configuration["additionallyAllowedTenants"];
+            var tokenFilePath = configuration["tokenFilePath"];
             IEnumerable<string> additionallyAllowedTenantsList = null;
             if (!string.IsNullOrWhiteSpace(additionallyAllowedTenants))
             {
@@ -117,6 +118,34 @@ namespace Microsoft.Extensions.Azure
                 }
 
                 return new ManagedIdentityCredential(clientId);
+            }
+
+            if (string.Equals(credentialType, "workloadidentity", StringComparison.OrdinalIgnoreCase))
+            {
+                var workloadIdentityOptions = new WorkloadIdentityCredentialOptions();
+                if (!string.IsNullOrWhiteSpace(tenantId))
+                {
+                    workloadIdentityOptions.TenantId = tenantId;
+                }
+
+                if (!string.IsNullOrWhiteSpace(clientId))
+                {
+                    workloadIdentityOptions.ClientId = clientId;
+                }
+
+                if (!string.IsNullOrWhiteSpace(tokenFilePath))
+                {
+                    workloadIdentityOptions.TokenFilePath = tokenFilePath;
+                }
+
+                if (!string.IsNullOrWhiteSpace(workloadIdentityOptions.TenantId) &&
+                    !string.IsNullOrWhiteSpace(workloadIdentityOptions.ClientId) &&
+                    !string.IsNullOrWhiteSpace(workloadIdentityOptions.TokenFilePath))
+                {
+                    return new WorkloadIdentityCredential(workloadIdentityOptions);
+                }
+
+                throw new ArgumentException("For workload identity, 'tenantId', 'clientId', and 'tokenFilePath' must be specified via environment variables or the configuration.");
             }
 
             if (!string.IsNullOrWhiteSpace(tenantId) &&
