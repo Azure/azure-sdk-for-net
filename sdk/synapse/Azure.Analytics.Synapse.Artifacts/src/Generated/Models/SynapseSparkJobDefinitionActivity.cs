@@ -36,6 +36,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -57,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="configurationType"> The type of the spark config. </param>
         /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
-        internal SynapseSparkJobDefinitionActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseSparkJobReference sparkJob, IList<object> arguments, object file, object scanFolder, object className, IList<object> files, IList<object> pythonCodeReference, IList<object> filesV2, BigDataPoolParametrizationReference targetBigDataPool, object executorSize, object conf, object driverSize, object numExecutors, ConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, object> sparkConfig) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal SynapseSparkJobDefinitionActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, SynapseSparkJobReference sparkJob, IList<object> arguments, object file, object scanFolder, object className, IList<object> files, IList<object> pythonCodeReference, IList<object> filesV2, BigDataPoolParametrizationReference targetBigDataPool, object executorSize, object conf, object driverSize, object numExecutors, ConfigurationType? configurationType, SparkConfigurationParametrizationReference targetSparkConfiguration, IDictionary<string, object> sparkConfig) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             SparkJob = sparkJob;
             Arguments = arguments;

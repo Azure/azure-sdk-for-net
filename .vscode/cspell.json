@@ -1029,6 +1029,8 @@
         "byoa",
         "distcp",
         "eloqua",
+        "ename",
+        "evalue",
         "exfiltration",
         "fqdns",
         "hana",
@@ -1050,6 +1052,8 @@
         "vertica",
         "xero",
         "Asana",
+        "Ename",
+        "Evalue",
         "Twilio"
       ]
     },
