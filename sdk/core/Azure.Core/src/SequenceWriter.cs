@@ -27,10 +27,10 @@ namespace Azure.Core
         /// <summary>
         /// Initializes a new instance of <see cref="SequenceWriter"/>.
         /// </summary>
-        /// <param name="bufferSize">The max size of each buffer segment.</param>
-        public SequenceWriter(int bufferSize = 4096)
+        /// <param name="segmentSize">The size of each buffer segment.</param>
+        public SequenceWriter(int segmentSize = 4096)
         {
-            _bufferSize = bufferSize;
+            _bufferSize = segmentSize;
             _buffers = Array.Empty<Buffer>();
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc cref="RequestContent.WriteTo(Stream, CancellationToken)"/>
-        public void WriteTo(Stream stream, CancellationToken cancellation)
+        public void CopyTo(Stream stream, CancellationToken cancellation)
         {
             for (int i = 0; i < _count; i++)
             {
@@ -141,7 +141,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc cref="RequestContent.WriteToAsync(Stream, CancellationToken)"/>
-        public async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        public async Task CopyToAsync(Stream stream, CancellationToken cancellation)
         {
             for (int i = 0; i < _count; i++)
             {

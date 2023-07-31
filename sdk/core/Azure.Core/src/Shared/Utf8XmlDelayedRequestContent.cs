@@ -15,13 +15,13 @@ namespace Azure.Core
     {
         private readonly object _serializedLock = new object();
 
-        private IXmlModelSerializable<object> _model;
+        private IModelXmlSerializable<object> _model;
         private ModelSerializerOptions _serializerOptions;
         private XmlWriter? _writer;
         private RequestContent? _content;
         private MemoryStream? _stream;
 
-        public Utf8XmlDelayedRequestContent(IXmlModelSerializable<object> model, ModelSerializerOptions options)
+        public Utf8XmlDelayedRequestContent(IModelXmlSerializable<object> model, ModelSerializerOptions options)
         {
             _model = model;
             _serializerOptions = options;

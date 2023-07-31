@@ -18,7 +18,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     public abstract class RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
-        public abstract object Deserialize(string payload, ModelSerializerOptions options);
+        public abstract object Deserialize(string payload, object model, ModelSerializerOptions options);
         public abstract BinaryData Serialize(T model, ModelSerializerOptions options);
     }
 
@@ -28,7 +28,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             return ModelSerializer.Serialize(model, options);
         }
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
             return ModelSerializer.Deserialize<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return ModelSerializer.Serialize((object)model, options);
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
             return ModelSerializer.Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), options);
         }
@@ -53,15 +53,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             using var stream = new MemoryStream();
             using var writer = XmlWriter.Create(stream);
-            ((IXmlModelSerializable<T>)model).Serialize(writer, options);
+            ((IModelXmlSerializable<T>)model).Serialize(writer, options);
             writer.Flush();
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
-            return ((IXmlModelSerializable<T>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModelXmlSerializable<T>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -71,15 +70,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             using var stream = new MemoryStream();
             using var writer = XmlWriter.Create(stream);
-            ((IXmlModelSerializable)model).Serialize(writer, options);
+            ((IModelXmlSerializable<object>)model).Serialize(writer, options);
             writer.Flush();
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
-            return ((IXmlModelSerializable)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModelXmlSerializable<object>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -90,10 +88,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return model.Serialize(options);
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
-            return model.Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModelSerializable<T>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -101,13 +98,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelSerializable)model).Serialize(options);
+            return ((IModelSerializable<object>)model).Serialize(options);
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
-            return ((IModelSerializable)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModelSerializable<object>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -115,13 +111,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IJsonModelSerializable<T>)model).Serialize(options);
+            return ((IModelJsonSerializable<T>)model).Serialize(options);
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
-            return ((IJsonModelSerializable<T>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModelJsonSerializable<T>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -129,13 +124,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IJsonModelSerializable)model).Serialize(options);
+            return ((IModelJsonSerializable<object>)model).Serialize(options);
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
-            return ((IJsonModelSerializable)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModelJsonSerializable<object>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -143,14 +137,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IJsonModelSerializable<T>)model).Serialize(options);
+            return ((IModelJsonSerializable<T>)model).Serialize(options);
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
             var reader = new Utf8JsonReader(new BinaryData(Encoding.UTF8.GetBytes(payload)));
-            return ((IJsonModelSerializable<T>)model).Deserialize(ref reader, options);
+            return ((IModelJsonSerializable<T>)model).Deserialize(ref reader, options);
         }
     }
 
@@ -160,18 +153,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             using var sequenceWriter = new SequenceWriter();
             using var writer = new Utf8JsonWriter(sequenceWriter);
-            ((IJsonModelSerializable<T>)model).Serialize(writer, options);
+            ((IModelJsonSerializable<T>)model).Serialize(writer, options);
             writer.Flush();
             sequenceWriter.TryComputeLength(out var length);
             var stream = new MemoryStream((int)length);
-            sequenceWriter.WriteTo(stream, default);
+            sequenceWriter.CopyTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
-            return ((IJsonModelSerializable<T>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModelJsonSerializable<T>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -181,18 +173,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             using var sequenceWriter = new SequenceWriter();
             using var writer = new Utf8JsonWriter(sequenceWriter);
-            ((IJsonModelSerializable)model).Serialize(writer, options);
+            ((IModelJsonSerializable<object>)model).Serialize(writer, options);
             writer.Flush();
             sequenceWriter.TryComputeLength(out var length);
             var stream = new MemoryStream((int)length);
-            sequenceWriter.WriteTo(stream, default);
+            sequenceWriter.CopyTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
-            return ((IJsonModelSerializable)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ((IModelJsonSerializable<object>)model).Deserialize(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -200,14 +191,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IJsonModelSerializable)model).Serialize(options);
+            return ((IModelJsonSerializable<object>)model).Serialize(options);
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
             var reader = new Utf8JsonReader(new BinaryData(Encoding.UTF8.GetBytes(payload)));
-            return ((IJsonModelSerializable)model).Deserialize(ref reader, options);
+            return ((IModelJsonSerializable<object>)model).Deserialize(ref reader, options);
         }
     }
 
@@ -231,7 +221,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
             var response = new MockResponse(200);
             response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(payload));
@@ -243,14 +233,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IXmlModelSerializable<T>)model).Serialize(options);
+            return ((IModelXmlSerializable<T>)model).Serialize(options);
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(payload));
-            return ((IXmlModelSerializable<T>)model).Deserialize(XElement.Load(stream), options);
+            return ((IModelXmlSerializable<T>)model).Deserialize(XElement.Load(stream), options);
         }
     }
 
@@ -258,14 +247,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IXmlModelSerializable)model).Serialize(options);
+            return ((IModelXmlSerializable<object>)model).Serialize(options);
         }
 
-        public override object Deserialize(string payload, ModelSerializerOptions options)
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
         {
-            T model = Activator.CreateInstance(typeof(T), true) as T;
             var stream = new MemoryStream(Encoding.UTF8.GetBytes(payload));
-            return ((IXmlModelSerializable)model).Deserialize(XElement.Load(stream), options);
+            return ((IModelXmlSerializable<object>)model).Deserialize(XElement.Load(stream), options);
         }
     }
 }

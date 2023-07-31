@@ -99,9 +99,9 @@ namespace Azure.Core
                 return (T)readValue(ref reader);
             }
 
-            var model = Activator.CreateInstance(typeToConvert, true) as IJsonModelSerializable;
+            var model = Activator.CreateInstance(typeToConvert, true) as IModelJsonSerializable<T>;
             if (model is null)
-                throw new InvalidOperationException($"{typeToConvert.Name} does not implement {nameof(IJsonModelSerializable)}");
+                throw new InvalidOperationException($"{typeToConvert.Name} does not implement {nameof(IModelJsonSerializable<T>)}");
 
             return (T)model.Deserialize(ref reader, options);
         }

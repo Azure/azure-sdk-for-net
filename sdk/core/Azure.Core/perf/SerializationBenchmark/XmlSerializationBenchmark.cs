@@ -15,7 +15,7 @@ using BenchmarkDotNet.Configs;
 namespace Azure.Core.Perf
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class XmlSerializationBenchmark<T> where T : class, IXmlModelSerializable<T>
+    public abstract class XmlSerializationBenchmark<T> where T : class, IModelXmlSerializable<T>
     {
         private string _xml;
         protected T _model;

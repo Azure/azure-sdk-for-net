@@ -14,13 +14,13 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ResourceTypeAliasPathMetadata : IUtf8JsonSerializable, IJsonModelSerializable<ResourceTypeAliasPathMetadata>, IJsonModelSerializable
+    public partial class ResourceTypeAliasPathMetadata : IUtf8JsonSerializable, IModelJsonSerializable<ResourceTypeAliasPathMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ResourceTypeAliasPathMetadata>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeAliasPathMetadata>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        internal static ResourceTypeAliasPathMetadata DeserializeResourceTypeAliasPathMetadata(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ResourceTypeAliasPathMetadata DeserializeResourceTypeAliasPathMetadata(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -52,7 +52,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return new ResourceTypeAliasPathMetadata(Optional.ToNullable(type), Optional.ToNullable(attributes));
         }
 
-        void IJsonModelSerializable<ResourceTypeAliasPathMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<ResourceTypeAliasPathMetadata>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -76,7 +76,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public Optional<ResourceTypeAliasPathAttributes> Attributes { get; set; }
         }
 
-        ResourceTypeAliasPathMetadata IJsonModelSerializable<ResourceTypeAliasPathMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ResourceTypeAliasPathMetadata IModelJsonSerializable<ResourceTypeAliasPathMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             if (!reader.TryDeserialize<ResourceTypeAliasPathMetadataProperties>(options, SetProperty, out var properties))
                 return null;
@@ -113,13 +113,5 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
         {
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ResourceTypeAliasPathMetadata>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ResourceTypeAliasPathMetadata>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ResourceTypeAliasPathMetadata>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ResourceTypeAliasPathMetadata>)this).Serialize(options);
     }
 }

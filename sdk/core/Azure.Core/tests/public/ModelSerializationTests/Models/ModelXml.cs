@@ -12,7 +12,7 @@ using Azure.Core.Serialization;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    public class ModelXml : IXmlSerializable, IXmlModelSerializable<ModelXml>, IXmlModelSerializable
+    public class ModelXml : IXmlSerializable, IModelXmlSerializable<ModelXml>
     {
         internal ModelXml() { }
 
@@ -57,10 +57,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
 
-        void IXmlModelSerializable<ModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
+        void IModelXmlSerializable<ModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
             if (options.Format != ModelSerializerFormat.Wire)
-                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IXmlModelSerializable)} interface");
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IModelXmlSerializable<ModelXml>)} interface");
 
             Serialize(writer, options, null);
         }
@@ -101,9 +101,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        public static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions? options = default)
+        public static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             string key = default;
             string value = default;
@@ -141,9 +141,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
-        internal static ModelXml DeserializeModelXml(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ModelXml DeserializeModelXml(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             string key = default;
             string value = default;
@@ -191,14 +191,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
-        void IXmlModelSerializable<object>.Serialize(XmlWriter writer, ModelSerializerOptions options) => ((IXmlModelSerializable<ModelXml>)this).Serialize(writer, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ModelXml>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ModelXml>)this).Serialize(options);
-
-        ModelXml IXmlModelSerializable<ModelXml>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeModelXml(root, options);
-
-        object IXmlModelSerializable<object>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeModelXml(root, options);
+        ModelXml IModelXmlSerializable<ModelXml>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeModelXml(root, options);
     }
 }

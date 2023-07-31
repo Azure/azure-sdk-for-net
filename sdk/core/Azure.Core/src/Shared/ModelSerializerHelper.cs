@@ -18,7 +18,7 @@ namespace Azure.Core
             jsonWriter.Flush();
             writer.TryComputeLength(out var length);
             using var stream = new MemoryStream((int)length);
-            writer.WriteTo(stream, default);
+            writer.CopyTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 

@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    public class ModelY : BaseModel, IUtf8JsonSerializable, IJsonModelSerializable<ModelY>, IJsonModelSerializable
+    public class ModelY : BaseModel, IUtf8JsonSerializable, IModelJsonSerializable<ModelY>
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -33,9 +33,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public string YProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ModelY>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ModelY>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        void IJsonModelSerializable<ModelY>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<ModelY>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -68,9 +68,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelY DeserializeModelY(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ModelY DeserializeModelY(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,7 +97,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     yProperty = property.Value.GetString();
                     continue;
                 }
-                if (options.Value.Format == ModelSerializerFormat.Json)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -111,20 +111,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return DeserializeModelY(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        ModelY IJsonModelSerializable<ModelY>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ModelY IModelJsonSerializable<ModelY>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeModelY(doc.RootElement, options);
         }
 
         BinaryData IModelSerializable<ModelY>.Serialize(ModelSerializerOptions options) => ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ModelY>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ModelY>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ModelY>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ModelY>)this).Serialize(options);
     }
 }

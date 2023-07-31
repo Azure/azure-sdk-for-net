@@ -16,7 +16,7 @@ using BenchmarkDotNet.Configs;
 namespace Azure.Core.Perf
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class JsonSerializationBenchmark<T> where T : class, IJsonModelSerializable<T>
+    public abstract class JsonSerializationBenchmark<T> where T : class, IModelJsonSerializable<T>
     {
         private string _json;
         protected T _model;

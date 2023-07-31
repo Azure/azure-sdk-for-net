@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using Azure.Core.Serialization;
 using NUnit.Framework;
@@ -11,10 +12,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     public abstract class ModelTests<T> where T : class, IModelSerializable<T>
     {
         private T _modelInstance;
+        private T ModelInstance => _modelInstance ??= GetModelInstance();
 
-        public ModelTests()
+        protected virtual T GetModelInstance()
         {
-            _modelInstance = Activator.CreateInstance(typeof(T), true) as T;
+            return Activator.CreateInstance(typeof(T), true) as T;
         }
 
         protected abstract string GetExpectedResult(ModelSerializerFormat format);
@@ -39,7 +41,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithXmlInterface(string format)
         {
-            if (_modelInstance is IXmlModelSerializable<T>)
+            if (ModelInstance is IModelXmlSerializable<T>)
             {
                 if (format == ModelSerializerFormat.Wire)
                 {
@@ -56,7 +58,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithXmlInterfaceNonGeneric(string format)
         {
-            if (_modelInstance is IXmlModelSerializable<T>)
+            if (ModelInstance is IModelXmlSerializable<T>)
             {
                 if (format == ModelSerializerFormat.Wire)
                 {
@@ -73,7 +75,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithXmlInterfaceXElement(string format)
         {
-            if (_modelInstance is IXmlModelSerializable<T>)
+            if (ModelInstance is IModelXmlSerializable<T>)
             {
                 if (format == ModelSerializerFormat.Wire)
                 {
@@ -90,7 +92,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithXmlInterfaceXElementNonGeneric(string format)
         {
-            if (_modelInstance is IXmlModelSerializable<T>)
+            if (ModelInstance is IModelXmlSerializable<T>)
             {
                 if (format == ModelSerializerFormat.Wire)
                 {
@@ -117,7 +119,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterface(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceStrategy<T>());
         }
 
@@ -125,7 +127,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceNonGeneric(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceNonGenericStrategy<T>());
         }
 
@@ -133,7 +135,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceUtf8Reader(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceUtf8ReaderStrategy<T>());
         }
 
@@ -141,7 +143,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceUtf8ReaderNonGeneric(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceUtf8ReaderNonGenericStrategy<T>());
         }
 
@@ -149,7 +151,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceSequenceWriter(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceSequenceWriterStrategy<T>());
         }
 
@@ -157,7 +159,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceSequenceNonGenericWriter(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceSequenceWriterNonGenericStrategy<T>());
         }
 
@@ -173,7 +175,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             var expectedSerializedString = GetExpectedResult(format);
 
-            T model = strategy.Deserialize(serviceResponse, options) as T;
+            T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T;
 
             VerifyModel(model, format);
             var data = strategy.Serialize(model, options);
@@ -181,8 +183,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            T model2 = strategy.Deserialize(roundTrip, options) as T;
+            T model2 = strategy.Deserialize(roundTrip, ModelInstance, options) as T;
             CompareModels(model, model2, format);
+        }
+
+        protected Dictionary<string, BinaryData> GetRawData(object model)
+        {
+            var propertyInfo = model.GetType().GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            return propertyInfo.GetValue(model) as Dictionary<string, BinaryData>;
         }
     }
 }

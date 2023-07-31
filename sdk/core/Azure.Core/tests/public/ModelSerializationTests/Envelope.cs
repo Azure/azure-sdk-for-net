@@ -9,7 +9,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Envelope<T> : IJsonModelSerializable<Envelope<T>>, IUtf8JsonSerializable, IJsonModelSerializable
+    public class Envelope<T> : IModelJsonSerializable<Envelope<T>>, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -36,9 +36,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public T ModelT { get; set; }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<Envelope<T>>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Envelope<T>>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        void IJsonModelSerializable<Envelope<T>>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<Envelope<T>>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -50,7 +50,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
 
             writer.WritePropertyName("modelA"u8);
-            ((IJsonModelSerializable)ModelA).Serialize(writer, options);
+            ((IModelJsonSerializable<CatReadOnlyProperty>)ModelA).Serialize(writer, options);
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 
@@ -70,9 +70,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions? options = default)
+        internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
 
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
@@ -88,16 +88,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
                 if (property.NameEquals("modelA"u8))
                 {
-                    modelA = CatReadOnlyProperty.DeserializeCatReadOnlyProperty(property.Value, options.Value);
+                    modelA = CatReadOnlyProperty.DeserializeCatReadOnlyProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modelC"u8))
                 {
-                    modelC = DeserializeT(property.Value, options.Value);
+                    modelC = DeserializeT(property.Value, options);
                     continue;
                 }
 
-                if (options.Value.Format == ModelSerializerFormat.Json)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an modelC property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -119,7 +119,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         private static ObjectSerializer GetObjectSerializer(ModelSerializerOptions options)
         {
-            var serializer = options.UnknownTypeSerializationFallback is not null ? options.UnknownTypeSerializationFallback(typeof(T)) : null;
+            var serializer = options.GenericTypeSerializerCreator is not null ? options.GenericTypeSerializerCreator(typeof(T)) : null;
             return serializer ?? JsonObjectSerializer.Default;
         }
 
@@ -139,7 +139,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeEnvelope(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        Envelope<T> IJsonModelSerializable<Envelope<T>>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        Envelope<T> IModelJsonSerializable<Envelope<T>>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeEnvelope(doc.RootElement, options);
@@ -150,13 +150,5 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
         }
         #endregion
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<Envelope<T>>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<Envelope<T>>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<Envelope<T>>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<Envelope<T>>)this).Serialize(options);
     }
 }
