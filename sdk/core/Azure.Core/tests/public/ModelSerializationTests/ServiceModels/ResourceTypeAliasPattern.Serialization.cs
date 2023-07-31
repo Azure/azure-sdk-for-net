@@ -14,7 +14,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ResourceTypeAliasPattern : IUtf8JsonSerializable, IModelJsonSerializable<ResourceTypeAliasPattern>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeAliasPattern>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeAliasPattern>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         internal static ResourceTypeAliasPattern DeserializeResourceTypeAliasPattern(JsonElement element, ModelSerializerOptions options = default)
         {

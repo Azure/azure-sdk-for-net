@@ -92,7 +92,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceProviderData>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceProviderData>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         // only used for public access to internal serialize
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);

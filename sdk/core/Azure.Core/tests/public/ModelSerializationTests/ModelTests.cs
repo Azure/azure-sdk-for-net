@@ -14,6 +14,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         private T _modelInstance;
         private T ModelInstance => _modelInstance ??= GetModelInstance();
 
+        private bool IsXmlWireFormat => WirePayload.StartsWith("<", StringComparison.Ordinal);
+
         protected virtual T GetModelInstance()
         {
             return Activator.CreateInstance(typeof(T), true) as T;
@@ -175,16 +177,30 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             var expectedSerializedString = GetExpectedResult(format);
 
-            T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T;
+            if (IsXmlWireFormat && strategy.IsExplicitJsonDeserialize && format == ModelSerializerFormat.Wire)
+            {
+                Assert.Throws<InvalidOperationException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+            }
+            else
+            {
+                T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T;
 
-            VerifyModel(model, format);
-            var data = strategy.Serialize(model, options);
-            string roundTrip = data.ToString();
+                VerifyModel(model, format);
+                if (IsXmlWireFormat && strategy.IsExplicitJsonSerialize && format == ModelSerializerFormat.Wire)
+                {
+                    Assert.Throws<InvalidOperationException>(() => { var data = strategy.Serialize(model, options); });
+                }
+                else
+                {
+                    var data = strategy.Serialize(model, options);
+                    string roundTrip = data.ToString();
 
-            Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
+                    Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            T model2 = strategy.Deserialize(roundTrip, ModelInstance, options) as T;
-            CompareModels(model, model2, format);
+                    T model2 = strategy.Deserialize(roundTrip, ModelInstance, options) as T;
+                    CompareModels(model, model2, format);
+                }
+            }
         }
 
         protected Dictionary<string, BinaryData> GetRawData(object model)

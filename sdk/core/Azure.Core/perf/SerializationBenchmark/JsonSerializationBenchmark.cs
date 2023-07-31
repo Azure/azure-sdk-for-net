@@ -45,7 +45,7 @@ namespace Azure.Core.Perf
             _model = ModelSerializer.Deserialize<T>(_data);
             _response = new MockResponse(200);
             _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
-            _options = new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            _options = ModelSerializerOptions.DefaultServiceOptions;
             _content = new SequenceWriter();
             using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
             _model.Serialize(writer, new ModelSerializerOptions());
@@ -87,13 +87,6 @@ namespace Azure.Core.Perf
             x.TryComputeLength(out var length);
             using var stream = new MemoryStream((int)length);
             x.WriteTo(stream, default);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("Cast")]
-        public RequestContent CreateRequestContent()
-        {
-            return RequestContent.Create(_content);
         }
 
         [Benchmark]

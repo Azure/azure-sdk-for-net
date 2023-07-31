@@ -47,7 +47,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Animal>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Animal>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         void IModelJsonSerializable<Animal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 

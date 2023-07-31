@@ -23,13 +23,13 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
     {
         public static implicit operator RequestContent(ResourceProviderData resourceProviderData)
         {
-            return new Utf8JsonDelayedRequestContent(resourceProviderData, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            return RequestContent.Create(resourceProviderData, ModelSerializerOptions.DefaultServiceOptions);
         }
 
         public static explicit operator ResourceProviderData(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeResourceProviderData(jsonDocument.RootElement, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+            return DeserializeResourceProviderData(jsonDocument.RootElement, ModelSerializerOptions.DefaultServiceOptions);
         }
 
         /// <summary> Initializes a new instance of ProviderData. </summary>

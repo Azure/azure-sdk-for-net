@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
     [JsonConverter(typeof(WritableSubResourceConverter))]
     public partial class WritableSubResource : IUtf8JsonSerializable, IModelJsonSerializable<WritableSubResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WritableSubResource>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WritableSubResource>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         void IModelJsonSerializable<WritableSubResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -105,7 +105,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWritableSubResource(document.RootElement, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+                return DeserializeWritableSubResource(document.RootElement, ModelSerializerOptions.DefaultServiceOptions);
             }
         }
 

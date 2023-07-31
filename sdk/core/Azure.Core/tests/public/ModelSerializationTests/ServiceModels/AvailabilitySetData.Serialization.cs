@@ -23,7 +23,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IUtf8JsonSerializable, IModelJsonSerializable<AvailabilitySetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailabilitySetData>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailabilitySetData>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         void IModelJsonSerializable<AvailabilitySetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 

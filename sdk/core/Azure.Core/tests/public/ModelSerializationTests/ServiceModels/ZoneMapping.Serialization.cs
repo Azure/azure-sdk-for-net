@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ZoneMapping : IUtf8JsonSerializable, IModelJsonSerializable<ZoneMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ZoneMapping>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ZoneMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         internal static ZoneMapping DeserializeZoneMapping(JsonElement element, ModelSerializerOptions options = default)
         {

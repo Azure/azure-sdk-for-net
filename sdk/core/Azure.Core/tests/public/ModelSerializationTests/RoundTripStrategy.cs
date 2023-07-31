@@ -20,10 +20,15 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         public abstract object Deserialize(string payload, object model, ModelSerializerOptions options);
         public abstract BinaryData Serialize(T model, ModelSerializerOptions options);
+        public abstract bool IsExplicitJsonSerialize { get; }
+        public abstract bool IsExplicitJsonDeserialize { get; }
     }
 
     public class ModelSerializerStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => false;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
             return ModelSerializer.Serialize(model, options);
@@ -36,6 +41,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class ModelSerializerNonGenericStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => false;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
             return ModelSerializer.Serialize((object)model, options);
@@ -49,6 +57,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class XmlInterfaceStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => false;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
             using var stream = new MemoryStream();
@@ -66,6 +77,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class XmlInterfaceNonGenericStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => false;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
             using var stream = new MemoryStream();
@@ -83,6 +97,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class ModelInterfaceStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => false;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
             return model.Serialize(options);
@@ -96,6 +113,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class ModelInterfaceNonGenericStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => false;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
             return ((IModelSerializable<object>)model).Serialize(options);
@@ -109,9 +129,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class JsonInterfaceStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => true;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<T>)model).Serialize(options);
+            return ModelSerializerHelper.SerializeToBinaryData(writer => ((IModelJsonSerializable<T>)model).Serialize(writer, options));
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -122,9 +145,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class JsonInterfaceNonGenericStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => true;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<object>)model).Serialize(options);
+            return ModelSerializerHelper.SerializeToBinaryData(writer => ((IModelJsonSerializable<T>)model).Serialize(writer, options));
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -135,9 +161,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class JsonInterfaceUtf8ReaderStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => true;
+        public override bool IsExplicitJsonDeserialize => true;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<T>)model).Serialize(options);
+            return ModelSerializerHelper.SerializeToBinaryData(writer => ((IModelJsonSerializable<T>)model).Serialize(writer, options));
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -149,16 +178,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class JsonInterfaceSequenceWriterStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => true;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            using var sequenceWriter = new SequenceWriter();
-            using var writer = new Utf8JsonWriter(sequenceWriter);
-            ((IModelJsonSerializable<T>)model).Serialize(writer, options);
-            writer.Flush();
-            sequenceWriter.TryComputeLength(out var length);
-            var stream = new MemoryStream((int)length);
-            sequenceWriter.CopyTo(stream, default);
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            return ModelSerializerHelper.SerializeToBinaryData(writer => ((IModelJsonSerializable<T>)model).Serialize(writer, options));
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -169,16 +194,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class JsonInterfaceSequenceWriterNonGenericStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => true;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            using var sequenceWriter = new SequenceWriter();
-            using var writer = new Utf8JsonWriter(sequenceWriter);
-            ((IModelJsonSerializable<object>)model).Serialize(writer, options);
-            writer.Flush();
-            sequenceWriter.TryComputeLength(out var length);
-            var stream = new MemoryStream((int)length);
-            sequenceWriter.CopyTo(stream, default);
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            return ModelSerializerHelper.SerializeToBinaryData(writer => ((IModelJsonSerializable<object>)model).Serialize(writer, options));
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -189,9 +210,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class JsonInterfaceUtf8ReaderNonGenericStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => true;
+        public override bool IsExplicitJsonDeserialize => true;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<object>)model).Serialize(options);
+            return ModelSerializerHelper.SerializeToBinaryData(writer => ((IModelJsonSerializable<T>)model).Serialize(writer, options));
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -212,6 +236,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             _fromResponse = fromResponse;
         }
 
+        public override bool IsExplicitJsonSerialize => false;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
             RequestContent content = _toRequestContent(model);
@@ -231,6 +258,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class XmlInterfaceXElementStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => false;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
             return ((IModelXmlSerializable<T>)model).Serialize(options);
@@ -245,6 +275,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
     public class XmlInterfaceXElementNonGenericStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
+        public override bool IsExplicitJsonSerialize => false;
+        public override bool IsExplicitJsonDeserialize => false;
+
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
             return ((IModelXmlSerializable<object>)model).Serialize(options);

@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ProviderResourceType : IUtf8JsonSerializable, IModelJsonSerializable<ProviderResourceType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderResourceType>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderResourceType>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         internal static ProviderResourceType DeserializeProviderResourceType(JsonElement element, ModelSerializerOptions options = default)
         {

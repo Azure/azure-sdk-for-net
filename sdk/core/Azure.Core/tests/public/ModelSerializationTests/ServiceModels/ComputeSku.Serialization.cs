@@ -15,7 +15,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
     public partial class ComputeSku : IUtf8JsonSerializable, IModelJsonSerializable<ComputeSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComputeSku>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComputeSku>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         void IModelJsonSerializable<ComputeSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 

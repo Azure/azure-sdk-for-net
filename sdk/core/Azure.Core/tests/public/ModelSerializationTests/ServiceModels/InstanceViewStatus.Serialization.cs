@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
     public partial class InstanceViewStatus : IUtf8JsonSerializable, IModelJsonSerializable<InstanceViewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstanceViewStatus>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstanceViewStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
 
         void IModelJsonSerializable<InstanceViewStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
