@@ -69,9 +69,7 @@ namespace Azure.Core.Pipeline
                 if (attributeType.FullName == ("Azure.Core.AzureResourceProviderNamespaceAttribute"))
                 {
                     var namedArguments = customAttribute.ConstructorArguments;
-                    return namedArguments.Single().Value as string;
-                    //return attributeType.GetProperty("ResourceProviderNamespace")?.GetValue(customAttribute.) as string;
-                }
+                    return namedArguments.Single().Value as string;                }
             }
 
             return null;

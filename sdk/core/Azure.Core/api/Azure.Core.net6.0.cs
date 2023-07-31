@@ -1119,7 +1119,7 @@ namespace Azure.Core.Serialization
         public JsonObjectSerializer(System.Text.Json.JsonSerializerOptions options) { }
         public static Azure.Core.Serialization.JsonObjectSerializer Default { get { throw null; } }
         string? Azure.Core.Serialization.IMemberNameConverter.ConvertMemberName(System.Reflection.MemberInfo member) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.Deserialize which requires unreferenced code.")]
         public override object? Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<object?> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
