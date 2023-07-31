@@ -253,6 +253,92 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
 
         [RecordedTest]
         [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
+        public async Task DsRecordOperationTest()
+        {
+            var collection = _dnsZone.GetDnsDSRecords();
+            string dsRecordName = Recording.GenerateAssetName("ds");
+
+            const int keyTagValue0 = 64567;
+            const int keyTagValue1 = 5167;
+            const string digestValue0 = "5EFBB46DA4472777DB1DE2EAF585108FE50B124346B5F2A70032E6168CD248AA";
+            const string digestValue1 = "F6E14AD1A6F1A4EDAE94A5F07F4116C5C0CA3A00C28B22B0A7541AB17B114C7D";
+
+            // CreateOrUpdate
+            var data = new DnsDSRecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsDSRecords =
+                {
+                    new DnsDSRecordInfo
+                    {
+                        Algorithm = 13,
+                        KeyTag = keyTagValue0,
+                        Digest = new DSRecordDigest
+                        {
+                             AlgorithmType = 2,
+                             Value = digestValue0
+                        }
+                    },
+                    new DnsDSRecordInfo
+                    {
+                        Algorithm = 13,
+                        KeyTag = keyTagValue1,
+                        Digest = new DSRecordDigest
+                        {
+                             AlgorithmType = 2,
+                             Value = digestValue1
+                        }
+                    }
+                },
+            };
+            var dsRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dsRecordName, data);
+            ValidateRecordBaseInfo(dsRecord.Value.Data, dsRecordName);
+            Assert.AreEqual("dnszones/DS", dsRecord.Value.Data.ResourceType.Type.ToString());
+            Assert.AreEqual(3600, dsRecord.Value.Data.TtlInSeconds);
+
+            Assert.AreEqual(keyTagValue0, dsRecord.Value.Data.DnsDSRecords[0].KeyTag);
+            Assert.AreEqual(keyTagValue1, dsRecord.Value.Data.DnsDSRecords[0].KeyTag);
+            Assert.AreEqual(13, dsRecord.Value.Data.DnsDSRecords[0].Algorithm);
+            Assert.AreEqual(14, dsRecord.Value.Data.DnsDSRecords[0].Algorithm);
+            Assert.AreEqual(digestValue0, dsRecord.Value.Data.DnsDSRecords[0].Digest.Value);
+            Assert.AreEqual(digestValue1, dsRecord.Value.Data.DnsDSRecords[1].Digest.Value);
+            Assert.AreEqual(2, dsRecord.Value.Data.DnsDSRecords[0].Digest.AlgorithmType);
+            Assert.AreEqual(2, dsRecord.Value.Data.DnsDSRecords[1].Digest.AlgorithmType);
+
+            // Exist
+            bool flag = await collection.ExistsAsync(dsRecordName);
+            Assert.IsTrue(flag);
+
+            // Update
+            var updateResponse = await dsRecord.Value.UpdateAsync(new DnsDSRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+
+            // Get
+            var getResponse = await collection.GetAsync(dsRecordName);
+            ValidateRecordBaseInfo(getResponse.Value.Data, dsRecordName);
+            Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
+            Assert.AreEqual(keyTagValue0, dsRecord.Value.Data.DnsDSRecords[0].KeyTag);
+            Assert.AreEqual(keyTagValue1, dsRecord.Value.Data.DnsDSRecords[0].KeyTag);
+            Assert.AreEqual(13, dsRecord.Value.Data.DnsDSRecords[0].Algorithm);
+            Assert.AreEqual(13, dsRecord.Value.Data.DnsDSRecords[1].Algorithm);
+            Assert.AreEqual(digestValue0, dsRecord.Value.Data.DnsDSRecords[0].Digest.Value);
+            Assert.AreEqual(digestValue1, dsRecord.Value.Data.DnsDSRecords[1].Digest.Value);
+            Assert.AreEqual(2, dsRecord.Value.Data.DnsDSRecords[0].Digest.AlgorithmType);
+            Assert.AreEqual(2, dsRecord.Value.Data.DnsDSRecords[1].Digest.AlgorithmType);
+
+            // GetAll
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidateRecordBaseInfo(list.First(item => item.Data.Name == dsRecordName).Data, dsRecordName);
+
+            // Delete
+            await dsRecord.Value.DeleteAsync(WaitUntil.Completed);
+            flag = await collection.ExistsAsync(dsRecordName);
+            Assert.IsFalse(flag);
+        }
+
+        [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
         public async Task MXRecordOperationTest()
         {
             var collection = _dnsZone.GetDnsMXRecords();
@@ -545,6 +631,72 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             // Delete
             await srvRecord.Value.DeleteAsync(WaitUntil.Completed);
             flag = await collection.ExistsAsync(srvRecordName);
+            Assert.IsFalse(flag);
+        }
+
+        [RecordedTest]
+        [Ignore("No registered resource provider found for API version '2023-07-01-preview'")]
+        public async Task TlsaRecordOperationTest()
+        {
+            var collection = _dnsZone.GetDnsTlsaRecords();
+            string tlsaRecordName = Recording.GenerateAssetName("tlsa");
+
+            const string value0 = "053884471510B33B4BEBCB40747BFAA41B766B23F8063FD6D4B667D8003F2521";
+            // CreateOrUpdate
+            var data = new DnsTlsaRecordData()
+            {
+                TtlInSeconds = 3600,
+                DnsTlsaRecords =
+                {
+                    new DnsTlsaRecordInfo()
+                    {
+                        Usage = 3,
+                        Selector = 1,
+                        MatchingType = 1,
+                        CertAssociationData = value0
+                    }
+                }
+            };
+            var tlsaRecord = await collection.CreateOrUpdateAsync(WaitUntil.Completed, tlsaRecordName, data);
+            ValidateRecordBaseInfo(tlsaRecord.Value.Data, tlsaRecordName);
+            Assert.AreEqual("dnszones/TLSA", tlsaRecord.Value.Data.ResourceType.Type.ToString());
+            Assert.AreEqual(3600, tlsaRecord.Value.Data.TtlInSeconds);
+            Assert.AreEqual(1, tlsaRecord.Value.Data.DnsTlsaRecords.Count);
+            Assert.AreEqual(3, tlsaRecord.Value.Data.DnsTlsaRecords[0].Usage);
+            Assert.AreEqual(1, tlsaRecord.Value.Data.DnsTlsaRecords[0].Selector);
+            Assert.AreEqual(1, tlsaRecord.Value.Data.DnsTlsaRecords[0].MatchingType);
+            Assert.AreEqual(value0, tlsaRecord.Value.Data.DnsTlsaRecords[0].CertAssociationData);
+
+            // Exist
+            bool flag = await collection.ExistsAsync(tlsaRecordName);
+            Assert.IsTrue(flag);
+
+            // Update
+            var updateResponse = await tlsaRecord.Value.UpdateAsync(new DnsTlsaRecordData() { TtlInSeconds = 7200 });
+            Assert.AreEqual(7200, updateResponse.Value.Data.TtlInSeconds);
+
+            // Get
+            var getResponse = await collection.GetAsync(tlsaRecordName);
+            ValidateRecordBaseInfo(getResponse.Value.Data, tlsaRecordName);
+            Assert.AreEqual(7200, getResponse.Value.Data.TtlInSeconds);
+            Assert.AreEqual(1, getResponse.Value.Data.DnsTlsaRecords.Count);
+            ValidateRecordBaseInfo(tlsaRecord.Value.Data, tlsaRecordName);
+            Assert.AreEqual("dnszones/TLSA", tlsaRecord.Value.Data.ResourceType.Type.ToString());
+            Assert.AreEqual(3600, tlsaRecord.Value.Data.TtlInSeconds);
+            Assert.AreEqual(1, tlsaRecord.Value.Data.DnsTlsaRecords.Count);
+            Assert.AreEqual(3, tlsaRecord.Value.Data.DnsTlsaRecords[0].Usage);
+            Assert.AreEqual(1, tlsaRecord.Value.Data.DnsTlsaRecords[0].Selector);
+            Assert.AreEqual(1, tlsaRecord.Value.Data.DnsTlsaRecords[0].MatchingType);
+            Assert.AreEqual(value0, tlsaRecord.Value.Data.DnsTlsaRecords[0].CertAssociationData);
+
+            // GetAll
+            var list = await collection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidateRecordBaseInfo(list.First(item => item.Data.Name == tlsaRecordName).Data, tlsaRecordName);
+
+            // Delete
+            await tlsaRecord.Value.DeleteAsync(WaitUntil.Completed);
+            flag = await collection.ExistsAsync(tlsaRecordName);
             Assert.IsFalse(flag);
         }
 
