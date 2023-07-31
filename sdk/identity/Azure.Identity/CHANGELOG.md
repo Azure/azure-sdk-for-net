@@ -1,6 +1,19 @@
 # Release History
 
-## 1.10.0-beta.1 (2023-07-11)
+## 1.10.0-beta.2 (Unreleased)
+
+### Features Added
+- Add `BrowserCustomizedOptions` to `InteractiveBrowserCredential` to enable web view customization for interactive authentication.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- ManagedIdentityCredential will no longer attempt to parse invalid json payloads on responses from the managed identity endpoint.
+
+### Other Changes
+
+## 1.10.0-beta.1 (2023-07-17)
 
 ### Features Added
 - Continuous Access Evaluation (CAE) is now configurable per-request by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor.

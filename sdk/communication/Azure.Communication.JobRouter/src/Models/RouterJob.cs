@@ -66,7 +66,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.Value)
+                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -87,7 +87,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key, x => x.Value.Value)
+                    ? Tags?.ToDictionary(x => x.Key, x => x.Value?.Value)
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -108,7 +108,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Notes != null && Notes.Count != 0
-                    ? Notes?.ToDictionary(x => (x.AddedAtUtc ?? DateTimeOffset.UtcNow)
+                    ? Notes?.ToDictionary(x => (x.AddedAt ?? DateTimeOffset.UtcNow)
                         .ToUniversalTime().ToString("O", CultureInfo.InvariantCulture), x => x.Message)
                     : new ChangeTrackingDictionary<string, string>();
             }
@@ -118,7 +118,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     Notes.Add(new RouterJobNote
                     {
-                        AddedAtUtc = DateTimeOffsetParser.ParseAndGetDateTimeOffset(note.Key),
+                        AddedAt = DateTimeOffsetParser.ParseAndGetDateTimeOffset(note.Key),
                         Message = note.Value
                     });
                 }

@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("getSecureVMGuestStateSAS"u8);
                 writer.WriteBooleanValue(GetSecureVmGuestStateSas.Value);
             }
+            if (Optional.IsDefined(FileFormat))
+            {
+                writer.WritePropertyName("fileFormat"u8);
+                writer.WriteStringValue(FileFormat.Value.ToString());
+            }
             writer.WriteEndObject();
         }
     }

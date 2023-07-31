@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Result of listing marketplaces. It contains a list of available marketplaces in reverse chronological order by billing period.
-    /// Serialized Name: MarketplacesListResult
-    /// </summary>
+    /// <summary> Result of listing marketplaces. It contains a list of available marketplaces in reverse chronological order by billing period. </summary>
     internal partial class MarketplacesListResult
     {
         /// <summary> Initializes a new instance of MarketplacesListResult. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of MarketplacesListResult. </summary>
-        /// <param name="value">
-        /// The list of marketplaces.
-        /// Serialized Name: MarketplacesListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: MarketplacesListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of marketplaces. </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal MarketplacesListResult(IReadOnlyList<ConsumptionMarketplace> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The list of marketplaces.
-        /// Serialized Name: MarketplacesListResult.value
-        /// </summary>
+        /// <summary> The list of marketplaces. </summary>
         public IReadOnlyList<ConsumptionMarketplace> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: MarketplacesListResult.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

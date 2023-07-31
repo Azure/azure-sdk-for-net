@@ -4,8 +4,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
@@ -17,8 +16,7 @@ namespace Azure.Storage.DataMovement
                 lastModified: fileInfo.LastWriteTimeUtc,
                 createdOn: fileInfo.CreationTimeUtc,
                 contentLength: fileInfo.Length,
-                lastAccessed: fileInfo.LastAccessTimeUtc,
-                resourceType: StorageResourceType.LocalFile);
+                lastAccessed: fileInfo.LastAccessTimeUtc);
         }
 
         public static async Task<StreamToUriJobPart> ToJobPartAsync(

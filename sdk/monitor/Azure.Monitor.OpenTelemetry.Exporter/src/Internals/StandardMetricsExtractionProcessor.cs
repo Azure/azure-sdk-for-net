@@ -11,7 +11,7 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class StandardMetricsExtractionProcessor : BaseProcessor<Activity>
+    internal sealed class StandardMetricsExtractionProcessor : BaseProcessor<Activity>
     {
         private bool _disposed;
         private AzureMonitorResource? _resource;
@@ -60,6 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             // TODO: other activity kinds
+            // (2023-07) fix before GA
         }
 
         private void ReportRequestDurationMetric(Activity activity)

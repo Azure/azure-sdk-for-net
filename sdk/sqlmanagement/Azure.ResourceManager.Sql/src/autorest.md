@@ -4,7 +4,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-require: https://github.com/Azure/azure-rest-api-specs/blob/67527326606bd3c71700e2b96ff3c9ce9e655e29/specification/sql/resource-manager/readme.md
+tag: package-composite-v5
+require: https://github.com/Azure/azure-rest-api-specs/blob/eba34b9c764e877193788a87a81cebfa915eb858/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -328,6 +329,12 @@ rename-mapping:
   OutboundEnvironmentEndpoint: SqlOutboundEnvironmentEndpoint
   OutboundEnvironmentEndpointCollection: SqlOutboundEnvironmentEndpointCollection
   MetricDefinition.resourceUri: ResourceUriString
+  FailoverGroup.properties.databases: FailoverDatabases
+  ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
+  ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
+
+# mgmt-debug: 
+#  show-serialized-names: true
 
 prompted-enum-values:
   - Default

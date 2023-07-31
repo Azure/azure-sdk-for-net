@@ -505,7 +505,7 @@ namespace Azure.Identity.Tests
                 // Assert.AreEqual(tenantId, tId);
                 return publicResult;
             };
-            mockPublicMsalClient.InteractiveAuthFactory = (_, _, _, _, tenant, _, _) =>
+            mockPublicMsalClient.InteractiveAuthFactory = (_, _, _, _, tenant, _, _, _) =>
             {
                 Assert.AreEqual(expectedTenantId, tenant, "TenantId passed to msal should match");
                 return result;
