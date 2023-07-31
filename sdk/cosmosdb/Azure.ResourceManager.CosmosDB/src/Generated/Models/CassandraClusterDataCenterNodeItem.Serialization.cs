@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> address = default;
             Optional<CassandraNodeState> state = default;
             Optional<string> status = default;
+            Optional<string> cassandraProcessStatus = default;
             Optional<string> load = default;
             Optional<IReadOnlyList<string>> tokens = default;
             Optional<int> size = default;
@@ -55,6 +56,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("cassandraProcessStatus"u8))
+                {
+                    cassandraProcessStatus = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("load"u8))
@@ -168,7 +174,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, load.Value, Optional.ToList(tokens), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage));
+            return new CassandraClusterDataCenterNodeItem(address.Value, Optional.ToNullable(state), status.Value, cassandraProcessStatus.Value, load.Value, Optional.ToList(tokens), Optional.ToNullable(size), Optional.ToNullable(hostId), rack.Value, timestamp.Value, Optional.ToNullable(diskUsedKB), Optional.ToNullable(diskFreeKB), Optional.ToNullable(memoryUsedKB), Optional.ToNullable(memoryBuffersAndCachedKB), Optional.ToNullable(memoryFreeKB), Optional.ToNullable(memoryTotalKB), Optional.ToNullable(cpuUsage));
         }
     }
 }
