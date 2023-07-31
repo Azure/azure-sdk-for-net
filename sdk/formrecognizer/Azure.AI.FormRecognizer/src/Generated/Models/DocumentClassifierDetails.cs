@@ -17,19 +17,19 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
-        /// <param name="apiVersion"> API version used to create this document classifier. </param>
-        /// <param name="documentTypes"> List of document types to classify against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="apiVersion"/> or <paramref name="documentTypes"/> is null. </exception>
-        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
+        /// <param name="serviceVersion"> API version used to create this document classifier. </param>
+        /// <param name="documentTypeDetails"> List of document types to classify against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="serviceVersion"/> or <paramref name="documentTypeDetails"/> is null. </exception>
+        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypeDetails)
         {
             Argument.AssertNotNull(classifierId, nameof(classifierId));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-            Argument.AssertNotNull(documentTypes, nameof(documentTypes));
+            Argument.AssertNotNull(serviceVersion, nameof(serviceVersion));
+            Argument.AssertNotNull(documentTypeDetails, nameof(documentTypeDetails));
 
             ClassifierId = classifierId;
             CreatedOn = createdOn;
-            ApiVersion = apiVersion;
-            DocumentTypes = documentTypes;
+            ServiceVersion = serviceVersion;
+            DocumentTypeDetails = documentTypeDetails;
         }
 
         /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
@@ -37,23 +37,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="description"> Document classifier description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
-        /// <param name="apiVersion"> API version used to create this document classifier. </param>
-        /// <param name="documentTypes"> List of document types to classify against. </param>
-        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
+        /// <param name="serviceVersion"> API version used to create this document classifier. </param>
+        /// <param name="documentTypeDetails"> List of document types to classify against. </param>
+        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypeDetails)
         {
             ClassifierId = classifierId;
             Description = description;
             CreatedOn = createdOn;
             ExpiresOn = expiresOn;
-            ApiVersion = apiVersion;
-            DocumentTypes = documentTypes;
+            ServiceVersion = serviceVersion;
+            DocumentTypeDetails = documentTypeDetails;
         }
 
         /// <summary> Unique document classifier name. </summary>
         public string ClassifierId { get; }
         /// <summary> Document classifier description. </summary>
         public string Description { get; }
-        /// <summary> API version used to create this document classifier. </summary>
-        public string ApiVersion { get; }
     }
 }

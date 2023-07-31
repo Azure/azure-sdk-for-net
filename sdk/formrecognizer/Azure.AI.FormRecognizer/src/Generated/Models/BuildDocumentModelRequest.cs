@@ -34,9 +34,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Custom document model build mode. </summary>
         public DocumentBuildMode BuildMode { get; }
         /// <summary> Azure Blob Storage location containing the training data.  Either azureBlobSource or azureBlobFileListSource must be specified. </summary>
-        public AzureBlobContentSource AzureBlobSource { get; set; }
+        public BlobContentSource AzureBlobSource { get; set; }
         /// <summary> Azure Blob Storage file list specifying the training data.  Either azureBlobSource or azureBlobFileListSource must be specified. </summary>
-        public AzureBlobFileListSource AzureBlobFileListSource { get; set; }
+        public BlobFileListContentSource AzureBlobFileListSource { get; set; }
         /// <summary> List of key-value tag attributes associated with the document model. </summary>
         public IDictionary<string, string> Tags { get; }
     }

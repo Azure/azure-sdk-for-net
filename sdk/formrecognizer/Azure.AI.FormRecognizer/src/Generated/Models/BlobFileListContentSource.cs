@@ -5,10 +5,13 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> Classifier document type info. </summary>
-    public partial class ClassifierDocumentTypeDetails
+    /// <summary> File list in Azure Blob Storage. </summary>
+    public partial class BlobFileListContentSource
     {
     }
 }

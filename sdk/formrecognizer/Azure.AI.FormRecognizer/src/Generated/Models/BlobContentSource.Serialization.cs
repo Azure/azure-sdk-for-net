@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class AzureBlobContentSource : IUtf8JsonSerializable
+    public partial class BlobContentSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,7 +26,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteEndObject();
         }
 
-        internal static AzureBlobContentSource DeserializeAzureBlobContentSource(JsonElement element)
+        internal static BlobContentSource DeserializeBlobContentSource(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AzureBlobContentSource(containerUrl, prefix.Value);
+            return new BlobContentSource(containerUrl, prefix.Value);
         }
     }
 }

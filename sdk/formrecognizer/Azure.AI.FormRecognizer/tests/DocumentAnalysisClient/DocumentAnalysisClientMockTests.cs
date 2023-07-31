@@ -254,7 +254,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateInstrumentedClient(options);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
-            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas, DocumentAnalysisFeature.StyleFont } };
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas, DocumentAnalysisFeature.FontStyling } };
             await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
@@ -274,7 +274,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateInstrumentedClient(options);
 
             var uri = new Uri("https://fakeuri.com/");
-            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas, DocumentAnalysisFeature.StyleFont } };
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas, DocumentAnalysisFeature.FontStyling } };
             await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
@@ -506,7 +506,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var barcode = result.Pages[0].Barcodes[0];
             var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
 
-            Assert.AreEqual(DocumentBarcodeKind.QRCode, barcode.Kind);
+            Assert.AreEqual(DocumentBarcodeKind.QrCode, barcode.Kind);
             Assert.AreEqual("barcodeValue", barcode.Value);
             CollectionAssert.AreEqual(expectedPolygon, barcode.BoundingPolygon);
             Assert.AreEqual(10, barcode.Span.Index);
