@@ -789,21 +789,21 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://aka.ms/bloburl"));
                 await sourceBlob.DownloadToAsync(downloadPath);
 
-                // Create transfer manager
-                TransferManager oldTransferManager = new TransferManager(new TransferManagerOptions());
+                #region Snippet:InitialTransferStart
+                TransferManager initialTransferManager = new();
 
-                // Create source and destination resource
                 StorageResource sourceResource = new BlockBlobStorageResource(sourceBlob);
                 StorageResource destinationResource = new LocalFileStorageResource(downloadPath);
 
-                // Create simple transfer single blob download job
-                DataTransfer originalTransfer = await oldTransferManager.StartTransferAsync(
+                DataTransfer originalTransfer = await initialTransferManager.StartTransferAsync(
                     sourceResource: sourceResource,
                     destinationResource: destinationResource);
                 string transferId = originalTransfer.Id;
+                #endregion
 
-                // Pause from the Transfer Manager using the Transfer Id
-                await oldTransferManager.PauseTransferIfRunningAsync(transferId);
+                #region Snippet:PauseTransfer
+                await initialTransferManager.PauseTransferIfRunningAsync(transferId);
+                #endregion
 
                 #region Snippet:ResumeAllTransfers
                 AzureStorageCredentialSupplier supplier = new()
@@ -815,9 +815,9 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 options.AddRehydrator(supplier.GetBlobStorageResourceRehydrator());
                 // filesystem rehydrator is configured by default, no need to add it
 
-                TransferManager transferManager = new(options);
+                TransferManager newTransferManager = new(options);
                 List<DataTransfer> resumedTransfers = new();
-                await foreach (DataTransfer dataTransfer in transferManager.ResumeAllTransfersAsync())
+                await foreach (DataTransfer dataTransfer in newTransferManager.ResumeAllTransfersAsync())
                 {
                     resumedTransfers.Add(dataTransfer);
                 }
