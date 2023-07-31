@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-preview.19 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-preview.18 (2023-08-08)
 - Added `authenticationType`, `containerUri`, `sasUri` and `sasToken` properties to BlobService 
 - Added `setSystemVariable` proprety to SetVariableActivityTypeProperties
