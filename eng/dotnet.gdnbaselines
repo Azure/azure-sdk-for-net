@@ -11,7 +11,8 @@
     "52282670312a7c1517be0342985c6a71094b714130b306f9df411543884fc448": {
       "signature": "52282670312a7c1517be0342985c6a71094b714130b306f9df411543884fc448",
       "alternativeSignatures": [
-        "ce48ef606c14114cbda3db41455c638e77ff7da42f5684f2510abb0686f4051f"
+        "ce48ef606c14114cbda3db41455c638e77ff7da42f5684f2510abb0686f4051f",
+        "Dhe2f1RZf4yYyVeJdnu9pKjZesAX5M8ocQqhviysMqI="
       ],
       "target": "eng/common/testproxy/dotnet-devcert.pfx",
       "memberOf": [
