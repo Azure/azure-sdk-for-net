@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(MountOptions))
+            {
+                writer.WritePropertyName("mountOptions"u8);
+                writer.WriteStringValue(MountOptions);
+            }
             writer.WriteEndObject();
         }
 
@@ -54,6 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppStorageType> storageType = default;
             Optional<string> storageName = default;
             Optional<IList<SecretVolumeItem>> secrets = default;
+            Optional<string> mountOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -89,8 +95,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                     secrets = array;
                     continue;
                 }
+                if (property.NameEquals("mountOptions"u8))
+                {
+                    mountOptions = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContainerAppVolume(name.Value, Optional.ToNullable(storageType), storageName.Value, Optional.ToList(secrets));
+            return new ContainerAppVolume(name.Value, Optional.ToNullable(storageType), storageName.Value, Optional.ToList(secrets), mountOptions.Value);
         }
     }
 }

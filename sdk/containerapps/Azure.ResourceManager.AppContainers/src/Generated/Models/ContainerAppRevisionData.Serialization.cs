@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<string> provisioningError = default;
             Optional<ContainerAppRevisionHealthState> healthState = default;
             Optional<ContainerAppRevisionProvisioningState> provisioningState = default;
+            Optional<RevisionRunningState> runningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -161,11 +162,20 @@ namespace Azure.ResourceManager.AppContainers
                             provisioningState = new ContainerAppRevisionProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("runningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runningState = new RevisionRunningState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerAppRevisionData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastActiveTime), fqdn.Value, template.Value, Optional.ToNullable(active), Optional.ToNullable(replicas), Optional.ToNullable(trafficWeight), provisioningError.Value, Optional.ToNullable(healthState), Optional.ToNullable(provisioningState));
+            return new ContainerAppRevisionData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(lastActiveTime), fqdn.Value, template.Value, Optional.ToNullable(active), Optional.ToNullable(replicas), Optional.ToNullable(trafficWeight), provisioningError.Value, Optional.ToNullable(healthState), Optional.ToNullable(provisioningState), Optional.ToNullable(runningState));
         }
     }
 }

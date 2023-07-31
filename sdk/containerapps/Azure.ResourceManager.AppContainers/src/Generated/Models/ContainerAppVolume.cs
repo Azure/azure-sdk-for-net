@@ -24,12 +24,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="storageType"> Storage type for the volume. If not provided, use EmptyDir. </param>
         /// <param name="storageName"> Name of storage resource. No need to provide for EmptyDir and Secret. </param>
         /// <param name="secrets"> List of secrets to be added in volume. If no secrets are provided, all secrets in collection will be added to volume. </param>
-        internal ContainerAppVolume(string name, ContainerAppStorageType? storageType, string storageName, IList<SecretVolumeItem> secrets)
+        /// <param name="mountOptions"> Mount options used while mounting the AzureFile. Must be a comma-separated string. </param>
+        internal ContainerAppVolume(string name, ContainerAppStorageType? storageType, string storageName, IList<SecretVolumeItem> secrets, string mountOptions)
         {
             Name = name;
             StorageType = storageType;
             StorageName = storageName;
             Secrets = secrets;
+            MountOptions = mountOptions;
         }
 
         /// <summary> Volume name. </summary>
@@ -40,5 +42,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string StorageName { get; set; }
         /// <summary> List of secrets to be added in volume. If no secrets are provided, all secrets in collection will be added to volume. </summary>
         public IList<SecretVolumeItem> Secrets { get; }
+        /// <summary> Mount options used while mounting the AzureFile. Must be a comma-separated string. </summary>
+        public string MountOptions { get; set; }
     }
 }

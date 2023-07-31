@@ -7,19 +7,23 @@
 
 using System;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppContainers.Models
+namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> Container Apps Jobs execution. </summary>
-    public partial class ContainerAppJobExecution : ResourceData
+    /// <summary>
+    /// A class representing the ContainerAppJobExecution data model.
+    /// Container Apps Job execution.
+    /// </summary>
+    public partial class ContainerAppJobExecutionData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppJobExecution. </summary>
-        internal ContainerAppJobExecution()
+        /// <summary> Initializes a new instance of ContainerAppJobExecutionData. </summary>
+        internal ContainerAppJobExecutionData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobExecution. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobExecutionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -28,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="startOn"> Job execution start time. </param>
         /// <param name="endOn"> Job execution start time. </param>
         /// <param name="template"> Job's execution container. </param>
-        internal ContainerAppJobExecution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template) : base(id, name, resourceType, systemData)
+        internal ContainerAppJobExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartOn = startOn;

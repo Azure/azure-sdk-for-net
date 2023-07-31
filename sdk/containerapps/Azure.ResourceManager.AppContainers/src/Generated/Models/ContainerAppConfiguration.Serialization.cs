@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("maxInactiveRevisions"u8);
                 writer.WriteNumberValue(MaxInactiveRevisions.Value);
             }
+            if (Optional.IsDefined(Service))
+            {
+                writer.WritePropertyName("service"u8);
+                writer.WriteObjectValue(Service);
+            }
             writer.WriteEndObject();
         }
 
@@ -71,6 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<ContainerAppRegistryCredentials>> registries = default;
             Optional<ContainerAppDaprConfiguration> dapr = default;
             Optional<int> maxInactiveRevisions = default;
+            Optional<Service> service = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secrets"u8))
@@ -137,8 +143,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                     maxInactiveRevisions = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("service"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    service = Service.DeserializeService(property.Value);
+                    continue;
+                }
             }
-            return new ContainerAppConfiguration(Optional.ToList(secrets), Optional.ToNullable(activeRevisionsMode), ingress.Value, Optional.ToList(registries), dapr.Value, Optional.ToNullable(maxInactiveRevisions));
+            return new ContainerAppConfiguration(Optional.ToList(secrets), Optional.ToNullable(activeRevisionsMode), ingress.Value, Optional.ToList(registries), dapr.Value, Optional.ToNullable(maxInactiveRevisions), service.Value);
         }
     }
 }

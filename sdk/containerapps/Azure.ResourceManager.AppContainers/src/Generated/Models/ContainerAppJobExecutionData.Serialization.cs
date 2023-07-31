@@ -8,13 +8,14 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.AppContainers.Models
+namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppJobExecution
+    public partial class ContainerAppJobExecutionData
     {
-        internal static ContainerAppJobExecution DeserializeContainerAppJobExecution(JsonElement element)
+        internal static ContainerAppJobExecutionData DeserializeContainerAppJobExecutionData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppJobExecution(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), template.Value);
+            return new ContainerAppJobExecutionData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(startTime), Optional.ToNullable(endTime), template.Value);
         }
     }
 }
