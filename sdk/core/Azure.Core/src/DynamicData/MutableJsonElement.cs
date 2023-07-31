@@ -1121,6 +1121,9 @@ namespace Azure.Core.Json
             return _element.ToString() ?? "null";
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
         internal JsonElement GetJsonElement()
         {
             EnsureValid();
@@ -1140,6 +1143,9 @@ namespace Azure.Core.Json
             return _element;
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
         private byte[] GetRawBytes()
         {
             using MemoryStream changedElementStream = new();

@@ -40,6 +40,9 @@ namespace Azure.Core.Serialization
             _serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
         }
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
         internal void WriteTo(Stream stream)
         {
             using Utf8JsonWriter writer = new(stream);

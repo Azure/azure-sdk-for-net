@@ -341,8 +341,8 @@ namespace Azure.Core.Pipeline
             }
 
 #if NET6_0_OR_GREATER
-            [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(Activity))]
-            [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(DiagnosticActivity))]
+            [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(Activity))]
+            [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(DiagnosticActivity))]
 #endif
             public Activity? Start()
             {
@@ -537,7 +537,7 @@ namespace Azure.Core.Pipeline
             }
 
 #if NET6_0_OR_GREATER
-           [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Class constructor is marked with RequiresUnreferencedCode.")]
+           [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "The class constructor is marked with RequiresUnreferencedCode.")]
 #endif
             public void Dispose()
             {

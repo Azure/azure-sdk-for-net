@@ -330,6 +330,9 @@ namespace Azure.Core
                 _data.Dispose();
             }
 
+#if NET6_0_OR_GREATER
+            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
                 _data.WriteTo(stream);
@@ -341,6 +344,9 @@ namespace Azure.Core
                 return false;
             }
 
+#if NET6_0_OR_GREATER
+            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+#endif
             public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 _data.WriteTo(stream);
