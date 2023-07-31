@@ -19,21 +19,32 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
         }
 
-        public Envelope(string location)
+        public Envelope(string readOnlyProperty)
         {
-            ReadOnlyProperty = location;
+            ReadOnlyProperty = readOnlyProperty;
         }
 
-        internal Envelope(string property, CatReadOnlyProperty cat, T modelC, Dictionary<string, BinaryData> rawData)
+        internal Envelope(string readOnlyProperty, CatReadOnlyProperty modelA, T modelT, Dictionary<string, BinaryData> rawData)
         {
-            ReadOnlyProperty = property;
-            ModelA = cat;
-            ModelT = modelC;
+            ReadOnlyProperty = readOnlyProperty;
+            ModelA = modelA;
+            ModelT = modelT;
             RawData = rawData;
         }
 
         public CatReadOnlyProperty ModelA { get; set; }
         public T ModelT { get; set; }
+
+        public static implicit operator RequestContent(Envelope<T> envelope)
+        {
+            return RequestContent.Create(envelope, ModelSerializerOptions.DefaultServiceOptions);
+        }
+
+        public static explicit operator Envelope<T>(Response response)
+        {
+            using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
+            return DeserializeEnvelope(jsonDocument.RootElement, ModelSerializerOptions.DefaultServiceOptions);
+        }
 
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Envelope<T>>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
@@ -76,7 +87,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
-            T modelC = default(T);
+            T modelT = default(T);
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
 
             foreach (var property in element.EnumerateObject())
@@ -93,7 +104,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
                 if (property.NameEquals("modelC"u8))
                 {
-                    modelC = DeserializeT(property.Value, options);
+                    modelT = DeserializeT(property.Value, options);
                     continue;
                 }
 
@@ -103,7 +114,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new Envelope<T>(readonlyProperty, modelA, modelC, rawData);
+            return new Envelope<T>(readonlyProperty, modelA, modelT, rawData);
         }
 
         private void SerializeT(Utf8JsonWriter writer, ModelSerializerOptions options)

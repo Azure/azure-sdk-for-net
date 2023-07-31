@@ -82,7 +82,30 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                         return ModelY.DeserializeModelY(element, options);
                 }
             }
-            return UnknownBaseModel.DeserializeUnknownBaseModel(element, options);
+
+            //Deserialize unknown subtype
+            string kind = default;
+            Optional<string> name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    //this means it's an unknown property we got
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            return new UnknownBaseModel(kind, name, rawData);
         }
 
         BaseModel IModelSerializable<BaseModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
