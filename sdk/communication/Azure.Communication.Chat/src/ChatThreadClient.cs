@@ -90,6 +90,7 @@ namespace Azure.Communication.Chat
                 throw;
             }
         }
+
         /// <summary> Updates the thread's properties asynchronously. </summary>
         /// <param name="options"> Chat thread options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

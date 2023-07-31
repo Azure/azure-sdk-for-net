@@ -74,64 +74,6 @@ namespace Azure.Communication.Chat
             return message;
         }
 
-        /// <summary> Creates a chat thread. </summary>
-        /// <param name="topic"> The chat thread topic. </param>
-        /// <param name="participants"> Participants to be added to the chat thread. </param>
-        /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
-        public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(string topic, IEnumerable<ChatParticipantInternal> participants = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
-        {
-            if (topic == null)
-            {
-                throw new ArgumentNullException(nameof(topic));
-            }
-
-            using var message = CreateCreateChatThreadRequest(topic, participants, metadata);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        CreateChatThreadResultInternal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CreateChatThreadResultInternal.DeserializeCreateChatThreadResultInternal(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates a chat thread. </summary>
-        /// <param name="topic"> The chat thread topic. </param>
-        /// <param name="participants"> Participants to be added to the chat thread. </param>
-        /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topic"/> is null. </exception>
-        public Response<CreateChatThreadResultInternal> CreateChatThread(string topic, IEnumerable<ChatParticipantInternal> participants = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
-        {
-            if (topic == null)
-            {
-                throw new ArgumentNullException(nameof(topic));
-            }
-
-            using var message = CreateCreateChatThreadRequest(topic, participants, metadata);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        CreateChatThreadResultInternal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CreateChatThreadResultInternal.DeserializeCreateChatThreadResultInternal(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateListChatThreadsRequest(int? maxPageSize, DateTimeOffset? startTime)
         {
             var message = _pipeline.CreateMessage();
