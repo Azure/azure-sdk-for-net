@@ -244,7 +244,7 @@ if (dataTransfer.TransferStatus == StorageTransferStatus.CompletedWithFailedTran
 Below logs individual failures in a container transfer via `TransferOptions` events.
 
 ```C# Snippet:LogIndividualTransferFailures
-transferOptions.TransferFailed += (TransferItemFailedEventArgs args) =>
+transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {
