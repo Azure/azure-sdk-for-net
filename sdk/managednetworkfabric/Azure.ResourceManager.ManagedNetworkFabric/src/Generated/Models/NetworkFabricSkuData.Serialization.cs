@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("maxComputeRacks"u8);
                 writer.WriteNumberValue(MaxComputeRacks.Value);
             }
+            if (Optional.IsDefined(MaximumServerCount))
+            {
+                writer.WritePropertyName("maximumServerCount"u8);
+                writer.WriteNumberValue(MaximumServerCount.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -39,12 +44,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> type0 = default;
+            Optional<NetworkFabricSkuType> type0 = default;
             Optional<int> maxComputeRacks = default;
-            Optional<string> minSupportedVer = default;
-            Optional<string> maxSupportedVer = default;
-            Optional<Uri> detailsUri = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<int> maximumServerCount = default;
+            Optional<IReadOnlyList<string>> supportedVersions = default;
+            Optional<string> details = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -82,7 +87,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                     {
                         if (property0.NameEquals("type"u8))
                         {
-                            type0 = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            type0 = new NetworkFabricSkuType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("maxComputeRacks"u8))
@@ -94,23 +103,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             maxComputeRacks = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("minSupportedVer"u8))
-                        {
-                            minSupportedVer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("maxSupportedVer"u8))
-                        {
-                            maxSupportedVer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("detailsUri"u8))
+                        if (property0.NameEquals("maximumServerCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            detailsUri = new Uri(property0.Value.GetString());
+                            maximumServerCount = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("supportedVersions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            supportedVersions = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("details"u8))
+                        {
+                            details = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -119,14 +137,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new NetworkFabricSkuData(id, name, type, systemData.Value, type0.Value, Optional.ToNullable(maxComputeRacks), minSupportedVer.Value, maxSupportedVer.Value, detailsUri.Value, Optional.ToNullable(provisioningState));
+            return new NetworkFabricSkuData(id, name, type, systemData.Value, Optional.ToNullable(type0), Optional.ToNullable(maxComputeRacks), Optional.ToNullable(maximumServerCount), Optional.ToList(supportedVersions), details.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

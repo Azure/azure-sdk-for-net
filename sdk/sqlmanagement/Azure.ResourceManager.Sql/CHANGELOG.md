@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.2 (2023-07-31)
+
+### Features Added
+
+- Supported Sql Elastic Pool creation and update with `PreferredEnclaveType`.
 
 ## 1.3.0-beta.1 (2023-05-31)
 

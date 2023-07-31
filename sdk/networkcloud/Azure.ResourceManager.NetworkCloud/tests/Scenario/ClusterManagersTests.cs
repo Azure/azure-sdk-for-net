@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         [RecordedTest]
         public async Task ClusterManagers()
         {
-            var clusterManagerCollection = ResourceGroupResource.GetClusterManagers();
+            var clusterManagerCollection = ResourceGroupResource.GetNetworkCloudClusterManagers();
             string clusterManagerName = Recording.GenerateAssetName("clustermanager");
 
             // Create
-            var createData = new ClusterManagerData(new AzureLocation(TestEnvironment.Location), TestEnvironment.SubnetId)
+            var createData = new NetworkCloudClusterManagerData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.SubnetId))
             {
                 Tags = {
                     ["DisableFabricIntegration"] = "true"
@@ -37,31 +37,31 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Get
             var getResult =await clusterManagerCollection.GetAsync(clusterManagerName);
             Assert.AreEqual(getResult.Value.Data.Name, clusterManagerName);
-            ClusterManagerResource clusterManagerResource = Client.GetClusterManagerResource(getResult.Value.Data.Id);
+            NetworkCloudClusterManagerResource clusterManagerResource = Client.GetNetworkCloudClusterManagerResource(getResult.Value.Data.Id);
 
             // Update
-            var newTags = new ClusterManagerPatch()
+            var newTags = new NetworkCloudClusterManagerPatch()
             {
                 Tags = {
                     ["DisableFabricIntegration"] = "true",
                     ["PatchTag"] = "patchTag",
                 }
             };
-            ClusterManagerResource updateResponse = await clusterManagerResource.UpdateAsync(newTags);
+            NetworkCloudClusterManagerResource updateResponse = await clusterManagerResource.UpdateAsync(newTags);
             Assert.AreEqual(updateResponse.Data.Tags["DisableFabricIntegration"], "true");
             Assert.AreEqual(updateResponse.Data.Tags["PatchTag"], "patchTag");
 
             // List by Resource Group
-            var listByResourceGroup = new List<ClusterManagerResource>();
-            await foreach (ClusterManagerResource item in clusterManagerCollection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkCloudClusterManagerResource>();
+            await foreach (NetworkCloudClusterManagerResource item in clusterManagerCollection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
             // List by Subscription
-            var listBySubscription = new List<ClusterManagerResource>();
-            await foreach (ClusterManagerResource item in SubscriptionResource.GetClusterManagersAsync())
+            var listBySubscription = new List<NetworkCloudClusterManagerResource>();
+            await foreach (NetworkCloudClusterManagerResource item in SubscriptionResource.GetNetworkCloudClusterManagersAsync())
             {
                 listBySubscription.Add(item);
             }

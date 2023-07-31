@@ -15,15 +15,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
+        private readonly float _sampleRate; // This value is recorded on TelemetryItem.SampleRate.
         private AzureMonitorResource? _resource;
         private bool _disposed;
 
-        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
+        public AzureMonitorTraceExporter(AzureMonitorExporterOptions options) : this(options, TransmitterFactory.Instance.Get(options))
         {
         }
 
-        internal AzureMonitorTraceExporter(ITransmitter transmitter)
+        internal AzureMonitorTraceExporter(AzureMonitorExporterOptions options, ITransmitter transmitter)
         {
+            _sampleRate = (float)Math.Round(options.SamplingRatio * 100);
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
         }
@@ -40,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, TraceResource, _instrumentationKey);
+                var telemetryItems = TraceHelper.OtelToAzureMonitorTrace(batch, TraceResource, _instrumentationKey, _sampleRate);
                 if (telemetryItems.Count > 0)
                 {
                     exportResult = _transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.AzureMonitorTraceExporter, false, CancellationToken.None).EnsureCompleted();

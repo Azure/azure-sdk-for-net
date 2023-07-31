@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -18,16 +19,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of IPExtendedCommunityAddOperationProperties. </summary>
-        /// <param name="add"> IP Extended Community Id list properties. </param>
+        /// <param name="add"> List of IP Extended Community IDs. </param>
         internal IPExtendedCommunityAddOperationProperties(IPExtendedCommunityIdList @add)
         {
             Add = @add;
         }
 
-        /// <summary> IP Extended Community Id list properties. </summary>
+        /// <summary> List of IP Extended Community IDs. </summary>
         internal IPExtendedCommunityIdList Add { get; set; }
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<string> AddIPExtendedCommunityIds
+        public IList<ResourceIdentifier> AddIPExtendedCommunityIds
         {
             get
             {

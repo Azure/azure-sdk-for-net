@@ -3488,6 +3488,24 @@ namespace Azure.ResourceManager.Compute.Models
         public DiskImageEncryption() { }
         public Azure.Core.ResourceIdentifier DiskEncryptionSetId { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DiskImageFileFormat : System.IEquatable<Azure.ResourceManager.Compute.Models.DiskImageFileFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DiskImageFileFormat(string value) { throw null; }
+        public static Azure.ResourceManager.Compute.Models.DiskImageFileFormat Vhd { get { throw null; } }
+        public static Azure.ResourceManager.Compute.Models.DiskImageFileFormat Vhdx { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Compute.Models.DiskImageFileFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Compute.Models.DiskImageFileFormat left, Azure.ResourceManager.Compute.Models.DiskImageFileFormat right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Compute.Models.DiskImageFileFormat (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Compute.Models.DiskImageFileFormat left, Azure.ResourceManager.Compute.Models.DiskImageFileFormat right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class DiskImagePatch : Azure.ResourceManager.Compute.Models.ComputeResourcePatch
     {
         public DiskImagePatch() { }
@@ -4046,6 +4064,7 @@ namespace Azure.ResourceManager.Compute.Models
         public GrantAccessData(Azure.ResourceManager.Compute.Models.AccessLevel access, int durationInSeconds) { }
         public Azure.ResourceManager.Compute.Models.AccessLevel Access { get { throw null; } }
         public int DurationInSeconds { get { throw null; } }
+        public Azure.ResourceManager.Compute.Models.DiskImageFileFormat? FileFormat { get { throw null; } set { } }
         public bool? GetSecureVmGuestStateSas { get { throw null; } set { } }
     }
     public enum HostCaching

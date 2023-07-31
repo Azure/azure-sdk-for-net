@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
                 .AddSource(nameof(StandardMetricTests.ValidateRequestDurationMetric))
                 .AddProcessor(standardMetricCustomProcessor)
-                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
                 .Build();
 
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Server))
@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
                 .AddSource(nameof(StandardMetricTests.ValidateRequestDurationMetric))
                 .AddProcessor(standardMetricCustomProcessor)
-                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
                 .Build();
 
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Server))
@@ -134,7 +134,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
                 .AddSource(nameof(StandardMetricTests.ValidateDependencyDurationMetric))
                 .AddProcessor(standardMetricCustomProcessor)
-                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
                 .Build();
 
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Client))
@@ -189,7 +189,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
                 .AddSource(nameof(StandardMetricTests.ValidateDependencyDurationMetric))
                 .AddProcessor(standardMetricCustomProcessor)
-                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
                 .Build();
 
             using (var activity = activitySource.StartActivity("Test", ActivityKind.Client))
@@ -242,7 +242,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .SetSampler(new AlwaysOnSampler())
                 .AddSource(nameof(StandardMetricTests.ValidateNullStatusCode))
                 .AddProcessor(standardMetricCustomProcessor)
-                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
                 .Build();
 
             using (var activity = activitySource.StartActivity("Test", kind))
@@ -290,7 +290,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 .SetSampler(new AlwaysOnSampler())
                 .AddSource(nameof(StandardMetricTests.ValidateNullStatusCode))
                 .AddProcessor(standardMetricCustomProcessor)
-                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new MockTransmitter(traceTelemetryItems))))
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
                 .Build();
 
             using (var activity = activitySource.StartActivity("Test", kind))

@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         {
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ClusterManagedRG);
             ResourceGroupResource clusterRGResource = Client.GetResourceGroupResource(resourceGroupResourceId);
-            BareMetalMachineCollection collection = clusterRGResource.GetBareMetalMachines();
+            NetworkCloudBareMetalMachineCollection collection = clusterRGResource.GetNetworkCloudBareMetalMachines();
 
             // List by Resource Group
-            var listByResourceGroup = new List<BareMetalMachineResource>();
+            var listByResourceGroup = new List<NetworkCloudBareMetalMachineResource>();
             await foreach (var item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.IsNotEmpty(listByResourceGroup);
 
             // List by Subscription
-            var listBySubscription = new List<BareMetalMachineResource>();
-            await foreach (var item in SubscriptionResource.GetBareMetalMachinesAsync())
+            var listBySubscription = new List<NetworkCloudBareMetalMachineResource>();
+            await foreach (var item in SubscriptionResource.GetNetworkCloudBareMetalMachinesAsync())
             {
                 listBySubscription.Add(item);
             }
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(bareMetalMachineName, getResult.Value.Data.Name);
 
             // Update
-            BareMetalMachineResource bareMetalMachine = Client.GetBareMetalMachineResource(new ResourceIdentifier(firstBMM.Id));
-            BareMetalMachinePatch patch = new BareMetalMachinePatch(){};
+            NetworkCloudBareMetalMachineResource bareMetalMachine = Client.GetNetworkCloudBareMetalMachineResource(new ResourceIdentifier(firstBMM.Id));
+            NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch(){};
             var testKey = "test-key";
             var testValue = "test-value";
             patch.Tags.Add(testKey, testValue);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 patch.Tags.Add(key, firstBMM.Tags[key]);
             }
-            ArmOperation<BareMetalMachineResource> updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudBareMetalMachineResource> updateResult = await bareMetalMachine.UpdateAsync(WaitUntil.Completed, patch);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             patch.Tags.Remove(testKey);
