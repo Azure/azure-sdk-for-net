@@ -504,10 +504,13 @@ namespace Azure.ResourceManager.AppContainers
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(template);
-            request.Content = content;
+            if (template != null)
+            {
+                request.Headers.Add("Content-Type", "application/json");
+                var content = new Utf8JsonRequestContent();
+                content.JsonWriter.WriteObjectValue(template);
+                request.Content = content;
+            }
             _userAgent.Apply(message);
             return message;
         }
@@ -516,16 +519,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jobName"> Job Name. </param>
-        /// <param name="template"> Properties used to start a job instance. </param>
+        /// <param name="template"> Properties used to start a job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="template"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string jobName, ContainerAppJobExecutionTemplate template, CancellationToken cancellationToken = default)
+        public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string jobName, ContainerAppJobExecutionTemplate template = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNull(template, nameof(template));
 
             using var message = CreateStartRequest(subscriptionId, resourceGroupName, jobName, template);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -543,16 +545,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="jobName"> Job Name. </param>
-        /// <param name="template"> Properties used to start a job instance. </param>
+        /// <param name="template"> Properties used to start a job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="jobName"/> or <paramref name="template"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Start(string subscriptionId, string resourceGroupName, string jobName, ContainerAppJobExecutionTemplate template, CancellationToken cancellationToken = default)
+        public Response Start(string subscriptionId, string resourceGroupName, string jobName, ContainerAppJobExecutionTemplate template = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-            Argument.AssertNotNull(template, nameof(template));
 
             using var message = CreateStartRequest(subscriptionId, resourceGroupName, jobName, template);
             _pipeline.Send(message, cancellationToken);

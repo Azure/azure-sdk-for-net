@@ -264,7 +264,7 @@ Memory = "100Mi",
 }
 },
             };
-            ArmOperation<ContainerAppJobExecutionBase> lro = await containerAppJob.StartAsync(WaitUntil.Completed, template);
+            ArmOperation<ContainerAppJobExecutionBase> lro = await containerAppJob.StartAsync(WaitUntil.Completed, template: template);
             ContainerAppJobExecutionBase result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Log analytics configuration. </summary>
+    /// <summary> Log Analytics configuration, must only be provided when destination is configured as 'log-analytics'. </summary>
     public partial class ContainerAppLogAnalyticsConfiguration
     {
         /// <summary> Initializes a new instance of ContainerAppLogAnalyticsConfiguration. </summary>

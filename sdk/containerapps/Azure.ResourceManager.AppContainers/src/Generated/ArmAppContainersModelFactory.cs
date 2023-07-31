@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="status"> Current running State of the job. </param>
         /// <param name="startOn"> Job execution start time. </param>
-        /// <param name="endOn"> Job execution start time. </param>
+        /// <param name="endOn"> Job execution end time. </param>
         /// <param name="template"> Job's execution container. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppJobExecutionData"/> instance for mocking. </returns>
         public static ContainerAppJobExecutionData ContainerAppJobExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, JobExecutionRunningState? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, ContainerAppJobExecutionTemplate template = null)
