@@ -101,9 +101,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeApiProfile(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ApiProfile>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
+        BinaryData IModelSerializable<ApiProfile>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
     }
 }

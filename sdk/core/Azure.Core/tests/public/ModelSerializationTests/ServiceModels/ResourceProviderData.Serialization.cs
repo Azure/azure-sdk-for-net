@@ -211,9 +211,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             reader.Skip();
         }
 
-        BinaryData IModelSerializable<ResourceProviderData>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
+        BinaryData IModelSerializable<ResourceProviderData>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
     }
 }

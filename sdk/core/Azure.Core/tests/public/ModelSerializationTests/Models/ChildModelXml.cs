@@ -119,11 +119,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
-                return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
+                return ((IModelJsonSerializable<ChildModelXml>)this).ToBinaryData(options);
             }
             if (options.Format == ModelSerializerFormat.Wire)
             {
-                return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options, null); });
+                return ((IModelXmlSerializable<ChildModelXml>)this).ToBinaryData(options);
             }
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }

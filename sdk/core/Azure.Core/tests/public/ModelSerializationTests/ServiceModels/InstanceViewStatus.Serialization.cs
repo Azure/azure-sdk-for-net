@@ -171,9 +171,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             return DeserializeInstanceViewStatus(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<InstanceViewStatus>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
+        BinaryData IModelSerializable<InstanceViewStatus>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
     }
 }

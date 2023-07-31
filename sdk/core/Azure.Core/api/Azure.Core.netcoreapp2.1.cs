@@ -17,6 +17,8 @@ namespace Azure
     }
     public static partial class AzureCoreExtensions
     {
+        public static System.BinaryData ToBinaryData(this Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
+        public static System.BinaryData ToBinaryData(this Azure.Core.Serialization.IModelXmlSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -717,17 +719,6 @@ namespace Azure.Core
         public int MaxRetries { get { throw null; } set { } }
         public Azure.Core.RetryMode Mode { get { throw null; } set { } }
         public System.TimeSpan NetworkTimeout { get { throw null; } set { } }
-    }
-    public sealed partial class SequenceWriter : System.Buffers.IBufferWriter<byte>, System.IDisposable
-    {
-        public SequenceWriter(int segmentSize = 4096) { }
-        public void Advance(int bytesWritten) { }
-        public void CopyTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { }
-        public System.Threading.Tasks.Task CopyToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation) { throw null; }
-        public void Dispose() { }
-        public System.Memory<byte> GetMemory(int sizeHint = 0) { throw null; }
-        public System.Span<byte> GetSpan(int sizeHint = 0) { throw null; }
-        public bool TryComputeLength(out long length) { throw null; }
     }
     public partial class StatusCodeClassifier : Azure.Core.ResponseClassifier
     {
