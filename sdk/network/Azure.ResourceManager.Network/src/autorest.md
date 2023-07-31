@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/1671d2db822c68a800edddd1e20fe65db1624216/specification/network/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f5cb37608399dd19760b9ef985a707294e32fbda/specification/network/resource-manager/readme.md
 # tag: package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -474,13 +474,6 @@ directive:
   - from: networkInterface.json # a temporary fix for issue https://github.com/Azure/azure-sdk-for-net/issues/34094
     where: $.definitions.EffectiveNetworkSecurityGroup.properties.tagMap.type
     transform: return "object";
-  # Fix the httpListeners which is array of `ApplicationGatewayHttpListener` instead of a `SubResource`
-  - from: applicationGateway.json
-    where: $.definitions
-    transform: >
-      $.ApplicationGatewayFrontendIPConfigurationPropertiesFormat.properties.httpListeners.type = 'array';
-      $.ApplicationGatewayFrontendIPConfigurationPropertiesFormat.properties.httpListeners.items = { '$ref': '#/definitions/ApplicationGatewayHttpListener' };
-      delete $.ApplicationGatewayFrontendIPConfigurationPropertiesFormat.properties.httpListeners['$ref'];
   # Remove all files that not belong to Network
   - from: cloudServiceNetworkInterface.json
     where: $.paths
