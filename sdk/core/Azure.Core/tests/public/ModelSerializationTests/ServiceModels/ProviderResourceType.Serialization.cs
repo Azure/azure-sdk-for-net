@@ -360,9 +360,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeProviderResourceType(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ProviderResourceType>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
+        BinaryData IModelSerializable<ProviderResourceType>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
     }
 }

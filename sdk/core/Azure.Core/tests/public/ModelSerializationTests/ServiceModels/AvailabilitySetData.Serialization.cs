@@ -394,9 +394,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
             reader.Skip();
         }
 
-        BinaryData IModelSerializable<AvailabilitySetData>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
+        BinaryData IModelSerializable<AvailabilitySetData>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
     }
 }

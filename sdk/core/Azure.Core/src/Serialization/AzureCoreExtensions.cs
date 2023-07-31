@@ -3,9 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
+using Azure.Core;
 using Azure.Core.Json;
 using Azure.Core.Serialization;
 
@@ -97,6 +100,41 @@ namespace Azure
         {
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicDataOptions.ToSerializerOptions(options));
             return new DynamicData(mdoc.RootElement, options);
+        }
+
+        /// <summary>
+        /// Converts an <see cref="IModelJsonSerializable{T}"/> into a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>A binary representation of the serialized model.</returns>
+        public static BinaryData ToBinaryData(this IModelJsonSerializable<object> model, ModelSerializerOptions? options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            using var writer = new SequenceWriter();
+            using var jsonWriter = new Utf8JsonWriter(writer);
+            model.Serialize(jsonWriter, options);
+            jsonWriter.Flush();
+            writer.TryComputeLength(out var length);
+            using var stream = new MemoryStream((int)length);
+            writer.CopyTo(stream, default);
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+        }
+
+        /// <summary>
+        /// Converts an <see cref="IModelXmlSerializable{T}"/> into a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>A binary representation of the serialized model.</returns>
+        public static BinaryData ToBinaryData(this IModelXmlSerializable<object> model, ModelSerializerOptions? options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            using MemoryStream stream = new MemoryStream();
+            using XmlWriter writer = XmlWriter.Create(stream);
+            model.Serialize(writer, options);
+            writer.Flush();
+            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
         }
 
         private static object? GetObject(in this JsonElement element)

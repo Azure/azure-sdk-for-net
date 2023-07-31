@@ -132,11 +132,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
-                return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
+                return ((IModelJsonSerializable<ModelXml>)this).ToBinaryData(options);
             }
             if (options.Format == ModelSerializerFormat.Wire)
             {
-                return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options, null); });
+                return ((IModelXmlSerializable<ModelXml>)this).ToBinaryData(options);
             }
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }

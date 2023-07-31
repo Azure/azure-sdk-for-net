@@ -137,9 +137,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeProviderExtendedLocation(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ProviderExtendedLocation>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
+        BinaryData IModelSerializable<ProviderExtendedLocation>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
     }
 }

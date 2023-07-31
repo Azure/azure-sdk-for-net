@@ -122,9 +122,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeResourceTypeAliasPattern(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ResourceTypeAliasPattern>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
+        BinaryData IModelSerializable<ResourceTypeAliasPattern>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
     }
 }
