@@ -54,13 +54,15 @@ function GetMetadata($moniker) {
   return $metadata
 }
 
-function ValidatePackage($package) {
+function ValidatePackageForOnboarding2($package) {
   if (!(Test-Path "Function:$ValidateDocsMsPackagesFn")) {
     return $true
   }
 
-  # TODO: Ensure parameters are correct here across all languages
-  return &$ValidateDocsMsPackagesFn $package
+  return &$ValidateDocsMsPackagesFn `
+    -PackageInfo $package `
+    -DocValidationImageId $ImageId `
+    -DocRepoLocation $DocRepoLocation
 }
 
 $MONIKERS = @('latest', 'preview', 'legacy')
@@ -76,39 +78,50 @@ foreach ($moniker in $MONIKERS) {
 
     $outputPackages = @()
     foreach ($package in $sortedMetadata) {
-      if (!($alreadyOnboardedPackages.ContainsKey($package.Name))) {
-        if (!(ValidatePackage $package)) {
-          LogWarning "Skip adding package that did not pass validation: $($package.Name)"
+      $packageIdentity = $package.Name
+      if (Test-Path "Function:$GetPackageIdentity") {
+        $packageIdentity = &$GetPackageIdentity $package
+      }
+
+      if (!($alreadyOnboardedPackages.ContainsKey($packageIdentity))) {
+        Write-Host "Evaluating package for onboarding: $($packageIdentity)"
+        if ($package.ContainsKey('_SkipDocsValidation') -and $true -eq $package._SkipDocsValidation) {
+          Write-Host "Skip validation for package: $($packageIdentity)"
+        }
+        elseif (!(ValidatePackageForOnboarding2 $package)) {
+          LogWarning "Skip adding package that did not pass validation: $($packageIdentity)"
           continue
         }
 
-        Write-Host "Add new package: $($package.Name)@$($package.Version)"
+        Write-Host "Add new package: $($packageIdentity)@$($package.Version)"
         $outputPackages += $package
         continue
       }
 
-      $oldPackage = $alreadyOnboardedPackages[$package.Name]
+      $oldPackage = $alreadyOnboardedPackages[$packageIdentity]
 
       if ($oldPackage.Version -ne $package.Version) {
-        if (!(ValidatePackage $package)) {
-          LogWarning "Omitting package that failed validation: $($package.Name)@$($package.Version)"
+        if (!(ValidatePackageForOnboarding2 $package)) {
+          LogWarning "Omitting package that failed validation: $($packageIdentity)@$($package.Version)"
           continue
         }
 
-        Write-Host "Update package: $($package.Name)@$($oldPackage.Version) to $($package.Name)@$($package.Version)"
+        Write-Host "Update package: $($packageIdentity)@$($oldPackage.Version) to $($packageIdentity)@$($package.Version)"
         $outputPackages += $package
         continue
       }
 
-      Write-Host "Unchanged package: $($package.Name)@$($package.Version)"
+      Write-Host "Unchanged package: $($packageIdentity)@$($package.Version)"
       $outputPackages += $package
     }
 
     &$SetDocsPackageOnboarding $moniker $outputPackages $DocRepoLocation $PackageSourceOverride
-  } catch {
+  }
+  catch {
     Write-Host "Error onboarding packages for moniker: $moniker"
     Write-Host "Error: $_"
     Write-Host "Stacktrace: $($_.ScriptStackTrace)"
     Write-Error $_
+    exit 1
   }
 }
