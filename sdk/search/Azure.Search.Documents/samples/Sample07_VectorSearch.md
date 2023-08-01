@@ -296,7 +296,7 @@ await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
 Console.WriteLine($"Total number of search results:{count}");
 ```
 
-### Multi Vector Search
+### Multi-vector Search
 
 You can search containing multiple query vectors using the `SearchOptions.Vectors` property. These queries will be executed concurrently in the search index, with each one searching for similarities in the target vector fields. The result set will be a combination of documents that matched both vector queries. One common use case for this query request is when using models like CLIP for a multi-modal vector search, where the same model can vectorize both image and non-image content.
 
