@@ -410,6 +410,82 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary>
+        /// Merges the partitions of a SQL database
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/partitionMerge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_SqlDatabasePartitionMerge</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="mergeParameters"> The parameters for the merge operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mergeParameters"/> is null. </exception>
+        public virtual async Task<ArmOperation<PhysicalPartitionStorageInfoCollection>> SqlDatabasePartitionMergeAsync(WaitUntil waitUntil, MergeParameters mergeParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(mergeParameters, nameof(mergeParameters));
+
+            using var scope = _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlDatabaseResource.SqlDatabasePartitionMerge");
+            scope.Start();
+            try
+            {
+                var response = await _cosmosDBSqlDatabaseSqlResourcesRestClient.SqlDatabasePartitionMergeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mergeParameters, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection>(new PhysicalPartitionStorageInfoCollectionOperationSource(), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateSqlDatabasePartitionMergeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mergeParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Merges the partitions of a SQL database
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/partitionMerge</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_SqlDatabasePartitionMerge</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="mergeParameters"> The parameters for the merge operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="mergeParameters"/> is null. </exception>
+        public virtual ArmOperation<PhysicalPartitionStorageInfoCollection> SqlDatabasePartitionMerge(WaitUntil waitUntil, MergeParameters mergeParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(mergeParameters, nameof(mergeParameters));
+
+            using var scope = _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlDatabaseResource.SqlDatabasePartitionMerge");
+            scope.Start();
+            try
+            {
+                var response = _cosmosDBSqlDatabaseSqlResourcesRestClient.SqlDatabasePartitionMerge(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mergeParameters, cancellationToken);
+                var operation = new CosmosDBArmOperation<PhysicalPartitionStorageInfoCollection>(new PhysicalPartitionStorageInfoCollectionOperationSource(), _cosmosDBSqlDatabaseSqlResourcesClientDiagnostics, Pipeline, _cosmosDBSqlDatabaseSqlResourcesRestClient.CreateSqlDatabasePartitionMergeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, mergeParameters).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>

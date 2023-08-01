@@ -445,7 +445,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
-        /// <param name="timeout"></param>
+        /// <param name="timeout">The timeout for the operation.</param>
         private async Task CompleteInternalAsync(
             Guid lockToken,
             TimeSpan timeout)
@@ -460,7 +460,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     SessionId).ConfigureAwait(false);
                 return;
             }
-            await DisposeMessageAsync(lockToken, AmqpConstants.AcceptedOutcome, timeout).ConfigureAwait(false);
+            await DisposeMessageAsync(lockToken, AmqpConstants.AcceptedOutcome, DispositionStatus.Completed, timeout).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -468,12 +468,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="lockToken">The lockToken of the <see cref="ServiceBusReceivedMessage"/> to complete.</param>
-        /// <param name="outcome"></param>
-        /// <param name="timeout"></param>
+        /// <param name="outcome">The outcome of the message - used when disposing over receive link.</param>
+        /// <param name="disposition">The disposition of the message - used when disposing over the management link.</param>
+        /// <param name="timeout">The timeout for the operation.</param>
+        /// <param name="propertiesToModify">Properties to modify when deadlettering, deferring, or abandoning.</param>
+        /// <param name="deadLetterReason">Dead letter reason. Only valid when deadlettering.</param>
+        /// <param name="deadLetterDescription">Dead letter description. Only valid when deadlettering.</param>
         private async Task DisposeMessageAsync(
             Guid lockToken,
             Outcome outcome,
-            TimeSpan timeout)
+            DispositionStatus disposition,
+            TimeSpan timeout,
+            IDictionary<string, object> propertiesToModify = null,
+            string deadLetterReason = null,
+            string deadLetterDescription = null)
         {
             byte[] bufferForLockToken = ArrayPool<byte>.Shared.Rent(SizeOfGuidInBytes);
             GuidUtilities.WriteGuidToBuffer(lockToken, bufferForLockToken.AsSpan(0, SizeOfGuidInBytes));
@@ -508,7 +516,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     if (error.Condition.Equals(AmqpErrorCode.NotFound))
                     {
-                        ThrowLockLostException();
+                        if (_isSessionReceiver)
+                        {
+                            ThrowLockLostException();
+                        }
+
+                        // The message was not found on the link which can occur as a result of a reconnect.
+                        // Attempt to settle the message over the management link.
+                        await DisposeMessageRequestResponseAsync(
+                            lockToken,
+                            timeout,
+                            disposition,
+                            propertiesToModify: propertiesToModify,
+                            deadLetterReason: deadLetterReason,
+                            deadLetterDescription: deadLetterDescription).ConfigureAwait(false);
+                        return;
                     }
 
                     throw error.ToMessagingContractException();
@@ -587,7 +609,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <summary>Indicates that the receiver wants to defer the processing for the message.</summary>
         ///
         /// <param name="lockToken">The lock token of the <see cref="ServiceBusMessage" />.</param>
-        /// <param name="timeout"></param>
+        /// <param name="timeout">The timeout for the operation.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while deferring the message.</param>
         ///
         private Task DeferInternalAsync(
@@ -605,7 +627,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessageAsync(lockToken, GetDeferOutcome(propertiesToModify), timeout);
+            return DisposeMessageAsync(
+                lockToken,
+                GetDeferOutcome(propertiesToModify),
+                DispositionStatus.Defered,
+                timeout,
+                propertiesToModify: propertiesToModify);
         }
 
         /// <summary>
@@ -645,7 +672,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="lockToken">The lock token of the corresponding message to abandon.</param>
-        /// <param name="timeout"></param>
+        /// <param name="timeout">The timeout for the operation.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while abandoning the message.</param>
         private Task AbandonInternalAsync(
             Guid lockToken,
@@ -662,7 +689,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     SessionId,
                     propertiesToModify);
             }
-            return DisposeMessageAsync(lockToken, GetAbandonOutcome(propertiesToModify), timeout);
+            return DisposeMessageAsync(
+                lockToken,
+                GetAbandonOutcome(propertiesToModify),
+                DispositionStatus.Abandoned,
+                timeout,
+                propertiesToModify: propertiesToModify);
         }
 
         /// <summary>
@@ -710,7 +742,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         ///
         /// <param name="lockToken">The lock token of the corresponding message to dead-letter.</param>
-        /// <param name="timeout"></param>
+        /// <param name="timeout">The timeout for the operation.</param>
         /// <param name="propertiesToModify">The properties of the message to modify while moving to subqueue.</param>
         /// <param name="deadLetterReason">The reason for dead-lettering the message.</param>
         /// <param name="deadLetterErrorDescription">The error description for dead-lettering the message.</param>
@@ -740,7 +772,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
             return DisposeMessageAsync(
                 lockToken,
                 GetRejectedOutcome(propertiesToModify, deadLetterReason, deadLetterErrorDescription),
-                timeout);
+                DispositionStatus.Suspended,
+                timeout,
+                propertiesToModify,
+                deadLetterReason,
+                deadLetterErrorDescription);
         }
 
         private static Rejected GetRejectedOutcome(

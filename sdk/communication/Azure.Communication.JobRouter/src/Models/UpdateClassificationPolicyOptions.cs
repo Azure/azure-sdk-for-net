@@ -47,9 +47,9 @@ namespace Azure.Communication.JobRouter
         public RouterRule PrioritizationRule { get; set; }
 
         /// <summary> The queue selectors to resolve a queue for a given job. </summary>
-        public IList<QueueSelectorAttachment> QueueSelectors { get; } = new List<QueueSelectorAttachment>();
+        public List<QueueSelectorAttachment> QueueSelectors { get; } = new List<QueueSelectorAttachment>();
 
         /// <summary> The worker label selectors to attach to a given job. </summary>
-        public IList<WorkerSelectorAttachment> WorkerSelectors { get; } = new List<WorkerSelectorAttachment>();
+        public List<WorkerSelectorAttachment> WorkerSelectors { get; } = new List<WorkerSelectorAttachment>();
     }
 }

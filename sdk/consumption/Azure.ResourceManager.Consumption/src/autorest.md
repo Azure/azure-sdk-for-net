@@ -55,9 +55,6 @@ override-operation-name:
   Tags_Get: GetConsumptionTags
   UsageDetails_List: GetConsumptionUsageDetails
 
-mgmt-debug:
-  show-serialized-names: true
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -87,6 +84,14 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+models-to-treat-empty-string-as-null:
+  - ConsumptionLegacyReservationRecommendation
+  - ConsumptionLegacyUsageDetail
+  - ConsumptionMarketplace
+  - ConsumptionModernReservationRecommendation
+  - ConsumptionModernUsageDetail
+  - PriceSheetProperties
 
 rename-mapping:
   Budget: ConsumptionBudget

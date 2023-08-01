@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
         private FormRecognizerClient CreateInstrumentedClient() => InstrumentClient(CreateClient());
 
-        #region client
+        #region Client
         /// <summary>
         /// Verifies functionality of the <see cref="FormRecognizerClient"/> constructors.
         /// </summary>

@@ -29,10 +29,10 @@ namespace Azure.Data.SchemaRegistry
         /// <summary> Avro Serialization schema type. </summary>
         public static SchemaFormat Avro { get; } = new SchemaFormat(AvroValue);
 
-        /// <summary> Avro Serialization schema type. </summary>
+        /// <summary> JSON Serialization schema type. </summary>
         public static SchemaFormat Json { get; } = new SchemaFormat(JsonValue);
 
-        /// <summary> Avro Serialization schema type. </summary>
+        /// <summary> Custom Serialization schema type. </summary>
         public static SchemaFormat Custom { get; } = new SchemaFormat(CustomValue);
 
         /// <summary> Determines if two <see cref="SchemaFormat"/> values are the same. </summary>

@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(RouteTargets))
+            {
+                writer.WritePropertyName("routeTargets"u8);
+                writer.WriteObjectValue(RouteTargets);
+            }
             writer.WriteEndObject();
         }
 
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             Optional<IList<string>> importRouteTargets = default;
             Optional<IList<string>> exportRouteTargets = default;
+            Optional<RouteTargetInformation> routeTargets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("importRouteTargets"u8))
@@ -77,8 +83,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     exportRouteTargets = array;
                     continue;
                 }
+                if (property.NameEquals("routeTargets"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    routeTargets = RouteTargetInformation.DeserializeRouteTargetInformation(property.Value);
+                    continue;
+                }
             }
-            return new OptionBProperties(Optional.ToList(importRouteTargets), Optional.ToList(exportRouteTargets));
+            return new OptionBProperties(Optional.ToList(importRouteTargets), Optional.ToList(exportRouteTargets), routeTargets.Value);
         }
     }
 }

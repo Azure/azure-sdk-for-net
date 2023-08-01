@@ -110,10 +110,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// service.&lt;/br&gt;Not specifying any of these properties on PATCH
         /// operation will reset omitted properties' values to their defaults.
         /// For all the settings except Http2 the default value is `True` if
-        /// the service was created on or before April 1st 2018 and `False`
+        /// the service was created on or before April 1, 2018 and `False`
         /// otherwise. Http2 setting's default value is
-        /// `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of next ciphers
-        /// by using settings
+        /// `False`.&lt;/br&gt;&lt;/br&gt;You can disable any of the following
+        /// ciphers by using settings
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`:
         /// TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
         /// TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
@@ -123,10 +123,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA,
         /// TLS_RSA_WITH_AES_128_CBC_SHA. For example,
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`.
-        /// The default value is `true` for them.  Note: next ciphers can't be
-        /// disabled since they are required by Azure CloudService internal
-        /// components:
-        /// TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384</param>
+        /// The default value is `true` for them.&lt;/br&gt; Note: The
+        /// following ciphers can't be disabled since they are required by
+        /// internal platform components:
+        /// TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</param>
         /// <param name="certificates">List of Certificates that need to be
         /// installed in the API Management service. Max supported certificates
         /// that can be installed is 10.</param>
@@ -135,6 +135,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// certificate to be presented on each request to the gateway. This
         /// also enables the ability to authenticate the certificate in the
         /// policy on the gateway.</param>
+        /// <param name="natGatewayState">Property can be used to enable NAT
+        /// Gateway for this API Management service. Possible values include:
+        /// 'Enabled', 'Disabled'</param>
+        /// <param name="outboundPublicIPAddresses">Outbound public IPV4
+        /// address prefixes associated with NAT Gateway deployed service.
+        /// Available only for Premium SKU on stv2 platform.</param>
         /// <param name="disableGateway">Property only valid for an Api
         /// Management service deployed in multiple locations. This can be used
         /// to disable the gateway in master region.</param>
@@ -165,7 +171,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="etag">ETag of the resource.</param>
         /// <param name="zones">A list of availability zones denoting where the
         /// resource needs to come from.</param>
-        public ApiManagementServiceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), string developerPortalUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), string publicIpAddressId = default(string), string publicNetworkAccess = default(string), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), bool? disableGateway = default(bool?), string virtualNetworkType = default(string), ApiVersionConstraint apiVersionConstraint = default(ApiVersionConstraint), bool? restore = default(bool?), IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default(IList<RemotePrivateEndpointConnectionWrapper>), string platformVersion = default(string), string publisherEmail = default(string), string publisherName = default(string), ApiManagementServiceSkuProperties sku = default(ApiManagementServiceSkuProperties), ApiManagementServiceIdentity identity = default(ApiManagementServiceIdentity), string etag = default(string), IList<string> zones = default(IList<string>))
+        public ApiManagementServiceUpdateParameters(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string notificationSenderEmail = default(string), string provisioningState = default(string), string targetProvisioningState = default(string), System.DateTime? createdAtUtc = default(System.DateTime?), string gatewayUrl = default(string), string gatewayRegionalUrl = default(string), string portalUrl = default(string), string managementApiUrl = default(string), string scmUrl = default(string), string developerPortalUrl = default(string), IList<HostnameConfiguration> hostnameConfigurations = default(IList<HostnameConfiguration>), IList<string> publicIPAddresses = default(IList<string>), IList<string> privateIPAddresses = default(IList<string>), string publicIpAddressId = default(string), string publicNetworkAccess = default(string), VirtualNetworkConfiguration virtualNetworkConfiguration = default(VirtualNetworkConfiguration), IList<AdditionalLocation> additionalLocations = default(IList<AdditionalLocation>), IDictionary<string, string> customProperties = default(IDictionary<string, string>), IList<CertificateConfiguration> certificates = default(IList<CertificateConfiguration>), bool? enableClientCertificate = default(bool?), string natGatewayState = default(string), IList<string> outboundPublicIPAddresses = default(IList<string>), bool? disableGateway = default(bool?), string virtualNetworkType = default(string), ApiVersionConstraint apiVersionConstraint = default(ApiVersionConstraint), bool? restore = default(bool?), IList<RemotePrivateEndpointConnectionWrapper> privateEndpointConnections = default(IList<RemotePrivateEndpointConnectionWrapper>), string platformVersion = default(string), string publisherEmail = default(string), string publisherName = default(string), ApiManagementServiceSkuProperties sku = default(ApiManagementServiceSkuProperties), ApiManagementServiceIdentity identity = default(ApiManagementServiceIdentity), string etag = default(string), IList<string> zones = default(IList<string>))
             : base(id, name, type, tags)
         {
             NotificationSenderEmail = notificationSenderEmail;
@@ -188,6 +194,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             CustomProperties = customProperties;
             Certificates = certificates;
             EnableClientCertificate = enableClientCertificate;
+            NatGatewayState = natGatewayState;
+            OutboundPublicIPAddresses = outboundPublicIPAddresses;
             DisableGateway = disableGateway;
             VirtualNetworkType = virtualNetworkType;
             ApiVersionConstraint = apiVersionConstraint;
@@ -354,10 +362,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// service.&amp;lt;/br&amp;gt;Not specifying any of these properties
         /// on PATCH operation will reset omitted properties' values to their
         /// defaults. For all the settings except Http2 the default value is
-        /// `True` if the service was created on or before April 1st 2018 and
+        /// `True` if the service was created on or before April 1, 2018 and
         /// `False` otherwise. Http2 setting's default value is
         /// `False`.&amp;lt;/br&amp;gt;&amp;lt;/br&amp;gt;You can disable any
-        /// of next ciphers by using settings
+        /// of the following ciphers by using settings
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.[cipher_name]`:
         /// TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,
         /// TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,
@@ -367,10 +375,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// TLS_RSA_WITH_AES_128_CBC_SHA256, TLS_RSA_WITH_AES_256_CBC_SHA,
         /// TLS_RSA_WITH_AES_128_CBC_SHA. For example,
         /// `Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TLS_RSA_WITH_AES_128_CBC_SHA256`:`false`.
-        /// The default value is `true` for them.  Note: next ciphers can't be
-        /// disabled since they are required by Azure CloudService internal
-        /// components:
-        /// TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384
+        /// The default value is `true` for them.&amp;lt;/br&amp;gt; Note: The
+        /// following ciphers can't be disabled since they are required by
+        /// internal platform components:
+        /// TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
         /// </summary>
         [JsonProperty(PropertyName = "properties.customProperties")]
         public IDictionary<string, string> CustomProperties { get; set; }
@@ -391,6 +399,22 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableClientCertificate")]
         public bool? EnableClientCertificate { get; set; }
+
+        /// <summary>
+        /// Gets or sets property can be used to enable NAT Gateway for this
+        /// API Management service. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.natGatewayState")]
+        public string NatGatewayState { get; set; }
+
+        /// <summary>
+        /// Gets outbound public IPV4 address prefixes associated with NAT
+        /// Gateway deployed service. Available only for Premium SKU on stv2
+        /// platform.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.outboundPublicIPAddresses")]
+        public IList<string> OutboundPublicIPAddresses { get; private set; }
 
         /// <summary>
         /// Gets or sets property only valid for an Api Management service

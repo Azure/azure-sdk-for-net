@@ -38,8 +38,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
-            writer.WritePropertyName("networkRackSku"u8);
-            writer.WriteStringValue(NetworkRackSku);
+            if (Optional.IsDefined(NetworkRackType))
+            {
+                writer.WritePropertyName("networkRackType"u8);
+                writer.WriteStringValue(NetworkRackType.Value.ToString());
+            }
             writer.WritePropertyName("networkFabricId"u8);
             writer.WriteStringValue(NetworkFabricId);
             writer.WriteEndObject();
@@ -59,10 +62,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> annotation = default;
-            string networkRackSku = default;
-            string networkFabricId = default;
-            Optional<IReadOnlyList<string>> networkDevices = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkRackType> networkRackType = default;
+            ResourceIdentifier networkFabricId = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> networkDevices = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -122,14 +125,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             annotation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("networkRackSku"u8))
+                        if (property0.NameEquals("networkRackType"u8))
                         {
-                            networkRackSku = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            networkRackType = new NetworkRackType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkFabricId"u8))
                         {
-                            networkFabricId = property0.Value.GetString();
+                            networkFabricId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkDevices"u8))
@@ -138,10 +145,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             networkDevices = array;
                             continue;
@@ -152,14 +166,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new NetworkRackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, networkRackSku, networkFabricId, Optional.ToList(networkDevices), Optional.ToNullable(provisioningState));
+            return new NetworkRackData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToNullable(networkRackType), networkFabricId, Optional.ToList(networkDevices), Optional.ToNullable(provisioningState));
         }
     }
 }

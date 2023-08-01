@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> location capability. </summary>
+    /// <summary> Capability for the PostgreSQL server. </summary>
     internal partial class PostgreSqlFlexibleServerCapabilitiesListResult
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilitiesListResult. </summary>

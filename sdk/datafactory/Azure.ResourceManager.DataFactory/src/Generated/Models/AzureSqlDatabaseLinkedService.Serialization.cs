@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(ServicePrincipalId))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey);
+                JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
             if (Optional.IsDefined(Tenant))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> connectionString = default;
-            Optional<AzureKeyVaultSecretReference> password = default;
+            Optional<DataFactoryKeyVaultSecretReference> password = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
             Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
             Optional<DataFactoryElement<string>> tenant = default;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            password = AzureKeyVaultSecretReference.DeserializeAzureKeyVaultSecretReference(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactoryKeyVaultSecretReference>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalKey = DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureSqlDatabaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, password.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, encryptedCredential.Value, alwaysEncryptedSettings.Value, credential.Value);
+            return new AzureSqlDatabaseLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, password, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, azureCloudType.Value, encryptedCredential.Value, alwaysEncryptedSettings.Value, credential.Value);
         }
     }
 }

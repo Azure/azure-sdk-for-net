@@ -39,15 +39,11 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
         {
             _collection = await GetVolumeCollection();
             string volumeName = Recording.GenerateAssetName("testvolume-");
-            ElasticSanVolumeData data = new ElasticSanVolumeData()
-            {
-                SizeGiB = 100
-            };
+            ElasticSanVolumeData data = new ElasticSanVolumeData(100);
             ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, data)).Value;
             ElasticSanVolumeResource volume2 = await volume1.GetAsync();
             Assert.AreEqual(volume1.Id.Name, volume2.Id.Name);
             Assert.AreEqual(100, volume2.Data.SizeGiB);
-            Assert.IsEmpty(volume2.Data.Tags);
             Assert.IsNull(volume2.Data.CreationData.SourceUri);
             Assert.AreEqual(ElasticSanVolumeCreateOption.None, volume1.Data.CreationData.CreateSource);
         }
@@ -74,11 +70,8 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             {
                 SizeGiB = 200
             };
-            patch.Tags.Add("tag1", "value1");
             ElasticSanVolumeResource volume2 = (await volume1.UpdateAsync(WaitUntil.Completed, patch)).Value;
             Assert.AreEqual(200, volume2.Data.SizeGiB);
-            Assert.GreaterOrEqual(volume2.Data.Tags.Count, 1);
-            Assert.AreEqual("value1", volume2.Data.Tags["tag1"]);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Creates or Updates a Api Version Set.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Deletes specific Api Version Set.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

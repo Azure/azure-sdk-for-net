@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of FirewallResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of FirewallResources and their operations over a FirewallResource. </returns>
-        public virtual FirewallResourceCollection GetFirewallResources()
+        /// <summary> Gets a collection of PaloAltoNetworksFirewallResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PaloAltoNetworksFirewallResources and their operations over a PaloAltoNetworksFirewallResource. </returns>
+        public virtual PaloAltoNetworksFirewallCollection GetPaloAltoNetworksFirewalls()
         {
-            return GetCachedClient(Client => new FirewallResourceCollection(Client, Id));
+            return GetCachedClient(Client => new PaloAltoNetworksFirewallCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of LocalRulestackResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of LocalRulestackResources and their operations over a LocalRulestackResource. </returns>
-        public virtual LocalRulestackResourceCollection GetLocalRulestackResources()
+        public virtual LocalRulestackCollection GetLocalRulestacks()
         {
-            return GetCachedClient(Client => new LocalRulestackResourceCollection(Client, Id));
+            return GetCachedClient(Client => new LocalRulestackCollection(Client, Id));
         }
     }
 }

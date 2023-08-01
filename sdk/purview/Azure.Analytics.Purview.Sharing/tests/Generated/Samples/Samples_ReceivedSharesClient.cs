@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                 },
             };
 
-            Response response = client.ActivateTenantEmailRegistration(RequestContent.Create(data), "<repeatabilityRequestId>");
+            Response response = client.ActivateTenantEmailRegistration(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
                 },
             };
 
-            Response response = await client.ActivateTenantEmailRegistrationAsync(RequestContent.Create(data), "<repeatabilityRequestId>");
+            Response response = await client.ActivateTenantEmailRegistrationAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -179,7 +179,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = client.RegisterTenantEmailRegistration("<repeatabilityRequestId>", new RequestContext());
+            Response response = client.RegisterTenantEmailRegistration(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -193,7 +193,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = client.RegisterTenantEmailRegistration("<repeatabilityRequestId>", new RequestContext());
+            Response response = client.RegisterTenantEmailRegistration(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
@@ -214,7 +214,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = await client.RegisterTenantEmailRegistrationAsync("<repeatabilityRequestId>", new RequestContext());
+            Response response = await client.RegisterTenantEmailRegistrationAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -228,7 +228,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             var endpoint = new Uri("<https://my-service.azure.com>");
             var client = new ReceivedSharesClient(endpoint, credential);
 
-            Response response = await client.RegisterTenantEmailRegistrationAsync("<repeatabilityRequestId>", new RequestContext());
+            Response response = await client.RegisterTenantEmailRegistrationAsync(new RequestContext());
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("activationCode").ToString());
