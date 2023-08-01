@@ -88,6 +88,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
 
         ResourceProviderData IModelSerializable<ResourceProviderData>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
@@ -97,7 +99,12 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
         // only used for public access to internal serialize
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        void IModelJsonSerializable<ResourceProviderData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<ResourceProviderData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            Serialize(writer, options);
+        }
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -152,6 +159,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
 
         ResourceProviderData IModelJsonSerializable<ResourceProviderData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             if (!reader.TryDeserialize< ResourceProviderDataProperties>(options, SetProperty, out var properties))
                 return null;
 
@@ -211,6 +220,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             reader.Skip();
         }
 
-        BinaryData IModelSerializable<ResourceProviderData>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
+        BinaryData IModelSerializable<ResourceProviderData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.ConvertToBinaryData(this, options);
+        }
     }
 }

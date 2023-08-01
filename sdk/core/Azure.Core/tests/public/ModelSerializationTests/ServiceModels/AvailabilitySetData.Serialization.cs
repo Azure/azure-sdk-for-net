@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ResourceManager.Compute.Models;
 using Azure.Core.Tests.Public.ResourceManager.Models;
 using Azure.Core.Tests.Public.ResourceManager.Resources.Models;
-using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Compute
 {
@@ -25,7 +19,12 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailabilitySetData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        void IModelJsonSerializable<AvailabilitySetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<AvailabilitySetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            Serialize(writer, options);
+        }
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -241,6 +240,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 
         AvailabilitySetData IModelSerializable<AvailabilitySetData>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             using var doc = JsonDocument.Parse(data);
             return DeserializeAvailabilitySetData(doc.RootElement, options);
         }
@@ -266,6 +267,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 
         AvailabilitySetData IModelJsonSerializable<AvailabilitySetData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             if (!reader.TryDeserialize<AvailabilitySetDataProperties>(options, SetProperty, out var properties))
                 return null;
 
@@ -394,6 +397,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
             reader.Skip();
         }
 
-        BinaryData IModelSerializable<AvailabilitySetData>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
+        BinaryData IModelSerializable<AvailabilitySetData>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.ConvertToBinaryData(this, options);
+        }
     }
 }

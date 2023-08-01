@@ -49,7 +49,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Envelope<T>>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        void IModelJsonSerializable<Envelope<T>>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<Envelope<T>>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            Serialize(writer, options);
+        }
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -147,16 +152,25 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         Envelope<T> IModelSerializable<Envelope<T>>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             return DeserializeEnvelope(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
         Envelope<T> IModelJsonSerializable<Envelope<T>>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeEnvelope(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<Envelope<T>>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
+        BinaryData IModelSerializable<Envelope<T>>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.ConvertToBinaryData(this, options);
+        }
         #endregion
     }
 }

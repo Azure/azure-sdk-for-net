@@ -26,7 +26,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        void IModelJsonSerializable<BaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<BaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            Serialize(writer, options);
+        }
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -58,15 +63,24 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         BaseModel IModelSerializable<BaseModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             return DeserializeUnknownBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
         BaseModel IModelJsonSerializable<BaseModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeUnknownBaseModel(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<BaseModel>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
+        BinaryData IModelSerializable<BaseModel>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.ConvertToBinaryData(this, options);
+        }
     }
 }

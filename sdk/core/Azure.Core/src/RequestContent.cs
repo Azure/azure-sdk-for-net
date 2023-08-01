@@ -98,6 +98,14 @@ namespace Azure.Core
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
+        /// <param name="model">The <see cref="IModelJsonSerializable{T}"/> to serialize.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default) => new ModelSerializableContent(model, options ?? ModelSerializerOptions.DefaultWireOptions);
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
@@ -236,11 +244,19 @@ namespace Azure.Core
             private byte[]? _bytes;
             private readonly IModelSerializable<object> _model;
             private readonly ModelSerializerOptions _options;
+            private bool _useJsonInterface;
 
             public ModelSerializableContent(IModelSerializable<object> model, ModelSerializerOptions options)
+                : this(model, options, false) { }
+
+            public ModelSerializableContent(IModelJsonSerializable<object> model, ModelSerializerOptions options)
+                : this(model, options, true) { }
+
+            private ModelSerializableContent(IModelSerializable<object> model, ModelSerializerOptions options, bool useJsonInterface)
             {
                 _model = model;
                 _options = options;
+                _useJsonInterface = useJsonInterface;
             }
 
             public override void Dispose() => _writer?.Dispose();
@@ -279,15 +295,9 @@ namespace Azure.Core
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
                 // a model implements both xml and json we don't know the wire format and must let the model decide.
-                if (_model is IModelJsonSerializable<object> jsonSerializable && _model is not IModelXmlSerializable<object>)
+                if (_model is IModelJsonSerializable<object> jsonSerializable && _useJsonInterface)
                 {
                     GetWriter(jsonSerializable).CopyTo(stream, cancellation);
-                }
-                else if (_model is IModelXmlSerializable<object> xmlSerializable && _model is not IModelJsonSerializable<object>)
-                {
-                    using XmlWriter writer = XmlWriter.Create(stream);
-                    xmlSerializable.Serialize(writer, _options);
-                    writer.Flush();
                 }
                 else
                 {
@@ -303,7 +313,7 @@ namespace Azure.Core
 
             public override bool TryComputeLength(out long length)
             {
-                if (_model is IModelJsonSerializable<object> jsonSerializable && _model is not IModelXmlSerializable<object>)
+                if (_model is IModelJsonSerializable<object> jsonSerializable && _useJsonInterface)
                     return GetWriter(jsonSerializable).TryComputeLength(out length);
 
                 length = 0;
@@ -312,15 +322,9 @@ namespace Azure.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
-                if (_model is IModelJsonSerializable<object> jsonSerializable && _model is not IModelXmlSerializable<object>)
+                if (_model is IModelJsonSerializable<object> jsonSerializable && _useJsonInterface)
                 {
                     await GetWriter(jsonSerializable).CopyToAsync(stream, cancellation).ConfigureAwait(false);
-                }
-                else if (_model is IModelXmlSerializable<object> xmlSerializable && _model is not IModelJsonSerializable<object>)
-                {
-                    using XmlWriter writer = XmlWriter.Create(stream);
-                    xmlSerializable.Serialize(writer, _options);
-                    await writer.FlushAsync().ConfigureAwait(false);
                 }
                 else
                 {
