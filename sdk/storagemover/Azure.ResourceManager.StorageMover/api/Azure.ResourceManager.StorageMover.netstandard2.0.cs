@@ -313,8 +313,8 @@ namespace Azure.ResourceManager.StorageMover.Models
     public partial class AzureKeyVaultSmbCredentials : Azure.ResourceManager.StorageMover.Models.StorageMoverCredentials
     {
         public AzureKeyVaultSmbCredentials() { }
-        public string PasswordUri { get { throw null; } set { } }
-        public string UsernameUri { get { throw null; } set { } }
+        public string PasswordUriString { get { throw null; } set { } }
+        public string UsernameUriString { get { throw null; } set { } }
     }
     public partial class AzureStorageBlobContainerEndpointProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties
     {
