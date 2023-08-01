@@ -11,6 +11,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
+    //wip
     internal static class Utf8JsonReaderExtensions
     {
         public delegate void PropertySetter<T>(ReadOnlySpan<byte> propertyName, ref T properties, ref Utf8JsonReader reader, ModelSerializerOptions options);
