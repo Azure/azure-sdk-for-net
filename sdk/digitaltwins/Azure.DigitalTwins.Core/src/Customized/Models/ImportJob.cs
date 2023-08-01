@@ -27,7 +27,7 @@ namespace Azure.DigitalTwins.Core
         /// <summary> Details of the error(s) that occurred executing the import job. </summary>
         [CodeGenMember("Error")]
         [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeErrorValue))]
-        public ResponseError Error { get; set; }
+        public ResponseError Error { get; }
 
         /// <summary> Status of the job. </summary>
         [CodeGenMember("Status")]
