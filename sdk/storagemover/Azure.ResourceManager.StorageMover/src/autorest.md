@@ -61,5 +61,6 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
+  PasswordUri: PasswordUriString
+  UsernameUri: UsernameUriString
 ```

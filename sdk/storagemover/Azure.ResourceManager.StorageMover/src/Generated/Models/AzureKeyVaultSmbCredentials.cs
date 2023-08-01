@@ -18,18 +18,18 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Initializes a new instance of AzureKeyVaultSmbCredentials. </summary>
         /// <param name="credentialType"> The Credentials type. </param>
-        /// <param name="usernameUri"> The Azure Key Vault secret URI which stores the username. Use empty string to clean-up existing value. </param>
-        /// <param name="passwordUri"> The Azure Key Vault secret URI which stores the password. Use empty string to clean-up existing value. </param>
-        internal AzureKeyVaultSmbCredentials(CredentialType credentialType, string usernameUri, string passwordUri) : base(credentialType)
+        /// <param name="usernameUriString"> The Azure Key Vault secret URI which stores the username. Use empty string to clean-up existing value. </param>
+        /// <param name="passwordUriString"> The Azure Key Vault secret URI which stores the password. Use empty string to clean-up existing value. </param>
+        internal AzureKeyVaultSmbCredentials(CredentialType credentialType, string usernameUriString, string passwordUriString) : base(credentialType)
         {
-            UsernameUri = usernameUri;
-            PasswordUri = passwordUri;
+            UsernameUriString = usernameUriString;
+            PasswordUriString = passwordUriString;
             CredentialType = credentialType;
         }
 
         /// <summary> The Azure Key Vault secret URI which stores the username. Use empty string to clean-up existing value. </summary>
-        public string UsernameUri { get; set; }
+        public string UsernameUriString { get; set; }
         /// <summary> The Azure Key Vault secret URI which stores the password. Use empty string to clean-up existing value. </summary>
-        public string PasswordUri { get; set; }
+        public string PasswordUriString { get; set; }
     }
 }

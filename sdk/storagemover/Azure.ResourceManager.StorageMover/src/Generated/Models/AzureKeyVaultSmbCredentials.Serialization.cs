@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.StorageMover.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(UsernameUri))
+            if (Optional.IsDefined(UsernameUriString))
             {
                 writer.WritePropertyName("usernameUri"u8);
-                writer.WriteStringValue(UsernameUri);
+                writer.WriteStringValue(UsernameUriString);
             }
-            if (Optional.IsDefined(PasswordUri))
+            if (Optional.IsDefined(PasswordUriString))
             {
                 writer.WritePropertyName("passwordUri"u8);
-                writer.WriteStringValue(PasswordUri);
+                writer.WriteStringValue(PasswordUriString);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CredentialType.ToString());
@@ -36,19 +36,19 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            Optional<string> usernameUri = default;
-            Optional<string> passwordUri = default;
+            Optional<string> usernameUriString = default;
+            Optional<string> passwordUriString = default;
             CredentialType type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usernameUri"u8))
                 {
-                    usernameUri = property.Value.GetString();
+                    usernameUriString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("passwordUri"u8))
                 {
-                    passwordUri = property.Value.GetString();
+                    passwordUriString = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     continue;
                 }
             }
-            return new AzureKeyVaultSmbCredentials(type, usernameUri.Value, passwordUri.Value);
+            return new AzureKeyVaultSmbCredentials(type, usernameUriString.Value, passwordUriString.Value);
         }
     }
 }

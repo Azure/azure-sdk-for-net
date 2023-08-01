@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             SmbMountEndpointProperties smbMountEndpointProperties = new SmbMountEndpointProperties("10.0.0.1", "testshare");
             AzureKeyVaultSmbCredentials credentials = new AzureKeyVaultSmbCredentials
             {
-                UsernameUri = "https://examples-azureKeyVault.vault.azure.net/secrets/examples-username",
-                PasswordUri = "https://examples-azureKeyVault.vault.azure.net/secrets/examples-password",
+                UsernameUriString = "https://examples-azureKeyVault.vault.azure.net/secrets/examples-username",
+                PasswordUriString = "https://examples-azureKeyVault.vault.azure.net/secrets/examples-password",
             };
             data = new StorageMoverEndpointData(smbMountEndpointProperties);
             smbMountEndpointProperties.Credentials = credentials;
@@ -77,21 +77,21 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             StorageMoverEndpointResource smbEndpoint = (await endpoints.CreateOrUpdateAsync(WaitUntil.Completed, smbEndpointName, data)).Value;
             Assert.AreEqual(smbEndpoint.Data.Name, smbEndpointName);
             Assert.AreEqual(smbEndpoint.Data.Properties.EndpointType.ToString(), "SmbMount");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUri, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-username");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUri, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-password");
+            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUriString, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-username");
+            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUriString, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-password");
             Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Host, "10.0.0.1");
             Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).ShareName, "testshare");
 
             smbEndpoint = (await endpoints.GetAsync(smbEndpointName)).Value;
             Assert.AreEqual(smbEndpoint.Data.Name, smbEndpointName);
             Assert.AreEqual(smbEndpoint.Data.Properties.EndpointType.ToString(), "SmbMount");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUri, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-username");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUri, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-password");
+            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUriString, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-username");
+            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUriString, "https://examples-azureKeyVault.vault.azure.net/secrets/examples-password");
             Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Host, "10.0.0.1");
             Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).ShareName, "testshare");
 
-            credentials.UsernameUri = "";
-            credentials.PasswordUri = "";
+            credentials.UsernameUriString = "";
+            credentials.PasswordUriString = "";
             SmbMountEndpointUpdateProperties updateProperties = new SmbMountEndpointUpdateProperties
             {
                 Credentials = credentials,
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.StorageMover.Tests.Scenario
             smbEndpoint = (await smbEndpoint.UpdateAsync(patch)).Value;
             Assert.AreEqual(smbEndpoint.Data.Name, smbEndpointName);
             Assert.AreEqual(smbEndpoint.Data.Properties.EndpointType.ToString(), "SmbMount");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUri, "");
-            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUri, "");
+            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.PasswordUriString, "");
+            Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Credentials.UsernameUriString, "");
             Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).Host, "10.0.0.1");
             Assert.AreEqual(((SmbMountEndpointProperties)smbEndpoint.Data.Properties).ShareName, "testshare");
 
