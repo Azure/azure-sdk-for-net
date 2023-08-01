@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dns
             }
             if (Optional.IsCollectionDefined(DnsTlsaRecords))
             {
-                writer.WritePropertyName("TlsaRecords");
+                writer.WritePropertyName("TLSARecords");
                 writer.WriteStartArray();
                 foreach (var item in DnsTlsaRecords)
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("TlsaRecords"))
+                        if (property0.NameEquals("TLSARecords"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
