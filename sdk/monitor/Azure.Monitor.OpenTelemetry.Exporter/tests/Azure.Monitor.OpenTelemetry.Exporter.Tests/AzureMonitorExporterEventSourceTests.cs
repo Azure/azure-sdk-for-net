@@ -7,9 +7,6 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    /// <summary>
-    /// These tests depend on the <see cref="AzureMonitorExporterEventListener"/> to subscribe to the <see cref="AzureMonitorExporterEventSource"/> and write events to the <see cref="TelemetryDebugWriter"/>.
-    /// </summary>
     public class AzureMonitorExporterEventSourceTests
     {
         /// <summary>

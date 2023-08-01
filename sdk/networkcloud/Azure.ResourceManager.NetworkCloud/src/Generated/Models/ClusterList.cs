@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of ClusterList. </summary>
         internal ClusterList()
         {
-            Value = new ChangeTrackingList<ClusterData>();
+            Value = new ChangeTrackingList<NetworkCloudClusterData>();
         }
 
         /// <summary> Initializes a new instance of ClusterList. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of clusters. </param>
-        internal ClusterList(string nextLink, IReadOnlyList<ClusterData> value)
+        internal ClusterList(string nextLink, IReadOnlyList<NetworkCloudClusterData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of clusters. </summary>
-        public IReadOnlyList<ClusterData> Value { get; }
+        public IReadOnlyList<NetworkCloudClusterData> Value { get; }
     }
 }

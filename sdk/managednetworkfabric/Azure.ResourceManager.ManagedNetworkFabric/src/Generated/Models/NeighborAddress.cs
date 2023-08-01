@@ -17,16 +17,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of NeighborAddress. </summary>
         /// <param name="address"> IP Address. </param>
-        /// <param name="operationalState"> OperationalState of the NeighborAddress. </param>
-        internal NeighborAddress(string address, string operationalState)
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        internal NeighborAddress(string address, NetworkFabricConfigurationState? configurationState)
         {
             Address = address;
-            OperationalState = operationalState;
+            ConfigurationState = configurationState;
         }
 
         /// <summary> IP Address. </summary>
         public string Address { get; set; }
-        /// <summary> OperationalState of the NeighborAddress. </summary>
-        public string OperationalState { get; }
+        /// <summary> Configuration state of the resource. </summary>
+        public NetworkFabricConfigurationState? ConfigurationState { get; }
     }
 }

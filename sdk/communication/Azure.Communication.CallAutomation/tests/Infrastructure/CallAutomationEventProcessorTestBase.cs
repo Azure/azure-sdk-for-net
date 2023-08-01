@@ -42,6 +42,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         protected const string RemoveParticipantPayload = AddParticipantsPayload;
 
+        protected const string DialogPayload = "{\"dialogId\":\"dialogId\",\"dialogInputType\":\"powerVirtualAgent\"}";
+
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null, CallAutomationClientOptions ? options = default)
         {
             var mockResponse = new MockResponse(responseCode);
