@@ -43,6 +43,15 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         [TestCase("J")]
         [TestCase("W")]
+        public void RoundTripWithModelSerializerFormatOverload(string format)
+        {
+            //if we only pass in the format we can't test BYOM
+            if (!typeof(T).IsGenericType)
+                RoundTripTest(format, new ModelSerializerFormatOverloadStrategy<T>());
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
         public void RoundTripWithXmlInterface(string format)
         {
             if (ModelInstance is IModelXmlSerializable<T>)
