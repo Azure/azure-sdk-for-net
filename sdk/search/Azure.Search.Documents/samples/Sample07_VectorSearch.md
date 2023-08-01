@@ -324,7 +324,7 @@ await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
 Console.WriteLine($"Total number of search results:{count}");
 ```
 
-### Multi Fields Vector Search
+### Multi-field Vector Search
 
 You can set the `SearchOptions.Vectors.Fields` property to multiple vector fields. For example, we have vector fields named `DescriptionVector` and `CategoryVector`. Your vector query executes over both the `DescriptionVector` and `CategoryVector` fields, which must have the same embedding space since they share the same query vector.
 
