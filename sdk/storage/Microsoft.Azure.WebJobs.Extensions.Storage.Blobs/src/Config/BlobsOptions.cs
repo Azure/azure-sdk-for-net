@@ -76,7 +76,8 @@ namespace Microsoft.Azure.WebJobs.Host
         {
             JObject options = new JObject
             {
-                { nameof(MaxDegreeOfParallelism), MaxDegreeOfParallelism }
+                { nameof(MaxDegreeOfParallelism), MaxDegreeOfParallelism },
+                { nameof(MaxDequeueCount), MaxDequeueCount }
             };
 
             return options.ToString(Formatting.Indented);
