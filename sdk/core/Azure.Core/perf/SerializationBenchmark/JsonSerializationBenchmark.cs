@@ -45,7 +45,7 @@ namespace Azure.Core.Perf
             _model = ModelSerializer.Deserialize<T>(_data);
             _response = new MockResponse(200);
             _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
-            _options = ModelSerializerOptions.DefaultServiceOptions;
+            _options = ModelSerializerOptions.DefaultWireOptions;
             _content = new SequenceWriter();
             using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
             _model.Serialize(writer, new ModelSerializerOptions());

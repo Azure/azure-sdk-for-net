@@ -3,14 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core.Serialization;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
@@ -33,7 +27,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public string YProperty { get; private set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ModelY>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ModelY>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         void IModelJsonSerializable<ModelY>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -42,16 +36,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (options.Format == ModelSerializerFormat.Json)
             {
-                if (Optional.IsDefined(Name))
-                {
-                    writer.WritePropertyName("name"u8);
-                    writer.WriteStringValue(Name);
-                }
+                writer.WritePropertyName("yProperty"u8);
+                writer.WriteStringValue(YProperty);
             }
-            writer.WritePropertyName("yProperty"u8);
-            writer.WriteStringValue(YProperty);
             if (options.Format == ModelSerializerFormat.Json)
             {
                 //write out the raw data
@@ -70,7 +64,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static ModelY DeserializeModelY(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,6 +111,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return DeserializeModelY(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ModelY>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<ModelY>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

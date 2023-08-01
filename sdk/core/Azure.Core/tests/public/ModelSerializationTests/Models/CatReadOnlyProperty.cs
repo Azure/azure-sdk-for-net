@@ -29,7 +29,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CatReadOnlyProperty>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CatReadOnlyProperty>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         void IModelJsonSerializable<CatReadOnlyProperty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -69,7 +69,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             double weight = default;
             string name = "";
@@ -126,7 +126,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeCatReadOnlyProperty(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<CatReadOnlyProperty>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<CatReadOnlyProperty>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
 
         #endregion
     }

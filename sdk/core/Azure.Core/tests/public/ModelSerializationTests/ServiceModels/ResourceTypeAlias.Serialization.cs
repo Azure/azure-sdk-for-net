@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ResourceTypeAlias : IUtf8JsonSerializable, IModelJsonSerializable<ResourceTypeAlias>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeAlias>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeAlias>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -209,6 +209,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeResourceTypeAlias(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ResourceTypeAlias>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<ResourceTypeAlias>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

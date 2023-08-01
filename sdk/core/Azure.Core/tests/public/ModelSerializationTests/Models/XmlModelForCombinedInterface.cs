@@ -42,16 +42,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static implicit operator RequestContent(XmlModelForCombinedInterface xmlModelForCombinedInterface)
         {
-            return RequestContent.Create(xmlModelForCombinedInterface, ModelSerializerOptions.DefaultServiceOptions);
+            return RequestContent.Create(xmlModelForCombinedInterface, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator XmlModelForCombinedInterface(Response response)
         {
-            return DeserializeXmlModelForCombinedInterface(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultServiceOptions);
+            return DeserializeXmlModelForCombinedInterface(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, ModelSerializerOptions.DefaultServiceOptions, nameHint);
+            Serialize(writer, ModelSerializerOptions.DefaultWireOptions, nameHint);
 
         void IModelXmlSerializable<XmlModelForCombinedInterface>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
@@ -63,7 +63,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string key = default;
             string value = default;
@@ -120,18 +120,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
-                return ((IModelJsonSerializable<XmlModelForCombinedInterface>)this).ToBinaryData(options);
+                return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<XmlModelForCombinedInterface>)this, options);
             }
             if (options.Format == ModelSerializerFormat.Wire)
             {
-                return ((IModelXmlSerializable<XmlModelForCombinedInterface>)this).ToBinaryData(options);
+                return ModelSerializer.ConvertToBinaryData((IModelXmlSerializable<XmlModelForCombinedInterface>)this, options);
             }
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
         internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string key = default;
             string value = default;

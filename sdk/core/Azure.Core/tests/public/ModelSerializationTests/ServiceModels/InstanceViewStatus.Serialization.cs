@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
     public partial class InstanceViewStatus : IUtf8JsonSerializable, IModelJsonSerializable<InstanceViewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstanceViewStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstanceViewStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         void IModelJsonSerializable<InstanceViewStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 
         internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,6 +171,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             return DeserializeInstanceViewStatus(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<InstanceViewStatus>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<InstanceViewStatus>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

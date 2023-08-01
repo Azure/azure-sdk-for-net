@@ -16,7 +16,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
     [JsonConverter(typeof(WritableSubResourceConverter))]
     public partial class WritableSubResource : IUtf8JsonSerializable, IModelJsonSerializable<WritableSubResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WritableSubResource>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<WritableSubResource>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         void IModelJsonSerializable<WritableSubResource>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -47,7 +47,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
         /// <returns>Deserialized WritableSubResource object.</returns>
         internal static WritableSubResource DeserializeWritableSubResource(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             ResourceIdentifier id = default;
             foreach (var property in element.EnumerateObject())
@@ -105,10 +105,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public override WritableSubResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeWritableSubResource(document.RootElement, ModelSerializerOptions.DefaultServiceOptions);
+                return DeserializeWritableSubResource(document.RootElement, ModelSerializerOptions.DefaultWireOptions);
             }
         }
 
-        BinaryData IModelSerializable<WritableSubResource>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<WritableSubResource>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

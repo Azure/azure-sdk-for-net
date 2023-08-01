@@ -15,11 +15,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ProviderExtendedLocation : IUtf8JsonSerializable, IModelJsonSerializable<ProviderExtendedLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderExtendedLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ProviderExtendedLocation>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         internal static ProviderExtendedLocation DeserializeProviderExtendedLocation(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,6 +137,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeProviderExtendedLocation(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ProviderExtendedLocation>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<ProviderExtendedLocation>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

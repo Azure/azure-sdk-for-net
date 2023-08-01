@@ -37,17 +37,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public static implicit operator RequestContent(Envelope<T> envelope)
         {
-            return RequestContent.Create(envelope, ModelSerializerOptions.DefaultServiceOptions);
+            return RequestContent.Create(envelope, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator Envelope<T>(Response response)
         {
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
-            return DeserializeEnvelope(jsonDocument.RootElement, ModelSerializerOptions.DefaultServiceOptions);
+            return DeserializeEnvelope(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Envelope<T>>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Envelope<T>>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         void IModelJsonSerializable<Envelope<T>>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
@@ -83,7 +83,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         internal static Envelope<T> DeserializeEnvelope(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string readonlyProperty = "";
             CatReadOnlyProperty modelA = new CatReadOnlyProperty();
@@ -156,7 +156,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeEnvelope(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<Envelope<T>>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<Envelope<T>>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
         #endregion
     }
 }

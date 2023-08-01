@@ -21,7 +21,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
     {
         public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +92,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceProviderData>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceProviderData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         // only used for public access to internal serialize
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
@@ -211,6 +211,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
             reader.Skip();
         }
 
-        BinaryData IModelSerializable<ResourceProviderData>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<ResourceProviderData>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

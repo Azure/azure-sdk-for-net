@@ -16,11 +16,11 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
     public partial class ZoneMapping : IUtf8JsonSerializable, IModelJsonSerializable<ZoneMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ZoneMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ZoneMapping>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         internal static ZoneMapping DeserializeZoneMapping(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -119,6 +119,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeZoneMapping(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ZoneMapping>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<ZoneMapping>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

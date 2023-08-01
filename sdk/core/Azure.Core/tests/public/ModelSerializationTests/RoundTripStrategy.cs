@@ -39,6 +39,21 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
     }
 
+    public class ModelSerializerFormatOverloadStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
+    {
+        public override bool IsExplicitJsonSerialize => false;
+        public override bool IsExplicitJsonDeserialize => false;
+
+        public override BinaryData Serialize(T model, ModelSerializerOptions options)
+        {
+            return ModelSerializer.Serialize(model, options.Format);
+        }
+        public override object Deserialize(string payload, object model, ModelSerializerOptions options)
+        {
+            return ModelSerializer.Deserialize<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options.Format);
+        }
+    }
+
     public class ModelSerializerNonGenericStrategy<T> : RoundTripStrategy<T> where T : class, IModelSerializable<T>
     {
         public override bool IsExplicitJsonSerialize => false;
@@ -134,7 +149,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<T>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<T>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -150,7 +165,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<object>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<object>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -166,7 +181,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<T>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<T>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -183,7 +198,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<T>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<T>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -199,7 +214,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<object>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<object>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -215,7 +230,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            return ((IModelJsonSerializable<object>)model).ToBinaryData(options);
+            return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<object>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)

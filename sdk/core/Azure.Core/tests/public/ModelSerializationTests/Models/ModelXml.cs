@@ -45,17 +45,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static implicit operator RequestContent(ModelXml modelXml)
         {
-            return RequestContent.Create(modelXml, ModelSerializerOptions.DefaultServiceOptions);
+            return RequestContent.Create(modelXml, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelXml(Response response)
         {
-            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultServiceOptions);
+            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
 
-        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultServiceOptions, nameHint);
+        public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions, nameHint);
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultServiceOptions, nameHint);
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions, nameHint);
 
         void IModelXmlSerializable<ModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
@@ -103,7 +103,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string key = default;
             string value = default;
@@ -132,18 +132,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
-                return ((IModelJsonSerializable<ModelXml>)this).ToBinaryData(options);
+                return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<ModelXml>)this, options);
             }
             if (options.Format == ModelSerializerFormat.Wire)
             {
-                return ((IModelXmlSerializable<ModelXml>)this).ToBinaryData(options);
+                return ModelSerializer.ConvertToBinaryData((IModelXmlSerializable<ModelXml>)this, options);
             }
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
         internal static ModelXml DeserializeModelXml(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string key = default;
             string value = default;

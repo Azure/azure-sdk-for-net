@@ -45,11 +45,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string Value { get; set; }
         public string ReadOnlyProperty { get; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JsonModelForCombinedInterface>)this).Serialize(writer, ModelSerializerOptions.DefaultServiceOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<JsonModelForCombinedInterface>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         internal static JsonModelForCombinedInterface DeserializeJsonModelForCombinedInterface(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= ModelSerializerOptions.DefaultServiceOptions;
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string key = default;
             string value = default;
@@ -123,6 +123,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return DeserializeJsonModelForCombinedInterface(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<JsonModelForCombinedInterface>.Serialize(ModelSerializerOptions options) => this.ToBinaryData(options);
+        BinaryData IModelSerializable<JsonModelForCombinedInterface>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }
