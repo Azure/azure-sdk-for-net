@@ -327,6 +327,9 @@ namespace Azure.Search.Documents
             }
         }
 
+        /// <summary> The query parameters for multi-vector search queries. </summary>
+        public IList<SearchQueryVector> Vectors { get; internal set; } = new List<SearchQueryVector>();
+
         /// <summary>
         /// Shallow copy one SearchOptions instance to another.
         /// </summary>
@@ -365,6 +368,7 @@ namespace Azure.Search.Documents
             destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
+            destination.Vectors = source.Vectors;
         }
 
         /// <summary>
