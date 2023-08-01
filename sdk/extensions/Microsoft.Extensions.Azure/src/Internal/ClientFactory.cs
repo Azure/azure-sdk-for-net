@@ -122,6 +122,8 @@ namespace Microsoft.Extensions.Azure
 
             if (string.Equals(credentialType, "workloadidentity", StringComparison.OrdinalIgnoreCase))
             {
+                // The WorkloadIdentityCredentialOptions object initialization populates its instance members
+                // from the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_FEDERATED_TOKEN_FILE
                 var workloadIdentityOptions = new WorkloadIdentityCredentialOptions();
                 if (!string.IsNullOrWhiteSpace(tenantId))
                 {
