@@ -678,12 +678,14 @@ namespace Azure.Communication.CallAutomation
 
                 request.OperationContext = operationContext;
 
-                return RestClient.Mute(
+                var response = RestClient.Mute(
                     CallConnectionId,
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken);
+
+                return Response.FromValue(new MuteParticipantResult(response.Value), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -713,12 +715,14 @@ namespace Azure.Communication.CallAutomation
 
                 request.OperationContext = operationContext;
 
-                return await RestClient.MuteAsync(
+                var response = await RestClient.MuteAsync(
                     CallConnectionId,
                     request,
                     repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.RepeatabilityFirstSent,
                     cancellationToken).ConfigureAwait(false);
+
+                return Response.FromValue(new MuteParticipantResult(response.Value), response.GetRawResponse());
             }
             catch (Exception ex)
             {

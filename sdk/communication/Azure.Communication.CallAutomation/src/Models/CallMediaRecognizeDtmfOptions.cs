@@ -42,6 +42,10 @@ namespace Azure.Communication.CallAutomation
                 _stopTones ??= new List<DtmfTone>();
                 return _stopTones;
             }
+            set
+            {
+                _stopTones = value;
+            }
         }
     }
 }

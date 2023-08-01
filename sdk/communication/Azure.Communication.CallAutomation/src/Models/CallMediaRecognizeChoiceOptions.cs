@@ -13,9 +13,9 @@ namespace Azure.Communication.CallAutomation
     public class CallMediaRecognizeChoiceOptions : CallMediaRecognizeOptions
     {
         /// <summary> Initializes a new instance of CallMediaRecognizeChoiceOptions. </summary>
-        public CallMediaRecognizeChoiceOptions(CommunicationIdentifier targetParticipant, IEnumerable<RecognitionChoice> recognizeChoices) : base(RecognizeInputType.Choices, targetParticipant)
+        public CallMediaRecognizeChoiceOptions(CommunicationIdentifier targetParticipant, IEnumerable<RecognitionChoice> recognitionChoices) : base(RecognizeInputType.Choices, targetParticipant)
         {
-            Choices = recognizeChoices.ToList().AsReadOnly();
+            Choices = recognitionChoices.ToList().AsReadOnly();
         }
 
         /// <summary>

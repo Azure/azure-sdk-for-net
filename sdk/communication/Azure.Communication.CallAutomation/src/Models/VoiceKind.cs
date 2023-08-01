@@ -7,11 +7,11 @@ using System.Text.Json.Serialization;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The possible Dtmf Tones.
+    /// The kind of voice.
     /// </summary>
-    [CodeGenModel("Gender", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    [JsonConverter(typeof(EquatableEnumJsonConverter<GenderType>))]
-    public readonly partial struct GenderType
+    [CodeGenModel("VoiceKind", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    [JsonConverter(typeof(EquatableEnumJsonConverter<VoiceKind>))]
+    public readonly partial struct VoiceKind
     {
     }
 }

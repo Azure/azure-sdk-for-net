@@ -200,5 +200,37 @@ namespace Azure.Communication.CallAutomation
         {
             return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, recognizeResult);
         }
+
+        /// <summary>
+        /// Initializes a new instance of SendDtmfTonesCompleted.
+        /// </summary>
+        /// <param name="callConnectionId"></param>
+        /// <param name="serverCallId"></param>
+        /// <param name="correlationId"></param>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"></param>
+        /// <returns></returns>
+        public static SendDtmfTonesCompleted SendDtmfTonesCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            var internalObject = new SendDtmfTonesCompletedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+
+            return new SendDtmfTonesCompleted(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of SendDtmfTonesFailed.
+        /// </summary>
+        /// <param name="callConnectionId"></param>
+        /// <param name="serverCallId"></param>
+        /// <param name="correlationId"></param>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"></param>
+        /// <returns></returns>
+        public static SendDtmfTonesFailed SendDtmfTonesFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            var internalObject = new SendDtmfTonesFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+
+            return new SendDtmfTonesFailed(internalObject);
+        }
     }
 }

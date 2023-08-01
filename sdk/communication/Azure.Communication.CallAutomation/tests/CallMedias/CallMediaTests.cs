@@ -97,7 +97,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Prompt = new TextSource("PlayTTS test text.")
             {
                 SourceLocale = "en-US",
-                VoiceGender = GenderType.Female,
+                VoiceKind = VoiceKind.Female,
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
@@ -114,7 +114,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Prompt = new TextSource("PlayTTS test text.")
             {
                 SourceLocale = "en-US",
-                VoiceGender = GenderType.Female,
+                VoiceKind = VoiceKind.Female,
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
@@ -131,7 +131,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Prompt = new TextSource("PlayTTS test text.")
             {
                 SourceLocale = "en-US",
-                VoiceGender = GenderType.Female,
+                VoiceKind = VoiceKind.Female,
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
@@ -183,7 +183,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
-        public async Task SendDtmfOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<SendDtmfResult>>> operation)
+        public async Task SendDtmfOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<SendDtmfTonesResult>>> operation)
         {
             _callMedia = GetCallMedia(202, "{ \"operationContext\": \"operationContext\" }");
             var result = await operation(_callMedia);
@@ -237,7 +237,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperations))]
-        public void SendDtmfOperations_Return202Accepted(Func<CallMedia, Response<SendDtmfResult>> operation)
+        public void SendDtmfOperations_Return202Accepted(Func<CallMedia, Response<SendDtmfTonesResult>> operation)
         {
             _callMedia = GetCallMedia(202, "{ \"operationContext\": \"operationContext\" }");
             var result = operation(_callMedia);
@@ -294,7 +294,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
-        public void SendDtmfOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<SendDtmfResult>>> operation)
+        public void SendDtmfOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<SendDtmfTonesResult>>> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
@@ -345,7 +345,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperations))]
-        public void SendDtmfOperations_Return404NotFound(Func<CallMedia, Response<SendDtmfResult>> operation)
+        public void SendDtmfOperations_Return404NotFound(Func<CallMedia, Response<SendDtmfTonesResult>> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
@@ -537,7 +537,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             return new[]
             {
-                new Func<CallMedia, Response<SendDtmfResult>>?[]
+                new Func<CallMedia, Response<SendDtmfTonesResult>>?[]
                 {
                    callMedia => callMedia.SendDtmf(
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
@@ -552,7 +552,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             return new[]
             {
-                new Func<CallMedia, Task<Response<SendDtmfResult>>>?[]
+                new Func<CallMedia, Task<Response<SendDtmfTonesResult>>>?[]
                 {
                    callMedia => callMedia.SendDtmfAsync(
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },

@@ -22,14 +22,6 @@ namespace Azure.Communication.CallAutomation
             return new TransferCallToParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of SendDtmfTonesResult. </summary>
-        /// <param name="operationContext"> The operation context provided by client. </param>
-        /// <returns> A new <see cref="CallAutomation.SendDtmfTonesResult"/> instance for mocking. </returns>
-        public static SendDtmfTonesResult SendDtmfTonesResult(string operationContext = null)
-        {
-            return new SendDtmfTonesResult(operationContext);
-        }
-
         /// <summary> Initializes a new instance of MuteParticipantsResult. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         /// <returns> A new <see cref="CallAutomation.MuteParticipantsResult"/> instance for mocking. </returns>

@@ -464,16 +464,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new SendDtmfCompleted(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation()));
+            SendAndProcessEvent(handler, CallAutomationModelFactory.SendDtmfTonesCompleted(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation()));
 
-            SendDtmfEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+            SendDtmfTonesEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
             Assert.AreEqual(true, returnedResult.IsSuccess);
             Assert.NotNull(returnedResult.SuccessResult);
             Assert.IsNull(returnedResult.FailureResult);
-            Assert.AreEqual(typeof(SendDtmfCompleted), returnedResult.SuccessResult.GetType());
+            Assert.AreEqual(typeof(SendDtmfTonesCompleted), returnedResult.SuccessResult.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
             Assert.AreEqual(OperationContext, returnedResult.SuccessResult.OperationContext);
         }
@@ -494,16 +494,16 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.AreEqual(successCode, response.GetRawResponse().Status);
 
             // Create and send event to event processor
-            SendAndProcessEvent(handler, new SendDtmfFailed(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation()));
+            SendAndProcessEvent(handler, CallAutomationModelFactory.SendDtmfTonesFailed(CallConnectionId, ServerCallId, CorelationId, OperationContext, new ResultInformation()));
 
-            SendDtmfEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+            SendDtmfTonesEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
 
             // Assert
             Assert.NotNull(returnedResult);
             Assert.AreEqual(false, returnedResult.IsSuccess);
             Assert.NotNull(returnedResult.FailureResult);
             Assert.IsNull(returnedResult.SuccessResult);
-            Assert.AreEqual(typeof(SendDtmfFailed), returnedResult.FailureResult.GetType());
+            Assert.AreEqual(typeof(SendDtmfTonesFailed), returnedResult.FailureResult.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
             Assert.AreEqual(OperationContext, returnedResult.FailureResult.OperationContext);
         }
