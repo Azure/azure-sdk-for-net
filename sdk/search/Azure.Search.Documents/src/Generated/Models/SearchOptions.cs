@@ -108,7 +108,5 @@ namespace Azure.Search.Documents
         public SearchMode? SearchMode { get; set; }
         /// <summary> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </summary>
         public int? Skip { get; set; }
-        /// <summary> The query parameters for multi-vector search queries. </summary>
-        public IList<SearchQueryVector> Vectors { get; }
     }
 }

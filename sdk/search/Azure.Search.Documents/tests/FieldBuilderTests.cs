@@ -674,6 +674,7 @@ namespace Azure.Search.Documents.Tests
             [SimpleField(IsKey = true)]
             public string ID { get; set; }
 
+            [SearchableField(VectorSearchDimensions = "1536", VectorSearchConfiguration = "test-config")]
             public IReadOnlyList<float> TitleVector { get; set; }
         }
     }
