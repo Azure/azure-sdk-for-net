@@ -395,6 +395,7 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        // The convenience method of this operation is not generated because this operation has a http verb of PATCH which we do not support yet.
         /// <summary>
         /// [Protocol Method] Create Or Update Text Blocklist
         /// <list type="bullet">
@@ -432,6 +433,7 @@ namespace Azure.AI.ContentSafety
             }
         }
 
+        // The convenience method of this operation is not generated because this operation has a http verb of PATCH which we do not support yet.
         /// <summary>
         /// [Protocol Method] Create Or Update Text Blocklist
         /// <list type="bullet">
