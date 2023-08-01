@@ -3256,20 +3256,11 @@
      "Description": "The actual response from a LUIS Generally Available application.",
      "Type": {
       "$id": "443",
-      "Name": "Dictionary",
-      "KeyType": {
-       "$id": "444",
-       "Name": "string",
-       "Kind": "String",
-       "IsNullable": false
-      },
-      "ValueType": {
-       "$id": "445",
-       "Name": "string",
-       "Kind": "String",
-       "IsNullable": false
-      },
-      "IsNullable": false
+      "Name": "",
+      "Namespace": "Language.Conversations",
+      "IsNullable": false,
+      "Usage": "None",
+      "Properties": []
      },
      "IsRequired": false,
      "IsReadOnly": false
@@ -3277,7 +3268,10 @@
    ]
   },
   {
-   "$id": "446",
+   "$ref": "443"
+  },
+  {
+   "$id": "444",
    "Name": "QuestionAnsweringTargetIntentResult",
    "Namespace": "Language.Conversations",
    "Description": "It is a wrap up a Question Answering KB response.",
@@ -3288,12 +3282,12 @@
    "Usage": "None",
    "Properties": [
     {
-     "$id": "447",
+     "$id": "445",
      "Name": "result",
      "SerializedName": "result",
      "Description": "The generated answer by a Question Answering KB.",
      "Type": {
-      "$id": "448",
+      "$id": "446",
       "Name": "AnswersResult",
       "Namespace": "Language.Conversations",
       "Description": "Represents List of Question Answers.",
@@ -3301,15 +3295,15 @@
       "Usage": "None",
       "Properties": [
        {
-        "$id": "449",
+        "$id": "447",
         "Name": "answers",
         "SerializedName": "answers",
         "Description": "Represents Answer Result list.",
         "Type": {
-         "$id": "450",
+         "$id": "448",
          "Name": "Array",
          "ElementType": {
-          "$id": "451",
+          "$id": "449",
           "Name": "KnowledgeBaseAnswer",
           "Namespace": "Language.Conversations",
           "Description": "Represents knowledge base answer.",
@@ -3317,15 +3311,15 @@
           "Usage": "None",
           "Properties": [
            {
-            "$id": "452",
+            "$id": "450",
             "Name": "questions",
             "SerializedName": "questions",
             "Description": "List of questions associated with the answer.",
             "Type": {
-             "$id": "453",
+             "$id": "451",
              "Name": "Array",
              "ElementType": {
-              "$id": "454",
+              "$id": "452",
               "Name": "string",
               "Kind": "String",
               "IsNullable": false
@@ -3336,12 +3330,12 @@
             "IsReadOnly": false
            },
            {
-            "$id": "455",
+            "$id": "453",
             "Name": "answer",
             "SerializedName": "answer",
             "Description": "Answer text.",
             "Type": {
-             "$id": "456",
+             "$id": "454",
              "Name": "string",
              "Kind": "String",
              "IsNullable": false
@@ -3350,12 +3344,12 @@
             "IsReadOnly": false
            },
            {
-            "$id": "457",
+            "$id": "455",
             "Name": "confidence",
             "SerializedName": "confidenceScore",
             "Description": "Answer confidence score, value ranges from 0 to 1.",
             "Type": {
-             "$id": "458",
+             "$id": "456",
              "Name": "float64",
              "Kind": "Float64",
              "IsNullable": false
@@ -3364,12 +3358,12 @@
             "IsReadOnly": false
            },
            {
-            "$id": "459",
+            "$id": "457",
             "Name": "qnaId",
             "SerializedName": "id",
             "Description": "ID of the QnA result.",
             "Type": {
-             "$id": "460",
+             "$id": "458",
              "Name": "int32",
              "Kind": "Int32",
              "IsNullable": false
@@ -3378,12 +3372,12 @@
             "IsReadOnly": false
            },
            {
-            "$id": "461",
+            "$id": "459",
             "Name": "source",
             "SerializedName": "source",
             "Description": "Source of QnA result.",
             "Type": {
-             "$id": "462",
+             "$id": "460",
              "Name": "string",
              "Kind": "String",
              "IsNullable": false
@@ -3392,12 +3386,12 @@
             "IsReadOnly": false
            },
            {
-            "$id": "463",
+            "$id": "461",
             "Name": "metadata",
             "SerializedName": "metadata",
             "Description": "Metadata associated with the answer, useful to categorize or filter question answers.",
             "Type": {
-             "$id": "464",
+             "$id": "462",
              "Name": "object",
              "Namespace": "TypeSpec",
              "Deprecated": "object is deprecated. Please use {} for an empty model, `Record<unknown>` for a record with unknown property types, `unknown[]` for an array.",
@@ -3410,12 +3404,12 @@
             "IsReadOnly": false
            },
            {
-            "$id": "465",
+            "$id": "463",
             "Name": "dialog",
             "SerializedName": "dialog",
             "Description": "Dialog associated with Answer.",
             "Type": {
-             "$id": "466",
+             "$id": "464",
              "Name": "KnowledgeBaseAnswerDialog",
              "Namespace": "Language.Conversations",
              "Description": "Dialog associated with Answer.",
@@ -3423,12 +3417,12 @@
              "Usage": "None",
              "Properties": [
               {
-               "$id": "467",
+               "$id": "465",
                "Name": "isContextOnly",
                "SerializedName": "isContextOnly",
                "Description": "To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as search result for queries without context; otherwise, if false, ignores context and includes this QnA in search result.",
                "Type": {
-                "$id": "468",
+                "$id": "466",
                 "Name": "boolean",
                 "Kind": "Boolean",
                 "IsNullable": false
@@ -3437,15 +3431,15 @@
                "IsReadOnly": false
               },
               {
-               "$id": "469",
+               "$id": "467",
                "Name": "prompts",
                "SerializedName": "prompts",
                "Description": "List of prompts associated with the answer.",
                "Type": {
-                "$id": "470",
+                "$id": "468",
                 "Name": "Array",
                 "ElementType": {
-                 "$id": "471",
+                 "$id": "469",
                  "Name": "KnowledgeBaseAnswerPrompt",
                  "Namespace": "Language.Conversations",
                  "Description": "Prompt for an answer.",
@@ -3453,10 +3447,24 @@
                  "Usage": "None",
                  "Properties": [
                   {
-                   "$id": "472",
+                   "$id": "470",
                    "Name": "displayOrder",
                    "SerializedName": "displayOrder",
                    "Description": "Index of the prompt - used in ordering of the prompts.",
+                   "Type": {
+                    "$id": "471",
+                    "Name": "int32",
+                    "Kind": "Int32",
+                    "IsNullable": false
+                   },
+                   "IsRequired": true,
+                   "IsReadOnly": false
+                  },
+                  {
+                   "$id": "472",
+                   "Name": "qnaId",
+                   "SerializedName": "qnaId",
+                   "Description": "QnA ID corresponding to the prompt.",
                    "Type": {
                     "$id": "473",
                     "Name": "int32",
@@ -3468,25 +3476,11 @@
                   },
                   {
                    "$id": "474",
-                   "Name": "qnaId",
-                   "SerializedName": "qnaId",
-                   "Description": "QnA ID corresponding to the prompt.",
-                   "Type": {
-                    "$id": "475",
-                    "Name": "int32",
-                    "Kind": "Int32",
-                    "IsNullable": false
-                   },
-                   "IsRequired": true,
-                   "IsReadOnly": false
-                  },
-                  {
-                   "$id": "476",
                    "Name": "displayText",
                    "SerializedName": "displayText",
                    "Description": "Text displayed to represent a follow up question prompt.",
                    "Type": {
-                    "$id": "477",
+                    "$id": "475",
                     "Name": "string",
                     "Kind": "String",
                     "IsNullable": false
@@ -3507,12 +3501,12 @@
             "IsReadOnly": false
            },
            {
-            "$id": "478",
+            "$id": "476",
             "Name": "shortAnswer",
             "SerializedName": "answerSpan",
             "Description": "Answer span object of QnA with respect to user's question.",
             "Type": {
-             "$id": "479",
+             "$id": "477",
              "Name": "AnswerSpan",
              "Namespace": "Language.Conversations",
              "Description": "Answer span object of QnA.",
@@ -3520,12 +3514,12 @@
              "Usage": "None",
              "Properties": [
               {
-               "$id": "480",
+               "$id": "478",
                "Name": "text",
                "SerializedName": "text",
                "Description": "Predicted text of answer span.",
                "Type": {
-                "$id": "481",
+                "$id": "479",
                 "Name": "string",
                 "Kind": "String",
                 "IsNullable": false
@@ -3534,12 +3528,12 @@
                "IsReadOnly": false
               },
               {
-               "$id": "482",
+               "$id": "480",
                "Name": "confidenceScore",
                "SerializedName": "confidenceScore",
                "Description": "Predicted score of answer span, value ranges from 0 to 1.",
                "Type": {
-                "$id": "483",
+                "$id": "481",
                 "Name": "float64",
                 "Kind": "Float64",
                 "IsNullable": false
@@ -3548,12 +3542,12 @@
                "IsReadOnly": false
               },
               {
-               "$id": "484",
+               "$id": "482",
                "Name": "offset",
                "SerializedName": "offset",
                "Description": "The answer span offset from the start of answer.",
                "Type": {
-                "$id": "485",
+                "$id": "483",
                 "Name": "int32",
                 "Kind": "Int32",
                 "IsNullable": false
@@ -3562,12 +3556,12 @@
                "IsReadOnly": false
               },
               {
-               "$id": "486",
+               "$id": "484",
                "Name": "length",
                "SerializedName": "length",
                "Description": "The length of the answer span.",
                "Type": {
-                "$id": "487",
+                "$id": "485",
                 "Name": "int32",
                 "Kind": "Int32",
                 "IsNullable": false
@@ -3595,43 +3589,43 @@
    ]
   },
   {
-   "$ref": "448"
+   "$ref": "446"
   },
   {
-   "$ref": "451"
+   "$ref": "449"
+  },
+  {
+   "$ref": "462"
   },
   {
    "$ref": "464"
   },
   {
-   "$ref": "466"
+   "$ref": "469"
   },
   {
-   "$ref": "471"
-  },
-  {
-   "$ref": "479"
+   "$ref": "477"
   }
  ],
  "Clients": [
   {
-   "$id": "488",
+   "$id": "486",
    "Name": "ConversationsClient",
    "Description": "The language service conversations API is a suite of natural language processing (NLP) skills that can be used to analyze structured conversations (textual or spoken). The synchronous API in this suite accepts a request and mediates among multiple language projects, such as LUIS Generally Available, Question Answering, Conversational Language Understanding, and then calls the best candidate service to handle the request. At last, it returns a response with the candidate service's response as a payload.\n\n In some cases, this API needs to forward requests and responses between the caller and an upstream service. The asynchronous APIs in this suite enable tasks like Conversation Summarization and Conversational PII detection.",
    "Operations": [
     {
-     "$id": "489",
+     "$id": "487",
      "Name": "analyzeConversation",
      "ResourceName": "Conversations",
      "Description": "Analyzes the input conversation utterance.",
      "Parameters": [
       {
-       "$id": "490",
-       "Name": "endpoint",
-       "NameInRequest": "endpoint",
+       "$id": "488",
+       "Name": "Endpoint",
+       "NameInRequest": "Endpoint",
        "Description": "Supported Cognitive Services endpoint (e.g., https://<resource-name>.api.cognitiveservices.azure.com).",
        "Type": {
-        "$id": "491",
+        "$id": "489",
         "Name": "Uri",
         "Kind": "Uri",
         "IsNullable": false
@@ -3647,12 +3641,12 @@
        "Kind": "Client"
       },
       {
-       "$id": "492",
+       "$id": "490",
        "Name": "apiVersion",
        "NameInRequest": "api-version",
        "Description": "",
        "Type": {
-        "$id": "493",
+        "$id": "491",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -3667,9 +3661,9 @@
        "Explode": false,
        "Kind": "Client",
        "DefaultValue": {
-        "$id": "494",
+        "$id": "492",
         "Type": {
-         "$id": "495",
+         "$id": "493",
          "Name": "String",
          "Kind": "String",
          "IsNullable": false
@@ -3678,7 +3672,7 @@
        }
       },
       {
-       "$id": "496",
+       "$id": "494",
        "Name": "AnalyzeConversationTask",
        "NameInRequest": "AnalyzeConversationTask",
        "Description": "The base class of a conversation input task.",
@@ -3696,11 +3690,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "497",
+       "$id": "495",
        "Name": "contentType",
        "NameInRequest": "Content-Type",
        "Type": {
-        "$id": "498",
+        "$id": "496",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -3715,19 +3709,19 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "499",
+        "$id": "497",
         "Type": {
-         "$ref": "498"
+         "$ref": "496"
         },
         "Value": "application/json"
        }
       },
       {
-       "$id": "500",
+       "$id": "498",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "501",
+        "$id": "499",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -3742,9 +3736,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "502",
+        "$id": "500",
         "Type": {
-         "$ref": "501"
+         "$ref": "499"
         },
         "Value": "application/json"
        }
@@ -3752,7 +3746,7 @@
      ],
      "Responses": [
       {
-       "$id": "503",
+       "$id": "501",
        "StatusCodes": [
         200
        ],
@@ -3766,7 +3760,7 @@
      ],
      "HttpMethod": "POST",
      "RequestBodyMediaType": "Json",
-     "Uri": "{endpoint}",
+     "Uri": "{Endpoint}",
      "Path": "/language/:analyze-conversations",
      "RequestMediaTypes": [
       "application/json"
@@ -3777,15 +3771,15 @@
     }
    ],
    "Protocol": {
-    "$id": "504"
+    "$id": "502"
    },
    "Creatable": true
   }
  ],
  "Auth": {
-  "$id": "505",
+  "$id": "503",
   "ApiKey": {
-   "$id": "506",
+   "$id": "504",
    "Name": "Ocp-Apim-Subscription-Key"
   }
  }
