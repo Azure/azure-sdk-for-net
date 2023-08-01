@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> ServiceNow server dataset. </summary>
-    public partial class ServiceNowObjectDataset : DataFactoryDatasetDefinition
+    public partial class ServiceNowObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of ServiceNowObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

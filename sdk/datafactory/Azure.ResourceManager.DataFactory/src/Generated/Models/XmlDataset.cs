@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Xml dataset. </summary>
-    public partial class XmlDataset : DataFactoryDatasetDefinition
+    public partial class XmlDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of XmlDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

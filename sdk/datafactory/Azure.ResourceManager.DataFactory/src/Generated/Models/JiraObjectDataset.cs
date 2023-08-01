@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Jira Service dataset. </summary>
-    public partial class JiraObjectDataset : DataFactoryDatasetDefinition
+    public partial class JiraObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of JiraObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

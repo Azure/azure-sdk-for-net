@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string triggerName = "exampleTrigger";
-            DataFactoryTriggerData data = new DataFactoryTriggerData(new ScheduleTrigger(new ScheduleTriggerRecurrence()
+            DataFactoryTriggerData data = new DataFactoryTriggerData(new DataFactoryScheduleTrigger(new ScheduleTriggerRecurrence()
             {
-                Frequency = RecurrenceFrequency.Minute,
+                Frequency = DataFactoryRecurrenceFrequency.Minute,
                 Interval = 4,
                 StartOn = DateTimeOffset.Parse("2018-06-16T00:39:13.8441801Z"),
                 EndOn = DateTimeOffset.Parse("2018-06-16T00:55:13.8441801Z"),
@@ -138,9 +138,9 @@ Parameters =
 
             // invoke the operation
             string triggerName = "exampleTrigger";
-            DataFactoryTriggerData data = new DataFactoryTriggerData(new ScheduleTrigger(new ScheduleTriggerRecurrence()
+            DataFactoryTriggerData data = new DataFactoryTriggerData(new DataFactoryScheduleTrigger(new ScheduleTriggerRecurrence()
             {
-                Frequency = RecurrenceFrequency.Minute,
+                Frequency = DataFactoryRecurrenceFrequency.Minute,
                 Interval = 4,
                 StartOn = DateTimeOffset.Parse("2018-06-16T00:39:14.905167Z"),
                 EndOn = DateTimeOffset.Parse("2018-06-16T00:55:14.905167Z"),

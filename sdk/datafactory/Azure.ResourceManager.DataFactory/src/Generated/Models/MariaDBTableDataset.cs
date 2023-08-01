@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> MariaDB server dataset. </summary>
-    public partial class MariaDBTableDataset : DataFactoryDatasetDefinition
+    public partial class MariaDBTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of MariaDBTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

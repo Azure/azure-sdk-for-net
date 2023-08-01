@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SAP Table Resource properties. </summary>
-    public partial class SapTableResourceDataset : DataFactoryDatasetDefinition
+    public partial class SapTableResourceDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SapTableResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

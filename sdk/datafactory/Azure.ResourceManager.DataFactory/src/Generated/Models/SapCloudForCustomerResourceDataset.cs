@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The path of the SAP Cloud for Customer OData entity. </summary>
-    public partial class SapCloudForCustomerResourceDataset : DataFactoryDatasetDefinition
+    public partial class SapCloudForCustomerResourceDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SapCloudForCustomerResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

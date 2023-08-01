@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Parquet dataset. </summary>
-    public partial class ParquetDataset : DataFactoryDatasetDefinition
+    public partial class ParquetDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of ParquetDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

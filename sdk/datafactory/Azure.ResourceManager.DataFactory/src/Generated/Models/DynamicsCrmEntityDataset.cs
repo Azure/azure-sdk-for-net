@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Dynamics CRM entity dataset. </summary>
-    public partial class DynamicsCrmEntityDataset : DataFactoryDatasetDefinition
+    public partial class DynamicsCrmEntityDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of DynamicsCrmEntityDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

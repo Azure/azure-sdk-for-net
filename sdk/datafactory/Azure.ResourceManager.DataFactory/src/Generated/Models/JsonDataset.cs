@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Json dataset. </summary>
-    public partial class JsonDataset : DataFactoryDatasetDefinition
+    public partial class JsonDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of JsonDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Core resource properties. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal DataFactoryPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryPrivateEndpointProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataFactoryPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryPrivateEndpointConnectionProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
         }
 
         /// <summary> Core resource properties. </summary>
-        public DataFactoryPrivateEndpointProperties Properties { get; set; }
+        public DataFactoryPrivateEndpointConnectionProperties Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
         public ETag? ETag { get; }
     }

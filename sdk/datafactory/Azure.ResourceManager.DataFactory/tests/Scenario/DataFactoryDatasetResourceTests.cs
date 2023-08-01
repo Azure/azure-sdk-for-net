@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         private async Task<DataFactoryDatasetResource> CreateDefaultDataset(string datasetName)
         {
             DataFactoryLinkedServiceReference linkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
-            DataFactoryDatasetDefinition properties = new DataFactoryDatasetDefinition(linkedServiceReference);
+            DataFactoryDatasetProperties properties = new DataFactoryDatasetProperties(linkedServiceReference);
             DataFactoryDatasetData data = new DataFactoryDatasetData(properties);
             var dataset = await _dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return dataset.Value;

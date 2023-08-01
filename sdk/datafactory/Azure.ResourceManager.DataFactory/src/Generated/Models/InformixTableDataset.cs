@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Informix table dataset. </summary>
-    public partial class InformixTableDataset : DataFactoryDatasetDefinition
+    public partial class InformixTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of InformixTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

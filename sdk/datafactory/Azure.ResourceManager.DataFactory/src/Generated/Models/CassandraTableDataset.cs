@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Cassandra database dataset. </summary>
-    public partial class CassandraTableDataset : DataFactoryDatasetDefinition
+    public partial class CassandraTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of CassandraTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

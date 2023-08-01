@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Amazon RDS for SQL Server dataset. </summary>
-    public partial class AmazonRdsForSqlServerTableDataset : DataFactoryDatasetDefinition
+    public partial class AmazonRdsForSqlServerTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AmazonRdsForSqlServerTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

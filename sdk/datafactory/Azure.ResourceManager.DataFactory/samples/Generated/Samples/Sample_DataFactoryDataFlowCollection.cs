@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string dataFlowName = "exampleDataFlow";
-            DataFactoryDataFlowData data = new DataFactoryDataFlowData(new DataFactoryMappingDataFlowDefinition()
+            DataFactoryDataFlowData data = new DataFactoryDataFlowData(new DataFactoryMappingDataFlowProperties()
             {
                 Sources =
 {
@@ -108,7 +108,7 @@ Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,"CADOutput"
 
             // invoke the operation
             string dataFlowName = "exampleDataFlow";
-            DataFactoryDataFlowData data = new DataFactoryDataFlowData(new DataFactoryMappingDataFlowDefinition()
+            DataFactoryDataFlowData data = new DataFactoryDataFlowData(new DataFactoryMappingDataFlowProperties()
             {
                 Sources =
 {

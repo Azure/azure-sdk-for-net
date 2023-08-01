@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryTriggerResource> CreateDefaultTrigger(DataFactoryResource dataFactory, string triggerName)
         {
-            DataFactoryTriggerDefinition dataFactoryTriggerProperties = new DataFactoryTriggerDefinition()
+            DataFactoryTriggerProperties dataFactoryTriggerProperties = new DataFactoryTriggerProperties()
             {
                 TriggerType = "ScheduleTrigger",
             };
