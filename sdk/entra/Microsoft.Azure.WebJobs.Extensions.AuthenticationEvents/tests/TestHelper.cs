@@ -379,7 +379,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 case ActionTestTypes.NullActionItems:
                     return (null,
                         HttpStatusCode.InternalServerError,
-                        "{\"errors\":[\"TokenIssuanceStartResponse: Actions can not contain null items\"]}");
+                        "{\"errors\":[\"TokenIssuanceStartResponse: Actions can not contain null items.\"]}");
                 default:
                     return (null,
                     HttpStatusCode.InternalServerError,
