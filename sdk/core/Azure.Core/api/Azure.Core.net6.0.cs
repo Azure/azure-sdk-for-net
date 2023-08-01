@@ -538,6 +538,7 @@ namespace Azure.Core
     {
         protected RequestContent() { }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
+        public static Azure.Core.RequestContent Create(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.IModelSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static Azure.Core.RequestContent Create(System.BinaryData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
@@ -1119,11 +1120,6 @@ namespace Azure.Core.Serialization
         T Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options);
         System.BinaryData Serialize(Azure.Core.Serialization.ModelSerializerOptions options);
     }
-    public partial interface IModelXmlSerializable<out T> : Azure.Core.Serialization.IModelSerializable<T>
-    {
-        T Deserialize(System.Xml.Linq.XElement root, Azure.Core.Serialization.ModelSerializerOptions options);
-        void Serialize(System.Xml.XmlWriter writer, Azure.Core.Serialization.ModelSerializerOptions options);
-    }
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
         public JsonObjectSerializer() { }
@@ -1156,8 +1152,6 @@ namespace Azure.Core.Serialization
     {
         public static System.BinaryData ConvertToBinaryData(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
         public static System.BinaryData ConvertToBinaryData(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
-        public static System.BinaryData ConvertToBinaryData(Azure.Core.Serialization.IModelXmlSerializable<object> model, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
-        public static System.BinaryData ConvertToBinaryData(Azure.Core.Serialization.IModelXmlSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
         public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerFormat format) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }

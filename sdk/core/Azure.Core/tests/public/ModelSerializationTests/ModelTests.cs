@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using System.Xml;
 using Azure.Core.Serialization;
 using NUnit.Framework;
@@ -48,74 +50,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             //if we only pass in the format we can't test BYOM
             if (!typeof(T).IsGenericType)
                 RoundTripTest(format, new ModelSerializerFormatOverloadStrategy<T>());
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithXmlInterface(string format)
-        {
-            if (ModelInstance is IModelXmlSerializable<T>)
-            {
-                if (format == ModelSerializerFormat.Wire)
-                {
-                    RoundTripTest(format, new XmlInterfaceStrategy<T>());
-                }
-                else
-                {
-                    Assert.Throws<InvalidOperationException>(() => RoundTripTest(format, new XmlInterfaceStrategy<T>()));
-                }
-            }
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithXmlInterfaceNonGeneric(string format)
-        {
-            if (ModelInstance is IModelXmlSerializable<T>)
-            {
-                if (format == ModelSerializerFormat.Wire)
-                {
-                    RoundTripTest(format, new XmlInterfaceNonGenericStrategy<T>());
-                }
-                else
-                {
-                    Assert.Throws<InvalidOperationException>(() => RoundTripTest(format, new XmlInterfaceNonGenericStrategy<T>()));
-                }
-            }
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithXmlInterfaceXElement(string format)
-        {
-            if (ModelInstance is IModelXmlSerializable<T>)
-            {
-                if (format == ModelSerializerFormat.Wire)
-                {
-                    RoundTripTest(format, new XmlInterfaceXElementStrategy<T>());
-                }
-                else
-                {
-                    Assert.Throws<XmlException>(() => RoundTripTest(format, new XmlInterfaceXElementStrategy<T>()));
-                }
-            }
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithXmlInterfaceXElementNonGeneric(string format)
-        {
-            if (ModelInstance is IModelXmlSerializable<T>)
-            {
-                if (format == ModelSerializerFormat.Wire)
-                {
-                    RoundTripTest(format, new XmlInterfaceXElementNonGenericStrategy<T>());
-                }
-                else
-                {
-                    Assert.Throws<XmlException>(() => RoundTripTest(format, new XmlInterfaceXElementNonGenericStrategy<T>()));
-                }
-            }
         }
 
         [TestCase("J")]
@@ -193,29 +127,30 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             var expectedSerializedString = GetExpectedResult(format);
 
-            if (IsXmlWireFormat && strategy.IsExplicitJsonDeserialize && format == ModelSerializerFormat.Wire)
+            if (IsXmlWireFormat && (strategy.IsExplicitJsonDeserialize || strategy.IsExplicitJsonSerialize) && format == ModelSerializerFormat.Wire)
             {
-                Assert.Throws<InvalidOperationException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+                if (strategy.IsExplicitJsonDeserialize)
+                    Assert.Throws<InvalidOperationException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+                if (strategy.IsExplicitJsonSerialize)
+                    Assert.Throws<InvalidOperationException>(() => { var data = strategy.Serialize(ModelInstance, options); });
+            }
+            else if (ModelInstance is not IModelJsonSerializable<T> && format == ModelSerializerFormat.Json)
+            {
+                Assert.Throws<NotSupportedException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+                Assert.Throws<NotSupportedException>(() => { var data = strategy.Serialize(ModelInstance, options); });
             }
             else
             {
                 T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T;
 
                 VerifyModel(model, format);
-                if (IsXmlWireFormat && strategy.IsExplicitJsonSerialize && format == ModelSerializerFormat.Wire)
-                {
-                    Assert.Throws<InvalidOperationException>(() => { var data = strategy.Serialize(model, options); });
-                }
-                else
-                {
-                    var data = strategy.Serialize(model, options);
-                    string roundTrip = data.ToString();
+                var data = strategy.Serialize(model, options);
+                string roundTrip = data.ToString();
 
-                    Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
+                Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-                    T model2 = strategy.Deserialize(roundTrip, ModelInstance, options) as T;
-                    CompareModels(model, model2, format);
-                }
+                T model2 = strategy.Deserialize(roundTrip, ModelInstance, options) as T;
+                CompareModels(model, model2, format);
             }
         }
 
@@ -223,6 +158,51 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             var propertyInfo = model.GetType().GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             return propertyInfo.GetValue(model) as Dictionary<string, BinaryData>;
+        }
+
+        [Test]
+        public void ThrowsIfUnknownFormat()
+        {
+            ModelSerializerOptions options = new ModelSerializerOptions("x");
+            Assert.Throws<NotSupportedException>(() => ModelSerializer.Serialize(ModelInstance, options));
+            Assert.Throws<NotSupportedException>(() => ModelSerializer.Deserialize<T>(new BinaryData("x"), options));
+
+            Assert.Throws<NotSupportedException>(() => ModelSerializer.Serialize((IModelSerializable<object>)ModelInstance, options));
+            Assert.Throws<NotSupportedException>(() => ModelSerializer.Deserialize(new BinaryData("x"), typeof(T), options));
+            if (ModelInstance is IModelJsonSerializable<T> jsonModel)
+            {
+                Assert.Throws<NotSupportedException>(() => jsonModel.Serialize(new Utf8JsonWriter(new MemoryStream()), options));
+                Assert.Throws<NotSupportedException>(() => ((IModelJsonSerializable<object>)jsonModel).Serialize(new Utf8JsonWriter(new MemoryStream()), options));
+                bool gotException = false;
+                try
+                {
+                    Utf8JsonReader reader = default;
+                    jsonModel.Deserialize(ref reader, options);
+                }
+                catch (NotSupportedException)
+                {
+                    gotException = true;
+                }
+                finally
+                {
+                    Assert.IsTrue(gotException);
+                }
+
+                gotException = false;
+                try
+                {
+                    Utf8JsonReader reader = default;
+                    ((IModelJsonSerializable<object>)jsonModel).Deserialize(ref reader, options);
+                }
+                catch (NotSupportedException)
+                {
+                    gotException = true;
+                }
+                finally
+                {
+                    Assert.IsTrue(gotException);
+                }
+            }
         }
     }
 }

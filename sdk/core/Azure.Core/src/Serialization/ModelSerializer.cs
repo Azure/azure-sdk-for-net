@@ -148,31 +148,6 @@ namespace Azure.Core.Serialization
         public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerFormat format)
             => ConvertToBinaryData(model, new ModelSerializerOptions(format));
 
-        /// <summary>
-        /// Converts an <see cref="IModelXmlSerializable{T}"/> into a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="model">The model to convert.</param>
-        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
-        /// <returns>A binary representation of the serialized model.</returns>
-        public static BinaryData ConvertToBinaryData(IModelXmlSerializable<object> model, ModelSerializerOptions? options = default)
-        {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-            using MemoryStream stream = new MemoryStream();
-            using XmlWriter writer = XmlWriter.Create(stream);
-            model.Serialize(writer, options);
-            writer.Flush();
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-        }
-
-        /// <summary>
-        /// Converts an <see cref="IModelXmlSerializable{T}"/> into a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="model">The model to convert.</param>
-        /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
-        /// <returns>A binary representation of the serialized model.</returns>
-        public static BinaryData ConvertToBinaryData(IModelXmlSerializable<object> model, ModelSerializerFormat format)
-            => ConvertToBinaryData(model, new ModelSerializerOptions(format));
-
         private static IModelSerializable<object> GetInstance(Type returnType)
         {
             var model = GetObjectInstance(returnType) as IModelSerializable<object>;

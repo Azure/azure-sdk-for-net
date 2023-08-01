@@ -15,7 +15,7 @@ using BenchmarkDotNet.Configs;
 namespace Azure.Core.Perf
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class XmlSerializationBenchmark<T> where T : class, IModelXmlSerializable<T>
+    public abstract class XmlSerializationBenchmark<T> where T : class, IModelSerializable<T>
     {
         private string _xml;
         protected T _model;
@@ -96,16 +96,6 @@ namespace Azure.Core.Perf
         }
 
         [Benchmark]
-        [BenchmarkCategory("PublicInterface")]
-        public void Serialize_PublicInterface()
-        {
-            using var stream = new MemoryStream();
-            using var writer = XmlWriter.Create(stream);
-            _model.Serialize(writer, _options);
-            writer.Flush();
-        }
-
-        [Benchmark]
         [BenchmarkCategory("Internal")]
         public T Deserialize_Internal()
         {
@@ -140,13 +130,6 @@ namespace Azure.Core.Perf
         public T Deserialize_PublicInterfaceFromBinaryData()
         {
             return _model.Deserialize(_data, _options);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("PublicInterface")]
-        public T Deserialize_PublicInterfaceFromXElement()
-        {
-            return _model.Deserialize(_element, _options);
         }
     }
 }
