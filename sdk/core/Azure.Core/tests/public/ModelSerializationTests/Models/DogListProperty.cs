@@ -164,7 +164,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 //pulls the additional properties setting from the ModelJsonConverter if it exists
                 //if it does not exist it uses the default value of true for azure sdk use cases
                 var modelConverter = options.Converters.FirstOrDefault(c => c.GetType() == typeof(ModelJsonConverter)) as ModelJsonConverter;
-                return modelConverter is not null ? modelConverter.Options : ModelSerializerOptions.DefaultWireOptions;
+                return modelConverter is not null ? modelConverter.ModelSerializerOptions : ModelSerializerOptions.DefaultWireOptions;
             }
         }
         DogListProperty IModelSerializable<DogListProperty>.Deserialize(BinaryData data, ModelSerializerOptions options)

@@ -1146,7 +1146,8 @@ namespace Azure.Core.Serialization
     {
         public ModelJsonConverter() { }
         public ModelJsonConverter(Azure.Core.Serialization.ModelSerializerFormat format) { }
-        public Azure.Core.Serialization.ModelSerializerOptions Options { get { throw null; } }
+        public ModelJsonConverter(Azure.Core.Serialization.ModelSerializerOptions options) { }
+        public Azure.Core.Serialization.ModelSerializerOptions ModelSerializerOptions { get { throw null; } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
         public override Azure.Core.Serialization.IModelJsonSerializable<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IModelJsonSerializable<object> value, System.Text.Json.JsonSerializerOptions options) { }
