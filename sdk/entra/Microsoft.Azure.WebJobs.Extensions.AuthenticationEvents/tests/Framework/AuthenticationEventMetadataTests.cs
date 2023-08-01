@@ -15,7 +15,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
     {
         [Test]
         [TestCaseSource(nameof(TestScenarios))]
-        public void TestRequestCreateInstance(object testObject, string message, bool success)
+        public void TestRequestCreateInstance(object testObject, string message, bool success, string exceptionMessage)
         {
             string payload = testObject.ToString();
             AuthenticationEventMetadata eventMetadata = AuthenticationEventMetadataLoader.GetEventMetadata(payload);
@@ -24,6 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             if (success == false)
             {
                 var ex = Assert.Throws<ValidationException>(() => eventMetadata.CreateEventRequestValidate(requestMessage, payload, string.Empty));
+                Assert.AreEqual(exceptionMessage, ex.Message);
             }
             else
             {
@@ -38,6 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             {
                 Test = Payload.TokenIssuanceStart.RequestWithoutSourcePayload,
                 Message = "Testing request payload without source field passed and verifies it throws an error",
+                ExceptionMessage = "TokenIssuanceStartRequest: The Source field is required."
             }.ToArray;
 #endregion
 

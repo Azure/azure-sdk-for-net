@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 using NUnit.Framework;
@@ -13,13 +16,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
     {
         [Test]
         [TestCaseSource(nameof(TestScenarios))]
-        public void EnumberableItemsNotNullIsValidWithTestCase(object testObject, string message, bool success)
+        public void EnumberableItemsNotNullIsValidWithTestCase(object testObject, string message, bool success, string exceptionMessage)
         {
             DummyClass dummyObj = new() { Obj = testObject };
 
             if (success == false)
             {
-                Assert.Throws<ValidationException>(() => Validator.ValidateObject(dummyObj, new ValidationContext(dummyObj), true), AuthenticationEventResource.Ex_Null_Action_Items);
+                var ex = Assert.Throws<ValidationException>(() => Validator.ValidateObject(dummyObj, new ValidationContext(dummyObj), true));
+                Assert.AreEqual(exceptionMessage, ex.Message);
             }
             else
             {
@@ -43,30 +47,35 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             {
                 Test = null,
                 Message = "Testing null",
+                ExceptionMessage = AuthenticationEventResource.Ex_Null_Action_Items,
             }.ToArray;
             yield return new TestCaseStructure()
             {
                 Test = new object(),
                 Message = "Testing object",
+                ExceptionMessage = AuthenticationEventResource.Ex_Null_Action_Items,
             }.ToArray;
             yield return new TestCaseStructure()
             {
                 Test = new List<object>() { null },
                 Message = "Testing object list with null item",
+                ExceptionMessage = AuthenticationEventResource.Ex_Null_Action_Items,
             }.ToArray;
             yield return new TestCaseStructure()
             {
                 Test = new List<object>() { new(), null, new() },
                 Message = "Testing object list with multiple items with one null",
+                ExceptionMessage = AuthenticationEventResource.Ex_Null_Action_Items,
             }.ToArray;
             yield return new TestCaseStructure()
             {
                 Test = new object[1],
                 Message = "Testing single null item array",
+                ExceptionMessage = AuthenticationEventResource.Ex_Null_Action_Items,
             }.ToArray;
-#endregion
+            #endregion
 
-#region Valid
+            #region Valid
             yield return new TestCaseStructure()
             {
                 Test = new List<object>() { new(), new() },
