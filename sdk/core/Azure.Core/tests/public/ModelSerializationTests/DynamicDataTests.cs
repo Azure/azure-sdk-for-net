@@ -35,7 +35,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             DynamicDataBaseModel model = (DynamicDataBaseModel)widget;
             Assert.IsNotNull(model);
             Assert.AreEqual("dynamo", model.Name);
-            //Assert.AreEqual("yProperty", model.MiniModel.foo);
+            Assert.AreEqual("yProperty", model.MiniModel.X);
+
+            string expected =
+            "{\"name\":\"dynamo\"," +
+            "\"miniModel\":{\"foo\":\"yProperty\"}" +
+            "}";
+            BinaryData actual = ModelSerializer.Serialize(model, options);
+            Assert.AreEqual(expected, actual.ToString());
         }
     }
 }

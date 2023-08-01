@@ -1057,9 +1057,10 @@ namespace Azure.Core.Json
             }
 
             // if value inherits from IModelSerializable, use the ModelSerializer serialize method otherwise use default JsonSerializer
+            // need to return an object that can be serialized by JsonSerializer.SerializeToUtf8Bytes and not BinaryData
             if (value is IModelSerializable)
             {
-                return ModelSerializer.Serialize(value);
+                return JsonDocument.Parse(ModelSerializer.Serialize(value)).RootElement;
             }
 
             // If it's not a special type, we'll serialize it on assignment.
