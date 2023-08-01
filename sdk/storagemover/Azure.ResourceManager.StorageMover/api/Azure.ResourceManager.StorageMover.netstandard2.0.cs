@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static Azure.ResourceManager.StorageMover.StorageMoverEndpointData StorageMoverEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties properties = null) { throw null; }
         public static Azure.ResourceManager.StorageMover.StorageMoverProjectData StorageMoverProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?)) { throw null; }
     }
-    public partial class AzureKeyVaultSmbCredentials : Azure.ResourceManager.StorageMover.Models.Credentials
+    public partial class AzureKeyVaultSmbCredentials : Azure.ResourceManager.StorageMover.Models.StorageMoverCredentials
     {
         public AzureKeyVaultSmbCredentials() { }
         public string PasswordUri { get { throw null; } set { } }
@@ -335,10 +335,6 @@ namespace Azure.ResourceManager.StorageMover.Models
     public partial class AzureStorageSmbFileShareEndpointUpdateProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties
     {
         public AzureStorageSmbFileShareEndpointUpdateProperties() { }
-    }
-    public abstract partial class Credentials
-    {
-        protected Credentials() { }
     }
     public abstract partial class EndpointBaseProperties
     {
@@ -505,6 +501,10 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static implicit operator Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode left, Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public abstract partial class StorageMoverCredentials
+    {
+        protected StorageMoverCredentials() { }
     }
     public partial class StorageMoverEndpointPatch
     {

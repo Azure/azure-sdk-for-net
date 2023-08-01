@@ -9,19 +9,19 @@ namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary>
     /// The Credentials.
-    /// Please note <see cref="Credentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="StorageMoverCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureKeyVaultSmbCredentials"/>.
     /// </summary>
-    public abstract partial class Credentials
+    public abstract partial class StorageMoverCredentials
     {
-        /// <summary> Initializes a new instance of Credentials. </summary>
-        protected Credentials()
+        /// <summary> Initializes a new instance of StorageMoverCredentials. </summary>
+        protected StorageMoverCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of Credentials. </summary>
+        /// <summary> Initializes a new instance of StorageMoverCredentials. </summary>
         /// <param name="credentialType"> The Credentials type. </param>
-        internal Credentials(CredentialType credentialType)
+        internal StorageMoverCredentials(CredentialType credentialType)
         {
             CredentialType = credentialType;
         }

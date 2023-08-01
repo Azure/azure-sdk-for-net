@@ -22,6 +22,7 @@ rename-mapping:
   AgentStatus: StorageMoverAgentStatus
   CopyMode: StorageMoverCopyMode
   ProvisioningState: StorageMoverProvisioningState
+  Credentials : StorageMoverCredentials
   JobDefinition.properties.agentResourceId: -|arm-id
   JobDefinition.properties.latestJobRunResourceId: -|arm-id
   JobDefinition.properties.targetResourceId: -|arm-id

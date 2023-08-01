@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The Azure Key Vault secret URIs which store the credentials. </summary>
-    public partial class AzureKeyVaultSmbCredentials : Credentials
+    public partial class AzureKeyVaultSmbCredentials : StorageMoverCredentials
     {
         /// <summary> Initializes a new instance of AzureKeyVaultSmbCredentials. </summary>
         public AzureKeyVaultSmbCredentials()

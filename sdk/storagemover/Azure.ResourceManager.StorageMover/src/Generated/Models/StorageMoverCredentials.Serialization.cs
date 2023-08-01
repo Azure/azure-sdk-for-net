@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class Credentials : IUtf8JsonSerializable
+    public partial class StorageMoverCredentials : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteEndObject();
         }
 
-        internal static Credentials DeserializeCredentials(JsonElement element)
+        internal static StorageMoverCredentials DeserializeStorageMoverCredentials(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
