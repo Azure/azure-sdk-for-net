@@ -210,6 +210,8 @@ namespace Azure.Search.Documents.Indexes
         public string IndexAnalyzerName { get { throw null; } set { } }
         public string SearchAnalyzerName { get { throw null; } set { } }
         public string[] SynonymMapNames { get { throw null; } set { } }
+        public string VectorSearchConfiguration { get { throw null; } set { } }
+        public string VectorSearchDimensions { get { throw null; } set { } }
     }
     public partial class SearchIndexClient
     {
