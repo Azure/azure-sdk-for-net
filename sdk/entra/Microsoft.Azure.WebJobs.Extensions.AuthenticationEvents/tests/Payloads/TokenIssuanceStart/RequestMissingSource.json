@@ -1,0 +1,41 @@
+{
+  "type": "microsoft.graph.authenticationEvent.tokenIssuanceStart",
+  "data": {
+    "@odata.type": "microsoft.graph.onTokenIssuanceStartCalloutData",
+    "tenantId": "d33b1c3f-49c2-8cb3-963b-ca195de1e704",
+    "authenticationEventListenerId": "6fd9cb25-ff72-304b-7b27-5fd793aa3c2f",
+    "customAuthenticationExtensionId": "ce1b2217-fdf9-a19f-2f46-a639514a4107",
+    "authenticationContext": {
+      "correlationId": "1dc14bea-414b-a99e-64de-b4702d82ab59",
+      "client": {
+        "ip": "30.51.176.110",
+        "locale": "en-us",
+        "market": "en-us"
+      },
+      "protocol": "OAUTH2.0",
+      "clientServicePrincipal": {
+        "id": "1dc14bea-414b-a99e-64de-b4702d82ab59",
+        "appId": "d56ef0c3-a4e8-b26c-484c-8873b560eab3",
+        "appDisplayName": "My Test application",
+        "displayName": "My Test application"
+      },
+      "resourceServicePrincipal": {
+        "id": "8de396f3-6559-a65c-398e-43a2fc6a2141",
+        "appId": "d56ef0c3-a4e8-b26c-484c-8873b560eab3",
+        "appDisplayName": "My Test application",
+        "displayName": "My Test application"
+      },
+      "user": {
+        "createdDateTime": "2016-03-01T15:23:40Z",
+        "displayName": "Bob",
+        "givenName": "Bob Smith",
+        "id": "90847c2a-e29d-4d2f-9f54-c5b4d3f26471",
+        "mail": "bob@contoso.com",
+        "preferredLanguage": "en-us",
+        "surname": "Smith",
+        "userPrincipalName": "bob@contoso.com",
+        "userType": "Member"
+      }
+    }
+  }
+}

@@ -4,9 +4,9 @@
 
 ### Bugs Fixed
 
-- Updated ODataType signature - 2433332
-- Empty or null response actions will throw a bad response - 2161553
-- Made the source field in the request a required field - 2161566
+- Updated ODataType signature - https://identitydivision.visualstudio.com/Engineering/_workitems/edit/2433332
+- Empty or null response actions will throw a bad response - https://identitydivision.visualstudio.com/Engineering/_workitems/edit/2161553
+- Made the source field in the request a required field - https://identitydivision.visualstudio.com/Engineering/_workitems/edit/2161566
 
 ## 1.0.0-beta.3 (2022-12-13)
 
