@@ -22,6 +22,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public string X { get; set; }
 
+        #region Serialization
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             writer.WriteStartObject();
@@ -31,13 +32,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        private void Deserialize(object x)
-        {
-            ModelSerializer.Deserialize(new BinaryData(x), x.GetType());
-            ModelSerializer.Deserialize<DynamicDataMiniModel>(new BinaryData(x));
-        }
-
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+
+        void IJsonModelSerializable<DynamicDataMiniModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         internal static DynamicDataMiniModel DeserializeDynamicDataMiniModel(JsonElement element, ModelSerializerOptions options)
         {
@@ -54,31 +51,34 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
             return new DynamicDataMiniModel(x);
         }
+        #endregion
 
         #region InterfaceImplementation
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options)
+
+        DynamicDataMiniModel IModelSerializable<DynamicDataMiniModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             return DeserializeDynamicDataMiniModel(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        DynamicDataMiniModel IJsonModelSerializable<DynamicDataMiniModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeDynamicDataMiniModel(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<DynamicDataMiniModel>)this).Serialize(options);
+        BinaryData IModelSerializable<DynamicDataMiniModel>.Serialize(ModelSerializerOptions options)
+        {
+            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
+        }
+
+        #endregion
 
         void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<DynamicDataMiniModel>)this).Serialize(writer, options);
 
-        void IJsonModelSerializable<DynamicDataMiniModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
-        => ((IJsonModelSerializable<DynamicDataMiniModel>)this).Serialize(writer, options);
+        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<DynamicDataMiniModel>)this).Deserialize(ref reader, options);
 
-        DynamicDataMiniModel IJsonModelSerializable<DynamicDataMiniModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => DeserializeDynamicDataMiniModel(JsonDocument.ParseValue(ref reader).RootElement, options);
+        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<DynamicDataMiniModel>)this).Deserialize(data, options);
 
-        DynamicDataMiniModel IModelSerializable<DynamicDataMiniModel>.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDynamicDataMiniModel(JsonDocument.Parse(data.ToString()).RootElement, options);
-
-        BinaryData IModelSerializable<DynamicDataMiniModel>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<DynamicDataMiniModel>)this).Serialize(options); //recurses here
-        #endregion
+        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<DynamicDataMiniModel>)this).Serialize(options);
     }
 }
