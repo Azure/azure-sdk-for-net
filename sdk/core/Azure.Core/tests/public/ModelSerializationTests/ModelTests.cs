@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Xml;
 using Azure.Core.Serialization;
 using NUnit.Framework;
@@ -11,10 +12,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     public abstract class ModelTests<T> where T : class, IModelSerializable<T>
     {
         private T _modelInstance;
+        private T ModelInstance => _modelInstance ??= GetModelInstance();
 
-        public ModelTests()
+        private bool IsXmlWireFormat => WirePayload.StartsWith("<", StringComparison.Ordinal);
+
+        protected virtual T GetModelInstance()
         {
-            _modelInstance = Activator.CreateInstance(typeof(T), true) as T;
+            return Activator.CreateInstance(typeof(T), true) as T;
         }
 
         protected abstract string GetExpectedResult(ModelSerializerFormat format);
@@ -24,6 +28,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         protected abstract string WirePayload { get; }
         protected abstract Func<T, RequestContent> ToRequestContent { get; }
         protected abstract Func<Response, T> FromResponse { get; }
+
+        protected virtual Func<Type, ObjectSerializer> GetObjectSerializerFactory(ModelSerializerFormat format) => null;
 
         [TestCase("J")]
         [TestCase("W")]
@@ -37,9 +43,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         [TestCase("J")]
         [TestCase("W")]
+        public void RoundTripWithModelSerializerFormatOverload(string format)
+        {
+            //if we only pass in the format we can't test BYOM
+            if (!typeof(T).IsGenericType)
+                RoundTripTest(format, new ModelSerializerFormatOverloadStrategy<T>());
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
         public void RoundTripWithXmlInterface(string format)
         {
-            if (_modelInstance is IXmlModelSerializable<T>)
+            if (ModelInstance is IModelXmlSerializable<T>)
             {
                 if (format == ModelSerializerFormat.Wire)
                 {
@@ -56,7 +71,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithXmlInterfaceNonGeneric(string format)
         {
-            if (_modelInstance is IXmlModelSerializable<T>)
+            if (ModelInstance is IModelXmlSerializable<T>)
             {
                 if (format == ModelSerializerFormat.Wire)
                 {
@@ -73,7 +88,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithXmlInterfaceXElement(string format)
         {
-            if (_modelInstance is IXmlModelSerializable<T>)
+            if (ModelInstance is IModelXmlSerializable<T>)
             {
                 if (format == ModelSerializerFormat.Wire)
                 {
@@ -90,7 +105,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithXmlInterfaceXElementNonGeneric(string format)
         {
-            if (_modelInstance is IXmlModelSerializable<T>)
+            if (ModelInstance is IModelXmlSerializable<T>)
             {
                 if (format == ModelSerializerFormat.Wire)
                 {
@@ -117,7 +132,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterface(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceStrategy<T>());
         }
 
@@ -125,7 +140,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceNonGeneric(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceNonGenericStrategy<T>());
         }
 
@@ -133,7 +148,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceUtf8Reader(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceUtf8ReaderStrategy<T>());
         }
 
@@ -141,7 +156,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceUtf8ReaderNonGeneric(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceUtf8ReaderNonGenericStrategy<T>());
         }
 
@@ -149,7 +164,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceSequenceWriter(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceSequenceWriterStrategy<T>());
         }
 
@@ -157,32 +172,57 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceSequenceNonGenericWriter(string format)
         {
-            if (_modelInstance is IJsonModelSerializable<T>)
+            if (ModelInstance is IModelJsonSerializable<T>)
                 RoundTripTest(format, new JsonInterfaceSequenceWriterNonGenericStrategy<T>());
         }
 
         [Test]
         public void RoundTripWithCast()
-            => RoundTripTest(ModelSerializerFormat.Wire, new CastStrategy<T>(ToRequestContent, FromResponse));
+        {
+            //cast does not work without options
+            if (!typeof(T).IsGenericType)
+                RoundTripTest(ModelSerializerFormat.Wire, new CastStrategy<T>(ToRequestContent, FromResponse));
+        }
 
         protected void RoundTripTest(ModelSerializerFormat format, RoundTripStrategy<T> strategy)
         {
             string serviceResponse = format == ModelSerializerFormat.Json ? JsonPayload : WirePayload;
 
             ModelSerializerOptions options = new ModelSerializerOptions(format);
+            options.GenericTypeSerializerCreator = GetObjectSerializerFactory(format);
 
             var expectedSerializedString = GetExpectedResult(format);
 
-            T model = strategy.Deserialize(serviceResponse, options) as T;
+            if (IsXmlWireFormat && strategy.IsExplicitJsonDeserialize && format == ModelSerializerFormat.Wire)
+            {
+                Assert.Throws<InvalidOperationException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+            }
+            else
+            {
+                T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T;
 
-            VerifyModel(model, format);
-            var data = strategy.Serialize(model, options);
-            string roundTrip = data.ToString();
+                VerifyModel(model, format);
+                if (IsXmlWireFormat && strategy.IsExplicitJsonSerialize && format == ModelSerializerFormat.Wire)
+                {
+                    Assert.Throws<InvalidOperationException>(() => { var data = strategy.Serialize(model, options); });
+                }
+                else
+                {
+                    var data = strategy.Serialize(model, options);
+                    string roundTrip = data.ToString();
 
-            Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
+                    Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
 
-            T model2 = strategy.Deserialize(roundTrip, options) as T;
-            CompareModels(model, model2, format);
+                    T model2 = strategy.Deserialize(roundTrip, ModelInstance, options) as T;
+                    CompareModels(model, model2, format);
+                }
+            }
+        }
+
+        protected Dictionary<string, BinaryData> GetRawData(object model)
+        {
+            var propertyInfo = model.GetType().GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            return propertyInfo.GetValue(model) as Dictionary<string, BinaryData>;
         }
     }
 }

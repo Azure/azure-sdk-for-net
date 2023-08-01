@@ -7,7 +7,7 @@ using System.ComponentModel;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Enumerator representing format of the serialized model.
+    /// A format used to specify how a model should be serialized and deserialized.
     /// </summary>
     public readonly partial struct ModelSerializerFormat : IEquatable<ModelSerializerFormat>
     {
@@ -15,12 +15,14 @@ namespace Azure.Core.Serialization
         internal const string WireValue = "W";
 
         /// <summary>
-        /// Specifies the data format where IgnoreReadOnly and IgnoreAdditionalProperties are false.
+        /// Default format which will serialize all properties including read-only and additional properties.
+        /// The format will always be JSON.
         /// </summary>
         public static readonly ModelSerializerFormat Json = new ModelSerializerFormat(JsonValue);
 
         /// <summary>
-        /// Specifies the wire format IgnoreReadOnly and IgnoreAdditionalProperties are true.
+        /// Format used to communicate with Azure services.  This format will not serialize read-only properties or additional properties.
+        /// The format will vary between XML and JSON depdending on the service.
         /// </summary>
         public static readonly ModelSerializerFormat Wire = new ModelSerializerFormat(WireValue);
 

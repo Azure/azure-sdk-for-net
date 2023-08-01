@@ -11,7 +11,7 @@ using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class Animal : IUtf8JsonSerializable, IJsonModelSerializable<Animal>, IJsonModelSerializable
+    public class Animal : IUtf8JsonSerializable, IModelJsonSerializable<Animal>
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -47,9 +47,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<Animal>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<Animal>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        void IJsonModelSerializable<Animal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<Animal>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -82,9 +82,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static Animal DeserializeAnimal(JsonElement element, ModelSerializerOptions? options = default)
+        internal static Animal DeserializeAnimal(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             double weight = default;
             string name = "";
@@ -115,7 +115,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     continue;
                 }
 
-                if (options.Value.Format == ModelSerializerFormat.Json)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -132,25 +132,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeAnimal(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        Animal IJsonModelSerializable<Animal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        Animal IModelJsonSerializable<Animal>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeAnimal(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<Animal>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
+        BinaryData IModelSerializable<Animal>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
 
         #endregion
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<Animal>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<Animal>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<Animal>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<Animal>)this).Serialize(options);
     }
 }

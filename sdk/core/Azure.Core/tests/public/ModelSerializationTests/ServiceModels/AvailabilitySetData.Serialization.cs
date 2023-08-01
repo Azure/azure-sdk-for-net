@@ -21,11 +21,11 @@ using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Compute
 {
-    public partial class AvailabilitySetData : IUtf8JsonSerializable, IJsonModelSerializable<AvailabilitySetData>, IJsonModelSerializable
+    public partial class AvailabilitySetData : IUtf8JsonSerializable, IModelJsonSerializable<AvailabilitySetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<AvailabilitySetData>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailabilitySetData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        void IJsonModelSerializable<AvailabilitySetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<AvailabilitySetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -94,9 +94,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
             writer.WriteEndObject();
         }
 
-        public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelSerializerOptions? options = default)
+        public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -122,7 +122,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value, options.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -227,7 +227,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
                             List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options.Value));
+                                array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                             }
                             statuses = array;
                             continue;
@@ -264,7 +264,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
             public Optional<IReadOnlyList<InstanceViewStatus>> Statuses { get; set; }
         }
 
-        AvailabilitySetData IJsonModelSerializable<AvailabilitySetData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        AvailabilitySetData IModelJsonSerializable<AvailabilitySetData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             if (!reader.TryDeserialize<AvailabilitySetDataProperties>(options, SetProperty, out var properties))
                 return null;
@@ -394,17 +394,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
             reader.Skip();
         }
 
-        BinaryData IModelSerializable<AvailabilitySetData>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<AvailabilitySetData>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<AvailabilitySetData>)this).Serialize(options);
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<AvailabilitySetData>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<AvailabilitySetData>)this).Deserialize(ref reader, options);
+        BinaryData IModelSerializable<AvailabilitySetData>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

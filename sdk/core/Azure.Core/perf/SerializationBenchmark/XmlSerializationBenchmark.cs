@@ -15,7 +15,7 @@ using BenchmarkDotNet.Configs;
 namespace Azure.Core.Perf
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class XmlSerializationBenchmark<T> where T : class, IXmlModelSerializable<T>
+    public abstract class XmlSerializationBenchmark<T> where T : class, IModelXmlSerializable<T>
     {
         private string _xml;
         protected T _model;
@@ -42,7 +42,7 @@ namespace Azure.Core.Perf
             _model = ModelSerializer.Deserialize<T>(_data);
             _response = new MockResponse(200);
             _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_xml));
-            _options = new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            _options = ModelSerializerOptions.DefaultWireOptions;
             _element = XElement.Parse(_xml);
         }
 

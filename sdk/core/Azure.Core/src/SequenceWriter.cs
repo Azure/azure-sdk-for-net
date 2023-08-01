@@ -12,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// A buffer writer which writes large sequences of data into smaller shared buffers.
     /// </summary>
-    public sealed class SequenceWriter : IBufferWriter<byte>, IDisposable
+    internal sealed class SequenceWriter : IBufferWriter<byte>, IDisposable
     {
         private SequenceSegment? _first;
         private SequenceSegment? _last;
@@ -30,14 +30,19 @@ namespace Azure.Core
         /// <summary>
         /// Initializes a new instance of <see cref="SequenceWriter"/>.
         /// </summary>
-        /// <param name="bufferSize">The max size of each buffer segment.</param>
-        public SequenceWriter(int bufferSize = 4096)
+        /// <param name="segmentSize">The size of each buffer segment.</param>
+        public SequenceWriter(int segmentSize = 4096)
         {
-            _bufferSize = bufferSize;
+            _bufferSize = segmentSize;
             _buffers = Array.Empty<Buffer>();
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Notifies the <see cref="SequenceWriter"/> that bytes bytes were written to the output <see cref="Span{T}"/> or <see cref="Memory{T}"/>.
+        /// You must request a new buffer after calling <see cref="Advance(int)"/> to continue writing more data; you cannot write to a previously acquired buffer.
+        /// </summary>
+        /// <param name="bytesWritten">The number of bytes written to the <see cref="Span{T}"/> or <see cref="Memory{T}"/>.</param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void Advance(int bytesWritten)
         {
             ref Buffer last = ref _buffers[_count - 1];
@@ -48,7 +53,11 @@ namespace Azure.Core
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns a <see cref="Memory{T}"/> to write to that is at least the requested size, as specified by the <paramref name="sizeHint"/> parameter.
+        /// </summary>
+        /// <param name="sizeHint">The minimum length of the returned <see cref="Memory{T}"/>. If less than 256, a buffer of size 256 will be returned.</param>
+        /// <returns>A memory buffer of at least <paramref name="sizeHint"/> bytes. If <paramref name="sizeHint"/> is less than 256, a buffer of size 256 will be returned.</returns>
         public Memory<byte> GetMemory(int sizeHint = 0)
         {
             if (sizeHint < 256)
@@ -91,7 +100,11 @@ namespace Azure.Core
             return newArray;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns a <see cref="Span{T}"/> to write to that is at least the requested size, as specified by the <paramref name="sizeHint"/> parameter.
+        /// </summary>
+        /// <param name="sizeHint">The minimum length of the returned <see cref="Span{T}"/>. If less than 256, a buffer of size 256 will be returned.</param>
+        /// <returns>A buffer of at least <paramref name="sizeHint"/> bytes. If <paramref name="sizeHint"/> is less than 256, a buffer of size 256 will be returned.</returns>
         public Span<byte> GetSpan(int sizeHint = 0)
         {
             Memory<byte> memory = GetMemory(sizeHint);
@@ -134,7 +147,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc cref="RequestContent.WriteTo(Stream, CancellationToken)"/>
-        public void WriteTo(Stream stream, CancellationToken cancellation)
+        public void CopyTo(Stream stream, CancellationToken cancellation)
         {
             for (int i = 0; i < _count; i++)
             {
@@ -144,7 +157,7 @@ namespace Azure.Core
         }
 
         /// <inheritdoc cref="RequestContent.WriteToAsync(Stream, CancellationToken)"/>
-        public async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        public async Task CopyToAsync(Stream stream, CancellationToken cancellation)
         {
             for (int i = 0; i < _count; i++)
             {
@@ -176,10 +189,9 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// .
+        /// Gets a <see cref="ReadOnlySequence{T}"/> representing the data written to the SequenceWriter.
         /// </summary>
-        /// <returns></returns>
-        public ReadOnlySequence<byte> GetReadOnlySequence()
+        internal ReadOnlySequence<byte> GetReadOnlySequence()
         {
             if (_count == 0)
                 return ReadOnlySequence<byte>.Empty;

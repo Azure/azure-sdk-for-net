@@ -1,27 +1,60 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
+using System;
 using System.Text;
 using Azure.Core.Serialization;
-using NUnit.Framework;
 using Newtonsoft.Json;
-using System;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class EnvelopeTests
+    internal class EnvelopeTests : ModelTests<Envelope<EnvelopeTests.ModelC>>
     {
-        [TestCase("J")]
-        [TestCase("W")]
-        public void CanRoundTripFutureVersionWithoutLoss(string format)
-        {
-            string serviceResponse =
-                "{\"readOnlyProperty\":\"read\"," +
+        protected override string JsonPayload => WirePayload;
+
+        protected override string WirePayload => "{\"readOnlyProperty\":\"read\"," +
                 "\"modelA\":{\"name\":\"Cat\",\"isHungry\":false,\"weight\":2.5}," +
                 "\"modelC\":{\"x\":\"hello\",\"y\":\"bye\"}" +
                 "}";
 
+        protected override Func<Envelope<ModelC>, RequestContent> ToRequestContent => model => model;
+
+        protected override Func<Response, Envelope<ModelC>> FromResponse => response => (Envelope<ModelC>)response;
+
+        protected override Func<Type, ObjectSerializer> GetObjectSerializerFactory(ModelSerializerFormat format)
+        {
+            if (format == ModelSerializerFormat.Wire)
+            {
+                JsonSerializerSettings settings = new JsonSerializerSettings
+                {
+                    ContractResolver = new IgnoreReadOnlyPropertiesResolver()
+                };
+                return type => type.Equals(typeof(ModelC)) ? new NewtonsoftJsonObjectSerializer(settings) : null;
+            }
+            else
+            {
+                return type => type.Equals(typeof(ModelC)) ? new NewtonsoftJsonObjectSerializer() : null;
+            }
+        }
+
+        protected override void CompareModels(Envelope<ModelC> model, Envelope<ModelC> model2, ModelSerializerFormat format)
+        {
+            if (format == ModelSerializerFormat.Json)
+            {
+                Assert.AreEqual(model.ReadOnlyProperty, model2.ReadOnlyProperty);
+                Assert.AreEqual(model.ModelA.LatinName, model2.ModelA.LatinName);
+                Assert.AreEqual(model.ModelA.HasWhiskers, model2.ModelA.HasWhiskers);
+            }
+            Assert.AreEqual(model.ModelA.Name, model2.ModelA.Name);
+            Assert.AreEqual(model.ModelA.IsHungry, model2.ModelA.IsHungry);
+            Assert.AreEqual(model.ModelA.Weight, model2.ModelA.Weight);
+            Assert.AreEqual(model.ModelT.X, model2.ModelT.X);
+            Assert.AreEqual(model.ModelT.Y, model2.ModelT.Y);
+        }
+
+        protected override string GetExpectedResult(ModelSerializerFormat format)
+        {
             StringBuilder expectedSerialized = new StringBuilder("{");
             if (format == ModelSerializerFormat.Json)
             {
@@ -35,42 +68,24 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             expectedSerialized.Append("\"name\":\"Cat\",\"isHungry\":false,\"weight\":2.5},");
             expectedSerialized.Append("\"modelC\":{\"X\":\"hello\",\"Y\":\"bye\"}"); //using NewtonSoft Serializer
             expectedSerialized.Append("}");
-            var expectedSerializedString = expectedSerialized.ToString();
+            return expectedSerialized.ToString();
+        }
 
-            ModelSerializerOptions options = new ModelSerializerOptions(format);
-
-            if (format == ModelSerializerFormat.Wire)
-            {
-                JsonSerializerSettings settings = new JsonSerializerSettings
-                {
-                    ContractResolver = new IgnoreReadOnlyPropertiesResolver()
-                };
-                options.UnknownTypeSerializationFallback = type => type.Equals(typeof(ModelC)) ? new NewtonsoftJsonObjectSerializer(settings) : null;
-            }
-            else
-            {
-                options.UnknownTypeSerializationFallback = type => type.Equals(typeof(ModelC)) ? new NewtonsoftJsonObjectSerializer() : null;
-            }
-
-            Envelope<ModelC> model = ModelSerializer.Deserialize<Envelope<ModelC>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
-
+        protected override void VerifyModel(Envelope<ModelC> model, ModelSerializerFormat format)
+        {
+            Assert.IsNotNull(model.ModelA);
             if (format == ModelSerializerFormat.Json)
             {
-                Assert.That(model.ReadOnlyProperty, Is.EqualTo("read"));
+                Assert.AreEqual("read", model.ReadOnlyProperty);
+                Assert.AreEqual("Felis catus", model.ModelA.LatinName);
+                Assert.AreEqual(false, model.ModelA.HasWhiskers);
             }
-
-            CatReadOnlyProperty correctCat = new CatReadOnlyProperty(2.5, default, "Cat", false, default);
-            VerifyModels.CheckAnimals(correctCat, model.ModelA, options);
+            Assert.AreEqual("Cat", model.ModelA.Name);
+            Assert.AreEqual(false, model.ModelA.IsHungry);
+            Assert.AreEqual(2.5, model.ModelA.Weight);
+            Assert.IsNotNull(model.ModelT);
             Assert.AreEqual("hello", model.ModelT.X);
             Assert.AreEqual("bye", model.ModelT.Y);
-            var data = ModelSerializer.Serialize(model, options);
-            string roundTrip = data.ToString();
-
-            Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
-
-            var model2 = ModelSerializer.Deserialize<Envelope<ModelC>>(new BinaryData(Encoding.UTF8.GetBytes(roundTrip)), options: options);
-            ModelC correctModelC = new ModelC("hello", "bye");
-            ModelC.VerifyModelC(correctModelC, model2.ModelT);
         }
 
         // Generate a class that implements the NewtonSoft default contract resolver so that ReadOnly properties are not serialized
@@ -90,7 +105,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
         }
 
-        private class ModelC
+        public class ModelC
         {
             public ModelC(string x1, string y1)
             {

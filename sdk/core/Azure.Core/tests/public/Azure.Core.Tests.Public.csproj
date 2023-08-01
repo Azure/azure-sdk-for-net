@@ -3,6 +3,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IsTestProject>true</IsTestProject>
+    <IsTestSupportProject>false</IsTestSupportProject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,10 +22,7 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Utf8JsonDelayedRequestContent.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Utf8XmlDelayedRequestContent.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)Utf8JsonReaderExtensions.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <!-- Test classes to share in public space-->

@@ -2,19 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Xml.Linq;
-using System.Xml;
-using Azure.Core.Serialization;
-using NUnit.Framework;
-using System.Xml.Serialization;
-using System.IO;
-using System.Text.Json;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    internal class XmlModelForCombinedInterface : IXmlSerializable, IXmlModelSerializable<XmlModelForCombinedInterface>, IXmlModelSerializable
+    internal class XmlModelForCombinedInterface : IXmlSerializable, IModelXmlSerializable<XmlModelForCombinedInterface>, IModelJsonSerializable<XmlModelForCombinedInterface>
     {
         public XmlModelForCombinedInterface() { }
 
@@ -42,20 +40,30 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
 
-        void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
+        public static implicit operator RequestContent(XmlModelForCombinedInterface xmlModelForCombinedInterface)
+        {
+            return RequestContent.Create(xmlModelForCombinedInterface, ModelSerializerOptions.DefaultWireOptions);
+        }
 
-        void IXmlModelSerializable<XmlModelForCombinedInterface>.Serialize(XmlWriter writer, ModelSerializerOptions options)
+        public static explicit operator XmlModelForCombinedInterface(Response response)
+        {
+            return DeserializeXmlModelForCombinedInterface(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
+            Serialize(writer, ModelSerializerOptions.DefaultWireOptions, nameHint);
+
+        void IModelXmlSerializable<XmlModelForCombinedInterface>.Serialize(XmlWriter writer, ModelSerializerOptions options)
         {
             if (options.Format != ModelSerializerFormat.Wire)
-                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IXmlModelSerializable)} interface");
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IModelXmlSerializable<XmlModelForCombinedInterface>)} interface");
 
             Serialize(writer, options, null);
         }
 
-        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions? options = default)
+        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(XElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string key = default;
             string value = default;
@@ -112,18 +120,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         {
             if (options.Format == ModelSerializerFormat.Json)
             {
-                return ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
+                return ModelSerializer.ConvertToBinaryData((IModelJsonSerializable<XmlModelForCombinedInterface>)this, options);
             }
             if (options.Format == ModelSerializerFormat.Wire)
             {
-                return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options, null); });
+                return ModelSerializer.ConvertToBinaryData((IModelXmlSerializable<XmlModelForCombinedInterface>)this, options);
             }
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
-        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelSerializerOptions? options = default)
+        internal static XmlModelForCombinedInterface DeserializeXmlModelForCombinedInterface(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string key = default;
             string value = default;
@@ -165,14 +173,23 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
-        void IXmlModelSerializable<object>.Serialize(XmlWriter writer, ModelSerializerOptions options) => ((IXmlModelSerializable<XmlModelForCombinedInterface>)this).Serialize(writer, options);
+        XmlModelForCombinedInterface IModelXmlSerializable<XmlModelForCombinedInterface>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(root, options);
 
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<XmlModelForCombinedInterface>)this).Deserialize(data, options);
+        void IModelJsonSerializable<XmlModelForCombinedInterface>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            if (options.Format != ModelSerializerFormat.Json)
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Json}' format when calling the {nameof(IModelJsonSerializable<XmlModelForCombinedInterface>)} interface");
 
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<XmlModelForCombinedInterface>)this).Serialize(options);
+            Serialize(writer, options);
+        }
 
-        XmlModelForCombinedInterface IXmlModelSerializable<XmlModelForCombinedInterface>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(root, options);
+        XmlModelForCombinedInterface IModelJsonSerializable<XmlModelForCombinedInterface>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            if (options.Format != ModelSerializerFormat.Json)
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Json}' format when calling the {nameof(IModelJsonSerializable<XmlModelForCombinedInterface>)} interface");
 
-        object IXmlModelSerializable<object>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeXmlModelForCombinedInterface(root, options);
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeXmlModelForCombinedInterface(doc.RootElement, options);
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core.Buffers;
 using Azure.Core.Serialization;
 
@@ -89,9 +90,10 @@ namespace Azure.Core
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
-        /// <param name="writer">The <see cref="SequenceWriter"/> that contains the serialized data.</param>
+        /// <param name="model">The <see cref="IModelSerializable{T}"/> to serialize.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(SequenceWriter writer) => new SequenceWriterContent(writer);
+        public static RequestContent Create(IModelSerializable<object> model, ModelSerializerOptions? options = default) => new ModelSerializableContent(model, options ?? ModelSerializerOptions.DefaultWireOptions);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -227,22 +229,105 @@ namespace Azure.Core
             }
         }
 
-        private sealed class SequenceWriterContent : RequestContent
+        private sealed class ModelSerializableContent : RequestContent
         {
-            private readonly SequenceWriter _writer;
+            private SequenceWriter? _writer;
+            private BinaryData? _data;
+            private byte[]? _bytes;
+            private readonly IModelSerializable<object> _model;
+            private readonly ModelSerializerOptions _options;
 
-            public SequenceWriterContent(SequenceWriter writer)
+            public ModelSerializableContent(IModelSerializable<object> model, ModelSerializerOptions options)
             {
-                _writer = writer;
+                _model = model;
+                _options = options;
             }
 
-            public override void Dispose() => _writer.Dispose();
+            public override void Dispose() => _writer?.Dispose();
 
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => _writer.WriteTo(stream, cancellation);
+            private SequenceWriter GetWriter(IModelJsonSerializable<object> model)
+            {
+                if (_writer is null)
+                {
+                    var writer = new SequenceWriter();
+                    using var jsonWriter = new Utf8JsonWriter(writer);
+                    model.Serialize(jsonWriter, _options);
+                    jsonWriter.Flush();
+                    _writer = writer;
+                }
+                return _writer;
+            }
 
-            public override bool TryComputeLength(out long length) => _writer.TryComputeLength(out length);
+            private BinaryData GetBinaryData()
+            {
+                if (_data is null)
+                {
+                    _data = _model.Serialize(_options);
+                }
+                return _data;
+            }
 
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await _writer.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+            private byte[] GetBytes()
+            {
+                if (_bytes is null)
+                {
+                    _bytes = GetBinaryData().ToArray();
+                }
+                return _bytes;
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                // a model implements both xml and json we don't know the wire format and must let the model decide.
+                if (_model is IModelJsonSerializable<object> jsonSerializable && _model is not IModelXmlSerializable<object>)
+                {
+                    GetWriter(jsonSerializable).CopyTo(stream, cancellation);
+                }
+                else if (_model is IModelXmlSerializable<object> xmlSerializable && _model is not IModelJsonSerializable<object>)
+                {
+                    using XmlWriter writer = XmlWriter.Create(stream);
+                    xmlSerializable.Serialize(writer, _options);
+                    writer.Flush();
+                }
+                else
+                {
+                    var data = GetBinaryData();
+#if NETFRAMEWORK || NETSTANDARD2_0
+                    var bytes = GetBytes();
+                    stream.Write(bytes, 0, bytes.Length);
+#else
+                    stream.Write(data.ToMemory().Span);
+#endif
+                }
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                if (_model is IModelJsonSerializable<object> jsonSerializable && _model is not IModelXmlSerializable<object>)
+                    return GetWriter(jsonSerializable).TryComputeLength(out length);
+
+                length = 0;
+                return false;
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                if (_model is IModelJsonSerializable<object> jsonSerializable && _model is not IModelXmlSerializable<object>)
+                {
+                    await GetWriter(jsonSerializable).CopyToAsync(stream, cancellation).ConfigureAwait(false);
+                }
+                else if (_model is IModelXmlSerializable<object> xmlSerializable && _model is not IModelJsonSerializable<object>)
+                {
+                    using XmlWriter writer = XmlWriter.Create(stream);
+                    xmlSerializable.Serialize(writer, _options);
+                    await writer.FlushAsync().ConfigureAwait(false);
+                }
+                else
+                {
+                    var data = GetBinaryData();
+                    await stream.WriteAsync(data.ToMemory(), cancellation).ConfigureAwait(false);
+                }
+            }
         }
 
         private sealed class ArrayContent : RequestContent
