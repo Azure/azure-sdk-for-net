@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ConnectedVMwarevSphere.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// <summary> A class to add extension methods to Azure.ResourceManager.ConnectedVMwarevSphere. </summary>
     public static partial class ConnectedVMwarevSphereExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ConnectedVMwarevSphereArmClientMockingExtension GetConnectedVMwarevSphereArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new ConnectedVMwarevSphereArmClientMockingExtension(client);
+            });
+        }
+
+        private static ConnectedVMwarevSphereResourceGroupMockingExtension GetConnectedVMwarevSphereResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ConnectedVMwarevSphereResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ConnectedVMwarevSphereSubscriptionMockingExtension GetConnectedVMwarevSphereSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ConnectedVMwarevSphereSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region ResourcePoolResource
         /// <summary>
         /// Gets an object representing a <see cref="ResourcePoolResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="ResourcePoolResource" /> object. </returns>
         public static ResourcePoolResource GetResourcePoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ResourcePoolResource.ValidateResourceId(id);
-                return new ResourcePoolResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetResourcePoolResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VMwareClusterResource" /> object. </returns>
         public static VMwareClusterResource GetVMwareClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VMwareClusterResource.ValidateResourceId(id);
-                return new VMwareClusterResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetVMwareClusterResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VMwareHostResource" /> object. </returns>
         public static VMwareHostResource GetVMwareHostResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VMwareHostResource.ValidateResourceId(id);
-                return new VMwareHostResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetVMwareHostResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VMwareDatastoreResource" /> object. </returns>
         public static VMwareDatastoreResource GetVMwareDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VMwareDatastoreResource.ValidateResourceId(id);
-                return new VMwareDatastoreResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetVMwareDatastoreResource(id);
         }
         #endregion
 
@@ -135,12 +109,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VCenterResource" /> object. </returns>
         public static VCenterResource GetVCenterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VCenterResource.ValidateResourceId(id);
-                return new VCenterResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetVCenterResource(id);
         }
         #endregion
 
@@ -154,12 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VirtualMachineResource" /> object. </returns>
         public static VirtualMachineResource GetVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineResource.ValidateResourceId(id);
-                return new VirtualMachineResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetVirtualMachineResource(id);
         }
         #endregion
 
@@ -173,12 +137,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VirtualMachineTemplateResource" /> object. </returns>
         public static VirtualMachineTemplateResource GetVirtualMachineTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualMachineTemplateResource.ValidateResourceId(id);
-                return new VirtualMachineTemplateResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetVirtualMachineTemplateResource(id);
         }
         #endregion
 
@@ -192,12 +151,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="VirtualNetworkResource" /> object. </returns>
         public static VirtualNetworkResource GetVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualNetworkResource.ValidateResourceId(id);
-                return new VirtualNetworkResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetVirtualNetworkResource(id);
         }
         #endregion
 
@@ -211,12 +165,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="InventoryItemResource" /> object. </returns>
         public static InventoryItemResource GetInventoryItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                InventoryItemResource.ValidateResourceId(id);
-                return new InventoryItemResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetInventoryItemResource(id);
         }
         #endregion
 
@@ -230,12 +179,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="HybridIdentityMetadataResource" /> object. </returns>
         public static HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridIdentityMetadataResource.ValidateResourceId(id);
-                return new HybridIdentityMetadataResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetHybridIdentityMetadataResource(id);
         }
         #endregion
 
@@ -249,12 +193,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="MachineExtensionResource" /> object. </returns>
         public static MachineExtensionResource GetMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MachineExtensionResource.ValidateResourceId(id);
-                return new MachineExtensionResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetMachineExtensionResource(id);
         }
         #endregion
 
@@ -268,12 +207,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> Returns a <see cref="GuestAgentResource" /> object. </returns>
         public static GuestAgentResource GetGuestAgentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GuestAgentResource.ValidateResourceId(id);
-                return new GuestAgentResource(client, id);
-            }
-            );
+            return GetConnectedVMwarevSphereArmClientMockingExtension(client).GetGuestAgentResource(id);
         }
         #endregion
 
@@ -282,7 +216,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of ResourcePoolResources and their operations over a ResourcePoolResource. </returns>
         public static ResourcePoolCollection GetResourcePools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourcePools();
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetResourcePools();
         }
 
         /// <summary>
@@ -306,7 +240,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static async Task<Response<ResourcePoolResource>> GetResourcePoolAsync(this ResourceGroupResource resourceGroupResource, string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetResourcePools().GetAsync(resourcePoolName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetResourcePoolAsync(resourcePoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -330,7 +264,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static Response<ResourcePoolResource> GetResourcePool(this ResourceGroupResource resourceGroupResource, string resourcePoolName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetResourcePools().Get(resourcePoolName, cancellationToken);
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetResourcePool(resourcePoolName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VMwareClusterResources in the ResourceGroupResource. </summary>
@@ -338,7 +272,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of VMwareClusterResources and their operations over a VMwareClusterResource. </returns>
         public static VMwareClusterCollection GetVMwareClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVMwareClusters();
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVMwareClusters();
         }
 
         /// <summary>
@@ -362,7 +296,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static async Task<Response<VMwareClusterResource>> GetVMwareClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVMwareClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVMwareClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -386,7 +320,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static Response<VMwareClusterResource> GetVMwareCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVMwareClusters().Get(clusterName, cancellationToken);
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVMwareCluster(clusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VMwareHostResources in the ResourceGroupResource. </summary>
@@ -394,7 +328,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of VMwareHostResources and their operations over a VMwareHostResource. </returns>
         public static VMwareHostCollection GetVMwareHosts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVMwareHosts();
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVMwareHosts();
         }
 
         /// <summary>
@@ -418,7 +352,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static async Task<Response<VMwareHostResource>> GetVMwareHostAsync(this ResourceGroupResource resourceGroupResource, string hostName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVMwareHosts().GetAsync(hostName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVMwareHostAsync(hostName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -442,7 +376,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static Response<VMwareHostResource> GetVMwareHost(this ResourceGroupResource resourceGroupResource, string hostName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVMwareHosts().Get(hostName, cancellationToken);
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVMwareHost(hostName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VMwareDatastoreResources in the ResourceGroupResource. </summary>
@@ -450,7 +384,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of VMwareDatastoreResources and their operations over a VMwareDatastoreResource. </returns>
         public static VMwareDatastoreCollection GetVMwareDatastores(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVMwareDatastores();
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVMwareDatastores();
         }
 
         /// <summary>
@@ -474,7 +408,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static async Task<Response<VMwareDatastoreResource>> GetVMwareDatastoreAsync(this ResourceGroupResource resourceGroupResource, string datastoreName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVMwareDatastores().GetAsync(datastoreName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVMwareDatastoreAsync(datastoreName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -498,7 +432,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static Response<VMwareDatastoreResource> GetVMwareDatastore(this ResourceGroupResource resourceGroupResource, string datastoreName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVMwareDatastores().Get(datastoreName, cancellationToken);
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVMwareDatastore(datastoreName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VCenterResources in the ResourceGroupResource. </summary>
@@ -506,7 +440,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of VCenterResources and their operations over a VCenterResource. </returns>
         public static VCenterCollection GetVCenters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVCenters();
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVCenters();
         }
 
         /// <summary>
@@ -530,7 +464,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static async Task<Response<VCenterResource>> GetVCenterAsync(this ResourceGroupResource resourceGroupResource, string vcenterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVCenters().GetAsync(vcenterName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVCenterAsync(vcenterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -554,7 +488,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static Response<VCenterResource> GetVCenter(this ResourceGroupResource resourceGroupResource, string vcenterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVCenters().Get(vcenterName, cancellationToken);
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVCenter(vcenterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
@@ -562,7 +496,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
         public static VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualMachines();
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachines();
         }
 
         /// <summary>
@@ -586,7 +520,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachineAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -610,7 +544,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static Response<VirtualMachineResource> GetVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualMachines().Get(virtualMachineName, cancellationToken);
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachine(virtualMachineName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualMachineTemplateResources in the ResourceGroupResource. </summary>
@@ -618,7 +552,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of VirtualMachineTemplateResources and their operations over a VirtualMachineTemplateResource. </returns>
         public static VirtualMachineTemplateCollection GetVirtualMachineTemplates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualMachineTemplates();
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachineTemplates();
         }
 
         /// <summary>
@@ -642,7 +576,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static async Task<Response<VirtualMachineTemplateResource>> GetVirtualMachineTemplateAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualMachineTemplates().GetAsync(virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachineTemplateAsync(virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -666,7 +600,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static Response<VirtualMachineTemplateResource> GetVirtualMachineTemplate(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualMachineTemplates().Get(virtualMachineTemplateName, cancellationToken);
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachineTemplate(virtualMachineTemplateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
@@ -674,7 +608,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
         public static VirtualNetworkCollection GetVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualNetworks();
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworks();
         }
 
         /// <summary>
@@ -698,7 +632,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static async Task<Response<VirtualNetworkResource>> GetVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualNetworks().GetAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetworkAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -722,7 +656,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         [ForwardsClientCalls]
         public static Response<VirtualNetworkResource> GetVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualNetworks().Get(virtualNetworkName, cancellationToken);
+            return GetConnectedVMwarevSphereResourceGroupMockingExtension(resourceGroupResource).GetVirtualNetwork(virtualNetworkName, cancellationToken);
         }
 
         /// <summary>
@@ -743,7 +677,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourcePoolResource> GetResourcePoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourcePoolsAsync(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetResourcePoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -764,7 +698,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="ResourcePoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourcePoolResource> GetResourcePools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourcePools(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetResourcePools(cancellationToken);
         }
 
         /// <summary>
@@ -785,7 +719,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VMwareClusterResource> GetVMwareClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVMwareClustersAsync(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVMwareClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -806,7 +740,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VMwareClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VMwareClusterResource> GetVMwareClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVMwareClusters(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVMwareClusters(cancellationToken);
         }
 
         /// <summary>
@@ -827,7 +761,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VMwareHostResource> GetVMwareHostsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVMwareHostsAsync(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVMwareHostsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -848,7 +782,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VMwareHostResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VMwareHostResource> GetVMwareHosts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVMwareHosts(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVMwareHosts(cancellationToken);
         }
 
         /// <summary>
@@ -869,7 +803,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VMwareDatastoreResource> GetVMwareDatastoresAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVMwareDatastoresAsync(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVMwareDatastoresAsync(cancellationToken);
         }
 
         /// <summary>
@@ -890,7 +824,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VMwareDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VMwareDatastoreResource> GetVMwareDatastores(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVMwareDatastores(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVMwareDatastores(cancellationToken);
         }
 
         /// <summary>
@@ -911,7 +845,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VCenterResource> GetVCentersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVCentersAsync(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVCentersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -932,7 +866,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VCenterResource> GetVCenters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVCenters(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVCenters(cancellationToken);
         }
 
         /// <summary>
@@ -953,7 +887,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachinesAsync(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVirtualMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -974,7 +908,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachines(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVirtualMachines(cancellationToken);
         }
 
         /// <summary>
@@ -995,7 +929,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineTemplateResource> GetVirtualMachineTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachineTemplatesAsync(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineTemplatesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1016,7 +950,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineTemplateResource> GetVirtualMachineTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualMachineTemplates(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineTemplates(cancellationToken);
         }
 
         /// <summary>
@@ -1037,7 +971,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> An async collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualNetworkResource> GetVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualNetworksAsync(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1058,7 +992,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <returns> A collection of <see cref="VirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualNetworkResource> GetVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualNetworks(cancellationToken);
+            return GetConnectedVMwarevSphereSubscriptionMockingExtension(subscriptionResource).GetVirtualNetworks(cancellationToken);
         }
     }
 }

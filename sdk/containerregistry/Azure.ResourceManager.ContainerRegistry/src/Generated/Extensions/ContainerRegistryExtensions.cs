@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerRegistry.Mocking;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerRegistry. </summary>
     public static partial class ContainerRegistryExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ContainerRegistryArmClientMockingExtension GetContainerRegistryArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new ContainerRegistryArmClientMockingExtension(client);
+            });
+        }
+
+        private static ContainerRegistryResourceGroupMockingExtension GetContainerRegistryResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ContainerRegistryResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ContainerRegistrySubscriptionMockingExtension GetContainerRegistrySubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ContainerRegistrySubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region ContainerRegistryResource
         /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryResource" /> object. </returns>
         public static ContainerRegistryResource GetContainerRegistryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryResource.ValidateResourceId(id);
-                return new ContainerRegistryResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryPrivateLinkResource" /> object. </returns>
         public static ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryPrivateLinkResource.ValidateResourceId(id);
-                return new ContainerRegistryPrivateLinkResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryPrivateLinkResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryPrivateEndpointConnectionResource" /> object. </returns>
         public static ContainerRegistryPrivateEndpointConnectionResource GetContainerRegistryPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new ContainerRegistryPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryReplicationResource" /> object. </returns>
         public static ContainerRegistryReplicationResource GetContainerRegistryReplicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryReplicationResource.ValidateResourceId(id);
-                return new ContainerRegistryReplicationResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryReplicationResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ScopeMapResource" /> object. </returns>
         public static ScopeMapResource GetScopeMapResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScopeMapResource.ValidateResourceId(id);
-                return new ScopeMapResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetScopeMapResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryTokenResource" /> object. </returns>
         public static ContainerRegistryTokenResource GetContainerRegistryTokenResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryTokenResource.ValidateResourceId(id);
-                return new ContainerRegistryTokenResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryTokenResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryWebhookResource" /> object. </returns>
         public static ContainerRegistryWebhookResource GetContainerRegistryWebhookResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryWebhookResource.ValidateResourceId(id);
-                return new ContainerRegistryWebhookResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryWebhookResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryAgentPoolResource" /> object. </returns>
         public static ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryAgentPoolResource.ValidateResourceId(id);
-                return new ContainerRegistryAgentPoolResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryAgentPoolResource(id);
         }
         #endregion
 
@@ -212,12 +166,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryRunResource" /> object. </returns>
         public static ContainerRegistryRunResource GetContainerRegistryRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryRunResource.ValidateResourceId(id);
-                return new ContainerRegistryRunResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryRunResource(id);
         }
         #endregion
 
@@ -231,12 +180,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryTaskRunResource" /> object. </returns>
         public static ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryTaskRunResource.ValidateResourceId(id);
-                return new ContainerRegistryTaskRunResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryTaskRunResource(id);
         }
         #endregion
 
@@ -250,12 +194,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryTaskResource" /> object. </returns>
         public static ContainerRegistryTaskResource GetContainerRegistryTaskResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerRegistryTaskResource.ValidateResourceId(id);
-                return new ContainerRegistryTaskResource(client, id);
-            }
-            );
+            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryTaskResource(id);
         }
         #endregion
 
@@ -264,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An object representing collection of ContainerRegistryResources and their operations over a ContainerRegistryResource. </returns>
         public static ContainerRegistryCollection GetContainerRegistries(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerRegistries();
+            return GetContainerRegistryResourceGroupMockingExtension(resourceGroupResource).GetContainerRegistries();
         }
 
         /// <summary>
@@ -288,7 +227,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         public static async Task<Response<ContainerRegistryResource>> GetContainerRegistryAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetContainerRegistries().GetAsync(registryName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerRegistryResourceGroupMockingExtension(resourceGroupResource).GetContainerRegistryAsync(registryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -312,7 +251,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         public static Response<ContainerRegistryResource> GetContainerRegistry(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetContainerRegistries().Get(registryName, cancellationToken);
+            return GetContainerRegistryResourceGroupMockingExtension(resourceGroupResource).GetContainerRegistry(registryName, cancellationToken);
         }
 
         /// <summary>
@@ -334,9 +273,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<ContainerRegistryNameAvailableResult>> CheckContainerRegistryNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckContainerRegistryNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetContainerRegistrySubscriptionMockingExtension(subscriptionResource).CheckContainerRegistryNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -358,9 +295,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<ContainerRegistryNameAvailableResult> CheckContainerRegistryNameAvailability(this SubscriptionResource subscriptionResource, ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckContainerRegistryNameAvailability(content, cancellationToken);
+            return GetContainerRegistrySubscriptionMockingExtension(subscriptionResource).CheckContainerRegistryNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -381,7 +316,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An async collection of <see cref="ContainerRegistryResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerRegistryResource> GetContainerRegistriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerRegistriesAsync(cancellationToken);
+            return GetContainerRegistrySubscriptionMockingExtension(subscriptionResource).GetContainerRegistriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -402,7 +337,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ContainerRegistryResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerRegistryResource> GetContainerRegistries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerRegistries(cancellationToken);
+            return GetContainerRegistrySubscriptionMockingExtension(subscriptionResource).GetContainerRegistries(cancellationToken);
         }
     }
 }
