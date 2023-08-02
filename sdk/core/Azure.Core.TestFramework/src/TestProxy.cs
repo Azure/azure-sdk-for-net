@@ -146,7 +146,10 @@ namespace Azure.Core.TestFramework
                 {
                     while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardOutput.EndOfStream)
                     {
-                        _output.AppendLine(_testProxyProcess.StandardOutput.ReadLine());
+                        lock (_output)
+                        {
+                            _output.AppendLine(_testProxyProcess.StandardOutput.ReadLine());
+                        }
                     }
                 });
         }
@@ -214,8 +217,14 @@ namespace Azure.Core.TestFramework
         {
             // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
             await Task.Delay(100);
-            TestContext.Out.WriteLine(_output.ToString());
-            _output.Clear();
+
+            // lock to avoid any race conditions caused by appending to the StringBuilder while calling ToString
+            lock (_output)
+            {
+                TestContext.Out.WriteLine(_output.ToString());
+                _output.Clear();
+            }
+
             if (_errorBuffer.Length > 0)
             {
                 var error = _errorBuffer.ToString();
