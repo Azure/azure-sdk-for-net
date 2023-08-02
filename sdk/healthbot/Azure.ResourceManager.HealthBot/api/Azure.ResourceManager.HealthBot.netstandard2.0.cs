@@ -52,6 +52,27 @@ namespace Azure.ResourceManager.HealthBot
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource>> UpdateAsync(Azure.ResourceManager.HealthBot.Models.HealthBotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.HealthBot.Mocking
+{
+    public partial class HealthBotArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected HealthBotArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.HealthBot.HealthBotResource GetHealthBotResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class HealthBotResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected HealthBotResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource> GetHealthBot(string botName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource>> GetHealthBotAsync(string botName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HealthBot.HealthBotCollection GetHealthBots() { throw null; }
+    }
+    public partial class HealthBotSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected HealthBotSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.HealthBot.HealthBotResource> GetHealthBots(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HealthBot.HealthBotResource> GetHealthBotsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.HealthBot.Models
 {
     public static partial class ArmHealthBotModelFactory

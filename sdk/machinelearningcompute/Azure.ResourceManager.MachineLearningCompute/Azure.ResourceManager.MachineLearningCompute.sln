@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{AD28C841-23ED-4538-8D21-178A02D67B0C}") = "Azure.ResourceManager.MachineLearningCompute", "src\Azure.ResourceManager.MachineLearningCompute.csproj", "{BA27E854-E57A-45E1-8324-04109F54B232}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MachineLearningCompute", "src\Azure.ResourceManager.MachineLearningCompute.csproj", "{BA27E854-E57A-45E1-8324-04109F54B232}"
 EndProject
-Project("{AD28C841-23ED-4538-8D21-178A02D67B0C}") = "Azure.ResourceManager.MachineLearningCompute.Tests", "tests\Azure.ResourceManager.MachineLearningCompute.Tests.csproj", "{1D409A86-C07D-4967-9115-78AEECBF4D25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MachineLearningCompute.Tests", "tests\Azure.ResourceManager.MachineLearningCompute.Tests.csproj", "{1D409A86-C07D-4967-9115-78AEECBF4D25}"
 EndProject
-Project("{AD28C841-23ED-4538-8D21-178A02D67B0C}") = "Azure.ResourceManager.MachineLearningCompute.Samples", "samples\Azure.ResourceManager.MachineLearningCompute.Samples.csproj", "{67C9A380-0892-4F04-AAA1-EEA63B66F465}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.MachineLearningCompute.Samples", "samples\Azure.ResourceManager.MachineLearningCompute.Samples.csproj", "{67C9A380-0892-4F04-AAA1-EEA63B66F465}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D4CBDE2E-7C1A-4FD4-920E-1193C4A9BA1F}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{1D409A86-C07D-4967-9115-78AEECBF4D25}.Release|x64.Build.0 = Release|Any CPU
 		{1D409A86-C07D-4967-9115-78AEECBF4D25}.Release|x86.ActiveCfg = Release|Any CPU
 		{1D409A86-C07D-4967-9115-78AEECBF4D25}.Release|x86.Build.0 = Release|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Debug|x64.Build.0 = Debug|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Debug|x86.Build.0 = Debug|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Release|x64.ActiveCfg = Release|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Release|x64.Build.0 = Release|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Release|x86.ActiveCfg = Release|Any CPU
+		{67C9A380-0892-4F04-AAA1-EEA63B66F465}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4CBDE2E-7C1A-4FD4-920E-1193C4A9BA1F}
 	EndGlobalSection
 EndGlobal

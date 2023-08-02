@@ -110,6 +110,30 @@ namespace Azure.ResourceManager.VoiceServices
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>> UpdateAsync(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.VoiceServices.Mocking
+{
+    public partial class VoiceServicesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VoiceServicesArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource GetVoiceServicesCommunicationsGatewayResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource GetVoiceServicesTestLineResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class VoiceServicesResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VoiceServicesResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateway(string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>> GetVoiceServicesCommunicationsGatewayAsync(string communicationsGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayCollection GetVoiceServicesCommunicationsGateways() { throw null; }
+    }
+    public partial class VoiceServicesSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected VoiceServicesSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult> CheckVoiceServicesNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult>> CheckVoiceServicesNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateways(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGatewaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.VoiceServices.Models
 {
     public static partial class ArmVoiceServicesModelFactory

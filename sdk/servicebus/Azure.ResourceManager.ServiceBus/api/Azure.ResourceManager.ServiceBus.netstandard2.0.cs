@@ -590,6 +590,41 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusTopicResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.ServiceBusTopicData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ServiceBus.Mocking
+{
+    public partial class ServiceBusArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ServiceBusArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.ServiceBus.MigrationConfigurationResource GetMigrationConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryAuthorizationRuleResource GetServiceBusDisasterRecoveryAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryResource GetServiceBusDisasterRecoveryResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusNamespaceAuthorizationRuleResource GetServiceBusNamespaceAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource GetServiceBusNamespaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetResource GetServiceBusNetworkRuleSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionResource GetServiceBusPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusQueueAuthorizationRuleResource GetServiceBusQueueAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusQueueResource GetServiceBusQueueResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusRuleResource GetServiceBusRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionResource GetServiceBusSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusTopicAuthorizationRuleResource GetServiceBusTopicAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusTopicResource GetServiceBusTopicResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class ServiceBusResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ServiceBusResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> GetServiceBusNamespace(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> GetServiceBusNamespaceAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ServiceBus.ServiceBusNamespaceCollection GetServiceBusNamespaces() { throw null; }
+    }
+    public partial class ServiceBusSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ServiceBusSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult> CheckServiceBusNamespaceNameAvailability(Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult>> CheckServiceBusNamespaceNameAvailabilityAsync(Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> GetServiceBusNamespaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> GetServiceBusNamespacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     public static partial class ArmServiceBusModelFactory

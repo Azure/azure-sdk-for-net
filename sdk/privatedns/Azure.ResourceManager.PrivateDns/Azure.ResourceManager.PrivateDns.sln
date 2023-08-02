@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BCCA942-A639-4B72-9A08-F74AFF80121D}") = "Azure.ResourceManager.PrivateDns", "src\Azure.ResourceManager.PrivateDns.csproj", "{4F3323E1-DBDE-45CD-81D6-9F755B11E3B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.PrivateDns", "src\Azure.ResourceManager.PrivateDns.csproj", "{4F3323E1-DBDE-45CD-81D6-9F755B11E3B9}"
 EndProject
-Project("{8BCCA942-A639-4B72-9A08-F74AFF80121D}") = "Azure.ResourceManager.PrivateDns.Tests", "tests\Azure.ResourceManager.PrivateDns.Tests.csproj", "{AE92756D-428C-41B1-B264-1671BCAB9262}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.PrivateDns.Tests", "tests\Azure.ResourceManager.PrivateDns.Tests.csproj", "{AE92756D-428C-41B1-B264-1671BCAB9262}"
 EndProject
-Project("{8BCCA942-A639-4B72-9A08-F74AFF80121D}") = "Azure.ResourceManager.PrivateDns.Samples", "samples\Azure.ResourceManager.PrivateDns.Samples.csproj", "{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.PrivateDns.Samples", "samples\Azure.ResourceManager.PrivateDns.Samples.csproj", "{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9A33B00E-DD4E-4F38-8880-6916FFD057E9}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{AE92756D-428C-41B1-B264-1671BCAB9262}.Release|x64.Build.0 = Release|Any CPU
 		{AE92756D-428C-41B1-B264-1671BCAB9262}.Release|x86.ActiveCfg = Release|Any CPU
 		{AE92756D-428C-41B1-B264-1671BCAB9262}.Release|x86.Build.0 = Release|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Debug|x64.Build.0 = Debug|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Debug|x86.Build.0 = Debug|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Release|x64.ActiveCfg = Release|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Release|x64.Build.0 = Release|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Release|x86.ActiveCfg = Release|Any CPU
+		{CCC31236-7E37-4AC3-8BA4-4FDD23E87CB4}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9A33B00E-DD4E-4F38-8880-6916FFD057E9}
 	EndGlobalSection
 EndGlobal
