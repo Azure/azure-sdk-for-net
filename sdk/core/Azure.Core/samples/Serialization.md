@@ -1,34 +1,47 @@
-# Azure.Core public serialization samples
+# Azure.Core Public Serialization Guide
 
-## Using explicit cast
+The latest updates to the `Azure.Core` library have simplified serializing and deserializing of all public Azure models. With the addiion of the ModelSerializer class, we provide a public interface that exposes the currently internal serialization code so customers can access it without needing to use reflection or write their own translation. The recommended serialization approach is to use the static `ModelSerializer` class. The ModelSerializer class also has the ModelSerializerOptions which allows the user to set the serialization Format type (Json or Wire) and provide custom Serializer types for specific models.
 
-When using protocol methods for advanced handling of RequestContext it is still possible to use the strongly typed models.
-There is an explicit cast operator that can be used to convert the protocol Response to the strongly typed model.
-There is also an explicit cast operator that can be used to convert the strongly typed model to the protocol RequestContent.
+## Key Concepts
+
+- [Using the ModelSerializer](#using-the-modelserializer)
+- [Using explicit cast](#using-explicit-cast)
+- [Using the ModelJsonConverter](#using-the-modeljsonconverter)
+- [Envelope BYOM Case](#envelope-byom-case)
+- [Using ModelSerializer with generic IModelSerializable](#using-modelserializer-with-generic-imodelserializable)
+
+## Using the ModelSerializer
+
+The default serialization options can be overridden by passing in a `ModelSerializerOptions` object to the Serialize and Deserialize methods. Developers can set the format options to specify the serialization format such as XML, JSON, and BinaryData. Default `ModelSerializationOptions` use the Wire format and the System.Text.Json serializer. The following samples demonstrate how to use `ModelSerializer` class for `System.Text.Json` and `Newtonsoft.Json` serialization.
+
+## Using ModelSerializer for System.Text.Json
+In the following sample, we are using the default `ModelSerializerOptions`. This will allow the `ModelSerializer` to use the System.Text.Json serializer for all models. In the Deserialization sample, we are setting the `ModelSerializerFormat` in the Options to Json. This will serialize all properties including read-only and additional properties.
 
 ### Serialization
 
-```C# Snippet:ExplicitCast_Serialize
-PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
-DogListProperty dog = new DogListProperty("myPet");
-Response response = client.CreatePet("myPet", (RequestContent)dog);
-var response2 = client.CreatePet("myPet", RequestContent.Create(dog));
+```C# Snippet:SystemTextJson_Serialize
+DogListProperty dog = new DogListProperty
+{
+    Name = "Doggo",
+    IsHungry = true,
+    Weight = 1.1,
+    FoodConsumed = { "kibble", "egg", "peanut butter" },
+};
+BinaryData data = ModelSerializer.Serialize(dog);
 ```
 
 ### Deserialization
 
-```C# Snippet:ExplicitCast_Deserialize
-PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
-Response response = client.GetPet("myPet");
-DogListProperty dog = (DogListProperty)response;
-Console.WriteLine(dog.IsHungry);
-```
+```C# Snippet:SystemTextJson_Deserialize
+ModelSerializerOptions options = new ModelSerializerOptions(ModelSerializerFormat.Json);
+string json = @"[{""Name"":""Doggo"",""IsHungry"":true,""Weight"":1.1,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
-Given that explicit cast does not allow for serialization options we might also consider a static `FromResponse` and instance `ToRequestContent` methods.
+DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(BinaryData.FromString(json), options);
+```
 
 ## Using ModelSerializer for NewtonSoftJson
 
-By using the ModelSerializer class, a new instance of Dog does not need to be created before calling Deserialize. Also added ObjectSerializer to Options class so different kinds of Serializers can be used.
+In the following sample, we are adding the DogListProperty with the `NewtonsoftJsonObjectSerializer` to the `GenericTypeSerializerCreator`. This will allow the `ModelSerializer` to use the `NewtonsoftJsonObjectSerializer` for the DogListProperty model. 
 
 ### Serialization
 
@@ -56,16 +69,33 @@ string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"","
 DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(BinaryData.FromString(json), options);
 ```
 
+## Using explicit cast
+
+If you would like to convert the protocol model to the strongly typed model, you can use the explicit cast operator. This will allow you to use the strongly typed model for serialization and deserialization. There is also an explicit cast operator that can be used to convert the strongly typed model to the protocol RequestContent.
+
+### Serialization
+
+```C# Snippet:ExplicitCast_Serialize
+DefaultAzureCredential credential = new DefaultAzureCredential();
+PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), credential);
+DogListProperty dog = new DogListProperty("myPet");
+Response response = client.CreatePet("myPet", (RequestContent)dog);
+Response response2 = client.CreatePet("myPet", RequestContent.Create(dog));
+```
+
+### Deserialization
+
+```C# Snippet:ExplicitCast_Deserialize
+DefaultAzureCredential credential = new DefaultAzureCredential();
+PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), credential);
+Response response = client.GetPet("myPet");
+DogListProperty dog = (DogListProperty)response;
+Console.WriteLine(dog.IsHungry);
+```
+
 ## Using ModelJsonConverter for JsonSerializer
 
-In order to better integrate with the rest of the .NET ecosystem, Azure.Core supports System.Text.Json serialization. The following example demonstrates using System.Text.Json for serialization and deserialization
-If we go this route the IJsonSerializable interface will only be needed for compile time constraints and can most likely be methodless and renamed to IRehydratable.
-
-One limitation if we go this route is there isn't a clear place to pass in a flag to include additional properties during serialization and deserialization.
-
-By using the ModelJsonConverter class we can have a place to add additional properties to the JsonSerializerOptions.
-This will allow us to add things like `IgnoreAdditionalProperties` and `Version` to the options without needing to have our own ModelSerializer.
-The `SerializableOptions` would become internal and we would have a converter to convert from `JsonSerializerOptions` + `ModelJsonConverter` to `SerializableOptions`.
+If you have Json that needs to be converted into a specific object type, consider using the ModelJsonConverter class. This class can handle the deserialization of a model to a specific type and include additional metadata. 
 
 ### Serialization
 
@@ -97,7 +127,7 @@ DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListPropert
 
 ## Envelope BYOM Case
 
-The following examples show a use case where a User brings a model unknown to the Serializer. The serialization used for each model can also be set in the SerializableOptions options property Serializers. 
+The following examples show a use case where a user brings a model unknown to the Serializer. The serialization used for each model can also be set in the SerializableOptions options property Serializers. 
 
 Model Being Used by User
 ```C# Snippet:Example_Model
@@ -138,8 +168,6 @@ Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new Binar
 
 In this example we demonstrate how we could use the exact same method / interface to serialize either json or xml.
 Above we demonstrate using `SerializeJson` and `SerializeXml` methods but this requires the user to know which serializer to use.
-We could delegate needing to know this to each model itself since they for sure need to know how to serialize themselves.  It does
-introduce a question around what happens if a model could be serialized as both json and xml.
 
 ### Serialization
 
@@ -162,3 +190,15 @@ XmlModelForCombinedInterface xmlModel = ModelSerializer.Deserialize<XmlModelForC
 string jsonResponse = "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"x\":\"extra\"}";
 JsonModelForCombinedInterface jsonModel = ModelSerializer.Deserialize<JsonModelForCombinedInterface>(new BinaryData(Encoding.UTF8.GetBytes(jsonResponse)));
 ```
+
+## Next steps
+
+To learn more about serialization with Azure Core, see the [Azure.Core.Serialization class](https://learn.microsoft.com/en-us/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet).
+
+## Contributing
+
+This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [https://cla.microsoft.com](https://cla.microsoft.com).
+
+When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately. For example, labels and comments. Follow the instructions provided by the bot. You only need to sign the CLA once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information, see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any questions or comments.

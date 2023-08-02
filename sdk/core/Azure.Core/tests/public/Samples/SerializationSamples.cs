@@ -22,10 +22,15 @@ namespace Azure.Core.Samples
         public void ExplicitCastSerialize()
         {
             #region Snippet:ExplicitCast_Serialize
-            PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
+#if SNIPPET
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+#else
+            MockCredential credential = new();
+#endif
+            PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), credential);
             DogListProperty dog = new DogListProperty("myPet");
             Response response = client.CreatePet("myPet", (RequestContent)dog);
-            var response2 = client.CreatePet("myPet", RequestContent.Create(dog));
+            Response response2 = client.CreatePet("myPet", RequestContent.Create(dog));
             #endregion
         }
 
@@ -34,7 +39,12 @@ namespace Azure.Core.Samples
         public void ExplicitCastDeserialize()
         {
             #region Snippet:ExplicitCast_Deserialize
-            PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), new MockCredential());
+#if SNIPPET
+            DefaultAzureCredential credential = new DefaultAzureCredential();
+#else
+            MockCredential credential = new();
+#endif
+            PetStoreClient client = new PetStoreClient(new Uri("http://somewhere.com"), credential);
             Response response = client.GetPet("myPet");
             DogListProperty dog = (DogListProperty)response;
             Console.WriteLine(dog.IsHungry);
@@ -68,6 +78,34 @@ namespace Azure.Core.Samples
             ModelSerializerOptions options = new ModelSerializerOptions();
             options.GenericTypeSerializerCreator = type => type.Equals(typeof(DogListProperty)) ? new NewtonsoftJsonObjectSerializer() : null;
             string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
+
+            DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(BinaryData.FromString(json), options);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void SystemTextJsonSerialize()
+        {
+            #region Snippet:SystemTextJson_Serialize
+            DogListProperty dog = new DogListProperty
+            {
+                Name = "Doggo",
+                IsHungry = true,
+                Weight = 1.1,
+                FoodConsumed = { "kibble", "egg", "peanut butter" },
+            };
+            BinaryData data = ModelSerializer.Serialize(dog);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void SystemTextJsonDeserialize()
+        {
+            #region Snippet:SystemTextJson_Deserialize
+            ModelSerializerOptions options = new ModelSerializerOptions(ModelSerializerFormat.Json);
+            string json = @"[{""Name"":""Doggo"",""IsHungry"":true,""Weight"":1.1,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
             DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(BinaryData.FromString(json), options);
             #endregion
