@@ -179,6 +179,32 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         public Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesPrivateLinkResourceProperties Properties { get { throw null; } }
     }
 }
+namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
+{
+    public partial class DeviceProvisioningServicesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DeviceProvisioningServicesArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class DeviceProvisioningServicesResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DeviceProvisioningServicesResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningService(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceCollection GetDeviceProvisioningServices() { throw null; }
+    }
+    public partial class DeviceProvisioningServicesSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DeviceProvisioningServicesSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
     public static partial class ArmDeviceProvisioningServicesModelFactory

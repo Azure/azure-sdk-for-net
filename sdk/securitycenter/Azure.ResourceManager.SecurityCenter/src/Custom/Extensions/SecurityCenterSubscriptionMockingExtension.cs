@@ -4,21 +4,16 @@
 #nullable disable
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.SecurityCenter.Models;
+using System.ComponentModel;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class SecurityCenterSubscriptionMockingExtension : ArmResource
     {
         /// <summary> Gets a collection of SubscriptionGovernanceRuleResources in the SubscriptionResource. </summary>
         /// <returns> An object representing collection of SubscriptionGovernanceRuleResources and their operations over a SubscriptionGovernanceRuleResource. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public virtual SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules()
         {

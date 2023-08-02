@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using Azure.ResourceManager.Resources;
 using System.Threading;
 using Azure.ResourceManager.Reservations.Models;
@@ -34,15 +36,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An async collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            TenantResourceGetReservationDetailsOptions options = new TenantResourceGetReservationDetailsOptions();
-            options.Filter = filter;
-            options.Orderby = orderby;
-            options.RefreshSummary = refreshSummary;
-            options.Skiptoken = skiptoken;
-            options.SelectedState = selectedState;
-            options.Take = take;
-
-            return tenantResource.GetReservationDetailsAsync(options, cancellationToken);
+            return GetReservationsTenantMockingExtension(tenantResource).GetReservationDetailsAsync(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken);
         }
 
         /// <summary>
@@ -69,15 +63,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> A collection of <see cref="ReservationDetailResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, string filter = null, string orderby = null, string refreshSummary = null, float? skiptoken = null, string selectedState = null, float? take = null, CancellationToken cancellationToken = default)
         {
-            TenantResourceGetReservationDetailsOptions options = new TenantResourceGetReservationDetailsOptions();
-            options.Filter = filter;
-            options.Orderby = orderby;
-            options.RefreshSummary = refreshSummary;
-            options.Skiptoken = skiptoken;
-            options.SelectedState = selectedState;
-            options.Take = take;
-
-            return tenantResource.GetReservationDetails(options, cancellationToken);
+            return GetReservationsTenantMockingExtension(tenantResource).GetReservationDetails(filter, orderby, refreshSummary, skiptoken, selectedState, take, cancellationToken);
         }
 
         /// <summary>
@@ -103,15 +89,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An async collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ReservationCatalog> GetCatalogAsync(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
-            SubscriptionResourceGetCatalogOptions options = new SubscriptionResourceGetCatalogOptions
-            {
-                ReservedResourceType = reservedResourceType,
-                Location = location,
-                PublisherId = publisherId,
-                OfferId = offerId,
-                PlanId = planId
-            };
-            return subscriptionResource.GetCatalogAsync(options, cancellationToken);
+            return GetReservationsSubscriptionMockingExtension(subscriptionResource).GetCatalogAsync(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
         }
 
         /// <summary>
@@ -137,15 +115,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> A collection of <see cref="ReservationCatalog" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ReservationCatalog> GetCatalog(this SubscriptionResource subscriptionResource, string reservedResourceType = null, AzureLocation? location = null, string publisherId = null, string offerId = null, string planId = null, CancellationToken cancellationToken = default)
         {
-            SubscriptionResourceGetCatalogOptions options = new SubscriptionResourceGetCatalogOptions
-            {
-                ReservedResourceType = reservedResourceType,
-                Location = location,
-                PublisherId = publisherId,
-                OfferId = offerId,
-                PlanId = planId
-            };
-            return subscriptionResource.GetCatalog(options, cancellationToken);
+            return GetReservationsSubscriptionMockingExtension(subscriptionResource).GetCatalog(reservedResourceType, location, publisherId, offerId, planId, cancellationToken);
         }
     }
 }

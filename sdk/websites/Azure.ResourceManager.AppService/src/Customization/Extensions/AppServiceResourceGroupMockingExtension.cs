@@ -6,16 +6,12 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppService.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class AppServiceResourceGroupMockingExtension : ArmResource
     {
         /// <summary>
         /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.

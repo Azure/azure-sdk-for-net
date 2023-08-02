@@ -140,6 +140,29 @@ namespace Azure.ResourceManager.Nginx
         public static Azure.AsyncPageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeploymentsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Nginx.Mocking
+{
+    public partial class NginxArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NginxArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.Nginx.NginxCertificateResource GetNginxCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Nginx.NginxConfigurationResource GetNginxConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Nginx.NginxDeploymentResource GetNginxDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class NginxResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NginxResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeployment(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Nginx.NginxDeploymentResource>> GetNginxDeploymentAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Nginx.NginxDeploymentCollection GetNginxDeployments() { throw null; }
+    }
+    public partial class NginxSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NginxSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeployments(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Nginx.NginxDeploymentResource> GetNginxDeploymentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Nginx.Models
 {
     public static partial class ArmNginxModelFactory

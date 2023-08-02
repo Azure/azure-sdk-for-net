@@ -571,6 +571,53 @@ namespace Azure.ResourceManager.OperationalInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.OperationalInsights.StorageInsightResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.OperationalInsights.StorageInsightData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.OperationalInsights.Mocking
+{
+    public partial class OperationalInsightsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected OperationalInsightsArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource GetLogAnalyticsQueryPackResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryResource GetLogAnalyticsQueryResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterResource GetOperationalInsightsClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsDataExportResource GetOperationalInsightsDataExportResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsDataSourceResource GetOperationalInsightsDataSourceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedServiceResource GetOperationalInsightsLinkedServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsLinkedStorageAccountsResource GetOperationalInsightsLinkedStorageAccountsResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsSavedSearchResource GetOperationalInsightsSavedSearchResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsTableResource GetOperationalInsightsTableResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource GetOperationalInsightsWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.StorageInsightResource GetStorageInsightResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class OperationalInsightsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected OperationalInsightsResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource> CreateOrUpdateWithoutNameQueryPack(Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPack(string queryPackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource>> GetLogAnalyticsQueryPackAsync(string queryPackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackCollection GetLogAnalyticsQueryPacks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterResource> GetOperationalInsightsCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterResource>> GetOperationalInsightsClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterCollection GetOperationalInsightsClusters() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspace(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource>> GetOperationalInsightsWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceCollection GetOperationalInsightsWorkspaces() { throw null; }
+    }
+    public partial class OperationalInsightsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected OperationalInsightsSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterResource> GetOperationalInsightsClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsClusterResource> GetOperationalInsightsClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.OperationalInsights.OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public static partial class ArmOperationalInsightsModelFactory

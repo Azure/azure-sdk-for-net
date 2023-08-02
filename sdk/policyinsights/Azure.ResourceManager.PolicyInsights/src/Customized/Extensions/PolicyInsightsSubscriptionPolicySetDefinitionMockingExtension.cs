@@ -4,35 +4,31 @@
 #nullable disable
 
 using System;
-using System.Globalization;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights.Models;
 
-namespace Azure.ResourceManager.PolicyInsights
+namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionPolicySetDefinition. </summary>
-    internal partial class SubscriptionPolicySetDefinitionResourceExtensionClient : ArmResource
+    public partial class PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension : ArmResource
     {
         private ClientDiagnostics _policyEventsClientDiagnostics;
         private PolicyEventsRestOperations _policyEventsRestClient;
         private ClientDiagnostics _policyStatesClientDiagnostics;
         private PolicyStatesRestOperations _policyStatesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinitionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionPolicySetDefinitionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension"/> class for mocking. </summary>
+        protected PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinitionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionPolicySetDefinitionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -40,6 +36,7 @@ namespace Azure.ResourceManager.PolicyInsights
         private PolicyEventsRestOperations PolicyEventsRestClient => _policyEventsRestClient ??= new PolicyEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics PolicyStatesClientDiagnostics => _policyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private PolicyStatesRestOperations PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);

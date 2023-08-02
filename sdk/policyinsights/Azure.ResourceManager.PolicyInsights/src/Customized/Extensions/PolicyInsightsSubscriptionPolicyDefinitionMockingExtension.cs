@@ -4,35 +4,31 @@
 #nullable disable
 
 using System;
-using System.Globalization;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PolicyInsights.Models;
 
-namespace Azure.ResourceManager.PolicyInsights
+namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionPolicyDefinitionResource. </summary>
-    internal partial class SubscriptionPolicyDefinitionResourceExtensionClient : ArmResource
+    public partial class PolicyInsightsSubscriptionPolicyDefinitionMockingExtension : ArmResource
     {
         private ClientDiagnostics _policyEventsClientDiagnostics;
         private PolicyEventsRestOperations _policyEventsRestClient;
         private ClientDiagnostics _policyStatesClientDiagnostics;
         private PolicyStatesRestOperations _policyStatesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicyDefinitionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionPolicyDefinitionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsSubscriptionPolicyDefinitionMockingExtension"/> class for mocking. </summary>
+        protected PolicyInsightsSubscriptionPolicyDefinitionMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicyDefinitionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsSubscriptionPolicyDefinitionMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionPolicyDefinitionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyInsightsSubscriptionPolicyDefinitionMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

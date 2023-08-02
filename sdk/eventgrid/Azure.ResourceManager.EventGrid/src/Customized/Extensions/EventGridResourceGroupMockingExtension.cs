@@ -8,9 +8,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.EventGrid
+namespace Azure.ResourceManager.EventGrid.Mocking
 {
-    internal partial class ResourceGroupResourceExtensionClient
+    [CodeGenSuppress("GetEventTypesAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetEventTypes", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    public partial class EventGridResourceGroupMockingExtension
     {
         /// <summary>
         /// List all global event subscriptions under a resource group for a specific topic type.
@@ -24,6 +26,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicTypeAsync(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+
             async Task<Page<EventGridSubscriptionData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
@@ -69,6 +73,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicType(string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+
             Page<EventGridSubscriptionData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsDataForTopicType");
@@ -205,6 +211,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicTypeAsync(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+
             async Task<Page<EventGridSubscriptionData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");
@@ -251,6 +259,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicType(AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+
             Page<EventGridSubscriptionData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsDataForTopicType");

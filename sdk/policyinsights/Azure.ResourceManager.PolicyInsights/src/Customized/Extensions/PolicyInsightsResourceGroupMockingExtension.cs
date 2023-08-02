@@ -7,7 +7,7 @@ using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager.PolicyInsights.Models;
 
-namespace Azure.ResourceManager.PolicyInsights
+namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     [CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents", typeof(string), typeof(PolicyEventType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PolicyInsights
     [CodeGenSuppress("GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync", typeof(string), typeof(PolicyStateType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [CodeGenSuppress("SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates", typeof(string), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     [CodeGenSuppress("SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync", typeof(string), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class PolicyInsightsResourceGroupMockingExtension : ArmResource
     {
     }
 }

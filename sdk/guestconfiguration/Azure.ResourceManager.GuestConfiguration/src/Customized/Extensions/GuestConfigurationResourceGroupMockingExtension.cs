@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.GuestConfiguration
+namespace Azure.ResourceManager.GuestConfiguration.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     [CodeGenSuppress("GetGuestConfigurationAssignmentsAsync", typeof(CancellationToken))]
@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.GuestConfiguration
     [CodeGenSuppress("GetGuestConfigurationVmAssignments", typeof(string))]
     [CodeGenSuppress("GetGuestConfigurationHcrpAssignments", typeof(string))]
     [CodeGenSuppress("GetGuestConfigurationVmssAssignments", typeof(string))]
-    internal partial class ResourceGroupResourceExtensionClient : ArmResource
+    public partial class GuestConfigurationResourceGroupMockingExtension : ArmResource
     {
         /// <summary>
         /// List all guest configuration assignments for a resource group.

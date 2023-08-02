@@ -121,6 +121,34 @@ namespace Azure.ResourceManager.NewRelicObservability
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleResource>> UpdateAsync(Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityTagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.NewRelicObservability.Mocking
+{
+    public partial class NewRelicObservabilityArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NewRelicObservabilityArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource GetNewRelicMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleResource GetNewRelicObservabilityTagRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class NewRelicObservabilityResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NewRelicObservabilityResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource> GetNewRelicMonitorResource(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource>> GetNewRelicMonitorResourceAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceCollection GetNewRelicMonitorResources() { throw null; }
+    }
+    public partial class NewRelicObservabilitySubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NewRelicObservabilitySubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData> GetNewRelicAccounts(string userEmail, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData> GetNewRelicAccountsAsync(string userEmail, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource> GetNewRelicMonitorResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource> GetNewRelicMonitorResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData> GetNewRelicOrganizations(string userEmail, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicOrganizationResourceData> GetNewRelicOrganizationsAsync(string userEmail, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData> GetNewRelicPlans(string accountId = null, string organizationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicPlanData> GetNewRelicPlansAsync(string accountId = null, string organizationId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     public static partial class ArmNewRelicObservabilityModelFactory

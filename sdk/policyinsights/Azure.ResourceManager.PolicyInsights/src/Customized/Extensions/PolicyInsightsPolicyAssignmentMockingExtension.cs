@@ -10,10 +10,10 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PolicyInsights.Models;
 
-namespace Azure.ResourceManager.PolicyInsights
+namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
     /// <summary> A class to add extension methods to PolicyAssignmentResource. </summary>
-    internal partial class PolicyAssignmentResourceExtensionClient : ArmResource
+    public partial class PolicyInsightsPolicyAssignmentMockingExtension : ArmResource
     {
         private ClientDiagnostics _policyEventsClientDiagnostics;
         private PolicyEventsRestOperations _policyEventsRestClient;
@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.PolicyInsights
         private static readonly ResourceType _subscription = new ResourceType("Microsoft.Resources/subscriptions");
         private static readonly ResourceType _resourceGroup = new ResourceType("Microsoft.Resources/resourceGroups");
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentResourceExtensionClient"/> class for mocking. </summary>
-        protected PolicyAssignmentResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsPolicyAssignmentMockingExtension"/> class for mocking. </summary>
+        protected PolicyInsightsPolicyAssignmentMockingExtension()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyAssignmentResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsPolicyAssignmentMockingExtension"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PolicyAssignmentResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyInsightsPolicyAssignmentMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

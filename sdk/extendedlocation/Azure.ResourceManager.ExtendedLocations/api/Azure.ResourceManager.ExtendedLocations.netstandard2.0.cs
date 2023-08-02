@@ -59,6 +59,27 @@ namespace Azure.ResourceManager.ExtendedLocations
         public static Azure.AsyncPageable<Azure.ResourceManager.ExtendedLocations.CustomLocationResource> GetCustomLocationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ExtendedLocations.Mocking
+{
+    public partial class ExtendedLocationsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ExtendedLocationsArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.ExtendedLocations.CustomLocationResource GetCustomLocationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class ExtendedLocationsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ExtendedLocationsResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.ExtendedLocations.CustomLocationResource> GetCustomLocation(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ExtendedLocations.CustomLocationResource>> GetCustomLocationAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ExtendedLocations.CustomLocationCollection GetCustomLocations() { throw null; }
+    }
+    public partial class ExtendedLocationsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ExtendedLocationsSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ExtendedLocations.CustomLocationResource> GetCustomLocations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ExtendedLocations.CustomLocationResource> GetCustomLocationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
     public static partial class ArmExtendedLocationsModelFactory

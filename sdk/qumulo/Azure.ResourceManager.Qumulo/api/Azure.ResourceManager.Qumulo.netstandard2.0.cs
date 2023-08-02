@@ -60,6 +60,27 @@ namespace Azure.ResourceManager.Qumulo
         public string UserDetailsEmail { get { throw null; } set { } }
     }
 }
+namespace Azure.ResourceManager.Qumulo.Mocking
+{
+    public partial class QumuloArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected QumuloArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.Qumulo.QumuloFileSystemResource GetQumuloFileSystemResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class QumuloResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected QumuloResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Qumulo.QumuloFileSystemResource> GetQumuloFileSystemResource(string fileSystemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Qumulo.QumuloFileSystemResource>> GetQumuloFileSystemResourceAsync(string fileSystemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Qumulo.QumuloFileSystemResourceCollection GetQumuloFileSystemResources() { throw null; }
+    }
+    public partial class QumuloSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected QumuloSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Qumulo.QumuloFileSystemResource> GetQumuloFileSystemResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Qumulo.QumuloFileSystemResource> GetQumuloFileSystemResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Qumulo.Models
 {
     public static partial class ArmQumuloModelFactory

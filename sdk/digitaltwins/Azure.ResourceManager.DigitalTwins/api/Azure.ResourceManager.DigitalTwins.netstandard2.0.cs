@@ -206,6 +206,33 @@ namespace Azure.ResourceManager.DigitalTwins
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DigitalTwins.Mocking
+{
+    public partial class DigitalTwinsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DigitalTwinsArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource GetDigitalTwinsDescriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResource GetDigitalTwinsEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionResource GetDigitalTwinsPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResource GetDigitalTwinsPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource GetTimeSeriesDatabaseConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class DigitalTwinsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DigitalTwinsResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource> GetDigitalTwinsDescription(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource>> GetDigitalTwinsDescriptionAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionCollection GetDigitalTwinsDescriptions() { throw null; }
+    }
+    public partial class DigitalTwinsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DigitalTwinsSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult> CheckDigitalTwinsNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult>> CheckDigitalTwinsNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     public static partial class ArmDigitalTwinsModelFactory

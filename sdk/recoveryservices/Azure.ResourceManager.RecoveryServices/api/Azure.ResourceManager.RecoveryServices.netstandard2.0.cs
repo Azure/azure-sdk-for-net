@@ -124,6 +124,33 @@ namespace Azure.ResourceManager.RecoveryServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.RecoveryServices.Mocking
+{
+    public partial class RecoveryServicesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected RecoveryServicesArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource GetRecoveryServicesVaultResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class RecoveryServicesResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected RecoveryServicesResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> GetRecoveryServicesVault(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource>> GetRecoveryServicesVaultAsync(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultCollection GetRecoveryServicesVaults() { throw null; }
+    }
+    public partial class RecoveryServicesSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected RecoveryServicesSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult> GetRecoveryServiceCapabilities(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServices.Models.CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServices.Models.ResourceCapabilities input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> GetRecoveryServicesVaults(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServices.RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     public static partial class ArmRecoveryServicesModelFactory

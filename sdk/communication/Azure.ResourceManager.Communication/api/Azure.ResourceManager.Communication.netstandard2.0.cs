@@ -209,6 +209,39 @@ namespace Azure.ResourceManager.Communication
         public string Username { get { throw null; } set { } }
     }
 }
+namespace Azure.ResourceManager.Communication.Mocking
+{
+    public partial class CommunicationArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected CommunicationArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.Communication.CommunicationDomainResource GetCommunicationDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Communication.CommunicationServiceResource GetCommunicationServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Communication.EmailServiceResource GetEmailServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Communication.SenderUsernameResource GetSenderUsernameResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class CommunicationResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected CommunicationResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.CommunicationServiceResource> GetCommunicationServiceResource(string communicationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.CommunicationServiceResource>> GetCommunicationServiceResourceAsync(string communicationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Communication.CommunicationServiceResourceCollection GetCommunicationServiceResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.EmailServiceResource> GetEmailServiceResource(string emailServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.EmailServiceResource>> GetEmailServiceResourceAsync(string emailServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Communication.EmailServiceResourceCollection GetEmailServiceResources() { throw null; }
+    }
+    public partial class CommunicationSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected CommunicationSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityResult> CheckCommunicationNameAvailability(Azure.ResourceManager.Communication.Models.CommunicationServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Communication.Models.CommunicationNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(Azure.ResourceManager.Communication.Models.CommunicationServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Communication.CommunicationServiceResource> GetCommunicationServiceResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Communication.CommunicationServiceResource> GetCommunicationServiceResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Communication.EmailServiceResource> GetEmailServiceResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Communication.EmailServiceResource> GetEmailServiceResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Communication.Models
 {
     public static partial class ArmCommunicationModelFactory

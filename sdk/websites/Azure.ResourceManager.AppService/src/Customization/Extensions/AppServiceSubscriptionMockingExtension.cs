@@ -4,19 +4,15 @@
 #nullable disable
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
-namespace Azure.ResourceManager.AppService
+namespace Azure.ResourceManager.AppService.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class AppServiceSubscriptionMockingExtension : ArmResource
     {
         /// <summary>
         /// Description for List all apps that are assigned to a hostname.
@@ -28,6 +24,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceIdentifierData" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceIdentifierData> GetAllSiteIdentifierDataAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
+
             async Task<Page<AppServiceIdentifierData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
@@ -71,6 +69,8 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceIdentifierData" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceIdentifierData> GetAllSiteIdentifierData(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
+
             Page<AppServiceIdentifierData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");

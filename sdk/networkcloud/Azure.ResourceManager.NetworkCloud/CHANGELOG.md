@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2023-07-30)
+## 1.0.0-beta.3 (Unreleased)
 
 This is the first stable SDK for NetworkCloud based on 2023-07-01 APIs.
 

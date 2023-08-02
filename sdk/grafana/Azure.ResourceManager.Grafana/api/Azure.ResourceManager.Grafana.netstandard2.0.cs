@@ -128,6 +128,29 @@ namespace Azure.ResourceManager.Grafana
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Grafana.ManagedGrafanaResource>> UpdateAsync(Azure.ResourceManager.Grafana.Models.ManagedGrafanaPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Grafana.Mocking
+{
+    public partial class GrafanaArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected GrafanaArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.Grafana.GrafanaPrivateEndpointConnectionResource GetGrafanaPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Grafana.GrafanaPrivateLinkResource GetGrafanaPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Grafana.ManagedGrafanaResource GetManagedGrafanaResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class GrafanaResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected GrafanaResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Grafana.ManagedGrafanaResource> GetManagedGrafana(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Grafana.ManagedGrafanaResource>> GetManagedGrafanaAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Grafana.ManagedGrafanaCollection GetManagedGrafanas() { throw null; }
+    }
+    public partial class GrafanaSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected GrafanaSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Grafana.ManagedGrafanaResource> GetManagedGrafanas(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Grafana.ManagedGrafanaResource> GetManagedGrafanasAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Grafana.Models
 {
     public static partial class ArmGrafanaModelFactory

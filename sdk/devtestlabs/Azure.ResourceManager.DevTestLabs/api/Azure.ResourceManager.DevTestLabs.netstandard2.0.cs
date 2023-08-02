@@ -1110,6 +1110,52 @@ namespace Azure.ResourceManager.DevTestLabs
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource>> UpdateAsync(Azure.ResourceManager.DevTestLabs.Models.DevTestLabSchedulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DevTestLabs.Mocking
+{
+    public partial class DevTestLabsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DevTestLabsArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource GetDevTestLabArmTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource GetDevTestLabArtifactResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource GetDevTestLabArtifactSourceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCostResource GetDevTestLabCostResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCustomImageResource GetDevTestLabCustomImageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabDiskResource GetDevTestLabDiskResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabEnvironmentResource GetDevTestLabEnvironmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabFormulaResource GetDevTestLabFormulaResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabNotificationChannelResource GetDevTestLabNotificationChannelResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabPolicyResource GetDevTestLabPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabResource GetDevTestLabResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabScheduleResource GetDevTestLabScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabSecretResource GetDevTestLabSecretResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricResource GetDevTestLabServiceFabricResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabServiceRunnerResource GetDevTestLabServiceRunnerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabUserResource GetDevTestLabUserResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVirtualNetworkResource GetDevTestLabVirtualNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmResource GetDevTestLabVmResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class DevTestLabsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DevTestLabsResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLab(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> GetDevTestLabAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource>> GetDevTestLabGlobalScheduleAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules() { throw null; }
+        public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCollection GetDevTestLabs() { throw null; }
+    }
+    public partial class DevTestLabsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DevTestLabsSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLabs(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLabsAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     public static partial class ArmDevTestLabsModelFactory
