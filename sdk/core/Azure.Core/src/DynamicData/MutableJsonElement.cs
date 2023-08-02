@@ -50,45 +50,6 @@ namespace Azure.Core.Json
             }
         }
 
-        internal T ConvertTo<T>()
-        {
-            JsonElement element = GetJsonElement();
-            Utf8JsonReader reader = GetReaderForElement(element);
-
-            try
-            {
-                // TODO: change this implementation so we don't deserialize known types.
-                // i.e. check typeof(T) and call relevant GetXx() method for supported types.
-                // Can we do better here per perf?
-
-                T? value;
-
-                // Use custom deserialization for an Azure model type.
-                if (typeof(T).GetInterfaces().Contains(typeof(IJsonModelSerializable)) &&
-                    Activator.CreateInstance(typeof(T), true) is IJsonModelSerializable model)
-                {
-                    // TODO: Do we want default options or something else here?
-                    return (T)model.Deserialize(ref reader, ModelSerializerOptions.AzureServiceDefault);
-                }
-
-#if NET6_0_OR_GREATER
-                value = JsonSerializer.Deserialize<T>(element, _root.SerializerOptions);
-#else
-                value = JsonSerializer.Deserialize<T>(ref reader, _root.SerializerOptions);
-#endif
-
-                if (value is null)
-                {
-                    throw new InvalidCastException($"Unable to convert value of kind '{element.ValueKind}' to type '{typeof(T)}'.");
-                }
-                return value!;
-            }
-            catch (JsonException e)
-            {
-                throw new InvalidCastException($"Unable to convert value of kind '{element.ValueKind}' to type '{typeof(T)}'.", e);
-            }
-        }
-
         /// <summary>
         /// Gets the MutableJsonElement for the value of the property with the specified name.
         /// </summary>
@@ -1131,20 +1092,6 @@ namespace Azure.Core.Json
             if (value is MutableJsonElement mje)
             {
                 mje.EnsureValid();
-            }
-
-            // Use custom serialization for an Azure model type.
-            if (value is IJsonModelSerializable model)
-            {
-                using MemoryStream stream = new();
-                using Utf8JsonWriter writer = new(stream);
-
-                // TODO: Are default serializer options sufficient here?
-                model.Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
-                writer.Flush();
-                stream.Position = 0;
-                BinaryData data = BinaryData.FromStream(stream);
-                return JsonDocument.Parse(data).RootElement;
             }
 
             // If it's not a special type, we'll serialize it on assignment.
