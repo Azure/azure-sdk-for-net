@@ -5,45 +5,49 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Xml;
-using System.Xml.Linq;
+using System.Text.Json;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Perf.Serializations
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class XmlSerializationBenchmark<T> where T : class, IModelSerializable<T>
+    public abstract class JsonBenchmark<T> where T : class, IModelJsonSerializable<T>
     {
-        private string _xml;
+        private string _json;
         protected T _model;
         protected Response _response;
         protected ModelSerializerOptions _options;
         private BinaryData _data;
-        private XElement _element;
+        private SequenceWriter _content;
+        private JsonDocument _jsonDocument;
 
-        protected abstract T Deserialize(XElement xmlElement);
+        protected abstract T Deserialize(JsonElement jsonElement);
 
-        protected abstract void Serialize(XmlWriter writer);
+        protected abstract void Serialize(Utf8JsonWriter writer);
 
         protected abstract RequestContent CastToRequestContent();
 
         protected abstract T CastFromResponse();
 
-        protected abstract string XmlFileName { get; }
+        protected abstract string JsonFileName { get; }
 
         [GlobalSetup]
         public void SetUp()
         {
-            _xml = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "SerializationBenchmark", "TestData", XmlFileName));
-            _data = BinaryData.FromString(_xml);
+            _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", JsonFileName));
+            _data = BinaryData.FromString(_json);
             _model = ModelSerializer.Deserialize<T>(_data);
             _response = new MockResponse(200);
-            _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_xml));
+            _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
             _options = ModelSerializerOptions.DefaultWireOptions;
-            _element = XElement.Parse(_xml);
+            _content = new SequenceWriter();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
+            _model.Serialize(writer, new ModelSerializerOptions());
+            writer.Flush();
+            _jsonDocument = JsonDocument.Parse(_json);
         }
 
         [Benchmark]
@@ -51,7 +55,7 @@ namespace Azure.Core.Perf
         public void Serialize_Internal()
         {
             using var stream = new MemoryStream();
-            using var writer = XmlWriter.Create(stream);
+            using var writer = new Utf8JsonWriter(stream);
             Serialize(writer);
             writer.Flush();
         }
@@ -82,6 +86,15 @@ namespace Azure.Core.Perf
         }
 
         [Benchmark]
+        [BenchmarkCategory("ModelJsonConverter")]
+        public string Serialize_ModelJsonConverter()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.Converters.Add(new ModelJsonConverter(ModelSerializerFormat.Wire));
+            return JsonSerializer.Serialize(_model, options);
+        }
+
+        [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
         public BinaryData Serialize_ModelSerializer()
         {
@@ -96,10 +109,20 @@ namespace Azure.Core.Perf
         }
 
         [Benchmark]
+        [BenchmarkCategory("PublicInterface")]
+        public void Serialize_PublicInterface()
+        {
+            using var content = new SequenceWriter();
+            using var writer = new Utf8JsonWriter(content);
+            _model.Serialize(writer, _options);
+            writer.Flush();
+        }
+
+        [Benchmark]
         [BenchmarkCategory("Internal")]
         public T Deserialize_Internal()
         {
-            return Deserialize(_element);
+            return Deserialize(_jsonDocument.RootElement);
         }
 
         [Benchmark]
@@ -109,6 +132,15 @@ namespace Azure.Core.Perf
             T result = CastFromResponse();
             _response.ContentStream.Position = 0; //reset for reuse
             return result;
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("ModelJsonConverter")]
+        public T Deserialize_ModelJsonConverter()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.Converters.Add(new ModelJsonConverter(ModelSerializerFormat.Wire));
+            return JsonSerializer.Deserialize<T>(_json, options);
         }
 
         [Benchmark]
@@ -130,6 +162,29 @@ namespace Azure.Core.Perf
         public T Deserialize_PublicInterfaceFromBinaryData()
         {
             return _model.Deserialize(_data, _options);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("PublicInterface")]
+        public T Deserialize_Utf8JsonReaderFromBinaryData()
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(_data);
+            return _model.Deserialize(ref reader, _options);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonDocument")]
+        public void JsonDocumentFromReader()
+        {
+            Utf8JsonReader reader = new Utf8JsonReader(_data);
+            using var doc = JsonDocument.ParseValue(ref reader);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonDocument")]
+        public void JsonDocumentFromBinaryData()
+        {
+            using var doc = JsonDocument.Parse(_data);
         }
     }
 }

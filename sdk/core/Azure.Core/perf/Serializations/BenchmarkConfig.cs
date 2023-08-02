@@ -6,11 +6,11 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Reports;
 using Perfolizer.Horology;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Perf.Serializations
 {
-    internal class SerializationBenchmarkConfig : ManualConfig
+    internal class BenchmarkConfig : ManualConfig
     {
-        public SerializationBenchmarkConfig()
+        public BenchmarkConfig()
         {
             SummaryStyle = SummaryStyle.Default
                 .WithTimeUnit(TimeUnit.Microsecond)
