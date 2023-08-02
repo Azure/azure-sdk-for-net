@@ -141,7 +141,7 @@ namespace Azure.Core.Json
                 }
             }
 
-            internal MutableJsonChange? GetNextChange(MutableJsonChange? lastChange, out int maxPathLength)
+            internal MutableJsonChange? GetNextMergePatchChange(MutableJsonChange? lastChange, out int maxPathLength)
             {
                 // This method gets changes from the list in sorted order by path.
                 // It is intended for use by JSON Merge Patch WriteTo routine.

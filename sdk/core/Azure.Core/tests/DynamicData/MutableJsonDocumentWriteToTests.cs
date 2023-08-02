@@ -975,7 +975,53 @@ namespace Azure.Core.Tests
         [Test]
         public void CanWritePatchToArrayElement()
         {
-            throw new NotImplementedException();
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """[0, 1, 2]""";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetIndexElement(0).Set(3);
+
+            string expected = """[3, 1, 2]""";
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchToArrayObjectProperty()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": [0, 1]
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetIndexElement(0).Set(2);
+
+            string expected = """
+            {
+                "a": [2, 1]
+            }
+            """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
         }
 
         [Test]
