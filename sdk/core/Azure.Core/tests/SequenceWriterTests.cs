@@ -229,6 +229,11 @@ namespace Azure.Core.Tests
             object buffer1 = rawSegments.GetValue(0);
             int buffer1BytesWritten = (int)buffer1.GetType().GetField("Written", BindingFlags.Public | BindingFlags.Instance).GetValue(buffer1);
             Assert.AreEqual(0, buffer1BytesWritten);
+
+            byte[] buffer1Array = (byte[])buffer1.GetType().GetField("Array", BindingFlags.Public | BindingFlags.Instance).GetValue(buffer1);
+            Assert.AreEqual(0, buffer1Array[0]);
+            Assert.AreEqual(0, buffer1Array[399]);
+
             object buffer2 = rawSegments.GetValue(1);
             int buffer2BytesWritten = (int)buffer2.GetType().GetField("Written", BindingFlags.Public | BindingFlags.Instance).GetValue(buffer2);
             Assert.AreEqual(800, buffer2BytesWritten);
@@ -244,7 +249,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(0xFF, buffer[0]);
             Assert.AreEqual(0xFF, buffer[799]);
 
-            byte[] buffer1Array = (byte[])buffer1.GetType().GetField("Array", BindingFlags.Public | BindingFlags.Instance).GetValue(buffer1);
+            buffer1Array = (byte[])buffer1.GetType().GetField("Array", BindingFlags.Public | BindingFlags.Instance).GetValue(buffer1);
             Assert.AreEqual(0xFE, buffer1Array[0]);
             Assert.AreEqual(0xFE, buffer1Array[399]);
 
