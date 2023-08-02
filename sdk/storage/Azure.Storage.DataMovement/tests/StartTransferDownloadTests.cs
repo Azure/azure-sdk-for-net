@@ -9,12 +9,8 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using NUnit.Framework;
 using System.Threading;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.Shared;
-using System.Data.Common;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -168,12 +164,12 @@ namespace Azure.Storage.DataMovement.Tests
                 // Assert
                 Assert.NotNull(downloadedBlobInfo[i].DataTransfer);
                 CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-                await downloadedBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
+                await downloadedBlobInfo[i].DataTransfer.WaitForCompletionAsync(tokenSource.Token);
                 Assert.IsTrue(downloadedBlobInfo[i].DataTransfer.HasCompleted);
-                Assert.AreEqual(StorageTransferStatus.Completed, downloadedBlobInfo[i].DataTransfer.TransferStatus);
 
                 // Verify Download
                 await downloadedBlobInfo[i].EventsRaised.AssertSingleCompletedCheck();
+                Assert.AreEqual(StorageTransferStatus.Completed, downloadedBlobInfo[i].DataTransfer.TransferStatus);
                 CheckDownloadFile(downloadedBlobInfo[i].SourceLocalPath, downloadedBlobInfo[i].DestinationLocalPath);
             };
         }
@@ -284,7 +280,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalFileStorageResource(destFile),
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -326,7 +322,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalFileStorageResource(destFile),
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -585,7 +581,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Assert
                 Assert.NotNull(downloadedBlobInfo[i].DataTransfer);
                 CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-                await downloadedBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
+                await downloadedBlobInfo[i].DataTransfer.WaitForCompletionAsync(tokenSource.Token);
                 Assert.IsTrue(downloadedBlobInfo[i].DataTransfer.HasCompleted);
 
                 // Verify Download
@@ -691,7 +687,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalFileStorageResource(destFile),
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -734,7 +730,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalFileStorageResource(destFile),
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -781,7 +777,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
             Assert.AreEqual(1, testEventsRaised.FailedEvents.Count);
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
             await testEventsRaised.AssertSingleFailedCheck();
@@ -1050,7 +1046,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // Assert
                 Assert.NotNull(downloadedBlobInfo[i].DataTransfer);
                 CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-                await downloadedBlobInfo[i].DataTransfer.AwaitCompletion(tokenSource.Token);
+                await downloadedBlobInfo[i].DataTransfer.WaitForCompletionAsync(tokenSource.Token);
                 Assert.IsTrue(downloadedBlobInfo[i].DataTransfer.HasCompleted);
 
                 // Verify Download
@@ -1151,7 +1147,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalFileStorageResource(destFile),
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -1194,7 +1190,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new LocalFileStorageResource(destFile),
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -1413,7 +1409,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             failureTransferHolder.AssertUnexpectedFailureCheck();
@@ -1445,7 +1441,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);
@@ -1480,7 +1476,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.AwaitCompletion(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             Assert.NotNull(transfer);

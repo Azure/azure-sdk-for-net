@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.4.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.4.0-beta.3 (2023-07-31)
+
+### Features Added
+ - Updated Microsoft.DocumentDB RP API version to `2023-03-15-preview`
+ - Adds support for Database partition merge operation.
+ - Adds support for Materialized view in Collections.
 ## 1.4.0-beta.2 (2023-05-29)
 
 ### Features Added
@@ -29,7 +35,7 @@
 ### Features Added
 
 - Updated Microsoft.DocumentDB RP API version to `2022-11-15-preview`
-- Added support for restoring deleted table and gremlin resources within the same account 
+- Added support for restoring deleted table and gremlin resources within the same account
 - Added support for cross region restore
 - Added support for enabling burst capacity of the CosmosDB account
 

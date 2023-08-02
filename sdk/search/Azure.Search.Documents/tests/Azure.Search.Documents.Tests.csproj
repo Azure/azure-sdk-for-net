@@ -25,6 +25,11 @@
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 
+ <!-- References required for sample snippet -->
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.OpenAI" />
+  </ItemGroup>
+
   <!-- References required for test resource creation -->
   <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" />

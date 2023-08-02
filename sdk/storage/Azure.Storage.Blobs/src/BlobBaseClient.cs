@@ -19,13 +19,6 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
 
-[assembly: InternalsVisibleTo("Azure.Storage.DataMovement.Blobs, PublicKey=" +
-    "0024000004800000940000000602000000240000525341310004000001000100d15ddcb2968829" +
-    "5338af4b7686603fe614abd555e09efba8fb88ee09e1f7b1ccaeed2e8f823fa9eef3fdd60217fc" +
-    "012ea67d2479751a0b8c087a4185541b851bd8b16f8d91b840e51b1cb0ba6fe647997e57429265" +
-    "e85ef62d565db50a69ae1647d54d7bd855e4db3d8a91510e5bcbd0edfbbecaa20a7bd9ae74593d" +
-    "aa7b11b4")]
-
 namespace Azure.Storage.Blobs.Specialized
 {
     /// <summary>
@@ -245,7 +238,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, BlobClientOptions options = default)
-            : this(blobUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
+            : this(
+                  blobUri,
+                  (HttpPipelinePolicy)null,
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -268,7 +267,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, StorageSharedKeyCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(), options, storageSharedKeyCredential: credential)
+            : this(
+                  blobUri,
+                  credential.AsPolicy(),
+                  options,
+                  storageSharedKeyCredential: credential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -295,7 +300,13 @@ namespace Azure.Storage.Blobs.Specialized
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public BlobBaseClient(Uri blobUri, AzureSasCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy<BlobUriBuilder>(blobUri), options, storageSharedKeyCredential: null)
+            : this(
+                  blobUri,
+                  credential.AsPolicy<BlobUriBuilder>(blobUri),
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: credential,
+                  tokenCredential: null)
         {
         }
 
@@ -318,69 +329,15 @@ namespace Azure.Storage.Blobs.Specialized
         /// every request.
         /// </param>
         public BlobBaseClient(Uri blobUri, TokenCredential credential, BlobClientOptions options = default)
-            : this(blobUri, credential.AsPolicy(options), options, credential)
+            : this(
+                  blobUri,
+                  credential.AsPolicy(options),
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(blobUri);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlobBaseClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="blobUri">
-        /// A <see cref="Uri"/> referencing the blob that includes the
-        /// name of the account, the name of the container, and the name of
-        /// the blob.
-        /// This is likely to be similar to "https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}".
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <param name="tokenCredential">
-        /// The token credential used to sign requests.
-        /// </param>
-        internal BlobBaseClient(
-            Uri blobUri,
-            HttpPipelinePolicy authentication,
-            BlobClientOptions options,
-            TokenCredential tokenCredential)
-        {
-            Argument.AssertNotNull(blobUri, nameof(blobUri));
-            options ??= new BlobClientOptions();
-            _uri = blobUri;
-            if (!string.IsNullOrEmpty(blobUri.Query))
-            {
-                UriQueryParamsCollection queryParamsCollection = new UriQueryParamsCollection(blobUri.Query);
-                if (queryParamsCollection.ContainsKey(Constants.SnapshotParameterName))
-                {
-                    _snapshot = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.SnapshotParameterName);
-                }
-                if (queryParamsCollection.ContainsKey(Constants.VersionIdParameterName))
-                {
-                    _blobVersionId = System.Web.HttpUtility.ParseQueryString(blobUri.Query).Get(Constants.VersionIdParameterName);
-                }
-            }
-
-            _clientConfiguration = new BlobClientConfiguration(
-                pipeline: options.Build(authentication),
-                tokenCredential: tokenCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
-                version: options.Version,
-                customerProvidedKey: options.CustomerProvidedKey,
-                transferValidation: options.TransferValidation,
-                encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes);
-
-            _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
-            _blobRestClient = BuildBlobRestClient(blobUri);
-
-            BlobErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
-            BlobErrors.VerifyCpkAndEncryptionScopeNotBothSet(_clientConfiguration.CustomerProvidedKey, _clientConfiguration.EncryptionScope);
         }
 
         /// <summary>
@@ -404,11 +361,19 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
         internal BlobBaseClient(
             Uri blobUri,
             HttpPipelinePolicy authentication,
             BlobClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential)
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(blobUri, nameof(blobUri));
             options ??= new BlobClientOptions();
@@ -429,6 +394,8 @@ namespace Azure.Storage.Blobs.Specialized
             _clientConfiguration = new BlobClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
+                sasCredential: sasCredential,
+                tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
@@ -641,39 +608,30 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region internal static accessors for Azure.Storage.DataMovement.Blobs
         /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="TokenCredential"/>
+        /// Get a <see cref="BlobBaseClient"/>'s <see cref="HttpAuthorization"/>
         /// for passing the authorization when performing service to service copy
         /// where OAuth is necessary to authenticate the source.
         /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
+        /// <param name="client">
+        /// The storage client which to generate the
+        /// authorization header off of.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>The BlobServiceClient's HttpPipeline.</returns>
-        internal static TokenCredential GetTokenCredential(BlobBaseClient client) =>
-            client.ClientConfiguration.OAuthTokenCredential;
-
-        /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
-        /// for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-        internal static BlobClientOptions GetClientOptions(BlobBaseClient client) =>
-            new BlobClientOptions(client.ClientConfiguration.Version)
+        protected static async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(
+            BlobBaseClient client,
+            CancellationToken cancellationToken = default)
+        {
+            if (client.ClientConfiguration.TokenCredential != default)
             {
-                // We only use this for communicating diagnostics, at the moment
-                Diagnostics =
-                {
-                    IsDistributedTracingEnabled = client.ClientConfiguration.ClientDiagnostics.IsActivityEnabled
-                }
-            };
-
-        /// <summary>
-        /// Get a <see cref="BlobBaseClient"/>'s <see cref="BlobClientOptions"/>
-        /// for creating child clients.
-        /// </summary>
-        /// <param name="client">The BlobServiceClient.</param>
-        /// <returns>The BlobServiceClient's BlobClientOptions.</returns>
-        internal static bool GetUsingClientSideEncryption(BlobBaseClient client) => client.UsingClientSideEncryption;
-        #endregion protected static accessors for Azure.Storage.DataMovement.Blobs
+                return await client.ClientConfiguration.TokenCredential.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
+            }
+            return default;
+        }
+        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         ///// <summary>
         ///// Creates a clone of this instance that references a version ID rather than the base blob.

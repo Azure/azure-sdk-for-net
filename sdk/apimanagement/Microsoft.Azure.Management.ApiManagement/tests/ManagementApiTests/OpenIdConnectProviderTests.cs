@@ -63,6 +63,10 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Null(openIdConnectProviderContract.ClientSecret);
                     Assert.Null(openIdConnectProviderContract.Description);
 
+                    // check default values for UseInTestConsole and UseInApiDocumentation
+                    Assert.True(openIdConnectProviderContract.UseInTestConsole);
+                    Assert.False(openIdConnectProviderContract.UseInApiDocumentation);
+
                     // create a Secret property
                     string openIdProviderName2 = TestUtilities.GenerateName("openIdName");
                     string metadataEndpoint2 = testBase.GetOpenIdMetadataEndpointUrl();
@@ -161,7 +165,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                         new OpenidConnectProviderUpdateContract
                         {
                             MetadataEndpoint = updateMetadataEndpoint,
-                            ClientId = updatedClientId
+                            ClientId = updatedClientId,
+                            UseInTestConsole = true,
+                            UseInApiDocumentation = false
                         },
                         openIdConnectProviderTag.ETag);
 
@@ -180,6 +186,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(updateMetadataEndpoint, getResponseOpendId2.Body.MetadataEndpoint);
                     Assert.Null(getResponseOpendId2.Body.ClientSecret);
                     Assert.NotNull(getResponseOpendId2.Body.Description);
+                    Assert.True(getResponseOpendId2.Body.UseInTestConsole);
+                    Assert.False(getResponseOpendId2.Body.UseInApiDocumentation);
 
                     var secretsResponse = await testBase.client.OpenIdConnectProvider.ListSecretsAsync(
                         testBase.rgName,

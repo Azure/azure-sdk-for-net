@@ -41,6 +41,7 @@ namespace Azure.Identity.Tests
             {
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 TenantId = config.TenantId,
+                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
             var testProcess = new TestProcess { Output = processOutput };
@@ -92,11 +93,11 @@ namespace Azure.Identity.Tests
             yield return new object[] { "Get-AzAccessToken: Run Connect-AzAccount to login.", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
             yield return new object[] { "No accounts were found in the cache", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
             yield return new object[] { "cannot retrieve access token", AzurePowerShellCredential.AzurePowerShellNotLogInError, typeof(CredentialUnavailableException) };
-            yield return new object[] { "Some random exception", AzurePowerShellCredential.AzurePowerShellFailedError + " Some random exception", typeof(CredentialUnavailableException) };
+            yield return new object[] { "Some random exception", AzurePowerShellCredential.AzurePowerShellFailedError + " Some random exception", typeof(AuthenticationFailedException) };
             yield return new object[] {
                 "AADSTS500011: The resource principal named <RESOURCE> was not found in the tenant named",
                 AzurePowerShellCredential.AzurePowerShellFailedError +  " AADSTS500011: The resource principal named <RESOURCE> was not found in the tenant named",
-                typeof(CredentialUnavailableException) };
+                typeof(AuthenticationFailedException) };
         }
 
         [Test]
@@ -215,13 +216,21 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void AuthenticateWithAzurePowerShellCredential_AzurePowerShellUnknownError()
+        public void AuthenticateWithAzurePowerShellCredential_AzurePowerShellUnknownError([Values(true, false)] bool isChainedCredential)
         {
             string mockResult = "mock-result";
             var testProcess = new TestProcess { Error = mockResult };
             AzurePowerShellCredential credential = InstrumentClient(
-                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions(), CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+                new AzurePowerShellCredential(new AzurePowerShellCredentialOptions() { IsChainedCredential = isChainedCredential }, CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+
+            if (isChainedCredential)
+            {
+                Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            }
+            else
+            {
+                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            }
         }
 
         [Test]

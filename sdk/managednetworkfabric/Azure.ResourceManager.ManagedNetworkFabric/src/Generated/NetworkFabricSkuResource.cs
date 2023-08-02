@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements Network Fabric Sku GET method.
+        /// Implements Network Fabric SKU GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements Network Fabric Sku GET method.
+        /// Implements Network Fabric SKU GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

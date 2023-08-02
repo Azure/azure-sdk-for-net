@@ -6,8 +6,8 @@
     <PackageId>Az.Auth.NetCore.Tests</PackageId>
     <PackageTags>NetCoreTests AzAuthNetCore Test $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
   </PropertyGroup>
-  
-  <PropertyGroup>    
+
+  <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <PropertyGroup>
@@ -18,7 +18,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.20" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.24" />
 
     <ProjectReference Include="..\..\Az.Authentication\Microsoft.Rest.ClientRuntime.Azure.Authentication.csproj" />
   </ItemGroup>

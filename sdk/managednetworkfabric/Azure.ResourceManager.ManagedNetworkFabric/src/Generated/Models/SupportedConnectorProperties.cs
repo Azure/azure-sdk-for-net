@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of SupportedConnectorProperties. </summary>
-        /// <param name="connectorType"> Connector type. Example: Optical. </param>
+        /// <param name="connectorType"> Type of connector used. Example: Optical. </param>
         /// <param name="maxSpeedInMbps"> Maximum speed of the connector in Mbps. </param>
         internal SupportedConnectorProperties(string connectorType, int? maxSpeedInMbps)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             MaxSpeedInMbps = maxSpeedInMbps;
         }
 
-        /// <summary> Connector type. Example: Optical. </summary>
+        /// <summary> Type of connector used. Example: Optical. </summary>
         public string ConnectorType { get; set; }
         /// <summary> Maximum speed of the connector in Mbps. </summary>
         public int? MaxSpeedInMbps { get; set; }

@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models;
 using System.Buffers;
 using System;
 using Azure.Core.Pipeline;

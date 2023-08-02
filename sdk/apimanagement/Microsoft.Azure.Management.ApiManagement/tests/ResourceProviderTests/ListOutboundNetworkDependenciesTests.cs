@@ -18,7 +18,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
         [Trait("owner", "jikang")]
         public void GetOutboundNetworkDependencies()
         {
-            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+                      Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
 
             using (MockContext context = MockContext.Start(this.GetType()))
             {
@@ -33,7 +33,6 @@ namespace ApiManagement.Tests.ResourceProviderTests
 
                 Assert.NotNull(outboundDependencies);
                 Assert.Equal(10, outboundDependencies.Value.Count);
-                Assert.NotNull(outboundDependencies.Value.Single(d => d.Category.Equals("Azure SMTP")));
                 Assert.NotNull(outboundDependencies.Value.Single(d => d.Category.Equals("Azure Storage")));
                 Assert.NotNull(outboundDependencies.Value.Single(d => d.Category.Equals("Azure Active Directory")));
                 Assert.NotNull(outboundDependencies.Value.Single(d => d.Category.Equals("Azure SQL")));

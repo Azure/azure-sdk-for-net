@@ -48,10 +48,6 @@ namespace ApiManagement.Tests.ResourceProviderTests
             {
                 //prepare test base
                 var testBase = new ApiManagementTestBase(context);
-                // test is done in prod preview environment
-                string serviceRegion = "West US 2";
-                testBase.location = serviceRegion;
-                testBase.serviceProperties.Location = serviceRegion;
                 testBase.serviceProperties.Sku = new ApiManagementServiceSkuProperties(SkuType.Developer, capacity: 1);
 
                 // prepare private endpoint names and ids
@@ -232,7 +228,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
 
                 // disable public network access for the api service and confirm the container is updated with GET
                 apiService.PublicNetworkAccess = "Disabled";
-                await testBase.client.ApiManagementService.CreateOrUpdateAsync(testBase.rgName, testBase.serviceName, apiService);
+                apiService = await testBase.client.ApiManagementService.CreateOrUpdateAsync(testBase.rgName, testBase.serviceName, apiService);
                 apiService = await testBase.client.ApiManagementService.GetAsync(testBase.rgName, testBase.serviceName);
                 Assert.Contains(apiService.PrivateEndpointConnections,
                     connection =>

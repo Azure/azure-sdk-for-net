@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -272,7 +273,7 @@ namespace Azure.Messaging.ServiceBus
             // create a new scope for the specified operation
             DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 activityName,
-                DiagnosticScope.ActivityKind.Client,
+                ActivityKind.Client,
                 operation);
 
             scope.SetMessageData(messages);
@@ -289,7 +290,7 @@ namespace Azure.Messaging.ServiceBus
             // create a new scope for the specified operation
             DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 activityName,
-                DiagnosticScope.ActivityKind.Client,
+                ActivityKind.Client,
                 operation);
 
             scope.SetMessageData(messages);
@@ -564,7 +565,7 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.CancelActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             try

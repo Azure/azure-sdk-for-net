@@ -228,7 +228,8 @@
         "swappable",
         "ssdzrs",
         "dscp",
-        "vmguest"
+        "vmguest",
+        "vhdx"
       ]
     },
     {
@@ -584,13 +585,13 @@
       "words": [
         "Azfw",
         "Conditon",
+        "Diffie",
         "Ddos",
-        "ddos",
         "Dnat",
         "Dscp",
-        "dscp",
         "Eapmscha",
         "Eaptls",
+        "Fips",
         "Fqdns",
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
@@ -611,7 +612,6 @@
         "WAFV",
         "Wans",
         "Idps",
-        "idps",
         "Ocsp",
         "Afri",
         "Apac",
@@ -672,7 +672,8 @@
       "words": [
         "evpn",
         "mbps",
-        "gshut"
+        "gshut",
+        "dscp"
       ]
     },
     {
@@ -931,6 +932,12 @@
       ]
     },
     {
+      "filename": "**/sdk/sphere/**/*.cs",
+      "words": [
+        "Nwfs"
+      ]
+    },
+    {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
         "CIAS",
@@ -1021,6 +1028,8 @@
         "byoa",
         "distcp",
         "eloqua",
+        "ename",
+        "evalue",
         "exfiltration",
         "fqdns",
         "hana",
@@ -1042,6 +1051,8 @@
         "vertica",
         "xero",
         "Asana",
+        "Ename",
+        "Evalue",
         "Twilio"
       ]
     },
@@ -1087,7 +1098,8 @@
         "Zilla",
         "Guage",
         "Plex",
-        "Vstsrm"
+        "Vstsrm",
+        "Localizable"
       ]
     },
     {

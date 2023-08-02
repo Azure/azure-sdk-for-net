@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.GraphServices.Models
 {
     /// <summary> Account patch properties. </summary>
-    public partial class GraphServicesAccountResourcePatch : TagUpdate
+    public partial class GraphServicesAccountResourcePatch : GraphServicesTagUpdate
     {
         /// <summary> Initializes a new instance of GraphServicesAccountResourcePatch. </summary>
         public GraphServicesAccountResourcePatch()

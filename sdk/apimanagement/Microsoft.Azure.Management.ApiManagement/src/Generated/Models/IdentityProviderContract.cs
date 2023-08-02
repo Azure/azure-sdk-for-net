@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Identity Provider details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class IdentityProviderContract : Resource
+    public partial class IdentityProviderContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the IdentityProviderContract class.
@@ -60,13 +60,16 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Only applies to AAD B2C Identity Provider.</param>
         /// <param name="passwordResetPolicyName">Password Reset Policy Name.
         /// Only applies to AAD B2C Identity Provider.</param>
+        /// <param name="clientLibrary">The client library to be used in the
+        /// developer portal. Only applies to AAD and AAD B2C Identity
+        /// Provider.</param>
         /// <param name="clientSecret">Client secret of the Application in
         /// external Identity Provider, used to authenticate login request. For
         /// example, it is App Secret for Facebook login, API Key for Google
         /// login, Public Key for Microsoft. This property will not be filled
         /// on 'GET' operations! Use '/listSecrets' POST request to get the
         /// value.</param>
-        public IdentityProviderContract(string clientId, string id = default(string), string name = default(string), string type = default(string), string identityProviderContractType = default(string), string signinTenant = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string), string clientSecret = default(string))
+        public IdentityProviderContract(string clientId, string id = default(string), string name = default(string), string type = default(string), string identityProviderContractType = default(string), string signinTenant = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string), string clientLibrary = default(string), string clientSecret = default(string))
             : base(id, name, type)
         {
             IdentityProviderContractType = identityProviderContractType;
@@ -77,6 +80,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             SigninPolicyName = signinPolicyName;
             ProfileEditingPolicyName = profileEditingPolicyName;
             PasswordResetPolicyName = passwordResetPolicyName;
+            ClientLibrary = clientLibrary;
             ClientId = clientId;
             ClientSecret = clientSecret;
             CustomInit();
@@ -145,6 +149,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string PasswordResetPolicyName { get; set; }
 
         /// <summary>
+        /// Gets or sets the client library to be used in the developer portal.
+        /// Only applies to AAD and AAD B2C Identity Provider.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientLibrary")]
+        public string ClientLibrary { get; set; }
+
+        /// <summary>
         /// Gets or sets client Id of the Application in the external Identity
         /// Provider. It is App ID for Facebook login, Client ID for Google
         /// login, App ID for Microsoft.
@@ -207,6 +218,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
                 if (PasswordResetPolicyName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "PasswordResetPolicyName", 1);
+                }
+            }
+            if (ClientLibrary != null)
+            {
+                if (ClientLibrary.Length > 16)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ClientLibrary", 16);
+                }
+                if (ClientLibrary.Length < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ClientLibrary", 0);
                 }
             }
             if (ClientId != null)

@@ -146,7 +146,13 @@ namespace Azure.Storage.Files.DataLake
         /// name of the account and the name of the file system.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri)
-            : this(fileSystemUri, (HttpPipelinePolicy)null, null, storageSharedKeyCredential: null)
+            : this(
+                  fileSystemUri,
+                  (HttpPipelinePolicy)null,
+                  options: null,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -164,7 +170,13 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, DataLakeClientOptions options)
-            : this(fileSystemUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential: null)
+            : this(
+                  fileSystemUri,
+                  (HttpPipelinePolicy)null,
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -254,7 +266,13 @@ namespace Azure.Storage.Files.DataLake
         /// The shared key credential used to sign requests.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, StorageSharedKeyCredential credential)
-            : this(fileSystemUri, credential.AsPolicy(), null, credential)
+            : this(
+                  fileSystemUri,
+                  credential.AsPolicy(),
+                  options: null,
+                  storageSharedKeyCredential: credential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -275,7 +293,13 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, StorageSharedKeyCredential credential, DataLakeClientOptions options)
-            : this(fileSystemUri, credential.AsPolicy(), options, credential)
+            : this(
+                  fileSystemUri,
+                  credential.AsPolicy(),
+                  options,
+                  storageSharedKeyCredential: credential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -320,7 +344,13 @@ namespace Azure.Storage.Files.DataLake
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public DataLakeFileSystemClient(Uri fileSystemUri, AzureSasCredential credential, DataLakeClientOptions options)
-            : this(fileSystemUri, credential.AsPolicy<DataLakeUriBuilder>(fileSystemUri), options, credential)
+            : this(
+                  fileSystemUri,
+                  credential.AsPolicy<DataLakeUriBuilder>(fileSystemUri),
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: credential,
+                  tokenCredential: null)
         {
         }
 
@@ -336,7 +366,13 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential)
-            : this(fileSystemUri, credential.AsPolicy(new DataLakeClientOptions()), null, storageSharedKeyCredential:null)
+            : this(
+                  fileSystemUri,
+                  credential.AsPolicy(new DataLakeClientOptions()),
+                  options: null,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
@@ -358,7 +394,13 @@ namespace Azure.Storage.Files.DataLake
         /// every request.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileSystemUri, credential.AsPolicy(options), options, storageSharedKeyCredential:null)
+            : this(
+                  fileSystemUri,
+                  credential.AsPolicy(options),
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
@@ -382,11 +424,19 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="storageSharedKeyCredential">
         /// The shared key credential used to sign requests.
         /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
         internal DataLakeFileSystemClient(
             Uri fileSystemUri,
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential)
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(fileSystemUri, nameof(fileSystemUri));
             DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
@@ -398,56 +448,8 @@ namespace Azure.Storage.Files.DataLake
             _clientConfiguration = new DataLakeClientConfiguration(
                 pipeline: options.Build(authentication),
                 sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options,
-                customerProvidedKey: options.CustomerProvidedKey);
-
-            _containerClient = BlobContainerClientInternals.Create(
-                _blobUri,
-                _clientConfiguration);
-
-            (FileSystemRestClient dfsFileSystemRestClient, FileSystemRestClient blobFileSystemRestClient) = BuildFileSystemRestClients(_dfsUri, _blobUri);
-            _fileSystemRestClient = dfsFileSystemRestClient;
-            _blobFileSystemRestClient = blobFileSystemRestClient;
-
-            DataLakeErrors.VerifyHttpsCustomerProvidedKey(_uri, _clientConfiguration.CustomerProvidedKey);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DataLakeFileSystemClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="fileSystemUri">
-        /// A <see cref="Uri"/> referencing the file system that includes the
-        /// name of the account and the name of the file system.
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <param name="sasCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        internal DataLakeFileSystemClient(
-            Uri fileSystemUri,
-            HttpPipelinePolicy authentication,
-            DataLakeClientOptions options,
-            AzureSasCredential sasCredential)
-        {
-            Argument.AssertNotNull(fileSystemUri, nameof(fileSystemUri));
-            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(fileSystemUri);
-            options ??= new DataLakeClientOptions();
-            _uri = fileSystemUri;
-            _blobUri = uriBuilder.ToBlobUri();
-            _dfsUri = uriBuilder.ToDfsUri();
-
-            _clientConfiguration = new DataLakeClientConfiguration(
-                pipeline: options.Build(authentication),
                 sasCredential: sasCredential,
+                tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
                 clientOptions: options,
                 customerProvidedKey: options.CustomerProvidedKey);

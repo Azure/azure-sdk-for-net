@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// Result of listing usage details. It contains a list of available usage details in reverse chronological order by billing period.
-    /// Serialized Name: UsageDetailsListResult
-    /// </summary>
+    /// <summary> Result of listing usage details. It contains a list of available usage details in reverse chronological order by billing period. </summary>
     internal partial class UsageDetailsListResult
     {
         /// <summary> Initializes a new instance of UsageDetailsListResult. </summary>
@@ -25,14 +22,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of UsageDetailsListResult. </summary>
         /// <param name="value">
         /// The list of usage details.
-        /// Serialized Name: UsageDetailsListResult.value
         /// Please note <see cref="ConsumptionUsageDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConsumptionLegacyUsageDetail"/> and <see cref="ConsumptionModernUsageDetail"/>.
         /// </param>
-        /// <param name="nextLink">
-        /// The link (url) to the next page of results.
-        /// Serialized Name: UsageDetailsListResult.nextLink
-        /// </param>
+        /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal UsageDetailsListResult(IReadOnlyList<ConsumptionUsageDetail> value, string nextLink)
         {
             Value = value;
@@ -41,15 +34,11 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary>
         /// The list of usage details.
-        /// Serialized Name: UsageDetailsListResult.value
         /// Please note <see cref="ConsumptionUsageDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConsumptionLegacyUsageDetail"/> and <see cref="ConsumptionModernUsageDetail"/>.
         /// </summary>
         public IReadOnlyList<ConsumptionUsageDetail> Value { get; }
-        /// <summary>
-        /// The link (url) to the next page of results.
-        /// Serialized Name: UsageDetailsListResult.nextLink
-        /// </summary>
+        /// <summary> The link (url) to the next page of results. </summary>
         public string NextLink { get; }
     }
 }

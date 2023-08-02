@@ -4,6 +4,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: keyvault
+    SDKType: client
     MaxParallel: 5
     TimeoutInMinutes: 240
     SupportedClouds: 'Public,UsGov,China,Canary'

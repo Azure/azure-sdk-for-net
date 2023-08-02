@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
@@ -15,24 +16,26 @@ internal static class AzMonNewListExtensions
     {
         try
         {
-            var serverAddress = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeServerAddress)?.ToString();
-            if (serverAddress != null)
-            {
-                UriBuilder uriBuilder = new()
-                {
-                    Scheme = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeUrlScheme)?.ToString(),
-                    Host = serverAddress,
-                    Path = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeUrlPath)?.ToString(),
-                    Query = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeUrlQuery)?.ToString()
-                };
+            var requestUrlTagObjects = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeUrlScheme, SemanticConventions.AttributeServerAddress, SemanticConventions.AttributeServerPort, SemanticConventions.AttributeUrlPath, SemanticConventions.AttributeUrlQuery);
 
-                if (int.TryParse(AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeServerPort)?.ToString(), out int port))
-                {
-                    uriBuilder.Port = port;
-                }
+            var scheme = requestUrlTagObjects[0]?.ToString() ?? string.Empty; // requestUrlTagObjects[0] => SemanticConventions.AttributeUrlScheme.
+            var host = requestUrlTagObjects[1]?.ToString() ?? string.Empty; // requestUrlTagObjects[1] => SemanticConventions.AttributeServerAddress.
+            var port = requestUrlTagObjects[2]?.ToString(); // requestUrlTagObjects[2] => SemanticConventions.AttributeServerPort.
+            port = port != null ? port = $":{port}" : string.Empty;
+            var path = requestUrlTagObjects[3]?.ToString() ?? string.Empty; // requestUrlTagObjects[3] => SemanticConventions.AttributeUrlPath.
+            var queryString = requestUrlTagObjects[4]?.ToString() ?? string.Empty; // requestUrlTagObjects[4] => SemanticConventions.AttributeUrlQuery.
 
-                return uriBuilder.Uri.AbsoluteUri;
-            }
+            var length = scheme.Length + Uri.SchemeDelimiter.Length + host.Length + port.Length + path.Length + queryString.Length;
+
+            var urlStringBuilder = new System.Text.StringBuilder(length)
+                .Append(scheme)
+                .Append(Uri.SchemeDelimiter)
+                .Append(host)
+                .Append(port)
+                .Append(path)
+                .Append(queryString);
+
+            return urlStringBuilder.ToString();
         }
         catch
         {
@@ -40,6 +43,52 @@ internal static class AzMonNewListExtensions
         }
 
         return null;
+    }
+
+    ///<summary>
+    /// Gets messaging url from activity tag objects.
+    ///</summary>
+    internal static (string? MessagingUrl, string? SourceOrTarget) GetMessagingUrlAndSourceOrTarget(this AzMonList tagObjects, ActivityKind activityKind)
+    {
+        string? messagingUrl = null;
+        string? sourceOrTarget = null;
+
+        try
+        {
+            var host = AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeServerAddress)?.ToString()
+                        ?? AzMonList.GetTagValue(ref tagObjects, SemanticConventions.AttributeNetPeerName)?.ToString();
+            if (!string.IsNullOrEmpty(host))
+            {
+                object?[] messagingTagObjects;
+
+                messagingTagObjects = AzMonList.GetTagValues(ref tagObjects, SemanticConventions.AttributeNetworkProtocolName, SemanticConventions.AttributeMessagingDestinationName);
+                var protocolName = messagingTagObjects[0]?.ToString() ?? string.Empty; // messagingTagObjects[0] => SemanticConventions.AttributeNetworkProtocolName.
+                var destinationName = messagingTagObjects[1]?.ToString() ?? string.Empty; // messagingTagObjects[1] => SemanticConventions.AttributeMessagingDestinationName.
+
+                if (destinationName.Length > 0)
+                {
+                    destinationName = $"/{destinationName}";
+                }
+
+                sourceOrTarget = $"{host}{destinationName}";
+
+                var length = protocolName.Length + (protocolName?.Length > 0 ? Uri.SchemeDelimiter.Length : 0) + host!.Length + destinationName.Length;
+
+                var messagingStringBuilder = new System.Text.StringBuilder(length)
+                    .Append(protocolName)
+                    .Append(string.IsNullOrEmpty(protocolName) ? null : Uri.SchemeDelimiter)
+                    .Append(host)
+                    .Append(destinationName);
+
+                messagingUrl = messagingStringBuilder.ToString();
+            }
+        }
+        catch
+        {
+            // If Messaging Url building fails, there is no need to throw an exception. Instead, we can simply return null.
+        }
+
+        return (MessagingUrl: messagingUrl, SourceOrTarget: sourceOrTarget);
     }
 
     ///<summary>
@@ -81,6 +130,22 @@ internal static class AzMonNewListExtensions
         }
 
         return null;
+    }
+
+    ///<summary>
+    /// Gets dependency target from activity tag objects.
+    ///</summary>
+    internal static string? GetNewSchemaDependencyTarget(this AzMonList tagObjects, OperationType type)
+    {
+        switch (type)
+        {
+            case OperationType.Http:
+                return tagObjects.GetNewSchemaHttpDependencyTarget();
+            case OperationType.Db:
+                return tagObjects.GetDbDependencyTargetAndName().DbTarget;
+            default:
+                return null;
+        }
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

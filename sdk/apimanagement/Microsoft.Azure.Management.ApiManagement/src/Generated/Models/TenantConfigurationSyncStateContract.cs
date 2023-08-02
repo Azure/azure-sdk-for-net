@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Result of Tenant Configuration Sync State.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class TenantConfigurationSyncStateContract : Resource
+    public partial class TenantConfigurationSyncStateContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the

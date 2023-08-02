@@ -25,7 +25,7 @@ namespace Azure.Storage
         /// Gets the default service version to use when building shared access
         /// signatures.
         /// </summary>
-        public const string DefaultSasVersion = "2023-01-03";
+        public const string DefaultSasVersion = "2023-08-03";
 
         /// <summary>
         /// Max download range size while requesting a transactional hash.
@@ -713,6 +713,12 @@ namespace Azure.Storage
         {
             internal const string HttpMessagePropertyKey = "Azure.Storage.StorageServerTimeoutPolicy.Timeout";
             internal const string QueryParameterKey = "timeout";
+        }
+
+        internal static class CopyHttpAuthorization
+        {
+            internal static readonly string[] Scopes = { "https://storage.azure.com/.default" };
+            internal const string BearerScheme = "Bearer";
         }
     }
 }

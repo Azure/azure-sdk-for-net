@@ -287,7 +287,14 @@ namespace Azure.Search.Documents
 
                 if (QueryCaption.HasValue)
                 {
-                    queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
+                    if (QueryCaption.Value == QueryCaptionType.Extractive)
+                    {
+                        queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
+                    }
+                    else
+                    {
+                        queryCaptionStringValue = QueryCaption.Value.ToString();
+                    }
                 }
 
                 return queryCaptionStringValue;
@@ -319,6 +326,9 @@ namespace Azure.Search.Documents
                 }
             }
         }
+
+        /// <summary> The query parameters for multi-vector search queries. </summary>
+        public IList<SearchQueryVector> Vectors { get; internal set; } = new List<SearchQueryVector>();
 
         /// <summary>
         /// Shallow copy one SearchOptions instance to another.
@@ -358,6 +368,7 @@ namespace Azure.Search.Documents
             destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
+            destination.Vectors = source.Vectors;
         }
 
         /// <summary>

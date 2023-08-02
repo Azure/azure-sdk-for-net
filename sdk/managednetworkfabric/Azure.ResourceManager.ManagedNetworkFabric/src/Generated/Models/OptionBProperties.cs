@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Option B configuration. </summary>
+    /// <summary> Option B configuration to be used for Management VPN. </summary>
     public partial class OptionBProperties
     {
         /// <summary> Initializes a new instance of OptionBProperties. </summary>
@@ -21,17 +21,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of OptionBProperties. </summary>
-        /// <param name="importRouteTargets"> Route Targets to be applied for incoming routes into CE. </param>
-        /// <param name="exportRouteTargets"> Route Targets to be applied for outgoing routes from CE. </param>
-        internal OptionBProperties(IList<string> importRouteTargets, IList<string> exportRouteTargets)
+        /// <param name="importRouteTargets"> Route Targets to be applied for incoming routes into CE. This is for backward compatibility. </param>
+        /// <param name="exportRouteTargets"> Route Targets to be applied for outgoing routes from CE. This is for backward compatibility. </param>
+        /// <param name="routeTargets"> Route Targets to be applied. </param>
+        internal OptionBProperties(IList<string> importRouteTargets, IList<string> exportRouteTargets, RouteTargetInformation routeTargets)
         {
             ImportRouteTargets = importRouteTargets;
             ExportRouteTargets = exportRouteTargets;
+            RouteTargets = routeTargets;
         }
 
-        /// <summary> Route Targets to be applied for incoming routes into CE. </summary>
+        /// <summary> Route Targets to be applied for incoming routes into CE. This is for backward compatibility. </summary>
         public IList<string> ImportRouteTargets { get; }
-        /// <summary> Route Targets to be applied for outgoing routes from CE. </summary>
+        /// <summary> Route Targets to be applied for outgoing routes from CE. This is for backward compatibility. </summary>
         public IList<string> ExportRouteTargets { get; }
+        /// <summary> Route Targets to be applied. </summary>
+        public RouteTargetInformation RouteTargets { get; set; }
     }
 }

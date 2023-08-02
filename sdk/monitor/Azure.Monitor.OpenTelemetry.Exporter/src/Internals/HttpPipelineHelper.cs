@@ -168,7 +168,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return ExportResult.Failure;
         }
 
-        internal static ExportResult HandleFailures(HttpMessage httpMessage, PersistentBlobProvider blobProvider, ConnectionVars connectionVars, TelemetryItemOrigin origin)
+        internal static ExportResult HandleFailures(HttpMessage httpMessage, PersistentBlobProvider blobProvider, ConnectionVars connectionVars, TelemetryItemOrigin origin, bool isAadEnabled)
         {
             ExportResult result = ExportResult.Failure;
             int statusCode = 0;
@@ -223,6 +223,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             AzureMonitorExporterEventSource.Log.TransmissionFailed(
                 origin: origin,
                 statusCode: statusCode,
+                isAadEnabled: isAadEnabled,
                 connectionVars: connectionVars,
                 requestEndpoint: httpMessage.Request.Uri.Host,
                 willRetry: (result == ExportResult.Success),
@@ -231,7 +232,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return result;
         }
 
-        internal static void HandleFailures(HttpMessage httpMessage, PersistentBlob blob, PersistentBlobProvider blobProvider, ConnectionVars connectionVars)
+        internal static void HandleFailures(HttpMessage httpMessage, PersistentBlob blob, PersistentBlobProvider blobProvider, ConnectionVars connectionVars, bool isAadEnabled)
         {
             int statusCode = 0;
             bool willRetry = true;
@@ -273,6 +274,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             AzureMonitorExporterEventSource.Log.TransmissionFailed(
                 origin: TelemetryItemOrigin.Storage,
+                isAadEnabled: isAadEnabled,
                 statusCode: statusCode,
                 connectionVars: connectionVars,
                 requestEndpoint: httpMessage.Request.Uri.Host,

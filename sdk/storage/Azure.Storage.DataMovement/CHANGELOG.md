@@ -1,6 +1,32 @@
 # Release History
 
-## 12.0.0-beta.3 (Unreleased)
+## 12.0.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+- [BREAKING CHANGE] Made the following members `public` to `protected internal` members (including all derived classes):
+    - `StorageResource.CanProduceUri`
+    - `StorageResource.IsContainer`
+    - `StorageResourceContainer.GetStorageResourcesAsync`
+    - `StorageResourceSingle.Length`
+    - `StorageResourceSingle.MaxChunkSize`
+    - `StorageResourceSingle.ResourceId`
+    - `StorageResourceSingle.TransferType`
+    - `StorageResourceSingle.CompleteTransferAsync`
+    - `StorageResourceSingle.CopyBlockFromUriAsync`
+    - `StorageResourceSingle.CopyFromUriAsync`
+    - `StorageResourceSingle.DeleteIfExistsAsync`
+    - `StorageResourceSingle.GetCopyAuthorizationHeaderAsync`
+    - `StorageResourceSingle.GetPropertiesAsync`
+    - `StorageResourceSingle.ReadStreamAsync`
+    - `StorageResourceSingle.WriteFromStreamAsync`
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.0.0-beta.3 (2023-07-11)
 
 ### Features Added
 - `TransferManager` new API `PauseAllRunningTransfersAsync`.
@@ -8,6 +34,7 @@
 - Added support for tracking progress of transfers. See `TransferOptions.ProgressHandler` and `TransferOptions.ProgressHandlerOptions`.
 - Added `TransferManager.GetResumableTransfers` to get information about transfers that can be resumed.
 - Added support for `Transfermanager.ResumeTransferAsync` to resume a transfer.
+- Added support authorization using Azure Active Directory when using Service to Service Copy. 
 
 ### Breaking Changes
 - [BREAKING CHANGE] Altered API signatures on `TransferManager` and `DataTransfer` for pausing.
@@ -24,8 +51,6 @@
 - Fixed `ErrorHandlingOptions.ContinueOnFailure` not be respected.
 - Fixed bug where resuming a transfer where the source and destination is a `StorageResourceContainer` would throw a null reference exception. 
 - Fixed bug when downloading zero length `StorageResource`s in a `StorageResourceContainer` will throw an exception.
-
-### Other Changes
 
 ## 12.0.0-beta.2 (2023-04-26)
 - [BREAKING CHANGE] Combined `SingleTransferOptions` and `ContainerTransferOptions` into `TransferOptions`.

@@ -379,11 +379,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<VpnProfileResponse>> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VpnProfileResponse>> GenerateVirtualWanVpnServerConfigurationVpnProfileAsync(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("VirtualWanResource.Generatevirtualwanvpnserverconfigurationvpnprofile");
+            using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("VirtualWanResource.GenerateVirtualWanVpnServerConfigurationVpnProfile");
             scope.Start();
             try
             {
@@ -417,11 +417,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="content"> Parameters supplied to the generate VirtualWan VPN profile generation operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<VpnProfileResponse> Generatevirtualwanvpnserverconfigurationvpnprofile(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VpnProfileResponse> GenerateVirtualWanVpnServerConfigurationVpnProfile(WaitUntil waitUntil, VirtualWanVpnProfileContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("VirtualWanResource.Generatevirtualwanvpnserverconfigurationvpnprofile");
+            using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("VirtualWanResource.GenerateVirtualWanVpnServerConfigurationVpnProfile");
             scope.Start();
             try
             {

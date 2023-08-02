@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<string> address = default;
-            Optional<string> operationalState = default;
+            Optional<NetworkFabricConfigurationState> configurationState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -38,13 +38,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     address = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationalState"u8))
+                if (property.NameEquals("configurationState"u8))
                 {
-                    operationalState = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    configurationState = new NetworkFabricConfigurationState(property.Value.GetString());
                     continue;
                 }
             }
-            return new NeighborAddress(address.Value, operationalState.Value);
+            return new NeighborAddress(address.Value, Optional.ToNullable(configurationState));
         }
     }
 }

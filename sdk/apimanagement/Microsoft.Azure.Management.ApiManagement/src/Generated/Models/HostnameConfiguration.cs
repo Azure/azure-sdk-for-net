@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// will be the certificate that will be challenged. The property is
         /// useful if a service has multiple custom hostname enabled and it
         /// needs to decide on the default ssl certificate. The setting only
-        /// applied to Proxy Hostname Type.</param>
+        /// applied to gateway Hostname Type.</param>
         /// <param name="negotiateClientCertificate">Specify true to always
         /// negotiate client certificate on the hostname. Default Value is
         /// false.</param>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// send the SNI header, then this will be the certificate that will be
         /// challenged. The property is useful if a service has multiple custom
         /// hostname enabled and it needs to decide on the default ssl
-        /// certificate. The setting only applied to Proxy Hostname Type.
+        /// certificate. The setting only applied to gateway Hostname Type.
         /// </summary>
         [JsonProperty(PropertyName = "defaultSslBinding")]
         public bool? DefaultSslBinding { get; set; }
