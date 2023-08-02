@@ -53,7 +53,9 @@ namespace Azure.Core.Serialization
             set
             {
                 if (_isFrozen)
+                {
                     throw new InvalidOperationException("Cannot modify static options reference.");
+                }
 
                 _genericTypeSerializerCreator = value;
             }

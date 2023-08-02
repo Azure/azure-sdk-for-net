@@ -241,7 +241,6 @@ namespace Azure.Core
         {
             private SequenceWriter? _writer;
             private BinaryData? _data;
-            private byte[]? _bytes;
             private readonly IModelSerializable<object> _model;
             private readonly ModelSerializerOptions _options;
             private bool _useJsonInterface;
@@ -283,6 +282,8 @@ namespace Azure.Core
                 return _data;
             }
 
+#if NETFRAMEWORK || NETSTANDARD2_0
+            private byte[]? _bytes;
             private byte[] GetBytes()
             {
                 if (_bytes is null)
@@ -291,6 +292,7 @@ namespace Azure.Core
                 }
                 return _bytes;
             }
+#endif
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
@@ -301,11 +303,11 @@ namespace Azure.Core
                 }
                 else
                 {
-                    var data = GetBinaryData();
 #if NETFRAMEWORK || NETSTANDARD2_0
                     var bytes = GetBytes();
                     stream.Write(bytes, 0, bytes.Length);
 #else
+                    var data = GetBinaryData();
                     stream.Write(data.ToMemory().Span);
 #endif
                 }
@@ -314,10 +316,16 @@ namespace Azure.Core
             public override bool TryComputeLength(out long length)
             {
                 if (_model is IModelJsonSerializable<object> jsonSerializable && _useJsonInterface)
+                {
                     return GetWriter(jsonSerializable).TryComputeLength(out length);
+                }
+                else
+                {
+                    var data = GetBinaryData();
 
-                length = 0;
-                return false;
+                    length = data.ToMemory().Length;
+                    return true;
+                }
             }
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
