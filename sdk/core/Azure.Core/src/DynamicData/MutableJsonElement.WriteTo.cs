@@ -148,7 +148,7 @@ namespace Azure.Core.Json
                 return;
             }
 
-            MutableJsonChange? change = _root.Changes.GetNextMergePatchChange(null, out int maxPathLength);
+            MutableJsonChange? change = _root.Changes.GetFirstMergePatchChange(out int maxPathLength);
 
             // patchPath tracks the global path we're on in writing out the PATCH JSON.
             // We only iterate forward through the PATCH JSON.
@@ -235,7 +235,7 @@ namespace Azure.Core.Json
                     }
                 }
 
-                change = _root.Changes.GetNextMergePatchChange(change, out _);
+                change = _root.Changes.GetNextMergePatchChange(change.Value.Path.AsSpan());
             }
 
             // The above loop will have written out the values of all the elements on the

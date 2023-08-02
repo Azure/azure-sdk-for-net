@@ -62,23 +62,22 @@ namespace Azure.Core.Json
 
         internal bool IsDescendant(string path)
         {
-            if (path.Length > 0)
-            {
-                // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
-                path += MutableJsonDocument.ChangeTracker.Delimiter;
-            }
-
-            return Path.StartsWith(path, StringComparison.Ordinal);
+            return IsDescendant(path.AsSpan());
         }
 
-        internal bool IsDescendant(MutableJsonChange? other)
+        internal bool IsDescendant(ReadOnlySpan<char> path)
         {
-            if (other == null)
+            if (path.Length == 0)
             {
-                return false;
+                return Path.Length > 0;
             }
 
-            return IsDescendant(other.Value.Path);
+            // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
+            Span<char> copy = stackalloc char[path.Length + 1];
+            path.CopyTo(copy);
+            copy[path.Length] = MutableJsonDocument.ChangeTracker.Delimiter;
+
+            return Path.AsSpan().StartsWith(copy, StringComparison.Ordinal);
         }
 
         internal bool IsDirectDescendant(string path)
@@ -95,24 +94,14 @@ namespace Azure.Core.Json
             return ancestorPathLength == (descendantPathLength - 1);
         }
 
-        internal bool IsLessThan(MutableJsonChange? other)
+        internal bool IsLessThan(ReadOnlySpan<char> otherPath)
         {
-            if (other == null)
-            {
-                return true;
-            }
-
-            return Path.AsSpan().SequenceCompareTo(other.Value.Path.AsSpan()) < 0;
+            return Path.AsSpan().SequenceCompareTo(otherPath) < 0;
         }
 
-        internal bool IsGreaterThan(MutableJsonChange? other)
+        internal bool IsGreaterThan(ReadOnlySpan<char> otherPath)
         {
-            if (other == null)
-            {
-                return true;
-            }
-
-            return Path.AsSpan().SequenceCompareTo(other.Value.Path.AsSpan()) > 0;
+            return Path.AsSpan().SequenceCompareTo(otherPath) > 0;
         }
 
         internal string AsString()

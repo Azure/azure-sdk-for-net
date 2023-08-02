@@ -141,7 +141,7 @@ namespace Azure.Core.Json
                 }
             }
 
-            internal MutableJsonChange? GetNextMergePatchChange(MutableJsonChange? lastChange, out int maxPathLength)
+            internal MutableJsonChange? GetFirstMergePatchChange(out int maxPathLength)
             {
                 // This method gets changes from the list in sorted order by path.
                 // It is intended for use by JSON Merge Patch WriteTo routine.
@@ -163,10 +163,7 @@ namespace Azure.Core.Json
                 {
                     MutableJsonChange c = _changes[i];
 
-                    if (c.IsGreaterThan(lastChange) &&
-                        c.IsLessThan(min) &&
-                        // Ignore descendant if its ancestor changed
-                        !c.IsDescendant(lastChange))
+                    if (min == null || c.IsLessThan(min.Value.Path.AsSpan()))
                     {
                         min = c;
                     }
@@ -174,6 +171,38 @@ namespace Azure.Core.Json
                     if (c.Path.Length > maxPathLength)
                     {
                         maxPathLength = c.Path.Length;
+                    }
+                }
+
+                return min;
+            }
+
+            internal MutableJsonChange? GetNextMergePatchChange(ReadOnlySpan<char> lastChangePath)
+            {
+                // This method gets changes from the list in sorted order by path.
+                // It is intended for use by JSON Merge Patch WriteTo routine.
+
+                if (_changes == null)
+                {
+                    // null means there's no next change, we can exit a loop
+                    return null;
+                }
+
+                MutableJsonChange? min = null;
+
+                // This implementation is based on the assumption that iterating through
+                // list elements is fast.
+                // Iterating backwards means we get the latest change for a given path.
+                for (int i = _changes!.Count - 1; i >= 0; i--)
+                {
+                    MutableJsonChange c = _changes[i];
+
+                    if (c.IsGreaterThan(lastChangePath) &&
+                        (min == null || c.IsLessThan(min.Value.Path.AsSpan())) &&
+                        // Ignore descendant if its ancestor changed
+                        !c.IsDescendant(lastChangePath))
+                    {
+                        min = c;
                     }
                 }
 

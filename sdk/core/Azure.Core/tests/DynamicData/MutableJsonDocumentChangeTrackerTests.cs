@@ -19,22 +19,22 @@ namespace Azure.Core.Tests
             char delimiter = MutableJsonDocument.ChangeTracker.Delimiter;
 
             // Test IsLessThan
-            Assert.IsTrue(CreateChange("a").IsLessThan(CreateChange("b")));
-            Assert.IsTrue(CreateChange("a").IsLessThan(CreateChange($"a{delimiter}a")));
+            Assert.IsTrue(CreateChange("a").IsLessThan("b".AsSpan()));
+            Assert.IsTrue(CreateChange("a").IsLessThan($"a{delimiter}a".AsSpan()));
 
-            Assert.IsFalse(CreateChange("a").IsLessThan(CreateChange("a")));
+            Assert.IsFalse(CreateChange("a").IsLessThan("a".AsSpan()));
 
-            Assert.IsFalse(CreateChange("b").IsLessThan(CreateChange("a")));
-            Assert.IsFalse(CreateChange($"a{delimiter}a").IsLessThan(CreateChange("a")));
+            Assert.IsFalse(CreateChange("b").IsLessThan("a".AsSpan()));
+            Assert.IsFalse(CreateChange($"a{delimiter}a").IsLessThan("a".AsSpan()));
 
             // Test IsGreaterThan
-            Assert.IsTrue(CreateChange("b").IsGreaterThan(CreateChange("a")));
-            Assert.IsTrue(CreateChange($"a{delimiter}a").IsGreaterThan(CreateChange("a")));
+            Assert.IsTrue(CreateChange("b").IsGreaterThan("a".AsSpan()));
+            Assert.IsTrue(CreateChange($"a{delimiter}a").IsGreaterThan("a".AsSpan()));
 
-            Assert.IsFalse(CreateChange("a").IsGreaterThan(CreateChange("a")));
+            Assert.IsFalse(CreateChange("a").IsGreaterThan("a".AsSpan()));
 
-            Assert.IsFalse(CreateChange("a").IsGreaterThan(CreateChange("b")));
-            Assert.IsFalse(CreateChange("a").IsGreaterThan(CreateChange($"a{delimiter}a")));
+            Assert.IsFalse(CreateChange("a").IsGreaterThan("b".AsSpan()));
+            Assert.IsFalse(CreateChange("a").IsGreaterThan($"a{delimiter}a".AsSpan()));
         }
 
         [Test]
@@ -50,14 +50,14 @@ namespace Azure.Core.Tests
 
             List<MutableJsonChange> changes = new();
 
-            MutableJsonChange? change = changeTracker.GetNextMergePatchChange(null, out int length);
+            MutableJsonChange? change = changeTracker.GetFirstMergePatchChange(out int length);
 
             Assert.AreEqual(3, length);
 
             while (change != null)
             {
                 changes.Add(change.Value);
-                change = changeTracker.GetNextMergePatchChange(change, out length);
+                change = changeTracker.GetNextMergePatchChange(change.Value.Path.AsSpan());
             }
 
             // Note, descendants are ignored
