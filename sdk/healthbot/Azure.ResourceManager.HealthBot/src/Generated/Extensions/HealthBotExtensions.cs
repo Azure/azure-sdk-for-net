@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HealthBot.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthBot
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.HealthBot
     /// <summary> A class to add extension methods to Azure.ResourceManager.HealthBot. </summary>
     public static partial class HealthBotExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static HealthBotArmClientMockingExtension GetHealthBotArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new HealthBotArmClientMockingExtension(client);
+            });
+        }
+
+        private static HealthBotResourceGroupMockingExtension GetHealthBotResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new HealthBotResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HealthBotSubscriptionMockingExtension GetHealthBotSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HealthBotSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region HealthBotResource
         /// <summary>
         /// Gets an object representing a <see cref="HealthBotResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> Returns a <see cref="HealthBotResource" /> object. </returns>
         public static HealthBotResource GetHealthBotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthBotResource.ValidateResourceId(id);
-                return new HealthBotResource(client, id);
-            }
-            );
+            return GetHealthBotArmClientMockingExtension(client).GetHealthBotResource(id);
         }
         #endregion
 
@@ -73,7 +62,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> An object representing collection of HealthBotResources and their operations over a HealthBotResource. </returns>
         public static HealthBotCollection GetHealthBots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthBots();
+            return GetHealthBotResourceGroupMockingExtension(resourceGroupResource).GetHealthBots();
         }
 
         /// <summary>
@@ -97,7 +86,7 @@ namespace Azure.ResourceManager.HealthBot
         [ForwardsClientCalls]
         public static async Task<Response<HealthBotResource>> GetHealthBotAsync(this ResourceGroupResource resourceGroupResource, string botName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHealthBots().GetAsync(botName, cancellationToken).ConfigureAwait(false);
+            return await GetHealthBotResourceGroupMockingExtension(resourceGroupResource).GetHealthBotAsync(botName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,7 +110,7 @@ namespace Azure.ResourceManager.HealthBot
         [ForwardsClientCalls]
         public static Response<HealthBotResource> GetHealthBot(this ResourceGroupResource resourceGroupResource, string botName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHealthBots().Get(botName, cancellationToken);
+            return GetHealthBotResourceGroupMockingExtension(resourceGroupResource).GetHealthBot(botName, cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +131,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> An async collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthBotResource> GetHealthBotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthBotsAsync(cancellationToken);
+            return GetHealthBotSubscriptionMockingExtension(subscriptionResource).GetHealthBotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +152,7 @@ namespace Azure.ResourceManager.HealthBot
         /// <returns> A collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HealthBotResource> GetHealthBots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthBots(cancellationToken);
+            return GetHealthBotSubscriptionMockingExtension(subscriptionResource).GetHealthBots(cancellationToken);
         }
     }
 }
