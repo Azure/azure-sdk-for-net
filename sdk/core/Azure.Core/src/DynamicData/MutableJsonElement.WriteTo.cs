@@ -141,6 +141,13 @@ namespace Azure.Core.Json
                 return;
             }
 
+            // For an array, if any element has changed, the entire array is replaced.
+            if (_root.RootElement.ValueKind == JsonValueKind.Array)
+            {
+                _root.RootElement.WriteTo(writer);
+                return;
+            }
+
             MutableJsonChange? change = _root.Changes.GetNextMergePatchChange(null, out int maxPathLength);
 
             // patchPath tracks the global path we're on in writing out the PATCH JSON.
@@ -159,12 +166,9 @@ namespace Azure.Core.Json
 
             // TODO: this breaks for arrays
 
-            if (_root.RootElement.ValueKind != JsonValueKind.Array)
-            {
-                // Write the start of the PATCH JSON
-                writer.WriteStartObject();
-                Debug.WriteLine("** writer: Writing '{' | start PATCH");
-            }
+            // Write the start of the PATCH JSON
+            writer.WriteStartObject();
+            Debug.WriteLine("** writer: Writing '{' | start PATCH");
 
             while (change != null)
             {
@@ -240,12 +244,9 @@ namespace Azure.Core.Json
             Debug.WriteLine($"** patchPath is '{GetString(patchPath, 0, patchPathLength)}'");
             CloseFinalObjects(writer, patchPath, patchPathLength);
 
-            if (_root.RootElement.ValueKind != JsonValueKind.Array)
-            {
-                // Write the end of the PATCH JSON.
-                writer.WriteEndObject();
-                Debug.WriteLine("** writer: Writing '}' | end PATCH");
-            }
+            // Write the end of the PATCH JSON.
+            writer.WriteEndObject();
+            Debug.WriteLine("** writer: Writing '}' | end PATCH");
         }
         private ReadOnlySpan<char> GetFirstSegment(ReadOnlySpan<char> path)
         {
