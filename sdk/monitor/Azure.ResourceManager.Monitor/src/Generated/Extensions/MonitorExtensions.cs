@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Monitor.Mocking;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,420 +20,46 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to Azure.ResourceManager.Monitor. </summary>
     public static partial class MonitorExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MonitorArmClientMockingExtension GetMonitorArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new MonitorArmClientMockingExtension(client);
+            });
+        }
+
+        private static MonitorResourceGroupMockingExtension GetMonitorResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new MonitorResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MonitorSubscriptionMockingExtension GetMonitorSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MonitorSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MonitorTenantMockingExtension GetMonitorTenantMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MonitorTenantMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region AutoscaleSettingResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AutoscaleSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutoscaleSettingResource.CreateResourceIdentifier" /> to create an <see cref="AutoscaleSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutoscaleSettingResource" /> object. </returns>
-        public static AutoscaleSettingResource GetAutoscaleSettingResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AutoscaleSettingResource.ValidateResourceId(id);
-                return new AutoscaleSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region AlertRuleResource
-        /// <summary>
-        /// Gets an object representing an <see cref="AlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertRuleResource" /> object. </returns>
-        public static AlertRuleResource GetAlertRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                AlertRuleResource.ValidateResourceId(id);
-                return new AlertRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region LogProfileResource
-        /// <summary>
-        /// Gets an object representing a <see cref="LogProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogProfileResource.CreateResourceIdentifier" /> to create a <see cref="LogProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogProfileResource" /> object. </returns>
-        public static LogProfileResource GetLogProfileResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                LogProfileResource.ValidateResourceId(id);
-                return new LogProfileResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DiagnosticSettingResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingResource" /> object. </returns>
-        public static DiagnosticSettingResource GetDiagnosticSettingResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DiagnosticSettingResource.ValidateResourceId(id);
-                return new DiagnosticSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DiagnosticSettingsCategoryResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticSettingsCategoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticSettingsCategoryResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingsCategoryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource" /> object. </returns>
-        public static DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DiagnosticSettingsCategoryResource.ValidateResourceId(id);
-                return new DiagnosticSettingsCategoryResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ActionGroupResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ActionGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ActionGroupResource.CreateResourceIdentifier" /> to create an <see cref="ActionGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActionGroupResource" /> object. </returns>
-        public static ActionGroupResource GetActionGroupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ActionGroupResource.ValidateResourceId(id);
-                return new ActionGroupResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MetricAlertResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MetricAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MetricAlertResource.CreateResourceIdentifier" /> to create a <see cref="MetricAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MetricAlertResource" /> object. </returns>
-        public static MetricAlertResource GetMetricAlertResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MetricAlertResource.ValidateResourceId(id);
-                return new MetricAlertResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ScheduledQueryRuleResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ScheduledQueryRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScheduledQueryRuleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledQueryRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScheduledQueryRuleResource" /> object. </returns>
-        public static ScheduledQueryRuleResource GetScheduledQueryRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ScheduledQueryRuleResource.ValidateResourceId(id);
-                return new ScheduledQueryRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region VmInsightsOnboardingStatusResource
-        /// <summary>
-        /// Gets an object representing a <see cref="VmInsightsOnboardingStatusResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VmInsightsOnboardingStatusResource.CreateResourceIdentifier" /> to create a <see cref="VmInsightsOnboardingStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
-        public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                VmInsightsOnboardingStatusResource.ValidateResourceId(id);
-                return new VmInsightsOnboardingStatusResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MonitorPrivateLinkScopeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateLinkScopeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource" /> object. </returns>
-        public static MonitorPrivateLinkScopeResource GetMonitorPrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MonitorPrivateLinkScopeResource.ValidateResourceId(id);
-                return new MonitorPrivateLinkScopeResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MonitorPrivateLinkResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkResource" /> object. </returns>
-        public static MonitorPrivateLinkResource GetMonitorPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MonitorPrivateLinkResource.ValidateResourceId(id);
-                return new MonitorPrivateLinkResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MonitorPrivateEndpointConnectionResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorPrivateEndpointConnectionResource" /> object. </returns>
-        public static MonitorPrivateEndpointConnectionResource GetMonitorPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MonitorPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new MonitorPrivateEndpointConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MonitorPrivateLinkScopedResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitorPrivateLinkScopedResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorPrivateLinkScopedResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopedResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource" /> object. </returns>
-        public static MonitorPrivateLinkScopedResource GetMonitorPrivateLinkScopedResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MonitorPrivateLinkScopedResource.ValidateResourceId(id);
-                return new MonitorPrivateLinkScopedResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ActivityLogAlertResource
-        /// <summary>
-        /// Gets an object representing an <see cref="ActivityLogAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ActivityLogAlertResource.CreateResourceIdentifier" /> to create an <see cref="ActivityLogAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ActivityLogAlertResource" /> object. </returns>
-        public static ActivityLogAlertResource GetActivityLogAlertResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ActivityLogAlertResource.ValidateResourceId(id);
-                return new ActivityLogAlertResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DataCollectionEndpointResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DataCollectionEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataCollectionEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCollectionEndpointResource" /> object. </returns>
-        public static DataCollectionEndpointResource GetDataCollectionEndpointResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DataCollectionEndpointResource.ValidateResourceId(id);
-                return new DataCollectionEndpointResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DataCollectionRuleAssociationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DataCollectionRuleAssociationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataCollectionRuleAssociationResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleAssociationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleAssociationResource" /> object. </returns>
-        public static DataCollectionRuleAssociationResource GetDataCollectionRuleAssociationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DataCollectionRuleAssociationResource.ValidateResourceId(id);
-                return new DataCollectionRuleAssociationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region DataCollectionRuleResource
-        /// <summary>
-        /// Gets an object representing a <see cref="DataCollectionRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataCollectionRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataCollectionRuleResource" /> object. </returns>
-        public static DataCollectionRuleResource GetDataCollectionRuleResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                DataCollectionRuleResource.ValidateResourceId(id);
-                return new DataCollectionRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region MonitorWorkspaceResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitorWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitorWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MonitorWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitorWorkspaceResource" /> object. </returns>
-        public static MonitorWorkspaceResource GetMonitorWorkspaceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                MonitorWorkspaceResource.ValidateResourceId(id);
-                return new MonitorWorkspaceResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of DiagnosticSettingResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of DiagnosticSettingResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
         public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDiagnosticSettings();
+            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSettings(scope);
         }
-
         /// <summary>
         /// Gets the active diagnostic settings for the specified resource.
         /// <list type="bullet">
@@ -455,9 +82,8 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return await client.GetDiagnosticSettings(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Gets the active diagnostic settings for the specified resource.
         /// <list type="bullet">
@@ -480,18 +106,17 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DiagnosticSettingResource> GetDiagnosticSetting(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return client.GetDiagnosticSettings(scope).Get(name, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSetting(scope, name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DiagnosticSettingsCategoryResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of DiagnosticSettingsCategoryResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of DiagnosticSettingsCategoryResources and their operations over a DiagnosticSettingsCategoryResource. </returns>
         public static DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDiagnosticSettingsCategories();
+            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingsCategories(scope);
         }
-
         /// <summary>
         /// Gets the diagnostic settings category for the specified resource.
         /// <list type="bullet">
@@ -514,9 +139,8 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return await client.GetDiagnosticSettingsCategories(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingsCategoryAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Gets the diagnostic settings category for the specified resource.
         /// <list type="bullet">
@@ -539,27 +163,26 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return client.GetDiagnosticSettingsCategories(scope).Get(name, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingsCategory(scope, name, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a VmInsightsOnboardingStatusResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <summary> Gets an object representing a VmInsightsOnboardingStatusResource along with the instance operations that can be performed on it in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
         public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetVmInsightsOnboardingStatus();
+            return GetMonitorArmClientMockingExtension(client).GetVmInsightsOnboardingStatus(scope);
         }
 
-        /// <summary> Gets a collection of DataCollectionRuleAssociationResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of DataCollectionRuleAssociationResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of DataCollectionRuleAssociationResources and their operations over a DataCollectionRuleAssociationResource. </returns>
         public static DataCollectionRuleAssociationCollection GetDataCollectionRuleAssociations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetDataCollectionRuleAssociations();
+            return GetMonitorArmClientMockingExtension(client).GetDataCollectionRuleAssociations(scope);
         }
-
         /// <summary>
         /// Returns the specified association.
         /// <list type="bullet">
@@ -582,9 +205,8 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DataCollectionRuleAssociationResource>> GetDataCollectionRuleAssociationAsync(this ArmClient client, ResourceIdentifier scope, string associationName, CancellationToken cancellationToken = default)
         {
-            return await client.GetDataCollectionRuleAssociations(scope).GetAsync(associationName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorArmClientMockingExtension(client).GetDataCollectionRuleAssociationAsync(scope, associationName, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Returns the specified association.
         /// <list type="bullet">
@@ -607,7 +229,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociation(this ArmClient client, ResourceIdentifier scope, string associationName, CancellationToken cancellationToken = default)
         {
-            return client.GetDataCollectionRuleAssociations(scope).Get(associationName, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetDataCollectionRuleAssociation(scope, associationName, cancellationToken);
         }
 
         /// <summary>
@@ -629,7 +251,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<MonitorMetricDefinition> GetMonitorMetricDefinitionsAsync(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricDefinitionsAsync(metricnamespace, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricDefinitionsAsync(scope, metricnamespace, cancellationToken);
         }
 
         /// <summary>
@@ -651,7 +273,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<MonitorMetricDefinition> GetMonitorMetricDefinitions(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricDefinitions(metricnamespace, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricDefinitions(scope, metricnamespace, cancellationToken);
         }
 
         /// <summary>
@@ -673,9 +295,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ArmResourceGetMonitorMetricsOptions();
-
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricsAsync(options, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricsAsync(scope, options, cancellationToken);
         }
 
         /// <summary>
@@ -697,9 +317,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<MonitorMetric> GetMonitorMetrics(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ArmResourceGetMonitorMetricsOptions();
-
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetrics(options, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetMonitorMetrics(scope, options, cancellationToken);
         }
 
         /// <summary>
@@ -721,9 +339,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
-
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricBaselinesAsync(options, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricBaselinesAsync(scope, options, cancellationToken);
         }
 
         /// <summary>
@@ -745,9 +361,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
-
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricBaselines(options, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricBaselines(scope, options, cancellationToken);
         }
 
         /// <summary>
@@ -769,7 +383,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<MonitorMetricNamespace> GetMonitorMetricNamespacesAsync(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricNamespacesAsync(startTime, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricNamespacesAsync(scope, startTime, cancellationToken);
         }
 
         /// <summary>
@@ -791,15 +405,267 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<MonitorMetricNamespace> GetMonitorMetricNamespaces(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
-            return GetArmResourceExtensionClient(client, scope).GetMonitorMetricNamespaces(startTime, cancellationToken);
+            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricNamespaces(scope, startTime, cancellationToken);
         }
+
+        #region AutoscaleSettingResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AutoscaleSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutoscaleSettingResource.CreateResourceIdentifier" /> to create an <see cref="AutoscaleSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AutoscaleSettingResource" /> object. </returns>
+        public static AutoscaleSettingResource GetAutoscaleSettingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetAutoscaleSettingResource(id);
+        }
+        #endregion
+
+        #region AlertRuleResource
+        /// <summary>
+        /// Gets an object representing an <see cref="AlertRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AlertRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AlertRuleResource" /> object. </returns>
+        public static AlertRuleResource GetAlertRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetAlertRuleResource(id);
+        }
+        #endregion
+
+        #region LogProfileResource
+        /// <summary>
+        /// Gets an object representing a <see cref="LogProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogProfileResource.CreateResourceIdentifier" /> to create a <see cref="LogProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LogProfileResource" /> object. </returns>
+        public static LogProfileResource GetLogProfileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetLogProfileResource(id);
+        }
+        #endregion
+
+        #region DiagnosticSettingResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DiagnosticSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiagnosticSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiagnosticSettingResource" /> object. </returns>
+        public static DiagnosticSettingResource GetDiagnosticSettingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingResource(id);
+        }
+        #endregion
+
+        #region DiagnosticSettingsCategoryResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DiagnosticSettingsCategoryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiagnosticSettingsCategoryResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingsCategoryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource" /> object. </returns>
+        public static DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingsCategoryResource(id);
+        }
+        #endregion
+
+        #region ActionGroupResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ActionGroupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ActionGroupResource.CreateResourceIdentifier" /> to create an <see cref="ActionGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ActionGroupResource" /> object. </returns>
+        public static ActionGroupResource GetActionGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetActionGroupResource(id);
+        }
+        #endregion
+
+        #region MetricAlertResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MetricAlertResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MetricAlertResource.CreateResourceIdentifier" /> to create a <see cref="MetricAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MetricAlertResource" /> object. </returns>
+        public static MetricAlertResource GetMetricAlertResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetMetricAlertResource(id);
+        }
+        #endregion
+
+        #region ScheduledQueryRuleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ScheduledQueryRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScheduledQueryRuleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledQueryRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScheduledQueryRuleResource" /> object. </returns>
+        public static ScheduledQueryRuleResource GetScheduledQueryRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetScheduledQueryRuleResource(id);
+        }
+        #endregion
+
+        #region VmInsightsOnboardingStatusResource
+        /// <summary>
+        /// Gets an object representing a <see cref="VmInsightsOnboardingStatusResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VmInsightsOnboardingStatusResource.CreateResourceIdentifier" /> to create a <see cref="VmInsightsOnboardingStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
+        public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetVmInsightsOnboardingStatusResource(id);
+        }
+        #endregion
+
+        #region MonitorPrivateLinkScopeResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MonitorPrivateLinkScopeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource" /> object. </returns>
+        public static MonitorPrivateLinkScopeResource GetMonitorPrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetMonitorPrivateLinkScopeResource(id);
+        }
+        #endregion
+
+        #region MonitorPrivateLinkResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MonitorPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkResource" /> object. </returns>
+        public static MonitorPrivateLinkResource GetMonitorPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetMonitorPrivateLinkResource(id);
+        }
+        #endregion
+
+        #region MonitorPrivateEndpointConnectionResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MonitorPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitorPrivateEndpointConnectionResource" /> object. </returns>
+        public static MonitorPrivateEndpointConnectionResource GetMonitorPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetMonitorPrivateEndpointConnectionResource(id);
+        }
+        #endregion
+
+        #region MonitorPrivateLinkScopedResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MonitorPrivateLinkScopedResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorPrivateLinkScopedResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopedResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource" /> object. </returns>
+        public static MonitorPrivateLinkScopedResource GetMonitorPrivateLinkScopedResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetMonitorPrivateLinkScopedResource(id);
+        }
+        #endregion
+
+        #region ActivityLogAlertResource
+        /// <summary>
+        /// Gets an object representing an <see cref="ActivityLogAlertResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ActivityLogAlertResource.CreateResourceIdentifier" /> to create an <see cref="ActivityLogAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ActivityLogAlertResource" /> object. </returns>
+        public static ActivityLogAlertResource GetActivityLogAlertResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetActivityLogAlertResource(id);
+        }
+        #endregion
+
+        #region DataCollectionEndpointResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataCollectionEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataCollectionEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataCollectionEndpointResource" /> object. </returns>
+        public static DataCollectionEndpointResource GetDataCollectionEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetDataCollectionEndpointResource(id);
+        }
+        #endregion
+
+        #region DataCollectionRuleAssociationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataCollectionRuleAssociationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataCollectionRuleAssociationResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleAssociationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataCollectionRuleAssociationResource" /> object. </returns>
+        public static DataCollectionRuleAssociationResource GetDataCollectionRuleAssociationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetDataCollectionRuleAssociationResource(id);
+        }
+        #endregion
+
+        #region DataCollectionRuleResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DataCollectionRuleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataCollectionRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DataCollectionRuleResource" /> object. </returns>
+        public static DataCollectionRuleResource GetDataCollectionRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetDataCollectionRuleResource(id);
+        }
+        #endregion
+
+        #region MonitorWorkspaceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MonitorWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitorWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MonitorWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MonitorWorkspaceResource" /> object. </returns>
+        public static MonitorWorkspaceResource GetMonitorWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMonitorArmClientMockingExtension(client).GetMonitorWorkspaceResource(id);
+        }
+        #endregion
 
         /// <summary> Gets a collection of AutoscaleSettingResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AutoscaleSettingResources and their operations over a AutoscaleSettingResource. </returns>
         public static AutoscaleSettingCollection GetAutoscaleSettings(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutoscaleSettings();
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAutoscaleSettings();
         }
 
         /// <summary>
@@ -823,7 +689,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<AutoscaleSettingResource>> GetAutoscaleSettingAsync(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAutoscaleSettings().GetAsync(autoscaleSettingName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAutoscaleSettingAsync(autoscaleSettingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -847,7 +713,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<AutoscaleSettingResource> GetAutoscaleSetting(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAutoscaleSettings().Get(autoscaleSettingName, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAutoscaleSetting(autoscaleSettingName, cancellationToken);
         }
 
         /// <summary> Gets a collection of AlertRuleResources in the ResourceGroupResource. </summary>
@@ -855,7 +721,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of AlertRuleResources and their operations over a AlertRuleResource. </returns>
         public static AlertRuleCollection GetAlertRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAlertRules();
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAlertRules();
         }
 
         /// <summary>
@@ -879,7 +745,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<AlertRuleResource>> GetAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAlertRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAlertRuleAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -903,7 +769,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<AlertRuleResource> GetAlertRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAlertRules().Get(ruleName, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAlertRule(ruleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ActionGroupResources in the ResourceGroupResource. </summary>
@@ -911,7 +777,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of ActionGroupResources and their operations over a ActionGroupResource. </returns>
         public static ActionGroupCollection GetActionGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetActionGroups();
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActionGroups();
         }
 
         /// <summary>
@@ -935,7 +801,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<ActionGroupResource>> GetActionGroupAsync(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetActionGroups().GetAsync(actionGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActionGroupAsync(actionGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -959,7 +825,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<ActionGroupResource> GetActionGroup(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetActionGroups().Get(actionGroupName, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActionGroup(actionGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MetricAlertResources in the ResourceGroupResource. </summary>
@@ -967,7 +833,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of MetricAlertResources and their operations over a MetricAlertResource. </returns>
         public static MetricAlertCollection GetMetricAlerts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMetricAlerts();
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMetricAlerts();
         }
 
         /// <summary>
@@ -991,7 +857,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<MetricAlertResource>> GetMetricAlertAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMetricAlerts().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMetricAlertAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1015,7 +881,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<MetricAlertResource> GetMetricAlert(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMetricAlerts().Get(ruleName, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMetricAlert(ruleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ScheduledQueryRuleResources in the ResourceGroupResource. </summary>
@@ -1023,7 +889,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of ScheduledQueryRuleResources and their operations over a ScheduledQueryRuleResource. </returns>
         public static ScheduledQueryRuleCollection GetScheduledQueryRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetScheduledQueryRules();
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetScheduledQueryRules();
         }
 
         /// <summary>
@@ -1047,7 +913,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<ScheduledQueryRuleResource>> GetScheduledQueryRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetScheduledQueryRules().GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetScheduledQueryRuleAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1071,7 +937,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<ScheduledQueryRuleResource> GetScheduledQueryRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetScheduledQueryRules().Get(ruleName, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetScheduledQueryRule(ruleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource. </summary>
@@ -1079,7 +945,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of MonitorPrivateLinkScopeResources and their operations over a MonitorPrivateLinkScopeResource. </returns>
         public static MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMonitorPrivateLinkScopes();
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorPrivateLinkScopes();
         }
 
         /// <summary>
@@ -1103,7 +969,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<MonitorPrivateLinkScopeResource>> GetMonitorPrivateLinkScopeAsync(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMonitorPrivateLinkScopes().GetAsync(scopeName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorPrivateLinkScopeAsync(scopeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1127,7 +993,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMonitorPrivateLinkScopes().Get(scopeName, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorPrivateLinkScope(scopeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ActivityLogAlertResources in the ResourceGroupResource. </summary>
@@ -1135,7 +1001,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of ActivityLogAlertResources and their operations over a ActivityLogAlertResource. </returns>
         public static ActivityLogAlertCollection GetActivityLogAlerts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetActivityLogAlerts();
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActivityLogAlerts();
         }
 
         /// <summary>
@@ -1159,7 +1025,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<ActivityLogAlertResource>> GetActivityLogAlertAsync(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetActivityLogAlerts().GetAsync(activityLogAlertName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActivityLogAlertAsync(activityLogAlertName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1183,7 +1049,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<ActivityLogAlertResource> GetActivityLogAlert(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetActivityLogAlerts().Get(activityLogAlertName, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActivityLogAlert(activityLogAlertName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataCollectionEndpointResources in the ResourceGroupResource. </summary>
@@ -1191,7 +1057,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of DataCollectionEndpointResources and their operations over a DataCollectionEndpointResource. </returns>
         public static DataCollectionEndpointCollection GetDataCollectionEndpoints(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataCollectionEndpoints();
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionEndpoints();
         }
 
         /// <summary>
@@ -1215,7 +1081,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DataCollectionEndpointResource>> GetDataCollectionEndpointAsync(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataCollectionEndpoints().GetAsync(dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionEndpointAsync(dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1239,7 +1105,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DataCollectionEndpointResource> GetDataCollectionEndpoint(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataCollectionEndpoints().Get(dataCollectionEndpointName, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionEndpoint(dataCollectionEndpointName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataCollectionRuleResources in the ResourceGroupResource. </summary>
@@ -1247,7 +1113,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of DataCollectionRuleResources and their operations over a DataCollectionRuleResource. </returns>
         public static DataCollectionRuleCollection GetDataCollectionRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataCollectionRules();
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionRules();
         }
 
         /// <summary>
@@ -1271,7 +1137,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DataCollectionRuleResource>> GetDataCollectionRuleAsync(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataCollectionRules().GetAsync(dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionRuleAsync(dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1295,7 +1161,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DataCollectionRuleResource> GetDataCollectionRule(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataCollectionRules().Get(dataCollectionRuleName, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionRule(dataCollectionRuleName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MonitorWorkspaceResources in the ResourceGroupResource. </summary>
@@ -1303,7 +1169,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of MonitorWorkspaceResources and their operations over a MonitorWorkspaceResource. </returns>
         public static MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMonitorWorkspaceResources();
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorWorkspaceResources();
         }
 
         /// <summary>
@@ -1327,7 +1193,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<MonitorWorkspaceResource>> GetMonitorWorkspaceResourceAsync(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMonitorWorkspaceResources().GetAsync(azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorWorkspaceResourceAsync(azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1351,7 +1217,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<MonitorWorkspaceResource> GetMonitorWorkspaceResource(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMonitorWorkspaceResources().Get(azureMonitorWorkspaceName, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorWorkspaceResource(azureMonitorWorkspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -1374,9 +1240,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         public static async Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetPrivateLinkScopeOperationStatusAsync(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatusAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetPrivateLinkScopeOperationStatusAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1399,9 +1263,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         public static Response<MonitorPrivateLinkScopeOperationStatus> GetPrivateLinkScopeOperationStatus(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPrivateLinkScopeOperationStatus(asyncOperationId, cancellationToken);
+            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetPrivateLinkScopeOperationStatus(asyncOperationId, cancellationToken);
         }
 
         /// <summary> Gets a collection of LogProfileResources in the SubscriptionResource. </summary>
@@ -1409,7 +1271,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of LogProfileResources and their operations over a LogProfileResource. </returns>
         public static LogProfileCollection GetLogProfiles(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLogProfiles();
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetLogProfiles();
         }
 
         /// <summary>
@@ -1433,7 +1295,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<LogProfileResource>> GetLogProfileAsync(this SubscriptionResource subscriptionResource, string logProfileName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetLogProfiles().GetAsync(logProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetMonitorSubscriptionMockingExtension(subscriptionResource).GetLogProfileAsync(logProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1457,7 +1319,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<LogProfileResource> GetLogProfile(this SubscriptionResource subscriptionResource, string logProfileName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetLogProfiles().Get(logProfileName, cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetLogProfile(logProfileName, cancellationToken);
         }
 
         /// <summary>
@@ -1478,7 +1340,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="AutoscaleSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoscaleSettingResource> GetAutoscaleSettingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoscaleSettingsAsync(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetAutoscaleSettingsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1499,7 +1361,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="AutoscaleSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoscaleSettingResource> GetAutoscaleSettings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutoscaleSettings(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetAutoscaleSettings(cancellationToken);
         }
 
         /// <summary>
@@ -1520,7 +1382,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AlertRuleResource> GetAlertRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAlertRulesAsync(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetAlertRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1541,7 +1403,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AlertRuleResource> GetAlertRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAlertRules(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetAlertRules(cancellationToken);
         }
 
         /// <summary>
@@ -1562,7 +1424,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="ActionGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ActionGroupResource> GetActionGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActionGroupsAsync(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActionGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1583,7 +1445,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="ActionGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ActionGroupResource> GetActionGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActionGroups(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActionGroups(cancellationToken);
         }
 
         /// <summary>
@@ -1607,9 +1469,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventDataInfo> GetActivityLogsAsync(this SubscriptionResource subscriptionResource, string filter, string select = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActivityLogsAsync(filter, select, cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActivityLogsAsync(filter, select, cancellationToken);
         }
 
         /// <summary>
@@ -1633,9 +1493,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventDataInfo> GetActivityLogs(this SubscriptionResource subscriptionResource, string filter, string select = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActivityLogs(filter, select, cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActivityLogs(filter, select, cancellationToken);
         }
 
         /// <summary>
@@ -1658,9 +1516,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorMetricsAsync(options, cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorMetricsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -1683,9 +1539,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SubscriptionMonitorMetric> GetMonitorMetrics(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorMetrics(options, cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorMetrics(options, cancellationToken);
         }
 
         /// <summary>
@@ -1708,9 +1562,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorMetricsWithPostAsync(options, cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorMetricsWithPostAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -1733,9 +1585,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPost(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(options, nameof(options));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorMetricsWithPost(options, cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorMetricsWithPost(options, cancellationToken);
         }
 
         /// <summary>
@@ -1756,7 +1606,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MetricAlertResource> GetMetricAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMetricAlertsAsync(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMetricAlertsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1777,7 +1627,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MetricAlertResource> GetMetricAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMetricAlerts(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMetricAlerts(cancellationToken);
         }
 
         /// <summary>
@@ -1798,7 +1648,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScheduledQueryRulesAsync(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetScheduledQueryRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1819,7 +1669,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetScheduledQueryRules(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetScheduledQueryRules(cancellationToken);
         }
 
         /// <summary>
@@ -1840,7 +1690,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorPrivateLinkScopesAsync(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorPrivateLinkScopesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1861,7 +1711,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorPrivateLinkScopes(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorPrivateLinkScopes(cancellationToken);
         }
 
         /// <summary>
@@ -1882,7 +1732,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="ActivityLogAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ActivityLogAlertResource> GetActivityLogAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActivityLogAlertsAsync(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActivityLogAlertsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1903,7 +1753,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="ActivityLogAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ActivityLogAlertResource> GetActivityLogAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetActivityLogAlerts(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActivityLogAlerts(cancellationToken);
         }
 
         /// <summary>
@@ -1924,7 +1774,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataCollectionEndpointResource> GetDataCollectionEndpointsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataCollectionEndpointsAsync(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetDataCollectionEndpointsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1945,7 +1795,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataCollectionEndpointResource> GetDataCollectionEndpoints(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataCollectionEndpoints(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetDataCollectionEndpoints(cancellationToken);
         }
 
         /// <summary>
@@ -1966,7 +1816,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataCollectionRuleResource> GetDataCollectionRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataCollectionRulesAsync(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetDataCollectionRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1987,7 +1837,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataCollectionRuleResource> GetDataCollectionRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataCollectionRules(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetDataCollectionRules(cancellationToken);
         }
 
         /// <summary>
@@ -2008,7 +1858,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorWorkspaceResourcesAsync(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorWorkspaceResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2029,7 +1879,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorWorkspaceResource> GetMonitorWorkspaceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMonitorWorkspaceResources(cancellationToken);
+            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorWorkspaceResources(cancellationToken);
         }
 
         /// <summary>
@@ -2050,7 +1900,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEventCategoriesAsync(cancellationToken);
+            return GetMonitorTenantMockingExtension(tenantResource).GetEventCategoriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2071,7 +1921,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorLocalizableString> GetEventCategories(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEventCategories(cancellationToken);
+            return GetMonitorTenantMockingExtension(tenantResource).GetEventCategories(cancellationToken);
         }
 
         /// <summary>
@@ -2094,7 +1944,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventDataInfo> GetTenantActivityLogsAsync(this TenantResource tenantResource, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantActivityLogsAsync(filter, select, cancellationToken);
+            return GetMonitorTenantMockingExtension(tenantResource).GetTenantActivityLogsAsync(filter, select, cancellationToken);
         }
 
         /// <summary>
@@ -2117,7 +1967,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventDataInfo> GetTenantActivityLogs(this TenantResource tenantResource, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantActivityLogs(filter, select, cancellationToken);
+            return GetMonitorTenantMockingExtension(tenantResource).GetTenantActivityLogs(filter, select, cancellationToken);
         }
     }
 }
