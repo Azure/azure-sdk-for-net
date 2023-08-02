@@ -354,6 +354,8 @@ This attribute, when used with `RecordedTestBase`-derived test fixtures`, will m
 
 ### Debugging Test Proxy
 
+#### Debug Mode
+
 The Test Proxy and Test Framework include detailed error messages for test failures. However, there will  always be times where it is necessary to debug to figure out what is going wrong, particularly if the issue actually exists in the Test Framework or Test Proxy code rather than in your test or client library.
 
 In order to enable debug mode, set the `UseLocalDebugProxy` property to true in your class that inherits from `RecordedTestBase`:
