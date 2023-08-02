@@ -30,7 +30,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 {
                     _configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
 
-                    options.ConnectionString ??= _configuration[ConnectionStringEnvironmentVariable];
+                    // Environment Variable should take precedence over config file.
+                    var connectionString = _configuration[ConnectionStringEnvironmentVariable];
+                    if (!string.IsNullOrEmpty(connectionString))
+                    {
+                        options.ConnectionString = connectionString;
+                    }
                 }
             }
             catch (Exception ex)

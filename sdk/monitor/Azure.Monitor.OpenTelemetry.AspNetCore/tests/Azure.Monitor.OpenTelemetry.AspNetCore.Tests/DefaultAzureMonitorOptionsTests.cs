@@ -55,6 +55,57 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Equal(0.5F, azureMonitorOptions.SamplingRatio);
             Assert.Equal("testJsonValue", azureMonitorOptions.StorageDirectory);
         }
+
+        [Fact]
+        public void VerifyConfigure_ViaJson_IConfigurationTakesPrecedence()
+        {
+            var appSettings = @"{""AzureMonitor"":{
+                ""ConnectionString"" : ""testJsonValue""
+                }}";
+
+            var configuration = new ConfigurationBuilder()
+                .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appSettings)))
+                .AddInMemoryCollection(new Dictionary<string, string?> { [ConnectionStringEnvironmentVariable] = "testValue" })
+                .Build();
+
+            var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
+
+            var azureMonitorOptions = new AzureMonitorOptions();
+
+            defaultAzureMonitorOptions.Configure(azureMonitorOptions);
+
+            Assert.Equal("testValue", azureMonitorOptions.ConnectionString);
+        }
+
+        [Fact]
+        public void VerifyConfigure_ViaJson_EnvironmentVarTakesPrecedence()
+        {
+            try
+            {
+                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, "testEnvVarValue");
+
+                var appSettings = @"{""AzureMonitor"":{
+                ""ConnectionString"" : ""testJsonValue""
+                }}";
+
+                var configuration = new ConfigurationBuilder()
+                    .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appSettings)))
+                    .AddEnvironmentVariables()
+                    .Build();
+
+                var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
+
+                var azureMonitorOptions = new AzureMonitorOptions();
+
+                defaultAzureMonitorOptions.Configure(azureMonitorOptions);
+
+                Assert.Equal("testEnvVarValue", azureMonitorOptions.ConnectionString);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, null);
+            }
+        }
 #endif
 
         [Fact]
