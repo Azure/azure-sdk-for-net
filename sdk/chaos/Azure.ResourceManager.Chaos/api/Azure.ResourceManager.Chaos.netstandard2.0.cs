@@ -287,6 +287,39 @@ namespace Azure.ResourceManager.Chaos
         public virtual Azure.ResourceManager.Chaos.CapabilityTypeCollection GetCapabilityTypes() { throw null; }
     }
 }
+namespace Azure.ResourceManager.Chaos.Mocking
+{
+    public partial class ChaosArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ChaosArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.Chaos.CapabilityResource GetCapabilityResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.CapabilityTypeResource GetCapabilityTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.ExperimentExecutionDetailResource GetExperimentExecutionDetailResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.ExperimentResource GetExperimentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.ExperimentStatusResource GetExperimentStatusResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.TargetResource GetTargetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.TargetTypeResource GetTargetTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class ChaosResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ChaosResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.ExperimentResource> GetExperiment(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.ExperimentResource>> GetExperimentAsync(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.ExperimentCollection GetExperiments() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.TargetResource> GetTarget(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.TargetResource>> GetTargetAsync(string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.TargetCollection GetTargets(string parentProviderNamespace, string parentResourceType, string parentResourceName) { throw null; }
+    }
+    public partial class ChaosSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ChaosSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Chaos.ExperimentResource> GetExperiments(bool? running = default(bool?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Chaos.ExperimentResource> GetExperimentsAsync(bool? running = default(bool?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Chaos.TargetTypeResource> GetTargetType(string locationName, string targetTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Chaos.TargetTypeResource>> GetTargetTypeAsync(string locationName, string targetTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Chaos.TargetTypeCollection GetTargetTypes(string locationName) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Chaos.Models
 {
     public abstract partial class Action

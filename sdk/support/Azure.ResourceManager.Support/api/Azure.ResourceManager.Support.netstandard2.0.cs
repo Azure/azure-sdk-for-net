@@ -169,6 +169,33 @@ namespace Azure.ResourceManager.Support
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketResource>> UpdateAsync(Azure.ResourceManager.Support.Models.SupportTicketPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Support.Mocking
+{
+    public partial class SupportArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SupportArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.Support.ProblemClassificationResource GetProblemClassificationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Support.SupportAzureServiceResource GetSupportAzureServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Support.SupportTicketCommunicationResource GetSupportTicketCommunicationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Support.SupportTicketResource GetSupportTicketResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class SupportSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SupportSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Support.SupportTicketResource> GetSupportTicket(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportTicketResource>> GetSupportTicketAsync(string supportTicketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Support.SupportTicketCollection GetSupportTickets() { throw null; }
+    }
+    public partial class SupportTenantMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SupportTenantMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Support.SupportAzureServiceResource> GetSupportAzureService(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Support.SupportAzureServiceResource>> GetSupportAzureServiceAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Support.SupportAzureServiceCollection GetSupportAzureServices() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Support.Models
 {
     public static partial class ArmSupportModelFactory

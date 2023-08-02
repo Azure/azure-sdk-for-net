@@ -8,12 +8,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.ResourceManager.GuestConfiguration
+namespace Azure.ResourceManager.GuestConfiguration.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     [CodeGenSuppress("GetGuestConfigurationAssignmentsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetGuestConfigurationAssignments", typeof(CancellationToken))]
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class GuestConfigurationSubscriptionMockingExtension : ArmResource
     {
         /// <summary>
         /// List all guest configuration assignments for a subscription.

@@ -76,6 +76,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         public Azure.ResourceManager.AppComplianceAutomation.Models.SnapshotProperties Properties { get { throw null; } }
     }
 }
+namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
+{
+    public partial class AppComplianceAutomationArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AppComplianceAutomationArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.AppComplianceAutomation.ReportResource GetReportResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.AppComplianceAutomation.SnapshotResource GetSnapshotResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class AppComplianceAutomationTenantMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected AppComplianceAutomationTenantMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.ReportResource> GetReportResource(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.ReportResource>> GetReportResourceAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.AppComplianceAutomation.ReportResourceCollection GetReportResources() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
     public static partial class ArmAppComplianceAutomationModelFactory
