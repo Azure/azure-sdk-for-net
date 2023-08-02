@@ -380,6 +380,12 @@ The key integration points between the Test Framework and the Test Proxy are:
  - InstrumentClientOptions method of `RecordedTestBase` - calling this on your client options will set the [ClientOptions.Transport property](https://learn.microsoft.com/dotnet/api/azure.core.clientoptions.transport?view=azure-dotnet) to be [ProxyTransport](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/ProxyTransport.cs) to your client options when in `Playback` or `Record` mode. The ProxyTransport will send all requests to the Test Proxy.
  - [TestProxy.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/src/TestProxy.cs) - This class is responsible for starting and stopping the Test Proxy process, as well as reporting any errors that occur in the Test Proxy process. The Test Proxy process is started automatically when running tests in `Record` or `Playback` mode, and is stopped automatically when the test run is complete. The Test Proxy process is shared between tests and test classes within a process.
 
+#### Including Test Proxy Debug level logs
+
+It is also possible to observe Debug logs from the Test Proxy by setting the environment 
+variable `Logging__LogLevel__Azure.Sdk.Tools.TestProxy` to `Debug`. This can be done locally, or 
+when queueing a build in Azure DevOps by adding a variable to the run.
+
 ## Unit tests
 
 The Test Framework provides several classes that can help you write unit tests for your client library.  Unit tests are helpful for scenarios that would be tricky to test with a recorded test, such as simulating certain error scenarios.
