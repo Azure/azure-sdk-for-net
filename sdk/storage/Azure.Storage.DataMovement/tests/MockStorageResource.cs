@@ -20,10 +20,11 @@ namespace Azure.Storage.DataMovement.Tests
         private readonly long _maxChunkSize;
         protected internal override long MaxChunkSize => _maxChunkSize;
 
-        private readonly bool _canProduceUri;
-        protected internal override bool CanProduceUri => _canProduceUri;
-
-        public override Uri Uri => new Uri("https://example.com");
+        public override bool TryGetUri(out Uri uri)
+        {
+            uri = new Uri("https://example.com");
+            return true;
+        }
 
         public override string Path => "random";
 
@@ -36,7 +37,6 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 _readStream = new RepeatingStream((int)(1234567 % length.Value), length.Value, revealsLength: true);
             }
-            _canProduceUri = conProduceUri;
             _maxChunkSize = maxChunkSize;
         }
 

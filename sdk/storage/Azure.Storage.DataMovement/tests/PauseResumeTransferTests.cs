@@ -47,7 +47,15 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 else
                 {
-                    string destinationChildName = childSourceResource.Uri.AbsoluteUri.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
+                    if (!childSourceResource.TryGetUri(out Uri childSourceUri))
+                    {
+                        throw Errors.ResourceUriInvalid(nameof(childSourceResource));
+                    }
+                    if (!sourceResource.TryGetUri(out Uri sourceUri))
+                    {
+                        throw Errors.ResourceUriInvalid(nameof(childSourceResource));
+                    }
+                    string destinationChildName = childSourceUri.AbsoluteUri.Substring(sourceUri.AbsoluteUri.Length + 1);
                     childDestinationResource = destinationResource.GetChildStorageResource(destinationChildName);
                 }
                 await AssertSourceAndDestinationAsync(
@@ -69,7 +77,11 @@ namespace Azure.Storage.DataMovement.Tests
             if (transferType == TransferDirection.Upload)
             {
                 // Verify Upload by downloading the blob and comparing the values
-                BlobUriBuilder destinationBuilder = new BlobUriBuilder(destinationResource.Uri);
+                if (!destinationResource.TryGetUri(out Uri destinationUri))
+                {
+                    throw Errors.ResourceUriInvalid(nameof(destinationResource));
+                }
+                BlobUriBuilder destinationBuilder = new BlobUriBuilder(destinationUri);
                 using (FileStream fileStream = File.OpenRead(sourceResource.Path))
                 {
                     await DownloadAndAssertAsync(fileStream, destinationContainer.GetBlockBlobClient(destinationBuilder.BlobName));
@@ -78,7 +90,11 @@ namespace Azure.Storage.DataMovement.Tests
             else if (transferType == TransferDirection.Download)
             {
                 // Verify Download
-                BlobUriBuilder sourceBuilder = new BlobUriBuilder(sourceResource.Uri);
+                if (!sourceResource.TryGetUri(out Uri sourceUri))
+                {
+                    throw Errors.ResourceUriInvalid(nameof(sourceResource));
+                }
+                BlobUriBuilder sourceBuilder = new BlobUriBuilder(sourceUri);
                 using (FileStream fileStream = File.OpenRead(destinationResource.Path))
                 {
                     await DownloadAndAssertAsync(fileStream, sourceContainer.GetBlockBlobClient(sourceBuilder.BlobName));
@@ -86,8 +102,16 @@ namespace Azure.Storage.DataMovement.Tests
             }
             else
             {
-                BlobUriBuilder sourceBuilder = new BlobUriBuilder(sourceResource.Uri);
-                BlobUriBuilder destinationBuilder = new BlobUriBuilder(destinationResource.Uri);
+                if (!sourceResource.TryGetUri(out Uri sourceUri))
+                {
+                    throw Errors.ResourceUriInvalid(nameof(sourceResource));
+                }
+                if (!destinationResource.TryGetUri(out Uri destinationUri))
+                {
+                    throw Errors.ResourceUriInvalid(nameof(destinationResource));
+                }
+                BlobUriBuilder sourceBuilder = new BlobUriBuilder(sourceUri);
+                BlobUriBuilder destinationBuilder = new BlobUriBuilder(destinationUri);
 
                 await DownloadCopyBlobAndAssert(
                     sourceContainer.GetBlobBaseClient(sourceBuilder.BlobName),

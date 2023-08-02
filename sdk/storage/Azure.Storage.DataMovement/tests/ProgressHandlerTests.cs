@@ -333,6 +333,7 @@ namespace Azure.Storage.DataMovement.Tests
                     TrackBytesTransferred = true
                 }
             };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
             // Act - Start transfer
             DataTransfer transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
@@ -360,6 +361,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(tokenSource.Token);
 
             // Assert
+            await testEventsRaised.AssertContainerCompletedCheck(5);
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
             ProgressHandlerAsserts.AssertFileProgress(progressHandler.Updates, 5, pauseIndexes: pause);
             ProgressHandlerAsserts.AssertBytesTransferred(progressHandler.Updates, _expectedBytesTransferred);

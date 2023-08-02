@@ -37,19 +37,25 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override string ResourceId => "BlockBlob";
 
         /// <summary>
-        /// Gets the URL of the storage resource.
+        /// Blob Storage Resource has a Uri.
+        /// This method will return true and return the Uri of the blob.
         /// </summary>
-        public override Uri Uri => BlobClient.Uri;
+        /// <param name="uri">
+        /// This value will return the Uri of the storage resource.
+        /// </param>
+        /// <returns>
+        /// Returns true.
+        /// </returns>
+        public override bool TryGetUri(out Uri uri)
+        {
+            uri = BlobClient.Uri;
+            return true;
+        }
 
-        /// <summary>
-        /// Gets the path of the storage resource.
-        /// </summary>
-        public override string Path => BlobClient.Name;
-
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        protected override bool CanProduceUri => true;
+    /// <summary>
+    /// Gets the path of the storage resource.
+    /// </summary>
+    public override string Path => BlobClient.Name;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.
@@ -214,8 +220,14 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // We use SyncUploadFromUri over SyncCopyUploadFromUri in this case because it accepts any blob type as the source.
             // TODO: subject to change as we scale to support resource types outside of blobs.
+
+            if (!sourceResource.TryGetUri(out Uri sourceUri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(sourceResource));
+            }
+
             await BlobClient.SyncUploadFromUriAsync(
-                sourceResource.Uri,
+                sourceUri,
                 _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
@@ -248,13 +260,18 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
+            if (!sourceResource.TryGetUri(out Uri sourceUri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(sourceResource));
+            }
+
             string id = options?.BlockId ?? Shared.StorageExtensions.GenerateBlockId(range.Offset);
             if (!_blocks.TryAdd(range.Offset, id))
             {
                 throw new ArgumentException($"Cannot Stage Block to the specific offset \"{range.Offset}\", it already exists in the block list");
             }
             await BlobClient.StageBlockFromUriAsync(
-                sourceResource.Uri,
+                sourceUri,
                 id,
                 options: _options.ToBlobStageBlockFromUriOptions(range, options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);

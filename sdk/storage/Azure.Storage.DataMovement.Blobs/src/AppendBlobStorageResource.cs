@@ -28,19 +28,25 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override string ResourceId => "AppendBlob";
 
         /// <summary>
-        /// Gets the URL of the storage resource.
+        /// Blob Storage Resource has a Uri.
+        /// This method will return true and return the Uri of the blob.
         /// </summary>
-        public override Uri Uri => BlobClient.Uri;
+        /// <param name="uri">
+        /// This value will return the Uri of the storage resource.
+        /// </param>
+        /// <returns>
+        /// Returns true.
+        /// </returns>
+        public override bool TryGetUri(out Uri uri)
+        {
+            uri = BlobClient.Uri;
+            return true;
+        }
 
         /// <summary>
         /// Gets the path of the storage resource.
         /// </summary>
         public override string Path => BlobClient.Name;
-
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        protected override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
@@ -188,13 +194,18 @@ namespace Azure.Storage.DataMovement.Blobs
                 options: _options.ToCreateOptions(overwrite),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
+            if (!sourceResource.TryGetUri(out Uri sourceUri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(sourceResource));
+            }
+
             // There is no synchronous single-call copy API for Append/Page -> Append Blob
             // so use a single Append Block from URL instead.
             if (completeLength > 0)
             {
                 HttpRange range = new HttpRange(0, completeLength);
                 await BlobClient.AppendBlockFromUriAsync(
-                    sourceResource.Uri,
+                    sourceUri,
                     options: _options.ToAppendBlockFromUriOptions(overwrite, range, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
@@ -226,19 +237,25 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            if (!sourceResource.TryGetUri(out Uri sourceUri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(sourceResource));
+            }
+
             if (range.Offset == 0)
             {
                 await BlobClient.CreateAsync(
                     _options.ToCreateOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
             }
+
             await BlobClient.AppendBlockFromUriAsync(
-            sourceResource.Uri,
-            options: _options.ToAppendBlockFromUriOptions(
-                overwrite,
-                range,
-                options?.SourceAuthentication),
-            cancellationToken: cancellationToken).ConfigureAwait(false);
+                sourceUri,
+                options: _options.ToAppendBlockFromUriOptions(
+                    overwrite,
+                    range,
+                    options?.SourceAuthentication),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -24,14 +24,20 @@ namespace Azure.Storage.DataMovement
         public override string Path => _path;
 
         /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
+        /// Local Directory Storage Resource does not have a Uri.
+        /// This method will return false and set the uri to default.
         /// </summary>
-        protected internal override bool CanProduceUri => false;
-
-        /// <summary>
-        /// Cannot get Uri. Will throw NotSupportedException();
-        /// </summary>
-        public override Uri Uri => throw new NotSupportedException();
+        /// <param name="uri">
+        /// This value will be set to default as the Storage Resource does not produce a Uri.
+        /// </param>
+        /// <returns>
+        /// Returns false.
+        /// </returns>
+        public override bool TryGetUri(out Uri uri)
+        {
+            uri = default;
+            return false;
+        }
 
         /// <summary>
         /// Constructor

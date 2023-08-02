@@ -210,7 +210,11 @@ namespace Azure.Storage.DataMovement.Tests
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
-            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            if (!storageResource.TryGetUri(out Uri uri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(storageResource));
+            }
+            Assert.AreEqual(originalPath, uri.AbsoluteUri);
         }
 
         [Test]
@@ -268,7 +272,11 @@ namespace Azure.Storage.DataMovement.Tests
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
-            Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
+            if (!storageResource.TryGetUri(out Uri uri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(storageResource));
+            }
+            Assert.AreEqual(destinationPath, uri.AbsoluteUri);
             Assert.AreEqual(AccessTier.Cool, storageResource._options.AccessTier);
             Assert.AreEqual(metadata, storageResource._options.Metadata);
             Assert.AreEqual(blobTags, storageResource._options.Tags);
@@ -317,7 +325,11 @@ namespace Azure.Storage.DataMovement.Tests
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
-            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            if (!storageResource.TryGetUri(out Uri uri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(storageResource));
+            }
+            Assert.AreEqual(originalPath, uri.AbsoluteUri);
         }
 
         [Test]
@@ -375,7 +387,11 @@ namespace Azure.Storage.DataMovement.Tests
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
-            Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
+            if (!storageResource.TryGetUri(out Uri uri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(storageResource));
+            }
+            Assert.AreEqual(destinationPath, uri.AbsoluteUri);
             Assert.AreEqual(AccessTier.P30, storageResource._options.AccessTier);
             Assert.AreEqual(metadata, storageResource._options.Metadata);
             Assert.AreEqual(blobTags, storageResource._options.Tags);
@@ -424,7 +440,11 @@ namespace Azure.Storage.DataMovement.Tests
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
-            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            if (!storageResource.TryGetUri(out Uri uri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(storageResource));
+            }
+            Assert.AreEqual(originalPath, uri.AbsoluteUri);
         }
 
         [Test]
@@ -481,7 +501,11 @@ namespace Azure.Storage.DataMovement.Tests
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
-            Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
+            if (!storageResource.TryGetUri(out Uri uri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(storageResource));
+            }
+            Assert.AreEqual(destinationPath, uri.AbsoluteUri);
             Assert.AreEqual(metadata, storageResource._options.Metadata);
             Assert.AreEqual(blobTags, storageResource._options.Tags);
         }
@@ -540,7 +564,11 @@ namespace Azure.Storage.DataMovement.Tests
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
-            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            if (!storageResource.TryGetUri(out Uri uri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(storageResource));
+            }
+            Assert.AreEqual(originalPath, uri.AbsoluteUri);
         }
     }
 }

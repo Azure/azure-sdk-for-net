@@ -28,19 +28,25 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override string ResourceId => "PageBlob";
 
         /// <summary>
-        /// Gets the URL of the storage resource.
+        /// Blob Storage Resource has a Uri.
+        /// This method will return true and return the Uri of the blob.
         /// </summary>
-        public override Uri Uri => BlobClient.Uri;
+        /// <param name="uri">
+        /// This value will return the Uri of the storage resource.
+        /// </param>
+        /// <returns>
+        /// Returns true.
+        /// </returns>
+        public override bool TryGetUri(out Uri uri)
+        {
+            uri = BlobClient.Uri;
+            return true;
+        }
 
         /// <summary>
         /// Gets the path of the resource.
         /// </summary>
         public override string Path => BlobClient.Name;
-
-        /// <summary>
-        /// Defines whether the storage resource type can produce a web URL.
-        /// </summary>
-        protected override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
@@ -187,6 +193,11 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            if (!sourceResource.TryGetUri(out Uri sourceUri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(sourceResource));
+            }
+
             await BlobClient.CreateAsync(
                 size: completeLength,
                 options: _options.ToCreateOptions(overwrite),
@@ -198,7 +209,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpRange range = new HttpRange(0, completeLength);
                 await BlobClient.UploadPagesFromUriAsync(
-                    sourceResource.Uri,
+                    sourceUri,
                     sourceRange: range,
                     range: range,
                     options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
@@ -232,6 +243,11 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            if (!sourceResource.TryGetUri(out Uri sourceUri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(sourceResource));
+            }
+
             // Create the blob first before uploading the pages
             if (range.Offset == 0)
             {
@@ -240,8 +256,9 @@ namespace Azure.Storage.DataMovement.Blobs
                     _options.ToCreateOptions(overwrite),
                     cancellationToken).ConfigureAwait(false);
             }
+
             await BlobClient.UploadPagesFromUriAsync(
-                sourceResource.Uri,
+                sourceUri,
                 sourceRange: range,
                 range: range,
                 options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),

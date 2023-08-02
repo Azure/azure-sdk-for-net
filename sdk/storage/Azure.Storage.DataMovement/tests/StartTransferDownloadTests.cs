@@ -1115,9 +1115,7 @@ namespace Azure.Storage.DataMovement.Tests
                 options: optionsList).ConfigureAwait(false);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/33086")]
-        [Test]
-        [LiveOnly]
+        [RecordedTest]
         public async Task PageBlobToLocal_Skip_Exists()
         {
             // Arrange
@@ -1131,6 +1129,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create destination file. So it can get skipped over.
             string destFile = Path.Combine(testDirectory.DirectoryPath, GetNewBlobName());
+            File.Create(destFile).Close();
 
             // Act
             // Create options bag to overwrite any existing destination.

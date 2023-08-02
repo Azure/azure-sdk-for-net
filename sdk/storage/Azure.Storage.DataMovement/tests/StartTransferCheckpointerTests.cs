@@ -153,6 +153,15 @@ namespace Azure.Storage.DataMovement.Tests
             BlockBlobClient newSourceBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
             StorageResourceSingle wrongSourceResource = new BlockBlobStorageResource(newSourceBlob);
 
+            if (!sourceResource.TryGetUri(out Uri sourceUri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(sourceResource));
+            }
+            if (!wrongSourceResource.TryGetUri(out Uri wrongSourceUri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(wrongSourceResource));
+            }
+
             Assert.CatchAsync<ArgumentException>(
                 async () => await transferManager.ResumeTransferAsync(
                     transfer.Id,
@@ -160,8 +169,8 @@ namespace Azure.Storage.DataMovement.Tests
                     destinationResource),
                 Errors.MismatchResumeTransferArguments(
                     "SourcePath",
-                    sourceResource.Uri.AbsoluteUri,
-                    wrongSourceResource.Uri.AbsoluteUri).Message);
+                    sourceUri.AbsoluteUri,
+                    wrongSourceUri.AbsoluteUri).Message);
         }
 
         [RecordedTest]
@@ -207,6 +216,15 @@ namespace Azure.Storage.DataMovement.Tests
             BlockBlobClient newDestinationBlob = test.Container.GetBlockBlobClient(GetNewBlobName());
             StorageResourceSingle wrongDestinationResource = new BlockBlobStorageResource(newDestinationBlob);
 
+            if (!destinationResource.TryGetUri(out Uri destinationUri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(sourceResource));
+            }
+            if (!wrongDestinationResource.TryGetUri(out Uri wrongDestinationUri))
+            {
+                throw Errors.ResourceUriInvalid(nameof(wrongDestinationResource));
+            }
+
             Assert.CatchAsync<ArgumentException>(
                 async () => await transferManager.ResumeTransferAsync(
                     transfer.Id,
@@ -214,8 +232,8 @@ namespace Azure.Storage.DataMovement.Tests
                     wrongDestinationResource),
                 Errors.MismatchResumeTransferArguments(
                     "DestinationPath",
-                    destinationResource.Uri.AbsoluteUri,
-                    wrongDestinationResource.Uri.AbsoluteUri).Message);
+                    destinationUri.AbsoluteUri,
+                    wrongDestinationUri.AbsoluteUri).Message);
         }
 
         [RecordedTest]

@@ -3,10 +3,10 @@
 ## 12.0.0-beta.4 (Unreleased)
 
 ### Features Added
+- Added support for `StorageResource.TryGetUri`
 
 ### Breaking Changes
 - [BREAKING CHANGE] Made the following members `public` to `protected internal` members (including all derived classes):
-    - `StorageResource.CanProduceUri`
     - `StorageResource.IsContainer`
     - `StorageResourceContainer.GetStorageResourcesAsync`
     - `StorageResourceSingle.Length`
@@ -21,6 +21,7 @@
     - `StorageResourceSingle.GetPropertiesAsync`
     - `StorageResourceSingle.ReadStreamAsync`
     - `StorageResourceSingle.WriteFromStreamAsync`
+- [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` and `StorageResource.Uri` (including it's derived classes). Use `StorageResource.TryGetUri` instead.
 
 ### Bugs Fixed
 

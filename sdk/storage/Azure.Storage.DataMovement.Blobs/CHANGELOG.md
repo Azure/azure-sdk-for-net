@@ -3,10 +3,10 @@
 ## 12.0.0-beta.4 (Unreleased)
 
 ### Features Added
+- Added support for `StorageResource.TryGetUri`
 
 ### Breaking Changes
 - [BREAKING CHANGE] Made the following members `public` to `protected` members (including all derived classes):
-    - `BlobStorageResourceContainer.CanProduceUri`
     - `BlobStorageResourceContainer.GetStorageResourcesAsync`
     - `*BlobStorageResource.CanProduceUri`
     - `*BlobStorageResource.Length`
@@ -21,6 +21,8 @@
     - `*BlobStorageResource.GetPropertiesAsync`
     - `*BlobStorageResource.ReadStreamAsync`
     - `*BlobStorageResource.WriteFromStreamAsync`
+- [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` and `StorageResource.Uri` (including it's derived classes). Use `StorageResource.TryGetUri` instead.
+
 ### Bugs Fixed
 
 ### Other Changes
