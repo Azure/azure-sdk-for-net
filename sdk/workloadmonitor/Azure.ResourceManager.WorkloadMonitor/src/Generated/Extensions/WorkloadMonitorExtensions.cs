@@ -12,27 +12,29 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.WorkloadMonitor.Mocking;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.WorkloadMonitor. </summary>
     public static partial class WorkloadMonitorExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static WorkloadMonitorArmClientMockingExtension GetWorkloadMonitorArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
+            return client.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new WorkloadMonitorArmClientMockingExtension(client);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static WorkloadMonitorResourceGroupMockingExtension GetWorkloadMonitorResourceGroupMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new WorkloadMonitorResourceGroupMockingExtension(client, resource.Id);
             });
         }
+
         #region HealthMonitorResource
         /// <summary>
         /// Gets an object representing a <see cref="HealthMonitorResource" /> along with the instance operations that can be performed on it but with no data.
@@ -43,12 +45,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> Returns a <see cref="HealthMonitorResource" /> object. </returns>
         public static HealthMonitorResource GetHealthMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthMonitorResource.ValidateResourceId(id);
-                return new HealthMonitorResource(client, id);
-            }
-            );
+            return GetWorkloadMonitorArmClientMockingExtension(client).GetHealthMonitorResource(id);
         }
         #endregion
 
@@ -62,12 +59,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> Returns a <see cref="HealthMonitorStateChangeResource" /> object. </returns>
         public static HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthMonitorStateChangeResource.ValidateResourceId(id);
-                return new HealthMonitorStateChangeResource(client, id);
-            }
-            );
+            return GetWorkloadMonitorArmClientMockingExtension(client).GetHealthMonitorStateChangeResource(id);
         }
         #endregion
 
@@ -85,7 +77,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             Argument.AssertNotNullOrEmpty(resourceCollectionName, nameof(resourceCollectionName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthMonitors(providerName, resourceCollectionName, resourceName);
+            return GetWorkloadMonitorResourceGroupMockingExtension(resourceGroupResource).GetHealthMonitors(providerName, resourceCollectionName, resourceName);
         }
 
         /// <summary>
@@ -113,7 +105,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         [ForwardsClientCalls]
         public static async Task<Response<HealthMonitorResource>> GetHealthMonitorAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHealthMonitors(providerName, resourceCollectionName, resourceName).GetAsync(monitorId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadMonitorResourceGroupMockingExtension(resourceGroupResource).GetHealthMonitorAsync(providerName, resourceCollectionName, resourceName, monitorId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -141,7 +133,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         [ForwardsClientCalls]
         public static Response<HealthMonitorResource> GetHealthMonitor(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHealthMonitors(providerName, resourceCollectionName, resourceName).Get(monitorId, expand, cancellationToken);
+            return GetWorkloadMonitorResourceGroupMockingExtension(resourceGroupResource).GetHealthMonitor(providerName, resourceCollectionName, resourceName, monitorId, expand, cancellationToken);
         }
     }
 }
