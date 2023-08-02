@@ -843,7 +843,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfCompleted");
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfTonesCompleted");
             if (parsedEvent is SendDtmfTonesCompleted SendDtmfCompleted)
             {
                 Assert.AreEqual("callConnectionId", SendDtmfCompleted.CallConnectionId);
@@ -869,7 +869,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 resultInformation: new ResultInformation(code: 400, subCode: 8510, message: "Action failed, some error."));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfFailed");
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfTonesFailed");
             if (parsedEvent is SendDtmfTonesFailed sendDtmfFailed)
             {
                 Assert.AreEqual("operationContext", sendDtmfFailed.OperationContext);

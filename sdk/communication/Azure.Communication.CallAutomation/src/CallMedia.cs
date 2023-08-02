@@ -673,10 +673,10 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns a Response containing a SendDtmfResult object indicating the result of the send operation.</returns>
-        public virtual async Task<Response<SendDtmfTonesResult>> SendDtmfAsync(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
+        public virtual async Task<Response<SendDtmfTonesResult>> SendDtmfTonesAsync(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
             string operationContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmfTones)}");
             scope.Start();
             try
             {
@@ -710,10 +710,10 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns a Response containing a SendDtmfResult object indicating the result of the send operation.</returns>
-        public virtual Response<SendDtmfTonesResult> SendDtmf(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
+        public virtual Response<SendDtmfTonesResult> SendDtmfTones(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
             string operationContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmfTones)}");
             scope.Start();
             try
             {
