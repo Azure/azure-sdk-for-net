@@ -144,63 +144,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 
         ResourceTypeAlias IModelJsonSerializable<ResourceTypeAlias>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ResourceTypeAliasProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new ResourceTypeAlias(
-                properties.Name.Value,
-                Optional.ToList(properties.Paths),
-                Optional.ToNullable(properties.AliasType),
-                properties.DefaultPath.Value,
-                properties.DefaultPattern.Value,
-                properties.DefaultMetadata.Value);
-        }
-
-        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ResourceTypeAliasProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            if (propertyName.SequenceEqual("name"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Name = reader.GetString();
-                return;
-            }
-            if (propertyName.SequenceEqual("paths"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Paths = reader.GetList<ResourceTypeAliasPath>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("type"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.AliasType = reader.GetString().ToResourceTypeAliasType();
-                return;
-            }
-            if (propertyName.SequenceEqual("defaultPath"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.DefaultPath = reader.GetString();
-                return;
-            }
-            if (propertyName.SequenceEqual("defaultPattern"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.DefaultPattern = reader.GetObject<ResourceTypeAliasPattern>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("defaultMetadata"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.DefaultMetadata = reader.GetObject<ResourceTypeAliasPathMetadata>(options);
-                return;
-            }
-            reader.Skip();
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeAlias(doc.RootElement, options);
         }
 
         ResourceTypeAlias IModelSerializable<ResourceTypeAlias>.Deserialize(BinaryData data, ModelSerializerOptions options)

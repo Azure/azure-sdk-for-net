@@ -88,29 +88,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 
         ZoneMapping IModelJsonSerializable<ZoneMapping>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ZoneMappingProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new ZoneMapping(Optional.ToNullable(properties.Location), Optional.ToList(properties.Zones));
-        }
-
-        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ZoneMappingProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            if (propertyName.SequenceEqual("location"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Location = new AzureLocation(reader.GetString());
-                return;
-            }
-            if (propertyName.SequenceEqual("zones"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Zones = reader.GetList<string>(options);
-                return;
-            }
-            reader.Skip();
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeZoneMapping(doc.RootElement, options);
         }
 
         ZoneMapping IModelSerializable<ZoneMapping>.Deserialize(BinaryData data, ModelSerializerOptions options)

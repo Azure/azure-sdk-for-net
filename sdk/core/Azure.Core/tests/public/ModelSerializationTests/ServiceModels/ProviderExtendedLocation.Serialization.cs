@@ -99,36 +99,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 
         ProviderExtendedLocation IModelJsonSerializable<ProviderExtendedLocation>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ProviderExtendedLocationProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new ProviderExtendedLocation(Optional.ToNullable(properties.Location), properties.ProviderExtendedLocationType.Value, Optional.ToList(properties.ExtendedLocations));
-        }
-
-        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ProviderExtendedLocationProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            if (propertyName.SequenceEqual("location"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Location = new AzureLocation(reader.GetString());
-                return;
-            }
-            if (propertyName.SequenceEqual("type"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.ProviderExtendedLocationType = reader.GetString();
-                return;
-            }
-            if (propertyName.SequenceEqual("extendedLocations"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.ExtendedLocations = reader.GetList<string>(options);
-                return;
-            }
-            reader.Skip();
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderExtendedLocation(doc.RootElement, options);
         }
 
         ProviderExtendedLocation IModelSerializable<ProviderExtendedLocation>.Deserialize(BinaryData data, ModelSerializerOptions options)
