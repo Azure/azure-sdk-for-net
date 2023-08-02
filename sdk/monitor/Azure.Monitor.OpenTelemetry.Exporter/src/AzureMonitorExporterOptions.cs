@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// The Connection String provides users with a single configuration setting to identify the Azure Monitor resource and endpoint.
         /// </summary>
         /// <remarks>
-        /// (https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string).
+        /// <see href="https://docs.microsoft.com/azure/azure-monitor/app/sdk-connection-string"/>.
         /// </remarks>
         public string ConnectionString { get; set; }
 
@@ -67,12 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public enum ServiceVersion
         {
             /// <summary>
-            /// (https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/2020-09-15_Preview/swagger.json).
-            /// </summary>
-            V2020_09_15_Preview = 1,
-
-            /// <summary>
-            /// (https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/v2.1/swagger.json).
+            /// <see href="https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/v2.1/swagger.json" />.
             /// </summary>
             v2_1 = 2,
         }
