@@ -382,10 +382,8 @@ The key integration points between the Test Framework and the Test Proxy are:
 
 #### Including Test Proxy Logs
 
-In order to enable Test Proxy logging, you can either set the `AZURE_ENABLE_TEST_PROXY_LOGGING`
-  environment
-  variable or the `EnableTestProxyLogging` [runsetting](https://github.
-  com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
+In order to enable Test Proxy logging, you can either set the `AZURE_ENABLE_TEST_PROXY_LOGGING` 
+environment variable or the `EnableTestProxyLogging` [runsetting](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/nunit.runsettings) parameter to `true`.
 
 ## Unit tests
 
