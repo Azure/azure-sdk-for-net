@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.PostgreSql.Mocking;
 using Azure.ResourceManager.PostgreSql.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.PostgreSql
     /// <summary> A class to add extension methods to Azure.ResourceManager.PostgreSql. </summary>
     public static partial class PostgreSqlExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static PostgreSqlArmClientMockingExtension GetPostgreSqlArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new PostgreSqlArmClientMockingExtension(client);
+            });
+        }
+
+        private static PostgreSqlResourceGroupMockingExtension GetPostgreSqlResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new PostgreSqlResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static PostgreSqlSubscriptionMockingExtension GetPostgreSqlSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new PostgreSqlSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region PostgreSqlServerResource
         /// <summary>
         /// Gets an object representing a <see cref="PostgreSqlServerResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlServerResource" /> object. </returns>
         public static PostgreSqlServerResource GetPostgreSqlServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlServerResource.ValidateResourceId(id);
-                return new PostgreSqlServerResource(client, id);
-            }
-            );
+            return GetPostgreSqlArmClientMockingExtension(client).GetPostgreSqlServerResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlFirewallRuleResource" /> object. </returns>
         public static PostgreSqlFirewallRuleResource GetPostgreSqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlFirewallRuleResource.ValidateResourceId(id);
-                return new PostgreSqlFirewallRuleResource(client, id);
-            }
-            );
+            return GetPostgreSqlArmClientMockingExtension(client).GetPostgreSqlFirewallRuleResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlVirtualNetworkRuleResource" /> object. </returns>
         public static PostgreSqlVirtualNetworkRuleResource GetPostgreSqlVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlVirtualNetworkRuleResource.ValidateResourceId(id);
-                return new PostgreSqlVirtualNetworkRuleResource(client, id);
-            }
-            );
+            return GetPostgreSqlArmClientMockingExtension(client).GetPostgreSqlVirtualNetworkRuleResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlDatabaseResource" /> object. </returns>
         public static PostgreSqlDatabaseResource GetPostgreSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlDatabaseResource.ValidateResourceId(id);
-                return new PostgreSqlDatabaseResource(client, id);
-            }
-            );
+            return GetPostgreSqlArmClientMockingExtension(client).GetPostgreSqlDatabaseResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlConfigurationResource" /> object. </returns>
         public static PostgreSqlConfigurationResource GetPostgreSqlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlConfigurationResource.ValidateResourceId(id);
-                return new PostgreSqlConfigurationResource(client, id);
-            }
-            );
+            return GetPostgreSqlArmClientMockingExtension(client).GetPostgreSqlConfigurationResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlServerAdministratorResource" /> object. </returns>
         public static PostgreSqlServerAdministratorResource GetPostgreSqlServerAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlServerAdministratorResource.ValidateResourceId(id);
-                return new PostgreSqlServerAdministratorResource(client, id);
-            }
-            );
+            return GetPostgreSqlArmClientMockingExtension(client).GetPostgreSqlServerAdministratorResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> object. </returns>
         public static PostgreSqlServerSecurityAlertPolicyResource GetPostgreSqlServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlServerSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new PostgreSqlServerSecurityAlertPolicyResource(client, id);
-            }
-            );
+            return GetPostgreSqlArmClientMockingExtension(client).GetPostgreSqlServerSecurityAlertPolicyResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlPrivateEndpointConnectionResource" /> object. </returns>
         public static PostgreSqlPrivateEndpointConnectionResource GetPostgreSqlPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new PostgreSqlPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetPostgreSqlArmClientMockingExtension(client).GetPostgreSqlPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -212,12 +166,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlPrivateLinkResource" /> object. </returns>
         public static PostgreSqlPrivateLinkResource GetPostgreSqlPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlPrivateLinkResource.ValidateResourceId(id);
-                return new PostgreSqlPrivateLinkResource(client, id);
-            }
-            );
+            return GetPostgreSqlArmClientMockingExtension(client).GetPostgreSqlPrivateLinkResource(id);
         }
         #endregion
 
@@ -231,12 +180,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> Returns a <see cref="PostgreSqlServerKeyResource" /> object. </returns>
         public static PostgreSqlServerKeyResource GetPostgreSqlServerKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PostgreSqlServerKeyResource.ValidateResourceId(id);
-                return new PostgreSqlServerKeyResource(client, id);
-            }
-            );
+            return GetPostgreSqlArmClientMockingExtension(client).GetPostgreSqlServerKeyResource(id);
         }
         #endregion
 
@@ -245,7 +189,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlServerResources and their operations over a PostgreSqlServerResource. </returns>
         public static PostgreSqlServerCollection GetPostgreSqlServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPostgreSqlServers();
+            return GetPostgreSqlResourceGroupMockingExtension(resourceGroupResource).GetPostgreSqlServers();
         }
 
         /// <summary>
@@ -269,7 +213,7 @@ namespace Azure.ResourceManager.PostgreSql
         [ForwardsClientCalls]
         public static async Task<Response<PostgreSqlServerResource>> GetPostgreSqlServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPostgreSqlServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
+            return await GetPostgreSqlResourceGroupMockingExtension(resourceGroupResource).GetPostgreSqlServerAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -293,7 +237,7 @@ namespace Azure.ResourceManager.PostgreSql
         [ForwardsClientCalls]
         public static Response<PostgreSqlServerResource> GetPostgreSqlServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPostgreSqlServers().Get(serverName, cancellationToken);
+            return GetPostgreSqlResourceGroupMockingExtension(resourceGroupResource).GetPostgreSqlServer(serverName, cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +258,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An async collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PostgreSqlServerResource> GetPostgreSqlServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPostgreSqlServersAsync(cancellationToken);
+            return GetPostgreSqlSubscriptionMockingExtension(subscriptionResource).GetPostgreSqlServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -335,7 +279,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> A collection of <see cref="PostgreSqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PostgreSqlServerResource> GetPostgreSqlServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPostgreSqlServers(cancellationToken);
+            return GetPostgreSqlSubscriptionMockingExtension(subscriptionResource).GetPostgreSqlServers(cancellationToken);
         }
 
         /// <summary>
@@ -357,7 +301,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An async collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
+            return GetPostgreSqlSubscriptionMockingExtension(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -379,7 +323,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> A collection of <see cref="PostgreSqlPerformanceTierProperties" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
+            return GetPostgreSqlSubscriptionMockingExtension(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -401,9 +345,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<PostgreSqlNameAvailabilityResult>> CheckPostgreSqlNameAvailabilityAsync(this SubscriptionResource subscriptionResource, PostgreSqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPostgreSqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetPostgreSqlSubscriptionMockingExtension(subscriptionResource).CheckPostgreSqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -425,9 +367,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<PostgreSqlNameAvailabilityResult> CheckPostgreSqlNameAvailability(this SubscriptionResource subscriptionResource, PostgreSqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPostgreSqlNameAvailability(content, cancellationToken);
+            return GetPostgreSqlSubscriptionMockingExtension(subscriptionResource).CheckPostgreSqlNameAvailability(content, cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Peering.Mocking;
 using Azure.ResourceManager.Peering.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.Peering
     /// <summary> A class to add extension methods to Azure.ResourceManager.Peering. </summary>
     public static partial class PeeringExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static PeeringArmClientMockingExtension GetPeeringArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new PeeringArmClientMockingExtension(client);
+            });
+        }
+
+        private static PeeringResourceGroupMockingExtension GetPeeringResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new PeeringResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static PeeringSubscriptionMockingExtension GetPeeringSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new PeeringSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region PeerAsnResource
         /// <summary>
         /// Gets an object representing a <see cref="PeerAsnResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeerAsnResource" /> object. </returns>
         public static PeerAsnResource GetPeerAsnResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PeerAsnResource.ValidateResourceId(id);
-                return new PeerAsnResource(client, id);
-            }
-            );
+            return GetPeeringArmClientMockingExtension(client).GetPeerAsnResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeeringRegisteredAsnResource" /> object. </returns>
         public static PeeringRegisteredAsnResource GetPeeringRegisteredAsnResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PeeringRegisteredAsnResource.ValidateResourceId(id);
-                return new PeeringRegisteredAsnResource(client, id);
-            }
-            );
+            return GetPeeringArmClientMockingExtension(client).GetPeeringRegisteredAsnResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeeringRegisteredPrefixResource" /> object. </returns>
         public static PeeringRegisteredPrefixResource GetPeeringRegisteredPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PeeringRegisteredPrefixResource.ValidateResourceId(id);
-                return new PeeringRegisteredPrefixResource(client, id);
-            }
-            );
+            return GetPeeringArmClientMockingExtension(client).GetPeeringRegisteredPrefixResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeeringResource" /> object. </returns>
         public static PeeringResource GetPeeringResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PeeringResource.ValidateResourceId(id);
-                return new PeeringResource(client, id);
-            }
-            );
+            return GetPeeringArmClientMockingExtension(client).GetPeeringResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="ConnectionMonitorTestResource" /> object. </returns>
         public static ConnectionMonitorTestResource GetConnectionMonitorTestResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ConnectionMonitorTestResource.ValidateResourceId(id);
-                return new ConnectionMonitorTestResource(client, id);
-            }
-            );
+            return GetPeeringArmClientMockingExtension(client).GetConnectionMonitorTestResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeeringServicePrefixResource" /> object. </returns>
         public static PeeringServicePrefixResource GetPeeringServicePrefixResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PeeringServicePrefixResource.ValidateResourceId(id);
-                return new PeeringServicePrefixResource(client, id);
-            }
-            );
+            return GetPeeringArmClientMockingExtension(client).GetPeeringServicePrefixResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeeringServiceResource" /> object. </returns>
         public static PeeringServiceResource GetPeeringServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PeeringServiceResource.ValidateResourceId(id);
-                return new PeeringServiceResource(client, id);
-            }
-            );
+            return GetPeeringArmClientMockingExtension(client).GetPeeringServiceResource(id);
         }
         #endregion
 
@@ -188,7 +147,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An object representing collection of PeeringResources and their operations over a PeeringResource. </returns>
         public static PeeringCollection GetPeerings(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPeerings();
+            return GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeerings();
         }
 
         /// <summary>
@@ -212,7 +171,7 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static async Task<Response<PeeringResource>> GetPeeringAsync(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPeerings().GetAsync(peeringName, cancellationToken).ConfigureAwait(false);
+            return await GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeeringAsync(peeringName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,7 +195,7 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static Response<PeeringResource> GetPeering(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPeerings().Get(peeringName, cancellationToken);
+            return GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeering(peeringName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PeeringServiceResources in the ResourceGroupResource. </summary>
@@ -244,7 +203,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An object representing collection of PeeringServiceResources and their operations over a PeeringServiceResource. </returns>
         public static PeeringServiceCollection GetPeeringServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPeeringServices();
+            return GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeeringServices();
         }
 
         /// <summary>
@@ -268,7 +227,7 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static async Task<Response<PeeringServiceResource>> GetPeeringServiceAsync(this ResourceGroupResource resourceGroupResource, string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPeeringServices().GetAsync(peeringServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeeringServiceAsync(peeringServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -292,7 +251,7 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static Response<PeeringServiceResource> GetPeeringService(this ResourceGroupResource resourceGroupResource, string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPeeringServices().Get(peeringServiceName, cancellationToken);
+            return GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeeringService(peeringServiceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PeerAsnResources in the SubscriptionResource. </summary>
@@ -300,7 +259,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An object representing collection of PeerAsnResources and their operations over a PeerAsnResource. </returns>
         public static PeerAsnCollection GetPeerAsns(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeerAsns();
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeerAsns();
         }
 
         /// <summary>
@@ -324,7 +283,7 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static async Task<Response<PeerAsnResource>> GetPeerAsnAsync(this SubscriptionResource subscriptionResource, string peerAsnName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetPeerAsns().GetAsync(peerAsnName, cancellationToken).ConfigureAwait(false);
+            return await GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeerAsnAsync(peerAsnName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -348,7 +307,7 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static Response<PeerAsnResource> GetPeerAsn(this SubscriptionResource subscriptionResource, string peerAsnName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetPeerAsns().Get(peerAsnName, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeerAsn(peerAsnName, cancellationToken);
         }
 
         /// <summary>
@@ -371,9 +330,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CdnPeeringPrefix> GetCdnPeeringPrefixesAsync(this SubscriptionResource subscriptionResource, string peeringLocation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCdnPeeringPrefixesAsync(peeringLocation, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetCdnPeeringPrefixesAsync(peeringLocation, cancellationToken);
         }
 
         /// <summary>
@@ -396,9 +353,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CdnPeeringPrefix> GetCdnPeeringPrefixes(this SubscriptionResource subscriptionResource, string peeringLocation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCdnPeeringPrefixes(peeringLocation, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetCdnPeeringPrefixes(peeringLocation, cancellationToken);
         }
 
         /// <summary>
@@ -420,9 +375,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPeeringServiceProviderAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetPeeringSubscriptionMockingExtension(subscriptionResource).CheckPeeringServiceProviderAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -444,9 +397,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(this SubscriptionResource subscriptionResource, CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckPeeringServiceProviderAvailability(content, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).CheckPeeringServiceProviderAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -472,9 +423,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
         }
 
         /// <summary>
@@ -500,9 +449,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(peeringLocation, nameof(peeringLocation));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
         }
 
         /// <summary>
@@ -527,10 +474,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
         public static async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).InvokeLookingGlassAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
+            return await GetPeeringSubscriptionMockingExtension(subscriptionResource).InvokeLookingGlassAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -555,10 +499,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
         public static Response<LookingGlassOutput> InvokeLookingGlass(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(sourceLocation, nameof(sourceLocation));
-            Argument.AssertNotNull(destinationIP, nameof(destinationIP));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).InvokeLookingGlass(command, sourceType, sourceLocation, destinationIP, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).InvokeLookingGlass(command, sourceType, sourceLocation, destinationIP, cancellationToken);
         }
 
         /// <summary>
@@ -581,7 +522,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringLocation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringLocation> GetPeeringLocationsAsync(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringLocationsAsync(kind, directPeeringType, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringLocationsAsync(kind, directPeeringType, cancellationToken);
         }
 
         /// <summary>
@@ -604,7 +545,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringLocation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringLocation> GetPeeringLocations(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringLocations(kind, directPeeringType, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringLocations(kind, directPeeringType, cancellationToken);
         }
 
         /// <summary>
@@ -625,7 +566,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringResource> GetPeeringsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringsAsync(cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -646,7 +587,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringResource> GetPeerings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeerings(cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeerings(cancellationToken);
         }
 
         /// <summary>
@@ -667,7 +608,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceCountry> GetPeeringServiceCountriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceCountriesAsync(cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceCountriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -688,7 +629,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceCountry> GetPeeringServiceCountries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceCountries(cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceCountries(cancellationToken);
         }
 
         /// <summary>
@@ -710,7 +651,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringServiceLocation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceLocation> GetPeeringServiceLocationsAsync(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceLocationsAsync(country, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceLocationsAsync(country, cancellationToken);
         }
 
         /// <summary>
@@ -732,7 +673,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringServiceLocation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceLocation> GetPeeringServiceLocations(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceLocations(country, cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceLocations(country, cancellationToken);
         }
 
         /// <summary>
@@ -753,7 +694,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceProvider> GetPeeringServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceProvidersAsync(cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -774,7 +715,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceProvider> GetPeeringServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServiceProviders(cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceProviders(cancellationToken);
         }
 
         /// <summary>
@@ -795,7 +736,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceResource> GetPeeringServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServicesAsync(cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -816,7 +757,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceResource> GetPeeringServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPeeringServices(cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServices(cancellationToken);
         }
 
         /// <summary>
@@ -836,7 +777,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response> InitializePeeringServiceConnectionMonitorAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).InitializePeeringServiceConnectionMonitorAsync(cancellationToken).ConfigureAwait(false);
+            return await GetPeeringSubscriptionMockingExtension(subscriptionResource).InitializePeeringServiceConnectionMonitorAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -856,7 +797,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response InitializePeeringServiceConnectionMonitor(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).InitializePeeringServiceConnectionMonitor(cancellationToken);
+            return GetPeeringSubscriptionMockingExtension(subscriptionResource).InitializePeeringServiceConnectionMonitor(cancellationToken);
         }
     }
 }

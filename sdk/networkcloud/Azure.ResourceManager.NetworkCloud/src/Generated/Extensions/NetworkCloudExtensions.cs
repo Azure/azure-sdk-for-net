@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkCloud.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.NetworkCloud
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetworkCloud. </summary>
     public static partial class NetworkCloudExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static NetworkCloudArmClientMockingExtension GetNetworkCloudArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new NetworkCloudArmClientMockingExtension(client);
+            });
+        }
+
+        private static NetworkCloudResourceGroupMockingExtension GetNetworkCloudResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new NetworkCloudResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static NetworkCloudSubscriptionMockingExtension GetNetworkCloudSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new NetworkCloudSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region NetworkCloudBareMetalMachineResource
         /// <summary>
         /// Gets an object representing a <see cref="NetworkCloudBareMetalMachineResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineResource" /> object. </returns>
         public static NetworkCloudBareMetalMachineResource GetNetworkCloudBareMetalMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudBareMetalMachineResource.ValidateResourceId(id);
-                return new NetworkCloudBareMetalMachineResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudBareMetalMachineResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudCloudServicesNetworkResource" /> object. </returns>
         public static NetworkCloudCloudServicesNetworkResource GetNetworkCloudCloudServicesNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudCloudServicesNetworkResource.ValidateResourceId(id);
-                return new NetworkCloudCloudServicesNetworkResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudCloudServicesNetworkResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudClusterManagerResource" /> object. </returns>
         public static NetworkCloudClusterManagerResource GetNetworkCloudClusterManagerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudClusterManagerResource.ValidateResourceId(id);
-                return new NetworkCloudClusterManagerResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudClusterManagerResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudClusterResource" /> object. </returns>
         public static NetworkCloudClusterResource GetNetworkCloudClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudClusterResource.ValidateResourceId(id);
-                return new NetworkCloudClusterResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudClusterResource(id);
         }
         #endregion
 
@@ -135,12 +109,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudKubernetesClusterResource" /> object. </returns>
         public static NetworkCloudKubernetesClusterResource GetNetworkCloudKubernetesClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudKubernetesClusterResource.ValidateResourceId(id);
-                return new NetworkCloudKubernetesClusterResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudKubernetesClusterResource(id);
         }
         #endregion
 
@@ -154,12 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudL2NetworkResource" /> object. </returns>
         public static NetworkCloudL2NetworkResource GetNetworkCloudL2NetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudL2NetworkResource.ValidateResourceId(id);
-                return new NetworkCloudL2NetworkResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudL2NetworkResource(id);
         }
         #endregion
 
@@ -173,12 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudL3NetworkResource" /> object. </returns>
         public static NetworkCloudL3NetworkResource GetNetworkCloudL3NetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudL3NetworkResource.ValidateResourceId(id);
-                return new NetworkCloudL3NetworkResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudL3NetworkResource(id);
         }
         #endregion
 
@@ -192,12 +151,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudRackSkuResource" /> object. </returns>
         public static NetworkCloudRackSkuResource GetNetworkCloudRackSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudRackSkuResource.ValidateResourceId(id);
-                return new NetworkCloudRackSkuResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudRackSkuResource(id);
         }
         #endregion
 
@@ -211,12 +165,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudRackResource" /> object. </returns>
         public static NetworkCloudRackResource GetNetworkCloudRackResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudRackResource.ValidateResourceId(id);
-                return new NetworkCloudRackResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudRackResource(id);
         }
         #endregion
 
@@ -230,12 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudStorageApplianceResource" /> object. </returns>
         public static NetworkCloudStorageApplianceResource GetNetworkCloudStorageApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudStorageApplianceResource.ValidateResourceId(id);
-                return new NetworkCloudStorageApplianceResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudStorageApplianceResource(id);
         }
         #endregion
 
@@ -249,12 +193,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudTrunkedNetworkResource" /> object. </returns>
         public static NetworkCloudTrunkedNetworkResource GetNetworkCloudTrunkedNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudTrunkedNetworkResource.ValidateResourceId(id);
-                return new NetworkCloudTrunkedNetworkResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudTrunkedNetworkResource(id);
         }
         #endregion
 
@@ -268,12 +207,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudVirtualMachineResource" /> object. </returns>
         public static NetworkCloudVirtualMachineResource GetNetworkCloudVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudVirtualMachineResource.ValidateResourceId(id);
-                return new NetworkCloudVirtualMachineResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudVirtualMachineResource(id);
         }
         #endregion
 
@@ -287,12 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudVolumeResource" /> object. </returns>
         public static NetworkCloudVolumeResource GetNetworkCloudVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudVolumeResource.ValidateResourceId(id);
-                return new NetworkCloudVolumeResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudVolumeResource(id);
         }
         #endregion
 
@@ -306,12 +235,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineKeySetResource" /> object. </returns>
         public static NetworkCloudBareMetalMachineKeySetResource GetNetworkCloudBareMetalMachineKeySetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudBareMetalMachineKeySetResource.ValidateResourceId(id);
-                return new NetworkCloudBareMetalMachineKeySetResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudBareMetalMachineKeySetResource(id);
         }
         #endregion
 
@@ -325,12 +249,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudBmcKeySetResource" /> object. </returns>
         public static NetworkCloudBmcKeySetResource GetNetworkCloudBmcKeySetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudBmcKeySetResource.ValidateResourceId(id);
-                return new NetworkCloudBmcKeySetResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudBmcKeySetResource(id);
         }
         #endregion
 
@@ -344,12 +263,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudClusterMetricsConfigurationResource" /> object. </returns>
         public static NetworkCloudClusterMetricsConfigurationResource GetNetworkCloudClusterMetricsConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudClusterMetricsConfigurationResource.ValidateResourceId(id);
-                return new NetworkCloudClusterMetricsConfigurationResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudClusterMetricsConfigurationResource(id);
         }
         #endregion
 
@@ -363,12 +277,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudAgentPoolResource" /> object. </returns>
         public static NetworkCloudAgentPoolResource GetNetworkCloudAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudAgentPoolResource.ValidateResourceId(id);
-                return new NetworkCloudAgentPoolResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudAgentPoolResource(id);
         }
         #endregion
 
@@ -382,12 +291,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> Returns a <see cref="NetworkCloudVirtualMachineConsoleResource" /> object. </returns>
         public static NetworkCloudVirtualMachineConsoleResource GetNetworkCloudVirtualMachineConsoleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NetworkCloudVirtualMachineConsoleResource.ValidateResourceId(id);
-                return new NetworkCloudVirtualMachineConsoleResource(client, id);
-            }
-            );
+            return GetNetworkCloudArmClientMockingExtension(client).GetNetworkCloudVirtualMachineConsoleResource(id);
         }
         #endregion
 
@@ -396,7 +300,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudBareMetalMachineResources and their operations over a NetworkCloudBareMetalMachineResource. </returns>
         public static NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudBareMetalMachines();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudBareMetalMachines();
         }
 
         /// <summary>
@@ -420,7 +324,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudBareMetalMachineResource>> GetNetworkCloudBareMetalMachineAsync(this ResourceGroupResource resourceGroupResource, string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudBareMetalMachines().GetAsync(bareMetalMachineName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudBareMetalMachineAsync(bareMetalMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -444,7 +348,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachine(this ResourceGroupResource resourceGroupResource, string bareMetalMachineName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudBareMetalMachines().Get(bareMetalMachineName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudBareMetalMachine(bareMetalMachineName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudCloudServicesNetworkResources in the ResourceGroupResource. </summary>
@@ -452,7 +356,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudCloudServicesNetworkResources and their operations over a NetworkCloudCloudServicesNetworkResource. </returns>
         public static NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudCloudServicesNetworks();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudCloudServicesNetworks();
         }
 
         /// <summary>
@@ -476,7 +380,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudCloudServicesNetworkResource>> GetNetworkCloudCloudServicesNetworkAsync(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudCloudServicesNetworks().GetAsync(cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudCloudServicesNetworkAsync(cloudServicesNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -500,7 +404,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetwork(this ResourceGroupResource resourceGroupResource, string cloudServicesNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudCloudServicesNetworks().Get(cloudServicesNetworkName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudCloudServicesNetwork(cloudServicesNetworkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudClusterManagerResources in the ResourceGroupResource. </summary>
@@ -508,7 +412,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudClusterManagerResources and their operations over a NetworkCloudClusterManagerResource. </returns>
         public static NetworkCloudClusterManagerCollection GetNetworkCloudClusterManagers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudClusterManagers();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudClusterManagers();
         }
 
         /// <summary>
@@ -532,7 +436,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudClusterManagerResource>> GetNetworkCloudClusterManagerAsync(this ResourceGroupResource resourceGroupResource, string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudClusterManagers().GetAsync(clusterManagerName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudClusterManagerAsync(clusterManagerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -556,7 +460,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManager(this ResourceGroupResource resourceGroupResource, string clusterManagerName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudClusterManagers().Get(clusterManagerName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudClusterManager(clusterManagerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudClusterResources in the ResourceGroupResource. </summary>
@@ -564,7 +468,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudClusterResources and their operations over a NetworkCloudClusterResource. </returns>
         public static NetworkCloudClusterCollection GetNetworkCloudClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudClusters();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudClusters();
         }
 
         /// <summary>
@@ -588,7 +492,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudClusterResource>> GetNetworkCloudClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -612,7 +516,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudClusterResource> GetNetworkCloudCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudClusters().Get(clusterName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudCluster(clusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudKubernetesClusterResources in the ResourceGroupResource. </summary>
@@ -620,7 +524,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudKubernetesClusterResources and their operations over a NetworkCloudKubernetesClusterResource. </returns>
         public static NetworkCloudKubernetesClusterCollection GetNetworkCloudKubernetesClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudKubernetesClusters();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudKubernetesClusters();
         }
 
         /// <summary>
@@ -644,7 +548,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudKubernetesClusterResource>> GetNetworkCloudKubernetesClusterAsync(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudKubernetesClusters().GetAsync(kubernetesClusterName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudKubernetesClusterAsync(kubernetesClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -668,7 +572,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesCluster(this ResourceGroupResource resourceGroupResource, string kubernetesClusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudKubernetesClusters().Get(kubernetesClusterName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudKubernetesCluster(kubernetesClusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudL2NetworkResources in the ResourceGroupResource. </summary>
@@ -676,7 +580,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudL2NetworkResources and their operations over a NetworkCloudL2NetworkResource. </returns>
         public static NetworkCloudL2NetworkCollection GetNetworkCloudL2Networks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudL2Networks();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudL2Networks();
         }
 
         /// <summary>
@@ -700,7 +604,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudL2NetworkResource>> GetNetworkCloudL2NetworkAsync(this ResourceGroupResource resourceGroupResource, string l2NetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudL2Networks().GetAsync(l2NetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudL2NetworkAsync(l2NetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -724,7 +628,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudL2NetworkResource> GetNetworkCloudL2Network(this ResourceGroupResource resourceGroupResource, string l2NetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudL2Networks().Get(l2NetworkName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudL2Network(l2NetworkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudL3NetworkResources in the ResourceGroupResource. </summary>
@@ -732,7 +636,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudL3NetworkResources and their operations over a NetworkCloudL3NetworkResource. </returns>
         public static NetworkCloudL3NetworkCollection GetNetworkCloudL3Networks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudL3Networks();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudL3Networks();
         }
 
         /// <summary>
@@ -756,7 +660,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudL3NetworkResource>> GetNetworkCloudL3NetworkAsync(this ResourceGroupResource resourceGroupResource, string l3NetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudL3Networks().GetAsync(l3NetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudL3NetworkAsync(l3NetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -780,7 +684,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudL3NetworkResource> GetNetworkCloudL3Network(this ResourceGroupResource resourceGroupResource, string l3NetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudL3Networks().Get(l3NetworkName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudL3Network(l3NetworkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudRackResources in the ResourceGroupResource. </summary>
@@ -788,7 +692,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudRackResources and their operations over a NetworkCloudRackResource. </returns>
         public static NetworkCloudRackCollection GetNetworkCloudRacks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudRacks();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudRacks();
         }
 
         /// <summary>
@@ -812,7 +716,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudRackResource>> GetNetworkCloudRackAsync(this ResourceGroupResource resourceGroupResource, string rackName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudRacks().GetAsync(rackName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudRackAsync(rackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -836,7 +740,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudRackResource> GetNetworkCloudRack(this ResourceGroupResource resourceGroupResource, string rackName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudRacks().Get(rackName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudRack(rackName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudStorageApplianceResources in the ResourceGroupResource. </summary>
@@ -844,7 +748,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudStorageApplianceResources and their operations over a NetworkCloudStorageApplianceResource. </returns>
         public static NetworkCloudStorageApplianceCollection GetNetworkCloudStorageAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudStorageAppliances();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudStorageAppliances();
         }
 
         /// <summary>
@@ -868,7 +772,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudStorageApplianceResource>> GetNetworkCloudStorageApplianceAsync(this ResourceGroupResource resourceGroupResource, string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudStorageAppliances().GetAsync(storageApplianceName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudStorageApplianceAsync(storageApplianceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -892,7 +796,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliance(this ResourceGroupResource resourceGroupResource, string storageApplianceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudStorageAppliances().Get(storageApplianceName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudStorageAppliance(storageApplianceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudTrunkedNetworkResources in the ResourceGroupResource. </summary>
@@ -900,7 +804,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudTrunkedNetworkResources and their operations over a NetworkCloudTrunkedNetworkResource. </returns>
         public static NetworkCloudTrunkedNetworkCollection GetNetworkCloudTrunkedNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudTrunkedNetworks();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudTrunkedNetworks();
         }
 
         /// <summary>
@@ -924,7 +828,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudTrunkedNetworkResource>> GetNetworkCloudTrunkedNetworkAsync(this ResourceGroupResource resourceGroupResource, string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudTrunkedNetworks().GetAsync(trunkedNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudTrunkedNetworkAsync(trunkedNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -948,7 +852,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetwork(this ResourceGroupResource resourceGroupResource, string trunkedNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudTrunkedNetworks().Get(trunkedNetworkName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudTrunkedNetwork(trunkedNetworkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudVirtualMachineResources in the ResourceGroupResource. </summary>
@@ -956,7 +860,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudVirtualMachineResources and their operations over a NetworkCloudVirtualMachineResource. </returns>
         public static NetworkCloudVirtualMachineCollection GetNetworkCloudVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudVirtualMachines();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudVirtualMachines();
         }
 
         /// <summary>
@@ -980,7 +884,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudVirtualMachineResource>> GetNetworkCloudVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudVirtualMachineAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1004,7 +908,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudVirtualMachines().Get(virtualMachineName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudVirtualMachine(virtualMachineName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudVolumeResources in the ResourceGroupResource. </summary>
@@ -1012,7 +916,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudVolumeResources and their operations over a NetworkCloudVolumeResource. </returns>
         public static NetworkCloudVolumeCollection GetNetworkCloudVolumes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetNetworkCloudVolumes();
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudVolumes();
         }
 
         /// <summary>
@@ -1036,7 +940,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudVolumeResource>> GetNetworkCloudVolumeAsync(this ResourceGroupResource resourceGroupResource, string volumeName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetNetworkCloudVolumes().GetAsync(volumeName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudVolumeAsync(volumeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1060,7 +964,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudVolumeResource> GetNetworkCloudVolume(this ResourceGroupResource resourceGroupResource, string volumeName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetNetworkCloudVolumes().Get(volumeName, cancellationToken);
+            return GetNetworkCloudResourceGroupMockingExtension(resourceGroupResource).GetNetworkCloudVolume(volumeName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetworkCloudRackSkuResources in the SubscriptionResource. </summary>
@@ -1068,7 +972,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An object representing collection of NetworkCloudRackSkuResources and their operations over a NetworkCloudRackSkuResource. </returns>
         public static NetworkCloudRackSkuCollection GetNetworkCloudRackSkus(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudRackSkus();
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudRackSkus();
         }
 
         /// <summary>
@@ -1092,7 +996,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static async Task<Response<NetworkCloudRackSkuResource>> GetNetworkCloudRackSkuAsync(this SubscriptionResource subscriptionResource, string rackSkuName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetNetworkCloudRackSkus().GetAsync(rackSkuName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudRackSkuAsync(rackSkuName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1116,7 +1020,7 @@ namespace Azure.ResourceManager.NetworkCloud
         [ForwardsClientCalls]
         public static Response<NetworkCloudRackSkuResource> GetNetworkCloudRackSku(this SubscriptionResource subscriptionResource, string rackSkuName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetNetworkCloudRackSkus().Get(rackSkuName, cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudRackSku(rackSkuName, cancellationToken);
         }
 
         /// <summary>
@@ -1137,7 +1041,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudBareMetalMachinesAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudBareMetalMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1158,7 +1062,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudBareMetalMachines(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudBareMetalMachines(cancellationToken);
         }
 
         /// <summary>
@@ -1179,7 +1083,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudCloudServicesNetworksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudCloudServicesNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1200,7 +1104,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudCloudServicesNetworks(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudCloudServicesNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1221,7 +1125,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClusterManagersAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudClusterManagersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1242,7 +1146,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClusterManagers(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudClusterManagers(cancellationToken);
         }
 
         /// <summary>
@@ -1263,7 +1167,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClustersAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1284,7 +1188,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudClusters(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1305,7 +1209,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudKubernetesClustersAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudKubernetesClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1326,7 +1230,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudKubernetesClusters(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudKubernetesClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1347,7 +1251,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL2NetworksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudL2NetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1368,7 +1272,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL2Networks(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudL2Networks(cancellationToken);
         }
 
         /// <summary>
@@ -1389,7 +1293,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL3NetworksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudL3NetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1410,7 +1314,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudL3Networks(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudL3Networks(cancellationToken);
         }
 
         /// <summary>
@@ -1431,7 +1335,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudRackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudRacksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudRacksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1452,7 +1356,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudRackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudRacks(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudRacks(cancellationToken);
         }
 
         /// <summary>
@@ -1473,7 +1377,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudStorageAppliancesAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudStorageAppliancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1494,7 +1398,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudStorageAppliances(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudStorageAppliances(cancellationToken);
         }
 
         /// <summary>
@@ -1515,7 +1419,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudTrunkedNetworksAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudTrunkedNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1536,7 +1440,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudTrunkedNetworks(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudTrunkedNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -1557,7 +1461,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVirtualMachinesAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudVirtualMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1578,7 +1482,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVirtualMachines(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudVirtualMachines(cancellationToken);
         }
 
         /// <summary>
@@ -1599,7 +1503,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> An async collection of <see cref="NetworkCloudVolumeResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVolumesAsync(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudVolumesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1620,7 +1524,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <returns> A collection of <see cref="NetworkCloudVolumeResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetNetworkCloudVolumes(cancellationToken);
+            return GetNetworkCloudSubscriptionMockingExtension(subscriptionResource).GetNetworkCloudVolumes(cancellationToken);
         }
     }
 }
