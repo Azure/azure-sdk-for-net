@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Maps.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maps
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.Maps
     /// <summary> A class to add extension methods to Azure.ResourceManager.Maps. </summary>
     public static partial class MapsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MapsArmClientMockingExtension GetMapsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new MapsArmClientMockingExtension(client);
+            });
+        }
+
+        private static MapsResourceGroupMockingExtension GetMapsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MapsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MapsSubscriptionMockingExtension GetMapsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MapsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region MapsAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="MapsAccountResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> Returns a <see cref="MapsAccountResource" /> object. </returns>
         public static MapsAccountResource GetMapsAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MapsAccountResource.ValidateResourceId(id);
-                return new MapsAccountResource(client, id);
-            }
-            );
+            return GetMapsArmClientMockingExtension(client).GetMapsAccountResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> Returns a <see cref="MapsCreatorResource" /> object. </returns>
         public static MapsCreatorResource GetMapsCreatorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MapsCreatorResource.ValidateResourceId(id);
-                return new MapsCreatorResource(client, id);
-            }
-            );
+            return GetMapsArmClientMockingExtension(client).GetMapsCreatorResource(id);
         }
         #endregion
 
@@ -92,7 +76,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> An object representing collection of MapsAccountResources and their operations over a MapsAccountResource. </returns>
         public static MapsAccountCollection GetMapsAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMapsAccounts();
+            return GetMapsResourceGroupMockingExtension(resourceGroupResource).GetMapsAccounts();
         }
 
         /// <summary>
@@ -116,7 +100,7 @@ namespace Azure.ResourceManager.Maps
         [ForwardsClientCalls]
         public static async Task<Response<MapsAccountResource>> GetMapsAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMapsAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMapsResourceGroupMockingExtension(resourceGroupResource).GetMapsAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -140,7 +124,7 @@ namespace Azure.ResourceManager.Maps
         [ForwardsClientCalls]
         public static Response<MapsAccountResource> GetMapsAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMapsAccounts().Get(accountName, cancellationToken);
+            return GetMapsResourceGroupMockingExtension(resourceGroupResource).GetMapsAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -161,7 +145,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> An async collection of <see cref="MapsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MapsAccountResource> GetMapsAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMapsAccountsAsync(cancellationToken);
+            return GetMapsSubscriptionMockingExtension(subscriptionResource).GetMapsAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +166,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> A collection of <see cref="MapsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MapsAccountResource> GetMapsAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMapsAccounts(cancellationToken);
+            return GetMapsSubscriptionMockingExtension(subscriptionResource).GetMapsAccounts(cancellationToken);
         }
     }
 }
