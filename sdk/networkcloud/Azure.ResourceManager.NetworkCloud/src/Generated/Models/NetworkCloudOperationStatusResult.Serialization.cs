@@ -13,9 +13,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class OperationStatusResult
+    public partial class NetworkCloudOperationStatusResult
     {
-        internal static OperationStatusResult DeserializeOperationStatusResult(JsonElement element)
+        internal static NetworkCloudOperationStatusResult DeserializeNetworkCloudOperationStatusResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<float> percentComplete = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<OperationStatusResult>> operations = default;
+            Optional<IReadOnlyList<NetworkCloudOperationStatusResult>> operations = default;
             Optional<ResponseError> error = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<OperationStatusResult> array = new List<OperationStatusResult>();
+                    List<NetworkCloudOperationStatusResult> array = new List<NetworkCloudOperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeOperationStatusResult(item));
+                        array.Add(DeserializeNetworkCloudOperationStatusResult(item));
                     }
                     operations = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new OperationStatusResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value);
+            return new NetworkCloudOperationStatusResult(id.Value, resourceId.Value, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value);
         }
     }
 }

@@ -13,20 +13,20 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> The current status of an async operation. </summary>
-    public partial class OperationStatusResult
+    public partial class NetworkCloudOperationStatusResult
     {
-        /// <summary> Initializes a new instance of OperationStatusResult. </summary>
+        /// <summary> Initializes a new instance of NetworkCloudOperationStatusResult. </summary>
         /// <param name="status"> Operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
-        internal OperationStatusResult(string status)
+        internal NetworkCloudOperationStatusResult(string status)
         {
             Argument.AssertNotNull(status, nameof(status));
 
             Status = status;
-            Operations = new ChangeTrackingList<OperationStatusResult>();
+            Operations = new ChangeTrackingList<NetworkCloudOperationStatusResult>();
         }
 
-        /// <summary> Initializes a new instance of OperationStatusResult. </summary>
+        /// <summary> Initializes a new instance of NetworkCloudOperationStatusResult. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="name"> Name of the async operation. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
-        internal OperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error)
+        internal NetworkCloudOperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<NetworkCloudOperationStatusResult> operations, ResponseError error)
         {
             Id = id;
             ResourceId = resourceId;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The end time of the operation. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> The operations list. </summary>
-        public IReadOnlyList<OperationStatusResult> Operations { get; }
+        public IReadOnlyList<NetworkCloudOperationStatusResult> Operations { get; }
         /// <summary> If present, details of the operation error. </summary>
         public ResponseError Error { get; }
     }

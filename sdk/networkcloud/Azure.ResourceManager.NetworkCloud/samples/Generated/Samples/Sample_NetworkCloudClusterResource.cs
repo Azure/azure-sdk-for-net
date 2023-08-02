@@ -246,8 +246,8 @@ StorageApplianceName = "vmName",
 
             // invoke the operation
             ClusterDeployContent content = new ClusterDeployContent();
-            ArmOperation<Models.OperationStatusResult> lro = await networkCloudCluster.DeployAsync(WaitUntil.Completed, content: content);
-            Models.OperationStatusResult result = lro.Value;
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudCluster.DeployAsync(WaitUntil.Completed, content: content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -281,8 +281,8 @@ StorageApplianceName = "vmName",
 "bmmName1"
 },
             };
-            ArmOperation<Models.OperationStatusResult> lro = await networkCloudCluster.DeployAsync(WaitUntil.Completed, content: content);
-            Models.OperationStatusResult result = lro.Value;
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudCluster.DeployAsync(WaitUntil.Completed, content: content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -310,8 +310,8 @@ StorageApplianceName = "vmName",
 
             // invoke the operation
             ClusterUpdateVersionContent content = new ClusterUpdateVersionContent("2.0");
-            ArmOperation<Models.OperationStatusResult> lro = await networkCloudCluster.UpdateVersionAsync(WaitUntil.Completed, content);
-            Models.OperationStatusResult result = lro.Value;
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudCluster.UpdateVersionAsync(WaitUntil.Completed, content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
