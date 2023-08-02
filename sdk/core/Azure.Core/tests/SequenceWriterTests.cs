@@ -9,6 +9,10 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
+    /// <summary>
+    /// Uses unique bytes in the memory in each test to better debug any issues with tests not
+    /// being fully cleaned up and affecting other tests.
+    /// </summary>
     internal class SequenceWriterTests
     {
         [Test]
@@ -33,8 +37,8 @@ namespace Azure.Core.Tests
         public void ValidateMultiBuffer()
         {
             using SequenceWriter writer = new SequenceWriter(512);
-            WriteMemory(writer, 400, 0xFF);
-            WriteMemory(writer, 400, 0xFF);
+            WriteMemory(writer, 400, 0xFE);
+            WriteMemory(writer, 400, 0xFE);
 
             Assert.IsTrue(writer.TryComputeLength(out var length));
             Assert.AreEqual(800, length);
@@ -44,8 +48,8 @@ namespace Azure.Core.Tests
         public void CanWriteMoreThanBufferSize()
         {
             using SequenceWriter writer = new SequenceWriter(512);
-            WriteMemory(writer, 513, 0xFF);
-            WriteMemory(writer, 256, 0xFE);
+            WriteMemory(writer, 513, 0xFD);
+            WriteMemory(writer, 256, 0xFD);
 
             Assert.IsTrue(writer.TryComputeLength(out var length));
             Assert.AreEqual(769, length);
@@ -59,7 +63,7 @@ namespace Azure.Core.Tests
             writer.Dispose();
 
             // need to find a way to make this fail
-            memory.Span.Fill(0xFF);
+            memory.Span.Fill(0xAA);
         }
 
         [Test]
@@ -70,7 +74,7 @@ namespace Azure.Core.Tests
             SequenceWriter writer = new SequenceWriter(512);
             for (int i = 0; i < segments; i++)
             {
-                WriteMemory(writer, segmentSize, 0xFF);
+                WriteMemory(writer, segmentSize, 0xFC);
             }
 
             Assert.IsTrue(writer.TryComputeLength(out var length));
@@ -78,10 +82,26 @@ namespace Azure.Core.Tests
 
             using MemoryStream memory = new MemoryStream((int)length);
             Task result = Task.Run(() => { return writer.CopyToAsync(memory, default); });
-            while (memory.Length == 0)
-            { }
+
+            // wait for the writing to start
+            while (memory.Length == 0) { }
+
             writer.Dispose();
+
+            //Assert.IsTrue(writer.TryComputeLength(out length));
+            //Assert.AreEqual(0, length);
+
+            SequenceWriter writer2 = new SequenceWriter(512);
+            Task result2 = Task.Run(() =>
+            {
+                for (int i = 0; i < segments; i++)
+                {
+                    WriteMemory(writer2, segmentSize, 0xFB);
+                }
+            });
+
             await result;
+            await result2;
 
             // because the writer was disposed in the middle of copying to a stream
             // the length will be less than expected
@@ -89,6 +109,14 @@ namespace Azure.Core.Tests
             // no exception is thrown here because the writer is not thread safe
             Assert.Greater(memory.Length, 0);
             Assert.Less(memory.Length, length);
+            byte[] memoryStreamBuffer = memory.GetBuffer();
+            for (int i = 0; i < memory.Length; i++)
+            {
+                // sometimes fails due to rerent, dispose doesn't wait for copies to finish
+                // failed on 102nd try
+                Assert.AreEqual(0xFC, memoryStreamBuffer[i]);
+            }
+            writer2.Dispose();
         }
 
         [Test]
@@ -104,7 +132,7 @@ namespace Azure.Core.Tests
                 {
                     for (int i = 0; i < segments; i++)
                     {
-                        WriteMemory(writer, segmentSize, 0xFF);
+                        WriteMemory(writer, segmentSize, 0xFA);
                     }
                 }
                 catch (IndexOutOfRangeException)
@@ -146,9 +174,11 @@ namespace Azure.Core.Tests
             Assert.AreEqual(0, length);
 
             // should this fail with ObjectDisposedException?
-            WriteMemory(writer, 400, 0xFF);
+            WriteMemory(writer, 400, 0xF9);
             Assert.IsTrue(writer.TryComputeLength(out length));
             Assert.AreEqual(400, length);
+
+            writer.Dispose();
         }
 
         private static void WriteMemory(SequenceWriter writer, int size, byte data)
@@ -169,7 +199,7 @@ namespace Azure.Core.Tests
             // If we did this perhaps we could eliminate the use-after-free and worst case leak
             // one segment that doesn't get disposed
             Memory<byte> memory2 = writer.GetMemory(400);
-            memory2.Span.Fill(0xFF);
+            memory2.Span.Fill(0xF8);
             writer.Advance(400);
 
             MemoryStream stream = new MemoryStream(400);
@@ -178,14 +208,14 @@ namespace Azure.Core.Tests
             byte[] buffer = stream.GetBuffer();
 
             // even though we write to the second memory buffer the first segment had 0 written bytes
-            Assert.AreEqual(0xFF, buffer[0]);
-            Assert.AreEqual(0xFF, buffer[399]);
+            Assert.AreEqual(0xF8, buffer[0]);
+            Assert.AreEqual(0xF8, buffer[399]);
 
             Array rawSegments = writer.GetType().GetField("_buffers", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(writer) as Array;
             // we should have 1 segment since the two memory objects should be pointed at the same place
             Assert.AreEqual(1, rawSegments.Length);
 
-            memory1.Span.Fill(0xFE);
+            memory1.Span.Fill(0xF7);
 
             stream = new MemoryStream(400);
             writer.CopyTo(stream, default);
@@ -194,8 +224,8 @@ namespace Azure.Core.Tests
 
             // without advancing since the first and second Memory pointed to the same place
             // we have replaced what was there
-            Assert.AreEqual(0xFE, buffer[0]);
-            Assert.AreEqual(0xFE, buffer[399]);
+            Assert.AreEqual(0xF7, buffer[0]);
+            Assert.AreEqual(0xF7, buffer[399]);
 
             Assert.Throws<ArgumentOutOfRangeException>(() => writer.Advance(400));
         }
@@ -205,13 +235,14 @@ namespace Azure.Core.Tests
         {
             using SequenceWriter writer = new SequenceWriter(512);
             Memory<byte> memory1 = writer.GetMemory(400);
+            memory1.Span.Fill(0); //zero it out for validation later
 
             // should we throw here on the second GetMemory without calling Advance?
             // It seems that you should not be able to get more memory without advancing
             // If we did this perhaps we could eliminate the use-after-free and worst case leak
             // one segment that doesn't get disposed
             Memory<byte> memory2 = writer.GetMemory(800);
-            memory2.Span.Fill(0xFF);
+            memory2.Span.Fill(0xF6);
             writer.Advance(800);
 
             MemoryStream stream = new MemoryStream(800);
@@ -220,8 +251,8 @@ namespace Azure.Core.Tests
             byte[] buffer = stream.GetBuffer();
 
             // even though we write to the second memory buffer the first segment had 0 written bytes
-            Assert.AreEqual(0xFF, buffer[0]);
-            Assert.AreEqual(0xFF, buffer[799]);
+            Assert.AreEqual(0xF6, buffer[0]);
+            Assert.AreEqual(0xF6, buffer[799]);
 
             Array rawSegments = writer.GetType().GetField("_buffers", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(writer) as Array;
             // we should have 2 segment since the second memory was larger than the segment size
@@ -238,7 +269,7 @@ namespace Azure.Core.Tests
             int buffer2BytesWritten = (int)buffer2.GetType().GetField("Written", BindingFlags.Public | BindingFlags.Instance).GetValue(buffer2);
             Assert.AreEqual(800, buffer2BytesWritten);
 
-            memory1.Span.Fill(0xFE);
+            memory1.Span.Fill(0xF5);
 
             // Since we didn't advance the public view is still the same
             // but internally we should have stuff written to the first segment
@@ -246,12 +277,12 @@ namespace Azure.Core.Tests
             writer.CopyTo(stream, default);
             Assert.AreEqual(800, stream.Length);
             buffer = stream.GetBuffer();
-            Assert.AreEqual(0xFF, buffer[0]);
-            Assert.AreEqual(0xFF, buffer[799]);
+            Assert.AreEqual(0xF6, buffer[0]);
+            Assert.AreEqual(0xF6, buffer[799]);
 
             buffer1Array = (byte[])buffer1.GetType().GetField("Array", BindingFlags.Public | BindingFlags.Instance).GetValue(buffer1);
-            Assert.AreEqual(0xFE, buffer1Array[0]);
-            Assert.AreEqual(0xFE, buffer1Array[399]);
+            Assert.AreEqual(0xF5, buffer1Array[0]);
+            Assert.AreEqual(0xF5, buffer1Array[399]);
 
             Assert.Throws<ArgumentOutOfRangeException>(() => writer.Advance(400));
         }

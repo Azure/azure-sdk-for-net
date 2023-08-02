@@ -20,8 +20,8 @@ namespace Azure.Core
             public int Written;
         }
 
-        private Buffer[] _buffers; // this is an array so items can be accessed by ref
-        private int _count;
+        private volatile Buffer[] _buffers; // this is an array so items can be accessed by ref
+        private volatile int _count;
         private int _segmentSize;
 
         /// <summary>
