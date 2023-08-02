@@ -217,7 +217,7 @@ namespace Azure.Core.TestFramework
         public async Task CheckProxyOutputAsync()
         {
             // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
-            await Task.Delay(100);
+            await Task.Delay(20);
 
             // lock to avoid any race conditions caused by appending to the StringBuilder while calling ToString
             lock (_output)
