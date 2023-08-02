@@ -71,6 +71,16 @@ namespace Azure.Core.Json
             return Path.StartsWith(path, StringComparison.Ordinal);
         }
 
+        internal bool IsDescendant(MutableJsonChange? other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return IsDescendant(other.Value.Path);
+        }
+
         internal bool IsDirectDescendant(string path)
         {
             if (!IsDescendant(path))
@@ -83,6 +93,26 @@ namespace Azure.Core.Json
             int descendantPathLength = Path.Split(MutableJsonDocument.ChangeTracker.Delimiter).Length;
 
             return ancestorPathLength == (descendantPathLength - 1);
+        }
+
+        internal bool IsLessThan(MutableJsonChange? other)
+        {
+            if (other == null)
+            {
+                return true;
+            }
+
+            return Path.AsSpan().SequenceCompareTo(other.Value.Path.AsSpan()) < 0;
+        }
+
+        internal bool IsGreaterThan(MutableJsonChange? other)
+        {
+            if (other == null)
+            {
+                return true;
+            }
+
+            return Path.AsSpan().SequenceCompareTo(other.Value.Path.AsSpan()) > 0;
         }
 
         internal string AsString()

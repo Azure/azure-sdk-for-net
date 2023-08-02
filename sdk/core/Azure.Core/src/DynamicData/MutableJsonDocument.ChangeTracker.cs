@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -65,6 +66,11 @@ namespace Azure.Core.Json
 
             internal bool TryGetChange(string path, in int lastAppliedChange, out MutableJsonChange change)
             {
+                return TryGetChange(path.AsSpan(), lastAppliedChange, out change);
+            }
+
+            internal bool TryGetChange(ReadOnlySpan<char> path, in int lastAppliedChange, out MutableJsonChange change)
+            {
                 if (_changes == null)
                 {
                     change = default;
@@ -74,7 +80,7 @@ namespace Azure.Core.Json
                 for (int i = _changes!.Count - 1; i > lastAppliedChange; i--)
                 {
                     MutableJsonChange c = _changes[i];
-                    if (c.Path == path)
+                    if (c.Path.AsSpan().SequenceEqual(path))
                     {
                         change = c;
                         return true;
@@ -135,6 +141,45 @@ namespace Azure.Core.Json
                 }
             }
 
+            internal MutableJsonChange? GetNextChange(MutableJsonChange? lastChange, out int maxPathLength)
+            {
+                // This method gets changes from the list in sorted order by path.
+                // It is intended for use by JSON Merge Patch WriteTo routine.
+
+                maxPathLength = -1;
+
+                if (_changes == null)
+                {
+                    // null means there's no next change, we can exit a loop
+                    return null;
+                }
+
+                MutableJsonChange? min = null;
+
+                // This implementation is based on the assumption that iterating through
+                // list elements is fast.
+                // Iterating backwards means we get the latest change for a given path.
+                for (int i = _changes!.Count - 1; i >= 0; i--)
+                {
+                    MutableJsonChange c = _changes[i];
+
+                    if (c.IsGreaterThan(lastChange) &&
+                        c.IsLessThan(min) &&
+                        // Ignore descendant if its ancestor changed
+                        !c.IsDescendant(lastChange))
+                    {
+                        min = c;
+                    }
+
+                    if (c.Path.Length > maxPathLength)
+                    {
+                        maxPathLength = c.Path.Length;
+                    }
+                }
+
+                return min;
+            }
+
             internal bool WasRemoved(string path, int highWaterMark)
             {
                 if (_changes == null)
@@ -175,16 +220,21 @@ namespace Azure.Core.Json
                 return string.Concat(path, Delimiter, value);
             }
 
-            internal static string PushProperty(string path, ReadOnlySpan<byte> value)
+            internal static void PushProperty(Span<char> path, ref int pathLength, ReadOnlySpan<char> value, int valueLength)
             {
-                string propertyName = BinaryData.FromBytes(value.ToArray()).ToString();
+                // Validate that path is large enough to write value into
+                Debug.Assert(path.Length - pathLength >= valueLength);
 
-                if (path.Length == 0)
+                if (pathLength == 0)
                 {
-                    return propertyName;
+                    value.Slice(0, valueLength).CopyTo(path);
+                    pathLength = valueLength;
+                    return;
                 }
 
-                return string.Concat(path, Delimiter, propertyName);
+                path[pathLength] = Delimiter;
+                value.Slice(0, valueLength).CopyTo(path.Slice(pathLength + 1));
+                pathLength += valueLength + 1;
             }
 
             internal static string PopProperty(string path)
@@ -197,6 +247,12 @@ namespace Azure.Core.Json
                 }
 
                 return path.Substring(0, lastDelimiter);
+            }
+
+            internal static void PopProperty(Span<char> path, ref int pathLength)
+            {
+                int lastDelimiter = path.Slice(0, pathLength).LastIndexOf(Delimiter);
+                pathLength = lastDelimiter == -1 ? 0 : lastDelimiter;
             }
         }
     }

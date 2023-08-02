@@ -4,9 +4,11 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Json
 {
@@ -48,14 +50,61 @@ namespace Azure.Core.Json
             }
         }
 
+        internal T ConvertTo<T>()
+        {
+            JsonElement element = GetJsonElement();
+            Utf8JsonReader reader = GetReaderForElement(element);
+
+            try
+            {
+                // TODO: change this implementation so we don't deserialize known types.
+                // i.e. check typeof(T) and call relevant GetXx() method for supported types.
+                // Can we do better here per perf?
+
+                T? value;
+
+                // Use custom deserialization for an Azure model type.
+                if (typeof(T).GetInterfaces().Contains(typeof(IJsonModelSerializable)) &&
+                    Activator.CreateInstance(typeof(T), true) is IJsonModelSerializable model)
+                {
+                    // TODO: Do we want default options or something else here?
+                    return (T)model.Deserialize(ref reader, ModelSerializerOptions.AzureServiceDefault);
+                }
+
+#if NET6_0_OR_GREATER
+                value = JsonSerializer.Deserialize<T>(element, _root.SerializerOptions);
+#else
+                value = JsonSerializer.Deserialize<T>(ref reader, _root.SerializerOptions);
+#endif
+
+                if (value is null)
+                {
+                    throw new InvalidCastException($"Unable to convert value of kind '{element.ValueKind}' to type '{typeof(T)}'.");
+                }
+                return value!;
+            }
+            catch (JsonException e)
+            {
+                throw new InvalidCastException($"Unable to convert value of kind '{element.ValueKind}' to type '{typeof(T)}'.", e);
+            }
+        }
+
         /// <summary>
         /// Gets the MutableJsonElement for the value of the property with the specified name.
         /// </summary>
         public MutableJsonElement GetProperty(string name)
         {
+            return GetProperty(name.AsSpan());
+        }
+
+        /// <summary>
+        /// Gets the MutableJsonElement for the value of the property with the specified name.
+        /// </summary>
+        public MutableJsonElement GetProperty(ReadOnlySpan<char> name)
+        {
             if (!TryGetProperty(name, out MutableJsonElement value))
             {
-                throw new InvalidOperationException($"'{_path}' does not contain property called '{name}'");
+                throw new InvalidOperationException($"'{_path}' does not contain property called '{GetString(name, 0, name.Length)}'");
             }
 
             return value;
@@ -69,11 +118,29 @@ namespace Azure.Core.Json
         /// <returns></returns>
         public bool TryGetProperty(string name, out MutableJsonElement value)
         {
+            return TryGetProperty(name.AsSpan(), out value);
+        }
+
+        /// <summary>
+        /// Looks for a property named propertyName in the current object, returning a value that indicates whether or not such a property exists. When the property exists, its value is assigned to the value argument.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value">The value to assign to the element.</param>
+        /// <returns></returns>
+        public bool TryGetProperty(ReadOnlySpan<char> name, out MutableJsonElement value)
+        {
             EnsureValid();
 
             EnsureObject();
 
-            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
+            int space = name.Length;
+            space += _path.Length > 0 ? _path.Length + 1 : 0;
+            Span<char> path = stackalloc char[space];
+            _path.AsSpan().CopyTo(path);
+            int pathLength = _path.Length;
+
+            MutableJsonDocument.ChangeTracker.PushProperty(path, ref pathLength, name, name.Length);
+
             if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
             {
                 if (change.ChangeKind == MutableJsonChangeKind.PropertyRemoval)
@@ -82,7 +149,7 @@ namespace Azure.Core.Json
                     return false;
                 }
 
-                value = new MutableJsonElement(_root, change.GetSerializedValue(), path, change.Index);
+                value = new MutableJsonElement(_root, change.GetSerializedValue(), GetString(path, 0, pathLength), change.Index);
                 return true;
             }
 
@@ -93,8 +160,17 @@ namespace Azure.Core.Json
                 return false;
             }
 
-            value = new MutableJsonElement(_root, element, path, _highWaterMark);
+            value = new MutableJsonElement(_root, element, GetString(path, 0, pathLength), _highWaterMark);
             return true;
+        }
+
+        private string GetString(ReadOnlySpan<char> value, int start, int end)
+        {
+#if NET5_0_OR_GREATER
+            return new string(value.Slice(start, end));
+#else
+            return new string(value.Slice(start, end).ToArray());
+#endif
         }
 
         public int GetArrayLength()
@@ -747,7 +823,7 @@ namespace Azure.Core.Json
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value">The value to assign to the element.</param>
-        public MutableJsonElement SetProperty(string name, object value)
+        public MutableJsonElement SetProperty(string name, object? value)
         {
             if (TryGetProperty(name, out MutableJsonElement element))
             {
@@ -970,7 +1046,7 @@ namespace Azure.Core.Json
         /// Sets the value of this element to the passed-in value.
         /// </summary>
         /// <param name="value">The value to assign to the element.</param>
-        public void Set(object value)
+        public void Set(object? value)
         {
             EnsureValid();
 
@@ -1033,8 +1109,10 @@ namespace Azure.Core.Json
             }
         }
 
-        private object GetSerializedValue(object value)
+        private object GetSerializedValue(object? value)
         {
+            // TODO: handle null
+
             if (value is JsonDocument doc)
             {
                 return doc.RootElement;
@@ -1055,10 +1133,21 @@ namespace Azure.Core.Json
                 mje.EnsureValid();
             }
 
+            // Use custom serialization for an Azure model type.
+            if (value is IJsonModelSerializable model)
+            {
+                using MemoryStream stream = new();
+                using Utf8JsonWriter writer = new(stream);
+
+                // TODO: Are default serializer options sufficient here?
+                model.Serialize(writer, ModelSerializerOptions.AzureServiceDefault);
+                writer.Flush();
+                stream.Position = 0;
+                BinaryData data = BinaryData.FromStream(stream);
+                return JsonDocument.Parse(data).RootElement;
+            }
+
             // If it's not a special type, we'll serialize it on assignment.
-            // for debugging
-            string sval = JsonSerializer.Serialize(value, _root.SerializerOptions);
-            // end
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _root.SerializerOptions);
             return JsonDocument.Parse(bytes).RootElement;
         }

@@ -196,5 +196,48 @@ namespace Azure.Core.Tests
 
             CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
         }
+
+        [Test]
+        public void JsonMergePatchContent()
+        {
+            ReadOnlySpan<byte> utf8Json = """
+                {
+                    "value": {
+                       "a": true,
+                       "b": 1,
+                       "c": "unmodified value"
+                    }
+                }
+                """u8;
+            ReadOnlyMemory<byte> json = new ReadOnlyMemory<byte>(utf8Json.ToArray());
+
+            using dynamic content = new BinaryData(json).ToDynamicFromJson();
+            content.value.a = null;
+            content.value.b = 2;
+
+            using RequestContent patch = RequestContent.CreatePatch(content);
+
+            ReadOnlySpan<byte> patchJson = """
+                {
+                    "value": {
+                       "a": null,
+                       "b": 2
+                    }
+                }
+                """u8;
+            ReadOnlyMemory<byte> expected = new ReadOnlyMemory<byte>(patchJson.ToArray());
+
+            //using JsonDocument expectedDoc = JsonDocument.Parse(expected);
+            //using MemoryStream expectedStream = new();
+            //using Utf8JsonWriter writer = new(expectedStream);
+            //expectedDoc.WriteTo(writer);
+            //writer.Flush();
+            //expectedStream.Position = 0;
+
+            using MemoryStream destination = new();
+            patch.WriteTo(destination, default);
+
+            CollectionAssert.AreEqual(expected.ToArray(), destination.ToArray());
+        }
     }
 }
