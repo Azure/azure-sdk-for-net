@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Xml;
 
 namespace Azure.Core.Serialization
 {
@@ -52,7 +52,9 @@ namespace Azure.Core.Serialization
 
             var iModel = model as IModelSerializable<object>;
             if (iModel is null)
+            {
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable<object>)}");
+            }
 
             return iModel.Serialize(options);
         }
@@ -133,7 +135,8 @@ namespace Azure.Core.Serialization
             using var jsonWriter = new Utf8JsonWriter(writer);
             model.Serialize(jsonWriter, options);
             jsonWriter.Flush();
-            writer.TryComputeLength(out var length);
+            bool gotLength = writer.TryComputeLength(out long length);
+            Debug.Assert(gotLength);
             using var stream = new MemoryStream((int)length);
             writer.CopyTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
@@ -152,7 +155,9 @@ namespace Azure.Core.Serialization
         {
             var model = GetObjectInstance(returnType) as IModelSerializable<object>;
             if (model is null)
+            {
                 throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IModelSerializable<object>)}");
+            }
             return model;
         }
 
@@ -160,7 +165,9 @@ namespace Azure.Core.Serialization
         {
             var model = GetObjectInstance(typeof(T)) as IModelSerializable<T>;
             if (model is null)
+            {
                 throw new InvalidOperationException($"{typeof(T).Name} does not implement {nameof(IModelSerializable<T>)}");
+            }
             return model;
         }
 
@@ -168,10 +175,14 @@ namespace Azure.Core.Serialization
         {
             var typeToActivate = returnType.IsAbstract ? returnType.Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{returnType.Name}") : returnType;
             if (typeToActivate is null)
+            {
                 throw new InvalidOperationException($"Unable to find type Unknown{returnType.Name} in assembly {returnType.Assembly.FullName}.");
+            }
             var obj = Activator.CreateInstance(typeToActivate, true);
             if (obj is null)
+            {
                 throw new InvalidOperationException($"Unable to create instance of {typeToActivate.Name}.");
+            }
             return obj;
         }
     }

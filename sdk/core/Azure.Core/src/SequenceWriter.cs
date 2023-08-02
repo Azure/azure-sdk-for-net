@@ -58,7 +58,9 @@ namespace Azure.Core
         public Memory<byte> GetMemory(int sizeHint = 0)
         {
             if (sizeHint < 256)
+            {
                 sizeHint = 256;
+            }
 
             int sizeToRent = sizeHint > _bufferSize ? sizeHint : _bufferSize;
 
@@ -72,7 +74,9 @@ namespace Azure.Core
             ref Buffer last = ref _buffers[_count - 1];
             var free = last.Array.AsMemory(last.Written);
             if (free.Length >= sizeHint)
+            {
                 return free;
+            }
 
             // else allocate a new buffer:
             var newArray = ArrayPool<byte>.Shared.Rent(sizeToRent);

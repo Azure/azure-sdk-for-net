@@ -3,12 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
-using Azure.Core;
 using Azure.Core.Json;
 using Azure.Core.Serialization;
 
