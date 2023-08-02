@@ -12,43 +12,37 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Sphere.Mocking;
 
 namespace Azure.ResourceManager.Sphere
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.Sphere. </summary>
     public static partial class SphereExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SphereArmClientMockingExtension GetSphereArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new SphereArmClientMockingExtension(client);
+            });
+        }
+
+        private static SphereResourceGroupMockingExtension GetSphereResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SphereResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SphereSubscriptionMockingExtension GetSphereSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SphereSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region SphereCatalogResource
         /// <summary>
         /// Gets an object representing a <see cref="SphereCatalogResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereCatalogResource" /> object. </returns>
         public static SphereCatalogResource GetSphereCatalogResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SphereCatalogResource.ValidateResourceId(id);
-                return new SphereCatalogResource(client, id);
-            }
-            );
+            return GetSphereArmClientMockingExtension(client).GetSphereCatalogResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereCertificateResource" /> object. </returns>
         public static SphereCertificateResource GetSphereCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SphereCertificateResource.ValidateResourceId(id);
-                return new SphereCertificateResource(client, id);
-            }
-            );
+            return GetSphereArmClientMockingExtension(client).GetSphereCertificateResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereImageResource" /> object. </returns>
         public static SphereImageResource GetSphereImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SphereImageResource.ValidateResourceId(id);
-                return new SphereImageResource(client, id);
-            }
-            );
+            return GetSphereArmClientMockingExtension(client).GetSphereImageResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereProductResource" /> object. </returns>
         public static SphereProductResource GetSphereProductResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SphereProductResource.ValidateResourceId(id);
-                return new SphereProductResource(client, id);
-            }
-            );
+            return GetSphereArmClientMockingExtension(client).GetSphereProductResource(id);
         }
         #endregion
 
@@ -135,12 +109,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereDeviceGroupResource" /> object. </returns>
         public static SphereDeviceGroupResource GetSphereDeviceGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SphereDeviceGroupResource.ValidateResourceId(id);
-                return new SphereDeviceGroupResource(client, id);
-            }
-            );
+            return GetSphereArmClientMockingExtension(client).GetSphereDeviceGroupResource(id);
         }
         #endregion
 
@@ -154,12 +123,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereDeploymentResource" /> object. </returns>
         public static SphereDeploymentResource GetSphereDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SphereDeploymentResource.ValidateResourceId(id);
-                return new SphereDeploymentResource(client, id);
-            }
-            );
+            return GetSphereArmClientMockingExtension(client).GetSphereDeploymentResource(id);
         }
         #endregion
 
@@ -173,12 +137,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereDeviceResource" /> object. </returns>
         public static SphereDeviceResource GetSphereDeviceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SphereDeviceResource.ValidateResourceId(id);
-                return new SphereDeviceResource(client, id);
-            }
-            );
+            return GetSphereArmClientMockingExtension(client).GetSphereDeviceResource(id);
         }
         #endregion
 
@@ -187,7 +146,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An object representing collection of SphereCatalogResources and their operations over a SphereCatalogResource. </returns>
         public static SphereCatalogCollection GetSphereCatalogs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSphereCatalogs();
+            return GetSphereResourceGroupMockingExtension(resourceGroupResource).GetSphereCatalogs();
         }
 
         /// <summary>
@@ -211,7 +170,7 @@ namespace Azure.ResourceManager.Sphere
         [ForwardsClientCalls]
         public static async Task<Response<SphereCatalogResource>> GetSphereCatalogAsync(this ResourceGroupResource resourceGroupResource, string catalogName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSphereCatalogs().GetAsync(catalogName, cancellationToken).ConfigureAwait(false);
+            return await GetSphereResourceGroupMockingExtension(resourceGroupResource).GetSphereCatalogAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -235,7 +194,7 @@ namespace Azure.ResourceManager.Sphere
         [ForwardsClientCalls]
         public static Response<SphereCatalogResource> GetSphereCatalog(this ResourceGroupResource resourceGroupResource, string catalogName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSphereCatalogs().Get(catalogName, cancellationToken);
+            return GetSphereResourceGroupMockingExtension(resourceGroupResource).GetSphereCatalog(catalogName, cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +215,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An async collection of <see cref="SphereCatalogResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SphereCatalogResource> GetSphereCatalogsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSphereCatalogsAsync(cancellationToken);
+            return GetSphereSubscriptionMockingExtension(subscriptionResource).GetSphereCatalogsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -277,7 +236,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> A collection of <see cref="SphereCatalogResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SphereCatalogResource> GetSphereCatalogs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSphereCatalogs(cancellationToken);
+            return GetSphereSubscriptionMockingExtension(subscriptionResource).GetSphereCatalogs(cancellationToken);
         }
     }
 }
