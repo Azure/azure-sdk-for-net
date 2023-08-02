@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TrafficManager.Mocking;
 using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
@@ -19,53 +20,38 @@ namespace Azure.ResourceManager.TrafficManager
     /// <summary> A class to add extension methods to Azure.ResourceManager.TrafficManager. </summary>
     public static partial class TrafficManagerExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static TrafficManagerArmClientMockingExtension GetTrafficManagerArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new TrafficManagerArmClientMockingExtension(client);
+            });
+        }
+
+        private static TrafficManagerResourceGroupMockingExtension GetTrafficManagerResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new TrafficManagerResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static TrafficManagerSubscriptionMockingExtension GetTrafficManagerSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new TrafficManagerSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static TrafficManagerTenantMockingExtension GetTrafficManagerTenantMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new TrafficManagerTenantMockingExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
         #region TrafficManagerEndpointResource
         /// <summary>
         /// Gets an object representing a <see cref="TrafficManagerEndpointResource" /> along with the instance operations that can be performed on it but with no data.
@@ -76,12 +62,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerEndpointResource" /> object. </returns>
         public static TrafficManagerEndpointResource GetTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<TrafficManagerEndpointResource>(() =>
-            {
-                TrafficManagerEndpointResource.ValidateResourceId(id);
-                return new TrafficManagerEndpointResource(client, id);
-            }
-            );
+            return GetTrafficManagerArmClientMockingExtension(client).GetTrafficManagerEndpointResource(id);
         }
         #endregion
 
@@ -95,12 +76,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerProfileResource" /> object. </returns>
         public static TrafficManagerProfileResource GetTrafficManagerProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TrafficManagerProfileResource.ValidateResourceId(id);
-                return new TrafficManagerProfileResource(client, id);
-            }
-            );
+            return GetTrafficManagerArmClientMockingExtension(client).GetTrafficManagerProfileResource(id);
         }
         #endregion
 
@@ -114,12 +90,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource" /> object. </returns>
         public static TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TrafficManagerGeographicHierarchyResource.ValidateResourceId(id);
-                return new TrafficManagerGeographicHierarchyResource(client, id);
-            }
-            );
+            return GetTrafficManagerArmClientMockingExtension(client).GetTrafficManagerGeographicHierarchyResource(id);
         }
         #endregion
 
@@ -133,12 +104,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerHeatMapResource" /> object. </returns>
         public static TrafficManagerHeatMapResource GetTrafficManagerHeatMapResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TrafficManagerHeatMapResource.ValidateResourceId(id);
-                return new TrafficManagerHeatMapResource(client, id);
-            }
-            );
+            return GetTrafficManagerArmClientMockingExtension(client).GetTrafficManagerHeatMapResource(id);
         }
         #endregion
 
@@ -152,12 +118,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource" /> object. </returns>
         public static TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TrafficManagerUserMetricsResource.ValidateResourceId(id);
-                return new TrafficManagerUserMetricsResource(client, id);
-            }
-            );
+            return GetTrafficManagerArmClientMockingExtension(client).GetTrafficManagerUserMetricsResource(id);
         }
         #endregion
 
@@ -166,7 +127,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> An object representing collection of TrafficManagerProfileResources and their operations over a TrafficManagerProfileResource. </returns>
         public static TrafficManagerProfileCollection GetTrafficManagerProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetTrafficManagerProfiles();
+            return GetTrafficManagerResourceGroupMockingExtension(resourceGroupResource).GetTrafficManagerProfiles();
         }
 
         /// <summary>
@@ -190,7 +151,7 @@ namespace Azure.ResourceManager.TrafficManager
         [ForwardsClientCalls]
         public static async Task<Response<TrafficManagerProfileResource>> GetTrafficManagerProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetTrafficManagerProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
+            return await GetTrafficManagerResourceGroupMockingExtension(resourceGroupResource).GetTrafficManagerProfileAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,7 +175,7 @@ namespace Azure.ResourceManager.TrafficManager
         [ForwardsClientCalls]
         public static Response<TrafficManagerProfileResource> GetTrafficManagerProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetTrafficManagerProfiles().Get(profileName, cancellationToken);
+            return GetTrafficManagerResourceGroupMockingExtension(resourceGroupResource).GetTrafficManagerProfile(profileName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a TrafficManagerUserMetricsResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
@@ -222,7 +183,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource" /> object. </returns>
         public static TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrafficManagerUserMetrics();
+            return GetTrafficManagerSubscriptionMockingExtension(subscriptionResource).GetTrafficManagerUserMetrics();
         }
 
         /// <summary>
@@ -244,9 +205,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckTrafficManagerNameAvailabilityV2Async(content, cancellationToken).ConfigureAwait(false);
+            return await GetTrafficManagerSubscriptionMockingExtension(subscriptionResource).CheckTrafficManagerNameAvailabilityV2Async(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -268,9 +227,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckTrafficManagerNameAvailabilityV2(content, cancellationToken);
+            return GetTrafficManagerSubscriptionMockingExtension(subscriptionResource).CheckTrafficManagerNameAvailabilityV2(content, cancellationToken);
         }
 
         /// <summary>
@@ -291,7 +248,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> An async collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrafficManagerProfilesAsync(cancellationToken);
+            return GetTrafficManagerSubscriptionMockingExtension(subscriptionResource).GetTrafficManagerProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +269,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> A collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetTrafficManagerProfiles(cancellationToken);
+            return GetTrafficManagerSubscriptionMockingExtension(subscriptionResource).GetTrafficManagerProfiles(cancellationToken);
         }
 
         /// <summary> Gets an object representing a TrafficManagerGeographicHierarchyResource along with the instance operations that can be performed on it in the TenantResource. </summary>
@@ -320,7 +277,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource" /> object. </returns>
         public static TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTrafficManagerGeographicHierarchy();
+            return GetTrafficManagerTenantMockingExtension(tenantResource).GetTrafficManagerGeographicHierarchy();
         }
 
         /// <summary>
@@ -342,9 +299,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetTrafficManagerTenantMockingExtension(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -366,9 +321,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).CheckTrafficManagerRelativeDnsNameAvailability(content, cancellationToken);
+            return GetTrafficManagerTenantMockingExtension(tenantResource).CheckTrafficManagerRelativeDnsNameAvailability(content, cancellationToken);
         }
     }
 }
