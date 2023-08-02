@@ -1994,6 +1994,9 @@ namespace Azure.ResourceManager.AppService
         public SiteLogsConfigData() { }
         public Azure.ResourceManager.AppService.Models.ApplicationLogsConfig ApplicationLogs { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig HttpLogs { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
+        public Azure.Core.ResourceIdentifier idstring { get { throw null; } set { } }
         public bool? IsDetailedErrorMessagesEnabled { get { throw null; } set { } }
         public bool? IsFailedRequestsTracingEnabled { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
@@ -5166,9 +5169,12 @@ namespace Azure.ResourceManager.AppService.Models
     }
     public partial class AppServiceTableStorageApplicationLogsConfig
     {
-        public AppServiceTableStorageApplicationLogsConfig(System.Uri sasUri) { }
+        public AppServiceTableStorageApplicationLogsConfig(string sasUriString) { }
         public Azure.ResourceManager.AppService.Models.WebAppLogLevel? Level { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
         public System.Uri SasUri { get { throw null; } set { } }
+        public string SasUriString { get { throw null; } set { } }
     }
     public partial class AppServiceTokenStore
     {

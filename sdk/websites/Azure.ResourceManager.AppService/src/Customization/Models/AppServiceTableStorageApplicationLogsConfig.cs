@@ -13,6 +13,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Uri of the resource. </summary>
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         [ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
-        public System.Uri Sas1Uri { get; set; }
+        public System.Uri SasUri { get; set; }
     }
 }
