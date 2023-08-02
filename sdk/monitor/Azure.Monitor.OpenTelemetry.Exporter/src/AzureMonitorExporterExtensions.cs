@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.Diagnostics;
 using Azure.Core;
@@ -33,9 +35,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
         public static TracerProviderBuilder AddAzureMonitorTraceExporter(
             this TracerProviderBuilder builder,
-            Action<AzureMonitorExporterOptions>? configure = null,
-            TokenCredential? credential = null,
-            string? name = null)
+            Action<AzureMonitorExporterOptions> configure = null,
+            TokenCredential credential = null,
+            string name = null)
         {
             if (builder == null)
             {
@@ -101,9 +103,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <returns>The instance of <see cref="MeterProviderBuilder"/> to chain the calls.</returns>
         public static MeterProviderBuilder AddAzureMonitorMetricExporter(
             this MeterProviderBuilder builder,
-            Action<AzureMonitorExporterOptions>? configure = null,
-            TokenCredential? credential = null,
-            string? name = null)
+            Action<AzureMonitorExporterOptions> configure = null,
+            TokenCredential credential = null,
+            string name = null)
         {
             if (builder == null)
             {
@@ -158,8 +160,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// <returns>The instance of <see cref="OpenTelemetryLoggerOptions"/> to chain the calls.</returns>
         public static OpenTelemetryLoggerOptions AddAzureMonitorLogExporter(
             this OpenTelemetryLoggerOptions loggerOptions,
-            Action<AzureMonitorExporterOptions>? configure = null,
-            TokenCredential? credential = null)
+            Action<AzureMonitorExporterOptions> configure = null,
+            TokenCredential credential = null)
         {
             if (loggerOptions == null)
             {
