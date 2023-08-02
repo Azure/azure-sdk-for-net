@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DeviceProvisioningServices.Mocking;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.DeviceProvisioningServices. </summary>
     public static partial class DeviceProvisioningServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DeviceProvisioningServicesArmClientMockingExtension GetDeviceProvisioningServicesArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DeviceProvisioningServicesArmClientMockingExtension(client);
+            });
+        }
+
+        private static DeviceProvisioningServicesResourceGroupMockingExtension GetDeviceProvisioningServicesResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DeviceProvisioningServicesResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DeviceProvisioningServicesSubscriptionMockingExtension GetDeviceProvisioningServicesSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DeviceProvisioningServicesSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region DeviceProvisioningServicesCertificateResource
         /// <summary>
         /// Gets an object representing a <see cref="DeviceProvisioningServicesCertificateResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServicesCertificateResource" /> object. </returns>
         public static DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeviceProvisioningServicesCertificateResource.ValidateResourceId(id);
-                return new DeviceProvisioningServicesCertificateResource(client, id);
-            }
-            );
+            return GetDeviceProvisioningServicesArmClientMockingExtension(client).GetDeviceProvisioningServicesCertificateResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServiceResource" /> object. </returns>
         public static DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeviceProvisioningServiceResource.ValidateResourceId(id);
-                return new DeviceProvisioningServiceResource(client, id);
-            }
-            );
+            return GetDeviceProvisioningServicesArmClientMockingExtension(client).GetDeviceProvisioningServiceResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> object. </returns>
         public static DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeviceProvisioningServicesPrivateLinkResource.ValidateResourceId(id);
-                return new DeviceProvisioningServicesPrivateLinkResource(client, id);
-            }
-            );
+            return GetDeviceProvisioningServicesArmClientMockingExtension(client).GetDeviceProvisioningServicesPrivateLinkResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> object. </returns>
         public static DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeviceProvisioningServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new DeviceProvisioningServicesPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetDeviceProvisioningServicesArmClientMockingExtension(client).GetDeviceProvisioningServicesPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -131,7 +105,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An object representing collection of DeviceProvisioningServiceResources and their operations over a DeviceProvisioningServiceResource. </returns>
         public static DeviceProvisioningServiceCollection GetDeviceProvisioningServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDeviceProvisioningServices();
+            return GetDeviceProvisioningServicesResourceGroupMockingExtension(resourceGroupResource).GetDeviceProvisioningServices();
         }
 
         /// <summary>
@@ -155,7 +129,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         [ForwardsClientCalls]
         public static async Task<Response<DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDeviceProvisioningServices().GetAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetDeviceProvisioningServicesResourceGroupMockingExtension(resourceGroupResource).GetDeviceProvisioningServiceAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -179,7 +153,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         [ForwardsClientCalls]
         public static Response<DeviceProvisioningServiceResource> GetDeviceProvisioningService(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDeviceProvisioningServices().Get(provisioningServiceName, cancellationToken);
+            return GetDeviceProvisioningServicesResourceGroupMockingExtension(resourceGroupResource).GetDeviceProvisioningService(provisioningServiceName, cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +174,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeviceProvisioningServicesAsync(cancellationToken);
+            return GetDeviceProvisioningServicesSubscriptionMockingExtension(subscriptionResource).GetDeviceProvisioningServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -221,7 +195,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeviceProvisioningServices(cancellationToken);
+            return GetDeviceProvisioningServicesSubscriptionMockingExtension(subscriptionResource).GetDeviceProvisioningServices(cancellationToken);
         }
 
         /// <summary>
@@ -243,9 +217,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDeviceProvisioningServicesNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetDeviceProvisioningServicesSubscriptionMockingExtension(subscriptionResource).CheckDeviceProvisioningServicesNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -267,9 +239,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(this SubscriptionResource subscriptionResource, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDeviceProvisioningServicesNameAvailability(content, cancellationToken);
+            return GetDeviceProvisioningServicesSubscriptionMockingExtension(subscriptionResource).CheckDeviceProvisioningServicesNameAvailability(content, cancellationToken);
         }
     }
 }
