@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Support.Mocking;
 using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.Support
     /// <summary> A class to add extension methods to Azure.ResourceManager.Support. </summary>
     public static partial class SupportExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SupportArmClientMockingExtension GetSupportArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new SupportArmClientMockingExtension(client);
+            });
+        }
+
+        private static SupportSubscriptionMockingExtension GetSupportSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SupportSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static SupportTenantMockingExtension GetSupportTenantMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new SupportTenantMockingExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
         #region SupportAzureServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="SupportAzureServiceResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportAzureServiceResource" /> object. </returns>
         public static SupportAzureServiceResource GetSupportAzureServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SupportAzureServiceResource.ValidateResourceId(id);
-                return new SupportAzureServiceResource(client, id);
-            }
-            );
+            return GetSupportArmClientMockingExtension(client).GetSupportAzureServiceResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="ProblemClassificationResource" /> object. </returns>
         public static ProblemClassificationResource GetProblemClassificationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProblemClassificationResource.ValidateResourceId(id);
-                return new ProblemClassificationResource(client, id);
-            }
-            );
+            return GetSupportArmClientMockingExtension(client).GetProblemClassificationResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportTicketResource" /> object. </returns>
         public static SupportTicketResource GetSupportTicketResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SupportTicketResource.ValidateResourceId(id);
-                return new SupportTicketResource(client, id);
-            }
-            );
+            return GetSupportArmClientMockingExtension(client).GetSupportTicketResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportTicketCommunicationResource" /> object. </returns>
         public static SupportTicketCommunicationResource GetSupportTicketCommunicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SupportTicketCommunicationResource.ValidateResourceId(id);
-                return new SupportTicketCommunicationResource(client, id);
-            }
-            );
+            return GetSupportArmClientMockingExtension(client).GetSupportTicketCommunicationResource(id);
         }
         #endregion
 
@@ -131,7 +105,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportTicketResources and their operations over a SupportTicketResource. </returns>
         public static SupportTicketCollection GetSupportTickets(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSupportTickets();
+            return GetSupportSubscriptionMockingExtension(subscriptionResource).GetSupportTickets();
         }
 
         /// <summary>
@@ -155,7 +129,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static async Task<Response<SupportTicketResource>> GetSupportTicketAsync(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
+            return await GetSupportSubscriptionMockingExtension(subscriptionResource).GetSupportTicketAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -179,7 +153,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static Response<SupportTicketResource> GetSupportTicket(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSupportTickets().Get(supportTicketName, cancellationToken);
+            return GetSupportSubscriptionMockingExtension(subscriptionResource).GetSupportTicket(supportTicketName, cancellationToken);
         }
 
         /// <summary>
@@ -201,9 +175,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSupportSubscriptionMockingExtension(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -225,9 +197,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
+            return GetSupportSubscriptionMockingExtension(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
         }
 
         /// <summary> Gets a collection of SupportAzureServiceResources in the TenantResource. </summary>
@@ -235,7 +205,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportAzureServiceResources and their operations over a SupportAzureServiceResource. </returns>
         public static SupportAzureServiceCollection GetSupportAzureServices(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetSupportAzureServices();
+            return GetSupportTenantMockingExtension(tenantResource).GetSupportAzureServices();
         }
 
         /// <summary>
@@ -259,7 +229,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static async Task<Response<SupportAzureServiceResource>> GetSupportAzureServiceAsync(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetSupportAzureServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetSupportTenantMockingExtension(tenantResource).GetSupportAzureServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,7 +253,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static Response<SupportAzureServiceResource> GetSupportAzureService(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetSupportAzureServices().Get(serviceName, cancellationToken);
+            return GetSupportTenantMockingExtension(tenantResource).GetSupportAzureService(serviceName, cancellationToken);
         }
     }
 }

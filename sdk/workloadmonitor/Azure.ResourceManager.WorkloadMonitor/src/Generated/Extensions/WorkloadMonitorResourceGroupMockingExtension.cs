@@ -11,69 +11,45 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.WorkloadMonitor.Mocking;
+using Azure.ResourceManager.WorkloadMonitor;
 
-namespace Azure.ResourceManager.WorkloadMonitor
+namespace Azure.ResourceManager.WorkloadMonitor.Mocking
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.WorkloadMonitor. </summary>
-    public static partial class WorkloadMonitorExtensions
+    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    public partial class WorkloadMonitorResourceGroupMockingExtension : ArmResource
     {
-        private static WorkloadMonitorArmClientMockingExtension GetWorkloadMonitorArmClientMockingExtension(ArmClient client)
+        /// <summary> Initializes a new instance of the <see cref="WorkloadMonitorResourceGroupMockingExtension"/> class for mocking. </summary>
+        protected WorkloadMonitorResourceGroupMockingExtension()
         {
-            return client.GetCachedClient(client =>
-            {
-                return new WorkloadMonitorArmClientMockingExtension(client);
-            });
         }
 
-        private static WorkloadMonitorResourceGroupMockingExtension GetWorkloadMonitorResourceGroupMockingExtension(ArmResource resource)
+        /// <summary> Initializes a new instance of the <see cref="WorkloadMonitorResourceGroupMockingExtension"/> class. </summary>
+        /// <param name="client"> The client parameters to use in these operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        internal WorkloadMonitorResourceGroupMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new WorkloadMonitorResourceGroupMockingExtension(client, resource.Id);
-            });
         }
 
-        #region HealthMonitorResource
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthMonitorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthMonitorResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthMonitorResource" /> object. </returns>
-        public static HealthMonitorResource GetHealthMonitorResource(this ArmClient client, ResourceIdentifier id)
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            return GetWorkloadMonitorArmClientMockingExtension(client).GetHealthMonitorResource(id);
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
-        #endregion
-
-        #region HealthMonitorStateChangeResource
-        /// <summary>
-        /// Gets an object representing a <see cref="HealthMonitorStateChangeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HealthMonitorStateChangeResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorStateChangeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HealthMonitorStateChangeResource" /> object. </returns>
-        public static HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return GetWorkloadMonitorArmClientMockingExtension(client).GetHealthMonitorStateChangeResource(id);
-        }
-        #endregion
 
         /// <summary> Gets a collection of HealthMonitorResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
         /// <param name="resourceCollectionName"> The resource collection name (ex: virtualMachines for virtual machines). </param>
         /// <param name="resourceName"> The name of the virtual machine. </param>
         /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceCollectionName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceCollectionName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <returns> An object representing collection of HealthMonitorResources and their operations over a HealthMonitorResource. </returns>
-        public static HealthMonitorCollection GetHealthMonitors(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName)
+        public virtual HealthMonitorCollection GetHealthMonitors(string providerName, string resourceCollectionName, string resourceName)
         {
-            return GetWorkloadMonitorResourceGroupMockingExtension(resourceGroupResource).GetHealthMonitors(providerName, resourceCollectionName, resourceName);
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceCollectionName, nameof(resourceCollectionName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            return new HealthMonitorCollection(Client, Id, providerName, resourceCollectionName, resourceName);
         }
 
         /// <summary>
@@ -89,7 +65,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
         /// <param name="resourceCollectionName"> The resource collection name (ex: virtualMachines for virtual machines). </param>
         /// <param name="resourceName"> The name of the virtual machine. </param>
@@ -99,9 +74,9 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceCollectionName"/>, <paramref name="resourceName"/> or <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceCollectionName"/>, <paramref name="resourceName"/> or <paramref name="monitorId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<HealthMonitorResource>> GetHealthMonitorAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthMonitorResource>> GetHealthMonitorAsync(string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetWorkloadMonitorResourceGroupMockingExtension(resourceGroupResource).GetHealthMonitorAsync(providerName, resourceCollectionName, resourceName, monitorId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetHealthMonitors(providerName, resourceCollectionName, resourceName).GetAsync(monitorId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -117,7 +92,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
         /// <param name="resourceCollectionName"> The resource collection name (ex: virtualMachines for virtual machines). </param>
         /// <param name="resourceName"> The name of the virtual machine. </param>
@@ -127,9 +101,9 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceCollectionName"/>, <paramref name="resourceName"/> or <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceCollectionName"/>, <paramref name="resourceName"/> or <paramref name="monitorId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<HealthMonitorResource> GetHealthMonitor(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<HealthMonitorResource> GetHealthMonitor(string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadMonitorResourceGroupMockingExtension(resourceGroupResource).GetHealthMonitor(providerName, resourceCollectionName, resourceName, monitorId, expand, cancellationToken);
+            return GetHealthMonitors(providerName, resourceCollectionName, resourceName).Get(monitorId, expand, cancellationToken);
         }
     }
 }
