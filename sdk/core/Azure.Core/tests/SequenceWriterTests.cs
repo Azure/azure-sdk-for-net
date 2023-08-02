@@ -109,7 +109,7 @@ namespace Azure.Core.Tests
             // only a portion of the writer was copied to the stream before the dispose
             // no exception is thrown here because the writer is not thread safe
             Assert.Greater(memory.Length, 0);
-            Assert.Less(memory.Length, length);
+            Assert.LessOrEqual(memory.Length, length); // in rare cases it can be equal
             byte[] memoryStreamBuffer = memory.GetBuffer();
             for (int i = 0; i < memory.Length; i++)
             {
