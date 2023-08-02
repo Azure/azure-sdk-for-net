@@ -16,6 +16,8 @@ namespace Azure.Core.Internal
 
         private SequenceWriter? _writer;
 
+        // write lock is used to synchronize between dispose and serialization
+        // read lock is used to block disposing while a copy to is in progress
         private ReaderWriterLockSlim? _lock;
         private ReaderWriterLockSlim Lock => _lock ??= new ReaderWriterLockSlim();
 
@@ -25,25 +27,32 @@ namespace Azure.Core.Internal
             _options = options;
         }
 
-        private SequenceWriter GetWriter(IModelJsonSerializable<object> model)
+        private SequenceWriter GetWriter()
         {
             if (_writer is null)
             {
-                SequenceWriter writer = new SequenceWriter();
-                using var jsonWriter = new Utf8JsonWriter(writer);
-                model.Serialize(jsonWriter, _options);
-                jsonWriter.Flush();
-                _writer = writer;
+                Lock.EnterWriteLock();
+                if (_writer is null)
+                {
+                    SequenceWriter writer = new SequenceWriter();
+                    using var jsonWriter = new Utf8JsonWriter(writer);
+                    _model.Serialize(jsonWriter, _options);
+                    jsonWriter.Flush();
+                    _writer = writer;
+                }
+                Lock.ExitWriteLock();
             }
             return _writer;
         }
 
-        public void WriteTo(Stream stream, CancellationToken cancellation)
+        public void CopyTo(Stream stream, CancellationToken cancellation)
         {
+            //can't get the write lock from inside the read lock
+            SequenceWriter writer = GetWriter();
             Lock.EnterReadLock();
             try
             {
-                GetWriter(_model).CopyTo(stream, cancellation);
+                writer.CopyTo(stream, cancellation);
             }
             finally
             {
@@ -53,10 +62,12 @@ namespace Azure.Core.Internal
 
         public bool TryComputeLength(out long length)
         {
+            //can't get the write lock from inside the read lock
+            SequenceWriter writer = GetWriter();
             Lock.EnterReadLock();
             try
             {
-                return GetWriter(_model).TryComputeLength(out length);
+                return writer.TryComputeLength(out length);
             }
             finally
             {
@@ -64,12 +75,14 @@ namespace Azure.Core.Internal
             }
         }
 
-        public async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+        public async Task CopyToAsync(Stream stream, CancellationToken cancellation)
         {
+            //can't get the write lock from inside the read lock
+            SequenceWriter writer = GetWriter();
             Lock.EnterReadLock();
             try
             {
-                await GetWriter(_model).CopyToAsync(stream, cancellation).ConfigureAwait(false);
+                await writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
             }
             finally
             {

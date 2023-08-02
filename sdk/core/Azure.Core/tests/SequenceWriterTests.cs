@@ -84,7 +84,8 @@ namespace Azure.Core.Tests
             Task result = Task.Run(() => { return writer.CopyToAsync(memory, default); });
 
             // wait for the writing to start
-            while (memory.Length == 0) { }
+            while (memory.Length == 0)
+            { }
 
             writer.Dispose();
 
@@ -269,6 +270,8 @@ namespace Azure.Core.Tests
             int buffer2BytesWritten = (int)buffer2.GetType().GetField("Written", BindingFlags.Public | BindingFlags.Instance).GetValue(buffer2);
             Assert.AreEqual(800, buffer2BytesWritten);
 
+            byte[] buffer2Array = (byte[])buffer2.GetType().GetField("Array", BindingFlags.Public | BindingFlags.Instance).GetValue(buffer2);
+
             memory1.Span.Fill(0xF5);
 
             // Since we didn't advance the public view is still the same
@@ -284,7 +287,8 @@ namespace Azure.Core.Tests
             Assert.AreEqual(0xF5, buffer1Array[0]);
             Assert.AreEqual(0xF5, buffer1Array[399]);
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => writer.Advance(400));
+            if (buffer2Array.Length < 1200) //sometimes the buffer will be big enough
+                Assert.Throws<ArgumentOutOfRangeException>(() => writer.Advance(400));
         }
     }
 }

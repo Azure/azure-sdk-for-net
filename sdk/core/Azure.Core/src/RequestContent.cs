@@ -254,9 +254,9 @@ namespace Azure.Core
 
             public override void Dispose() => _writerAccess?.Dispose();
 
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => WriterAccess.WriteTo(stream, cancellation);
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => WriterAccess.CopyTo(stream, cancellation);
 
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await WriterAccess.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await WriterAccess.CopyToAsync(stream, cancellation).ConfigureAwait(false);
 
             public override bool TryComputeLength(out long length) => WriterAccess.TryComputeLength(out length);
         }
