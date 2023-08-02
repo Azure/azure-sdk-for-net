@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ApiManagement.Mocking;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A class to add extension methods to Azure.ResourceManager.ApiManagement. </summary>
     public static partial class ApiManagementExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ApiManagementArmClientMockingExtension GetApiManagementArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new ApiManagementArmClientMockingExtension(client);
+            });
+        }
+
+        private static ApiManagementResourceGroupMockingExtension GetApiManagementResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ApiManagementResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ApiManagementSubscriptionMockingExtension GetApiManagementSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ApiManagementSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region ApiResource
         /// <summary>
         /// Gets an object representing an <see cref="ApiResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiResource" /> object. </returns>
         public static ApiResource GetApiResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiResource.ValidateResourceId(id);
-                return new ApiResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiReleaseResource" /> object. </returns>
         public static ApiReleaseResource GetApiReleaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiReleaseResource.ValidateResourceId(id);
-                return new ApiReleaseResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiReleaseResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiOperationResource" /> object. </returns>
         public static ApiOperationResource GetApiOperationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiOperationResource.ValidateResourceId(id);
-                return new ApiOperationResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiOperationResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiOperationPolicyResource" /> object. </returns>
         public static ApiOperationPolicyResource GetApiOperationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiOperationPolicyResource.ValidateResourceId(id);
-                return new ApiOperationPolicyResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiOperationPolicyResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiPolicyResource" /> object. </returns>
         public static ApiPolicyResource GetApiPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiPolicyResource.ValidateResourceId(id);
-                return new ApiPolicyResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiPolicyResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPolicyResource" /> object. </returns>
         public static ApiManagementPolicyResource GetApiManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementPolicyResource.ValidateResourceId(id);
-                return new ApiManagementPolicyResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPolicyResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementProductPolicyResource" /> object. </returns>
         public static ApiManagementProductPolicyResource GetApiManagementProductPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementProductPolicyResource.ValidateResourceId(id);
-                return new ApiManagementProductPolicyResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementProductPolicyResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiOperationTagResource" /> object. </returns>
         public static ApiOperationTagResource GetApiOperationTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiOperationTagResource.ValidateResourceId(id);
-                return new ApiOperationTagResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiOperationTagResource(id);
         }
         #endregion
 
@@ -212,12 +166,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiTagResource" /> object. </returns>
         public static ApiTagResource GetApiTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiTagResource.ValidateResourceId(id);
-                return new ApiTagResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiTagResource(id);
         }
         #endregion
 
@@ -231,12 +180,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementProductTagResource" /> object. </returns>
         public static ApiManagementProductTagResource GetApiManagementProductTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementProductTagResource.ValidateResourceId(id);
-                return new ApiManagementProductTagResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementProductTagResource(id);
         }
         #endregion
 
@@ -250,12 +194,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementTagResource" /> object. </returns>
         public static ApiManagementTagResource GetApiManagementTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementTagResource.ValidateResourceId(id);
-                return new ApiManagementTagResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementTagResource(id);
         }
         #endregion
 
@@ -269,12 +208,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiSchemaResource" /> object. </returns>
         public static ApiSchemaResource GetApiSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiSchemaResource.ValidateResourceId(id);
-                return new ApiSchemaResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiSchemaResource(id);
         }
         #endregion
 
@@ -288,12 +222,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiDiagnosticResource" /> object. </returns>
         public static ApiDiagnosticResource GetApiDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiDiagnosticResource.ValidateResourceId(id);
-                return new ApiDiagnosticResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiDiagnosticResource(id);
         }
         #endregion
 
@@ -307,12 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementDiagnosticResource" /> object. </returns>
         public static ApiManagementDiagnosticResource GetApiManagementDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementDiagnosticResource.ValidateResourceId(id);
-                return new ApiManagementDiagnosticResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementDiagnosticResource(id);
         }
         #endregion
 
@@ -326,12 +250,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiIssueResource" /> object. </returns>
         public static ApiIssueResource GetApiIssueResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiIssueResource.ValidateResourceId(id);
-                return new ApiIssueResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiIssueResource(id);
         }
         #endregion
 
@@ -345,12 +264,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementIssueResource" /> object. </returns>
         public static ApiManagementIssueResource GetApiManagementIssueResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementIssueResource.ValidateResourceId(id);
-                return new ApiManagementIssueResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementIssueResource(id);
         }
         #endregion
 
@@ -364,12 +278,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiIssueCommentResource" /> object. </returns>
         public static ApiIssueCommentResource GetApiIssueCommentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiIssueCommentResource.ValidateResourceId(id);
-                return new ApiIssueCommentResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiIssueCommentResource(id);
         }
         #endregion
 
@@ -383,12 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiIssueAttachmentResource" /> object. </returns>
         public static ApiIssueAttachmentResource GetApiIssueAttachmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiIssueAttachmentResource.ValidateResourceId(id);
-                return new ApiIssueAttachmentResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiIssueAttachmentResource(id);
         }
         #endregion
 
@@ -402,12 +306,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiTagDescriptionResource" /> object. </returns>
         public static ApiTagDescriptionResource GetApiTagDescriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiTagDescriptionResource.ValidateResourceId(id);
-                return new ApiTagDescriptionResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiTagDescriptionResource(id);
         }
         #endregion
 
@@ -421,12 +320,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiVersionSetResource" /> object. </returns>
         public static ApiVersionSetResource GetApiVersionSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiVersionSetResource.ValidateResourceId(id);
-                return new ApiVersionSetResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiVersionSetResource(id);
         }
         #endregion
 
@@ -440,12 +334,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementAuthorizationServerResource" /> object. </returns>
         public static ApiManagementAuthorizationServerResource GetApiManagementAuthorizationServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementAuthorizationServerResource.ValidateResourceId(id);
-                return new ApiManagementAuthorizationServerResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementAuthorizationServerResource(id);
         }
         #endregion
 
@@ -459,12 +348,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementBackendResource" /> object. </returns>
         public static ApiManagementBackendResource GetApiManagementBackendResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementBackendResource.ValidateResourceId(id);
-                return new ApiManagementBackendResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementBackendResource(id);
         }
         #endregion
 
@@ -478,12 +362,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementCacheResource" /> object. </returns>
         public static ApiManagementCacheResource GetApiManagementCacheResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementCacheResource.ValidateResourceId(id);
-                return new ApiManagementCacheResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementCacheResource(id);
         }
         #endregion
 
@@ -497,12 +376,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementCertificateResource" /> object. </returns>
         public static ApiManagementCertificateResource GetApiManagementCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementCertificateResource.ValidateResourceId(id);
-                return new ApiManagementCertificateResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementCertificateResource(id);
         }
         #endregion
 
@@ -516,12 +390,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource" /> object. </returns>
         public static ApiManagementDeletedServiceResource GetApiManagementDeletedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementDeletedServiceResource.ValidateResourceId(id);
-                return new ApiManagementDeletedServiceResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementDeletedServiceResource(id);
         }
         #endregion
 
@@ -535,12 +404,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementServiceResource" /> object. </returns>
         public static ApiManagementServiceResource GetApiManagementServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementServiceResource.ValidateResourceId(id);
-                return new ApiManagementServiceResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementServiceResource(id);
         }
         #endregion
 
@@ -554,12 +418,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementEmailTemplateResource" /> object. </returns>
         public static ApiManagementEmailTemplateResource GetApiManagementEmailTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementEmailTemplateResource.ValidateResourceId(id);
-                return new ApiManagementEmailTemplateResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementEmailTemplateResource(id);
         }
         #endregion
 
@@ -573,12 +432,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGatewayResource" /> object. </returns>
         public static ApiManagementGatewayResource GetApiManagementGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementGatewayResource.ValidateResourceId(id);
-                return new ApiManagementGatewayResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementGatewayResource(id);
         }
         #endregion
 
@@ -592,12 +446,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGatewayHostnameConfigurationResource" /> object. </returns>
         public static ApiManagementGatewayHostnameConfigurationResource GetApiManagementGatewayHostnameConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementGatewayHostnameConfigurationResource.ValidateResourceId(id);
-                return new ApiManagementGatewayHostnameConfigurationResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementGatewayHostnameConfigurationResource(id);
         }
         #endregion
 
@@ -611,12 +460,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGatewayCertificateAuthorityResource" /> object. </returns>
         public static ApiManagementGatewayCertificateAuthorityResource GetApiManagementGatewayCertificateAuthorityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementGatewayCertificateAuthorityResource.ValidateResourceId(id);
-                return new ApiManagementGatewayCertificateAuthorityResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementGatewayCertificateAuthorityResource(id);
         }
         #endregion
 
@@ -630,12 +474,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGroupResource" /> object. </returns>
         public static ApiManagementGroupResource GetApiManagementGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementGroupResource.ValidateResourceId(id);
-                return new ApiManagementGroupResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementGroupResource(id);
         }
         #endregion
 
@@ -649,12 +488,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementIdentityProviderResource" /> object. </returns>
         public static ApiManagementIdentityProviderResource GetApiManagementIdentityProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementIdentityProviderResource.ValidateResourceId(id);
-                return new ApiManagementIdentityProviderResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementIdentityProviderResource(id);
         }
         #endregion
 
@@ -668,12 +502,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementLoggerResource" /> object. </returns>
         public static ApiManagementLoggerResource GetApiManagementLoggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementLoggerResource.ValidateResourceId(id);
-                return new ApiManagementLoggerResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementLoggerResource(id);
         }
         #endregion
 
@@ -687,12 +516,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementNamedValueResource" /> object. </returns>
         public static ApiManagementNamedValueResource GetApiManagementNamedValueResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementNamedValueResource.ValidateResourceId(id);
-                return new ApiManagementNamedValueResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementNamedValueResource(id);
         }
         #endregion
 
@@ -706,12 +530,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementNotificationResource" /> object. </returns>
         public static ApiManagementNotificationResource GetApiManagementNotificationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementNotificationResource.ValidateResourceId(id);
-                return new ApiManagementNotificationResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementNotificationResource(id);
         }
         #endregion
 
@@ -725,12 +544,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementOpenIdConnectProviderResource" /> object. </returns>
         public static ApiManagementOpenIdConnectProviderResource GetApiManagementOpenIdConnectProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementOpenIdConnectProviderResource.ValidateResourceId(id);
-                return new ApiManagementOpenIdConnectProviderResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementOpenIdConnectProviderResource(id);
         }
         #endregion
 
@@ -744,12 +558,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalRevisionResource" /> object. </returns>
         public static ApiManagementPortalRevisionResource GetApiManagementPortalRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementPortalRevisionResource.ValidateResourceId(id);
-                return new ApiManagementPortalRevisionResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPortalRevisionResource(id);
         }
         #endregion
 
@@ -763,12 +572,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource" /> object. </returns>
         public static ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementPortalSignInSettingResource.ValidateResourceId(id);
-                return new ApiManagementPortalSignInSettingResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPortalSignInSettingResource(id);
         }
         #endregion
 
@@ -782,12 +586,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource" /> object. </returns>
         public static ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementPortalSignUpSettingResource.ValidateResourceId(id);
-                return new ApiManagementPortalSignUpSettingResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPortalSignUpSettingResource(id);
         }
         #endregion
 
@@ -801,12 +600,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource" /> object. </returns>
         public static ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementPortalDelegationSettingResource.ValidateResourceId(id);
-                return new ApiManagementPortalDelegationSettingResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPortalDelegationSettingResource(id);
         }
         #endregion
 
@@ -820,12 +614,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPrivateEndpointConnectionResource" /> object. </returns>
         public static ApiManagementPrivateEndpointConnectionResource GetApiManagementPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new ApiManagementPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -839,12 +628,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource" /> object. </returns>
         public static ApiManagementPrivateLinkResource GetApiManagementPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementPrivateLinkResource.ValidateResourceId(id);
-                return new ApiManagementPrivateLinkResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPrivateLinkResource(id);
         }
         #endregion
 
@@ -858,12 +642,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementProductResource" /> object. </returns>
         public static ApiManagementProductResource GetApiManagementProductResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementProductResource.ValidateResourceId(id);
-                return new ApiManagementProductResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementProductResource(id);
         }
         #endregion
 
@@ -877,12 +656,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGlobalSchemaResource" /> object. </returns>
         public static ApiManagementGlobalSchemaResource GetApiManagementGlobalSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementGlobalSchemaResource.ValidateResourceId(id);
-                return new ApiManagementGlobalSchemaResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementGlobalSchemaResource(id);
         }
         #endregion
 
@@ -896,12 +670,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementTenantSettingResource" /> object. </returns>
         public static ApiManagementTenantSettingResource GetApiManagementTenantSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementTenantSettingResource.ValidateResourceId(id);
-                return new ApiManagementTenantSettingResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementTenantSettingResource(id);
         }
         #endregion
 
@@ -915,12 +684,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementSubscriptionResource" /> object. </returns>
         public static ApiManagementSubscriptionResource GetApiManagementSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementSubscriptionResource.ValidateResourceId(id);
-                return new ApiManagementSubscriptionResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementSubscriptionResource(id);
         }
         #endregion
 
@@ -934,12 +698,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementUserSubscriptionResource" /> object. </returns>
         public static ApiManagementUserSubscriptionResource GetApiManagementUserSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementUserSubscriptionResource.ValidateResourceId(id);
-                return new ApiManagementUserSubscriptionResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementUserSubscriptionResource(id);
         }
         #endregion
 
@@ -953,12 +712,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="TenantAccessInfoResource" /> object. </returns>
         public static TenantAccessInfoResource GetTenantAccessInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TenantAccessInfoResource.ValidateResourceId(id);
-                return new TenantAccessInfoResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetTenantAccessInfoResource(id);
         }
         #endregion
 
@@ -972,12 +726,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementUserResource" /> object. </returns>
         public static ApiManagementUserResource GetApiManagementUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ApiManagementUserResource.ValidateResourceId(id);
-                return new ApiManagementUserResource(client, id);
-            }
-            );
+            return GetApiManagementArmClientMockingExtension(client).GetApiManagementUserResource(id);
         }
         #endregion
 
@@ -986,7 +735,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiManagementServiceResources and their operations over a ApiManagementServiceResource. </returns>
         public static ApiManagementServiceCollection GetApiManagementServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApiManagementServices();
+            return GetApiManagementResourceGroupMockingExtension(resourceGroupResource).GetApiManagementServices();
         }
 
         /// <summary>
@@ -1010,7 +759,7 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static async Task<Response<ApiManagementServiceResource>> GetApiManagementServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetApiManagementServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementResourceGroupMockingExtension(resourceGroupResource).GetApiManagementServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1034,7 +783,7 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static Response<ApiManagementServiceResource> GetApiManagementService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetApiManagementServices().Get(serviceName, cancellationToken);
+            return GetApiManagementResourceGroupMockingExtension(resourceGroupResource).GetApiManagementService(serviceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ApiManagementDeletedServiceResources in the SubscriptionResource. </summary>
@@ -1042,7 +791,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiManagementDeletedServiceResources and their operations over a ApiManagementDeletedServiceResource. </returns>
         public static ApiManagementDeletedServiceCollection GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementDeletedServices();
+            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementDeletedServices();
         }
 
         /// <summary>
@@ -1067,7 +816,7 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static async Task<Response<ApiManagementDeletedServiceResource>> GetApiManagementDeletedServiceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetApiManagementDeletedServices().GetAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementDeletedServiceAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1092,7 +841,7 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static Response<ApiManagementDeletedServiceResource> GetApiManagementDeletedService(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetApiManagementDeletedServices().Get(location, serviceName, cancellationToken);
+            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementDeletedService(location, serviceName, cancellationToken);
         }
 
         /// <summary>
@@ -1113,7 +862,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementDeletedServicesAsync(cancellationToken);
+            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementDeletedServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1134,7 +883,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementDeletedServices(cancellationToken);
+            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementDeletedServices(cancellationToken);
         }
 
         /// <summary>
@@ -1155,7 +904,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementServicesAsync(cancellationToken);
+            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1176,7 +925,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementServiceResource> GetApiManagementServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementServices(cancellationToken);
+            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementServices(cancellationToken);
         }
 
         /// <summary>
@@ -1198,9 +947,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckApiManagementServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckApiManagementServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementSubscriptionMockingExtension(subscriptionResource).CheckApiManagementServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1222,9 +969,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<ApiManagementServiceNameAvailabilityResult> CheckApiManagementServiceNameAvailability(this SubscriptionResource subscriptionResource, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckApiManagementServiceNameAvailability(content, cancellationToken);
+            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).CheckApiManagementServiceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -1244,7 +989,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ApiManagementServiceGetDomainOwnershipIdentifierResult>> GetApiManagementServiceDomainOwnershipIdentifierAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifierAsync(cancellationToken).ConfigureAwait(false);
+            return await GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifierAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1264,7 +1009,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ApiManagementServiceGetDomainOwnershipIdentifierResult> GetApiManagementServiceDomainOwnershipIdentifier(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifier(cancellationToken);
+            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifier(cancellationToken);
         }
 
         /// <summary>
@@ -1285,7 +1030,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementSkusAsync(cancellationToken);
+            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1306,7 +1051,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementSku> GetApiManagementSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetApiManagementSkus(cancellationToken);
+            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementSkus(cancellationToken);
         }
     }
 }

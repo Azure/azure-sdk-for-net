@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Batch.Mocking;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.Batch
     /// <summary> A class to add extension methods to Azure.ResourceManager.Batch. </summary>
     public static partial class BatchExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static BatchArmClientMockingExtension GetBatchArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new BatchArmClientMockingExtension(client);
+            });
+        }
+
+        private static BatchResourceGroupMockingExtension GetBatchResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new BatchResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static BatchSubscriptionMockingExtension GetBatchSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new BatchSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region BatchAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="BatchAccountResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> Returns a <see cref="BatchAccountResource" /> object. </returns>
         public static BatchAccountResource GetBatchAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BatchAccountResource.ValidateResourceId(id);
-                return new BatchAccountResource(client, id);
-            }
-            );
+            return GetBatchArmClientMockingExtension(client).GetBatchAccountResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> Returns a <see cref="BatchAccountDetectorResource" /> object. </returns>
         public static BatchAccountDetectorResource GetBatchAccountDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BatchAccountDetectorResource.ValidateResourceId(id);
-                return new BatchAccountDetectorResource(client, id);
-            }
-            );
+            return GetBatchArmClientMockingExtension(client).GetBatchAccountDetectorResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> Returns a <see cref="BatchApplicationPackageResource" /> object. </returns>
         public static BatchApplicationPackageResource GetBatchApplicationPackageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BatchApplicationPackageResource.ValidateResourceId(id);
-                return new BatchApplicationPackageResource(client, id);
-            }
-            );
+            return GetBatchArmClientMockingExtension(client).GetBatchApplicationPackageResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> Returns a <see cref="BatchApplicationResource" /> object. </returns>
         public static BatchApplicationResource GetBatchApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BatchApplicationResource.ValidateResourceId(id);
-                return new BatchApplicationResource(client, id);
-            }
-            );
+            return GetBatchArmClientMockingExtension(client).GetBatchApplicationResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> Returns a <see cref="BatchAccountCertificateResource" /> object. </returns>
         public static BatchAccountCertificateResource GetBatchAccountCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BatchAccountCertificateResource.ValidateResourceId(id);
-                return new BatchAccountCertificateResource(client, id);
-            }
-            );
+            return GetBatchArmClientMockingExtension(client).GetBatchAccountCertificateResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> Returns a <see cref="BatchPrivateLinkResource" /> object. </returns>
         public static BatchPrivateLinkResource GetBatchPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BatchPrivateLinkResource.ValidateResourceId(id);
-                return new BatchPrivateLinkResource(client, id);
-            }
-            );
+            return GetBatchArmClientMockingExtension(client).GetBatchPrivateLinkResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> Returns a <see cref="BatchPrivateEndpointConnectionResource" /> object. </returns>
         public static BatchPrivateEndpointConnectionResource GetBatchPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BatchPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new BatchPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetBatchArmClientMockingExtension(client).GetBatchPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> Returns a <see cref="BatchAccountPoolResource" /> object. </returns>
         public static BatchAccountPoolResource GetBatchAccountPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BatchAccountPoolResource.ValidateResourceId(id);
-                return new BatchAccountPoolResource(client, id);
-            }
-            );
+            return GetBatchArmClientMockingExtension(client).GetBatchAccountPoolResource(id);
         }
         #endregion
 
@@ -207,7 +161,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An object representing collection of BatchAccountResources and their operations over a BatchAccountResource. </returns>
         public static BatchAccountCollection GetBatchAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetBatchAccounts();
+            return GetBatchResourceGroupMockingExtension(resourceGroupResource).GetBatchAccounts();
         }
 
         /// <summary>
@@ -231,7 +185,7 @@ namespace Azure.ResourceManager.Batch
         [ForwardsClientCalls]
         public static async Task<Response<BatchAccountResource>> GetBatchAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetBatchAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetBatchResourceGroupMockingExtension(resourceGroupResource).GetBatchAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -255,7 +209,7 @@ namespace Azure.ResourceManager.Batch
         [ForwardsClientCalls]
         public static Response<BatchAccountResource> GetBatchAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetBatchAccounts().Get(accountName, cancellationToken);
+            return GetBatchResourceGroupMockingExtension(resourceGroupResource).GetBatchAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -276,7 +230,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BatchAccountResource> GetBatchAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBatchAccountsAsync(cancellationToken);
+            return GetBatchSubscriptionMockingExtension(subscriptionResource).GetBatchAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -297,7 +251,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BatchAccountResource> GetBatchAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBatchAccounts(cancellationToken);
+            return GetBatchSubscriptionMockingExtension(subscriptionResource).GetBatchAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -318,7 +272,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<BatchLocationQuota>> GetBatchQuotasAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetBatchQuotasAsync(locationName, cancellationToken).ConfigureAwait(false);
+            return await GetBatchSubscriptionMockingExtension(subscriptionResource).GetBatchQuotasAsync(locationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -339,7 +293,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<BatchLocationQuota> GetBatchQuotas(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBatchQuotas(locationName, cancellationToken);
+            return GetBatchSubscriptionMockingExtension(subscriptionResource).GetBatchQuotas(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -363,7 +317,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBatchSupportedVirtualMachineSkusAsync(locationName, maxresults, filter, cancellationToken);
+            return GetBatchSubscriptionMockingExtension(subscriptionResource).GetBatchSupportedVirtualMachineSkusAsync(locationName, maxresults, filter, cancellationToken);
         }
 
         /// <summary>
@@ -387,7 +341,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BatchSupportedSku> GetBatchSupportedVirtualMachineSkus(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBatchSupportedVirtualMachineSkus(locationName, maxresults, filter, cancellationToken);
+            return GetBatchSubscriptionMockingExtension(subscriptionResource).GetBatchSupportedVirtualMachineSkus(locationName, maxresults, filter, cancellationToken);
         }
 
         /// <summary>
@@ -411,7 +365,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> An async collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBatchSupportedCloudServiceSkusAsync(locationName, maxresults, filter, cancellationToken);
+            return GetBatchSubscriptionMockingExtension(subscriptionResource).GetBatchSupportedCloudServiceSkusAsync(locationName, maxresults, filter, cancellationToken);
         }
 
         /// <summary>
@@ -435,7 +389,7 @@ namespace Azure.ResourceManager.Batch
         /// <returns> A collection of <see cref="BatchSupportedSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BatchSupportedSku> GetBatchSupportedCloudServiceSkus(this SubscriptionResource subscriptionResource, AzureLocation locationName, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBatchSupportedCloudServiceSkus(locationName, maxresults, filter, cancellationToken);
+            return GetBatchSubscriptionMockingExtension(subscriptionResource).GetBatchSupportedCloudServiceSkus(locationName, maxresults, filter, cancellationToken);
         }
 
         /// <summary>
@@ -458,9 +412,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckBatchNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetBatchSubscriptionMockingExtension(subscriptionResource).CheckBatchNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -483,9 +435,7 @@ namespace Azure.ResourceManager.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<BatchNameAvailabilityResult> CheckBatchNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, BatchNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckBatchNameAvailability(locationName, content, cancellationToken);
+            return GetBatchSubscriptionMockingExtension(subscriptionResource).CheckBatchNameAvailability(locationName, content, cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Cdn.Mocking;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,53 +20,38 @@ namespace Azure.ResourceManager.Cdn
     /// <summary> A class to add extension methods to Azure.ResourceManager.Cdn. </summary>
     public static partial class CdnExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CdnArmClientMockingExtension GetCdnArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new CdnArmClientMockingExtension(client);
+            });
+        }
+
+        private static CdnResourceGroupMockingExtension GetCdnResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CdnResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static CdnSubscriptionMockingExtension GetCdnSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new CdnSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static CdnTenantMockingExtension GetCdnTenantMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new CdnTenantMockingExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
         #region FrontDoorCustomDomainResource
         /// <summary>
         /// Gets an object representing a <see cref="FrontDoorCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
@@ -76,12 +62,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorCustomDomainResource" /> object. </returns>
         public static FrontDoorCustomDomainResource GetFrontDoorCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorCustomDomainResource.ValidateResourceId(id);
-                return new FrontDoorCustomDomainResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetFrontDoorCustomDomainResource(id);
         }
         #endregion
 
@@ -95,12 +76,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorEndpointResource" /> object. </returns>
         public static FrontDoorEndpointResource GetFrontDoorEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorEndpointResource.ValidateResourceId(id);
-                return new FrontDoorEndpointResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetFrontDoorEndpointResource(id);
         }
         #endregion
 
@@ -114,12 +90,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorOriginGroupResource" /> object. </returns>
         public static FrontDoorOriginGroupResource GetFrontDoorOriginGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorOriginGroupResource.ValidateResourceId(id);
-                return new FrontDoorOriginGroupResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetFrontDoorOriginGroupResource(id);
         }
         #endregion
 
@@ -133,12 +104,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorOriginResource" /> object. </returns>
         public static FrontDoorOriginResource GetFrontDoorOriginResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorOriginResource.ValidateResourceId(id);
-                return new FrontDoorOriginResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetFrontDoorOriginResource(id);
         }
         #endregion
 
@@ -152,12 +118,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorRouteResource" /> object. </returns>
         public static FrontDoorRouteResource GetFrontDoorRouteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorRouteResource.ValidateResourceId(id);
-                return new FrontDoorRouteResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetFrontDoorRouteResource(id);
         }
         #endregion
 
@@ -171,12 +132,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorRuleSetResource" /> object. </returns>
         public static FrontDoorRuleSetResource GetFrontDoorRuleSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorRuleSetResource.ValidateResourceId(id);
-                return new FrontDoorRuleSetResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetFrontDoorRuleSetResource(id);
         }
         #endregion
 
@@ -190,12 +146,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorRuleResource" /> object. </returns>
         public static FrontDoorRuleResource GetFrontDoorRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorRuleResource.ValidateResourceId(id);
-                return new FrontDoorRuleResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetFrontDoorRuleResource(id);
         }
         #endregion
 
@@ -209,12 +160,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorSecurityPolicyResource" /> object. </returns>
         public static FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorSecurityPolicyResource.ValidateResourceId(id);
-                return new FrontDoorSecurityPolicyResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetFrontDoorSecurityPolicyResource(id);
         }
         #endregion
 
@@ -228,12 +174,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="FrontDoorSecretResource" /> object. </returns>
         public static FrontDoorSecretResource GetFrontDoorSecretResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FrontDoorSecretResource.ValidateResourceId(id);
-                return new FrontDoorSecretResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetFrontDoorSecretResource(id);
         }
         #endregion
 
@@ -247,12 +188,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="ProfileResource" /> object. </returns>
         public static ProfileResource GetProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProfileResource.ValidateResourceId(id);
-                return new ProfileResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetProfileResource(id);
         }
         #endregion
 
@@ -266,12 +202,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnEndpointResource" /> object. </returns>
         public static CdnEndpointResource GetCdnEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CdnEndpointResource.ValidateResourceId(id);
-                return new CdnEndpointResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetCdnEndpointResource(id);
         }
         #endregion
 
@@ -285,12 +216,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnOriginResource" /> object. </returns>
         public static CdnOriginResource GetCdnOriginResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CdnOriginResource.ValidateResourceId(id);
-                return new CdnOriginResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetCdnOriginResource(id);
         }
         #endregion
 
@@ -304,12 +230,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnOriginGroupResource" /> object. </returns>
         public static CdnOriginGroupResource GetCdnOriginGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CdnOriginGroupResource.ValidateResourceId(id);
-                return new CdnOriginGroupResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetCdnOriginGroupResource(id);
         }
         #endregion
 
@@ -323,12 +244,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnCustomDomainResource" /> object. </returns>
         public static CdnCustomDomainResource GetCdnCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CdnCustomDomainResource.ValidateResourceId(id);
-                return new CdnCustomDomainResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetCdnCustomDomainResource(id);
         }
         #endregion
 
@@ -342,12 +258,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> Returns a <see cref="CdnWebApplicationFirewallPolicyResource" /> object. </returns>
         public static CdnWebApplicationFirewallPolicyResource GetCdnWebApplicationFirewallPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CdnWebApplicationFirewallPolicyResource.ValidateResourceId(id);
-                return new CdnWebApplicationFirewallPolicyResource(client, id);
-            }
-            );
+            return GetCdnArmClientMockingExtension(client).GetCdnWebApplicationFirewallPolicyResource(id);
         }
         #endregion
 
@@ -356,7 +267,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of ProfileResources and their operations over a ProfileResource. </returns>
         public static ProfileCollection GetProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetProfiles();
+            return GetCdnResourceGroupMockingExtension(resourceGroupResource).GetProfiles();
         }
 
         /// <summary>
@@ -380,7 +291,7 @@ namespace Azure.ResourceManager.Cdn
         [ForwardsClientCalls]
         public static async Task<Response<ProfileResource>> GetProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetProfiles().GetAsync(profileName, cancellationToken).ConfigureAwait(false);
+            return await GetCdnResourceGroupMockingExtension(resourceGroupResource).GetProfileAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -404,7 +315,7 @@ namespace Azure.ResourceManager.Cdn
         [ForwardsClientCalls]
         public static Response<ProfileResource> GetProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetProfiles().Get(profileName, cancellationToken);
+            return GetCdnResourceGroupMockingExtension(resourceGroupResource).GetProfile(profileName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CdnWebApplicationFirewallPolicyResources in the ResourceGroupResource. </summary>
@@ -412,7 +323,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnWebApplicationFirewallPolicyResources and their operations over a CdnWebApplicationFirewallPolicyResource. </returns>
         public static CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCdnWebApplicationFirewallPolicies();
+            return GetCdnResourceGroupMockingExtension(resourceGroupResource).GetCdnWebApplicationFirewallPolicies();
         }
 
         /// <summary>
@@ -436,7 +347,7 @@ namespace Azure.ResourceManager.Cdn
         [ForwardsClientCalls]
         public static async Task<Response<CdnWebApplicationFirewallPolicyResource>> GetCdnWebApplicationFirewallPolicyAsync(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCdnWebApplicationFirewallPolicies().GetAsync(policyName, cancellationToken).ConfigureAwait(false);
+            return await GetCdnResourceGroupMockingExtension(resourceGroupResource).GetCdnWebApplicationFirewallPolicyAsync(policyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -460,7 +371,7 @@ namespace Azure.ResourceManager.Cdn
         [ForwardsClientCalls]
         public static Response<CdnWebApplicationFirewallPolicyResource> GetCdnWebApplicationFirewallPolicy(this ResourceGroupResource resourceGroupResource, string policyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCdnWebApplicationFirewallPolicies().Get(policyName, cancellationToken);
+            return GetCdnResourceGroupMockingExtension(resourceGroupResource).GetCdnWebApplicationFirewallPolicy(policyName, cancellationToken);
         }
 
         /// <summary>
@@ -482,9 +393,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckEndpointNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCdnResourceGroupMockingExtension(resourceGroupResource).CheckEndpointNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -506,9 +415,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<EndpointNameAvailabilityResult> CheckEndpointNameAvailability(this ResourceGroupResource resourceGroupResource, EndpointNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckEndpointNameAvailability(content, cancellationToken);
+            return GetCdnResourceGroupMockingExtension(resourceGroupResource).CheckEndpointNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -530,9 +437,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCdnSubscriptionMockingExtension(subscriptionResource).CheckCdnNameAvailabilityWithSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -554,9 +459,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(this SubscriptionResource subscriptionResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(content, cancellationToken);
+            return GetCdnSubscriptionMockingExtension(subscriptionResource).CheckCdnNameAvailabilityWithSubscription(content, cancellationToken);
         }
 
         /// <summary>
@@ -578,9 +481,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<ValidateProbeResult>> ValidateProbeAsync(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateProbeAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCdnSubscriptionMockingExtension(subscriptionResource).ValidateProbeAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -602,9 +503,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<ValidateProbeResult> ValidateProbe(this SubscriptionResource subscriptionResource, ValidateProbeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateProbe(content, cancellationToken);
+            return GetCdnSubscriptionMockingExtension(subscriptionResource).ValidateProbe(content, cancellationToken);
         }
 
         /// <summary>
@@ -625,7 +524,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProfileResource> GetProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProfilesAsync(cancellationToken);
+            return GetCdnSubscriptionMockingExtension(subscriptionResource).GetProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -646,7 +545,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProfileResource> GetProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProfiles(cancellationToken);
+            return GetCdnSubscriptionMockingExtension(subscriptionResource).GetProfiles(cancellationToken);
         }
 
         /// <summary>
@@ -667,7 +566,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CdnUsage> GetResourceUsagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceUsagesAsync(cancellationToken);
+            return GetCdnSubscriptionMockingExtension(subscriptionResource).GetResourceUsagesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -688,7 +587,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CdnUsage> GetResourceUsages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceUsages(cancellationToken);
+            return GetCdnSubscriptionMockingExtension(subscriptionResource).GetResourceUsages(cancellationToken);
         }
 
         /// <summary>
@@ -709,7 +608,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedRuleSetDefinition> GetManagedRuleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedRuleSetsAsync(cancellationToken);
+            return GetCdnSubscriptionMockingExtension(subscriptionResource).GetManagedRuleSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -730,7 +629,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="ManagedRuleSetDefinition" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedRuleSetDefinition> GetManagedRuleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedRuleSets(cancellationToken);
+            return GetCdnSubscriptionMockingExtension(subscriptionResource).GetManagedRuleSets(cancellationToken);
         }
 
         /// <summary>
@@ -752,9 +651,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CheckCdnNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCdnTenantMockingExtension(tenantResource).CheckCdnNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -776,9 +673,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<CdnNameAvailabilityResult> CheckCdnNameAvailability(this TenantResource tenantResource, CdnNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).CheckCdnNameAvailability(content, cancellationToken);
+            return GetCdnTenantMockingExtension(tenantResource).CheckCdnNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -799,7 +694,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An async collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeNode> GetEdgeNodesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEdgeNodesAsync(cancellationToken);
+            return GetCdnTenantMockingExtension(tenantResource).GetEdgeNodesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -820,7 +715,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> A collection of <see cref="EdgeNode" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeNode> GetEdgeNodes(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetEdgeNodes(cancellationToken);
+            return GetCdnTenantMockingExtension(tenantResource).GetEdgeNodes(cancellationToken);
         }
     }
 }

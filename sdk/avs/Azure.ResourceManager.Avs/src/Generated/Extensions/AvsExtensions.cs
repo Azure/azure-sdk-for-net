@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Avs.Mocking;
 using Azure.ResourceManager.Avs.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.Avs
     /// <summary> A class to add extension methods to Azure.ResourceManager.Avs. </summary>
     public static partial class AvsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AvsArmClientMockingExtension GetAvsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new AvsArmClientMockingExtension(client);
+            });
+        }
+
+        private static AvsResourceGroupMockingExtension GetAvsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AvsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AvsSubscriptionMockingExtension GetAvsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AvsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region AvsPrivateCloudResource
         /// <summary>
         /// Gets an object representing an <see cref="AvsPrivateCloudResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsPrivateCloudResource" /> object. </returns>
         public static AvsPrivateCloudResource GetAvsPrivateCloudResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsPrivateCloudResource.ValidateResourceId(id);
-                return new AvsPrivateCloudResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsPrivateCloudResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsPrivateCloudClusterResource" /> object. </returns>
         public static AvsPrivateCloudClusterResource GetAvsPrivateCloudClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsPrivateCloudClusterResource.ValidateResourceId(id);
-                return new AvsPrivateCloudClusterResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsPrivateCloudClusterResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsPrivateCloudDatastoreResource" /> object. </returns>
         public static AvsPrivateCloudDatastoreResource GetAvsPrivateCloudDatastoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsPrivateCloudDatastoreResource.ValidateResourceId(id);
-                return new AvsPrivateCloudDatastoreResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsPrivateCloudDatastoreResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="HcxEnterpriseSiteResource" /> object. </returns>
         public static HcxEnterpriseSiteResource GetHcxEnterpriseSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HcxEnterpriseSiteResource.ValidateResourceId(id);
-                return new HcxEnterpriseSiteResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetHcxEnterpriseSiteResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="ExpressRouteAuthorizationResource" /> object. </returns>
         public static ExpressRouteAuthorizationResource GetExpressRouteAuthorizationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExpressRouteAuthorizationResource.ValidateResourceId(id);
-                return new ExpressRouteAuthorizationResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetExpressRouteAuthorizationResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="GlobalReachConnectionResource" /> object. </returns>
         public static GlobalReachConnectionResource GetGlobalReachConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GlobalReachConnectionResource.ValidateResourceId(id);
-                return new GlobalReachConnectionResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetGlobalReachConnectionResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkResource" /> object. </returns>
         public static WorkloadNetworkResource GetWorkloadNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkResource.ValidateResourceId(id);
-                return new WorkloadNetworkResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource" /> object. </returns>
         public static WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkSegmentResource.ValidateResourceId(id);
-                return new WorkloadNetworkSegmentResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkSegmentResource(id);
         }
         #endregion
 
@@ -212,12 +166,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkDhcpResource" /> object. </returns>
         public static WorkloadNetworkDhcpResource GetWorkloadNetworkDhcpResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkDhcpResource.ValidateResourceId(id);
-                return new WorkloadNetworkDhcpResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkDhcpResource(id);
         }
         #endregion
 
@@ -231,12 +180,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkGatewayResource" /> object. </returns>
         public static WorkloadNetworkGatewayResource GetWorkloadNetworkGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkGatewayResource.ValidateResourceId(id);
-                return new WorkloadNetworkGatewayResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkGatewayResource(id);
         }
         #endregion
 
@@ -250,12 +194,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkPortMirroringProfileResource" /> object. </returns>
         public static WorkloadNetworkPortMirroringProfileResource GetWorkloadNetworkPortMirroringProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkPortMirroringProfileResource.ValidateResourceId(id);
-                return new WorkloadNetworkPortMirroringProfileResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkPortMirroringProfileResource(id);
         }
         #endregion
 
@@ -269,12 +208,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource" /> object. </returns>
         public static WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkVmGroupResource.ValidateResourceId(id);
-                return new WorkloadNetworkVmGroupResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkVmGroupResource(id);
         }
         #endregion
 
@@ -288,12 +222,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkVirtualMachineResource" /> object. </returns>
         public static WorkloadNetworkVirtualMachineResource GetWorkloadNetworkVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkVirtualMachineResource.ValidateResourceId(id);
-                return new WorkloadNetworkVirtualMachineResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkVirtualMachineResource(id);
         }
         #endregion
 
@@ -307,12 +236,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkDnsServiceResource" /> object. </returns>
         public static WorkloadNetworkDnsServiceResource GetWorkloadNetworkDnsServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkDnsServiceResource.ValidateResourceId(id);
-                return new WorkloadNetworkDnsServiceResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkDnsServiceResource(id);
         }
         #endregion
 
@@ -326,12 +250,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkDnsZoneResource" /> object. </returns>
         public static WorkloadNetworkDnsZoneResource GetWorkloadNetworkDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkDnsZoneResource.ValidateResourceId(id);
-                return new WorkloadNetworkDnsZoneResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkDnsZoneResource(id);
         }
         #endregion
 
@@ -345,12 +264,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="WorkloadNetworkPublicIPResource" /> object. </returns>
         public static WorkloadNetworkPublicIPResource GetWorkloadNetworkPublicIPResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadNetworkPublicIPResource.ValidateResourceId(id);
-                return new WorkloadNetworkPublicIPResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetWorkloadNetworkPublicIPResource(id);
         }
         #endregion
 
@@ -364,12 +278,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsCloudLinkResource" /> object. </returns>
         public static AvsCloudLinkResource GetAvsCloudLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsCloudLinkResource.ValidateResourceId(id);
-                return new AvsCloudLinkResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsCloudLinkResource(id);
         }
         #endregion
 
@@ -383,12 +292,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsPrivateCloudAddonResource" /> object. </returns>
         public static AvsPrivateCloudAddonResource GetAvsPrivateCloudAddonResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsPrivateCloudAddonResource.ValidateResourceId(id);
-                return new AvsPrivateCloudAddonResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsPrivateCloudAddonResource(id);
         }
         #endregion
 
@@ -402,12 +306,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> object. </returns>
         public static AvsPrivateCloudClusterVirtualMachineResource GetAvsPrivateCloudClusterVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AvsPrivateCloudClusterVirtualMachineResource.ValidateResourceId(id);
-                return new AvsPrivateCloudClusterVirtualMachineResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetAvsPrivateCloudClusterVirtualMachineResource(id);
         }
         #endregion
 
@@ -421,12 +320,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="PlacementPolicyResource" /> object. </returns>
         public static PlacementPolicyResource GetPlacementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PlacementPolicyResource.ValidateResourceId(id);
-                return new PlacementPolicyResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetPlacementPolicyResource(id);
         }
         #endregion
 
@@ -440,12 +334,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="ScriptPackageResource" /> object. </returns>
         public static ScriptPackageResource GetScriptPackageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScriptPackageResource.ValidateResourceId(id);
-                return new ScriptPackageResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetScriptPackageResource(id);
         }
         #endregion
 
@@ -459,12 +348,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="ScriptCmdletResource" /> object. </returns>
         public static ScriptCmdletResource GetScriptCmdletResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScriptCmdletResource.ValidateResourceId(id);
-                return new ScriptCmdletResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetScriptCmdletResource(id);
         }
         #endregion
 
@@ -478,12 +362,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> Returns a <see cref="ScriptExecutionResource" /> object. </returns>
         public static ScriptExecutionResource GetScriptExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ScriptExecutionResource.ValidateResourceId(id);
-                return new ScriptExecutionResource(client, id);
-            }
-            );
+            return GetAvsArmClientMockingExtension(client).GetScriptExecutionResource(id);
         }
         #endregion
 
@@ -492,7 +371,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of AvsPrivateCloudResources and their operations over a AvsPrivateCloudResource. </returns>
         public static AvsPrivateCloudCollection GetAvsPrivateClouds(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvsPrivateClouds();
+            return GetAvsResourceGroupMockingExtension(resourceGroupResource).GetAvsPrivateClouds();
         }
 
         /// <summary>
@@ -516,7 +395,7 @@ namespace Azure.ResourceManager.Avs
         [ForwardsClientCalls]
         public static async Task<Response<AvsPrivateCloudResource>> GetAvsPrivateCloudAsync(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAvsPrivateClouds().GetAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
+            return await GetAvsResourceGroupMockingExtension(resourceGroupResource).GetAvsPrivateCloudAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -540,7 +419,7 @@ namespace Azure.ResourceManager.Avs
         [ForwardsClientCalls]
         public static Response<AvsPrivateCloudResource> GetAvsPrivateCloud(this ResourceGroupResource resourceGroupResource, string privateCloudName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAvsPrivateClouds().Get(privateCloudName, cancellationToken);
+            return GetAvsResourceGroupMockingExtension(resourceGroupResource).GetAvsPrivateCloud(privateCloudName, cancellationToken);
         }
 
         /// <summary>
@@ -562,7 +441,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, sku, cancellationToken).ConfigureAwait(false);
+            return await GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, sku, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -584,7 +463,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, AvsSku sku = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsTrialAvailability(location, sku, cancellationToken);
+            return GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsTrialAvailability(location, sku, cancellationToken);
         }
 
         /// <summary>
@@ -605,7 +484,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsQuotaAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -626,7 +505,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAvsQuotaAvailability(location, cancellationToken);
+            return GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsQuotaAvailability(location, cancellationToken);
         }
 
         /// <summary>
@@ -647,7 +526,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An async collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvsPrivateCloudsAsync(cancellationToken);
+            return GetAvsSubscriptionMockingExtension(subscriptionResource).GetAvsPrivateCloudsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -668,7 +547,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> A collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvsPrivateCloudResource> GetAvsPrivateClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvsPrivateClouds(cancellationToken);
+            return GetAvsSubscriptionMockingExtension(subscriptionResource).GetAvsPrivateClouds(cancellationToken);
         }
     }
 }
