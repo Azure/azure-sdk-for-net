@@ -15,7 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         private const string ConnectionStringEnvironmentVariable = "APPLICATIONINSIGHTS_CONNECTION_STRING";
 
         [Fact]
-        public void VerifyConfigure_NoConnectionStringSet()
+        public void VerifyConfigure_Default()
         {
             var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions();
 
@@ -24,6 +24,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             defaultAzureMonitorOptions.Configure(azureMonitorOptions);
 
             Assert.Null(azureMonitorOptions.ConnectionString);
+            Assert.False(azureMonitorOptions.DisableOfflineStorage);
+            Assert.Equal(1.0F, azureMonitorOptions.SamplingRatio);
+            Assert.Null(azureMonitorOptions.StorageDirectory);
         }
 
 #if !NETFRAMEWORK
@@ -31,7 +34,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         public void VerifyConfigure_ViaJson()
         {
             var appSettings = @"{""AzureMonitor"":{
-                ""ConnectionString"" : ""testJsonValue""
+                ""ConnectionString"" : ""testJsonValue"",
+                ""DisableOfflineStorage"" : ""true"",
+                ""SamplingRatio"" : 0.5,
+                ""StorageDirectory"" : ""testJsonValue""
                 }}";
 
             var configuration = new ConfigurationBuilder()
@@ -45,6 +51,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             defaultAzureMonitorOptions.Configure(azureMonitorOptions);
 
             Assert.Equal("testJsonValue", azureMonitorOptions.ConnectionString);
+            Assert.True(azureMonitorOptions.DisableOfflineStorage);
+            Assert.Equal(0.5F, azureMonitorOptions.SamplingRatio);
+            Assert.Equal("testJsonValue", azureMonitorOptions.StorageDirectory);
         }
 #endif
 
