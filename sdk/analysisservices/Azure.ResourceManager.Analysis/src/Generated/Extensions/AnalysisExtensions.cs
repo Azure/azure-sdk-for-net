@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Analysis.Mocking;
 using Azure.ResourceManager.Analysis.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.Analysis
     /// <summary> A class to add extension methods to Azure.ResourceManager.Analysis. </summary>
     public static partial class AnalysisExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AnalysisArmClientMockingExtension GetAnalysisArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new AnalysisArmClientMockingExtension(client);
+            });
+        }
+
+        private static AnalysisResourceGroupMockingExtension GetAnalysisResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AnalysisResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AnalysisSubscriptionMockingExtension GetAnalysisSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AnalysisSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region AnalysisServerResource
         /// <summary>
         /// Gets an object representing an <see cref="AnalysisServerResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> Returns a <see cref="AnalysisServerResource" /> object. </returns>
         public static AnalysisServerResource GetAnalysisServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AnalysisServerResource.ValidateResourceId(id);
-                return new AnalysisServerResource(client, id);
-            }
-            );
+            return GetAnalysisArmClientMockingExtension(client).GetAnalysisServerResource(id);
         }
         #endregion
 
@@ -74,7 +63,7 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> An object representing collection of AnalysisServerResources and their operations over a AnalysisServerResource. </returns>
         public static AnalysisServerCollection GetAnalysisServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAnalysisServers();
+            return GetAnalysisResourceGroupMockingExtension(resourceGroupResource).GetAnalysisServers();
         }
 
         /// <summary>
@@ -98,7 +87,7 @@ namespace Azure.ResourceManager.Analysis
         [ForwardsClientCalls]
         public static async Task<Response<AnalysisServerResource>> GetAnalysisServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAnalysisServers().GetAsync(serverName, cancellationToken).ConfigureAwait(false);
+            return await GetAnalysisResourceGroupMockingExtension(resourceGroupResource).GetAnalysisServerAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,7 +111,7 @@ namespace Azure.ResourceManager.Analysis
         [ForwardsClientCalls]
         public static Response<AnalysisServerResource> GetAnalysisServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAnalysisServers().Get(serverName, cancellationToken);
+            return GetAnalysisResourceGroupMockingExtension(resourceGroupResource).GetAnalysisServer(serverName, cancellationToken);
         }
 
         /// <summary>
@@ -143,7 +132,7 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> An async collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AnalysisServerResource> GetAnalysisServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAnalysisServersAsync(cancellationToken);
+            return GetAnalysisSubscriptionMockingExtension(subscriptionResource).GetAnalysisServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -164,7 +153,7 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> A collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AnalysisServerResource> GetAnalysisServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAnalysisServers(cancellationToken);
+            return GetAnalysisSubscriptionMockingExtension(subscriptionResource).GetAnalysisServers(cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +174,7 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> An async collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AnalysisResourceSku> GetEligibleSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEligibleSkusAsync(cancellationToken);
+            return GetAnalysisSubscriptionMockingExtension(subscriptionResource).GetEligibleSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -206,7 +195,7 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> A collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AnalysisResourceSku> GetEligibleSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEligibleSkus(cancellationToken);
+            return GetAnalysisSubscriptionMockingExtension(subscriptionResource).GetEligibleSkus(cancellationToken);
         }
 
         /// <summary>
@@ -229,9 +218,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<AnalysisServerNameAvailabilityResult>> CheckAnalysisServerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAnalysisServerNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetAnalysisSubscriptionMockingExtension(subscriptionResource).CheckAnalysisServerNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -254,9 +241,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<AnalysisServerNameAvailabilityResult> CheckAnalysisServerNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAnalysisServerNameAvailability(location, content, cancellationToken);
+            return GetAnalysisSubscriptionMockingExtension(subscriptionResource).CheckAnalysisServerNameAvailability(location, content, cancellationToken);
         }
     }
 }
