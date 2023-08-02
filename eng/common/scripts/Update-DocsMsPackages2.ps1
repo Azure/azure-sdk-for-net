@@ -85,7 +85,7 @@ foreach ($moniker in $MONIKERS) {
 
       if (!($alreadyOnboardedPackages.ContainsKey($packageIdentity))) {
         Write-Host "Evaluating package for onboarding: $($packageIdentity)"
-        if ($package.ContainsKey('_SkipDocsValidation') -and $true -eq $package._SkipDocsValidation) {
+        if ($package.ContainsKey('_SkipDocsValidation') -and $true -eq $package['_SkipDocsValidation']) {
           Write-Host "Skip validation for package: $($packageIdentity)"
         }
         elseif (!(ValidatePackageForOnboarding2 $package)) {
