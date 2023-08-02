@@ -363,6 +363,8 @@ rename-mapping:
   BillingMeter.properties.billingLocation: -|azure-location
   AddressResponse.properties.vipMappings: VirtualIPMappings
   CloningInfo.sourceWebAppLocation: -|azure-location
+  AzureTableStorageApplicationLogsConfig.sasUrl: SasUriString
+
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties
   AppServiceCertificateResource: AppServiceCertificate
