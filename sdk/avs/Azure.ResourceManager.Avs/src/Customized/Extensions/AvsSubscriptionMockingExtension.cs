@@ -7,12 +7,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
-using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Avs
+namespace Azure.ResourceManager.Avs.Mocking
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.Avs. </summary>
-    public static partial class AvsExtensions
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    public partial class AvsSubscriptionMockingExtension : ArmResource
     {
         /// <summary>
         /// Return trial status for subscription by region
@@ -27,12 +26,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
+        public virtual async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(AzureLocation location, CancellationToken cancellationToken)
         {
-            return await GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
+            return await CheckAvsTrialAvailabilityAsync(location, null, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -48,12 +46,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
+        public virtual Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(AzureLocation location, CancellationToken cancellationToken)
         {
-            return GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsTrialAvailability(location, cancellationToken);
+            return CheckAvsTrialAvailability(location, null, cancellationToken);
         }
     }
 }
