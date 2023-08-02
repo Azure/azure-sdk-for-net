@@ -67,7 +67,8 @@ namespace Azure.Core.TestFramework
 
             debugMode |= environmentDebugMode;
 
-            var proxyLogLevel = Environment.GetEnvironmentVariable(TestProxyLogLevelEnvironmentVariable);
+            string proxyLogLevel = Environment.GetEnvironmentVariable(TestProxyLogLevelEnvironmentVariable);
+
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
                 $"\"{proxyPath}\" --storage-location=\"{TestEnvironment.RepositoryRoot}\"")
