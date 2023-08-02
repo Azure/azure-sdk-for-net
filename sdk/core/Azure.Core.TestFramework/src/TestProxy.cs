@@ -81,6 +81,7 @@ namespace Azure.Core.TestFramework
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
                     [TestProxyLogLevelEnvironmentVariable] = proxyLogLevel ?? "Information",
                     ["Logging__LogLevel__Default"] = "Error",
+                    ["Logging__LogLevel__Microsoft.AspNetCore"] = "Information",
                     ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
                     ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
                     ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
