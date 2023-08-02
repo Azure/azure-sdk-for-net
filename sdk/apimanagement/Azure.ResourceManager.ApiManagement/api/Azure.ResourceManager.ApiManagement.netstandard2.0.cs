@@ -2217,6 +2217,86 @@ namespace Azure.ResourceManager.ApiManagement
         public Azure.ResourceManager.ApiManagement.Models.ApiManagementUserState? State { get { throw null; } set { } }
     }
 }
+namespace Azure.ResourceManager.ApiManagement.Mocking
+{
+    public partial class ApiManagementArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ApiManagementArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.ApiManagement.ApiDiagnosticResource GetApiDiagnosticResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiIssueAttachmentResource GetApiIssueAttachmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiIssueCommentResource GetApiIssueCommentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiIssueResource GetApiIssueResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementAuthorizationServerResource GetApiManagementAuthorizationServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementBackendResource GetApiManagementBackendResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementCacheResource GetApiManagementCacheResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementCertificateResource GetApiManagementCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementDeletedServiceResource GetApiManagementDeletedServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementDiagnosticResource GetApiManagementDiagnosticResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementEmailTemplateResource GetApiManagementEmailTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementGatewayCertificateAuthorityResource GetApiManagementGatewayCertificateAuthorityResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementGatewayHostnameConfigurationResource GetApiManagementGatewayHostnameConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementGatewayResource GetApiManagementGatewayResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementGlobalSchemaResource GetApiManagementGlobalSchemaResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementGroupResource GetApiManagementGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementIdentityProviderResource GetApiManagementIdentityProviderResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementIssueResource GetApiManagementIssueResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementLoggerResource GetApiManagementLoggerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementNamedValueResource GetApiManagementNamedValueResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementNotificationResource GetApiManagementNotificationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementOpenIdConnectProviderResource GetApiManagementOpenIdConnectProviderResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPolicyResource GetApiManagementPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPortalRevisionResource GetApiManagementPortalRevisionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPrivateEndpointConnectionResource GetApiManagementPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementPrivateLinkResource GetApiManagementPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementProductPolicyResource GetApiManagementProductPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementProductResource GetApiManagementProductResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementProductTagResource GetApiManagementProductTagResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementServiceResource GetApiManagementServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementSubscriptionResource GetApiManagementSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementTagResource GetApiManagementTagResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementTenantSettingResource GetApiManagementTenantSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementUserResource GetApiManagementUserResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementUserSubscriptionResource GetApiManagementUserSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiOperationPolicyResource GetApiOperationPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiOperationResource GetApiOperationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiOperationTagResource GetApiOperationTagResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiPolicyResource GetApiPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiReleaseResource GetApiReleaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiResource GetApiResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiSchemaResource GetApiSchemaResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiTagDescriptionResource GetApiTagDescriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiTagResource GetApiTagResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiVersionSetResource GetApiVersionSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.TenantAccessInfoResource GetTenantAccessInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class ApiManagementResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ApiManagementResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource> GetApiManagementService(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource>> GetApiManagementServiceAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementServiceCollection GetApiManagementServices() { throw null; }
+    }
+    public partial class ApiManagementSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ApiManagementSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityResult> CheckApiManagementServiceNameAvailability(Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityResult>> CheckApiManagementServiceNameAvailabilityAsync(Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementDeletedServiceResource> GetApiManagementDeletedService(Azure.Core.AzureLocation location, string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementDeletedServiceResource>> GetApiManagementDeletedServiceAsync(Azure.Core.AzureLocation location, string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApiManagement.ApiManagementDeletedServiceCollection GetApiManagementDeletedServices() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceGetDomainOwnershipIdentifierResult> GetApiManagementServiceDomainOwnershipIdentifier(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceGetDomainOwnershipIdentifierResult>> GetApiManagementServiceDomainOwnershipIdentifierAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource> GetApiManagementServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource> GetApiManagementServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApiManagement.Models.ApiManagementSku> GetApiManagementSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiManagement.Models.ApiManagementSku> GetApiManagementSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
