@@ -114,15 +114,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 
         InstanceViewStatus IModelJsonSerializable<InstanceViewStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<InstanceViewStatusProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new InstanceViewStatus(
-                properties.Code.Value,
-                Optional.ToNullable(properties.Level),
-                properties.DisplayStatus.Value,
-                properties.Message.Value,
-                Optional.ToNullable(properties.Time));
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceViewStatus(doc.RootElement, options);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref InstanceViewStatusProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)

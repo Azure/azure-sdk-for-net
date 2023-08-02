@@ -116,43 +116,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 
         ResourceTypeAliasPath IModelJsonSerializable<ResourceTypeAliasPath>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ResourceTypeAliasPathProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new ResourceTypeAliasPath(properties.Path.Value, Optional.ToList(properties.ApiVersions), properties.Pattern.Value, properties.Metadata.Value);
-        }
-
-        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ResourceTypeAliasPathProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            if (propertyName.SequenceEqual("path"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Path = reader.GetString();
-                return;
-            }
-            if (propertyName.SequenceEqual("apiVersions"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.ApiVersions = reader.GetList<string>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("pattern"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Pattern = reader.GetObject<ResourceTypeAliasPattern>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("metadata"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Metadata = reader.GetObject<ResourceTypeAliasPathMetadata>(options);
-                return;
-            }
-            reader.Skip();
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeAliasPath(doc.RootElement, options);
         }
 
         ResourceTypeAliasPath IModelSerializable<ResourceTypeAliasPath>.Deserialize(BinaryData data, ModelSerializerOptions options)
