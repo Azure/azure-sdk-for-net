@@ -666,6 +666,73 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource>> UpdateAsync(Azure.ResourceManager.ConnectedVMwarevSphere.Models.ResourcePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
+{
+    public partial class ConnectedVMwarevSphereArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ConnectedVMwarevSphereArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.GuestAgentResource GetGuestAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.HybridIdentityMetadataResource GetHybridIdentityMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.InventoryItemResource GetInventoryItemResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.MachineExtensionResource GetMachineExtensionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource GetResourcePoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VCenterResource GetVCenterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineResource GetVirtualMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplateResource GetVirtualMachineTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetworkResource GetVirtualNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterResource GetVMwareClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreResource GetVMwareDatastoreResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource GetVMwareHostResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class ConnectedVMwarevSphereResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ConnectedVMwarevSphereResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource> GetResourcePool(string resourcePoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource>> GetResourcePoolAsync(string resourcePoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolCollection GetResourcePools() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterResource> GetVCenter(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterResource>> GetVCenterAsync(string vcenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VCenterCollection GetVCenters() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineResource> GetVirtualMachine(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineResource>> GetVirtualMachineAsync(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineCollection GetVirtualMachines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplateResource> GetVirtualMachineTemplate(string virtualMachineTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplateResource>> GetVirtualMachineTemplateAsync(string virtualMachineTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplateCollection GetVirtualMachineTemplates() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetworkResource> GetVirtualNetwork(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetworkResource>> GetVirtualNetworkAsync(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetworkCollection GetVirtualNetworks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterResource> GetVMwareCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterResource>> GetVMwareClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterCollection GetVMwareClusters() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreResource> GetVMwareDatastore(string datastoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreResource>> GetVMwareDatastoreAsync(string datastoreName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreCollection GetVMwareDatastores() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource> GetVMwareHost(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource>> GetVMwareHostAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostCollection GetVMwareHosts() { throw null; }
+    }
+    public partial class ConnectedVMwarevSphereSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ConnectedVMwarevSphereSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource> GetResourcePools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource> GetResourcePoolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterResource> GetVCenters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterResource> GetVCentersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineResource> GetVirtualMachines(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineResource> GetVirtualMachinesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplateResource> GetVirtualMachineTemplates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualMachineTemplateResource> GetVirtualMachineTemplatesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetworkResource> GetVirtualNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VirtualNetworkResource> GetVirtualNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterResource> GetVMwareClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterResource> GetVMwareClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreResource> GetVMwareDatastores(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreResource> GetVMwareDatastoresAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource> GetVMwareHosts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource> GetVMwareHostsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     public static partial class ArmConnectedVMwarevSphereModelFactory

@@ -1,13 +1,14 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+#nullable disable
 
 using System.Threading;
 using Azure.ResourceManager.DataLakeStore.Models;
-using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.DataLakeStore
+namespace Azure.ResourceManager.DataLakeStore.Mocking
 {
-    public static partial class DataLakeStoreExtensions
+    public partial class DataLakeStoreSubscriptionMockingExtension : ArmResource
     {
         /// <summary>
         /// Lists the Data Lake Store accounts within the subscription. The response includes a link to the next page of results, if any.
@@ -22,7 +23,6 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
@@ -31,9 +31,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            return GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).GetAccountsAsync(filter, top, skip, select, orderBy, count, cancellationToken);
+            SubscriptionResourceGetAccountsOptions options = new SubscriptionResourceGetAccountsOptions();
+            options.Filter = filter;
+            options.Top = top;
+            options.Skip = skip;
+            options.Select = select;
+            options.OrderBy = orderBy;
+            options.Count = count;
+
+            return GetAccountsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -49,7 +57,6 @@ namespace Azure.ResourceManager.DataLakeStore
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="top"> The number of items to return. Optional. </param>
         /// <param name="skip"> The number of items to skip over before returning elements. Optional. </param>
@@ -58,9 +65,17 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <param name="count"> The Boolean value of true or false to request a count of the matching resources included with the resources in the response, e.g. Categories?$count=true. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<DataLakeStoreAccountBasicData> GetAccounts(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<DataLakeStoreAccountBasicData> GetAccounts(string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            return GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).GetAccounts(filter, top, skip, select, orderBy, count, cancellationToken);
+            SubscriptionResourceGetAccountsOptions options = new SubscriptionResourceGetAccountsOptions();
+            options.Filter = filter;
+            options.Top = top;
+            options.Skip = skip;
+            options.Select = select;
+            options.OrderBy = orderBy;
+            options.Count = count;
+
+            return GetAccounts(options, cancellationToken);
         }
     }
 }

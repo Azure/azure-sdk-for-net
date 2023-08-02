@@ -387,6 +387,37 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         public string Value { get { throw null; } set { } }
     }
 }
+namespace Azure.ResourceManager.CosmosDBForPostgreSql.Mocking
+{
+    public partial class CosmosDBForPostgreSqlArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected CosmosDBForPostgreSqlArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterResource GetCosmosDBForPostgreSqlClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterServerResource GetCosmosDBForPostgreSqlClusterServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlConfigurationResource GetCosmosDBForPostgreSqlConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlCoordinatorConfigurationResource GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlFirewallRuleResource GetCosmosDBForPostgreSqlFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlNodeConfigurationResource GetCosmosDBForPostgreSqlNodeConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlPrivateEndpointConnectionResource GetCosmosDBForPostgreSqlPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlPrivateLinkResource GetCosmosDBForPostgreSqlPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlRoleResource GetCosmosDBForPostgreSqlRoleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class CosmosDBForPostgreSqlResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected CosmosDBForPostgreSqlResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterResource>> GetCosmosDBForPostgreSqlClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterCollection GetCosmosDBForPostgreSqlClusters() { throw null; }
+    }
+    public partial class CosmosDBForPostgreSqlSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected CosmosDBForPostgreSqlSubscriptionMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckCosmosDBForPostgreSqlClusterNameAvailability(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(Azure.ResourceManager.CosmosDBForPostgreSql.Models.CosmosDBForPostgreSqlClusterNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDBForPostgreSql.CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
     public static partial class ArmCosmosDBForPostgreSqlModelFactory

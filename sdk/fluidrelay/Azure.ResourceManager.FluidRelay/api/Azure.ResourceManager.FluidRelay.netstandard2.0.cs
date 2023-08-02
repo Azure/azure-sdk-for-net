@@ -97,6 +97,28 @@ namespace Azure.ResourceManager.FluidRelay
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource>> UpdateAsync(Azure.ResourceManager.FluidRelay.Models.FluidRelayServerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.FluidRelay.Mocking
+{
+    public partial class FluidRelayArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected FluidRelayArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.FluidRelay.FluidRelayContainerResource GetFluidRelayContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.FluidRelay.FluidRelayServerResource GetFluidRelayServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class FluidRelayResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected FluidRelayResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource> GetFluidRelayServer(string fluidRelayServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FluidRelay.FluidRelayServerResource>> GetFluidRelayServerAsync(string fluidRelayServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.FluidRelay.FluidRelayServerCollection GetFluidRelayServers() { throw null; }
+    }
+    public partial class FluidRelaySubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected FluidRelaySubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.FluidRelay.FluidRelayServerResource> GetFluidRelayServers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.FluidRelay.FluidRelayServerResource> GetFluidRelayServersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.FluidRelay.Models
 {
     public static partial class ArmFluidRelayModelFactory

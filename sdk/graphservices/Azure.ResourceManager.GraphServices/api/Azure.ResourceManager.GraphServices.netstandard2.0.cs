@@ -50,6 +50,27 @@ namespace Azure.ResourceManager.GraphServices
         public static Azure.AsyncPageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.GraphServices.Mocking
+{
+    public partial class GraphServicesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected GraphServicesArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.GraphServices.GraphServicesAccountResource GetGraphServicesAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class GraphServicesResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected GraphServicesResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResource(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>> GetGraphServicesAccountResourceAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.GraphServices.GraphServicesAccountResourceCollection GetGraphServicesAccountResources() { throw null; }
+    }
+    public partial class GraphServicesSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected GraphServicesSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.GraphServices.Models
 {
     public static partial class ArmGraphServicesModelFactory
