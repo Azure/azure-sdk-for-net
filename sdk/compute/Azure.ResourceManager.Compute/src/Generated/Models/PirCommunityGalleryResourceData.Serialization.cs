@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class PirCommunityGalleryResourceData : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializePirCommunityGalleryResourceData(JsonDocument.Parse(data).RootElement);
 
         internal static PirCommunityGalleryResourceData DeserializePirCommunityGalleryResourceData(JsonElement element)

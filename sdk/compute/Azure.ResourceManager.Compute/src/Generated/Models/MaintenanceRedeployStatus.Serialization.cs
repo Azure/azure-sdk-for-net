@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class MaintenanceRedeployStatus : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeMaintenanceRedeployStatus(JsonDocument.Parse(data).RootElement);
 
         internal static MaintenanceRedeployStatus DeserializeMaintenanceRedeployStatus(JsonElement element)

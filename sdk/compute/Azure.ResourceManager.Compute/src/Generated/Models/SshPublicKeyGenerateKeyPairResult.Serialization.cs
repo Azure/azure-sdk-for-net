@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class SshPublicKeyGenerateKeyPairResult : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeSshPublicKeyGenerateKeyPairResult(JsonDocument.Parse(data).RootElement);
 
         internal static SshPublicKeyGenerateKeyPairResult DeserializeSshPublicKeyGenerateKeyPairResult(JsonElement element)

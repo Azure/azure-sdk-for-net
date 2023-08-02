@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class CloudServiceInstanceView : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeCloudServiceInstanceView(JsonDocument.Parse(data).RootElement);
 
         internal static CloudServiceInstanceView DeserializeCloudServiceInstanceView(JsonElement element)

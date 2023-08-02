@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class StatusCodeCount : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeStatusCodeCount(JsonDocument.Parse(data).RootElement);
 
         internal static StatusCodeCount DeserializeStatusCodeCount(JsonElement element)

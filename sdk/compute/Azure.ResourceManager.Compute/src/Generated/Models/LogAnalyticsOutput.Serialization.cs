@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class LogAnalyticsOutput : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeLogAnalyticsOutput(JsonDocument.Parse(data).RootElement);
 
         internal static LogAnalyticsOutput DeserializeLogAnalyticsOutput(JsonElement element)

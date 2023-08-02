@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class DedicatedHostGroupListResult : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDedicatedHostGroupListResult(JsonDocument.Parse(data).RootElement);
 
         internal static DedicatedHostGroupListResult DeserializeDedicatedHostGroupListResult(JsonElement element)

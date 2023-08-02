@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class DedicatedHostInstanceView : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDedicatedHostInstanceView(JsonDocument.Parse(data).RootElement);
 
         internal static DedicatedHostInstanceView DeserializeDedicatedHostInstanceView(JsonElement element)

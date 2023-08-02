@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class RestorePointGroupListResult : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeRestorePointGroupListResult(JsonDocument.Parse(data).RootElement);
 
         internal static RestorePointGroupListResult DeserializeRestorePointGroupListResult(JsonElement element)

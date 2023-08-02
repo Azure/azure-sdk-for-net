@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class InstanceSku : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeInstanceSku(JsonDocument.Parse(data).RootElement);
 
         internal static InstanceSku DeserializeInstanceSku(JsonElement element)

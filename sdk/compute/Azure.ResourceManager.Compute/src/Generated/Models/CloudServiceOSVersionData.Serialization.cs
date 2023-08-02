@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CloudServiceOSVersionData : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeCloudServiceOSVersionData(JsonDocument.Parse(data).RootElement);
 
         internal static CloudServiceOSVersionData DeserializeCloudServiceOSVersionData(JsonElement element)

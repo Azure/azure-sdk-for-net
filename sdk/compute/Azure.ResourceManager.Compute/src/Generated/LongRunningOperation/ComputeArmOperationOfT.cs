@@ -11,13 +11,12 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Compute
 {
 #pragma warning disable SA1649 // File name should match first type name
-    internal class ComputeArmOperation<T> : ArmOperation<T> where T: class, IModelSerializable
+    internal class ComputeArmOperation<T> : ArmOperation<T>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         /// <inheritdoc />
 #pragma warning disable CA1822
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string Id => throw new NotImplementedException();
+        public override string Id => _operation.GetOperationId();
 #pragma warning restore CA1822
 
         /// <inheritdoc />

@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeApiErrorBase : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeComputeApiErrorBase(JsonDocument.Parse(data).RootElement);
 
         internal static ComputeApiErrorBase DeserializeComputeApiErrorBase(JsonElement element)

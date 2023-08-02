@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ComputeResourceSkuRestrictionInfo : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeComputeResourceSkuRestrictionInfo(JsonDocument.Parse(data).RootElement);
 
         internal static ComputeResourceSkuRestrictionInfo DeserializeComputeResourceSkuRestrictionInfo(JsonElement element)

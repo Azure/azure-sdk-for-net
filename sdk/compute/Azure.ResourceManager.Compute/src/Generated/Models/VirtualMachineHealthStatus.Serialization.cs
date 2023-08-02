@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class VirtualMachineHealthStatus : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeVirtualMachineHealthStatus(JsonDocument.Parse(data).RootElement);
 
         internal static VirtualMachineHealthStatus DeserializeVirtualMachineHealthStatus(JsonElement element)

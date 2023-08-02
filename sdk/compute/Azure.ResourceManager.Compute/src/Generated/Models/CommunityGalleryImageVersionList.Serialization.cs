@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class CommunityGalleryImageVersionList : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeCommunityGalleryImageVersionList(JsonDocument.Parse(data).RootElement);
 
         internal static CommunityGalleryImageVersionList DeserializeCommunityGalleryImageVersionList(JsonElement element)

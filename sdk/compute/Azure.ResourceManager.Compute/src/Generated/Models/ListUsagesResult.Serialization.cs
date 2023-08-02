@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class ListUsagesResult : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeListUsagesResult(JsonDocument.Parse(data).RootElement);
 
         internal static ListUsagesResult DeserializeListUsagesResult(JsonElement element)

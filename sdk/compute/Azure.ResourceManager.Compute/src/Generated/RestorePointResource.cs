@@ -7,13 +7,11 @@
 
 using System;
 using System.Globalization;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Core.Serialization;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 
@@ -25,7 +23,7 @@ namespace Azure.ResourceManager.Compute
     /// from an instance of <see cref="ArmClient" /> using the GetRestorePointResource method.
     /// Otherwise you can get one from its parent resource <see cref="RestorePointGroupResource" /> using the GetRestorePoint method.
     /// </summary>
-    public partial class RestorePointResource : ArmResource, ResourceManager.IResource, IJsonModelSerializable
+    public partial class RestorePointResource : ArmResource, ResourceManager.IResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RestorePointResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointGroupName, string restorePointName)
@@ -351,10 +349,5 @@ namespace Azure.ResourceManager.Compute
                 throw;
             }
         }
-        object IJsonModelSerializable.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => throw new NotImplementedException();
-
-        object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => ModelSerializer.Deserialize<RestorePointData>(data, options);
-
-        void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => throw new NotImplementedException();
     }
 }

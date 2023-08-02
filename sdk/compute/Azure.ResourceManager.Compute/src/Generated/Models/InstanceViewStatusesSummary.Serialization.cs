@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class InstanceViewStatusesSummary : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeInstanceViewStatusesSummary(JsonDocument.Parse(data).RootElement);
 
         internal static InstanceViewStatusesSummary DeserializeInstanceViewStatusesSummary(JsonElement element)

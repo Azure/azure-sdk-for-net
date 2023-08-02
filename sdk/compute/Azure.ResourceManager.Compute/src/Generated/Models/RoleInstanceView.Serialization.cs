@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class RoleInstanceView : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeRoleInstanceView(JsonDocument.Parse(data).RootElement);
 
         internal static RoleInstanceView DeserializeRoleInstanceView(JsonElement element)

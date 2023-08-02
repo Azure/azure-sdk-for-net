@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class ReplicationStatus : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeReplicationStatus(JsonDocument.Parse(data).RootElement);
 
         internal static ReplicationStatus DeserializeReplicationStatus(JsonElement element)

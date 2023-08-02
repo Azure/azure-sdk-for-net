@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class DiskInstanceView : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDiskInstanceView(JsonDocument.Parse(data).RootElement);
 
         internal static DiskInstanceView DeserializeDiskInstanceView(JsonElement element)

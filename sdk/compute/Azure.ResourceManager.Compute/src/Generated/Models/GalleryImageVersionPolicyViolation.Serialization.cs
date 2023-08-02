@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryImageVersionPolicyViolation : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeGalleryImageVersionPolicyViolation(JsonDocument.Parse(data).RootElement);
 
         internal static GalleryImageVersionPolicyViolation DeserializeGalleryImageVersionPolicyViolation(JsonElement element)

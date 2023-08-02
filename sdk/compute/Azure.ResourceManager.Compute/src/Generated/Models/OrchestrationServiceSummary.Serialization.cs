@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class OrchestrationServiceSummary : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeOrchestrationServiceSummary(JsonDocument.Parse(data).RootElement);
 
         internal static OrchestrationServiceSummary DeserializeOrchestrationServiceSummary(JsonElement element)

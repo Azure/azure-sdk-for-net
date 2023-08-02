@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal partial class PropertyUpdatesInProgress : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializePropertyUpdatesInProgress(JsonDocument.Parse(data).RootElement);
 
         internal static PropertyUpdatesInProgress DeserializePropertyUpdatesInProgress(JsonElement element)
