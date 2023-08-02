@@ -145,9 +145,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudStorageApplianceResource networkCloudStorageAppliance = client.GetNetworkCloudStorageApplianceResource(networkCloudStorageApplianceResourceId);
 
             // invoke the operation
-            await networkCloudStorageAppliance.DisableRemoteVendorManagementAsync(WaitUntil.Completed);
+            ArmOperation<Models.OperationStatusResult> lro = await networkCloudStorageAppliance.DisableRemoteVendorManagementAsync(WaitUntil.Completed);
+            Models.OperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Turn on remote vendor management for storage appliance
@@ -179,9 +180,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 "10.0.0.0/24"
 },
             };
-            await networkCloudStorageAppliance.EnableRemoteVendorManagementAsync(WaitUntil.Completed, content: content);
+            ArmOperation<Models.OperationStatusResult> lro = await networkCloudStorageAppliance.EnableRemoteVendorManagementAsync(WaitUntil.Completed, content: content);
+            Models.OperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }
