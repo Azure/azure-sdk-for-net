@@ -430,9 +430,7 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>
         /// <param name="callConnectionId"> The call connection id for the GetCallConnection instance. </param>
-#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual CallConnection GetCallConnection(string callConnectionId)
-#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallConnection)}");
             scope.Start();
@@ -448,9 +446,7 @@ namespace Azure.Communication.CallingServer
         }
 
         /// <summary> Initializes a new instance of GetCallRecording. <see cref="CallRecording"/>.</summary>
-#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual CallRecording GetCallRecording()
-#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallAutomationClient)}.{nameof(GetCallRecording)}");
             scope.Start();

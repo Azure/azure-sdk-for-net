@@ -687,7 +687,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </list>
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual Response<BlobDownloadInfo> Download() =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             Download(CancellationToken.None);
 
         /// <summary>
@@ -724,7 +726,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// </list>
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync() =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             await DownloadAsync(CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
@@ -811,7 +815,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
-            CancellationToken cancellationToken) =>
+            CancellationToken cancellationToken = default) =>
             await DownloadAsync(
                 conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
@@ -1757,7 +1761,9 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual Response<BlobDownloadResult> DownloadContent() =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             DownloadContent(CancellationToken.None);
 
         /// <summary>
@@ -1792,7 +1798,9 @@ namespace Azure.Storage.Blobs.Specialized
         ///     </item>
         /// </list>
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync() =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             await DownloadContentAsync(CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
@@ -1875,7 +1883,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </list>
         /// </remarks>
         public virtual async Task<Response<BlobDownloadResult>> DownloadContentAsync(
-            CancellationToken cancellationToken) =>
+            CancellationToken cancellationToken = default) =>
             await DownloadContentAsync(
                 conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
@@ -2282,7 +2290,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual Response DownloadTo(Stream destination) =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             DownloadTo(destination, CancellationToken.None);
 
         /// <summary>
@@ -2299,7 +2309,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual Response DownloadTo(string path) =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             DownloadTo(path, CancellationToken.None);
 
         /// <summary>
@@ -2316,7 +2328,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response> DownloadToAsync(Stream destination) =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             await DownloadToAsync(destination, CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
@@ -2333,7 +2347,9 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response> DownloadToAsync(string path) =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             await DownloadToAsync(path, CancellationToken.None).ConfigureAwait(false);
 
         /// <summary>
@@ -2355,9 +2371,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual Response DownloadTo(
             Stream destination,
             CancellationToken cancellationToken) =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             DownloadTo(
                 destination,
                 conditions: default, // Pass anything else so we don't recurse on this overload
@@ -2382,9 +2400,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual Response DownloadTo(
             string path,
             CancellationToken cancellationToken) =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             DownloadTo(
                 path,
                 conditions: default, // Pass anything else so we don't recurse on this overload
@@ -2409,9 +2429,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response> DownloadToAsync(
             Stream destination,
             CancellationToken cancellationToken) =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             await DownloadToAsync(
                 destination,
                 conditions: default, // Pass anything else so we don't recurse on this overload
@@ -2437,9 +2459,11 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response> DownloadToAsync(
             string path,
             CancellationToken cancellationToken) =>
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             await DownloadToAsync(
                 path,
                 conditions: default, // Pass anything else so we don't recurse on this overload

@@ -1396,9 +1396,7 @@ namespace Azure.Data.AppConfiguration
         /// Adds an external synchronization token to ensure service requests receive up-to-date values.
         /// </summary>
         /// <param name="token">The synchronization token value.</param>
-#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public virtual void UpdateSyncToken(string token)
-#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             Argument.AssertNotNull(token, nameof(token));
             _syncTokenPolicy.AddToken(token);
