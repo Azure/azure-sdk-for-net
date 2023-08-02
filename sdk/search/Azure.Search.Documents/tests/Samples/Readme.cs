@@ -110,7 +110,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 SearchDocument doc = result.Document;
                 string id = (string)doc["HotelId"];
                 string name = (string)doc["HotelName"];
-                Console.WriteLine("{id}: {name}");
+                Console.WriteLine($"{id}: {name}");
             }
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Dict
 
@@ -119,7 +119,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 dynamic doc = result.Document;
                 string id = doc.HotelId;
                 string name = doc.HotelName;
-                Console.WriteLine("{id}: {name}");
+                Console.WriteLine($"{id}: {name}");
             }
         }
 

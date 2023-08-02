@@ -39,9 +39,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     options.ConnectionString = connectionString;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: Log Error.
+                AzureMonitorAspNetCoreEventSource.Log.ConfigureFailed(ex);
             }
         }
     }

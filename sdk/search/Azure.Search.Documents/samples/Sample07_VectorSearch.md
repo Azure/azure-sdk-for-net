@@ -10,7 +10,7 @@ This sample will show you how to index a vector field and perform vector search 
 
 ## Create a Vector Index
 
-Let's consider the example of a `Hotel`. First, we need to create an index for storing hotel information. In this index, we will define a field called `DescriptionVector` as a vector field. To configure the vector field, you need to provide the model dimensions, which indicate the size of the embeddings generated for this field, and the name of the vector search algorithm configuration that specifies the algorithm and any optional parameters for searching the vector field. You can find detailed instructions on how to create a vector index in the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-create-index).
+Let's consider the example of a `Hotel`. First, we need to create an index for storing hotel information. In this index, we will define vector fields called `DescriptionVector` and `CategoryVector`. To configure the vector field, you need to provide the model dimensions, which indicate the size of the embeddings generated for this field, and the name of the vector search algorithm configuration that specifies the algorithm and any optional parameters for searching the vector field. You can find detailed instructions on how to create a vector index in the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-create-index).
 
 We will create an instace of `SearchIndex` and define `Hotel` fields.
 
@@ -32,7 +32,13 @@ SearchIndex searchIndex = new(indexName)
             VectorSearchDimensions = modelDimensions,
             VectorSearchConfiguration = vectorSearchConfigName
         },
-        new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true }
+        new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
+        new SearchField("CategoryVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
+        {
+            IsSearchable = true,
+            VectorSearchDimensions = modelDimensions,
+            VectorSearchConfiguration = vectorSearchConfigName
+        },
     },
     VectorSearch = new()
     {
@@ -67,6 +73,7 @@ public class Hotel
     public string Description { get; set; }
     public IReadOnlyList<float> DescriptionVector { get; set; }
     public string Category { get; set; }
+    public IReadOnlyList<float> CategoryVector { get; set; }
 }
 ```
 
@@ -87,7 +94,7 @@ Embeddings embeddings = await openAIClient.GetEmbeddingsAsync("EmbeddingsModelNa
 IReadOnlyList<float> descriptionVector = embeddings.Data[0].Embedding;
 ```
 
-In the sample code below, we are using hardcoded embeddings for the `DescriptionVector` field:
+In the sample code below, we are using hardcoded embeddings for the vector fields named `DescriptionVector` and `CategoryVector`:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Hotel_Document
 public static Hotel[] GetHotelDocuments()
@@ -104,6 +111,7 @@ public static Hotel[] GetHotelDocuments()
                 "the tourist attractions. We highly recommend this hotel.",
             DescriptionVector = VectorSearchEmbeddings.Hotel1VectorizeDescription,
             Category = "Luxury",
+            CategoryVector = VectorSearchEmbeddings.LuxuryVectorizeCategory
         },
         new Hotel()
         {
@@ -112,6 +120,7 @@ public static Hotel[] GetHotelDocuments()
             Description = "Cheapest hotel in town. Infact, a motel.",
             DescriptionVector = VectorSearchEmbeddings.Hotel2VectorizeDescription,
             Category = "Budget",
+            CategoryVector = VectorSearchEmbeddings.BudgetVectorizeCategory
         },
          // Add more hotel documents here...
     };
@@ -142,7 +151,7 @@ IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDe
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
     new SearchOptions
     {
-        Vector = new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "DescriptionVector" },
+        Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
     });
 
 int count = 0;
@@ -166,7 +175,7 @@ IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDe
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
     new SearchOptions
     {
-        Vector = new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "DescriptionVector" },
+        Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
         Filter = "Category eq 'Luxury'"
     });
 
@@ -194,7 +203,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
         "Top hotels in town",
         new SearchOptions
         {
-            Vector = new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "DescriptionVector" },
+            Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
         });
 
 int count = 0;
@@ -247,7 +256,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
     new SearchOptions
     {
-        Vector = new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = "descriptionVector" },
+        Vectors = { new() { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
         QueryType = SearchQueryType.Semantic,
         QueryLanguage = QueryLanguage.EnUs,
         SemanticConfigurationName = "my-semantic-config",
@@ -283,6 +292,61 @@ await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
             Console.WriteLine($"Caption Text: {caption.Text}");
         }
     }
+}
+Console.WriteLine($"Total number of search results:{count}");
+```
+
+### Multi-vector Search
+
+You can search containing multiple query vectors using the `SearchOptions.Vectors` property. These queries will be executed concurrently in the search index, with each one searching for similarities in the target vector fields. The result set will be a combination of documents that matched both vector queries. One common use case for this query request is when using models like CLIP for a multi-modal vector search, where the same model can vectorize both image and non-image content.
+
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search
+IReadOnlyList<float> vectorizedDescriptionQuery = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+IReadOnlyList<float> vectorizedCategoryQuery = VectorSearchEmbeddings.SearchVectorizeCategory; // "Luxury hotels in town"
+
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+    new SearchOptions
+    {
+        Vectors = {
+            new() { Value = vectorizedDescriptionQuery, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
+            new() { Value = vectorizedCategoryQuery, KNearestNeighborsCount = 3, Fields = { "CategoryVector" } }
+        },
+    });
+
+int count = 0;
+Console.WriteLine($"Multi Vector Search Results:");
+await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+{
+    count++;
+    Hotel doc = result.Document;
+    Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
+}
+Console.WriteLine($"Total number of search results:{count}");
+```
+
+### Multi-field Vector Search
+
+You can set the `SearchOptions.Vectors.Fields` property to multiple vector fields. For example, we have vector fields named `DescriptionVector` and `CategoryVector`. Your vector query executes over both the `DescriptionVector` and `CategoryVector` fields, which must have the same embedding space since they share the same query vector.
+
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search
+IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+    new SearchOptions
+    {
+        Vectors = { new() {
+            Value = vectorizedResult,
+            KNearestNeighborsCount = 3,
+            Fields = { "DescriptionVector", "CategoryVector" } } }
+    });
+
+int count = 0;
+Console.WriteLine($"Multi Fields Vector Search Results:");
+await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+{
+    count++;
+    Hotel doc = result.Document;
+    Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 }
 Console.WriteLine($"Total number of search results:{count}");
 ```

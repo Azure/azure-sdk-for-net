@@ -95,16 +95,6 @@ namespace Azure.AI.OpenAI
                             }
                         }
                     }
-
-                    // Non-Azure OpenAI doesn't always set the FinishReason on streaming choices when multiple prompts are
-                    // provided.
-                    lock (_streamingChoicesLock)
-                    {
-                        foreach (StreamingChoice streamingChoice in _streamingChoices)
-                        {
-                            streamingChoice.StreamingDoneSignalReceived = true;
-                        }
-                    }
                 }
                 catch (Exception pumpException)
                 {
@@ -112,6 +102,16 @@ namespace Azure.AI.OpenAI
                 }
                 finally
                 {
+                    lock (_streamingChoicesLock)
+                    {
+                        // If anything went wrong and a StreamingChoice didn't naturally determine it was complete
+                        // based on a non-null finish reason, ensure that nothing's left incomplete (and potentially
+                        // hanging!) now.
+                        foreach (StreamingChoice streamingChoice in _streamingChoices)
+                        {
+                            streamingChoice.EnsureFinishStreaming();
+                        }
+                    }
                     _streamingTaskComplete = true;
                     _updateAvailableEvent.Set();
                 }

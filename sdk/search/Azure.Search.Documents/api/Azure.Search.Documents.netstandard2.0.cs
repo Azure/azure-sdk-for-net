@@ -173,7 +173,7 @@ namespace Azure.Search.Documents
         public string SessionId { get { throw null; } set { } }
         public int? Size { get { throw null; } set { } }
         public int? Skip { get { throw null; } set { } }
-        public Azure.Search.Documents.Models.SearchQueryVector Vector { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.SearchQueryVector> Vectors { get { throw null; } }
     }
     public partial class SuggestOptions
     {
@@ -210,6 +210,8 @@ namespace Azure.Search.Documents.Indexes
         public string IndexAnalyzerName { get { throw null; } set { } }
         public string SearchAnalyzerName { get { throw null; } set { } }
         public string[] SynonymMapNames { get { throw null; } set { } }
+        public string VectorSearchConfiguration { get { throw null; } set { } }
+        public string VectorSearchDimensions { get { throw null; } set { } }
     }
     public partial class SearchIndexClient
     {
@@ -3282,7 +3284,6 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.SearchIndexerWarning SearchIndexerWarning(string key, string message, string name, string details, string documentationLink) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexStatistics SearchIndexStatistics(long documentCount, long storageSize) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchIndexStatistics SearchIndexStatistics(long documentCount = (long)0, long storageSize = (long)0, long? vectorIndexSize = default(long?)) { throw null; }
-        public static Azure.Search.Documents.Models.SearchQueryVector SearchQueryVector(System.Collections.Generic.IEnumerable<float> value = null, int? kNearestNeighborsCount = default(int?), string fields = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.SearchResourceCounter SearchResourceCounter(long usage, long? quota) { throw null; }
         public static Azure.Search.Documents.Models.SearchResultsPage<T> SearchResultsPage<T>(Azure.Search.Documents.Models.SearchResults<T> results) { throw null; }
         public static Azure.Search.Documents.Models.SearchResults<T> SearchResults<T>(System.Collections.Generic.IEnumerable<Azure.Search.Documents.Models.SearchResult<T>> values, long? totalCount, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.Search.Documents.Models.FacetResult>> facets, double? coverage, Azure.Response rawResponse) { throw null; }
@@ -3311,7 +3312,7 @@ namespace Azure.Search.Documents.Models
     public partial class SearchQueryVector
     {
         public SearchQueryVector() { }
-        public string Fields { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Fields { get { throw null; } }
         public int? KNearestNeighborsCount { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<float> Value { get { throw null; } set { } }
     }

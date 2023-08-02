@@ -69,6 +69,12 @@
         },
         {
             "file":[
+                "eng/common/testproxy/dotnet-devcert.pfx"
+            ],
+            "_justification": "File contains a dev cert used to communicate locally with the test-proxy spun up by our test framework."
+        },
+        {
+            "file":[
                 "sdk/automation/Microsoft.Azure.Management.Automation/tests/SessionRecords/AutomationTest/CanCreateUpdateDeleteWebhook.json",
                 "sdk/containerservice/Azure.ResourceManager.ContainerService/tests/SessionRecords/ContainerServiceCollectionTests/GetCredentials().json",
                 "sdk/containerservice/Azure.ResourceManager.ContainerService/tests/SessionRecords/ContainerServiceCollectionTests/GetCredentials()Async.json",
