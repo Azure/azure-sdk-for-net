@@ -109,13 +109,15 @@ namespace Azure.Core
         {
             // should we harden it? we really cannot afford use-after-free bugs. they might cause data corruption.
             // should we lock other members on this instance when we are disposing?
-            for (int i = 0; i < _count; i++)
-            {
-                var buffer = _buffers[i];
-                ArrayPool<byte>.Shared.Return(buffer.Array);
-            }
-            _buffers = Array.Empty<Buffer>();
+            int bufferCountToFree = _count;
             _count = 0;
+            Buffer[] buffersToFree = _buffers;
+            _buffers = Array.Empty<Buffer>();
+
+            for (int i = 0; i < bufferCountToFree; i++)
+            {
+                ArrayPool<byte>.Shared.Return(buffersToFree[i].Array);
+            }
         }
 
         /// <inheritdoc cref="RequestContent.TryComputeLength(out long)"/>
@@ -148,42 +150,6 @@ namespace Azure.Core
                 var buffer = _buffers[i];
                 await stream.WriteAsync(buffer.Array, 0, buffer.Written).ConfigureAwait(false);
             }
-        }
-
-        private class MultiBufferSegment : ReadOnlySequenceSegment<byte>
-        {
-            public MultiBufferSegment(byte[] array, int length, long runningIndex)
-            {
-                Memory = new Memory<byte>(array, 0, length);
-                RunningIndex = runningIndex;
-            }
-
-            public void Add(byte[] array, int length)
-            {
-                Next = new MultiBufferSegment(array, length, RunningIndex + Memory.Length);
-            }
-        }
-
-        /// <summary>
-        /// Gets a <see cref="ReadOnlySequence{T}"/> representing the data written to the SequenceWriter.
-        /// </summary>
-        internal ReadOnlySequence<byte> GetReadOnlySequence()
-        {
-            if (_count == 0)
-                return ReadOnlySequence<byte>.Empty;
-
-            if (_count == 1)
-                return new ReadOnlySequence<byte>(_buffers[0].Array, 0, _buffers[0].Written);
-
-            MultiBufferSegment first = new MultiBufferSegment(_buffers[0].Array, _buffers[0].Written, 0);
-            MultiBufferSegment previous = first;
-            for (int i = 1; i < _count; i++)
-            {
-                previous!.Add(_buffers[i].Array, _buffers[i].Written);
-                previous = (MultiBufferSegment)previous.Next!;
-            }
-
-            return new ReadOnlySequence<byte>(first, 0, previous, previous.Memory.Length);
         }
     }
 }

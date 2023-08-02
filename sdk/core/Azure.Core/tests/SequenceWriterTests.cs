@@ -3,6 +3,9 @@
 
 using System;
 using System.Buffers;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -12,55 +15,124 @@ namespace Azure.Core.Tests
         [Test]
         public void ValidateEmptyBuffer()
         {
-            SequenceWriter writer = new SequenceWriter();
+            using SequenceWriter writer = new SequenceWriter();
             Assert.IsTrue(writer.TryComputeLength(out var length));
             Assert.AreEqual(0, length);
-            Assert.AreEqual(ReadOnlySequence<byte>.Empty, writer.GetReadOnlySequence());
         }
 
         [Test]
         public void ValidateSingleBuffer()
         {
-            SequenceWriter writer = new SequenceWriter(512);
+            using SequenceWriter writer = new SequenceWriter(512);
             WriteMemory(writer, 400, 0xFF);
 
-            var sequence = writer.GetReadOnlySequence();
-
-            Assert.AreEqual(400, sequence.Length);
-            Assert.AreEqual(0xFF, sequence.First.Span[0]);
-            Assert.AreEqual(0xFF, sequence.Slice(399).First.Span[0]);
+            Assert.IsTrue(writer.TryComputeLength(out var length));
+            Assert.AreEqual(400, length);
         }
 
         [Test]
         public void ValidateMultiBuffer()
         {
-            SequenceWriter writer = new SequenceWriter(512);
+            using SequenceWriter writer = new SequenceWriter(512);
             WriteMemory(writer, 400, 0xFF);
             WriteMemory(writer, 400, 0xFF);
 
-            var sequence = writer.GetReadOnlySequence();
-
-            Assert.AreEqual(800, sequence.Length);
-            Assert.AreEqual(0xFF, sequence.First.Span[0]);
-            Assert.AreEqual(0xFF, sequence.Slice(399).First.Span[0]);
-            Assert.AreEqual(0xFF, sequence.Slice(400).First.Span[0]);
-            Assert.AreEqual(0xFF, sequence.Slice(799).First.Span[0]);
+            Assert.IsTrue(writer.TryComputeLength(out var length));
+            Assert.AreEqual(800, length);
         }
 
         [Test]
         public void CanWriteMoreThanBufferSize()
         {
-            SequenceWriter writer = new SequenceWriter(512);
+            using SequenceWriter writer = new SequenceWriter(512);
             WriteMemory(writer, 513, 0xFF);
             WriteMemory(writer, 256, 0xFE);
 
             Assert.IsTrue(writer.TryComputeLength(out var length));
             Assert.AreEqual(769, length);
+        }
 
-            var sequence = writer.GetReadOnlySequence();
-            Assert.AreEqual(769, sequence.Length);
-            Assert.AreEqual(0xFF, sequence.First.Span[0]);
-            Assert.AreEqual(0xFE, sequence.Slice(514).First.Span[0]);
+        [Test]
+        public void DisposeAfterGetMemory()
+        {
+            SequenceWriter writer = new SequenceWriter(512);
+            Memory<byte> memory = writer.GetMemory(400);
+            writer.Dispose();
+            Assert.Throws<Exception>(() => memory.Span.Fill(0xFF));
+        }
+
+        [Test]
+        public async Task DisposedWhileCopying()
+        {
+            int segments = 10000;
+            int segmentSize = 400;
+            SequenceWriter writer = new SequenceWriter(512);
+            for (int i = 0; i < segments; i++)
+            {
+                WriteMemory(writer, segmentSize, 0xFF);
+            }
+
+            Assert.IsTrue(writer.TryComputeLength(out var length));
+            Assert.AreEqual(segments * segmentSize, length);
+
+            using var memory = new MemoryStream((int)length);
+            var result = Task.Run(() => { return writer.CopyToAsync(memory, default); });
+            while (memory.Length == 0) { }
+            writer.Dispose();
+            await result;
+
+            Assert.Greater(memory.Length, 0);
+            Assert.Less(memory.Length, length);
+        }
+
+        [Test]
+        public async Task DisposedWhileWriting()
+        {
+            int segments = 10000;
+            int segmentSize = 400;
+            SequenceWriter writer = new SequenceWriter(512);
+            var result = Task.Run(() =>
+            {
+                bool exceptionThrown = false;
+                try
+                {
+                    for (int i = 0; i < segments; i++)
+                    {
+                        WriteMemory(writer, segmentSize, 0xFF);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Assert.IsTrue(ex is ArgumentOutOfRangeException || ex is IndexOutOfRangeException);
+                    exceptionThrown = true;
+                }
+                finally
+                {
+                    Assert.IsTrue(exceptionThrown);
+                }
+            });
+            long sequenceLength = 0;
+            do
+            {
+                writer.TryComputeLength(out sequenceLength);
+            } while (sequenceLength == 0);
+
+            writer.Dispose();
+            await result;
+        }
+
+        [Test]
+        public void GetNewMemoryAfterDispose()
+        {
+            SequenceWriter writer = new SequenceWriter(512);
+            writer.Dispose();
+
+            Assert.IsTrue(writer.TryComputeLength(out var length));
+            Assert.AreEqual(0, length);
+
+            WriteMemory(writer, 400, 0xFF);
+            Assert.IsTrue(writer.TryComputeLength(out length));
+            Assert.AreEqual(400, length);
         }
 
         private static void WriteMemory(SequenceWriter writer, int size, byte data)

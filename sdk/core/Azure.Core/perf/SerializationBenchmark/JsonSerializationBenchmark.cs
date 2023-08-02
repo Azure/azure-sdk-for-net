@@ -24,7 +24,6 @@ namespace Azure.Core.Perf
         protected ModelSerializerOptions _options;
         private BinaryData _data;
         private SequenceWriter _content;
-        private ReadOnlySequence<byte> _sequence;
         private JsonDocument _jsonDocument;
 
         protected abstract T Deserialize(JsonElement jsonElement);
@@ -50,7 +49,6 @@ namespace Azure.Core.Perf
             using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
             _model.Serialize(writer, new ModelSerializerOptions());
             writer.Flush();
-            _sequence = _content.GetReadOnlySequence();
             _jsonDocument = JsonDocument.Parse(_json);
         }
 
@@ -174,20 +172,6 @@ namespace Azure.Core.Perf
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
             return _model.Deserialize(ref reader, _options);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("JsonDocument")]
-        public ReadOnlySequence<byte> GetSequence()
-        {
-            return _content.GetReadOnlySequence();
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("JsonDocument")]
-        public void JsonDocumentFromSequence()
-        {
-            using var doc = JsonDocument.Parse(_sequence);
         }
 
         [Benchmark]
