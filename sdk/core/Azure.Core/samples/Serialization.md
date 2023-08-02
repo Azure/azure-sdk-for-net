@@ -14,7 +14,7 @@ The latest updates to the `Azure.Core` library have simplified serializing and d
 
 The default serialization options can be overridden by passing in a `ModelSerializerOptions` object to the Serialize and Deserialize methods. Developers can set the format options to specify the serialization format such as XML, JSON, and BinaryData. Default `ModelSerializationOptions` use the `Wire` format and the `System.Text.Json` serializer. The following samples demonstrate how to use `ModelSerializer` class for `System.Text.Json` and `Newtonsoft.Json` serialization.
 
-## Using ModelSerializer for System.Text.Json
+### Using ModelSerializer for System.Text.Json
 In the following sample, we are using the default `ModelSerializerOptions`. This will allow the `ModelSerializer` to use the `System.Text.Json` serializer for all models. In the Deserialization sample, we are setting the `ModelSerializerFormat` in the Options to `Json`. This will serialize all properties including read-only and additional properties.
 
 ### Serialization
@@ -39,7 +39,7 @@ string json = @"[{""Name"":""Doggo"",""IsHungry"":true,""Weight"":1.1,""FoodCons
 DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(BinaryData.FromString(json), options);
 ```
 
-## Using ModelSerializer for NewtonSoftJson
+### Using ModelSerializer for NewtonSoftJson
 
 In the following sample, we are adding the `DogListProperty` with the `NewtonsoftJsonObjectSerializer` to the `GenericTypeSerializerCreator`. This will allow the `ModelSerializer` to use the `NewtonsoftJsonObjectSerializer` for the DogListProperty model. 
 
