@@ -34,7 +34,18 @@ namespace Azure.Communication.Chat.Tests.samples
             {
                 DisplayName = "Kim"
             };
-            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new[] { chatParticipant });
+
+            chatParticipant.Metadata.Add("MetadataKey1", "MetadataValue1");
+            chatParticipant.Metadata.Add("MetadataKey2", "MetadataValue2");
+
+            CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
+
+            createChatThreadOptions.Participants.Add(chatParticipant);
+
+            createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
+            createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
+
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
             string threadId = createChatThreadResult.ChatThread.Id;
             ChatThreadClient chatThreadClient = chatClient.GetChatThreadClient(threadId);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread

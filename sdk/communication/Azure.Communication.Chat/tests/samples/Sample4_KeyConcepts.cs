@@ -29,10 +29,10 @@ namespace Azure.Communication.Chat.Tests.samples
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
             CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
+
             createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
             createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
 
-            createChatThreadOptions.Participants.Add(new ChatParticipant(await communicationIdentityClient.CreateUserAsync()));
             CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
             ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
@@ -42,7 +42,10 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadClient_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
-            chatThreadClient.UpdateTopic(topic: "Launch meeting");
+            UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
+            updateChatThreadPropertiesOptions.Topic = "Launch meeting";
+            updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
+            await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts
