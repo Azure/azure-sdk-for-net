@@ -69,7 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             /// <summary>
             /// <see href="https://github.com/Azure/azure-rest-api-specs/blob/master/specification/applicationinsights/data-plane/Monitor.Exporters/preview/v2.1/swagger.json" />.
             /// </summary>
-            v2_1 = 2,
+            v2_1 = 1,
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public Azure.Monitor.OpenTelemetry.Exporter.AzureMonitorExporterOptions.ServiceVersion Version { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            v2_1 = 2,
+            v2_1 = 1,
         }
     }
 }
