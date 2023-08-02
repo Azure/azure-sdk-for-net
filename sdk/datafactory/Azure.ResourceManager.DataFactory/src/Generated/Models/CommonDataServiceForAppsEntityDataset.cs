@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Common Data Service for Apps entity dataset. </summary>
-    public partial class CommonDataServiceForAppsEntityDataset : DataFactoryDatasetDefinition
+    public partial class CommonDataServiceForAppsEntityDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of CommonDataServiceForAppsEntityDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

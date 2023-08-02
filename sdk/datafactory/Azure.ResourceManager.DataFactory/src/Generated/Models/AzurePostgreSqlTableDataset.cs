@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure PostgreSQL dataset. </summary>
-    public partial class AzurePostgreSqlTableDataset : DataFactoryDatasetDefinition
+    public partial class AzurePostgreSqlTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AzurePostgreSqlTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

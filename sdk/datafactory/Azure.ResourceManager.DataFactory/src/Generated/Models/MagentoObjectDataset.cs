@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Magento server dataset. </summary>
-    public partial class MagentoObjectDataset : DataFactoryDatasetDefinition
+    public partial class MagentoObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of MagentoObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

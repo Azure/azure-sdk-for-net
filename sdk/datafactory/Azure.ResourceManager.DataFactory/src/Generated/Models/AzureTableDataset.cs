@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Azure Table storage dataset. </summary>
-    public partial class AzureTableDataset : DataFactoryDatasetDefinition
+    public partial class AzureTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AzureTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

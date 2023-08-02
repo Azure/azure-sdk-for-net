@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Delimited text dataset. </summary>
-    public partial class DelimitedTextDataset : DataFactoryDatasetDefinition
+    public partial class DelimitedTextDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of DelimitedTextDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

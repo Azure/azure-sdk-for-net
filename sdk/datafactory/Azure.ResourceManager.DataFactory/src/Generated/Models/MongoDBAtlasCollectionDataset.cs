@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The MongoDB Atlas database dataset. </summary>
-    public partial class MongoDBAtlasCollectionDataset : DataFactoryDatasetDefinition
+    public partial class MongoDBAtlasCollectionDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of MongoDBAtlasCollectionDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

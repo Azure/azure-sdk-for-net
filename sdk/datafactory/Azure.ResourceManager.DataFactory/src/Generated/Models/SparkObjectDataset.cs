@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Spark Server dataset. </summary>
-    public partial class SparkObjectDataset : DataFactoryDatasetDefinition
+    public partial class SparkObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SparkObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

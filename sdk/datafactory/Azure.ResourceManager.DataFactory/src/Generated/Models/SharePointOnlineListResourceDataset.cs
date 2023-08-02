@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The sharepoint online list resource dataset. </summary>
-    public partial class SharePointOnlineListResourceDataset : DataFactoryDatasetDefinition
+    public partial class SharePointOnlineListResourceDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SharePointOnlineListResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

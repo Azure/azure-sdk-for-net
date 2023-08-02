@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryElement<string> text = default;
-            ScriptType type = default;
+            DataFactoryScriptType type = default;
             Optional<IList<ScriptActivityParameter>> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ScriptType(property.Value.GetString());
+                    type = new DataFactoryScriptType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))

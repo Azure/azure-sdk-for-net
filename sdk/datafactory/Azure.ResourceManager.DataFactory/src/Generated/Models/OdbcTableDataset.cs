@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The ODBC table dataset. </summary>
-    public partial class OdbcTableDataset : DataFactoryDatasetDefinition
+    public partial class OdbcTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of OdbcTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

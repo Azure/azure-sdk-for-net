@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SAP ODP Resource properties. </summary>
-    public partial class SapOdpResourceDataset : DataFactoryDatasetDefinition
+    public partial class SapOdpResourceDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SapOdpResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Open Data Protocol (OData) resource dataset. </summary>
-    public partial class ODataResourceDataset : DataFactoryDatasetDefinition
+    public partial class ODataResourceDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of ODataResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

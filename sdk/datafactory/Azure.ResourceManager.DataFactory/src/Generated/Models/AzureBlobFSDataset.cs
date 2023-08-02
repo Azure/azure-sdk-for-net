@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Azure Data Lake Storage Gen2 storage. </summary>
-    public partial class AzureBlobFSDataset : DataFactoryDatasetDefinition
+    public partial class AzureBlobFSDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AzureBlobFSDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The UnknownTrigger. </summary>
-    internal partial class UnknownTrigger : DataFactoryTriggerDefinition
+    internal partial class UnknownTrigger : DataFactoryTriggerProperties
     {
         /// <summary> Initializes a new instance of UnknownTrigger. </summary>
         /// <param name="triggerType"> Trigger type. </param>

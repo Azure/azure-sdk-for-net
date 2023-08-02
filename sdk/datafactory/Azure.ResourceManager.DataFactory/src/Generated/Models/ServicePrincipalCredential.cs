@@ -12,7 +12,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Service principal credential. </summary>
-    public partial class ServicePrincipalCredential : Credential
+    public partial class ServicePrincipalCredential : DataFactoryCredential
     {
         /// <summary> Initializes a new instance of ServicePrincipalCredential. </summary>
         public ServicePrincipalCredential()

@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Sybase table dataset. </summary>
-    public partial class SybaseTableDataset : DataFactoryDatasetDefinition
+    public partial class SybaseTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SybaseTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

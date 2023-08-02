@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Hubspot Service dataset. </summary>
-    public partial class HubspotObjectDataset : DataFactoryDatasetDefinition
+    public partial class HubspotObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of HubspotObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

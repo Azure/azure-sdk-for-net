@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Couchbase server dataset. </summary>
-    public partial class CouchbaseTableDataset : DataFactoryDatasetDefinition
+    public partial class CouchbaseTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of CouchbaseTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             Optional<string> hostName = default;
             Optional<string> clientId = default;
-            Optional<GitHubClientSecret> clientSecret = default;
+            Optional<FactoryGitHubClientSecret> clientSecret = default;
             string type = default;
             string accountName = default;
             string repositoryName = default;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    clientSecret = GitHubClientSecret.DeserializeGitHubClientSecret(property.Value);
+                    clientSecret = FactoryGitHubClientSecret.DeserializeFactoryGitHubClientSecret(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

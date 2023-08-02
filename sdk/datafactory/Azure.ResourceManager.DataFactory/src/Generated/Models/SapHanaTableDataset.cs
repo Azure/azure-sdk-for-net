@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> SAP HANA Table properties. </summary>
-    public partial class SapHanaTableDataset : DataFactoryDatasetDefinition
+    public partial class SapHanaTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SapHanaTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

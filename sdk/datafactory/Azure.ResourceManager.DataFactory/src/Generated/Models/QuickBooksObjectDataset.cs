@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> QuickBooks server dataset. </summary>
-    public partial class QuickBooksObjectDataset : DataFactoryDatasetDefinition
+    public partial class QuickBooksObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of QuickBooksObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
