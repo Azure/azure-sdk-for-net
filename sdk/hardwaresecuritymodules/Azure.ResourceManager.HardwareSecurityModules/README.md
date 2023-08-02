@@ -1,6 +1,8 @@
 # Microsoft Azure Hardware Security Modules management client library for .NET
 
-**[Describe the service briefly first.]**
+**Azure Cloud HSM:** Azure Cloud HSM is a single-tenant HSM solution, granting customers administrative control over a highly available HSM cluster for various functionalities like PKCS#11, TDE, SSL/TLS processing, and custom applications, while Microsoft manages service provisioning, patching, and hosting.
+
+**Azure Dedicated HSM:** Azure Dedicated HSM is a single-tenant bare metal HSM service that allows customers to lease a general-purpose HSM appliance within Microsoft datacenters, providing complete ownership, management and control. It is particularly beneficial for legacy lift-and-shift workloads.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
