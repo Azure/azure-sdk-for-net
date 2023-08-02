@@ -21,7 +21,6 @@ The Dialog relies on an already running call (see the [Create Call Sample][creat
 var callConnection = client.GetCallConnection(@event.CallConnectionId);
 var callDialog = callConnection.GetCallDialog();
 ```
-For an example on managing the connection, refer to the [Quickstart][Quickstart].
 
 ## Starting the Dialog
 
@@ -54,8 +53,21 @@ var dialogOptions = new StartDialogOptions(DialogInputType.PowerVirtualAgents, b
 await callDialog.StartDialogAsync(dialogOptions);
 ```
 
+## Dialog Events
+
+Similar to how the call is handled through events, the interactions with the Dialog API is handled through events. The possible events are as follows:
+
+| Event             | Description |
+| ----------------- | ------------ |
+| DialogStarted | The dialog has started |
+| DialogCompleted | The dialog has completed |
+| DialogFailed | The dialog has failed |
+| DialogTransfer | The IVR application has requested a call transfer |
+| DialogHangup | The IVR application has requested to hang up the call |
+| DialogLanguageChange | The IVR application has requested to change the language |
+| DialogSensitivityUpdate | The IVR application has requested to change the privacy/sensitivity of the call. Can be used to request a pause in call recording or transcription |
+
 <!-- Links -->
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/README.md#getting-started
 [create_call_sample]: https://github.com/Azure/azure-sdk-for-net/blob/a20e269162fa88a43e5ba0e5bb28f2e76c74a484/sdk/communication/Azure.Communication.CallingServer/samples/Sample1_CreateCallAsync.md
-[Quickstart]: https://github.com/Azure/communication-preview/blob/0e88fc78cc3eddaab8b8a9fe631420a2a1092eca/samples/Dialog%20Quickstart/CallAutomation_Dialog/readme.md
 [Nuance_Mix]: https://docs.nuance.com/mix/
