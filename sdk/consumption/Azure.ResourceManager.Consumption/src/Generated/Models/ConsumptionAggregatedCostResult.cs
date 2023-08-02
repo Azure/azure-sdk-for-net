@@ -13,10 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// A management group aggregated cost resource.
-    /// Serialized Name: ManagementGroupAggregatedCostResult
-    /// </summary>
+    /// <summary> A management group aggregated cost resource. </summary>
     public partial class ConsumptionAggregatedCostResult : ResourceData
     {
         /// <summary> Initializes a new instance of ConsumptionAggregatedCostResult. </summary>
@@ -33,54 +30,18 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="billingPeriodId">
-        /// The id of the billing period resource that the aggregated cost belongs to.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.billingPeriodId
-        /// </param>
-        /// <param name="usageStartOn">
-        /// The start of the date time range covered by aggregated cost.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.usageStart
-        /// </param>
-        /// <param name="usageEndOn">
-        /// The end of the date time range covered by the aggregated cost.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.usageEnd
-        /// </param>
-        /// <param name="azureCharges">
-        /// Azure Charges.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.azureCharges
-        /// </param>
-        /// <param name="marketplaceCharges">
-        /// Marketplace Charges.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.marketplaceCharges
-        /// </param>
-        /// <param name="chargesBilledSeparately">
-        /// Charges Billed Separately.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.chargesBilledSeparately
-        /// </param>
-        /// <param name="currency">
-        /// The ISO currency in which the meter is charged, for example, USD.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.currency
-        /// </param>
-        /// <param name="children">
-        /// Children of a management group
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.children
-        /// </param>
-        /// <param name="includedSubscriptions">
-        /// List of subscription Guids included in the calculation of aggregated cost
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.includedSubscriptions
-        /// </param>
-        /// <param name="excludedSubscriptions">
-        /// List of subscription Guids excluded from the calculation of aggregated cost
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.excludedSubscriptions
-        /// </param>
-        /// <param name="etag">
-        /// The etag for the resource.
-        /// Serialized Name: Resource.etag
-        /// </param>
-        /// <param name="tags">
-        /// Resource tags.
-        /// Serialized Name: Resource.tags
-        /// </param>
+        /// <param name="billingPeriodId"> The id of the billing period resource that the aggregated cost belongs to. </param>
+        /// <param name="usageStartOn"> The start of the date time range covered by aggregated cost. </param>
+        /// <param name="usageEndOn"> The end of the date time range covered by the aggregated cost. </param>
+        /// <param name="azureCharges"> Azure Charges. </param>
+        /// <param name="marketplaceCharges"> Marketplace Charges. </param>
+        /// <param name="chargesBilledSeparately"> Charges Billed Separately. </param>
+        /// <param name="currency"> The ISO currency in which the meter is charged, for example, USD. </param>
+        /// <param name="children"> Children of a management group. </param>
+        /// <param name="includedSubscriptions"> List of subscription Guids included in the calculation of aggregated cost. </param>
+        /// <param name="excludedSubscriptions"> List of subscription Guids excluded from the calculation of aggregated cost. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         internal ConsumptionAggregatedCostResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string billingPeriodId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, decimal? azureCharges, decimal? marketplaceCharges, decimal? chargesBilledSeparately, string currency, IReadOnlyList<ConsumptionAggregatedCostResult> children, IReadOnlyList<string> includedSubscriptions, IReadOnlyList<string> excludedSubscriptions, ETag? etag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             BillingPeriodId = billingPeriodId;
@@ -97,65 +58,29 @@ namespace Azure.ResourceManager.Consumption.Models
             Tags = tags;
         }
 
-        /// <summary>
-        /// The id of the billing period resource that the aggregated cost belongs to.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.billingPeriodId
-        /// </summary>
+        /// <summary> The id of the billing period resource that the aggregated cost belongs to. </summary>
         public string BillingPeriodId { get; }
-        /// <summary>
-        /// The start of the date time range covered by aggregated cost.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.usageStart
-        /// </summary>
+        /// <summary> The start of the date time range covered by aggregated cost. </summary>
         public DateTimeOffset? UsageStartOn { get; }
-        /// <summary>
-        /// The end of the date time range covered by the aggregated cost.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.usageEnd
-        /// </summary>
+        /// <summary> The end of the date time range covered by the aggregated cost. </summary>
         public DateTimeOffset? UsageEndOn { get; }
-        /// <summary>
-        /// Azure Charges.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.azureCharges
-        /// </summary>
+        /// <summary> Azure Charges. </summary>
         public decimal? AzureCharges { get; }
-        /// <summary>
-        /// Marketplace Charges.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.marketplaceCharges
-        /// </summary>
+        /// <summary> Marketplace Charges. </summary>
         public decimal? MarketplaceCharges { get; }
-        /// <summary>
-        /// Charges Billed Separately.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.chargesBilledSeparately
-        /// </summary>
+        /// <summary> Charges Billed Separately. </summary>
         public decimal? ChargesBilledSeparately { get; }
-        /// <summary>
-        /// The ISO currency in which the meter is charged, for example, USD.
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.currency
-        /// </summary>
+        /// <summary> The ISO currency in which the meter is charged, for example, USD. </summary>
         public string Currency { get; }
-        /// <summary>
-        /// Children of a management group
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.children
-        /// </summary>
+        /// <summary> Children of a management group. </summary>
         public IReadOnlyList<ConsumptionAggregatedCostResult> Children { get; }
-        /// <summary>
-        /// List of subscription Guids included in the calculation of aggregated cost
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.includedSubscriptions
-        /// </summary>
+        /// <summary> List of subscription Guids included in the calculation of aggregated cost. </summary>
         public IReadOnlyList<string> IncludedSubscriptions { get; }
-        /// <summary>
-        /// List of subscription Guids excluded from the calculation of aggregated cost
-        /// Serialized Name: ManagementGroupAggregatedCostResult.properties.excludedSubscriptions
-        /// </summary>
+        /// <summary> List of subscription Guids excluded from the calculation of aggregated cost. </summary>
         public IReadOnlyList<string> ExcludedSubscriptions { get; }
-        /// <summary>
-        /// The etag for the resource.
-        /// Serialized Name: Resource.etag
-        /// </summary>
+        /// <summary> The etag for the resource. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// Resource tags.
-        /// Serialized Name: Resource.tags
-        /// </summary>
+        /// <summary> Resource tags. </summary>
         public IReadOnlyDictionary<string, string> Tags { get; }
     }
 }

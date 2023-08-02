@@ -21,17 +21,15 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Initializes a new instance of SearchQueryVector. </summary>
         /// <param name="value"> The vector representation of a search query. </param>
-        /// <param name="k"> Number of nearest neighbors to return as top hits. </param>
-        /// <param name="fields"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
-        internal SearchQueryVector(IReadOnlyList<float> value, int? k, string fields)
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
+        internal SearchQueryVector(IReadOnlyList<float> value, int? kNearestNeighborsCount, string fieldsRaw)
         {
             Value = value;
-            K = k;
-            Fields = fields;
+            KNearestNeighborsCount = kNearestNeighborsCount;
+            FieldsRaw = fieldsRaw;
         }
         /// <summary> Number of nearest neighbors to return as top hits. </summary>
-        public int? K { get; set; }
-        /// <summary> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </summary>
-        public string Fields { get; set; }
+        public int? KNearestNeighborsCount { get; set; }
     }
 }

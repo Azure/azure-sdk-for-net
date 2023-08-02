@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Response of a single operation on a batch of instances. Only one of &quot;get&quot;, &quot;put&quot;, &quot;update&quot; or &quot;delete&quot; will be set based on the request. </summary>
+    /// <summary> Response of a single operation on a batch of instances. Only one of "get", "put", "update" or "delete" will be set based on the request. </summary>
     internal partial class InstancesBatchResponse
     {
         /// <summary> Initializes a new instance of InstancesBatchResponse. </summary>
@@ -23,10 +23,10 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary> Initializes a new instance of InstancesBatchResponse. </summary>
-        /// <param name="get"> List of instance or error objects corresponding by position to the &quot;get&quot; array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </param>
-        /// <param name="put"> List of error objects corresponding by position to the &quot;put&quot; array in the request. Error object is set when operation is unsuccessful. </param>
-        /// <param name="update"> List of error objects corresponding by position to the &quot;update&quot; array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </param>
-        /// <param name="delete"> List of error objects corresponding by position to the &quot;delete&quot; array in the request. Null means the instance has been deleted, or did not exist. Error object is set when operation is unsuccessful (e.g. when there are events associated with this time series instance). </param>
+        /// <param name="get"> List of instance or error objects corresponding by position to the "get" array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </param>
+        /// <param name="put"> List of error objects corresponding by position to the "put" array in the request. Error object is set when operation is unsuccessful. </param>
+        /// <param name="update"> List of error objects corresponding by position to the "update" array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </param>
+        /// <param name="delete"> List of error objects corresponding by position to the "delete" array in the request. Null means the instance has been deleted, or did not exist. Error object is set when operation is unsuccessful (e.g. when there are events associated with this time series instance). </param>
         internal InstancesBatchResponse(IReadOnlyList<InstancesOperationResult> @get, IReadOnlyList<InstancesOperationResult> put, IReadOnlyList<InstancesOperationResult> update, IReadOnlyList<TimeSeriesOperationError> delete)
         {
             Get = @get;
@@ -35,13 +35,13 @@ namespace Azure.IoT.TimeSeriesInsights
             Delete = delete;
         }
 
-        /// <summary> List of instance or error objects corresponding by position to the &quot;get&quot; array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
+        /// <summary> List of instance or error objects corresponding by position to the "get" array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
         public IReadOnlyList<InstancesOperationResult> Get { get; }
-        /// <summary> List of error objects corresponding by position to the &quot;put&quot; array in the request. Error object is set when operation is unsuccessful. </summary>
+        /// <summary> List of error objects corresponding by position to the "put" array in the request. Error object is set when operation is unsuccessful. </summary>
         public IReadOnlyList<InstancesOperationResult> Put { get; }
-        /// <summary> List of error objects corresponding by position to the &quot;update&quot; array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
+        /// <summary> List of error objects corresponding by position to the "update" array in the request. Instance object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
         public IReadOnlyList<InstancesOperationResult> Update { get; }
-        /// <summary> List of error objects corresponding by position to the &quot;delete&quot; array in the request. Null means the instance has been deleted, or did not exist. Error object is set when operation is unsuccessful (e.g. when there are events associated with this time series instance). </summary>
+        /// <summary> List of error objects corresponding by position to the "delete" array in the request. Null means the instance has been deleted, or did not exist. Error object is set when operation is unsuccessful (e.g. when there are events associated with this time series instance). </summary>
         public IReadOnlyList<TimeSeriesOperationError> Delete { get; }
     }
 }

@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="sessions"> Number of sessions on SessionHost. </param>
         /// <param name="agentVersion"> Version of agent on SessionHost. </param>
         /// <param name="allowNewSession"> Allow a new session. </param>
-        /// <param name="vmId"> Virtual Machine Id of SessionHost&apos;s underlying virtual machine. </param>
-        /// <param name="resourceId"> Resource Id of SessionHost&apos;s underlying virtual machine. </param>
+        /// <param name="vmId"> Virtual Machine Id of SessionHost's underlying virtual machine. </param>
+        /// <param name="resourceId"> Resource Id of SessionHost's underlying virtual machine. </param>
         /// <param name="assignedUser"> User assigned to SessionHost. </param>
         /// <param name="friendlyName"> Friendly name of SessionHost. </param>
         /// <param name="status"> Status for a SessionHost. </param>
@@ -78,9 +78,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public string AgentVersion { get; set; }
         /// <summary> Allow a new session. </summary>
         public bool? AllowNewSession { get; set; }
-        /// <summary> Virtual Machine Id of SessionHost&apos;s underlying virtual machine. </summary>
+        /// <summary> Virtual Machine Id of SessionHost's underlying virtual machine. </summary>
         public string VmId { get; }
-        /// <summary> Resource Id of SessionHost&apos;s underlying virtual machine. </summary>
+        /// <summary> Resource Id of SessionHost's underlying virtual machine. </summary>
         public ResourceIdentifier ResourceId { get; }
         /// <summary> User assigned to SessionHost. </summary>
         public string AssignedUser { get; set; }

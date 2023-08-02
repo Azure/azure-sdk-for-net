@@ -2,20 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement;
-using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Test;
-using Azure.Storage.Test.Shared;
 using Mono.Unix.Native;
 using NUnit.Framework;
 
@@ -76,8 +69,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 // Assert
                 Assert.AreEqual(path, storageResource.Path);
-                Assert.AreEqual(ProduceUriType.NoUri, storageResource.CanProduceUri);
-                Assert.AreEqual(TransferCopyMethod.None, storageResource.ServiceCopyMethod);
+                Assert.IsFalse(storageResource.CanProduceUri);
             }
         }
 
@@ -282,7 +274,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
 
             // Act
-            await storageResource.CompleteTransferAsync();
+            await storageResource.CompleteTransferAsync(false);
 
             // Assert
             Assert.IsTrue(File.Exists(path));

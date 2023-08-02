@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
         /// <param name="exposedPort"> Exposed Port in containers for TCP traffic from ingress. </param>
         /// <param name="transport"> Ingress transport protocol. </param>
-        /// <param name="traffic"> Traffic weights for app&apos;s revisions. </param>
-        /// <param name="customDomains"> custom domain bindings for Container Apps&apos; hostnames. </param>
+        /// <param name="traffic"> Traffic weights for app's revisions. </param>
+        /// <param name="customDomains"> custom domain bindings for Container Apps' hostnames. </param>
         /// <param name="allowInsecure"> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </param>
         /// <param name="ipSecurityRestrictions"> Rules to restrict incoming IP address. </param>
         /// <param name="stickySessions"> Sticky Sessions for Single Revision Mode. </param>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         public int? ExposedPort { get; set; }
         /// <summary> Ingress transport protocol. </summary>
         public ContainerAppIngressTransportMethod? Transport { get; set; }
-        /// <summary> Traffic weights for app&apos;s revisions. </summary>
+        /// <summary> Traffic weights for app's revisions. </summary>
         public IList<ContainerAppRevisionTrafficWeight> Traffic { get; }
-        /// <summary> custom domain bindings for Container Apps&apos; hostnames. </summary>
+        /// <summary> custom domain bindings for Container Apps' hostnames. </summary>
         public IList<ContainerAppCustomDomain> CustomDomains { get; }
         /// <summary> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </summary>
         public bool? AllowInsecure { get; set; }

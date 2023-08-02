@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DeploymentManager.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sourceType"> The type of artifact source used. </param>
-        /// <param name="artifactRoot"> The path from the location that the &apos;authentication&apos; property [say, a SAS URI to the blob container] refers to, to the location of the artifacts. This can be used to differentiate different versions of the artifacts. Or, different types of artifacts like binaries or templates. The location referenced by the authentication property concatenated with this optional artifactRoot path forms the artifact source location where the artifacts are expected to be found. </param>
+        /// <param name="artifactRoot"> The path from the location that the 'authentication' property [say, a SAS URI to the blob container] refers to, to the location of the artifacts. This can be used to differentiate different versions of the artifacts. Or, different types of artifacts like binaries or templates. The location referenced by the authentication property concatenated with this optional artifactRoot path forms the artifact source location where the artifacts are expected to be found. </param>
         /// <param name="authentication">
         /// The authentication method to use to access the artifact source.
         /// Please note <see cref="Authentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

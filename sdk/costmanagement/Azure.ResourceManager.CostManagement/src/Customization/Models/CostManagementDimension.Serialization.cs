@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceType type = default;
             Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<string> description = default;
-            Optional<bool> filterEnabled = default;
-            Optional<bool> groupingEnabled = default;
+            Optional<bool> IsFilterEnabled = default;
+            Optional<bool> IsGroupingEnabled = default;
             Optional<IReadOnlyList<string>> data = default;
             Optional<int> total = default;
             Optional<string> category = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            filterEnabled = property0.Value.GetBoolean();
+                            IsFilterEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("groupingEnabled"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                             {
                                 continue;
                             }
-                            groupingEnabled = property0.Value.GetBoolean();
+                            IsGroupingEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("data"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new CostManagementDimension(id, name, type, systemData.Value, description.Value, Optional.ToNullable(filterEnabled), Optional.ToNullable(groupingEnabled), Optional.ToList(data), Optional.ToNullable(total), category.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), nextLink.Value, Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags));
+            return new CostManagementDimension(id, name, type, systemData.Value, description.Value, Optional.ToNullable(IsFilterEnabled), Optional.ToNullable(IsGroupingEnabled), Optional.ToList(data), Optional.ToNullable(total), category.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), nextLink.Value, Optional.ToNullable(location), sku.Value, Optional.ToNullable(eTag), Optional.ToDictionary(tags));
         }
     }
 }

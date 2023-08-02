@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 return null;
             }
-            IReadOnlyList<PreRulesResourceData> value = default;
+            IReadOnlyList<PreRulestackRuleData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<PreRulesResourceData> array = new List<PreRulesResourceData>();
+                    List<PreRulestackRuleData> array = new List<PreRulestackRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PreRulesResourceData.DeserializePreRulesResourceData(item));
+                        array.Add(PreRulestackRuleData.DeserializePreRulestackRuleData(item));
                     }
                     value = array;
                     continue;

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    /// <summary>
-    /// The properties of the meter detail.
-    /// Serialized Name: MeterDetailsResponse
-    /// </summary>
+    /// <summary> The properties of the meter detail. </summary>
     public partial class ConsumptionMeterDetailsInfo
     {
         /// <summary> Initializes a new instance of ConsumptionMeterDetailsInfo. </summary>
@@ -19,26 +16,11 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Initializes a new instance of ConsumptionMeterDetailsInfo. </summary>
-        /// <param name="meterName">
-        /// The name of the meter, within the given meter category
-        /// Serialized Name: MeterDetailsResponse.meterName
-        /// </param>
-        /// <param name="meterCategory">
-        /// The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc..
-        /// Serialized Name: MeterDetailsResponse.meterCategory
-        /// </param>
-        /// <param name="meterSubCategory">
-        /// The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc..
-        /// Serialized Name: MeterDetailsResponse.meterSubCategory
-        /// </param>
-        /// <param name="unitOfMeasure">
-        /// The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc.
-        /// Serialized Name: MeterDetailsResponse.unitOfMeasure
-        /// </param>
-        /// <param name="serviceFamily">
-        /// The service family.
-        /// Serialized Name: MeterDetailsResponse.serviceFamily
-        /// </param>
+        /// <param name="meterName"> The name of the meter, within the given meter category. </param>
+        /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
+        /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
+        /// <param name="unitOfMeasure"> The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc. </param>
+        /// <param name="serviceFamily"> The service family. </param>
         internal ConsumptionMeterDetailsInfo(string meterName, string meterCategory, string meterSubCategory, string unitOfMeasure, string serviceFamily)
         {
             MeterName = meterName;
@@ -48,30 +30,15 @@ namespace Azure.ResourceManager.Consumption.Models
             ServiceFamily = serviceFamily;
         }
 
-        /// <summary>
-        /// The name of the meter, within the given meter category
-        /// Serialized Name: MeterDetailsResponse.meterName
-        /// </summary>
+        /// <summary> The name of the meter, within the given meter category. </summary>
         public string MeterName { get; }
-        /// <summary>
-        /// The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc..
-        /// Serialized Name: MeterDetailsResponse.meterCategory
-        /// </summary>
+        /// <summary> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </summary>
         public string MeterCategory { get; }
-        /// <summary>
-        /// The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc..
-        /// Serialized Name: MeterDetailsResponse.meterSubCategory
-        /// </summary>
+        /// <summary> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </summary>
         public string MeterSubCategory { get; }
-        /// <summary>
-        /// The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc.
-        /// Serialized Name: MeterDetailsResponse.unitOfMeasure
-        /// </summary>
+        /// <summary> The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc. </summary>
         public string UnitOfMeasure { get; }
-        /// <summary>
-        /// The service family.
-        /// Serialized Name: MeterDetailsResponse.serviceFamily
-        /// </summary>
+        /// <summary> The service family. </summary>
         public string ServiceFamily { get; }
     }
 }

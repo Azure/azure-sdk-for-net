@@ -16,32 +16,30 @@ namespace Azure.ResourceManager.NetworkCloud
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _bareMetalMachineClientDiagnostics;
-        private BareMetalMachinesRestOperations _bareMetalMachineRestClient;
-        private ClientDiagnostics _cloudServicesNetworkClientDiagnostics;
-        private CloudServicesNetworksRestOperations _cloudServicesNetworkRestClient;
-        private ClientDiagnostics _clusterManagerClientDiagnostics;
-        private ClusterManagersRestOperations _clusterManagerRestClient;
-        private ClientDiagnostics _clusterClientDiagnostics;
-        private ClustersRestOperations _clusterRestClient;
-        private ClientDiagnostics _defaultCniNetworkClientDiagnostics;
-        private DefaultCniNetworksRestOperations _defaultCniNetworkRestClient;
-        private ClientDiagnostics _hybridAksClusterClientDiagnostics;
-        private HybridAksClustersRestOperations _hybridAksClusterRestClient;
-        private ClientDiagnostics _l2NetworkClientDiagnostics;
-        private L2NetworksRestOperations _l2NetworkRestClient;
-        private ClientDiagnostics _l3NetworkClientDiagnostics;
-        private L3NetworksRestOperations _l3NetworkRestClient;
-        private ClientDiagnostics _rackClientDiagnostics;
-        private RacksRestOperations _rackRestClient;
-        private ClientDiagnostics _storageApplianceClientDiagnostics;
-        private StorageAppliancesRestOperations _storageApplianceRestClient;
-        private ClientDiagnostics _trunkedNetworkClientDiagnostics;
-        private TrunkedNetworksRestOperations _trunkedNetworkRestClient;
-        private ClientDiagnostics _virtualMachineClientDiagnostics;
-        private VirtualMachinesRestOperations _virtualMachineRestClient;
-        private ClientDiagnostics _volumeClientDiagnostics;
-        private VolumesRestOperations _volumeRestClient;
+        private ClientDiagnostics _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics;
+        private BareMetalMachinesRestOperations _networkCloudBareMetalMachineBareMetalMachinesRestClient;
+        private ClientDiagnostics _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics;
+        private CloudServicesNetworksRestOperations _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient;
+        private ClientDiagnostics _networkCloudClusterManagerClusterManagersClientDiagnostics;
+        private ClusterManagersRestOperations _networkCloudClusterManagerClusterManagersRestClient;
+        private ClientDiagnostics _networkCloudClusterClustersClientDiagnostics;
+        private ClustersRestOperations _networkCloudClusterClustersRestClient;
+        private ClientDiagnostics _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics;
+        private KubernetesClustersRestOperations _networkCloudKubernetesClusterKubernetesClustersRestClient;
+        private ClientDiagnostics _networkCloudL2NetworkL2NetworksClientDiagnostics;
+        private L2NetworksRestOperations _networkCloudL2NetworkL2NetworksRestClient;
+        private ClientDiagnostics _networkCloudL3NetworkL3NetworksClientDiagnostics;
+        private L3NetworksRestOperations _networkCloudL3NetworkL3NetworksRestClient;
+        private ClientDiagnostics _networkCloudRackRacksClientDiagnostics;
+        private RacksRestOperations _networkCloudRackRacksRestClient;
+        private ClientDiagnostics _networkCloudStorageApplianceStorageAppliancesClientDiagnostics;
+        private StorageAppliancesRestOperations _networkCloudStorageApplianceStorageAppliancesRestClient;
+        private ClientDiagnostics _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics;
+        private TrunkedNetworksRestOperations _networkCloudTrunkedNetworkTrunkedNetworksRestClient;
+        private ClientDiagnostics _networkCloudVirtualMachineVirtualMachinesClientDiagnostics;
+        private VirtualMachinesRestOperations _networkCloudVirtualMachineVirtualMachinesRestClient;
+        private ClientDiagnostics _networkCloudVolumeVolumesClientDiagnostics;
+        private VolumesRestOperations _networkCloudVolumeVolumesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -55,32 +53,30 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        private ClientDiagnostics BareMetalMachineClientDiagnostics => _bareMetalMachineClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", BareMetalMachineResource.ResourceType.Namespace, Diagnostics);
-        private BareMetalMachinesRestOperations BareMetalMachineRestClient => _bareMetalMachineRestClient ??= new BareMetalMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BareMetalMachineResource.ResourceType));
-        private ClientDiagnostics CloudServicesNetworkClientDiagnostics => _cloudServicesNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", CloudServicesNetworkResource.ResourceType.Namespace, Diagnostics);
-        private CloudServicesNetworksRestOperations CloudServicesNetworkRestClient => _cloudServicesNetworkRestClient ??= new CloudServicesNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CloudServicesNetworkResource.ResourceType));
-        private ClientDiagnostics ClusterManagerClientDiagnostics => _clusterManagerClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ClusterManagerResource.ResourceType.Namespace, Diagnostics);
-        private ClusterManagersRestOperations ClusterManagerRestClient => _clusterManagerRestClient ??= new ClusterManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterManagerResource.ResourceType));
-        private ClientDiagnostics ClusterClientDiagnostics => _clusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ClusterResource.ResourceType.Namespace, Diagnostics);
-        private ClustersRestOperations ClusterRestClient => _clusterRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ClusterResource.ResourceType));
-        private ClientDiagnostics DefaultCniNetworkClientDiagnostics => _defaultCniNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", DefaultCniNetworkResource.ResourceType.Namespace, Diagnostics);
-        private DefaultCniNetworksRestOperations DefaultCniNetworkRestClient => _defaultCniNetworkRestClient ??= new DefaultCniNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DefaultCniNetworkResource.ResourceType));
-        private ClientDiagnostics HybridAksClusterClientDiagnostics => _hybridAksClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", HybridAksClusterResource.ResourceType.Namespace, Diagnostics);
-        private HybridAksClustersRestOperations HybridAksClusterRestClient => _hybridAksClusterRestClient ??= new HybridAksClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(HybridAksClusterResource.ResourceType));
-        private ClientDiagnostics L2NetworkClientDiagnostics => _l2NetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", L2NetworkResource.ResourceType.Namespace, Diagnostics);
-        private L2NetworksRestOperations L2NetworkRestClient => _l2NetworkRestClient ??= new L2NetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(L2NetworkResource.ResourceType));
-        private ClientDiagnostics L3NetworkClientDiagnostics => _l3NetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", L3NetworkResource.ResourceType.Namespace, Diagnostics);
-        private L3NetworksRestOperations L3NetworkRestClient => _l3NetworkRestClient ??= new L3NetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(L3NetworkResource.ResourceType));
-        private ClientDiagnostics RackClientDiagnostics => _rackClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", RackResource.ResourceType.Namespace, Diagnostics);
-        private RacksRestOperations RackRestClient => _rackRestClient ??= new RacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RackResource.ResourceType));
-        private ClientDiagnostics StorageApplianceClientDiagnostics => _storageApplianceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", StorageApplianceResource.ResourceType.Namespace, Diagnostics);
-        private StorageAppliancesRestOperations StorageApplianceRestClient => _storageApplianceRestClient ??= new StorageAppliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StorageApplianceResource.ResourceType));
-        private ClientDiagnostics TrunkedNetworkClientDiagnostics => _trunkedNetworkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", TrunkedNetworkResource.ResourceType.Namespace, Diagnostics);
-        private TrunkedNetworksRestOperations TrunkedNetworkRestClient => _trunkedNetworkRestClient ??= new TrunkedNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TrunkedNetworkResource.ResourceType));
-        private ClientDiagnostics VirtualMachineClientDiagnostics => _virtualMachineClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
-        private VirtualMachinesRestOperations VirtualMachineRestClient => _virtualMachineRestClient ??= new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineResource.ResourceType));
-        private ClientDiagnostics VolumeClientDiagnostics => _volumeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", VolumeResource.ResourceType.Namespace, Diagnostics);
-        private VolumesRestOperations VolumeRestClient => _volumeRestClient ??= new VolumesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VolumeResource.ResourceType));
+        private ClientDiagnostics NetworkCloudBareMetalMachineBareMetalMachinesClientDiagnostics => _networkCloudBareMetalMachineBareMetalMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudBareMetalMachineResource.ResourceType.Namespace, Diagnostics);
+        private BareMetalMachinesRestOperations NetworkCloudBareMetalMachineBareMetalMachinesRestClient => _networkCloudBareMetalMachineBareMetalMachinesRestClient ??= new BareMetalMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudBareMetalMachineResource.ResourceType));
+        private ClientDiagnostics NetworkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics => _networkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudCloudServicesNetworkResource.ResourceType.Namespace, Diagnostics);
+        private CloudServicesNetworksRestOperations NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient => _networkCloudCloudServicesNetworkCloudServicesNetworksRestClient ??= new CloudServicesNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudCloudServicesNetworkResource.ResourceType));
+        private ClientDiagnostics NetworkCloudClusterManagerClusterManagersClientDiagnostics => _networkCloudClusterManagerClusterManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudClusterManagerResource.ResourceType.Namespace, Diagnostics);
+        private ClusterManagersRestOperations NetworkCloudClusterManagerClusterManagersRestClient => _networkCloudClusterManagerClusterManagersRestClient ??= new ClusterManagersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudClusterManagerResource.ResourceType));
+        private ClientDiagnostics NetworkCloudClusterClustersClientDiagnostics => _networkCloudClusterClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudClusterResource.ResourceType.Namespace, Diagnostics);
+        private ClustersRestOperations NetworkCloudClusterClustersRestClient => _networkCloudClusterClustersRestClient ??= new ClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudClusterResource.ResourceType));
+        private ClientDiagnostics NetworkCloudKubernetesClusterKubernetesClustersClientDiagnostics => _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudKubernetesClusterResource.ResourceType.Namespace, Diagnostics);
+        private KubernetesClustersRestOperations NetworkCloudKubernetesClusterKubernetesClustersRestClient => _networkCloudKubernetesClusterKubernetesClustersRestClient ??= new KubernetesClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudKubernetesClusterResource.ResourceType));
+        private ClientDiagnostics NetworkCloudL2NetworkL2NetworksClientDiagnostics => _networkCloudL2NetworkL2NetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudL2NetworkResource.ResourceType.Namespace, Diagnostics);
+        private L2NetworksRestOperations NetworkCloudL2NetworkL2NetworksRestClient => _networkCloudL2NetworkL2NetworksRestClient ??= new L2NetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudL2NetworkResource.ResourceType));
+        private ClientDiagnostics NetworkCloudL3NetworkL3NetworksClientDiagnostics => _networkCloudL3NetworkL3NetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudL3NetworkResource.ResourceType.Namespace, Diagnostics);
+        private L3NetworksRestOperations NetworkCloudL3NetworkL3NetworksRestClient => _networkCloudL3NetworkL3NetworksRestClient ??= new L3NetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudL3NetworkResource.ResourceType));
+        private ClientDiagnostics NetworkCloudRackRacksClientDiagnostics => _networkCloudRackRacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudRackResource.ResourceType.Namespace, Diagnostics);
+        private RacksRestOperations NetworkCloudRackRacksRestClient => _networkCloudRackRacksRestClient ??= new RacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudRackResource.ResourceType));
+        private ClientDiagnostics NetworkCloudStorageApplianceStorageAppliancesClientDiagnostics => _networkCloudStorageApplianceStorageAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudStorageApplianceResource.ResourceType.Namespace, Diagnostics);
+        private StorageAppliancesRestOperations NetworkCloudStorageApplianceStorageAppliancesRestClient => _networkCloudStorageApplianceStorageAppliancesRestClient ??= new StorageAppliancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudStorageApplianceResource.ResourceType));
+        private ClientDiagnostics NetworkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics => _networkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudTrunkedNetworkResource.ResourceType.Namespace, Diagnostics);
+        private TrunkedNetworksRestOperations NetworkCloudTrunkedNetworkTrunkedNetworksRestClient => _networkCloudTrunkedNetworkTrunkedNetworksRestClient ??= new TrunkedNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudTrunkedNetworkResource.ResourceType));
+        private ClientDiagnostics NetworkCloudVirtualMachineVirtualMachinesClientDiagnostics => _networkCloudVirtualMachineVirtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudVirtualMachineResource.ResourceType.Namespace, Diagnostics);
+        private VirtualMachinesRestOperations NetworkCloudVirtualMachineVirtualMachinesRestClient => _networkCloudVirtualMachineVirtualMachinesRestClient ??= new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudVirtualMachineResource.ResourceType));
+        private ClientDiagnostics NetworkCloudVolumeVolumesClientDiagnostics => _networkCloudVolumeVolumesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudVolumeResource.ResourceType.Namespace, Diagnostics);
+        private VolumesRestOperations NetworkCloudVolumeVolumesRestClient => _networkCloudVolumeVolumesRestClient ??= new VolumesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetworkCloudVolumeResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -88,11 +84,11 @@ namespace Azure.ResourceManager.NetworkCloud
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of RackSkuResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of RackSkuResources and their operations over a RackSkuResource. </returns>
-        public virtual RackSkuCollection GetRackSkus()
+        /// <summary> Gets a collection of NetworkCloudRackSkuResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of NetworkCloudRackSkuResources and their operations over a NetworkCloudRackSkuResource. </returns>
+        public virtual NetworkCloudRackSkuCollection GetNetworkCloudRackSkus()
         {
-            return GetCachedClient(Client => new RackSkuCollection(Client, Id));
+            return GetCachedClient(Client => new NetworkCloudRackSkuCollection(Client, Id));
         }
 
         /// <summary>
@@ -109,12 +105,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BareMetalMachineResource> GetBareMetalMachinesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudBareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BareMetalMachineRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BareMetalMachineRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BareMetalMachineResource(Client, BareMetalMachineData.DeserializeBareMetalMachineData(e)), BareMetalMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBareMetalMachines", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineResource(Client, NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(e)), NetworkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudBareMetalMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -131,12 +127,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BareMetalMachineResource> GetBareMetalMachines(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudBareMetalMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => BareMetalMachineRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BareMetalMachineRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BareMetalMachineResource(Client, BareMetalMachineData.DeserializeBareMetalMachineData(e)), BareMetalMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBareMetalMachines", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudBareMetalMachineBareMetalMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudBareMetalMachineResource(Client, NetworkCloudBareMetalMachineData.DeserializeNetworkCloudBareMetalMachineData(e)), NetworkCloudBareMetalMachineBareMetalMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudBareMetalMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -153,12 +149,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CloudServicesNetworkResource> GetCloudServicesNetworksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CloudServicesNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudServicesNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CloudServicesNetworkResource(Client, CloudServicesNetworkData.DeserializeCloudServicesNetworkData(e)), CloudServicesNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCloudServicesNetworks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudCloudServicesNetworkResource(Client, NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(e)), NetworkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudCloudServicesNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -175,12 +171,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CloudServicesNetworkResource> GetCloudServicesNetworks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudCloudServicesNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CloudServicesNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CloudServicesNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CloudServicesNetworkResource(Client, CloudServicesNetworkData.DeserializeCloudServicesNetworkData(e)), CloudServicesNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCloudServicesNetworks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudCloudServicesNetworkCloudServicesNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudCloudServicesNetworkResource(Client, NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(e)), NetworkCloudCloudServicesNetworkCloudServicesNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudCloudServicesNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -197,12 +193,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterManagerResource> GetClusterManagersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClusterManagerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ClusterManagerResource(Client, ClusterManagerData.DeserializeClusterManagerData(e)), ClusterManagerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterManagers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterManagerResource(Client, NetworkCloudClusterManagerData.DeserializeNetworkCloudClusterManagerData(e)), NetworkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudClusterManagers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -219,12 +215,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterManagerResource> GetClusterManagers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudClusterManagerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterManagerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClusterManagerRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ClusterManagerResource(Client, ClusterManagerData.DeserializeClusterManagerData(e)), ClusterManagerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterManagers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterManagerClusterManagersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterManagerResource(Client, NetworkCloudClusterManagerData.DeserializeNetworkCloudClusterManagerData(e)), NetworkCloudClusterManagerClusterManagersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudClusterManagers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,12 +237,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterResource> GetClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudClusterResource> GetNetworkCloudClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ClusterResource(Client, ClusterData.DeserializeClusterData(e)), ClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusters", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterResource(Client, NetworkCloudClusterData.DeserializeNetworkCloudClusterData(e)), NetworkCloudClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -263,100 +259,56 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterResource> GetClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudClusterResource> GetNetworkCloudClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ClusterResource(Client, ClusterData.DeserializeClusterData(e)), ClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusters", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudClusterResource(Client, NetworkCloudClusterData.DeserializeNetworkCloudClusterData(e)), NetworkCloudClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of default CNI networks in the provided subscription.
+        /// Get a list of Kubernetes clusters in the provided subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/defaultCniNetworks</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/kubernetesClusters</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DefaultCniNetworks_ListBySubscription</description>
+        /// <description>KubernetesClusters_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DefaultCniNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DefaultCniNetworkResource> GetDefaultCniNetworksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudKubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultCniNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultCniNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DefaultCniNetworkResource(Client, DefaultCniNetworkData.DeserializeDefaultCniNetworkData(e)), DefaultCniNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDefaultCniNetworks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), NetworkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudKubernetesClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of default CNI networks in the provided subscription.
+        /// Get a list of Kubernetes clusters in the provided subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/defaultCniNetworks</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/kubernetesClusters</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DefaultCniNetworks_ListBySubscription</description>
+        /// <description>KubernetesClusters_ListBySubscription</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DefaultCniNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DefaultCniNetworkResource> GetDefaultCniNetworks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudKubernetesClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultCniNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultCniNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DefaultCniNetworkResource(Client, DefaultCniNetworkData.DeserializeDefaultCniNetworkData(e)), DefaultCniNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDefaultCniNetworks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of additional details related to Hybrid AKS provisioned clusters in the provided subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/hybridAksClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridAksClusters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridAksClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HybridAksClusterResource> GetHybridAksClustersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridAksClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridAksClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HybridAksClusterResource(Client, HybridAksClusterData.DeserializeHybridAksClusterData(e)), HybridAksClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridAksClusters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of additional details related to Hybrid AKS provisioned clusters in the provided subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetworkCloud/hybridAksClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridAksClusters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridAksClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HybridAksClusterResource> GetHybridAksClusters(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HybridAksClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HybridAksClusterRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HybridAksClusterResource(Client, HybridAksClusterData.DeserializeHybridAksClusterData(e)), HybridAksClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHybridAksClusters", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudKubernetesClusterKubernetesClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudKubernetesClusterResource(Client, NetworkCloudKubernetesClusterData.DeserializeNetworkCloudKubernetesClusterData(e)), NetworkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudKubernetesClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -373,12 +325,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="L2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<L2NetworkResource> GetL2NetworksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudL2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => L2NetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => L2NetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new L2NetworkResource(Client, L2NetworkData.DeserializeL2NetworkData(e)), L2NetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetL2Networks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL2NetworkResource(Client, NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(e)), NetworkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudL2Networks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -395,12 +347,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="L2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<L2NetworkResource> GetL2Networks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudL2NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => L2NetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => L2NetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new L2NetworkResource(Client, L2NetworkData.DeserializeL2NetworkData(e)), L2NetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetL2Networks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL2NetworkL2NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL2NetworkResource(Client, NetworkCloudL2NetworkData.DeserializeNetworkCloudL2NetworkData(e)), NetworkCloudL2NetworkL2NetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudL2Networks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -417,12 +369,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="L3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<L3NetworkResource> GetL3NetworksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudL3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => L3NetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => L3NetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new L3NetworkResource(Client, L3NetworkData.DeserializeL3NetworkData(e)), L3NetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetL3Networks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), NetworkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudL3Networks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -439,12 +391,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="L3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<L3NetworkResource> GetL3Networks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudL3NetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => L3NetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => L3NetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new L3NetworkResource(Client, L3NetworkData.DeserializeL3NetworkData(e)), L3NetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetL3Networks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudL3NetworkL3NetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudL3NetworkResource(Client, NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(e)), NetworkCloudL3NetworkL3NetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudL3Networks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -461,12 +413,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RackResource> GetRacksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudRackResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudRackResource> GetNetworkCloudRacksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RackResource(Client, RackData.DeserializeRackData(e)), RackClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRacks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), NetworkCloudRackRacksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudRacks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -483,12 +435,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RackResource> GetRacks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudRackResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudRackResource> GetNetworkCloudRacks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RackResource(Client, RackData.DeserializeRackData(e)), RackClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRacks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudRackRacksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudRackResource(Client, NetworkCloudRackData.DeserializeNetworkCloudRackData(e)), NetworkCloudRackRacksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudRacks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -505,12 +457,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StorageApplianceResource> GetStorageAppliancesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudStorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageApplianceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageApplianceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageApplianceResource(Client, StorageApplianceData.DeserializeStorageApplianceData(e)), StorageApplianceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageAppliances", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudStorageApplianceResource(Client, NetworkCloudStorageApplianceData.DeserializeNetworkCloudStorageApplianceData(e)), NetworkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudStorageAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -527,12 +479,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StorageApplianceResource> GetStorageAppliances(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudStorageApplianceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StorageApplianceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StorageApplianceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageApplianceResource(Client, StorageApplianceData.DeserializeStorageApplianceData(e)), StorageApplianceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStorageAppliances", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudStorageApplianceStorageAppliancesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudStorageApplianceResource(Client, NetworkCloudStorageApplianceData.DeserializeNetworkCloudStorageApplianceData(e)), NetworkCloudStorageApplianceStorageAppliancesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudStorageAppliances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -549,12 +501,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TrunkedNetworkResource> GetTrunkedNetworksAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TrunkedNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TrunkedNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TrunkedNetworkResource(Client, TrunkedNetworkData.DeserializeTrunkedNetworkData(e)), TrunkedNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTrunkedNetworks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudTrunkedNetworkResource(Client, NetworkCloudTrunkedNetworkData.DeserializeNetworkCloudTrunkedNetworkData(e)), NetworkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudTrunkedNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -571,12 +523,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TrunkedNetworkResource> GetTrunkedNetworks(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudTrunkedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TrunkedNetworkRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TrunkedNetworkRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TrunkedNetworkResource(Client, TrunkedNetworkData.DeserializeTrunkedNetworkData(e)), TrunkedNetworkClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetTrunkedNetworks", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudTrunkedNetworkTrunkedNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudTrunkedNetworkResource(Client, NetworkCloudTrunkedNetworkData.DeserializeNetworkCloudTrunkedNetworkData(e)), NetworkCloudTrunkedNetworkTrunkedNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudTrunkedNetworks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -593,12 +545,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachines", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudVirtualMachineResource(Client, NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(e)), NetworkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -615,12 +567,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineResource> GetVirtualMachines(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualMachineRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), VirtualMachineClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualMachines", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudVirtualMachineResource(Client, NetworkCloudVirtualMachineData.DeserializeNetworkCloudVirtualMachineData(e)), NetworkCloudVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -637,12 +589,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VolumeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VolumeResource> GetVolumesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetworkCloudVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VolumeRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VolumeRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VolumeResource(Client, VolumeData.DeserializeVolumeData(e)), VolumeClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVolumes", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudVolumeResource(Client, NetworkCloudVolumeData.DeserializeNetworkCloudVolumeData(e)), NetworkCloudVolumeVolumesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudVolumes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -659,12 +611,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VolumeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VolumeResource> GetVolumes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetworkCloudVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudVolumeResource> GetNetworkCloudVolumes(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VolumeRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VolumeRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VolumeResource(Client, VolumeData.DeserializeVolumeData(e)), VolumeClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVolumes", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkCloudVolumeVolumesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkCloudVolumeResource(Client, NetworkCloudVolumeData.DeserializeNetworkCloudVolumeData(e)), NetworkCloudVolumeVolumesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkCloudVolumes", "value", "nextLink", cancellationToken);
         }
     }
 }

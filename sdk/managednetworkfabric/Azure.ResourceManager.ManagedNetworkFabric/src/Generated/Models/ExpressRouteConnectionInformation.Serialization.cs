@@ -17,8 +17,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WriteStartObject();
             writer.WritePropertyName("expressRouteCircuitId"u8);
             writer.WriteStringValue(ExpressRouteCircuitId);
-            writer.WritePropertyName("expressRouteAuthorizationKey"u8);
-            writer.WriteStringValue(ExpressRouteAuthorizationKey);
+            if (Optional.IsDefined(ExpressRouteAuthorizationKey))
+            {
+                writer.WritePropertyName("expressRouteAuthorizationKey"u8);
+                writer.WriteStringValue(ExpressRouteAuthorizationKey);
+            }
             writer.WriteEndObject();
         }
 
@@ -28,13 +31,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            string expressRouteCircuitId = default;
-            string expressRouteAuthorizationKey = default;
+            ResourceIdentifier expressRouteCircuitId = default;
+            Optional<string> expressRouteAuthorizationKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expressRouteCircuitId"u8))
                 {
-                    expressRouteCircuitId = property.Value.GetString();
+                    expressRouteCircuitId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expressRouteAuthorizationKey"u8))
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new ExpressRouteConnectionInformation(expressRouteCircuitId, expressRouteAuthorizationKey);
+            return new ExpressRouteConnectionInformation(expressRouteCircuitId, expressRouteAuthorizationKey.Value);
         }
     }
 }

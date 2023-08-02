@@ -148,7 +148,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<TimeSpan?> timeout = default;
             Optional<int?> batchSize = default;
             Optional<int?> degreeOfParallelism = default;
-            Optional<string> authResourceId = default;
+            Optional<ResourceIdentifier> authResourceId = default;
             Optional<SearchIndexerDataIdentity> authIdentity = default;
             string odataType = default;
             Optional<string> name = default;
@@ -220,7 +220,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         authResourceId = null;
                         continue;
                     }
-                    authResourceId = property.Value.GetString();
+                    authResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("authIdentity"u8))

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Deleted API Management Service information.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class DeletedServiceContract : Resource
+    public partial class DeletedServiceContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the DeletedServiceContract class.

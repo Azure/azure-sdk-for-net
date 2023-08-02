@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
         public string TopicKeySetting { get; set; }
 
         /// <summary>
-        /// Gets or sets the app setting name that contains the Event Grid topic's connection string.
+        /// Gets or sets the app setting name that contains the Event Grid topic's connection information.
         /// </summary>
         public string Connection { get; set; }
     }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.Models;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
@@ -22,27 +21,15 @@ namespace Azure.Storage.DataMovement.Blobs
 
         internal BlobStorageResourceOptions(BlobStorageResourceOptions other)
         {
-            CopyMethod = other?.CopyMethod ?? TransferCopyMethod.None;
             Metadata = other?.Metadata;
             Tags = other?.Tags;
             HttpHeaders = other?.HttpHeaders;
             AccessTier = other?.AccessTier;
-            RehydratePriority = other?.RehydratePriority;
             DestinationImmutabilityPolicy = other?.DestinationImmutabilityPolicy;
             LegalHold = other?.LegalHold;
-            CopySourceTagsMode = other?.CopySourceTagsMode;
-            CopySourceBlobProperties = other?.CopySourceBlobProperties;
             UploadTransferValidationOptions = other?.UploadTransferValidationOptions;
             DownloadTransferValidationOptions = other?.DownloadTransferValidationOptions;
         }
-
-        /// <summary>
-        /// Optional. See <see cref="TransferCopyMethod"/>.
-        /// Defines the copy operation to use. Defaults to <see cref="TransferCopyMethod.SyncCopy"/>.
-        ///
-        /// Applies to copy transfers.
-        /// </summary>
-        public TransferCopyMethod CopyMethod { get; set; }
 
         /// <summary>
         /// Optional. Defines custom metadata to set on the destination blob.
@@ -65,8 +52,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Optional. Standard HTTP header properties that can be set for the new blob.
         ///
-        /// Applies to upload transfers and copy transfers when <see cref="CopyMethod"/>
-        /// is set to <see cref="TransferCopyMethod.SyncCopy"/>.
+        /// Applies to upload and copy transfers.
         /// </summary>
         public BlobHttpHeaders HttpHeaders { get; set; }
 
@@ -79,45 +65,18 @@ namespace Azure.Storage.DataMovement.Blobs
         public AccessTier? AccessTier { get; set; }
 
         /// <summary>
-        /// Optional. See <see cref="Storage.Blobs.Models.RehydratePriority"/>.
-        /// Indicates the priority with which to rehydrate an archived blob.
-        ///
-        /// Applies to copy transfers when <see cref="CopyMethod"/> is set to <see cref="TransferCopyMethod.AsyncCopy"/>.
-        /// </summary>
-        public RehydratePriority? RehydratePriority { get; set; }
-
-        /// <summary>
         /// Optional. See <see cref="BlobImmutabilityPolicy"/>.
         ///
-        /// Applies to upload transfers and copy transfers when <see cref="CopyMethod"/>
-        /// is set to <see cref="TransferCopyMethod.AsyncCopy"/>.
+        /// Applies to upload transfers.
         /// </summary>
         public BlobImmutabilityPolicy DestinationImmutabilityPolicy { get; set; }
 
         /// <summary>
         /// Optional. Indicates if a legal hold should be placed on the blob.
         ///
-        /// Applies to upload and copy transfers.
+        /// Applies to upload transfers.
         /// </summary>
         public bool? LegalHold { get; set; }
-
-        /// <summary>
-        /// Optional.
-        /// If <see cref="BlobCopySourceTagsMode.Replace"/>, the tags on the destination blob will be set to <see cref="Tags"/>.
-        /// If <see cref="BlobCopySourceTagsMode.Copy"/>, the tags on the source blob will be copied to the destination blob.
-        /// Default is to replace.
-        ///
-        /// Applies to copy transfers.
-        /// </summary>
-        public BlobCopySourceTagsMode? CopySourceTagsMode { get; set; }
-
-        /// <summary>
-        /// Optional. The copy source blob properties behavior. If true, the properties
-        /// of the source blob will be copied to the new blob. Default is true.
-        ///
-        /// Applies to copy transfers when <see cref="CopyMethod"/> is set to <see cref="TransferCopyMethod.SyncCopy"/>.
-        /// </summary>
-        public bool? CopySourceBlobProperties { get; set; }
 
         /// <summary>
         /// Optional. Options for transfer validation settings on this operation.

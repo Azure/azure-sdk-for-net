@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Get Network Device SKU details.
+        /// Get a Network Device SKU details.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Get Network Device SKU details.
+        /// Get a Network Device SKU details.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Location information. </summary>
@@ -13,9 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of LocationExpanded. </summary>
         internal LocationExpanded()
         {
+            AvailabilityZoneMappings = new ChangeTrackingList<AvailabilityZoneMappings>();
         }
 
-        /// <summary> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </summary>
+        /// <summary> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </summary>
         public string Id { get; }
         /// <summary> The subscription ID. </summary>
         public string SubscriptionId { get; }
@@ -29,5 +33,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string RegionalDisplayName { get; }
         /// <summary> Metadata of the location, such as lat/long, paired region, and others. </summary>
         public LocationMetadata Metadata { get; }
+        /// <summary> The availability zone mappings for this region. </summary>
+        public IReadOnlyList<AvailabilityZoneMappings> AvailabilityZoneMappings { get; }
     }
 }

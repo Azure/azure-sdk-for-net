@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
         /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
-        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </param>
+        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
         /// <param name="status"> Operational status of the Disk Pool. </param>
         /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
         /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         }
 
         /// <summary> Initializes a new instance of DiskPoolZoneInfo. </summary>
-        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </param>
+        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>
         /// <param name="sku"> Determines the SKU of VM deployed for Disk Pool. </param>
         /// <returns> A new <see cref="Models.DiskPoolZoneInfo"/> instance for mocking. </returns>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="aclMode"> Mode for Target connectivity. </param>
         /// <param name="staticAcls"> Access Control List (ACL) for an iSCSI Target; defines LUN masking policy. </param>
         /// <param name="luns"> List of LUNs to be exposed through iSCSI Target. </param>
-        /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:server&quot;. </param>
+        /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:server". </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="status"> Operational status of the iSCSI Target. </param>
         /// <param name="endpoints"> List of private IPv4 addresses to connect to the iSCSI Target. </param>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         }
 
         /// <summary> Initializes a new instance of ManagedDiskIscsiLun. </summary>
-        /// <param name="name"> User defined name for iSCSI LUN; example: &quot;lun0&quot;. </param>
+        /// <param name="name"> User defined name for iSCSI LUN; example: "lun0". </param>
         /// <param name="managedDiskAzureResourceId"> Azure Resource ID of the Managed Disk. </param>
         /// <param name="lun"> Specifies the Logical Unit Number of the iSCSI LUN. </param>
         /// <returns> A new <see cref="Models.ManagedDiskIscsiLun"/> instance for mocking. </returns>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
         /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
         /// <param name="aclMode"> Mode for Target connectivity. </param>
-        /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:server&quot;. </param>
+        /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:server". </param>
         /// <param name="staticAcls"> Access Control List (ACL) for an iSCSI Target; defines LUN masking policy. </param>
         /// <param name="luns"> List of LUNs to be exposed through iSCSI Target. </param>
         /// <returns> A new <see cref="Models.DiskPoolIscsiTargetCreateOrUpdateContent"/> instance for mocking. </returns>

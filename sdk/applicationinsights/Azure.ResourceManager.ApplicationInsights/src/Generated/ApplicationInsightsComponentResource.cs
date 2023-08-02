@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         }
 
         /// <summary>
-        /// Updates an existing component&apos;s tags. To update other fields use the CreateOrUpdate method.
+        /// Updates an existing component's tags. To update other fields use the CreateOrUpdate method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         }
 
         /// <summary>
-        /// Updates an existing component&apos;s tags. To update other fields use the CreateOrUpdate method.
+        /// Updates an existing component's tags. To update other fields use the CreateOrUpdate method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary>
         /// Purges data in an Application Insights component by a set of user-defined filters.
-        /// 
+        ///
         /// In order to manage system resources, purge requests are throttled at 50 requests per hour. You should batch the execution of purge requests by sending a single command whose predicate includes all user identities that require purging. Use the in operator to specify multiple identities. You should run the query prior to using for a purge request to verify that the results are expected.
         /// Note: this operation is intended for Classic resources, for  workspace-based Application Insights resource please run purge operation (directly on the workspace)(https://docs.microsoft.com/en-us/rest/api/loganalytics/workspace-purge/purge) , scoped to specific resource id.
         /// <list type="bullet">
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         /// <summary>
         /// Purges data in an Application Insights component by a set of user-defined filters.
-        /// 
+        ///
         /// In order to manage system resources, purge requests are throttled at 50 requests per hour. You should batch the execution of purge requests by sending a single command whose predicate includes all user identities that require purging. Use the in operator to specify multiple identities. You should run the query prior to using for a purge request to verify that the results are expected.
         /// Note: this operation is intended for Classic resources, for  workspace-based Application Insights resource please run purge operation (directly on the workspace)(https://docs.microsoft.com/en-us/rest/api/loganalytics/workspace-purge/purge) , scoped to specific resource id.
         /// <list type="bullet">
@@ -2209,7 +2209,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="favoriteType"> The type of favorite. Value can be either shared or user. </param>
-        /// <param name="sourceType"> Source type of favorite to return. When left out, the source type defaults to &apos;other&apos; (not present in this enum). </param>
+        /// <param name="sourceType"> Source type of favorite to return. When left out, the source type defaults to 'other' (not present in this enum). </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable favorite. If false, only return summary content for favorites. </param>
         /// <param name="tags"> Tags that must be present on each favorite returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2234,7 +2234,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="favoriteType"> The type of favorite. Value can be either shared or user. </param>
-        /// <param name="sourceType"> Source type of favorite to return. When left out, the source type defaults to &apos;other&apos; (not present in this enum). </param>
+        /// <param name="sourceType"> Source type of favorite to return. When left out, the source type defaults to 'other' (not present in this enum). </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable favorite. If false, only return summary content for favorites. </param>
         /// <param name="tags"> Tags that must be present on each favorite returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

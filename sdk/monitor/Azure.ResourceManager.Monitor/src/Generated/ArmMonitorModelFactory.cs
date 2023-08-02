@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="location"> The location. </param>
         /// <param name="profiles"> the collection of automatic scaling profiles that specify different scaling parameters for different time periods. A maximum of 20 profiles can be specified. </param>
         /// <param name="notifications"> the collection of notifications. </param>
-        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is &apos;false&apos;. </param>
+        /// <param name="isEnabled"> the enabled flag. Specifies whether automatic scaling is enabled for the resource. The default value is 'false'. </param>
         /// <param name="predictiveAutoscalePolicy"> the predictive autoscale policy mode. </param>
         /// <param name="autoscaleSettingName"> the name of the autoscale setting. </param>
         /// <param name="targetResourceId"> the resource identifier of the resource that the autoscale setting should be added to. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AutoscaleNotification. </summary>
-        /// <param name="operation"> the operation associated with the notification and its value must be &quot;scale&quot;. </param>
+        /// <param name="operation"> the operation associated with the notification and its value must be "scale". </param>
         /// <param name="email"> the email notification. </param>
         /// <param name="webhooks"> the collection of webhook notifications. </param>
         /// <returns> A new <see cref="Models.AutoscaleNotification"/> instance for mocking. </returns>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of AutoscaleSettingPredicativeResult. </summary>
-        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
+        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="metricName"> The metrics being queried. </param>
         /// <param name="targetResourceId"> resource of the predictive metric. </param>
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="storageAccountId"> the resource id of the storage account to which you would like to send the Activity Log. </param>
-        /// <param name="serviceBusRuleId"> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: &apos;{service bus resource ID}/authorizationrules/{key name}&apos;. </param>
-        /// <param name="locations"> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the &apos;global&apos; location. </param>
-        /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: &apos;Write&apos;, &apos;Delete&apos;, and/or &apos;Action.&apos;. </param>
+        /// <param name="serviceBusRuleId"> The service bus rule ID of the service bus namespace in which you would like to have Event Hubs created for streaming the Activity Log. The rule ID is of the format: '{service bus resource ID}/authorizationrules/{key name}'. </param>
+        /// <param name="locations"> List of regions for which Activity Log events should be stored or streamed. It is a comma separated list of valid ARM locations including the 'global' location. </param>
+        /// <param name="categories"> the categories of the logs. These categories are created as is convenient to the user. Some values are: 'Write', 'Delete', and/or 'Action.'. </param>
         /// <param name="retentionPolicy"> the retention policy for the events in the log. </param>
         /// <returns> A new <see cref="Monitor.LogProfileData"/> instance for mocking. </returns>
         public static LogProfileData LogProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier storageAccountId = null, ResourceIdentifier serviceBusRuleId = null, IEnumerable<AzureLocation> locations = null, IEnumerable<string> categories = null, RetentionPolicy retentionPolicy = null)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="correlationId"> the correlation Id, usually a GUID in the string format. The correlation Id is shared among the events that belong to the same uber operation. </param>
         /// <param name="eventName"> the event name. This value should not be confused with OperationName. For practical purposes, OperationName might be more appealing to end users. </param>
         /// <param name="category"> the event category. </param>
-        /// <param name="httpRequest"> the HTTP request info. Usually includes the &apos;clientRequestId&apos;, &apos;clientIpAddress&apos; (IP address of the user who initiated the event) and &apos;method&apos; (HTTP method e.g. PUT). </param>
+        /// <param name="httpRequest"> the HTTP request info. Usually includes the 'clientRequestId', 'clientIpAddress' (IP address of the user who initiated the event) and 'method' (HTTP method e.g. PUT). </param>
         /// <param name="level"> the event level. </param>
         /// <param name="resourceGroupName"> the resource group name of the impacted resource. </param>
         /// <param name="resourceProviderName"> the resource provider name of the impacted resource. </param>
@@ -372,8 +372,8 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorMetricAvailability. </summary>
-        /// <param name="timeGrain"> the time grain specifies the aggregation interval for the metric. Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
-        /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration &apos;PT1M&apos;, &apos;P1D&apos;, etc. </param>
+        /// <param name="timeGrain"> the time grain specifies the aggregation interval for the metric. Expressed as a duration 'PT1M', 'P1D', etc. </param>
+        /// <param name="retention"> the retention period for the metric at the specified timegrain.  Expressed as a duration 'PT1M', 'P1D', etc. </param>
         /// <returns> A new <see cref="Models.MonitorMetricAvailability"/> instance for mocking. </returns>
         public static MonitorMetricAvailability MonitorMetricAvailability(TimeSpan? timeGrain = null, TimeSpan? retention = null)
         {
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="subscriptionScopeMetricType"> the resource type of the metric resource. </param>
         /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="displayDescription"> Detailed description of this metric. </param>
-        /// <param name="errorCode"> &apos;Success&apos; or the error details on query failures for this metric. </param>
+        /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeseries"> the time series returned when a data query is performed. </param>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricType"> the resource type of the metric resource. </param>
         /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="displayDescription"> Detailed description of this metric. </param>
-        /// <param name="errorCode"> &apos;Success&apos; or the error details on query failures for this metric. </param>
+        /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeseries"> the time series returned when a data query is performed. </param>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
+        /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics been queried. </param>
         /// <param name="baselines"> The baseline for each time series that was queried. </param>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="description"> the description of the metric alert that will be included in the alert email. </param>
         /// <param name="severity"> Alert severity {0, 1, 2, 3, 4}. </param>
         /// <param name="isEnabled"> the flag that indicates whether the metric alert is enabled. </param>
-        /// <param name="scopes"> the list of resource id&apos;s that this metric alert is scoped to. </param>
+        /// <param name="scopes"> the list of resource id's that this metric alert is scoped to. </param>
         /// <param name="evaluationFrequency"> how often the metric alert is evaluated represented in ISO 8601 duration format. </param>
         /// <param name="windowSize"> the period of time (in ISO 8601 duration format) that is used to monitor alert activity based on the threshold. </param>
         /// <param name="targetResourceType"> the resource type of the target resource(s) on which the alert is created/updated. Mandatory if the scope contains a subscription, resource group, or more than one resource. </param>
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="displayName"> The display name of the alert rule. </param>
         /// <param name="severity"> Severity of the alert. Should be an integer between [0-4]. Value of 0 is severest. Relevant and required only for rules of the kind LogAlert. </param>
         /// <param name="isEnabled"> The flag which indicates whether this scheduled query rule is enabled. Value should be true or false. </param>
-        /// <param name="scopes"> The list of resource id&apos;s that this scheduled query rule is scoped to. </param>
+        /// <param name="scopes"> The list of resource id's that this scheduled query rule is scoped to. </param>
         /// <param name="evaluationFrequency"> How often the scheduled query rule is evaluated represented in ISO 8601 duration format. Relevant and required only for rules of the kind LogAlert. </param>
         /// <param name="windowSize"> The period of time (in ISO 8601 duration format) on which the Alert query will be executed (bin size). Relevant and required only for rules of the kind LogAlert. </param>
         /// <param name="overrideQueryTimeRange"> If specified then overrides the query time range (default is WindowSize*NumberOfEvaluationPeriods). Relevant only for rules of the kind LogAlert. </param>
@@ -614,8 +614,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="criteriaAllOf"> The rule criteria that defines the conditions of the scheduled query rule. </param>
         /// <param name="muteActionsDuration"> Mute actions for the chosen period of time (in ISO 8601 duration format) after the alert is fired. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="actions"> Actions to invoke when the alert fires. </param>
-        /// <param name="isWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer&apos;s storage. The default is false. </param>
-        /// <param name="checkWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule should be stored in the customer&apos;s storage. The default is false. Relevant only for rules of the kind LogAlert. </param>
+        /// <param name="isWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule has been configured to be stored in the customer's storage. The default is false. </param>
+        /// <param name="checkWorkspaceAlertsStorageConfigured"> The flag which indicates whether this scheduled query rule should be stored in the customer's storage. The default is false. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="skipQueryValidation"> The flag which indicates whether the provided query should be validated or not. The default is false. Relevant only for rules of the kind LogAlert. </param>
         /// <param name="autoMitigate"> The flag that indicates whether the alert should be automatically resolved or not. The default is true. Relevant only for rules of the kind LogAlert. </param>
         /// <returns> A new <see cref="Monitor.ScheduledQueryRuleData"/> instance for mocking. </returns>
@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metadata"> Metadata about the resource. </param>
         /// <param name="streamDeclarations"> Declaration of custom streams used in this rule. </param>
         /// <param name="dataSources">
-        /// The specification of data sources. 
+        /// The specification of data sources.
         /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
         /// </param>
         /// <param name="destinations"> The specification of destinations. </param>
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="workspaceResourceId"> The resource ID of the Log Analytics workspace. </param>
         /// <param name="workspaceId"> The Customer ID of the Log Analytics workspace. </param>
         /// <param name="name">
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
         /// <returns> A new <see cref="Models.LogAnalyticsDestination"/> instance for mocking. </returns>
@@ -963,13 +963,89 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="accountResourceId"> The resource ID of the monitoring account. </param>
         /// <param name="accountId"> The immutable ID  of the account. </param>
         /// <param name="name">
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
         /// <returns> A new <see cref="Models.MonitoringAccountDestination"/> instance for mocking. </returns>
         public static MonitoringAccountDestination MonitoringAccountDestination(ResourceIdentifier accountResourceId = null, string accountId = null, string name = null)
         {
             return new MonitoringAccountDestination(accountResourceId, accountId, name);
+        }
+
+        /// <summary> Initializes a new instance of MonitorWorkspaceResourceData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="etag"> Resource entity tag (ETag). </param>
+        /// <param name="accountId"> The immutable ID of the Azure Monitor workspace. This property is read-only. </param>
+        /// <param name="metrics"> Information about metrics for the Azure Monitor workspace. </param>
+        /// <param name="provisioningState"> The provisioning state of the Azure Monitor workspace. Set to Succeeded if everything is healthy. </param>
+        /// <param name="defaultIngestionSettings"> The Data Collection Rule and Endpoint used for ingestion by default. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="publicNetworkAccess"> Gets or sets allow or disallow public network access to workspace. </param>
+        /// <returns> A new <see cref="Monitor.MonitorWorkspaceResourceData"/> instance for mocking. </returns>
+        public static MonitorWorkspaceResourceData MonitorWorkspaceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, string accountId = null, MonitorWorkspaceMetrics metrics = null, MonitorProvisioningState? provisioningState = null, MonitorWorkspaceDefaultIngestionSettings defaultIngestionSettings = null, IEnumerable<MonitorWorkspacePrivateEndpointConnection> privateEndpointConnections = null, MonitorWorkspacePublicNetworkAccess? publicNetworkAccess = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            privateEndpointConnections ??= new List<MonitorWorkspacePrivateEndpointConnection>();
+
+            return new MonitorWorkspaceResourceData(id, name, resourceType, systemData, tags, location, etag, accountId, metrics, provisioningState, defaultIngestionSettings, privateEndpointConnections?.ToList(), publicNetworkAccess);
+        }
+
+        /// <summary> Initializes a new instance of MonitorWorkspaceMetrics. </summary>
+        /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the workspace. </param>
+        /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
+        /// <returns> A new <see cref="Models.MonitorWorkspaceMetrics"/> instance for mocking. </returns>
+        public static MonitorWorkspaceMetrics MonitorWorkspaceMetrics(string prometheusQueryEndpoint = null, string internalId = null)
+        {
+            return new MonitorWorkspaceMetrics(prometheusQueryEndpoint, internalId);
+        }
+
+        /// <summary> Initializes a new instance of MonitorWorkspaceMetricProperties. </summary>
+        /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the workspace. </param>
+        /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
+        /// <returns> A new <see cref="Models.MonitorWorkspaceMetricProperties"/> instance for mocking. </returns>
+        public static MonitorWorkspaceMetricProperties MonitorWorkspaceMetricProperties(string prometheusQueryEndpoint = null, string internalId = null)
+        {
+            return new MonitorWorkspaceMetricProperties(prometheusQueryEndpoint, internalId);
+        }
+
+        /// <summary> Initializes a new instance of MonitorWorkspaceDefaultIngestionSettings. </summary>
+        /// <param name="dataCollectionRuleResourceId"> The Azure resource Id of the default data collection rule for this workspace. </param>
+        /// <param name="dataCollectionEndpointResourceId"> The Azure resource Id of the default data collection endpoint for this workspace. </param>
+        /// <returns> A new <see cref="Models.MonitorWorkspaceDefaultIngestionSettings"/> instance for mocking. </returns>
+        public static MonitorWorkspaceDefaultIngestionSettings MonitorWorkspaceDefaultIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId = null, ResourceIdentifier dataCollectionEndpointResourceId = null)
+        {
+            return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId);
+        }
+
+        /// <summary> Initializes a new instance of MonitorWorkspaceIngestionSettings. </summary>
+        /// <param name="dataCollectionRuleResourceId"> The Azure resource Id of the default data collection rule for this workspace. </param>
+        /// <param name="dataCollectionEndpointResourceId"> The Azure resource Id of the default data collection endpoint for this workspace. </param>
+        /// <returns> A new <see cref="Models.MonitorWorkspaceIngestionSettings"/> instance for mocking. </returns>
+        public static MonitorWorkspaceIngestionSettings MonitorWorkspaceIngestionSettings(ResourceIdentifier dataCollectionRuleResourceId = null, ResourceIdentifier dataCollectionEndpointResourceId = null)
+        {
+            return new MonitorWorkspaceIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId);
+        }
+
+        /// <summary> Initializes a new instance of MonitorWorkspacePrivateEndpointConnection. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="privateEndpointId"> The private endpoint resource. </param>
+        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <returns> A new <see cref="Models.MonitorWorkspacePrivateEndpointConnection"/> instance for mocking. </returns>
+        public static MonitorWorkspacePrivateEndpointConnection MonitorWorkspacePrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, MonitorPrivateLinkServiceConnectionState connectionState = null, MonitorPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        {
+            groupIds ??= new List<string>();
+
+            return new MonitorWorkspacePrivateEndpointConnection(id, name, resourceType, systemData, groupIds?.ToList(), privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
     }
 }

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.DataMovement.Tests;
 using NUnit.Framework;
 
@@ -71,7 +70,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Assert
             Assert.AreEqual(uri, storageResource.Uri);
             Assert.AreEqual(directoryName, storageResource.Path);
-            Assert.AreEqual(ProduceUriType.ProducesUri, storageResource.CanProduceUri);
+            Assert.IsTrue(storageResource.CanProduceUri);
         }
 
         [RecordedTest]
@@ -85,9 +84,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobStorageResourceContainer storageResourceContainer =
                 new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = folderName });
 
-            var resources = new List<StorageResourceBase>();
+            var resources = new List<StorageResource>();
 
-            await foreach (StorageResourceBase resource in storageResourceContainer.GetStorageResourcesAsync())
+            await foreach (StorageResource resource in storageResourceContainer.GetStorageResourcesAsync())
             {
                 resources.Add(resource);
             }
@@ -107,42 +106,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             StorageResourceContainer containerResource =
                 new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = prefix });
 
-            StorageResource resource = containerResource.GetChildStorageResource("bar");
+            StorageResourceSingle resource = containerResource.GetChildStorageResource("bar");
 
             // Assert
             StorageResourceProperties properties = await resource.GetPropertiesAsync();
             Assert.IsNotNull(properties);
             Assert.IsNotNull(properties.ETag);
-        }
-
-        [RecordedTest]
-        public async Task GetParentStorageResourceAsync()
-        {
-            await using DisposingBlobContainer test = await GetTestContainerAsync();
-            await SetUpContainerForListing(test.Container);
-
-            string prefix = "baz/bar";
-            StorageResourceContainer containerResource =
-                new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = prefix });
-
-            StorageResourceContainer resource = containerResource.GetParentStorageResourceContainer();
-
-            Assert.AreEqual("baz", resource.Path);
-        }
-
-        [RecordedTest]
-        public async Task GetParentStorageResourceAsync_Root()
-        {
-            await using DisposingBlobContainer test = await GetTestContainerAsync();
-            await SetUpContainerForListing(test.Container);
-
-            string prefix = "foo";
-            StorageResourceContainer containerResource =
-                new BlobStorageResourceContainer(test.Container, new() { DirectoryPrefix = prefix });
-
-            StorageResourceContainer resource = containerResource.GetParentStorageResourceContainer();
-
-            Assert.AreEqual(resource.Uri, test.Container.Uri);
         }
     }
 }

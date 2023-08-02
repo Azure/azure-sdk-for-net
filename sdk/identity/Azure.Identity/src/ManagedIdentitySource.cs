@@ -49,11 +49,12 @@ namespace Azure.Identity
             Exception exception = null;
             try
             {
-                using JsonDocument json = async
-                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                    : JsonDocument.Parse(response.ContentStream);
                 if (response.Status == 200)
                 {
+                    using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
+
                     return GetTokenFromResponse(json.RootElement);
                 }
             }
@@ -82,12 +83,19 @@ namespace Azure.Identity
             {
                 return null;
             }
-            response.ContentStream.Position = 0;
-            using JsonDocument json = async
-                ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
-                : JsonDocument.Parse(response.ContentStream);
+            try
+            {
+                response.ContentStream.Position = 0;
+                using JsonDocument json = async
+                    ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
+                    : JsonDocument.Parse(response.ContentStream);
 
-            return GetMessageFromResponse(json.RootElement);
+                return GetMessageFromResponse(json.RootElement);
+            }
+            catch // parsing failed
+            {
+                return "Response was not in a valid json format.";
+            }
         }
 
         protected static string GetMessageFromResponse(in JsonElement root)

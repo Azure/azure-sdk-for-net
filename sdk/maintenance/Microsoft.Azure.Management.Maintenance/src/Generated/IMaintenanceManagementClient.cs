@@ -107,6 +107,16 @@ namespace Microsoft.Azure.Management.Maintenance
         IConfigurationAssignmentsWithinSubscriptionOperations ConfigurationAssignmentsWithinSubscription { get; }
 
         /// <summary>
+        /// Gets the IConfigurationAssignmentsForSubscriptionsOperations.
+        /// </summary>
+        IConfigurationAssignmentsForSubscriptionsOperations ConfigurationAssignmentsForSubscriptions { get; }
+
+        /// <summary>
+        /// Gets the IConfigurationAssignmentsForResourceGroupOperations.
+        /// </summary>
+        IConfigurationAssignmentsForResourceGroupOperations ConfigurationAssignmentsForResourceGroup { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

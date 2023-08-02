@@ -3,18 +3,7 @@
   <members>
     <member name="GetRoleDefinitionsAsync(bool?,string,RequestContext)">
 <example>
-This sample shows how to call GetRoleDefinitionsAsync and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new RoleDefinitionsClient(endpoint, credential);
-
-Response response = await client.GetRoleDefinitionsAsync();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetRoleDefinitionsAsync with all parameters, and how to parse the result.
+This sample shows how to call GetRoleDefinitionsAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -38,18 +27,7 @@ Console.WriteLine(result[0].GetProperty("availabilityStatus").ToString());
     </member>
     <member name="GetRoleDefinitions(bool?,string,RequestContext)">
 <example>
-This sample shows how to call GetRoleDefinitions and parse the result.
-<code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new RoleDefinitionsClient(endpoint, credential);
-
-Response response = client.GetRoleDefinitions();
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result[0].ToString());
-]]></code>
-This sample shows how to call GetRoleDefinitions with all parameters, and how to parse the result.
+This sample shows how to call GetRoleDefinitions with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -121,7 +99,7 @@ Console.WriteLine(result.GetProperty("availabilityStatus").ToString());
     </member>
     <member name="GetScopesAsync(RequestContext)">
 <example>
-This sample shows how to call GetScopesAsync and parse the result.
+This sample shows how to call GetScopesAsync with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -136,7 +114,7 @@ Console.WriteLine(result[0].ToString());
     </member>
     <member name="GetScopes(RequestContext)">
 <example>
-This sample shows how to call GetScopes and parse the result.
+This sample shows how to call GetScopes with required parameters and parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");

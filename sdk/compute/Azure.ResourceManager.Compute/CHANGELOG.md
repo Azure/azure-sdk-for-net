@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.2 (2023-07-28)
+
+### Features Added
+
+- Disk RP to `2023-01-02`
+    - Added new property class `DiskImageFileFormat` to `GrantAccessData` class
 
 ## 1.2.0-beta.1 (2023-06-01)
 

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> Initializes a new instance of ExportDataset. </summary>
-        /// <param name="granularity"> The granularity of rows in the export. Currently only &apos;Daily&apos; is supported. </param>
+        /// <param name="granularity"> The granularity of rows in the export. Currently only 'Daily' is supported. </param>
         /// <param name="configuration"> The export dataset configuration. </param>
         internal ExportDataset(GranularityType? granularity, ExportDatasetConfiguration configuration)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             Configuration = configuration;
         }
 
-        /// <summary> The granularity of rows in the export. Currently only &apos;Daily&apos; is supported. </summary>
+        /// <summary> The granularity of rows in the export. Currently only 'Daily' is supported. </summary>
         public GranularityType? Granularity { get; set; }
         /// <summary> The export dataset configuration. </summary>
         internal ExportDatasetConfiguration Configuration { get; set; }

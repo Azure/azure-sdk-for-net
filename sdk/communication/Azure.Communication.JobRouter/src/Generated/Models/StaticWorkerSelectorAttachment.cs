@@ -10,30 +10,30 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Describes a label selector that will always be attached. </summary>
+    /// <summary> Describes a worker selector that will be attached to the job. </summary>
     public partial class StaticWorkerSelectorAttachment : WorkerSelectorAttachment
     {
         /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
-        /// <param name="labelSelector"> Describes a condition that must be met against a set of labels for worker selection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labelSelector"/> is null. </exception>
-        public StaticWorkerSelectorAttachment(WorkerSelector labelSelector)
+        /// <param name="workerSelector"> Describes a condition that must be met against a set of labels for worker selection. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerSelector"/> is null. </exception>
+        public StaticWorkerSelectorAttachment(RouterWorkerSelector workerSelector)
         {
-            Argument.AssertNotNull(labelSelector, nameof(labelSelector));
+            Argument.AssertNotNull(workerSelector, nameof(workerSelector));
 
-            LabelSelector = labelSelector;
+            WorkerSelector = workerSelector;
             Kind = "static";
         }
 
         /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
-        /// <param name="kind"> The type discriminator describing the type of label selector attachment. </param>
-        /// <param name="labelSelector"> Describes a condition that must be met against a set of labels for worker selection. </param>
-        internal StaticWorkerSelectorAttachment(string kind, WorkerSelector labelSelector) : base(kind)
+        /// <param name="kind"> The type discriminator describing the type of worker selector attachment. </param>
+        /// <param name="workerSelector"> Describes a condition that must be met against a set of labels for worker selection. </param>
+        internal StaticWorkerSelectorAttachment(string kind, RouterWorkerSelector workerSelector) : base(kind)
         {
-            LabelSelector = labelSelector;
+            WorkerSelector = workerSelector;
             Kind = kind ?? "static";
         }
 
         /// <summary> Describes a condition that must be met against a set of labels for worker selection. </summary>
-        public WorkerSelector LabelSelector { get; set; }
+        public RouterWorkerSelector WorkerSelector { get; set; }
     }
 }

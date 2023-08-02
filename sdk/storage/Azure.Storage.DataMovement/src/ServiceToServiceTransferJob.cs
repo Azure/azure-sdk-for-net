@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models;
+using Azure.Core.Pipeline;
 
 namespace Azure.Storage.DataMovement
 {
@@ -18,13 +18,14 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal ServiceToServiceTransferJob(
             DataTransfer dataTransfer,
-            StorageResource sourceResource,
-            StorageResource destinationResource,
+            StorageResourceSingle sourceResource,
+            StorageResourceSingle destinationResource,
             TransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer CheckPointFolderPath,
-            ErrorHandlingOptions errorHandling,
-            ArrayPool<byte> arrayPool)
+            ErrorHandlingBehavior errorHandling,
+            ArrayPool<byte> arrayPool,
+            ClientDiagnostics clientDiagnostics)
             : base(dataTransfer,
                   sourceResource,
                   destinationResource,
@@ -32,7 +33,8 @@ namespace Azure.Storage.DataMovement
                   queueChunkTask,
                   CheckPointFolderPath,
                   errorHandling,
-                  arrayPool)
+                  arrayPool,
+                  clientDiagnostics)
         {
         }
 
@@ -46,8 +48,9 @@ namespace Azure.Storage.DataMovement
             TransferOptions transferOptions,
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkpointer,
-            ErrorHandlingOptions errorHandling,
-            ArrayPool<byte> arrayPool)
+            ErrorHandlingBehavior errorHandling,
+            ArrayPool<byte> arrayPool,
+            ClientDiagnostics clientDiagnostics)
             : base(dataTransfer,
                   sourceResource,
                   destinationResource,
@@ -55,7 +58,8 @@ namespace Azure.Storage.DataMovement
                   queueChunkTask,
                   checkpointer,
                   errorHandling,
-                  arrayPool)
+                  arrayPool,
+                  clientDiagnostics)
         {
         }
 
@@ -81,7 +85,7 @@ namespace Azure.Storage.DataMovement
                             job: this,
                             partNumber: partNumber,
                             isFinalPart: true).ConfigureAwait(false);
-                        _jobParts.Add(part);
+                        AppendJobPart(part);
                     }
                     catch (Exception ex)
                     {
@@ -135,7 +139,7 @@ namespace Azure.Storage.DataMovement
             int partNumber = _jobParts.Count;
             List<string> existingSources = GetJobPartSourceResourcePaths();
             // Call listing operation on the source container
-            IAsyncEnumerator<StorageResourceBase> enumerator;
+            IAsyncEnumerator<StorageResource> enumerator;
 
             // Obtain enumerator and check for any point of failure before we attempt to list
             // and fail gracefully.
@@ -153,7 +157,7 @@ namespace Azure.Storage.DataMovement
             // List the container keep track of the last job part in order to store it properly
             // so we know we finished enumerating/listed.
             bool enumerationCompleted = false;
-            StorageResourceBase lastResource = default;
+            StorageResource lastResource = default;
             while (!enumerationCompleted)
             {
                 try
@@ -170,7 +174,7 @@ namespace Azure.Storage.DataMovement
                     yield break;
                 }
 
-                StorageResourceBase current = enumerator.Current;
+                StorageResource current = enumerator.Current;
                 if (lastResource != default)
                 {
                     string sourceName = string.IsNullOrEmpty(_sourceResourceContainer.Path)
@@ -188,10 +192,10 @@ namespace Azure.Storage.DataMovement
                             part = await ServiceToServiceJobPart.CreateJobPartAsync(
                                 job: this,
                                 partNumber: partNumber,
-                                sourceResource: (StorageResource)lastResource,
+                                sourceResource: (StorageResourceSingle)lastResource,
                                 destinationResource: _destinationResourceContainer.GetChildStorageResource(sourceName),
                                 isFinalPart: false).ConfigureAwait(false);
-                            _jobParts.Add(part);
+                            AppendJobPart(part);
                         }
                         catch (Exception ex)
                         {
@@ -220,10 +224,10 @@ namespace Azure.Storage.DataMovement
                     lastPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                             job: this,
                             partNumber: partNumber,
-                            sourceResource: (StorageResource)lastResource,
+                            sourceResource: (StorageResourceSingle)lastResource,
                             destinationResource: _destinationResourceContainer.GetChildStorageResource(lastSourceName),
                             isFinalPart: true).ConfigureAwait(false);
-                    _jobParts.Add(lastPart);
+                    AppendJobPart(lastPart);
                 }
                 catch (Exception ex)
                 {

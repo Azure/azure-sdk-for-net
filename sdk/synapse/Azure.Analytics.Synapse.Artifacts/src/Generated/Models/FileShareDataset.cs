@@ -36,8 +36,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="folderPath"> The path of the on-premises file system. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> The name of the on-premises file system. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeStart"> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeEnd"> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeStart"> The start of file's modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeEnd"> The end of file's modified datetime. Type: string (or Expression with resultType string). </param>
         /// <param name="format">
         /// The format of the files.
         /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -61,9 +61,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object FolderPath { get; set; }
         /// <summary> The name of the on-premises file system. Type: string (or Expression with resultType string). </summary>
         public object FileName { get; set; }
-        /// <summary> The start of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The start of file's modified datetime. Type: string (or Expression with resultType string). </summary>
         public object ModifiedDatetimeStart { get; set; }
-        /// <summary> The end of file&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The end of file's modified datetime. Type: string (or Expression with resultType string). </summary>
         public object ModifiedDatetimeEnd { get; set; }
         /// <summary>
         /// The format of the files.

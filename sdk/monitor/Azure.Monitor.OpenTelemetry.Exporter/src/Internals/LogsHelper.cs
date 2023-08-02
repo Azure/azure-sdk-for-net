@@ -18,7 +18,7 @@ using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class LogsHelper
+    internal static class LogsHelper
     {
         private const int Version = 2;
         private static readonly ConcurrentDictionary<int, string> s_depthCache = new ConcurrentDictionary<int, string>();
@@ -55,7 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
                 catch (Exception ex)
                 {
-                    AzureMonitorExporterEventSource.Log.WriteError("FailedToConvertLogRecord", ex);
+                    AzureMonitorExporterEventSource.Log.FailedToConvertLogRecord(instrumentationKey, ex);
                 }
             }
 
@@ -66,9 +66,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             string? message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
 
-            if (logRecord.StateValues != null)
+            if (logRecord.Attributes != null)
             {
-                ExtractProperties(ref message, properties, logRecord.StateValues);
+                ExtractProperties(ref message, properties, logRecord.Attributes);
             }
 
             WriteScopeInformation(logRecord, properties);

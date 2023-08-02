@@ -6,51 +6,139 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "8019039b247d6a958d7343f7be2618dc",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230726.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "45ac855bd0ce7c78a7db8f3673810492",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 15 May 2023 15:53:37 GMT",
+        "x-ms-date": "Wed, 26 Jul 2023 17:02:30 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "api-supported-versions": "2022-12-01, 2022-12-02-preview2",
+        "api-supported-versions": "2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
-        "Content-Length": "420",
+        "Content-Length": "1487",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 15 May 2023 15:53:41 GMT",
-        "MS-CV": "vTKHl7MFHEGVVPgPxCqAlw.0",
+        "Date": "Wed, 26 Jul 2023 17:02:29 GMT",
+        "MS-CV": "HfdGuoaj/E6kZ4bc3HGA8Q.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0g1ViZAAAAAB3/YeBOY/WToIE9CRINNt\u002BU0FPMzFFREdFMTExNwA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0o1HBZAAAAAAvGZjxnW0QRo1emnyQyvhcU04xRURHRTIxMjEAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "3099ms"
+        "X-Processing-Time": "2565ms"
       },
       "ResponseBody": {
         "countries": [
           {
+            "localizedName": "Argentina",
+            "countryCode": "AR"
+          },
+          {
+            "localizedName": "Brazil",
+            "countryCode": "BR"
+          },
+          {
             "localizedName": "Canada",
             "countryCode": "CA"
+          },
+          {
+            "localizedName": "Chile",
+            "countryCode": "CL"
+          },
+          {
+            "localizedName": "China",
+            "countryCode": "CN"
+          },
+          {
+            "localizedName": "Colombia",
+            "countryCode": "CO"
           },
           {
             "localizedName": "Denmark",
             "countryCode": "DK"
           },
           {
+            "localizedName": "Finland",
+            "countryCode": "FI"
+          },
+          {
+            "localizedName": "France",
+            "countryCode": "FR"
+          },
+          {
+            "localizedName": "Hong Kong SAR",
+            "countryCode": "HK"
+          },
+          {
+            "localizedName": "Indonesia",
+            "countryCode": "ID"
+          },
+          {
             "localizedName": "Ireland",
             "countryCode": "IE"
+          },
+          {
+            "localizedName": "Israel",
+            "countryCode": "IL"
           },
           {
             "localizedName": "Italy",
             "countryCode": "IT"
           },
           {
+            "localizedName": "Korea",
+            "countryCode": "KR"
+          },
+          {
+            "localizedName": "Malaysia",
+            "countryCode": "MY"
+          },
+          {
+            "localizedName": "Mexico",
+            "countryCode": "MX"
+          },
+          {
+            "localizedName": "Netherlands",
+            "countryCode": "NL"
+          },
+          {
+            "localizedName": "New Zealand",
+            "countryCode": "NZ"
+          },
+          {
+            "localizedName": "Philippines",
+            "countryCode": "PH"
+          },
+          {
+            "localizedName": "Poland",
+            "countryCode": "PL"
+          },
+          {
             "localizedName": "Puerto Rico",
             "countryCode": "PR"
           },
           {
+            "localizedName": "Singapore",
+            "countryCode": "SG"
+          },
+          {
+            "localizedName": "South Africa",
+            "countryCode": "ZA"
+          },
+          {
             "localizedName": "Sweden",
             "countryCode": "SE"
+          },
+          {
+            "localizedName": "Taiwan",
+            "countryCode": "TW"
+          },
+          {
+            "localizedName": "Thailand",
+            "countryCode": "TH"
+          },
+          {
+            "localizedName": "United Arab Emirates",
+            "countryCode": "AE"
           },
           {
             "localizedName": "United Kingdom",
@@ -67,6 +155,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "154697076"
+    "RandomSeed": "434870602"
   }
 }

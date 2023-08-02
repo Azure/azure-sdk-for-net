@@ -11,6 +11,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ApiManagement.Tests.ResourceProviderTests
@@ -19,7 +20,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
     {
         [Fact]
         [Trait("owner", "sasolank")]
-        public void CreateMultiRegionService()
+        public async void CreateMultiRegionService()
         {
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -28,7 +29,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
 
                 var additionalLocation = new AdditionalLocation()
                 {
-                    Location = testBase.GetLocation("Europe"),
+                    Location = testBase.GetAdditionLocation(testBase.location, "Europe"),
                     Sku = new ApiManagementServiceSkuProperties(SkuType.Premium, capacity: 1)
                 };
 
@@ -69,6 +70,9 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     serviceName: testBase.serviceName,
                     parameters: testBase.serviceProperties);
 
+                // Get service
+                createdService = await testBase.client.ApiManagementService.GetAsync(testBase.rgName, testBase.serviceName);
+
                 ValidateService(createdService,
                    testBase.serviceName,
                    testBase.rgName,
@@ -97,5 +101,5 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 });
             }
         }
-    }   
+    }
 }

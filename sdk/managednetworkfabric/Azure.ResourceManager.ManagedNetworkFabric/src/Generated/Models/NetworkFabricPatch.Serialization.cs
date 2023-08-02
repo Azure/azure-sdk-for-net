@@ -33,10 +33,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("annotation"u8);
                 writer.WriteStringValue(Annotation);
             }
+            if (Optional.IsDefined(RackCount))
+            {
+                writer.WritePropertyName("rackCount"u8);
+                writer.WriteNumberValue(RackCount.Value);
+            }
+            if (Optional.IsDefined(ServerCountPerRack))
+            {
+                writer.WritePropertyName("serverCountPerRack"u8);
+                writer.WriteNumberValue(ServerCountPerRack.Value);
+            }
+            if (Optional.IsDefined(IPv4Prefix))
+            {
+                writer.WritePropertyName("ipv4Prefix"u8);
+                writer.WriteStringValue(IPv4Prefix);
+            }
+            if (Optional.IsDefined(IPv6Prefix))
+            {
+                writer.WritePropertyName("ipv6Prefix"u8);
+                writer.WriteStringValue(IPv6Prefix);
+            }
+            if (Optional.IsDefined(FabricAsn))
+            {
+                writer.WritePropertyName("fabricASN"u8);
+                writer.WriteNumberValue(FabricAsn.Value);
+            }
             if (Optional.IsDefined(TerminalServerConfiguration))
             {
                 writer.WritePropertyName("terminalServerConfiguration"u8);
                 writer.WriteObjectValue(TerminalServerConfiguration);
+            }
+            if (Optional.IsDefined(ManagementNetworkConfiguration))
+            {
+                writer.WritePropertyName("managementNetworkConfiguration"u8);
+                writer.WriteObjectValue(ManagementNetworkConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

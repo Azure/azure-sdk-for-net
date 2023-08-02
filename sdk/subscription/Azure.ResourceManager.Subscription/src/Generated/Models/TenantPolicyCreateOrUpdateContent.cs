@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Subscription.Models
             ExemptedPrincipals = new ChangeTrackingList<Guid>();
         }
 
-        /// <summary> Blocks the leaving of subscriptions from user&apos;s tenant. </summary>
+        /// <summary> Blocks the leaving of subscriptions from user's tenant. </summary>
         public bool? BlockSubscriptionsLeavingTenant { get; set; }
-        /// <summary> Blocks the entering of subscriptions into user&apos;s tenant. </summary>
+        /// <summary> Blocks the entering of subscriptions into user's tenant. </summary>
         public bool? BlockSubscriptionsIntoTenant { get; set; }
-        /// <summary> List of user objectIds that are exempted from the set subscription tenant policies for the user&apos;s tenant. </summary>
+        /// <summary> List of user objectIds that are exempted from the set subscription tenant policies for the user's tenant. </summary>
         public IList<Guid> ExemptedPrincipals { get; }
     }
 }

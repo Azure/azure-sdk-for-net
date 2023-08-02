@@ -8,7 +8,7 @@
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Request payload for unassigning a job. </summary>
-    public partial class UnassignJobRequest
+    internal partial class UnassignJobRequest
     {
         /// <summary> Initializes a new instance of UnassignJobRequest. </summary>
         public UnassignJobRequest()
@@ -16,6 +16,6 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> If WaitForActivation is true, then the job is not queued for re-matching with a worker. </summary>
-        public bool? WaitForActivation { get; set; }
+        public bool? SuspendMatching { get; set; }
     }
 }

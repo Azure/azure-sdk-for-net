@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Azure.Communication.CallAutomation.Tests.EventCatcher;
 using Azure.Communication.Identity;
+using Azure.Communication.PhoneNumbers;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -48,6 +49,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..id");
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
+            JsonPathSanitizers.Add("$..botAppId");
+            JsonPathSanitizers.Add("$..ivrContext");
             BodyKeySanitizers.Add(new BodyKeySanitizer(@"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized") { JsonPath = "..callbackUri" });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx, "https://sanitized.skype.com"));
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.skype.com"));
@@ -279,7 +282,17 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 case CommunicationUserIdentifier:
                     return RemoveAllNonChar(((CommunicationUserIdentifier)inputIdentifier).RawId);
                 case PhoneNumberIdentifier:
-                    return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId);
+                    if (Mode == RecordedTestMode.Playback)
+                    {
+                        return "Sanitized";
+                    }
+                    else
+                    {
+                        /* Change the plus + sign to it's unicode without the special characters i.e. u002B.
+                         * It's required because the dispacther app receives the incoming call context for pstn call
+                         * with the + as unicode in it and builds the topic id with it to send the event.*/
+                        return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId).Insert(1, "u002B");
+                    }
                 case MicrosoftTeamsUserIdentifier:
                     return RemoveAllNonChar(((MicrosoftTeamsUserIdentifier)inputIdentifier).RawId);
                 default:
