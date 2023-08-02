@@ -13,6 +13,7 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Sql.Mocking;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -20,37 +21,30 @@ namespace Azure.ResourceManager.Sql
     /// <summary> A class to add extension methods to Azure.ResourceManager.Sql. </summary>
     public static partial class SqlExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SqlArmClientMockingExtension GetSqlArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new SqlArmClientMockingExtension(client);
+            });
+        }
+
+        private static SqlResourceGroupMockingExtension GetSqlResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SqlResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SqlSubscriptionMockingExtension GetSqlSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SqlSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region DataMaskingPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="DataMaskingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
@@ -61,12 +55,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DataMaskingPolicyResource" /> object. </returns>
         public static DataMaskingPolicyResource GetDataMaskingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataMaskingPolicyResource.ValidateResourceId(id);
-                return new DataMaskingPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetDataMaskingPolicyResource(id);
         }
         #endregion
 
@@ -80,12 +69,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="GeoBackupPolicyResource" /> object. </returns>
         public static GeoBackupPolicyResource GetGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GeoBackupPolicyResource.ValidateResourceId(id);
-                return new GeoBackupPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetGeoBackupPolicyResource(id);
         }
         #endregion
 
@@ -99,12 +83,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerCommunicationLinkResource" /> object. </returns>
         public static SqlServerCommunicationLinkResource GetSqlServerCommunicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerCommunicationLinkResource.ValidateResourceId(id);
-                return new SqlServerCommunicationLinkResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerCommunicationLinkResource(id);
         }
         #endregion
 
@@ -118,12 +97,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServiceObjectiveResource" /> object. </returns>
         public static ServiceObjectiveResource GetServiceObjectiveResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceObjectiveResource.ValidateResourceId(id);
-                return new ServiceObjectiveResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetServiceObjectiveResource(id);
         }
         #endregion
 
@@ -137,12 +111,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseAdvisorResource" /> object. </returns>
         public static SqlDatabaseAdvisorResource GetSqlDatabaseAdvisorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseAdvisorResource.ValidateResourceId(id);
-                return new SqlDatabaseAdvisorResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseAdvisorResource(id);
         }
         #endregion
 
@@ -156,12 +125,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerAdvisorResource" /> object. </returns>
         public static SqlServerAdvisorResource GetSqlServerAdvisorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerAdvisorResource.ValidateResourceId(id);
-                return new SqlServerAdvisorResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerAdvisorResource(id);
         }
         #endregion
 
@@ -175,12 +139,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseAutomaticTuningResource" /> object. </returns>
         public static SqlDatabaseAutomaticTuningResource GetSqlDatabaseAutomaticTuningResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseAutomaticTuningResource.ValidateResourceId(id);
-                return new SqlDatabaseAutomaticTuningResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseAutomaticTuningResource(id);
         }
         #endregion
 
@@ -194,12 +153,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseColumnResource" /> object. </returns>
         public static SqlDatabaseColumnResource GetSqlDatabaseColumnResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseColumnResource.ValidateResourceId(id);
-                return new SqlDatabaseColumnResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseColumnResource(id);
         }
         #endregion
 
@@ -213,12 +167,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseColumnResource" /> object. </returns>
         public static ManagedDatabaseColumnResource GetManagedDatabaseColumnResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseColumnResource.ValidateResourceId(id);
-                return new ManagedDatabaseColumnResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseColumnResource(id);
         }
         #endregion
 
@@ -232,12 +181,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RecommendedActionResource" /> object. </returns>
         public static RecommendedActionResource GetRecommendedActionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RecommendedActionResource.ValidateResourceId(id);
-                return new RecommendedActionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetRecommendedActionResource(id);
         }
         #endregion
 
@@ -251,12 +195,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseSchemaResource" /> object. </returns>
         public static SqlDatabaseSchemaResource GetSqlDatabaseSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseSchemaResource.ValidateResourceId(id);
-                return new SqlDatabaseSchemaResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseSchemaResource(id);
         }
         #endregion
 
@@ -270,12 +209,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseSchemaResource" /> object. </returns>
         public static ManagedDatabaseSchemaResource GetManagedDatabaseSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseSchemaResource.ValidateResourceId(id);
-                return new ManagedDatabaseSchemaResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseSchemaResource(id);
         }
         #endregion
 
@@ -289,12 +223,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseSecurityAlertPolicyResource" /> object. </returns>
         public static SqlDatabaseSecurityAlertPolicyResource GetSqlDatabaseSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new SqlDatabaseSecurityAlertPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseSecurityAlertPolicyResource(id);
         }
         #endregion
 
@@ -308,12 +237,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseTableResource" /> object. </returns>
         public static SqlDatabaseTableResource GetSqlDatabaseTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseTableResource.ValidateResourceId(id);
-                return new SqlDatabaseTableResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseTableResource(id);
         }
         #endregion
 
@@ -327,12 +251,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseTableResource" /> object. </returns>
         public static ManagedDatabaseTableResource GetManagedDatabaseTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseTableResource.ValidateResourceId(id);
-                return new ManagedDatabaseTableResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseTableResource(id);
         }
         #endregion
 
@@ -346,12 +265,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
         public static SqlDatabaseVulnerabilityAssessmentRuleBaselineResource GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
-                return new SqlDatabaseVulnerabilityAssessmentRuleBaselineResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseVulnerabilityAssessmentRuleBaselineResource(id);
         }
         #endregion
 
@@ -365,12 +279,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
         public static ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
-                return new ManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseVulnerabilityAssessmentRuleBaselineResource(id);
         }
         #endregion
 
@@ -384,12 +293,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentResource" /> object. </returns>
         public static SqlDatabaseVulnerabilityAssessmentResource GetSqlDatabaseVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new SqlDatabaseVulnerabilityAssessmentResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseVulnerabilityAssessmentResource(id);
         }
         #endregion
 
@@ -403,12 +307,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentResource" /> object. </returns>
         public static ManagedDatabaseVulnerabilityAssessmentResource GetManagedDatabaseVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new ManagedDatabaseVulnerabilityAssessmentResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseVulnerabilityAssessmentResource(id);
         }
         #endregion
 
@@ -422,12 +321,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseVulnerabilityAssessmentScanResource" /> object. </returns>
         public static SqlDatabaseVulnerabilityAssessmentScanResource GetSqlDatabaseVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseVulnerabilityAssessmentScanResource.ValidateResourceId(id);
-                return new SqlDatabaseVulnerabilityAssessmentScanResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseVulnerabilityAssessmentScanResource(id);
         }
         #endregion
 
@@ -441,12 +335,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseVulnerabilityAssessmentScanResource" /> object. </returns>
         public static ManagedDatabaseVulnerabilityAssessmentScanResource GetManagedDatabaseVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseVulnerabilityAssessmentScanResource.ValidateResourceId(id);
-                return new ManagedDatabaseVulnerabilityAssessmentScanResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseVulnerabilityAssessmentScanResource(id);
         }
         #endregion
 
@@ -460,12 +349,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DataWarehouseUserActivityResource" /> object. </returns>
         public static DataWarehouseUserActivityResource GetDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataWarehouseUserActivityResource.ValidateResourceId(id);
-                return new DataWarehouseUserActivityResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetDataWarehouseUserActivityResource(id);
         }
         #endregion
 
@@ -479,12 +363,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DeletedServerResource" /> object. </returns>
         public static DeletedServerResource GetDeletedServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeletedServerResource.ValidateResourceId(id);
-                return new DeletedServerResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetDeletedServerResource(id);
         }
         #endregion
 
@@ -498,12 +377,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="EncryptionProtectorResource" /> object. </returns>
         public static EncryptionProtectorResource GetEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                EncryptionProtectorResource.ValidateResourceId(id);
-                return new EncryptionProtectorResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetEncryptionProtectorResource(id);
         }
         #endregion
 
@@ -517,12 +391,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlFirewallRuleResource" /> object. </returns>
         public static SqlFirewallRuleResource GetSqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlFirewallRuleResource.ValidateResourceId(id);
-                return new SqlFirewallRuleResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlFirewallRuleResource(id);
         }
         #endregion
 
@@ -536,12 +405,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="InstancePoolResource" /> object. </returns>
         public static InstancePoolResource GetInstancePoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                InstancePoolResource.ValidateResourceId(id);
-                return new InstancePoolResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetInstancePoolResource(id);
         }
         #endregion
 
@@ -555,12 +419,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerJobAgentResource" /> object. </returns>
         public static SqlServerJobAgentResource GetSqlServerJobAgentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerJobAgentResource.ValidateResourceId(id);
-                return new SqlServerJobAgentResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerJobAgentResource(id);
         }
         #endregion
 
@@ -574,12 +433,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerJobCredentialResource" /> object. </returns>
         public static SqlServerJobCredentialResource GetSqlServerJobCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerJobCredentialResource.ValidateResourceId(id);
-                return new SqlServerJobCredentialResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerJobCredentialResource(id);
         }
         #endregion
 
@@ -593,12 +447,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerJobExecutionResource" /> object. </returns>
         public static SqlServerJobExecutionResource GetSqlServerJobExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerJobExecutionResource.ValidateResourceId(id);
-                return new SqlServerJobExecutionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerJobExecutionResource(id);
         }
         #endregion
 
@@ -612,12 +461,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerJobExecutionStepResource" /> object. </returns>
         public static SqlServerJobExecutionStepResource GetSqlServerJobExecutionStepResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerJobExecutionStepResource.ValidateResourceId(id);
-                return new SqlServerJobExecutionStepResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerJobExecutionStepResource(id);
         }
         #endregion
 
@@ -631,12 +475,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerJobExecutionStepTargetResource" /> object. </returns>
         public static SqlServerJobExecutionStepTargetResource GetSqlServerJobExecutionStepTargetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerJobExecutionStepTargetResource.ValidateResourceId(id);
-                return new SqlServerJobExecutionStepTargetResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerJobExecutionStepTargetResource(id);
         }
         #endregion
 
@@ -650,12 +489,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerJobResource" /> object. </returns>
         public static SqlServerJobResource GetSqlServerJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerJobResource.ValidateResourceId(id);
-                return new SqlServerJobResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerJobResource(id);
         }
         #endregion
 
@@ -669,12 +503,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerJobVersionStepResource" /> object. </returns>
         public static SqlServerJobVersionStepResource GetSqlServerJobVersionStepResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerJobVersionStepResource.ValidateResourceId(id);
-                return new SqlServerJobVersionStepResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerJobVersionStepResource(id);
         }
         #endregion
 
@@ -688,12 +517,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerJobStepResource" /> object. </returns>
         public static SqlServerJobStepResource GetSqlServerJobStepResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerJobStepResource.ValidateResourceId(id);
-                return new SqlServerJobStepResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerJobStepResource(id);
         }
         #endregion
 
@@ -707,12 +531,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerJobTargetGroupResource" /> object. </returns>
         public static SqlServerJobTargetGroupResource GetSqlServerJobTargetGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerJobTargetGroupResource.ValidateResourceId(id);
-                return new SqlServerJobTargetGroupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerJobTargetGroupResource(id);
         }
         #endregion
 
@@ -726,12 +545,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerJobVersionResource" /> object. </returns>
         public static SqlServerJobVersionResource GetSqlServerJobVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerJobVersionResource.ValidateResourceId(id);
-                return new SqlServerJobVersionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerJobVersionResource(id);
         }
         #endregion
 
@@ -745,12 +559,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="LongTermRetentionPolicyResource" /> object. </returns>
         public static LongTermRetentionPolicyResource GetLongTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LongTermRetentionPolicyResource.ValidateResourceId(id);
-                return new LongTermRetentionPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetLongTermRetentionPolicyResource(id);
         }
         #endregion
 
@@ -764,12 +573,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="MaintenanceWindowOptionResource" /> object. </returns>
         public static MaintenanceWindowOptionResource GetMaintenanceWindowOptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MaintenanceWindowOptionResource.ValidateResourceId(id);
-                return new MaintenanceWindowOptionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetMaintenanceWindowOptionResource(id);
         }
         #endregion
 
@@ -783,12 +587,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="MaintenanceWindowsResource" /> object. </returns>
         public static MaintenanceWindowsResource GetMaintenanceWindowsResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MaintenanceWindowsResource.ValidateResourceId(id);
-                return new MaintenanceWindowsResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetMaintenanceWindowsResource(id);
         }
         #endregion
 
@@ -802,12 +601,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedBackupShortTermRetentionPolicyResource" /> object. </returns>
         public static ManagedBackupShortTermRetentionPolicyResource GetManagedBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedBackupShortTermRetentionPolicyResource.ValidateResourceId(id);
-                return new ManagedBackupShortTermRetentionPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedBackupShortTermRetentionPolicyResource(id);
         }
         #endregion
 
@@ -821,12 +615,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource" /> object. </returns>
         public static ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource GetManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource.ValidateResourceId(id);
-                return new ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource(id);
         }
         #endregion
 
@@ -840,12 +629,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseSecurityAlertPolicyResource" /> object. </returns>
         public static ManagedDatabaseSecurityAlertPolicyResource GetManagedDatabaseSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new ManagedDatabaseSecurityAlertPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseSecurityAlertPolicyResource(id);
         }
         #endregion
 
@@ -859,12 +643,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedTransparentDataEncryptionResource" /> object. </returns>
         public static ManagedTransparentDataEncryptionResource GetManagedTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedTransparentDataEncryptionResource.ValidateResourceId(id);
-                return new ManagedTransparentDataEncryptionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedTransparentDataEncryptionResource(id);
         }
         #endregion
 
@@ -878,12 +657,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceAdministratorResource" /> object. </returns>
         public static ManagedInstanceAdministratorResource GetManagedInstanceAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceAdministratorResource.ValidateResourceId(id);
-                return new ManagedInstanceAdministratorResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceAdministratorResource(id);
         }
         #endregion
 
@@ -897,12 +671,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceAzureADOnlyAuthenticationResource" /> object. </returns>
         public static ManagedInstanceAzureADOnlyAuthenticationResource GetManagedInstanceAzureADOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceAzureADOnlyAuthenticationResource.ValidateResourceId(id);
-                return new ManagedInstanceAzureADOnlyAuthenticationResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceAzureADOnlyAuthenticationResource(id);
         }
         #endregion
 
@@ -916,12 +685,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceEncryptionProtectorResource" /> object. </returns>
         public static ManagedInstanceEncryptionProtectorResource GetManagedInstanceEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceEncryptionProtectorResource.ValidateResourceId(id);
-                return new ManagedInstanceEncryptionProtectorResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceEncryptionProtectorResource(id);
         }
         #endregion
 
@@ -935,12 +699,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceKeyResource" /> object. </returns>
         public static ManagedInstanceKeyResource GetManagedInstanceKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceKeyResource.ValidateResourceId(id);
-                return new ManagedInstanceKeyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceKeyResource(id);
         }
         #endregion
 
@@ -954,12 +713,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceLongTermRetentionPolicyResource" /> object. </returns>
         public static ManagedInstanceLongTermRetentionPolicyResource GetManagedInstanceLongTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceLongTermRetentionPolicyResource.ValidateResourceId(id);
-                return new ManagedInstanceLongTermRetentionPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceLongTermRetentionPolicyResource(id);
         }
         #endregion
 
@@ -973,12 +727,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceOperationResource" /> object. </returns>
         public static ManagedInstanceOperationResource GetManagedInstanceOperationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceOperationResource.ValidateResourceId(id);
-                return new ManagedInstanceOperationResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceOperationResource(id);
         }
         #endregion
 
@@ -992,12 +741,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstancePrivateEndpointConnectionResource" /> object. </returns>
         public static ManagedInstancePrivateEndpointConnectionResource GetManagedInstancePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstancePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new ManagedInstancePrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstancePrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -1011,12 +755,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstancePrivateLinkResource" /> object. </returns>
         public static ManagedInstancePrivateLinkResource GetManagedInstancePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstancePrivateLinkResource.ValidateResourceId(id);
-                return new ManagedInstancePrivateLinkResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstancePrivateLinkResource(id);
         }
         #endregion
 
@@ -1030,12 +769,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceVulnerabilityAssessmentResource" /> object. </returns>
         public static ManagedInstanceVulnerabilityAssessmentResource GetManagedInstanceVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new ManagedInstanceVulnerabilityAssessmentResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceVulnerabilityAssessmentResource(id);
         }
         #endregion
 
@@ -1049,12 +783,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedServerSecurityAlertPolicyResource" /> object. </returns>
         public static ManagedServerSecurityAlertPolicyResource GetManagedServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedServerSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new ManagedServerSecurityAlertPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedServerSecurityAlertPolicyResource(id);
         }
         #endregion
 
@@ -1068,12 +797,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlPrivateEndpointConnectionResource" /> object. </returns>
         public static SqlPrivateEndpointConnectionResource GetSqlPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new SqlPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -1087,12 +811,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlPrivateLinkResource" /> object. </returns>
         public static SqlPrivateLinkResource GetSqlPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlPrivateLinkResource.ValidateResourceId(id);
-                return new SqlPrivateLinkResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlPrivateLinkResource(id);
         }
         #endregion
 
@@ -1106,12 +825,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RecoverableManagedDatabaseResource" /> object. </returns>
         public static RecoverableManagedDatabaseResource GetRecoverableManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RecoverableManagedDatabaseResource.ValidateResourceId(id);
-                return new RecoverableManagedDatabaseResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetRecoverableManagedDatabaseResource(id);
         }
         #endregion
 
@@ -1125,12 +839,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerDatabaseRestorePointResource" /> object. </returns>
         public static SqlServerDatabaseRestorePointResource GetSqlServerDatabaseRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerDatabaseRestorePointResource.ValidateResourceId(id);
-                return new SqlServerDatabaseRestorePointResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerDatabaseRestorePointResource(id);
         }
         #endregion
 
@@ -1144,12 +853,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerAutomaticTuningResource" /> object. </returns>
         public static SqlServerAutomaticTuningResource GetSqlServerAutomaticTuningResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerAutomaticTuningResource.ValidateResourceId(id);
-                return new SqlServerAutomaticTuningResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerAutomaticTuningResource(id);
         }
         #endregion
 
@@ -1163,12 +867,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerAzureADAdministratorResource" /> object. </returns>
         public static SqlServerAzureADAdministratorResource GetSqlServerAzureADAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerAzureADAdministratorResource.ValidateResourceId(id);
-                return new SqlServerAzureADAdministratorResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerAzureADAdministratorResource(id);
         }
         #endregion
 
@@ -1182,12 +881,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerAzureADOnlyAuthenticationResource" /> object. </returns>
         public static SqlServerAzureADOnlyAuthenticationResource GetSqlServerAzureADOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerAzureADOnlyAuthenticationResource.ValidateResourceId(id);
-                return new SqlServerAzureADOnlyAuthenticationResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerAzureADOnlyAuthenticationResource(id);
         }
         #endregion
 
@@ -1201,12 +895,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerDevOpsAuditingSettingResource" /> object. </returns>
         public static SqlServerDevOpsAuditingSettingResource GetSqlServerDevOpsAuditingSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerDevOpsAuditingSettingResource.ValidateResourceId(id);
-                return new SqlServerDevOpsAuditingSettingResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerDevOpsAuditingSettingResource(id);
         }
         #endregion
 
@@ -1220,12 +909,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerDnsAliasResource" /> object. </returns>
         public static SqlServerDnsAliasResource GetSqlServerDnsAliasResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerDnsAliasResource.ValidateResourceId(id);
-                return new SqlServerDnsAliasResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerDnsAliasResource(id);
         }
         #endregion
 
@@ -1239,12 +923,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerKeyResource" /> object. </returns>
         public static SqlServerKeyResource GetSqlServerKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerKeyResource.ValidateResourceId(id);
-                return new SqlServerKeyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerKeyResource(id);
         }
         #endregion
 
@@ -1258,12 +937,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerSecurityAlertPolicyResource" /> object. </returns>
         public static SqlServerSecurityAlertPolicyResource GetSqlServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new SqlServerSecurityAlertPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerSecurityAlertPolicyResource(id);
         }
         #endregion
 
@@ -1277,12 +951,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerTrustGroupResource" /> object. </returns>
         public static SqlServerTrustGroupResource GetSqlServerTrustGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerTrustGroupResource.ValidateResourceId(id);
-                return new SqlServerTrustGroupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerTrustGroupResource(id);
         }
         #endregion
 
@@ -1296,12 +965,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerVulnerabilityAssessmentResource" /> object. </returns>
         public static SqlServerVulnerabilityAssessmentResource GetSqlServerVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new SqlServerVulnerabilityAssessmentResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerVulnerabilityAssessmentResource(id);
         }
         #endregion
 
@@ -1315,12 +979,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlAgentConfigurationResource" /> object. </returns>
         public static SqlAgentConfigurationResource GetSqlAgentConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlAgentConfigurationResource.ValidateResourceId(id);
-                return new SqlAgentConfigurationResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlAgentConfigurationResource(id);
         }
         #endregion
 
@@ -1334,12 +993,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SubscriptionUsageResource" /> object. </returns>
         public static SubscriptionUsageResource GetSubscriptionUsageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionUsageResource.ValidateResourceId(id);
-                return new SubscriptionUsageResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSubscriptionUsageResource(id);
         }
         #endregion
 
@@ -1353,12 +1007,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SyncAgentResource" /> object. </returns>
         public static SyncAgentResource GetSyncAgentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SyncAgentResource.ValidateResourceId(id);
-                return new SyncAgentResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSyncAgentResource(id);
         }
         #endregion
 
@@ -1372,12 +1021,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SyncGroupResource" /> object. </returns>
         public static SyncGroupResource GetSyncGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SyncGroupResource.ValidateResourceId(id);
-                return new SyncGroupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSyncGroupResource(id);
         }
         #endregion
 
@@ -1391,12 +1035,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SyncMemberResource" /> object. </returns>
         public static SyncMemberResource GetSyncMemberResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SyncMemberResource.ValidateResourceId(id);
-                return new SyncMemberResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSyncMemberResource(id);
         }
         #endregion
 
@@ -1410,12 +1049,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlTimeZoneResource" /> object. </returns>
         public static SqlTimeZoneResource GetSqlTimeZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlTimeZoneResource.ValidateResourceId(id);
-                return new SqlTimeZoneResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlTimeZoneResource(id);
         }
         #endregion
 
@@ -1429,12 +1063,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerVirtualNetworkRuleResource" /> object. </returns>
         public static SqlServerVirtualNetworkRuleResource GetSqlServerVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerVirtualNetworkRuleResource.ValidateResourceId(id);
-                return new SqlServerVirtualNetworkRuleResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerVirtualNetworkRuleResource(id);
         }
         #endregion
 
@@ -1448,12 +1077,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="WorkloadClassifierResource" /> object. </returns>
         public static WorkloadClassifierResource GetWorkloadClassifierResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadClassifierResource.ValidateResourceId(id);
-                return new WorkloadClassifierResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetWorkloadClassifierResource(id);
         }
         #endregion
 
@@ -1467,12 +1091,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="WorkloadGroupResource" /> object. </returns>
         public static WorkloadGroupResource GetWorkloadGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WorkloadGroupResource.ValidateResourceId(id);
-                return new WorkloadGroupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetWorkloadGroupResource(id);
         }
         #endregion
 
@@ -1486,12 +1105,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="BackupShortTermRetentionPolicyResource" /> object. </returns>
         public static BackupShortTermRetentionPolicyResource GetBackupShortTermRetentionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BackupShortTermRetentionPolicyResource.ValidateResourceId(id);
-                return new BackupShortTermRetentionPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetBackupShortTermRetentionPolicyResource(id);
         }
         #endregion
 
@@ -1505,12 +1119,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="LedgerDigestUploadResource" /> object. </returns>
         public static LedgerDigestUploadResource GetLedgerDigestUploadResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LedgerDigestUploadResource.ValidateResourceId(id);
-                return new LedgerDigestUploadResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetLedgerDigestUploadResource(id);
         }
         #endregion
 
@@ -1524,12 +1133,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="OutboundFirewallRuleResource" /> object. </returns>
         public static OutboundFirewallRuleResource GetOutboundFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OutboundFirewallRuleResource.ValidateResourceId(id);
-                return new OutboundFirewallRuleResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetOutboundFirewallRuleResource(id);
         }
         #endregion
 
@@ -1543,12 +1147,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionBackupResource" /> object. </returns>
         public static SubscriptionLongTermRetentionBackupResource GetSubscriptionLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionLongTermRetentionBackupResource.ValidateResourceId(id);
-                return new SubscriptionLongTermRetentionBackupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSubscriptionLongTermRetentionBackupResource(id);
         }
         #endregion
 
@@ -1562,12 +1161,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionBackupResource" /> object. </returns>
         public static ResourceGroupLongTermRetentionBackupResource GetResourceGroupLongTermRetentionBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGroupLongTermRetentionBackupResource.ValidateResourceId(id);
-                return new ResourceGroupLongTermRetentionBackupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetResourceGroupLongTermRetentionBackupResource(id);
         }
         #endregion
 
@@ -1581,12 +1175,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SubscriptionLongTermRetentionManagedInstanceBackupResource" /> object. </returns>
         public static SubscriptionLongTermRetentionManagedInstanceBackupResource GetSubscriptionLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionLongTermRetentionManagedInstanceBackupResource.ValidateResourceId(id);
-                return new SubscriptionLongTermRetentionManagedInstanceBackupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSubscriptionLongTermRetentionManagedInstanceBackupResource(id);
         }
         #endregion
 
@@ -1600,12 +1189,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ResourceGroupLongTermRetentionManagedInstanceBackupResource" /> object. </returns>
         public static ResourceGroupLongTermRetentionManagedInstanceBackupResource GetResourceGroupLongTermRetentionManagedInstanceBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGroupLongTermRetentionManagedInstanceBackupResource.ValidateResourceId(id);
-                return new ResourceGroupLongTermRetentionManagedInstanceBackupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetResourceGroupLongTermRetentionManagedInstanceBackupResource(id);
         }
         #endregion
 
@@ -1619,12 +1203,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RestorableDroppedManagedDatabaseResource" /> object. </returns>
         public static RestorableDroppedManagedDatabaseResource GetRestorableDroppedManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RestorableDroppedManagedDatabaseResource.ValidateResourceId(id);
-                return new RestorableDroppedManagedDatabaseResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetRestorableDroppedManagedDatabaseResource(id);
         }
         #endregion
 
@@ -1638,12 +1217,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerConnectionPolicyResource" /> object. </returns>
         public static SqlServerConnectionPolicyResource GetSqlServerConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerConnectionPolicyResource.ValidateResourceId(id);
-                return new SqlServerConnectionPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerConnectionPolicyResource(id);
         }
         #endregion
 
@@ -1657,12 +1231,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DistributedAvailabilityGroupResource" /> object. </returns>
         public static DistributedAvailabilityGroupResource GetDistributedAvailabilityGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DistributedAvailabilityGroupResource.ValidateResourceId(id);
-                return new DistributedAvailabilityGroupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetDistributedAvailabilityGroupResource(id);
         }
         #endregion
 
@@ -1676,12 +1245,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceServerTrustCertificateResource" /> object. </returns>
         public static ManagedInstanceServerTrustCertificateResource GetManagedInstanceServerTrustCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceServerTrustCertificateResource.ValidateResourceId(id);
-                return new ManagedInstanceServerTrustCertificateResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceServerTrustCertificateResource(id);
         }
         #endregion
 
@@ -1695,12 +1259,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="EndpointCertificateResource" /> object. </returns>
         public static EndpointCertificateResource GetEndpointCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                EndpointCertificateResource.ValidateResourceId(id);
-                return new EndpointCertificateResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetEndpointCertificateResource(id);
         }
         #endregion
 
@@ -1714,12 +1273,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseSensitivityLabelResource" /> object. </returns>
         public static ManagedDatabaseSensitivityLabelResource GetManagedDatabaseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseSensitivityLabelResource.ValidateResourceId(id);
-                return new ManagedDatabaseSensitivityLabelResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseSensitivityLabelResource(id);
         }
         #endregion
 
@@ -1733,12 +1287,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseSensitivityLabelResource" /> object. </returns>
         public static SqlDatabaseSensitivityLabelResource GetSqlDatabaseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseSensitivityLabelResource.ValidateResourceId(id);
-                return new SqlDatabaseSensitivityLabelResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseSensitivityLabelResource(id);
         }
         #endregion
 
@@ -1752,12 +1301,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerBlobAuditingPolicyResource" /> object. </returns>
         public static SqlServerBlobAuditingPolicyResource GetSqlServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new SqlServerBlobAuditingPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerBlobAuditingPolicyResource(id);
         }
         #endregion
 
@@ -1771,12 +1315,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseBlobAuditingPolicyResource" /> object. </returns>
         public static SqlDatabaseBlobAuditingPolicyResource GetSqlDatabaseBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new SqlDatabaseBlobAuditingPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseBlobAuditingPolicyResource(id);
         }
         #endregion
 
@@ -1790,12 +1329,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ExtendedDatabaseBlobAuditingPolicyResource" /> object. </returns>
         public static ExtendedDatabaseBlobAuditingPolicyResource GetExtendedDatabaseBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExtendedDatabaseBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new ExtendedDatabaseBlobAuditingPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetExtendedDatabaseBlobAuditingPolicyResource(id);
         }
         #endregion
 
@@ -1809,12 +1343,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ExtendedServerBlobAuditingPolicyResource" /> object. </returns>
         public static ExtendedServerBlobAuditingPolicyResource GetExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ExtendedServerBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new ExtendedServerBlobAuditingPolicyResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetExtendedServerBlobAuditingPolicyResource(id);
         }
         #endregion
 
@@ -1828,12 +1357,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="DatabaseAdvancedThreatProtectionResource" /> object. </returns>
         public static DatabaseAdvancedThreatProtectionResource GetDatabaseAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DatabaseAdvancedThreatProtectionResource.ValidateResourceId(id);
-                return new DatabaseAdvancedThreatProtectionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetDatabaseAdvancedThreatProtectionResource(id);
         }
         #endregion
 
@@ -1847,12 +1371,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ServerAdvancedThreatProtectionResource" /> object. </returns>
         public static ServerAdvancedThreatProtectionResource GetServerAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServerAdvancedThreatProtectionResource.ValidateResourceId(id);
-                return new ServerAdvancedThreatProtectionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetServerAdvancedThreatProtectionResource(id);
         }
         #endregion
 
@@ -1866,12 +1385,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedServerDnsAliasResource" /> object. </returns>
         public static ManagedServerDnsAliasResource GetManagedServerDnsAliasResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedServerDnsAliasResource.ValidateResourceId(id);
-                return new ManagedServerDnsAliasResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedServerDnsAliasResource(id);
         }
         #endregion
 
@@ -1885,12 +1399,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseAdvancedThreatProtectionResource" /> object. </returns>
         public static ManagedDatabaseAdvancedThreatProtectionResource GetManagedDatabaseAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseAdvancedThreatProtectionResource.ValidateResourceId(id);
-                return new ManagedDatabaseAdvancedThreatProtectionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseAdvancedThreatProtectionResource(id);
         }
         #endregion
 
@@ -1904,12 +1413,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceAdvancedThreatProtectionResource" /> object. </returns>
         public static ManagedInstanceAdvancedThreatProtectionResource GetManagedInstanceAdvancedThreatProtectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceAdvancedThreatProtectionResource.ValidateResourceId(id);
-                return new ManagedInstanceAdvancedThreatProtectionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceAdvancedThreatProtectionResource(id);
         }
         #endregion
 
@@ -1923,12 +1427,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerDatabaseReplicationLinkResource" /> object. </returns>
         public static SqlServerDatabaseReplicationLinkResource GetSqlServerDatabaseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerDatabaseReplicationLinkResource.ValidateResourceId(id);
-                return new SqlServerDatabaseReplicationLinkResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerDatabaseReplicationLinkResource(id);
         }
         #endregion
 
@@ -1942,12 +1441,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceDtcResource" /> object. </returns>
         public static ManagedInstanceDtcResource GetManagedInstanceDtcResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceDtcResource.ValidateResourceId(id);
-                return new ManagedInstanceDtcResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceDtcResource(id);
         }
         #endregion
 
@@ -1961,12 +1455,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="VirtualClusterResource" /> object. </returns>
         public static VirtualClusterResource GetVirtualClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VirtualClusterResource.ValidateResourceId(id);
-                return new VirtualClusterResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetVirtualClusterResource(id);
         }
         #endregion
 
@@ -1980,12 +1469,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="InstanceFailoverGroupResource" /> object. </returns>
         public static InstanceFailoverGroupResource GetInstanceFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                InstanceFailoverGroupResource.ValidateResourceId(id);
-                return new InstanceFailoverGroupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetInstanceFailoverGroupResource(id);
         }
         #endregion
 
@@ -1999,12 +1483,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseRestoreDetailResource" /> object. </returns>
         public static ManagedDatabaseRestoreDetailResource GetManagedDatabaseRestoreDetailResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseRestoreDetailResource.ValidateResourceId(id);
-                return new ManagedDatabaseRestoreDetailResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseRestoreDetailResource(id);
         }
         #endregion
 
@@ -2018,12 +1497,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseResource" /> object. </returns>
         public static SqlDatabaseResource GetSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseResource.ValidateResourceId(id);
-                return new SqlDatabaseResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseResource(id);
         }
         #endregion
 
@@ -2037,12 +1511,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ElasticPoolResource" /> object. </returns>
         public static ElasticPoolResource GetElasticPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ElasticPoolResource.ValidateResourceId(id);
-                return new ElasticPoolResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetElasticPoolResource(id);
         }
         #endregion
 
@@ -2056,12 +1525,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedDatabaseResource" /> object. </returns>
         public static ManagedDatabaseResource GetManagedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedDatabaseResource.ValidateResourceId(id);
-                return new ManagedDatabaseResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedDatabaseResource(id);
         }
         #endregion
 
@@ -2075,12 +1539,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceResource" /> object. </returns>
         public static ManagedInstanceResource GetManagedInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceResource.ValidateResourceId(id);
-                return new ManagedInstanceResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceResource(id);
         }
         #endregion
 
@@ -2094,12 +1553,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedLedgerDigestUploadResource" /> object. </returns>
         public static ManagedLedgerDigestUploadResource GetManagedLedgerDigestUploadResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedLedgerDigestUploadResource.ValidateResourceId(id);
-                return new ManagedLedgerDigestUploadResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedLedgerDigestUploadResource(id);
         }
         #endregion
 
@@ -2113,12 +1567,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RecoverableDatabaseResource" /> object. </returns>
         public static RecoverableDatabaseResource GetRecoverableDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RecoverableDatabaseResource.ValidateResourceId(id);
-                return new RecoverableDatabaseResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetRecoverableDatabaseResource(id);
         }
         #endregion
 
@@ -2132,12 +1581,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="RestorableDroppedDatabaseResource" /> object. </returns>
         public static RestorableDroppedDatabaseResource GetRestorableDroppedDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RestorableDroppedDatabaseResource.ValidateResourceId(id);
-                return new RestorableDroppedDatabaseResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetRestorableDroppedDatabaseResource(id);
         }
         #endregion
 
@@ -2151,12 +1595,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceServerConfigurationOptionResource" /> object. </returns>
         public static ManagedInstanceServerConfigurationOptionResource GetManagedInstanceServerConfigurationOptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceServerConfigurationOptionResource.ValidateResourceId(id);
-                return new ManagedInstanceServerConfigurationOptionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceServerConfigurationOptionResource(id);
         }
         #endregion
 
@@ -2170,12 +1609,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerResource" /> object. </returns>
         public static SqlServerResource GetSqlServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerResource.ValidateResourceId(id);
-                return new SqlServerResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerResource(id);
         }
         #endregion
 
@@ -2189,12 +1623,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="ManagedInstanceStartStopScheduleResource" /> object. </returns>
         public static ManagedInstanceStartStopScheduleResource GetManagedInstanceStartStopScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedInstanceStartStopScheduleResource.ValidateResourceId(id);
-                return new ManagedInstanceStartStopScheduleResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetManagedInstanceStartStopScheduleResource(id);
         }
         #endregion
 
@@ -2208,12 +1637,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="LogicalDatabaseTransparentDataEncryptionResource" /> object. </returns>
         public static LogicalDatabaseTransparentDataEncryptionResource GetLogicalDatabaseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                LogicalDatabaseTransparentDataEncryptionResource.ValidateResourceId(id);
-                return new LogicalDatabaseTransparentDataEncryptionResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetLogicalDatabaseTransparentDataEncryptionResource(id);
         }
         #endregion
 
@@ -2227,12 +1651,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="FailoverGroupResource" /> object. </returns>
         public static FailoverGroupResource GetFailoverGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FailoverGroupResource.ValidateResourceId(id);
-                return new FailoverGroupResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetFailoverGroupResource(id);
         }
         #endregion
 
@@ -2246,12 +1665,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="IPv6FirewallRuleResource" /> object. </returns>
         public static IPv6FirewallRuleResource GetIPv6FirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                IPv6FirewallRuleResource.ValidateResourceId(id);
-                return new IPv6FirewallRuleResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetIPv6FirewallRuleResource(id);
         }
         #endregion
 
@@ -2265,12 +1679,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineResource" /> object. </returns>
         public static SqlServerSqlVulnerabilityAssessmentBaselineResource GetSqlServerSqlVulnerabilityAssessmentBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
-                return new SqlServerSqlVulnerabilityAssessmentBaselineResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerSqlVulnerabilityAssessmentBaselineResource(id);
         }
         #endregion
 
@@ -2284,12 +1693,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineResource" /> object. </returns>
         public static SqlDatabaseSqlVulnerabilityAssessmentBaselineResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseSqlVulnerabilityAssessmentBaselineResource.ValidateResourceId(id);
-                return new SqlDatabaseSqlVulnerabilityAssessmentBaselineResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseSqlVulnerabilityAssessmentBaselineResource(id);
         }
         #endregion
 
@@ -2303,12 +1707,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentBaselineRuleResource" /> object. </returns>
         public static SqlServerSqlVulnerabilityAssessmentBaselineRuleResource GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerSqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
-                return new SqlServerSqlVulnerabilityAssessmentBaselineRuleResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerSqlVulnerabilityAssessmentBaselineRuleResource(id);
         }
         #endregion
 
@@ -2322,12 +1721,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource" /> object. </returns>
         public static SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource.ValidateResourceId(id);
-                return new SqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseSqlVulnerabilityAssessmentBaselineRuleResource(id);
         }
         #endregion
 
@@ -2341,12 +1735,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentScanResultResource" /> object. </returns>
         public static SqlServerSqlVulnerabilityAssessmentScanResultResource GetSqlServerSqlVulnerabilityAssessmentScanResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerSqlVulnerabilityAssessmentScanResultResource.ValidateResourceId(id);
-                return new SqlServerSqlVulnerabilityAssessmentScanResultResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerSqlVulnerabilityAssessmentScanResultResource(id);
         }
         #endregion
 
@@ -2360,12 +1749,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResultResource" /> object. </returns>
         public static SqlDatabaseSqlVulnerabilityAssessmentScanResultResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseSqlVulnerabilityAssessmentScanResultResource.ValidateResourceId(id);
-                return new SqlDatabaseSqlVulnerabilityAssessmentScanResultResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseSqlVulnerabilityAssessmentScanResultResource(id);
         }
         #endregion
 
@@ -2379,12 +1763,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentScanResource" /> object. </returns>
         public static SqlServerSqlVulnerabilityAssessmentScanResource GetSqlServerSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerSqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
-                return new SqlServerSqlVulnerabilityAssessmentScanResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerSqlVulnerabilityAssessmentScanResource(id);
         }
         #endregion
 
@@ -2398,12 +1777,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentScanResource" /> object. </returns>
         public static SqlDatabaseSqlVulnerabilityAssessmentScanResource GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseSqlVulnerabilityAssessmentScanResource.ValidateResourceId(id);
-                return new SqlDatabaseSqlVulnerabilityAssessmentScanResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseSqlVulnerabilityAssessmentScanResource(id);
         }
         #endregion
 
@@ -2417,12 +1791,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlServerSqlVulnerabilityAssessmentResource" /> object. </returns>
         public static SqlServerSqlVulnerabilityAssessmentResource GetSqlServerSqlVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlServerSqlVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new SqlServerSqlVulnerabilityAssessmentResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlServerSqlVulnerabilityAssessmentResource(id);
         }
         #endregion
 
@@ -2436,12 +1805,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> Returns a <see cref="SqlDatabaseSqlVulnerabilityAssessmentResource" /> object. </returns>
         public static SqlDatabaseSqlVulnerabilityAssessmentResource GetSqlDatabaseSqlVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlDatabaseSqlVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new SqlDatabaseSqlVulnerabilityAssessmentResource(client, id);
-            }
-            );
+            return GetSqlArmClientMockingExtension(client).GetSqlDatabaseSqlVulnerabilityAssessmentResource(id);
         }
         #endregion
 
@@ -2450,7 +1814,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of InstancePoolResources and their operations over a InstancePoolResource. </returns>
         public static InstancePoolCollection GetInstancePools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetInstancePools();
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetInstancePools();
         }
 
         /// <summary>
@@ -2474,7 +1838,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<InstancePoolResource>> GetInstancePoolAsync(this ResourceGroupResource resourceGroupResource, string instancePoolName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetInstancePools().GetAsync(instancePoolName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlResourceGroupMockingExtension(resourceGroupResource).GetInstancePoolAsync(instancePoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2498,7 +1862,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<InstancePoolResource> GetInstancePool(this ResourceGroupResource resourceGroupResource, string instancePoolName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetInstancePools().Get(instancePoolName, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetInstancePool(instancePoolName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerTrustGroupResources in the ResourceGroupResource. </summary>
@@ -2507,7 +1871,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerTrustGroupResources and their operations over a SqlServerTrustGroupResource. </returns>
         public static SqlServerTrustGroupCollection GetSqlServerTrustGroups(this ResourceGroupResource resourceGroupResource, AzureLocation locationName)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlServerTrustGroups(locationName);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetSqlServerTrustGroups(locationName);
         }
 
         /// <summary>
@@ -2532,7 +1896,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<SqlServerTrustGroupResource>> GetSqlServerTrustGroupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSqlServerTrustGroups(locationName).GetAsync(serverTrustGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlResourceGroupMockingExtension(resourceGroupResource).GetSqlServerTrustGroupAsync(locationName, serverTrustGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2557,7 +1921,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<SqlServerTrustGroupResource> GetSqlServerTrustGroup(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string serverTrustGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSqlServerTrustGroups(locationName).Get(serverTrustGroupName, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetSqlServerTrustGroup(locationName, serverTrustGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackupResources in the ResourceGroupResource. </summary>
@@ -2570,10 +1934,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ResourceGroupLongTermRetentionBackupResources and their operations over a ResourceGroupLongTermRetentionBackupResource. </returns>
         public static ResourceGroupLongTermRetentionBackupCollection GetResourceGroupLongTermRetentionBackups(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
-            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
         /// <summary>
@@ -2600,7 +1961,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<ResourceGroupLongTermRetentionBackupResource>> GetResourceGroupLongTermRetentionBackupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlResourceGroupMockingExtension(resourceGroupResource).GetResourceGroupLongTermRetentionBackupAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2627,7 +1988,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<ResourceGroupLongTermRetentionBackupResource> GetResourceGroupLongTermRetentionBackup(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetResourceGroupLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).Get(backupName, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetResourceGroupLongTermRetentionBackup(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources in the ResourceGroupResource. </summary>
@@ -2640,10 +2001,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ResourceGroupLongTermRetentionManagedInstanceBackupResources and their operations over a ResourceGroupLongTermRetentionManagedInstanceBackupResource. </returns>
         public static ResourceGroupLongTermRetentionManagedInstanceBackupCollection GetResourceGroupLongTermRetentionManagedInstanceBackups(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, string databaseName)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
         }
 
         /// <summary>
@@ -2670,7 +2028,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource>> GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlResourceGroupMockingExtension(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackupAsync(locationName, managedInstanceName, databaseName, backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2697,7 +2055,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<ResourceGroupLongTermRetentionManagedInstanceBackupResource> GetResourceGroupLongTermRetentionManagedInstanceBackup(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetResourceGroupLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).Get(backupName, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetResourceGroupLongTermRetentionManagedInstanceBackup(locationName, managedInstanceName, databaseName, backupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
@@ -2705,7 +2063,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
         public static VirtualClusterCollection GetVirtualClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVirtualClusters();
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetVirtualClusters();
         }
 
         /// <summary>
@@ -2729,7 +2087,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<VirtualClusterResource>> GetVirtualClusterAsync(this ResourceGroupResource resourceGroupResource, string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVirtualClusters().GetAsync(virtualClusterName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlResourceGroupMockingExtension(resourceGroupResource).GetVirtualClusterAsync(virtualClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2753,7 +2111,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<VirtualClusterResource> GetVirtualCluster(this ResourceGroupResource resourceGroupResource, string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVirtualClusters().Get(virtualClusterName, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetVirtualCluster(virtualClusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of InstanceFailoverGroupResources in the ResourceGroupResource. </summary>
@@ -2762,7 +2120,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of InstanceFailoverGroupResources and their operations over a InstanceFailoverGroupResource. </returns>
         public static InstanceFailoverGroupCollection GetInstanceFailoverGroups(this ResourceGroupResource resourceGroupResource, AzureLocation locationName)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetInstanceFailoverGroups(locationName);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetInstanceFailoverGroups(locationName);
         }
 
         /// <summary>
@@ -2787,7 +2145,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<InstanceFailoverGroupResource>> GetInstanceFailoverGroupAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetInstanceFailoverGroups(locationName).GetAsync(failoverGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlResourceGroupMockingExtension(resourceGroupResource).GetInstanceFailoverGroupAsync(locationName, failoverGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2812,7 +2170,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<InstanceFailoverGroupResource> GetInstanceFailoverGroup(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string failoverGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetInstanceFailoverGroups(locationName).Get(failoverGroupName, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetInstanceFailoverGroup(locationName, failoverGroupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedInstanceResources in the ResourceGroupResource. </summary>
@@ -2820,7 +2178,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedInstanceResources and their operations over a ManagedInstanceResource. </returns>
         public static ManagedInstanceCollection GetManagedInstances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedInstances();
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetManagedInstances();
         }
 
         /// <summary>
@@ -2845,7 +2203,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<ManagedInstanceResource>> GetManagedInstanceAsync(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetManagedInstances().GetAsync(managedInstanceName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetSqlResourceGroupMockingExtension(resourceGroupResource).GetManagedInstanceAsync(managedInstanceName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2870,7 +2228,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<ManagedInstanceResource> GetManagedInstance(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetManagedInstances().Get(managedInstanceName, expand, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetManagedInstance(managedInstanceName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
@@ -2878,7 +2236,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
         public static SqlServerCollection GetSqlServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlServers();
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetSqlServers();
         }
 
         /// <summary>
@@ -2903,7 +2261,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<SqlServerResource>> GetSqlServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSqlServers().GetAsync(serverName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetSqlResourceGroupMockingExtension(resourceGroupResource).GetSqlServerAsync(serverName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2928,7 +2286,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<SqlServerResource> GetSqlServer(this ResourceGroupResource resourceGroupResource, string serverName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSqlServers().Get(serverName, expand, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetSqlServer(serverName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -2952,7 +2310,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -2976,7 +2334,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3003,9 +2361,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3032,9 +2388,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3061,9 +2415,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3090,9 +2442,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3116,7 +2466,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3140,7 +2490,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this ResourceGroupResource resourceGroupResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlResourceGroupMockingExtension(resourceGroupResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary> Gets a collection of DeletedServerResources in the SubscriptionResource. </summary>
@@ -3149,7 +2499,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of DeletedServerResources and their operations over a DeletedServerResource. </returns>
         public static DeletedServerCollection GetDeletedServers(this SubscriptionResource subscriptionResource, AzureLocation locationName)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedServers(locationName);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetDeletedServers(locationName);
         }
 
         /// <summary>
@@ -3174,7 +2524,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<DeletedServerResource>> GetDeletedServerAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string deletedServerName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetDeletedServers(locationName).GetAsync(deletedServerName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlSubscriptionMockingExtension(subscriptionResource).GetDeletedServerAsync(locationName, deletedServerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3199,7 +2549,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<DeletedServerResource> GetDeletedServer(this SubscriptionResource subscriptionResource, AzureLocation locationName, string deletedServerName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetDeletedServers(locationName).Get(deletedServerName, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetDeletedServer(locationName, deletedServerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SubscriptionUsageResources in the SubscriptionResource. </summary>
@@ -3208,7 +2558,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SubscriptionUsageResources and their operations over a SubscriptionUsageResource. </returns>
         public static SubscriptionUsageCollection GetSubscriptionUsages(this SubscriptionResource subscriptionResource, AzureLocation locationName)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionUsages(locationName);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSubscriptionUsages(locationName);
         }
 
         /// <summary>
@@ -3233,7 +2583,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionUsageResource>> GetSubscriptionUsageAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string usageName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSubscriptionUsages(locationName).GetAsync(usageName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlSubscriptionMockingExtension(subscriptionResource).GetSubscriptionUsageAsync(locationName, usageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3258,7 +2608,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<SubscriptionUsageResource> GetSubscriptionUsage(this SubscriptionResource subscriptionResource, AzureLocation locationName, string usageName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSubscriptionUsages(locationName).Get(usageName, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSubscriptionUsage(locationName, usageName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlTimeZoneResources in the SubscriptionResource. </summary>
@@ -3267,7 +2617,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlTimeZoneResources and their operations over a SqlTimeZoneResource. </returns>
         public static SqlTimeZoneCollection GetSqlTimeZones(this SubscriptionResource subscriptionResource, AzureLocation locationName)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlTimeZones(locationName);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSqlTimeZones(locationName);
         }
 
         /// <summary>
@@ -3292,7 +2642,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<SqlTimeZoneResource>> GetSqlTimeZoneAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSqlTimeZones(locationName).GetAsync(timeZoneId, cancellationToken).ConfigureAwait(false);
+            return await GetSqlSubscriptionMockingExtension(subscriptionResource).GetSqlTimeZoneAsync(locationName, timeZoneId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3317,7 +2667,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<SqlTimeZoneResource> GetSqlTimeZone(this SubscriptionResource subscriptionResource, AzureLocation locationName, string timeZoneId, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSqlTimeZones(locationName).Get(timeZoneId, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSqlTimeZone(locationName, timeZoneId, cancellationToken);
         }
 
         /// <summary> Gets a collection of SubscriptionLongTermRetentionBackupResources in the SubscriptionResource. </summary>
@@ -3330,10 +2680,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SubscriptionLongTermRetentionBackupResources and their operations over a SubscriptionLongTermRetentionBackupResource. </returns>
         public static SubscriptionLongTermRetentionBackupCollection GetSubscriptionLongTermRetentionBackups(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName)
         {
-            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-            Argument.AssertNotNullOrEmpty(longTermRetentionDatabaseName, nameof(longTermRetentionDatabaseName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName);
         }
 
         /// <summary>
@@ -3360,7 +2707,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionLongTermRetentionBackupResource>> GetSubscriptionLongTermRetentionBackupAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlSubscriptionMockingExtension(subscriptionResource).GetSubscriptionLongTermRetentionBackupAsync(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3387,7 +2734,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<SubscriptionLongTermRetentionBackupResource> GetSubscriptionLongTermRetentionBackup(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSubscriptionLongTermRetentionBackups(locationName, longTermRetentionServerName, longTermRetentionDatabaseName).Get(backupName, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSubscriptionLongTermRetentionBackup(locationName, longTermRetentionServerName, longTermRetentionDatabaseName, backupName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SubscriptionLongTermRetentionManagedInstanceBackupResources in the SubscriptionResource. </summary>
@@ -3400,10 +2747,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SubscriptionLongTermRetentionManagedInstanceBackupResources and their operations over a SubscriptionLongTermRetentionManagedInstanceBackupResource. </returns>
         public static SubscriptionLongTermRetentionManagedInstanceBackupCollection GetSubscriptionLongTermRetentionManagedInstanceBackups(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, string databaseName)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName);
         }
 
         /// <summary>
@@ -3430,7 +2774,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionLongTermRetentionManagedInstanceBackupResource>> GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).GetAsync(backupName, cancellationToken).ConfigureAwait(false);
+            return await GetSqlSubscriptionMockingExtension(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackupAsync(locationName, managedInstanceName, databaseName, backupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3457,7 +2801,7 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public static Response<SubscriptionLongTermRetentionManagedInstanceBackupResource> GetSubscriptionLongTermRetentionManagedInstanceBackup(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSubscriptionLongTermRetentionManagedInstanceBackups(locationName, managedInstanceName, databaseName).Get(backupName, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSubscriptionLongTermRetentionManagedInstanceBackup(locationName, managedInstanceName, databaseName, backupName, cancellationToken);
         }
 
         /// <summary>
@@ -3478,7 +2822,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedServerResource> GetDeletedServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedServersAsync(cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetDeletedServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3499,7 +2843,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="DeletedServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedServerResource> GetDeletedServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedServers(cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetDeletedServers(cancellationToken);
         }
 
         /// <summary>
@@ -3520,7 +2864,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<InstancePoolResource> GetInstancePoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetInstancePoolsAsync(cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetInstancePoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3541,7 +2885,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="InstancePoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<InstancePoolResource> GetInstancePools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetInstancePools(cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetInstancePools(cancellationToken);
         }
 
         /// <summary>
@@ -3563,7 +2907,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SqlLocationCapabilities>> GetCapabilitiesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilitiesByLocationAsync(locationName, include, cancellationToken).ConfigureAwait(false);
+            return await GetSqlSubscriptionMockingExtension(subscriptionResource).GetCapabilitiesByLocationAsync(locationName, include, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3585,7 +2929,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SqlLocationCapabilities> GetCapabilitiesByLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, SqlCapabilityGroup? include = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilitiesByLocation(locationName, include, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetCapabilitiesByLocation(locationName, include, cancellationToken);
         }
 
         /// <summary>
@@ -3607,7 +2951,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SubResource> GetSyncDatabaseIdsSyncGroupsAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSyncDatabaseIdsSyncGroupsAsync(locationName, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSyncDatabaseIdsSyncGroupsAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -3629,7 +2973,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SubResource> GetSyncDatabaseIdsSyncGroups(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSyncDatabaseIdsSyncGroups(locationName, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSyncDatabaseIdsSyncGroups(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -3653,7 +2997,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetLongTermRetentionBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3677,7 +3021,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetLongTermRetentionBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3704,9 +3048,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetLongTermRetentionBackupsWithServerAsync(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3733,9 +3075,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(this SubscriptionResource subscriptionResource, AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(longTermRetentionServerName, nameof(longTermRetentionServerName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetLongTermRetentionBackupsWithServer(locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3762,9 +3102,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3791,9 +3129,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(this SubscriptionResource subscriptionResource, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithInstance(locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3817,7 +3153,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3841,7 +3177,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(this SubscriptionResource subscriptionResource, AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetLongTermRetentionManagedInstanceBackupsWithLocation(locationName, onlyLatestPerDatabase, databaseState, cancellationToken);
         }
 
         /// <summary>
@@ -3862,7 +3198,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualClustersAsync(cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetVirtualClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3883,7 +3219,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualClusterResource> GetVirtualClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVirtualClusters(cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetVirtualClusters(cancellationToken);
         }
 
         /// <summary>
@@ -3905,7 +3241,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedInstancesAsync(expand, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetManagedInstancesAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -3927,7 +3263,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedInstanceResource> GetManagedInstances(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedInstances(expand, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetManagedInstances(expand, cancellationToken);
         }
 
         /// <summary>
@@ -3949,9 +3285,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<SqlNameAvailabilityResponse>> CheckSqlServerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSqlServerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSqlSubscriptionMockingExtension(subscriptionResource).CheckSqlServerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3973,9 +3307,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<SqlNameAvailabilityResponse> CheckSqlServerNameAvailability(this SubscriptionResource subscriptionResource, SqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSqlServerNameAvailability(content, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).CheckSqlServerNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -3997,7 +3329,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An async collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlServerResource> GetSqlServersAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlServersAsync(expand, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSqlServersAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -4019,7 +3351,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> A collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlServerResource> GetSqlServers(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlServers(expand, cancellationToken);
+            return GetSqlSubscriptionMockingExtension(subscriptionResource).GetSqlServers(expand, cancellationToken);
         }
     }
 }
