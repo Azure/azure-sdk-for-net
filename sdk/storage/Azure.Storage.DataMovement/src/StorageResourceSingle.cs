@@ -66,9 +66,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
-        /// <param name="position">
-        /// The offset which the stream will be copied to.
-        /// </param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
@@ -76,7 +73,7 @@ namespace Azure.Storage.DataMovement
         /// The length of the stream.
         /// </param>
         /// <param name="completeLength">
-        /// The expected complete length of the blob.
+        /// The expected complete length of the resource item.
         /// </param>
         /// <param name="stream"></param>
         /// <param name="options"></param>
@@ -89,8 +86,7 @@ namespace Azure.Storage.DataMovement
             Stream stream,
             long streamLength,
             bool overwrite,
-            long position = 0,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default);
 

@@ -21,6 +21,8 @@
     - `*BlobStorageResource.GetPropertiesAsync`
     - `*BlobStorageResource.ReadStreamAsync`
     - `*BlobStorageResource.WriteFromStreamAsync`
+- [BREAKING CHANGE] Removed `position` parameter from `*BlobStorageResource.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
+
 ### Bugs Fixed
 
 ### Other Changes

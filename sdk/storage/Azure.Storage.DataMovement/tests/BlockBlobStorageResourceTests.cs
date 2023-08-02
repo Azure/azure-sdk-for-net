@@ -145,8 +145,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 await storageResource.WriteFromStreamAsync(
                     stream: stream,
                     streamLength: length,
-                    completeLength: length,
-                    overwrite: false);
+                    overwrite: false,
+                    completeLength: length);
             }
 
             BlobDownloadStreamingResult result = await blobClient.DownloadStreamingAsync();
@@ -173,7 +173,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
-                    position: position);
+                    completeLength: length,
+                    options: new StorageResourceWriteToOffsetOptions() { Position = position });
             }
             await storageResource.CompleteTransferAsync(false);
 
@@ -195,7 +196,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource storageResource = new BlockBlobStorageResource(blobClient);
 
             // Act without creating the blob
-            int position = 0;
             int length = Constants.KB;
             var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
@@ -204,7 +204,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
-                    position: position);
+                    completeLength: 0);
             }
             using (var stream = new MemoryStream(data))
             {
@@ -214,7 +214,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
-                    position: position),
+                    completeLength: 0),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains("Cannot Stage Block to the specific offset"));
@@ -609,7 +609,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
-                    position: 0);
+                    completeLength: 0);
             }
 
             // Act
@@ -645,7 +645,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: overwrite,
-                    position: 0);
+                    completeLength: 0);
             }
 
             // Act

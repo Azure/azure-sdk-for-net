@@ -196,8 +196,8 @@ namespace Azure.Storage.DataMovement.Tests
                     stream,
                     streamLength: length,
                     overwrite: false,
-                    position: writePosition,
-                    completeLength: length);
+                    completeLength: length,
+                    options: new StorageResourceWriteToOffsetOptions() { Position = writePosition });
             }
 
             // Assert
@@ -220,7 +220,11 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 using (var stream = new MemoryStream(data))
                 {
-                    await storageResource.WriteFromStreamAsync(stream, length, false);
+                    await storageResource.WriteFromStreamAsync(
+                        stream: stream,
+                        streamLength: length,
+                        overwrite: false,
+                        completeLength: length);
                 }
             }
             catch (IOException ex)

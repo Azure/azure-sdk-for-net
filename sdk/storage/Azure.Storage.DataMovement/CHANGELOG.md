@@ -21,6 +21,7 @@
     - `StorageResourceSingle.GetPropertiesAsync`
     - `StorageResourceSingle.ReadStreamAsync`
     - `StorageResourceSingle.WriteFromStreamAsync`
+- [BREAKING CHANGE] Removed `position` parameter from `StorageResourceSingle.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
 
 ### Bugs Fixed
 
