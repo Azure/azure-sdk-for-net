@@ -418,7 +418,7 @@ namespace Azure.Communication.CallAutomation
                     InterruptPrompt = recognizeChoiceOptions.InterruptPrompt,
                     InitialSilenceTimeoutInSeconds = (int)recognizeChoiceOptions.InitialSilenceTimeout.TotalSeconds
                 };
-                
+
                 recognizeChoiceOptions.Choices
                     .ToList().ForEach(t => recognizeConfigurationsInternal.Choices.Add(t));
 
