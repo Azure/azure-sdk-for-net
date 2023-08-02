@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryPrivateEndpointResource dataFactoryPrivateEndpoint = client.GetDataFactoryPrivateEndpointResource(dataFactoryPrivateEndpointResourceId);
 
             // invoke the operation
-            DataFactoryPrivateEndpointData data = new DataFactoryPrivateEndpointData(new ManagedPrivateEndpoint()
+            DataFactoryPrivateEndpointData data = new DataFactoryPrivateEndpointData(new DataFactoryPrivateEndpointProperties()
             {
                 Fqdns =
 {

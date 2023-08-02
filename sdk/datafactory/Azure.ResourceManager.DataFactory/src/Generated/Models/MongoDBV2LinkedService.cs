@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for MongoDB data source. </summary>
-    public partial class MongoDBV2LinkedService : DataFactoryLinkedServiceDefinition
+    public partial class MongoDBV2LinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of MongoDBV2LinkedService. </summary>
         /// <param name="connectionString"> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>

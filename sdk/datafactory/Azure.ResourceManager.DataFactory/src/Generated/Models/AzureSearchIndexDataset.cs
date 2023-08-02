@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Azure Search Index. </summary>
-    public partial class AzureSearchIndexDataset : DataFactoryDatasetDefinition
+    public partial class AzureSearchIndexDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AzureSearchIndexDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

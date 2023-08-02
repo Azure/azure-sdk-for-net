@@ -44,13 +44,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        internal AzureDataExplorerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object database, object tenant) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzureDataExplorerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object database, object tenant, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Database = database;
             Tenant = tenant;
+            Credential = credential;
             Type = type ?? "AzureDataExplorer";
         }
 
@@ -68,5 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Database { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public object Tenant { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

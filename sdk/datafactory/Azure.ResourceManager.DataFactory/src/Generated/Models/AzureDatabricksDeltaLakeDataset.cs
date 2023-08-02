@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Databricks Delta Lake dataset. </summary>
-    public partial class AzureDatabricksDeltaLakeDataset : DataFactoryDatasetDefinition
+    public partial class AzureDatabricksDeltaLakeDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

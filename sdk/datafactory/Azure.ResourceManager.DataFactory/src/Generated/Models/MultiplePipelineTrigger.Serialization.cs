@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "BlobEventsTrigger": return DataFactoryBlobEventsTrigger.DeserializeDataFactoryBlobEventsTrigger(element);
                     case "BlobTrigger": return DataFactoryBlobTrigger.DeserializeDataFactoryBlobTrigger(element);
                     case "CustomEventsTrigger": return CustomEventsTrigger.DeserializeCustomEventsTrigger(element);
-                    case "ScheduleTrigger": return ScheduleTrigger.DeserializeScheduleTrigger(element);
+                    case "ScheduleTrigger": return DataFactoryScheduleTrigger.DeserializeDataFactoryScheduleTrigger(element);
                 }
             }
             Optional<IList<TriggerPipelineReference>> pipelines = default;

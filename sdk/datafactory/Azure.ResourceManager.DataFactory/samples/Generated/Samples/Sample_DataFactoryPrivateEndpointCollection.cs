@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string managedPrivateEndpointName = "exampleManagedPrivateEndpointName";
-            DataFactoryPrivateEndpointData data = new DataFactoryPrivateEndpointData(new ManagedPrivateEndpoint()
+            DataFactoryPrivateEndpointData data = new DataFactoryPrivateEndpointData(new DataFactoryPrivateEndpointProperties()
             {
                 Fqdns =
 {

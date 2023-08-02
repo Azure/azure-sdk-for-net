@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="hostName"> GitHub Enterprise host name. For example: `https://github.mydomain.com`. </param>
         /// <param name="clientId"> GitHub bring your own app client id. </param>
         /// <param name="clientSecret"> GitHub bring your own app client secret information. </param>
-        internal FactoryGitHubConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, string hostName, string clientId, GitHubClientSecret clientSecret) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish)
+        internal FactoryGitHubConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, string hostName, string clientId, FactoryGitHubClientSecret clientSecret) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish)
         {
             HostName = hostName;
             ClientId = clientId;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> GitHub bring your own app client id. </summary>
         public string ClientId { get; set; }
         /// <summary> GitHub bring your own app client secret information. </summary>
-        public GitHubClientSecret ClientSecret { get; set; }
+        public FactoryGitHubClientSecret ClientSecret { get; set; }
     }
 }

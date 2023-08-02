@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<int> coreCount = default;
             Optional<int> timeToLive = default;
             Optional<bool> cleanup = default;
-            Optional<IList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem>> customProperties = default;
+            Optional<IList<IntegrationRuntimeDataFlowCustomItem>> customProperties = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem> array = new List<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem>();
+                    List<IntegrationRuntimeDataFlowCustomItem> array = new List<IntegrationRuntimeDataFlowCustomItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem.DeserializeIntegrationRuntimeDataFlowPropertiesCustomPropertiesItem(item));
+                        array.Add(IntegrationRuntimeDataFlowCustomItem.DeserializeIntegrationRuntimeDataFlowCustomItem(item));
                     }
                     customProperties = array;
                     continue;

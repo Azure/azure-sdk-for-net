@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             {
                 Activities =
 {
-new ForEachActivity("ExampleForeachActivity",new DataFactoryExpressionDefinition(DataFactoryExpressionType.Expression,"@pipeline().parameters.OutputBlobNameList"),new DataFactoryActivity[]
+new ForEachActivity("ExampleForeachActivity",new DataFactoryExpression(DataFactoryExpressionType.Expression,"@pipeline().parameters.OutputBlobNameList"),new PipelineActivity[]
 {
 new CopyActivity("ExampleCopyActivity",new DataFactoryBlobSource(),new DataFactoryBlobSink())
 {
@@ -181,7 +181,7 @@ IsSequential = true,
                 Description = "Example description",
                 Activities =
 {
-new ForEachActivity("ExampleForeachActivity",new DataFactoryExpressionDefinition(DataFactoryExpressionType.Expression,"@pipeline().parameters.OutputBlobNameList"),new DataFactoryActivity[]
+new ForEachActivity("ExampleForeachActivity",new DataFactoryExpression(DataFactoryExpressionType.Expression,"@pipeline().parameters.OutputBlobNameList"),new PipelineActivity[]
 {
 new CopyActivity("ExampleCopyActivity",new DataFactoryBlobSource(),new DataFactoryBlobSink())
 {

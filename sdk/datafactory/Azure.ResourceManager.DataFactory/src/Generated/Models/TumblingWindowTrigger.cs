@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger that schedules pipeline runs for all fixed time interval windows from a start time without gaps and also supports backfill scenarios (when start time is in the past). </summary>
-    public partial class TumblingWindowTrigger : DataFactoryTriggerDefinition
+    public partial class TumblingWindowTrigger : DataFactoryTriggerProperties
     {
         /// <summary> Initializes a new instance of TumblingWindowTrigger. </summary>
         /// <param name="pipeline"> Pipeline for which runs are created when an event is fired for trigger window that is ready. </param>

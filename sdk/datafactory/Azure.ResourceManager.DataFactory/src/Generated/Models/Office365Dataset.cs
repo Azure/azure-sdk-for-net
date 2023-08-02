@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Office365 account. </summary>
-    public partial class Office365Dataset : DataFactoryDatasetDefinition
+    public partial class Office365Dataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of Office365Dataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

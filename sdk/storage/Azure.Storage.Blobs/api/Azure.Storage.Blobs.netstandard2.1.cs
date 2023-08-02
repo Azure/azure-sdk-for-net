@@ -311,6 +311,7 @@ namespace Azure.Storage.Blobs.Models
     {
         RehydratePendingToHot = 0,
         RehydratePendingToCool = 1,
+        RehydratePendingToCold = 2,
     }
     public partial class BlobAccessPolicy
     {

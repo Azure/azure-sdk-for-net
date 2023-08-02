@@ -144,6 +144,15 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
+        /// Creates a new message from the specified <see cref="AmqpAnnotatedMessage"/> instance.
+        /// </summary>
+        /// <param name="message">The AMQP message.</param>
+        public ServiceBusMessage(AmqpAnnotatedMessage message)
+        {
+            AmqpMessage = message;
+        }
+
+        /// <summary>
         /// Gets or sets the body of the message.
         /// </summary>
         public BinaryData Body
@@ -407,7 +416,7 @@ namespace Azure.Messaging.ServiceBus
         internal AmqpAnnotatedMessage AmqpMessage { get; set; }
 
         /// <summary>
-        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// Gets the raw AMQP message data that will be transmitted over the wire.
         /// This can be used to enable scenarios that require setting AMQP header, footer, property, or annotation
         /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
         /// </summary>

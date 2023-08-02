@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for CosmosDB (MongoDB API) data source. </summary>
-    public partial class CosmosDBMongoDBApiLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class CosmosDBMongoDBApiLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of CosmosDBMongoDBApiLinkedService. </summary>
         /// <param name="connectionString"> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>

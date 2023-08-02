@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryManagedVirtualNetworkResource> CreateDefaultManagedVirtualNetworkResource(string managedVirtualNetworkName)
         {
-            ManagedVirtualNetwork properties = new ManagedVirtualNetwork();
+            DataFactoryManagedVirtualNetworkProperties properties = new DataFactoryManagedVirtualNetworkProperties();
             DataFactoryManagedVirtualNetworkData data = new DataFactoryManagedVirtualNetworkData(properties);
             var managedVirtualNetwork = await _dataFactory.GetDataFactoryManagedVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, managedVirtualNetworkName, data);
             return managedVirtualNetwork.Value;

@@ -11,7 +11,7 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of NetworkDeviceSkus. </summary>
+    /// <summary> List of Network Device SKUs. </summary>
     internal partial class NetworkDeviceSkusListResult
     {
         /// <summary> Initializes a new instance of NetworkDeviceSkusListResult. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of NetworkDeviceSkusListResult. </summary>
-        /// <param name="value"> List of NetworkDeviceSku resources. </param>
+        /// <param name="value"> List of Network Device SKU resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NetworkDeviceSkusListResult(IReadOnlyList<NetworkDeviceSkuData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NextLink = nextLink;
         }
 
-        /// <summary> List of NetworkDeviceSku resources. </summary>
+        /// <summary> List of Network Device SKU resources. </summary>
         public IReadOnlyList<NetworkDeviceSkuData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }

@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The dataset points to a HTML table in the web page. </summary>
-    public partial class WebTableDataset : DataFactoryDatasetDefinition
+    public partial class WebTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of WebTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

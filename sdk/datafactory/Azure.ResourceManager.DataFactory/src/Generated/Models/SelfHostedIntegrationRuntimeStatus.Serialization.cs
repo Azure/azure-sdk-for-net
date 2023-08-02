@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<TimeSpan> localTimeZoneOffset = default;
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
             Optional<IReadOnlyList<Uri>> serviceUrls = default;
-            Optional<IntegrationRuntimeAutoUpdate> autoUpdate = default;
+            Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
             Optional<string> versionStatus = default;
             Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
             Optional<string> pushedVersion = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            autoUpdate = new IntegrationRuntimeAutoUpdate(property0.Value.GetString());
+                            autoUpdate = new IntegrationRuntimeAutoUpdateState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("versionStatus"u8))

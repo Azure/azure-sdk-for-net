@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> ORC dataset. </summary>
-    public partial class OrcDataset : DataFactoryDatasetDefinition
+    public partial class OrcDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of OrcDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

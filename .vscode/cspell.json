@@ -585,13 +585,13 @@
       "words": [
         "Azfw",
         "Conditon",
+        "Diffie",
         "Ddos",
-        "ddos",
         "Dnat",
         "Dscp",
-        "dscp",
         "Eapmscha",
         "Eaptls",
+        "Fips",
         "Fqdns",
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
@@ -612,7 +612,6 @@
         "WAFV",
         "Wans",
         "Idps",
-        "idps",
         "Ocsp",
         "Afri",
         "Apac",
@@ -673,7 +672,8 @@
       "words": [
         "evpn",
         "mbps",
-        "gshut"
+        "gshut",
+        "dscp"
       ]
     },
     {
@@ -1028,6 +1028,8 @@
         "byoa",
         "distcp",
         "eloqua",
+        "ename",
+        "evalue",
         "exfiltration",
         "fqdns",
         "hana",
@@ -1049,6 +1051,8 @@
         "vertica",
         "xero",
         "Asana",
+        "Ename",
+        "Evalue",
         "Twilio"
       ]
     },

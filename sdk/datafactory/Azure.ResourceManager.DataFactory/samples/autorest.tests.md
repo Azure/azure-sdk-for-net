@@ -10,4 +10,6 @@ require: ../src/autorest.md
 include-x-ms-examples-original-file: true
 testgen:
   sample: true
+  skipped-operations:
+  - ChangeDataCapture_CreateOrUpdate  # Missing required property
 ```

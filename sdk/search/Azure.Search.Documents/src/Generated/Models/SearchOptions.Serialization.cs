@@ -174,10 +174,15 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("semanticFields"u8);
                 writer.WriteStringValue(SemanticFieldsRaw);
             }
-            if (Optional.IsDefined(Vector))
+            if (Optional.IsCollectionDefined(Vectors))
             {
-                writer.WritePropertyName("vector"u8);
-                writer.WriteObjectValue(Vector);
+                writer.WritePropertyName("vectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Vectors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
@@ -216,7 +221,7 @@ namespace Azure.Search.Documents
             Optional<int> top = default;
             Optional<string> captions = default;
             Optional<string> semanticFields = default;
-            Optional<SearchQueryVector> vector = default;
+            Optional<IList<SearchQueryVector>> vectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -426,17 +431,22 @@ namespace Azure.Search.Documents
                     semanticFields = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vector"u8))
+                if (property.NameEquals("vectors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vector = SearchQueryVector.DeserializeSearchQueryVector(property.Value);
+                    List<SearchQueryVector> array = new List<SearchQueryVector>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SearchQueryVector.DeserializeSearchQueryVector(item));
+                    }
+                    vectors = array;
                     continue;
                 }
             }
-            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, semanticConfiguration.Value, Optional.ToNullable(semanticErrorHandling), Optional.ToNullable(semanticMaxWaitInMilliseconds), Optional.ToNullable(debug), search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top), captions.Value, semanticFields.Value, vector.Value);
+            return new SearchOptions(Optional.ToNullable(count), Optional.ToList(facets), filter.Value, highlight.Value, highlightPostTag.Value, highlightPreTag.Value, Optional.ToNullable(minimumCoverage), orderby.Value, Optional.ToNullable(queryType), Optional.ToNullable(scoringStatistics), sessionId.Value, Optional.ToList(scoringParameters), scoringProfile.Value, semanticConfiguration.Value, Optional.ToNullable(semanticErrorHandling), Optional.ToNullable(semanticMaxWaitInMilliseconds), Optional.ToNullable(debug), search.Value, searchFields.Value, Optional.ToNullable(searchMode), Optional.ToNullable(queryLanguage), Optional.ToNullable(speller), answers.Value, select.Value, Optional.ToNullable(skip), Optional.ToNullable(top), captions.Value, semanticFields.Value, Optional.ToList(vectors));
         }
     }
 }

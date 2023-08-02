@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The on-premises Oracle database dataset. </summary>
-    public partial class OracleTableDataset : DataFactoryDatasetDefinition
+    public partial class OracleTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of OracleTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

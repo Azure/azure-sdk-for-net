@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ReadBehavior))
             {
                 writer.WritePropertyName("readBehavior"u8);
-                writer.WriteStringValue(ReadBehavior.Value.ToString());
+                writer.WriteObjectValue(ReadBehavior);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -66,7 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             Optional<object> query = default;
-            Optional<SalesforceSourceReadBehavior> readBehavior = default;
+            Optional<object> readBehavior = default;
             Optional<object> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
@@ -91,7 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     {
                         continue;
                     }
-                    readBehavior = new SalesforceSourceReadBehavior(property.Value.GetString());
+                    readBehavior = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
@@ -138,7 +138,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceServiceCloudSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, Optional.ToNullable(readBehavior), additionalColumns.Value);
+            return new SalesforceServiceCloudSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, readBehavior.Value, additionalColumns.Value);
         }
 
         internal partial class SalesforceServiceCloudSourceConverter : JsonConverter<SalesforceServiceCloudSource>

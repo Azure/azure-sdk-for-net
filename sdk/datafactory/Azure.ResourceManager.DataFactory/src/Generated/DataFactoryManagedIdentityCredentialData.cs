@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <summary> Initializes a new instance of DataFactoryManagedIdentityCredentialData. </summary>
         /// <param name="properties"> Managed Identity Credential properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFactoryManagedIdentityCredentialData(DataFactoryManagedIdentityCredentialDefinition properties)
+        public DataFactoryManagedIdentityCredentialData(DataFactoryManagedIdentityCredentialProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Managed Identity Credential properties. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal DataFactoryManagedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryManagedIdentityCredentialDefinition properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataFactoryManagedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryManagedIdentityCredentialProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
         }
 
         /// <summary> Managed Identity Credential properties. </summary>
-        public DataFactoryManagedIdentityCredentialDefinition Properties { get; set; }
+        public DataFactoryManagedIdentityCredentialProperties Properties { get; set; }
         /// <summary> Etag identifies change in the resource. </summary>
         public ETag? ETag { get; }
     }

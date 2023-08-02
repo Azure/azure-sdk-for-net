@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Azure.Core;
+using Azure.Core.Amqp;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Message
@@ -263,6 +264,48 @@ namespace Azure.Messaging.ServiceBus.Tests.Message
             Assert.AreEqual("deadLetterSource5773", receivedMessage.DeadLetterSource);
             Assert.AreEqual(7632, receivedMessage.EnqueuedSequenceNumber);
             Assert.AreEqual(new DateTimeOffset(fixedDate, TimeSpan.FromSeconds(120)).UtcDateTime, receivedMessage.EnqueuedTime.UtcDateTime);
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void CanSerializeDeserializeAmqpBytes(bool useSession)
+        {
+            var message = new ServiceBusMessage(new BinaryData(ServiceBusTestUtilities.GetRandomBuffer(100)));
+            message.ContentType = "contenttype";
+            message.CorrelationId = "correlationid";
+            message.Subject = "label";
+            message.MessageId = "messageId";
+            message.PartitionKey = "key";
+            message.ApplicationProperties.Add("testProp", "my prop");
+            message.ReplyTo = "replyto";
+
+            message.ScheduledEnqueueTime = DateTimeOffset.Now;
+            if (useSession)
+            {
+                message.SessionId = "key";
+                message.ReplyToSessionId = "replytosession";
+            }
+
+            message.TimeToLive = TimeSpan.FromSeconds(60);
+            message.To = "to";
+
+            var serialized = message.GetRawAmqpMessage().ToBytes();
+
+            var deserialized = new ServiceBusMessage(AmqpAnnotatedMessage.FromBytes(serialized));
+            Assert.AreEqual(message.ContentType, deserialized.ContentType);
+            Assert.AreEqual(message.CorrelationId, deserialized.CorrelationId);
+            Assert.AreEqual(message.Subject, deserialized.Subject);
+            Assert.AreEqual(message.MessageId, deserialized.MessageId);
+            Assert.AreEqual(message.PartitionKey, deserialized.PartitionKey);
+            Assert.AreEqual(message.ApplicationProperties["testProp"], deserialized.ApplicationProperties["testProp"]);
+            Assert.AreEqual(message.ReplyTo, deserialized.ReplyTo);
+            Assert.AreEqual(message.ReplyToSessionId, deserialized.ReplyToSessionId);
+            // because AMQP only has millisecond resolution, allow for up to a 1ms difference when round-tripping
+            Assert.That(deserialized.ScheduledEnqueueTime, Is.EqualTo(message.ScheduledEnqueueTime).Within(1).Milliseconds);
+            Assert.AreEqual(message.SessionId, deserialized.SessionId);
+            Assert.AreEqual(message.TimeToLive, deserialized.TimeToLive);
+            Assert.AreEqual(message.To, deserialized.To);
         }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The MongoDB database dataset. </summary>
-    public partial class MongoDBCollectionDataset : DataFactoryDatasetDefinition
+    public partial class MongoDBCollectionDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of MongoDBCollectionDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

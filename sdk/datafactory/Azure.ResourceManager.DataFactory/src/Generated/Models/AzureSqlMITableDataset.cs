@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Azure SQL Managed Instance dataset. </summary>
-    public partial class AzureSqlMITableDataset : DataFactoryDatasetDefinition
+    public partial class AzureSqlMITableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AzureSqlMITableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

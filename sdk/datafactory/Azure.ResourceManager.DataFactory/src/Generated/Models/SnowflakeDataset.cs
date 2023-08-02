@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The snowflake dataset. </summary>
-    public partial class SnowflakeDataset : DataFactoryDatasetDefinition
+    public partial class SnowflakeDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SnowflakeDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Google BigQuery service dataset. </summary>
-    public partial class GoogleBigQueryObjectDataset : DataFactoryDatasetDefinition
+    public partial class GoogleBigQueryObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of GoogleBigQueryObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

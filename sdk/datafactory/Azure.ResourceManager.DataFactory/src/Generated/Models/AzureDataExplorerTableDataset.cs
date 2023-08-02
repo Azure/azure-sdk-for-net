@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Azure Data Explorer (Kusto) dataset. </summary>
-    public partial class AzureDataExplorerTableDataset : DataFactoryDatasetDefinition
+    public partial class AzureDataExplorerTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AzureDataExplorerTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

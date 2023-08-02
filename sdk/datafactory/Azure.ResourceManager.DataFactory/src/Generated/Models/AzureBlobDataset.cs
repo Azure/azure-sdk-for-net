@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Azure Blob storage. </summary>
-    public partial class AzureBlobDataset : DataFactoryDatasetDefinition
+    public partial class AzureBlobDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AzureBlobDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -114,6 +114,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential);
+            }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
+            if (Optional.IsDefined(ContainerUri))
+            {
+                writer.WritePropertyName("containerUri"u8);
+                writer.WriteObjectValue(ContainerUri);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -145,6 +160,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> azureCloudType = default;
             Optional<string> accountKind = default;
             Optional<string> encryptedCredential = default;
+            Optional<CredentialReference> credential = default;
+            Optional<AzureStorageAuthenticationType> authenticationType = default;
+            Optional<object> containerUri = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -299,13 +317,40 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             encryptedCredential = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("credential"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            credential = CredentialReference.DeserializeCredentialReference(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authenticationType = new AzureStorageAuthenticationType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("containerUri"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            containerUri = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, serviceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, accountKind.Value, encryptedCredential.Value);
+            return new AzureBlobStorageLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString.Value, accountKey.Value, sasUri.Value, sasToken.Value, serviceEndpoint.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, accountKind.Value, encryptedCredential.Value, credential.Value, Optional.ToNullable(authenticationType), containerUri.Value);
         }
 
         internal partial class AzureBlobStorageLinkedServiceConverter : JsonConverter<AzureBlobStorageLinkedService>

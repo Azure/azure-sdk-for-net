@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> An on-premises file system dataset. </summary>
-    public partial class FileShareDataset : DataFactoryDatasetDefinition
+    public partial class FileShareDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of FileShareDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

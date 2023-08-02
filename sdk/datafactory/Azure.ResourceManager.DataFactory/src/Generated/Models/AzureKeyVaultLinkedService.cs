@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Key Vault linked service. </summary>
-    public partial class AzureKeyVaultLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class AzureKeyVaultLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of AzureKeyVaultLinkedService. </summary>
         /// <param name="baseUri"> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </param>

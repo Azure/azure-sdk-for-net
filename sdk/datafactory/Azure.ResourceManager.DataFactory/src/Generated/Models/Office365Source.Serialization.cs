@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> dateFilterColumn = default;
             Optional<DataFactoryElement<string>> startTime = default;
             Optional<DataFactoryElement<string>> endTime = default;
-            Optional<DataFactoryElement<IList<OutputColumn>>> outputColumns = default;
+            Optional<DataFactoryElement<IList<Office365TableOutputColumn>>> outputColumns = default;
             string type = default;
             Optional<DataFactoryElement<int>> sourceRetryCount = default;
             Optional<DataFactoryElement<string>> sourceRetryWait = default;
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    outputColumns = JsonSerializer.Deserialize<DataFactoryElement<IList<OutputColumn>>>(property.Value.GetRawText());
+                    outputColumns = JsonSerializer.Deserialize<DataFactoryElement<IList<Office365TableOutputColumn>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

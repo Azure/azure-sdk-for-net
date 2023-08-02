@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             JsonSerializer.Serialize(writer, ConnectionString);
             writer.WritePropertyName("database"u8);
             JsonSerializer.Serialize(writer, Database);
-            if (Optional.IsDefined(MongoDBAtlasDriverVersion))
+            if (Optional.IsDefined(DriverVersion))
             {
-                writer.WritePropertyName("mongoDbAtlasDriverVersion"u8);
-                JsonSerializer.Serialize(writer, MongoDBAtlasDriverVersion);
+                writer.WritePropertyName("driverVersion"u8);
+                JsonSerializer.Serialize(writer, DriverVersion);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<BinaryData>> annotations = default;
             DataFactoryElement<string> connectionString = default;
             DataFactoryElement<string> database = default;
-            Optional<DataFactoryElement<string>> mongoDBAtlasDriverVersion = default;
+            Optional<DataFactoryElement<string>> driverVersion = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,13 +175,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                             database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("mongoDbAtlasDriverVersion"u8))
+                        if (property0.NameEquals("driverVersion"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            mongoDBAtlasDriverVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            driverVersion = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                     }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MongoDBAtlasLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, database, mongoDBAtlasDriverVersion.Value);
+            return new MongoDBAtlasLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, connectionString, database, driverVersion.Value);
         }
     }
 }

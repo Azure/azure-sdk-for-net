@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Phoenix server dataset. </summary>
-    public partial class PhoenixObjectDataset : DataFactoryDatasetDefinition
+    public partial class PhoenixObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of PhoenixObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

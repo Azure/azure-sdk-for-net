@@ -46,7 +46,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
         /// <param name="drainPeriodInSeconds"> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </param>
         /// <param name="virtualNetwork"> A reference to a virtual network. </param>
-        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, WritableSubResource virtualNetwork) : base(id, name, resourceType)
+        /// <param name="syncMode"> Backend address synchronous mode for the backend pool. </param>
+        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, WritableSubResource virtualNetwork, BackendAddressSyncMode? syncMode) : base(id, name, resourceType)
         {
             ETag = etag;
             Location = location;
@@ -60,6 +61,7 @@ namespace Azure.ResourceManager.Network
             ProvisioningState = provisioningState;
             DrainPeriodInSeconds = drainPeriodInSeconds;
             VirtualNetwork = virtualNetwork;
+            SyncMode = syncMode;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -103,5 +105,8 @@ namespace Azure.ResourceManager.Network
                 VirtualNetwork.Id = value;
             }
         }
+
+        /// <summary> Backend address synchronous mode for the backend pool. </summary>
+        public BackendAddressSyncMode? SyncMode { get; set; }
     }
 }
