@@ -25,7 +25,7 @@ namespace Azure.AI.OpenAI
                 else
                 {
                     var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-                    cancellationToken.Register(() => tcs?.SetCanceled());
+                    cancellationToken.Register(() => tcs?.TrySetCanceled());
                     _waits.Enqueue(tcs);
                     return tcs.Task;
                 }
