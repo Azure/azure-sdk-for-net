@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDBForPostgreSql.Mocking;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     /// <summary> A class to add extension methods to Azure.ResourceManager.CosmosDBForPostgreSql. </summary>
     public static partial class CosmosDBForPostgreSqlExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CosmosDBForPostgreSqlArmClientMockingExtension GetCosmosDBForPostgreSqlArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new CosmosDBForPostgreSqlArmClientMockingExtension(client);
+            });
+        }
+
+        private static CosmosDBForPostgreSqlResourceGroupMockingExtension GetCosmosDBForPostgreSqlResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CosmosDBForPostgreSqlResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static CosmosDBForPostgreSqlSubscriptionMockingExtension GetCosmosDBForPostgreSqlSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new CosmosDBForPostgreSqlSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region CosmosDBForPostgreSqlClusterResource
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBForPostgreSqlClusterResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterResource" /> object. </returns>
         public static CosmosDBForPostgreSqlClusterResource GetCosmosDBForPostgreSqlClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBForPostgreSqlClusterResource.ValidateResourceId(id);
-                return new CosmosDBForPostgreSqlClusterResource(client, id);
-            }
-            );
+            return GetCosmosDBForPostgreSqlArmClientMockingExtension(client).GetCosmosDBForPostgreSqlClusterResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlClusterServerResource" /> object. </returns>
         public static CosmosDBForPostgreSqlClusterServerResource GetCosmosDBForPostgreSqlClusterServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBForPostgreSqlClusterServerResource.ValidateResourceId(id);
-                return new CosmosDBForPostgreSqlClusterServerResource(client, id);
-            }
-            );
+            return GetCosmosDBForPostgreSqlArmClientMockingExtension(client).GetCosmosDBForPostgreSqlClusterServerResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlConfigurationResource" /> object. </returns>
         public static CosmosDBForPostgreSqlConfigurationResource GetCosmosDBForPostgreSqlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBForPostgreSqlConfigurationResource.ValidateResourceId(id);
-                return new CosmosDBForPostgreSqlConfigurationResource(client, id);
-            }
-            );
+            return GetCosmosDBForPostgreSqlArmClientMockingExtension(client).GetCosmosDBForPostgreSqlConfigurationResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource" /> object. </returns>
         public static CosmosDBForPostgreSqlCoordinatorConfigurationResource GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBForPostgreSqlCoordinatorConfigurationResource.ValidateResourceId(id);
-                return new CosmosDBForPostgreSqlCoordinatorConfigurationResource(client, id);
-            }
-            );
+            return GetCosmosDBForPostgreSqlArmClientMockingExtension(client).GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource" /> object. </returns>
         public static CosmosDBForPostgreSqlNodeConfigurationResource GetCosmosDBForPostgreSqlNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBForPostgreSqlNodeConfigurationResource.ValidateResourceId(id);
-                return new CosmosDBForPostgreSqlNodeConfigurationResource(client, id);
-            }
-            );
+            return GetCosmosDBForPostgreSqlArmClientMockingExtension(client).GetCosmosDBForPostgreSqlNodeConfigurationResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlFirewallRuleResource" /> object. </returns>
         public static CosmosDBForPostgreSqlFirewallRuleResource GetCosmosDBForPostgreSqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBForPostgreSqlFirewallRuleResource.ValidateResourceId(id);
-                return new CosmosDBForPostgreSqlFirewallRuleResource(client, id);
-            }
-            );
+            return GetCosmosDBForPostgreSqlArmClientMockingExtension(client).GetCosmosDBForPostgreSqlFirewallRuleResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlRoleResource" /> object. </returns>
         public static CosmosDBForPostgreSqlRoleResource GetCosmosDBForPostgreSqlRoleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBForPostgreSqlRoleResource.ValidateResourceId(id);
-                return new CosmosDBForPostgreSqlRoleResource(client, id);
-            }
-            );
+            return GetCosmosDBForPostgreSqlArmClientMockingExtension(client).GetCosmosDBForPostgreSqlRoleResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateEndpointConnectionResource" /> object. </returns>
         public static CosmosDBForPostgreSqlPrivateEndpointConnectionResource GetCosmosDBForPostgreSqlPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBForPostgreSqlPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new CosmosDBForPostgreSqlPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetCosmosDBForPostgreSqlArmClientMockingExtension(client).GetCosmosDBForPostgreSqlPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -212,12 +166,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> Returns a <see cref="CosmosDBForPostgreSqlPrivateLinkResource" /> object. </returns>
         public static CosmosDBForPostgreSqlPrivateLinkResource GetCosmosDBForPostgreSqlPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBForPostgreSqlPrivateLinkResource.ValidateResourceId(id);
-                return new CosmosDBForPostgreSqlPrivateLinkResource(client, id);
-            }
-            );
+            return GetCosmosDBForPostgreSqlArmClientMockingExtension(client).GetCosmosDBForPostgreSqlPrivateLinkResource(id);
         }
         #endregion
 
@@ -226,7 +175,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlClusterResources and their operations over a CosmosDBForPostgreSqlClusterResource. </returns>
         public static CosmosDBForPostgreSqlClusterCollection GetCosmosDBForPostgreSqlClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCosmosDBForPostgreSqlClusters();
+            return GetCosmosDBForPostgreSqlResourceGroupMockingExtension(resourceGroupResource).GetCosmosDBForPostgreSqlClusters();
         }
 
         /// <summary>
@@ -250,7 +199,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         [ForwardsClientCalls]
         public static async Task<Response<CosmosDBForPostgreSqlClusterResource>> GetCosmosDBForPostgreSqlClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCosmosDBForPostgreSqlClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBForPostgreSqlResourceGroupMockingExtension(resourceGroupResource).GetCosmosDBForPostgreSqlClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -274,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         [ForwardsClientCalls]
         public static Response<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCosmosDBForPostgreSqlClusters().Get(clusterName, cancellationToken);
+            return GetCosmosDBForPostgreSqlResourceGroupMockingExtension(resourceGroupResource).GetCosmosDBForPostgreSqlCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBForPostgreSqlClustersAsync(cancellationToken);
+            return GetCosmosDBForPostgreSqlSubscriptionMockingExtension(subscriptionResource).GetCosmosDBForPostgreSqlClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +265,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> A collection of <see cref="CosmosDBForPostgreSqlClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CosmosDBForPostgreSqlClusterResource> GetCosmosDBForPostgreSqlClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBForPostgreSqlClusters(cancellationToken);
+            return GetCosmosDBForPostgreSqlSubscriptionMockingExtension(subscriptionResource).GetCosmosDBForPostgreSqlClusters(cancellationToken);
         }
 
         /// <summary>
@@ -338,9 +287,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult>> CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBForPostgreSqlSubscriptionMockingExtension(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -362,9 +309,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<CosmosDBForPostgreSqlClusterNameAvailabilityResult> CheckCosmosDBForPostgreSqlClusterNameAvailability(this SubscriptionResource subscriptionResource, CosmosDBForPostgreSqlClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailability(content, cancellationToken);
+            return GetCosmosDBForPostgreSqlSubscriptionMockingExtension(subscriptionResource).CheckCosmosDBForPostgreSqlClusterNameAvailability(content, cancellationToken);
         }
     }
 }

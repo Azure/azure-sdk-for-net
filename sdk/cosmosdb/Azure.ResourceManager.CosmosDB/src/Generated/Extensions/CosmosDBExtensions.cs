@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -18,53 +19,38 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class to add extension methods to Azure.ResourceManager.CosmosDB. </summary>
     public static partial class CosmosDBExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CosmosDBArmClientMockingExtension GetCosmosDBArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new CosmosDBArmClientMockingExtension(client);
+            });
+        }
+
+        private static CosmosDBResourceGroupMockingExtension GetCosmosDBResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CosmosDBResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static CosmosDBSubscriptionMockingExtension GetCosmosDBSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new CosmosDBSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static CosmosDBTenantMockingExtension GetCosmosDBTenantMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new CosmosDBTenantMockingExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
         #region CosmosDBAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBAccountResource" /> along with the instance operations that can be performed on it but with no data.
@@ -75,12 +61,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBAccountResource" /> object. </returns>
         public static CosmosDBAccountResource GetCosmosDBAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBAccountResource.ValidateResourceId(id);
-                return new CosmosDBAccountResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBAccountResource(id);
         }
         #endregion
 
@@ -94,12 +75,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GraphResourceGetResultResource" /> object. </returns>
         public static GraphResourceGetResultResource GetGraphResourceGetResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GraphResourceGetResultResource.ValidateResourceId(id);
-                return new GraphResourceGetResultResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetGraphResourceGetResultResource(id);
         }
         #endregion
 
@@ -113,12 +89,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseResource" /> object. </returns>
         public static CosmosDBSqlDatabaseResource GetCosmosDBSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlDatabaseResource.ValidateResourceId(id);
-                return new CosmosDBSqlDatabaseResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlDatabaseResource(id);
         }
         #endregion
 
@@ -132,12 +103,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> object. </returns>
         public static CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlDatabaseThroughputSettingResource.ValidateResourceId(id);
-                return new CosmosDBSqlDatabaseThroughputSettingResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlDatabaseThroughputSettingResource(id);
         }
         #endregion
 
@@ -151,12 +117,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlContainerThroughputSettingResource" /> object. </returns>
         public static CosmosDBSqlContainerThroughputSettingResource GetCosmosDBSqlContainerThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlContainerThroughputSettingResource.ValidateResourceId(id);
-                return new CosmosDBSqlContainerThroughputSettingResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlContainerThroughputSettingResource(id);
         }
         #endregion
 
@@ -170,12 +131,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBDatabaseThroughputSettingResource" /> object. </returns>
         public static MongoDBDatabaseThroughputSettingResource GetMongoDBDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBDatabaseThroughputSettingResource.ValidateResourceId(id);
-                return new MongoDBDatabaseThroughputSettingResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBDatabaseThroughputSettingResource(id);
         }
         #endregion
 
@@ -189,12 +145,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBCollectionThroughputSettingResource" /> object. </returns>
         public static MongoDBCollectionThroughputSettingResource GetMongoDBCollectionThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBCollectionThroughputSettingResource.ValidateResourceId(id);
-                return new MongoDBCollectionThroughputSettingResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBCollectionThroughputSettingResource(id);
         }
         #endregion
 
@@ -208,12 +159,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource" /> object. </returns>
         public static CosmosTableThroughputSettingResource GetCosmosTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosTableThroughputSettingResource.ValidateResourceId(id);
-                return new CosmosTableThroughputSettingResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosTableThroughputSettingResource(id);
         }
         #endregion
 
@@ -227,12 +173,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource" /> object. </returns>
         public static CassandraKeyspaceThroughputSettingResource GetCassandraKeyspaceThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraKeyspaceThroughputSettingResource.ValidateResourceId(id);
-                return new CassandraKeyspaceThroughputSettingResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCassandraKeyspaceThroughputSettingResource(id);
         }
         #endregion
 
@@ -246,12 +187,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource" /> object. </returns>
         public static CassandraTableThroughputSettingResource GetCassandraTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraTableThroughputSettingResource.ValidateResourceId(id);
-                return new CassandraTableThroughputSettingResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCassandraTableThroughputSettingResource(id);
         }
         #endregion
 
@@ -265,12 +201,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraViewThroughputSettingResource" /> object. </returns>
         public static CassandraViewThroughputSettingResource GetCassandraViewThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraViewThroughputSettingResource.ValidateResourceId(id);
-                return new CassandraViewThroughputSettingResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCassandraViewThroughputSettingResource(id);
         }
         #endregion
 
@@ -284,12 +215,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinDatabaseThroughputSettingResource" /> object. </returns>
         public static GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GremlinDatabaseThroughputSettingResource.ValidateResourceId(id);
-                return new GremlinDatabaseThroughputSettingResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetGremlinDatabaseThroughputSettingResource(id);
         }
         #endregion
 
@@ -303,12 +229,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource" /> object. </returns>
         public static GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GremlinGraphThroughputSettingResource.ValidateResourceId(id);
-                return new GremlinGraphThroughputSettingResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetGremlinGraphThroughputSettingResource(id);
         }
         #endregion
 
@@ -322,12 +243,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> object. </returns>
         public static CosmosDBSqlClientEncryptionKeyResource GetCosmosDBSqlClientEncryptionKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlClientEncryptionKeyResource.ValidateResourceId(id);
-                return new CosmosDBSqlClientEncryptionKeyResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlClientEncryptionKeyResource(id);
         }
         #endregion
 
@@ -341,12 +257,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlContainerResource" /> object. </returns>
         public static CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlContainerResource.ValidateResourceId(id);
-                return new CosmosDBSqlContainerResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlContainerResource(id);
         }
         #endregion
 
@@ -360,12 +271,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlStoredProcedureResource" /> object. </returns>
         public static CosmosDBSqlStoredProcedureResource GetCosmosDBSqlStoredProcedureResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlStoredProcedureResource.ValidateResourceId(id);
-                return new CosmosDBSqlStoredProcedureResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlStoredProcedureResource(id);
         }
         #endregion
 
@@ -379,12 +285,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> object. </returns>
         public static CosmosDBSqlUserDefinedFunctionResource GetCosmosDBSqlUserDefinedFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlUserDefinedFunctionResource.ValidateResourceId(id);
-                return new CosmosDBSqlUserDefinedFunctionResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlUserDefinedFunctionResource(id);
         }
         #endregion
 
@@ -398,12 +299,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlTriggerResource" /> object. </returns>
         public static CosmosDBSqlTriggerResource GetCosmosDBSqlTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlTriggerResource.ValidateResourceId(id);
-                return new CosmosDBSqlTriggerResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlTriggerResource(id);
         }
         #endregion
 
@@ -417,12 +313,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlRoleDefinitionResource" /> object. </returns>
         public static CosmosDBSqlRoleDefinitionResource GetCosmosDBSqlRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlRoleDefinitionResource.ValidateResourceId(id);
-                return new CosmosDBSqlRoleDefinitionResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlRoleDefinitionResource(id);
         }
         #endregion
 
@@ -436,12 +327,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlRoleAssignmentResource" /> object. </returns>
         public static CosmosDBSqlRoleAssignmentResource GetCosmosDBSqlRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlRoleAssignmentResource.ValidateResourceId(id);
-                return new CosmosDBSqlRoleAssignmentResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlRoleAssignmentResource(id);
         }
         #endregion
 
@@ -455,12 +341,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBDatabaseResource" /> object. </returns>
         public static MongoDBDatabaseResource GetMongoDBDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBDatabaseResource.ValidateResourceId(id);
-                return new MongoDBDatabaseResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBDatabaseResource(id);
         }
         #endregion
 
@@ -474,12 +355,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBCollectionResource" /> object. </returns>
         public static MongoDBCollectionResource GetMongoDBCollectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBCollectionResource.ValidateResourceId(id);
-                return new MongoDBCollectionResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBCollectionResource(id);
         }
         #endregion
 
@@ -493,12 +369,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBRoleDefinitionResource" /> object. </returns>
         public static MongoDBRoleDefinitionResource GetMongoDBRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBRoleDefinitionResource.ValidateResourceId(id);
-                return new MongoDBRoleDefinitionResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBRoleDefinitionResource(id);
         }
         #endregion
 
@@ -512,12 +383,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBUserDefinitionResource" /> object. </returns>
         public static MongoDBUserDefinitionResource GetMongoDBUserDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBUserDefinitionResource.ValidateResourceId(id);
-                return new MongoDBUserDefinitionResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBUserDefinitionResource(id);
         }
         #endregion
 
@@ -531,12 +397,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBTableResource" /> object. </returns>
         public static CosmosDBTableResource GetCosmosDBTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBTableResource.ValidateResourceId(id);
-                return new CosmosDBTableResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBTableResource(id);
         }
         #endregion
 
@@ -550,12 +411,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraKeyspaceResource" /> object. </returns>
         public static CassandraKeyspaceResource GetCassandraKeyspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraKeyspaceResource.ValidateResourceId(id);
-                return new CassandraKeyspaceResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCassandraKeyspaceResource(id);
         }
         #endregion
 
@@ -569,12 +425,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraTableResource" /> object. </returns>
         public static CassandraTableResource GetCassandraTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraTableResource.ValidateResourceId(id);
-                return new CassandraTableResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCassandraTableResource(id);
         }
         #endregion
 
@@ -588,12 +439,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraViewGetResultResource" /> object. </returns>
         public static CassandraViewGetResultResource GetCassandraViewGetResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraViewGetResultResource.ValidateResourceId(id);
-                return new CassandraViewGetResultResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCassandraViewGetResultResource(id);
         }
         #endregion
 
@@ -607,12 +453,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinDatabaseResource" /> object. </returns>
         public static GremlinDatabaseResource GetGremlinDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GremlinDatabaseResource.ValidateResourceId(id);
-                return new GremlinDatabaseResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetGremlinDatabaseResource(id);
         }
         #endregion
 
@@ -626,12 +467,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinGraphResource" /> object. </returns>
         public static GremlinGraphResource GetGremlinGraphResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GremlinGraphResource.ValidateResourceId(id);
-                return new GremlinGraphResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetGremlinGraphResource(id);
         }
         #endregion
 
@@ -645,12 +481,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBLocationResource" /> object. </returns>
         public static CosmosDBLocationResource GetCosmosDBLocationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBLocationResource.ValidateResourceId(id);
-                return new CosmosDBLocationResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBLocationResource(id);
         }
         #endregion
 
@@ -664,12 +495,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DataTransferJobGetResultResource" /> object. </returns>
         public static DataTransferJobGetResultResource GetDataTransferJobGetResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataTransferJobGetResultResource.ValidateResourceId(id);
-                return new DataTransferJobGetResultResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetDataTransferJobGetResultResource(id);
         }
         #endregion
 
@@ -683,12 +509,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraClusterResource" /> object. </returns>
         public static CassandraClusterResource GetCassandraClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraClusterResource.ValidateResourceId(id);
-                return new CassandraClusterResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCassandraClusterResource(id);
         }
         #endregion
 
@@ -702,12 +523,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraClusterBackupResource" /> object. </returns>
         public static CassandraClusterBackupResource GetCassandraClusterBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraClusterBackupResource.ValidateResourceId(id);
-                return new CassandraClusterBackupResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCassandraClusterBackupResource(id);
         }
         #endregion
 
@@ -721,12 +537,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraDataCenterResource" /> object. </returns>
         public static CassandraDataCenterResource GetCassandraDataCenterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraDataCenterResource.ValidateResourceId(id);
-                return new CassandraDataCenterResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCassandraDataCenterResource(id);
         }
         #endregion
 
@@ -740,12 +551,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoClusterResource" /> object. </returns>
         public static MongoClusterResource GetMongoClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoClusterResource.ValidateResourceId(id);
-                return new MongoClusterResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetMongoClusterResource(id);
         }
         #endregion
 
@@ -759,12 +565,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBFirewallRuleResource" /> object. </returns>
         public static CosmosDBFirewallRuleResource GetCosmosDBFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBFirewallRuleResource.ValidateResourceId(id);
-                return new CosmosDBFirewallRuleResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBFirewallRuleResource(id);
         }
         #endregion
 
@@ -778,12 +579,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBPrivateEndpointConnectionResource" /> object. </returns>
         public static CosmosDBPrivateEndpointConnectionResource GetCosmosDBPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new CosmosDBPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -797,12 +593,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBPrivateLinkResource" /> object. </returns>
         public static CosmosDBPrivateLinkResource GetCosmosDBPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBPrivateLinkResource.ValidateResourceId(id);
-                return new CosmosDBPrivateLinkResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBPrivateLinkResource(id);
         }
         #endregion
 
@@ -816,12 +607,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="RestorableCosmosDBAccountResource" /> object. </returns>
         public static RestorableCosmosDBAccountResource GetRestorableCosmosDBAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RestorableCosmosDBAccountResource.ValidateResourceId(id);
-                return new RestorableCosmosDBAccountResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetRestorableCosmosDBAccountResource(id);
         }
         #endregion
 
@@ -835,12 +621,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBServiceResource" /> object. </returns>
         public static CosmosDBServiceResource GetCosmosDBServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBServiceResource.ValidateResourceId(id);
-                return new CosmosDBServiceResource(client, id);
-            }
-            );
+            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBServiceResource(id);
         }
         #endregion
 
@@ -849,7 +630,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CosmosDBAccountResources and their operations over a CosmosDBAccountResource. </returns>
         public static CosmosDBAccountCollection GetCosmosDBAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCosmosDBAccounts();
+            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCosmosDBAccounts();
         }
 
         /// <summary>
@@ -873,7 +654,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static async Task<Response<CosmosDBAccountResource>> GetCosmosDBAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCosmosDBAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCosmosDBAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -897,7 +678,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static Response<CosmosDBAccountResource> GetCosmosDBAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCosmosDBAccounts().Get(accountName, cancellationToken);
+            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCosmosDBAccount(accountName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CassandraClusterResources in the ResourceGroupResource. </summary>
@@ -905,7 +686,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CassandraClusterResources and their operations over a CassandraClusterResource. </returns>
         public static CassandraClusterCollection GetCassandraClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCassandraClusters();
+            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCassandraClusters();
         }
 
         /// <summary>
@@ -929,7 +710,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static async Task<Response<CassandraClusterResource>> GetCassandraClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCassandraClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCassandraClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -953,7 +734,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static Response<CassandraClusterResource> GetCassandraCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCassandraClusters().Get(clusterName, cancellationToken);
+            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCassandraCluster(clusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of MongoClusterResources in the ResourceGroupResource. </summary>
@@ -961,7 +742,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of MongoClusterResources and their operations over a MongoClusterResource. </returns>
         public static MongoClusterCollection GetMongoClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMongoClusters();
+            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetMongoClusters();
         }
 
         /// <summary>
@@ -985,7 +766,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static async Task<Response<MongoClusterResource>> GetMongoClusterAsync(this ResourceGroupResource resourceGroupResource, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMongoClusters().GetAsync(mongoClusterName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetMongoClusterAsync(mongoClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1009,7 +790,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static Response<MongoClusterResource> GetMongoCluster(this ResourceGroupResource resourceGroupResource, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMongoClusters().Get(mongoClusterName, cancellationToken);
+            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetMongoCluster(mongoClusterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CosmosDBLocationResources in the SubscriptionResource. </summary>
@@ -1017,7 +798,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CosmosDBLocationResources and their operations over a CosmosDBLocationResource. </returns>
         public static CosmosDBLocationCollection GetCosmosDBLocations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBLocations();
+            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCosmosDBLocations();
         }
 
         /// <summary>
@@ -1039,7 +820,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static async Task<Response<CosmosDBLocationResource>> GetCosmosDBLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetCosmosDBLocations().GetAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCosmosDBLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1061,7 +842,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static Response<CosmosDBLocationResource> GetCosmosDBLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetCosmosDBLocations().Get(location, cancellationToken);
+            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCosmosDBLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -1082,7 +863,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CosmosDBAccountResource> GetCosmosDBAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBAccountsAsync(cancellationToken);
+            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCosmosDBAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1103,7 +884,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CosmosDBAccountResource> GetCosmosDBAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBAccounts(cancellationToken);
+            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCosmosDBAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -1124,7 +905,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CassandraClusterResource> GetCassandraClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCassandraClustersAsync(cancellationToken);
+            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCassandraClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1145,7 +926,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CassandraClusterResource> GetCassandraClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCassandraClusters(cancellationToken);
+            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCassandraClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1166,7 +947,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MongoClusterResource> GetMongoClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMongoClustersAsync(cancellationToken);
+            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetMongoClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1187,7 +968,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MongoClusterResource> GetMongoClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMongoClusters(cancellationToken);
+            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetMongoClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1208,7 +989,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRestorableCosmosDBAccountsAsync(cancellationToken);
+            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetRestorableCosmosDBAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1229,7 +1010,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRestorableCosmosDBAccounts(cancellationToken);
+            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetRestorableCosmosDBAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -1252,9 +1033,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public static async Task<Response<bool>> CheckNameExistsDatabaseAccountAsync(this TenantResource tenantResource, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            return await GetTenantResourceExtensionClient(tenantResource).CheckNameExistsDatabaseAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBTenantMockingExtension(tenantResource).CheckNameExistsDatabaseAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1277,9 +1056,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public static Response<bool> CheckNameExistsDatabaseAccount(this TenantResource tenantResource, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-
-            return GetTenantResourceExtensionClient(tenantResource).CheckNameExistsDatabaseAccount(accountName, cancellationToken);
+            return GetCosmosDBTenantMockingExtension(tenantResource).CheckNameExistsDatabaseAccount(accountName, cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataBoxEdge.Mocking;
 using Azure.ResourceManager.DataBoxEdge.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataBoxEdge. </summary>
     public static partial class DataBoxEdgeExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataBoxEdgeArmClientMockingExtension GetDataBoxEdgeArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DataBoxEdgeArmClientMockingExtension(client);
+            });
+        }
+
+        private static DataBoxEdgeResourceGroupMockingExtension GetDataBoxEdgeResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataBoxEdgeResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataBoxEdgeSubscriptionMockingExtension GetDataBoxEdgeSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataBoxEdgeSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region DataBoxEdgeDeviceResource
         /// <summary>
         /// Gets an object representing a <see cref="DataBoxEdgeDeviceResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceResource" /> object. </returns>
         public static DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeDeviceResource.ValidateResourceId(id);
-                return new DataBoxEdgeDeviceResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeDeviceResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeAlertResource" /> object. </returns>
         public static DataBoxEdgeAlertResource GetDataBoxEdgeAlertResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeAlertResource.ValidateResourceId(id);
-                return new DataBoxEdgeAlertResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeAlertResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="BandwidthScheduleResource" /> object. </returns>
         public static BandwidthScheduleResource GetBandwidthScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BandwidthScheduleResource.ValidateResourceId(id);
-                return new BandwidthScheduleResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetBandwidthScheduleResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource" /> object. </returns>
         public static DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DiagnosticProactiveLogCollectionSettingResource.ValidateResourceId(id);
-                return new DiagnosticProactiveLogCollectionSettingResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDiagnosticProactiveLogCollectionSettingResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource" /> object. </returns>
         public static DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DiagnosticRemoteSupportSettingResource.ValidateResourceId(id);
-                return new DiagnosticRemoteSupportSettingResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDiagnosticRemoteSupportSettingResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeJobResource" /> object. </returns>
         public static DataBoxEdgeJobResource GetDataBoxEdgeJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeJobResource.ValidateResourceId(id);
-                return new DataBoxEdgeJobResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeJobResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeOrderResource" /> object. </returns>
         public static DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeOrderResource.ValidateResourceId(id);
-                return new DataBoxEdgeOrderResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeOrderResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeRoleResource" /> object. </returns>
         public static DataBoxEdgeRoleResource GetDataBoxEdgeRoleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeRoleResource.ValidateResourceId(id);
-                return new DataBoxEdgeRoleResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeRoleResource(id);
         }
         #endregion
 
@@ -212,12 +166,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeRoleAddonResource" /> object. </returns>
         public static DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeRoleAddonResource.ValidateResourceId(id);
-                return new DataBoxEdgeRoleAddonResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeRoleAddonResource(id);
         }
         #endregion
 
@@ -231,12 +180,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource" /> object. </returns>
         public static MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MonitoringMetricConfigurationResource.ValidateResourceId(id);
-                return new MonitoringMetricConfigurationResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetMonitoringMetricConfigurationResource(id);
         }
         #endregion
 
@@ -250,12 +194,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeShareResource" /> object. </returns>
         public static DataBoxEdgeShareResource GetDataBoxEdgeShareResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeShareResource.ValidateResourceId(id);
-                return new DataBoxEdgeShareResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeShareResource(id);
         }
         #endregion
 
@@ -269,12 +208,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountCredentialResource" /> object. </returns>
         public static DataBoxEdgeStorageAccountCredentialResource GetDataBoxEdgeStorageAccountCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeStorageAccountCredentialResource.ValidateResourceId(id);
-                return new DataBoxEdgeStorageAccountCredentialResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeStorageAccountCredentialResource(id);
         }
         #endregion
 
@@ -288,12 +222,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountResource" /> object. </returns>
         public static DataBoxEdgeStorageAccountResource GetDataBoxEdgeStorageAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeStorageAccountResource.ValidateResourceId(id);
-                return new DataBoxEdgeStorageAccountResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeStorageAccountResource(id);
         }
         #endregion
 
@@ -307,12 +236,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeStorageContainerResource" /> object. </returns>
         public static DataBoxEdgeStorageContainerResource GetDataBoxEdgeStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeStorageContainerResource.ValidateResourceId(id);
-                return new DataBoxEdgeStorageContainerResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeStorageContainerResource(id);
         }
         #endregion
 
@@ -326,12 +250,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeTriggerResource" /> object. </returns>
         public static DataBoxEdgeTriggerResource GetDataBoxEdgeTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeTriggerResource.ValidateResourceId(id);
-                return new DataBoxEdgeTriggerResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeTriggerResource(id);
         }
         #endregion
 
@@ -345,12 +264,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> Returns a <see cref="DataBoxEdgeUserResource" /> object. </returns>
         public static DataBoxEdgeUserResource GetDataBoxEdgeUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxEdgeUserResource.ValidateResourceId(id);
-                return new DataBoxEdgeUserResource(client, id);
-            }
-            );
+            return GetDataBoxEdgeArmClientMockingExtension(client).GetDataBoxEdgeUserResource(id);
         }
         #endregion
 
@@ -359,7 +273,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeDeviceResources and their operations over a DataBoxEdgeDeviceResource. </returns>
         public static DataBoxEdgeDeviceCollection GetDataBoxEdgeDevices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataBoxEdgeDevices();
+            return GetDataBoxEdgeResourceGroupMockingExtension(resourceGroupResource).GetDataBoxEdgeDevices();
         }
 
         /// <summary>
@@ -383,7 +297,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         [ForwardsClientCalls]
         public static async Task<Response<DataBoxEdgeDeviceResource>> GetDataBoxEdgeDeviceAsync(this ResourceGroupResource resourceGroupResource, string deviceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataBoxEdgeDevices().GetAsync(deviceName, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxEdgeResourceGroupMockingExtension(resourceGroupResource).GetDataBoxEdgeDeviceAsync(deviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -407,7 +321,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         [ForwardsClientCalls]
         public static Response<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevice(this ResourceGroupResource resourceGroupResource, string deviceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataBoxEdgeDevices().Get(deviceName, cancellationToken);
+            return GetDataBoxEdgeResourceGroupMockingExtension(resourceGroupResource).GetDataBoxEdgeDevice(deviceName, cancellationToken);
         }
 
         /// <summary>
@@ -428,7 +342,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An async collection of <see cref="AvailableDataBoxEdgeSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableDataBoxEdgeSku> GetAvailableSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableSkusAsync(cancellationToken);
+            return GetDataBoxEdgeSubscriptionMockingExtension(subscriptionResource).GetAvailableSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -449,7 +363,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="AvailableDataBoxEdgeSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableDataBoxEdgeSku> GetAvailableSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableSkus(cancellationToken);
+            return GetDataBoxEdgeSubscriptionMockingExtension(subscriptionResource).GetAvailableSkus(cancellationToken);
         }
 
         /// <summary>
@@ -471,7 +385,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevicesAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataBoxEdgeDevicesAsync(expand, cancellationToken);
+            return GetDataBoxEdgeSubscriptionMockingExtension(subscriptionResource).GetDataBoxEdgeDevicesAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -493,7 +407,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevices(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataBoxEdgeDevices(expand, cancellationToken);
+            return GetDataBoxEdgeSubscriptionMockingExtension(subscriptionResource).GetDataBoxEdgeDevices(expand, cancellationToken);
         }
     }
 }
