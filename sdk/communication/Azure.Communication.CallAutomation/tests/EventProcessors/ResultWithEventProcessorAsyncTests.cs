@@ -456,7 +456,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().SendDtmf(
+            var response = callConnection.GetCallMedia().SendDtmfTones(
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
                        new CommunicationUserIdentifier("targetUserId"),
                        OperationContext
@@ -486,7 +486,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var callConnection = CreateMockCallConnection(successCode, AddParticipantsPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
 
-            var response = callConnection.GetCallMedia().SendDtmf(
+            var response = callConnection.GetCallMedia().SendDtmfTones(
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
                        new CommunicationUserIdentifier("targetUserId"),
                        OperationContext
