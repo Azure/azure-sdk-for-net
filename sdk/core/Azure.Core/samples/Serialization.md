@@ -1,6 +1,6 @@
 # Azure.Core Public Serialization Guide
 
-The latest updates to the `Azure.Core` library have simplified serializing and deserializing of all public Azure models. With the addiion of the ModelSerializer class, we provide a public interface that exposes the currently internal serialization code so customers can access it without needing to use reflection or write their own translation. The recommended serialization approach is to use the static `ModelSerializer` class. The ModelSerializer class also has the ModelSerializerOptions which allows the user to set the serialization Format type (Json or Wire) and provide custom Serializer types for specific models.
+The latest updates to the `Azure.Core` library have simplified serializing and deserializing of all public Azure models. With the addiion of the `ModelSerializer` class, we provide a public interface that exposes the currently internal serialization code so customers can access it without needing to use reflection or write their own translation. The recommended serialization approach is to use the static `ModelSerializer` class. The `ModelSerializer` class also has the `ModelSerializerOptions` which allows the user to set the serialization `ModelSerializerFormat` type (`Json` or `Wire`) and provide custom Serializer types for specific models.
 
 ## Key Concepts
 
@@ -12,10 +12,10 @@ The latest updates to the `Azure.Core` library have simplified serializing and d
 
 ## Using the ModelSerializer
 
-The default serialization options can be overridden by passing in a `ModelSerializerOptions` object to the Serialize and Deserialize methods. Developers can set the format options to specify the serialization format such as XML, JSON, and BinaryData. Default `ModelSerializationOptions` use the Wire format and the System.Text.Json serializer. The following samples demonstrate how to use `ModelSerializer` class for `System.Text.Json` and `Newtonsoft.Json` serialization.
+The default serialization options can be overridden by passing in a `ModelSerializerOptions` object to the Serialize and Deserialize methods. Developers can set the format options to specify the serialization format such as XML, JSON, and BinaryData. Default `ModelSerializationOptions` use the `Wire` format and the `System.Text.Json` serializer. The following samples demonstrate how to use `ModelSerializer` class for `System.Text.Json` and `Newtonsoft.Json` serialization.
 
 ## Using ModelSerializer for System.Text.Json
-In the following sample, we are using the default `ModelSerializerOptions`. This will allow the `ModelSerializer` to use the System.Text.Json serializer for all models. In the Deserialization sample, we are setting the `ModelSerializerFormat` in the Options to Json. This will serialize all properties including read-only and additional properties.
+In the following sample, we are using the default `ModelSerializerOptions`. This will allow the `ModelSerializer` to use the `System.Text.Json` serializer for all models. In the Deserialization sample, we are setting the `ModelSerializerFormat` in the Options to `Json`. This will serialize all properties including read-only and additional properties.
 
 ### Serialization
 
@@ -41,7 +41,7 @@ DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(BinaryData.Fr
 
 ## Using ModelSerializer for NewtonSoftJson
 
-In the following sample, we are adding the DogListProperty with the `NewtonsoftJsonObjectSerializer` to the `GenericTypeSerializerCreator`. This will allow the `ModelSerializer` to use the `NewtonsoftJsonObjectSerializer` for the DogListProperty model. 
+In the following sample, we are adding the `DogListProperty` with the `NewtonsoftJsonObjectSerializer` to the `GenericTypeSerializerCreator`. This will allow the `ModelSerializer` to use the `NewtonsoftJsonObjectSerializer` for the DogListProperty model. 
 
 ### Serialization
 
@@ -95,7 +95,7 @@ Console.WriteLine(dog.IsHungry);
 
 ## Using ModelJsonConverter for JsonSerializer
 
-If you have Json that needs to be converted into a specific object type, consider using the ModelJsonConverter class. This class can handle the deserialization of a model to a specific type and include additional metadata. 
+If you have Json that needs to be converted into a specific object type, consider using the `ModelJsonConverter class`. This class can handle the deserialization of a model to a specific type and include additional metadata. 
 
 ### Serialization
 
@@ -127,7 +127,7 @@ DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListPropert
 
 ## Envelope BYOM Case
 
-The following examples show a use case where a user brings a model unknown to the Serializer. The serialization used for each model can also be set in the SerializableOptions options property Serializers. 
+The following examples show a use case where a user brings a model unknown to the Serializer. The serialization used for each model can also be set in the `ModelSerializableOptions` options property `GenericTypeSerializerCreator`. 
 
 Model Being Used by User
 ```C# Snippet:Example_Model
@@ -166,7 +166,7 @@ Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new Binar
 
 ## Using ModelSerializer with generic IModelSerializable
 
-In this example we demonstrate how we could use the exact same method / interface to serialize either json or xml.
+In this example we demonstrate how we could use the exact same method / interface to serialize either Json or Xml.
 Above we demonstrate using `SerializeJson` and `SerializeXml` methods but this requires the user to know which serializer to use.
 
 ### Serialization
