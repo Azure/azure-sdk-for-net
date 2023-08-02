@@ -780,9 +780,7 @@ namespace Azure.Maps.Rendering
         /// <param name="zoom">Zoom level</param>
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
         /// <returns>A tile index contains the tile X, Y index and zoom level.</returns>
-#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public static MapTileIndex PositionToTileXY(GeoPosition position, int zoom, int tileSize)
-#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             var latitude = Clip(position.Latitude, MinLatitude, MaxLatitude);
             var longitude = Clip(position.Longitude, MinLongitude, MaxLongitude);
@@ -805,9 +803,7 @@ namespace Azure.Maps.Rendering
         /// <param name="mapTileIndex">Tile X, Y coordinate and zoom level</param>
         /// <param name="tileSize">The size of the tiles in the tile pyramid.</param>
         /// <returns>A bounding box of the tile defined as an array of numbers in the format of GeoBoundingBox.</returns>
-#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public static GeoBoundingBox TileXYToBoundingBox(MapTileIndex mapTileIndex, int tileSize)
-#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             //Top left corner pixel coordinates
             var x1 = (double)(mapTileIndex.X * tileSize);

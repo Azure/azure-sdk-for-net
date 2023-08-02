@@ -499,9 +499,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="query">An interpolated query string.</param>
         /// <returns>A valid Kusto query.</returns>
-#pragma warning disable AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         public static string CreateQuery(FormattableString query)
-#pragma warning restore AZC0004 // DO provide both asynchronous and synchronous variants for all service methods.
         {
             if (query == null) { return null; }
 
