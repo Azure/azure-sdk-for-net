@@ -89,6 +89,7 @@ Below is an example of how `$templateFileParameters` can be used to pass data fr
 
 **Snippet from `test-resources-pre.ps1`**
 ```powershell
+Import-Module -Name ./eng/common/scripts/X509Certificate2
 $cert = New-X509Certificate2 -SubjectName 'E=opensource@microsoft.com, CN=Azure SDK, OU=Azure SDK, O=Microsoft, L=Frisco, S=TX, C=US' -ValidDays 3652
 # Create new entries in $templateFileParameters
 $templateFileParameters['ConfidentialLedgerPrincipalPEM'] = Format-X509Certificate2 -Certificate $cert

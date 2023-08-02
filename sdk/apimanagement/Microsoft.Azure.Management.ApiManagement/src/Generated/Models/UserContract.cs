@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// User details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class UserContract : Resource
+    public partial class UserContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the UserContract class.

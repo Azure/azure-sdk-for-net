@@ -51,7 +51,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeNetHostName,
             SemanticConventions.AttributeComponent,
             "otel.status_code",
-            "sampleRate",
 
             SemanticConventions.AttributeRpcService,
             // required - RPC

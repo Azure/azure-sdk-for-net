@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return await CreateDatabaseAccount(name, kind, null, enableContinuousModeBackup);
         }
 
-        protected async Task<CosmosDBAccountResource> CreateDatabaseAccount(string name, CosmosDBAccountKind kind, List<CosmosDBAccountCapability> capabilities, bool enableContinuousModeBackup = false)
+        protected async Task<CosmosDBAccountResource> CreateDatabaseAccount(string name, CosmosDBAccountKind kind, List<CosmosDBAccountCapability> capabilities, bool enableContinuousModeBackup = false, bool enablePartitionMerge = false)
         {
             var locations = new List<CosmosDBAccountLocation>()
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             {
                 capabilities.ForEach(x => createParameters.Capabilities.Add(x));
             }
-
+            createParameters.EnablePartitionMerge = enablePartitionMerge;
             createParameters.Tags.Add("key1", "value1");
             createParameters.Tags.Add("key2", "value2");
             _databaseAccountName = name;

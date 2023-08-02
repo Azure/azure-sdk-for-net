@@ -60,5 +60,15 @@
                 return PayloadHelper.GetPayload("TokenIssuanceStart.QueryParameters.json");
             }
         }
+
+        /// <summary> Gets the payload error message when response is set to null </summary>
+        /// <value> The payload with error message </value>
+        public static string NullResponsePayload
+        {
+            get
+            {
+                return PayloadHelper.GetPayload("TokenIssuanceStart.NullResponse.json");
+            }
+        }
     }
 }

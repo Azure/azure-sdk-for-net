@@ -63,6 +63,10 @@ namespace Azure.Core.TestFramework
 
         private TestProxy(string proxyPath, bool debugMode = false)
         {
+            bool.TryParse(Environment.GetEnvironmentVariable("PROXY_DEBUG_MODE"), out bool environmentDebugMode);
+
+            debugMode |= environmentDebugMode;
+
             var proxyLogLevel = Environment.GetEnvironmentVariable(TestProxyLogLevelEnvironmentVariable);
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
@@ -104,7 +108,7 @@ namespace Azure.Core.TestFramework
             else
             {
                 int lines = 0;
-                while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 200)
+                while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 50)
                 {
                     string outputLine = _testProxyProcess.StandardOutput.ReadLine();
                     // useful for debugging
@@ -136,7 +140,7 @@ namespace Azure.Core.TestFramework
 
             // For some reason draining the standard output stream is necessary to keep the test-proxy process healthy. Otherwise requests
             // start timing out. This only seems to happen when not specifying a port.
-            Task.Run(
+            _ = Task.Run(
                 () =>
                 {
                     while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardOutput.EndOfStream)

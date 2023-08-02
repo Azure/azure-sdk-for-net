@@ -20,7 +20,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Participant to add to the call.
         /// </summary>
-        /// <value></value>
         public CallInvite ParticipantToAdd { get; }
 
         /// <summary>

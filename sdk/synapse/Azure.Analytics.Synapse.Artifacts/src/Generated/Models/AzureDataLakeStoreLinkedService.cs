@@ -45,7 +45,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="subscriptionId"> Data Lake Store account subscription ID (if different from Data Factory account). Type: string (or Expression with resultType string). </param>
         /// <param name="resourceGroupName"> Data Lake Store account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureDataLakeStoreLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object dataLakeStoreUri, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object accountName, object subscriptionId, object resourceGroupName, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzureDataLakeStoreLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object dataLakeStoreUri, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object accountName, object subscriptionId, object resourceGroupName, object encryptedCredential, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             DataLakeStoreUri = dataLakeStoreUri;
             ServicePrincipalId = servicePrincipalId;
@@ -56,6 +57,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             Type = type ?? "AzureDataLakeStore";
         }
 
@@ -81,5 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ResourceGroupName { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewDataSourceClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context)
+        public virtual async Task<Response> CreateOrUpdateAsync(RequestContent content, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.CreateOrUpdate");
             scope.Start();
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewDataSourceClient.xml" path="doc/members/member[@name='CreateOrUpdate(RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(RequestContent content, RequestContext context)
+        public virtual Response CreateOrUpdate(RequestContent content, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewDataSourceClient.CreateOrUpdate");
             scope.Start();

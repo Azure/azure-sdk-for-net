@@ -63,6 +63,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
                 writer.WriteObjectValue(ManagedResourceGroupConfiguration);
             }
+            if (Optional.IsDefined(IsWorkloadManagementNetworkEnabled))
+            {
+                writer.WritePropertyName("isWorkloadManagementNetworkEnabled"u8);
+                writer.WriteStringValue(IsWorkloadManagementNetworkEnabled.Value.ToString());
+            }
             if (Optional.IsDefined(IPv4AddressSpace))
             {
                 writer.WritePropertyName("ipv4AddressSpace"u8);
@@ -72,6 +77,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 writer.WritePropertyName("ipv6AddressSpace"u8);
                 writer.WriteStringValue(IPv6AddressSpace);
+            }
+            if (Optional.IsDefined(NfcSku))
+            {
+                writer.WritePropertyName("nfcSku"u8);
+                writer.WriteStringValue(NfcSku.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -92,15 +102,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Optional<string> annotation = default;
             Optional<IList<ExpressRouteConnectionInformation>> infrastructureExpressRouteConnections = default;
             Optional<IList<ExpressRouteConnectionInformation>> workloadExpressRouteConnections = default;
-            Optional<InfrastructureServices> infrastructureServices = default;
-            Optional<WorkloadServices> workloadServices = default;
+            Optional<NetworkFabricControllerServices> infrastructureServices = default;
+            Optional<NetworkFabricControllerServices> workloadServices = default;
             Optional<ManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<IReadOnlyList<string>> networkFabricIds = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> networkFabricIds = default;
             Optional<bool> workloadManagementNetwork = default;
+            Optional<IsWorkloadManagementNetworkEnabled> isWorkloadManagementNetworkEnabled = default;
+            Optional<IReadOnlyList<ResourceIdentifier>> tenantInternetGatewayIds = default;
             Optional<string> ipv4AddressSpace = default;
             Optional<string> ipv6AddressSpace = default;
-            Optional<NetworkFabricControllerOperationalState> operationalState = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkFabricControllerSKU> nfcSku = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -194,7 +206,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            infrastructureServices = InfrastructureServices.DeserializeInfrastructureServices(property0.Value);
+                            infrastructureServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("workloadServices"u8))
@@ -203,7 +215,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            workloadServices = WorkloadServices.DeserializeWorkloadServices(property0.Value);
+                            workloadServices = NetworkFabricControllerServices.DeserializeNetworkFabricControllerServices(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("managedResourceGroupConfiguration"u8))
@@ -221,10 +233,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            List<string> array = new List<string>();
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
                             }
                             networkFabricIds = array;
                             continue;
@@ -238,6 +257,36 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             workloadManagementNetwork = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("isWorkloadManagementNetworkEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isWorkloadManagementNetworkEnabled = new IsWorkloadManagementNetworkEnabled(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("tenantInternetGatewayIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new ResourceIdentifier(item.GetString()));
+                                }
+                            }
+                            tenantInternetGatewayIds = array;
+                            continue;
+                        }
                         if (property0.NameEquals("ipv4AddressSpace"u8))
                         {
                             ipv4AddressSpace = property0.Value.GetString();
@@ -248,13 +297,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             ipv6AddressSpace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("operationalState"u8))
+                        if (property0.NameEquals("nfcSku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            operationalState = new NetworkFabricControllerOperationalState(property0.Value.GetString());
+                            nfcSku = new NetworkFabricControllerSKU(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -263,14 +312,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new NetworkFabricControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToList(infrastructureExpressRouteConnections), Optional.ToList(workloadExpressRouteConnections), infrastructureServices.Value, workloadServices.Value, managedResourceGroupConfiguration.Value, Optional.ToList(networkFabricIds), Optional.ToNullable(workloadManagementNetwork), ipv4AddressSpace.Value, ipv6AddressSpace.Value, Optional.ToNullable(operationalState), Optional.ToNullable(provisioningState));
+            return new NetworkFabricControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToList(infrastructureExpressRouteConnections), Optional.ToList(workloadExpressRouteConnections), infrastructureServices.Value, workloadServices.Value, managedResourceGroupConfiguration.Value, Optional.ToList(networkFabricIds), Optional.ToNullable(workloadManagementNetwork), Optional.ToNullable(isWorkloadManagementNetworkEnabled), Optional.ToList(tenantInternetGatewayIds), ipv4AddressSpace.Value, ipv6AddressSpace.Value, Optional.ToNullable(nfcSku), Optional.ToNullable(provisioningState));
         }
     }
 }

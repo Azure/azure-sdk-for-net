@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: StorageMover
 namespace: Azure.ResourceManager.StorageMover
-require: https://github.com/Azure/azure-rest-api-specs/blob/0b1805b3ce076549ba4e9285a4f0f8727caf53a5/specification/storagemover/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ed9bde6a3db71b84fdba076ba0546213bcce56ee/specification/storagemover/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -22,6 +22,7 @@ rename-mapping:
   AgentStatus: StorageMoverAgentStatus
   CopyMode: StorageMoverCopyMode
   ProvisioningState: StorageMoverProvisioningState
+  Credentials : StorageMoverCredentials
   JobDefinition.properties.agentResourceId: -|arm-id
   JobDefinition.properties.latestJobRunResourceId: -|arm-id
   JobDefinition.properties.targetResourceId: -|arm-id
@@ -30,12 +31,12 @@ rename-mapping:
   JobRun.properties.sourceResourceId: -|arm-id
   JobRun.properties.targetResourceId: -|arm-id
   JobRunResourceId.jobRunResourceId: -|arm-id
+  AzureStorageBlobContainerEndpointProperties.storageAccountResourceId: -|string
 
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
   'location': 'azure-location'
-  '*Uri': 'Uri'
   '*Uris': 'Uri'
 
 rename-rules:
@@ -60,5 +61,6 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
+  PasswordUri: PasswordUriString
+  UsernameUri: UsernameUriString
 ```

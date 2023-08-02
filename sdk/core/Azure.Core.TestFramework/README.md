@@ -366,6 +366,8 @@ public KeyClientLiveTests(bool isAsync, KeyClientOptions.ServiceVersion serviceV
 }
 ```
 
+__Note:__ A user can set the environment variable PROXY_DEBUG_MODE to a truthy value prior to invoking, just like if they set `UseLocalDebugProxy` in their code.
+
 In order to debug the test proxy, you will need to clone the [azure-sdk-tools](https://github.com/Azure/azure-sdk-tools) repo. The best practice is to first create a fork of the repo, and then clone your fork locally.
 
 Once you have cloned the repo, open the [Test Proxy solution](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy.sln) in your IDE.

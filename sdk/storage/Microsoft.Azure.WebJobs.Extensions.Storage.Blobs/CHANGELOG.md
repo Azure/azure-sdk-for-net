@@ -3,6 +3,7 @@
 ## 5.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for `BlobsOptions.MaxDequeueCount`
 
 ### Breaking Changes
 

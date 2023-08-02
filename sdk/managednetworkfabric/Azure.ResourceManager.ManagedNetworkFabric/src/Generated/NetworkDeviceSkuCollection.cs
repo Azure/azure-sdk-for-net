@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Get Network Device SKU details.
+        /// Get a Network Device SKU details.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkDeviceSkuName"> Name of the Network Device Sku. </param>
+        /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Get Network Device SKU details.
+        /// Get a Network Device SKU details.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkDeviceSkuName"> Name of the Network Device Sku. </param>
+        /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkDeviceSkuName"> Name of the Network Device Sku. </param>
+        /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkDeviceSkuName"> Name of the Network Device Sku. </param>
+        /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkDeviceSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkDeviceSkuName"/> is null. </exception>

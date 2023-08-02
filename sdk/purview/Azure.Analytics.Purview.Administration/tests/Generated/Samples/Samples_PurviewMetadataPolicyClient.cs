@@ -29,7 +29,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
             var data = new { };
 
-            Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
                 },
             };
 
-            Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data), new RequestContext());
+            Response response = client.UpdateMetadataPolicy("<policyId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
 
             var data = new { };
 
-            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -208,7 +208,7 @@ namespace Azure.Analytics.Purview.Administration.Samples
                 },
             };
 
-            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.UpdateMetadataPolicyAsync("<policyId>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("name").ToString());

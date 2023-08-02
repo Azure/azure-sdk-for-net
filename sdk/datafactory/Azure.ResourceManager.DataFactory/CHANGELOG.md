@@ -1,14 +1,26 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.3 (2023-08-02)
 
 ### Features Added
 
 - Supported the new `DataFactoryElement<T>` expression type property.
+- Upgraded API version.
 
 ### Other Changes
 
-- Upgraded API version.
+- Upgraded Azure.Core to 1.34.0.
+- Upgraded Azure.ResourceManager to 1.7.0.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

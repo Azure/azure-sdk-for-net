@@ -91,7 +91,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             var data = new { };
 
-            Response response = client.CreateOrUpdateFilter(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateFilter(RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateFilter(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
@@ -137,7 +137,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             var data = new { };
 
-            Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -164,7 +164,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].ToString());
