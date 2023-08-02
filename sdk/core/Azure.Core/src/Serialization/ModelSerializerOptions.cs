@@ -12,27 +12,28 @@ namespace Azure.Core.Serialization
     public class ModelSerializerOptions
     {
         /// <summary>
-        /// .
+        /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class using a default for of <see cref="ModelSerializerFormat.Json"/>.
         /// </summary>
-        public static readonly ModelSerializerOptions AzureSerivceDefault = new ModelSerializerOptions()
+        public ModelSerializerOptions()
+            : this(ModelSerializerFormat.JsonValue) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ModelSerializerOptions" /> class.
+        /// </summary>
+        /// <param name="format"> The format to serialize to and deserialize from. </param>
+        public ModelSerializerOptions(ModelSerializerFormat format)
         {
-            IgnoreAdditionalProperties = true,
-            IgnoreReadOnlyProperties = true,
-        };
+            Format = format;
+        }
 
         /// <summary>
-        /// Bool that determines if ReadOnlyProperties will be serialized. Default is false.
+        /// Gets the <see cref="ModelSerializerFormat"/> that determines Format of serialized model.
         /// </summary>
-        public bool IgnoreReadOnlyProperties { get; set; }
-
-        /// <summary>
-        /// Bool that determines if AdditionalProperties will be serialized. Default is false.
-        /// </summary>
-        public bool IgnoreAdditionalProperties { get; set; }
+        public ModelSerializerFormat Format { get; }
 
         /// <summary>
         /// Dictionary that holds all the serializers for the different model types.
         /// </summary>
-        public Dictionary<Type, ObjectSerializer> Serializers { get; internal set; } = new Dictionary<Type, ObjectSerializer>();
+        public Dictionary<Type, ObjectSerializer> Serializers { get; } = new Dictionary<Type, ObjectSerializer>();
     }
 }

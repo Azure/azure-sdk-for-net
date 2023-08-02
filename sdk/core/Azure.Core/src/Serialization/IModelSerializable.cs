@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 
 namespace Azure.Core.Serialization
 {
@@ -10,6 +11,11 @@ namespace Azure.Core.Serialization
     /// </summary>
     public interface IModelSerializable
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        BinaryData Serialize(ModelSerializerOptions options);
+
         /// <summary>
         /// .
         /// </summary>

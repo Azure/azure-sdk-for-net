@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     internal partial class DescendantParentGroupInfo : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDescendantParentGroupInfo(JsonDocument.Parse(data).RootElement);
 
         internal static DescendantParentGroupInfo DeserializeDescendantParentGroupInfo(JsonElement element)

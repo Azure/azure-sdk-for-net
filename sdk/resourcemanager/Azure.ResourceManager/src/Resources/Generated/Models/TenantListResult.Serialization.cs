@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class TenantListResult : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeTenantListResult(JsonDocument.Parse(data).RootElement);
 
         internal static TenantListResult DeserializeTenantListResult(JsonElement element)

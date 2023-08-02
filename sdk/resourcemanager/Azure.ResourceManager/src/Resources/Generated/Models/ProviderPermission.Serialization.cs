@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ProviderPermission : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeProviderPermission(JsonDocument.Parse(data).RootElement);
 
         internal static ProviderPermission DeserializeProviderPermission(JsonElement element)

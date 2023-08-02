@@ -50,6 +50,8 @@ namespace Azure.ResourceManager.Resources
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeResourceGroupData(JsonDocument.Parse(data).RootElement);
 
         internal static ResourceGroupData DeserializeResourceGroupData(JsonElement element)

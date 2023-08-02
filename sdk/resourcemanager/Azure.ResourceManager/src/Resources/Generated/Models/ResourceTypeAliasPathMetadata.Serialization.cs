@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceTypeAliasPathMetadata : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeResourceTypeAliasPathMetadata(JsonDocument.Parse(data).RootElement);
 
         internal static ResourceTypeAliasPathMetadata DeserializeResourceTypeAliasPathMetadata(JsonElement element)

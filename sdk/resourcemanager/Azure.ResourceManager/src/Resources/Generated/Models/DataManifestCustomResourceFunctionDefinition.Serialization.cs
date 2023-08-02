@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class DataManifestCustomResourceFunctionDefinition : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeDataManifestCustomResourceFunctionDefinition(JsonDocument.Parse(data).RootElement);
 
         internal static DataManifestCustomResourceFunctionDefinition DeserializeDataManifestCustomResourceFunctionDefinition(JsonElement element)

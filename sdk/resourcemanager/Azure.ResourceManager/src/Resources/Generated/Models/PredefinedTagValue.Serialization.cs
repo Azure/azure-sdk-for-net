@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class PredefinedTagValue : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializePredefinedTagValue(JsonDocument.Parse(data).RootElement);
 
         internal static PredefinedTagValue DeserializePredefinedTagValue(JsonElement element)

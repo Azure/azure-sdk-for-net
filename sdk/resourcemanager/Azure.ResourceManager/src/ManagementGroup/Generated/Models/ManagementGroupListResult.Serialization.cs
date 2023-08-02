@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.ManagementGroups.Models
 {
     internal partial class ManagementGroupListResult : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeManagementGroupListResult(JsonDocument.Parse(data).RootElement);
 
         internal static ManagementGroupListResult DeserializeManagementGroupListResult(JsonElement element)

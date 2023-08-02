@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ManagementGroups
 {
     public partial class ManagementGroupData : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeManagementGroupData(JsonDocument.Parse(data).RootElement);
 
         internal static ManagementGroupData DeserializeManagementGroupData(JsonElement element)
@@ -95,7 +97,6 @@ namespace Azure.ResourceManager.ManagementGroups
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                children = null;
                                 continue;
                             }
                             List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();

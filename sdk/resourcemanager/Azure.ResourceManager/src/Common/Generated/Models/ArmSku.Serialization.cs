@@ -48,6 +48,8 @@ namespace Azure.ResourceManager.Models
 
         void IJsonModelSerializable.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeArmSku(JsonDocument.Parse(data).RootElement);
 
         internal static ArmSku DeserializeArmSku(JsonElement element)

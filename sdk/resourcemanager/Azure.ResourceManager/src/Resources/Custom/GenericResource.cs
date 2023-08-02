@@ -455,5 +455,10 @@ namespace Azure.ResourceManager.Resources
         {
             throw new NotImplementedException();
         }
+
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

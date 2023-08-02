@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ResourceProviderData : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeResourceProviderData(JsonDocument.Parse(data).RootElement);
 
         internal static ResourceProviderData DeserializeResourceProviderData(JsonElement element)

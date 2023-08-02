@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class LocationListResult : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeLocationListResult(JsonDocument.Parse(data).RootElement);
 
         internal static LocationListResult DeserializeLocationListResult(JsonElement element)

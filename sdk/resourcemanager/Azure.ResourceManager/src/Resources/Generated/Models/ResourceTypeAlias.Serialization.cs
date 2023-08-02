@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class ResourceTypeAlias : IModelSerializable
     {
+        BinaryData IModelSerializable.Serialize(ModelSerializerOptions options) => throw new NotImplementedException();
+
         object IModelSerializable.Deserialize(BinaryData data, ModelSerializerOptions options) => DeserializeResourceTypeAlias(JsonDocument.Parse(data).RootElement);
 
         internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element)
