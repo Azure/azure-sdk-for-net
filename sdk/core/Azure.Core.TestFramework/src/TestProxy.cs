@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
@@ -38,6 +39,8 @@ namespace Azure.Core.TestFramework
         private readonly StringBuilder _errorBuffer = new();
         private static readonly object _lock = new();
         private static TestProxy _shared;
+        private readonly StringBuilder _output = new();
+        private const string TestProxyLogLevelEnvironmentVariable = "Logging__LogLevel__Azure.Sdk.Tools.TestProxy";
 
         static TestProxy()
         {
@@ -60,6 +63,7 @@ namespace Azure.Core.TestFramework
 
         private TestProxy(string proxyPath, bool debugMode = false)
         {
+            var proxyLogLevel = Environment.GetEnvironmentVariable(TestProxyLogLevelEnvironmentVariable);
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
                 $"\"{proxyPath}\" --storage-location=\"{TestEnvironment.RepositoryRoot}\"")
@@ -70,7 +74,8 @@ namespace Azure.Core.TestFramework
                 EnvironmentVariables =
                 {
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
-                    ["Logging__LogLevel__Default"] = "Error",
+                    [TestProxyLogLevelEnvironmentVariable] = proxyLogLevel ?? "Information",
+                    ["Logging__LogLevel__Default"] = "Information",
                     ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
                     ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
                     ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
@@ -99,7 +104,7 @@ namespace Azure.Core.TestFramework
             else
             {
                 int lines = 0;
-                while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 50)
+                while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 200)
                 {
                     string outputLine = _testProxyProcess.StandardOutput.ReadLine();
                     // useful for debugging
@@ -119,7 +124,7 @@ namespace Azure.Core.TestFramework
 
             if (_proxyPortHttp == null || _proxyPortHttps == null)
             {
-                CheckForErrors();
+                _ = CheckProxyOutputAsync();
                 // if no errors, fallback to this exception
                 throw new InvalidOperationException("Failed to start the test proxy. One or both of the ports was not populated." + Environment.NewLine +
                                                     $"http: {_proxyPortHttp}" + Environment.NewLine +
@@ -131,12 +136,12 @@ namespace Azure.Core.TestFramework
 
             // For some reason draining the standard output stream is necessary to keep the test-proxy process healthy. Otherwise requests
             // start timing out. This only seems to happen when not specifying a port.
-            _ = Task.Run(
+            Task.Run(
                 () =>
                 {
                     while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardOutput.EndOfStream)
                     {
-                        _testProxyProcess.StandardOutput.ReadLine();
+                        _output.AppendLine(_testProxyProcess.StandardOutput.ReadLine());
                     }
                 });
         }
@@ -200,8 +205,12 @@ namespace Azure.Core.TestFramework
             return false;
         }
 
-        public void CheckForErrors()
+        public async Task CheckProxyOutputAsync()
         {
+            // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
+            await Task.Delay(100);
+            TestContext.Out.WriteLine(_output.ToString());
+            _output.Clear();
             if (_errorBuffer.Length > 0)
             {
                 var error = _errorBuffer.ToString();
