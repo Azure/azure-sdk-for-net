@@ -24,19 +24,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
         public void Configure(AzureMonitorOptions options)
         {
-            if (_configuration != null)
-            {
-                _configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
-            }
-
             try
             {
-                // TODO: should we replace this with IConfiguration?
-                string connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
-
-                if (!string.IsNullOrWhiteSpace(connectionString))
+                if (_configuration != null)
                 {
-                    options.ConnectionString = connectionString;
+                    _configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
+
+                    options.ConnectionString ??= _configuration[ConnectionStringEnvironmentVariable];
                 }
             }
             catch (Exception ex)
