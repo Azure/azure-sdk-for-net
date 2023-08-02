@@ -135,7 +135,8 @@ namespace Azure.Core.Serialization
             using var jsonWriter = new Utf8JsonWriter(writer);
             model.Serialize(jsonWriter, options);
             jsonWriter.Flush();
-            Debug.Assert(writer.TryComputeLength(out var length));
+            bool gotLength = writer.TryComputeLength(out long length);
+            Debug.Assert(gotLength);
             using var stream = new MemoryStream((int)length);
             writer.CopyTo(stream, default);
             return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
