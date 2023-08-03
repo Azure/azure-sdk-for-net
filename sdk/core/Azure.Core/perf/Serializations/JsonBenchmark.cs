@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using Azure.Core.Internal;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using BenchmarkDotNet.Attributes;
@@ -21,7 +22,6 @@ namespace Azure.Core.Perf.Serializations
         protected Response _response;
         protected ModelSerializerOptions _options;
         private BinaryData _data;
-        private SequenceWriter _content;
         private JsonDocument _jsonDocument;
 
         protected abstract T Deserialize(JsonElement jsonElement);
@@ -43,10 +43,6 @@ namespace Azure.Core.Perf.Serializations
             _response = new MockResponse(200);
             _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
             _options = ModelSerializerOptions.DefaultWireOptions;
-            _content = new SequenceWriter();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
-            _model.Serialize(writer, new ModelSerializerOptions());
-            writer.Flush();
             _jsonDocument = JsonDocument.Parse(_json);
         }
 
@@ -103,6 +99,13 @@ namespace Azure.Core.Perf.Serializations
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
+        public BinaryData Serialize_ConvertToBinary()
+        {
+            return ModelSerializer.ConvertToBinaryData(_model, _options);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("ModelSerializer")]
         public BinaryData Serialize_ModelSerializerNonGeneric()
         {
             return ModelSerializer.Serialize((object)_model, _options);
@@ -112,8 +115,8 @@ namespace Azure.Core.Perf.Serializations
         [BenchmarkCategory("PublicInterface")]
         public void Serialize_PublicInterface()
         {
-            using var content = new SequenceWriter();
-            using var writer = new Utf8JsonWriter(content);
+            using var stream = new MemoryStream(_data.ToMemory().Length);
+            using var writer = new Utf8JsonWriter(stream);
             _model.Serialize(writer, _options);
             writer.Flush();
         }
