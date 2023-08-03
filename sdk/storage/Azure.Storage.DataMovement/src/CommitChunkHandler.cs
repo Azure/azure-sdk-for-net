@@ -49,14 +49,14 @@ namespace Azure.Storage.DataMovement
         private long _bytesTransferred;
         private readonly long _expectedLength;
         private readonly long _blockSize;
-        private readonly TransferType _transferType;
+        private readonly DataTransferOrder _transferOrder;
         private readonly ClientDiagnostics _clientDiagnostics;
 
         public CommitChunkHandler(
             long expectedLength,
             long blockSize,
             Behaviors behaviors,
-            TransferType transferType,
+            DataTransferOrder transferOrder,
             ClientDiagnostics clientDiagnostics,
             CancellationToken cancellationToken)
         {
@@ -97,8 +97,8 @@ namespace Azure.Storage.DataMovement
             _bytesTransferred = blockSize;
 
             _blockSize = blockSize;
-            _transferType = transferType;
-            if (_transferType == TransferType.Sequential)
+            _transferOrder = transferOrder;
+            if (_transferOrder == DataTransferOrder.Sequential)
             {
                 _commitBlockHandler += SequentialBlockEvent;
             }
@@ -121,7 +121,7 @@ namespace Azure.Storage.DataMovement
 
         private void DipsoseHandlers()
         {
-            if (_transferType == TransferType.Sequential)
+            if (_transferOrder == DataTransferOrder.Sequential)
             {
                 _commitBlockHandler -= SequentialBlockEvent;
             }

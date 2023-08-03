@@ -7,7 +7,7 @@ namespace Azure.Storage.DataMovement
     /// Options for Checkpointer used for saving transfer state to allow for
     /// resuming a transfer.
     /// </summary>
-    public class TransferCheckpointerOptions
+    public class TransferCheckpointStoreOptions
     {
         /// <summary>
         /// The local folder where the checkpoint information will be stored.
@@ -21,14 +21,14 @@ namespace Azure.Storage.DataMovement
         /// <param name="localCheckpointerPath">
         /// The local folder where the checkpoint information will be stored.
         /// </param>
-        public TransferCheckpointerOptions(string localCheckpointerPath)
+        public TransferCheckpointStoreOptions(string localCheckpointerPath)
         {
             CheckpointerPath = localCheckpointerPath;
         }
 
-        internal TransferCheckpointerOptions(TransferCheckpointerOptions other)
+        internal TransferCheckpointStoreOptions(TransferCheckpointStoreOptions options)
         {
-            CheckpointerPath = other.CheckpointerPath;
+            CheckpointerPath = options.CheckpointerPath;
         }
     }
 }

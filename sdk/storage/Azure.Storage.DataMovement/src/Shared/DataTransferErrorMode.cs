@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement
     /// Defines the Error Handling Path to take when a failure or error occurs.
     /// </summary>
     [Flags]
-    public enum ErrorHandlingBehavior
+    public enum DataTransferErrorMode
     {
         /// <summary>
         /// If set all the transfer jobs will ignore failures
@@ -25,6 +25,6 @@ namespace Azure.Storage.DataMovement
         /// quickly on encountering failures from the storage service
         /// and filesystem failures.
         /// </summary>
-        StopOnAllFailures = 0,
+        StopOnAnyFailure = 0,
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Abstract class for a single storage resource.
     /// </summary>
-    public abstract class StorageResourceSingle : StorageResource
+    public abstract class StorageResourceItem : StorageResource
     {
         /// <summary>
         /// For Mocking.
         /// </summary>
-        protected StorageResourceSingle() { }
+        protected StorageResourceItem() { }
 
         /// <summary>
         /// The identifier for the type of storage resource.
@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines the transfer type of the storage resource.
         /// </summary>
-        protected internal abstract TransferType TransferType { get; }
+        protected internal abstract DataTransferOrder TransferType { get; }
 
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        protected internal abstract Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        protected internal abstract Task<StorageResourceReadStreamResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default);
@@ -85,7 +85,7 @@ namespace Azure.Storage.DataMovement
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        protected internal abstract Task WriteFromStreamAsync(
+        protected internal abstract Task CopyFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <returns></returns>
         protected internal abstract Task CopyFromUriAsync(
-            StorageResourceSingle sourceResource,
+            StorageResourceItem sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
@@ -135,7 +135,7 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <returns></returns>
         protected internal abstract Task CopyBlockFromUriAsync(
-            StorageResourceSingle sourceResource,
+            StorageResourceItem sourceResource,
             HttpRange range,
             bool overwrite,
             long completeLength = 0,
