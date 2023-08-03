@@ -90,6 +90,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
+        [Ignore("Only verifying that the code builds")]
         public async Task ConfigureMessageLockLostHandler()
         {
             #region Snippet:ServiceBusProcessorLockLostHandler
@@ -156,6 +157,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
+        [Ignore("Only verifying that the code builds")]
         public async Task ConfigureSessionLockLostHandler()
         {
             #region Snippet:ServiceBusSessionProcessorLockLostHandler
