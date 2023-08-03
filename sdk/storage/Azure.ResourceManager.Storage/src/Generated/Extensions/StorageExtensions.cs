@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Storage.Mocking;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.Storage
     /// <summary> A class to add extension methods to Azure.ResourceManager.Storage. </summary>
     public static partial class StorageExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static StorageArmClientMockingExtension GetStorageArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new StorageArmClientMockingExtension(client);
+            });
+        }
+
+        private static StorageResourceGroupMockingExtension GetStorageResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new StorageResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static StorageSubscriptionMockingExtension GetStorageSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new StorageSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region StorageAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageAccountResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StorageAccountResource" /> object. </returns>
         public static StorageAccountResource GetStorageAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageAccountResource.ValidateResourceId(id);
-                return new StorageAccountResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetStorageAccountResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="DeletedAccountResource" /> object. </returns>
         public static DeletedAccountResource GetDeletedAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeletedAccountResource.ValidateResourceId(id);
-                return new DeletedAccountResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetDeletedAccountResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource" /> object. </returns>
         public static StorageAccountManagementPolicyResource GetStorageAccountManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageAccountManagementPolicyResource.ValidateResourceId(id);
-                return new StorageAccountManagementPolicyResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetStorageAccountManagementPolicyResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="BlobInventoryPolicyResource" /> object. </returns>
         public static BlobInventoryPolicyResource GetBlobInventoryPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BlobInventoryPolicyResource.ValidateResourceId(id);
-                return new BlobInventoryPolicyResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetBlobInventoryPolicyResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StoragePrivateEndpointConnectionResource" /> object. </returns>
         public static StoragePrivateEndpointConnectionResource GetStoragePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StoragePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new StoragePrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetStoragePrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="ObjectReplicationPolicyResource" /> object. </returns>
         public static ObjectReplicationPolicyResource GetObjectReplicationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ObjectReplicationPolicyResource.ValidateResourceId(id);
-                return new ObjectReplicationPolicyResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetObjectReplicationPolicyResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StorageAccountLocalUserResource" /> object. </returns>
         public static StorageAccountLocalUserResource GetStorageAccountLocalUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageAccountLocalUserResource.ValidateResourceId(id);
-                return new StorageAccountLocalUserResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetStorageAccountLocalUserResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="EncryptionScopeResource" /> object. </returns>
         public static EncryptionScopeResource GetEncryptionScopeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                EncryptionScopeResource.ValidateResourceId(id);
-                return new EncryptionScopeResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetEncryptionScopeResource(id);
         }
         #endregion
 
@@ -212,12 +166,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="BlobServiceResource" /> object. </returns>
         public static BlobServiceResource GetBlobServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BlobServiceResource.ValidateResourceId(id);
-                return new BlobServiceResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetBlobServiceResource(id);
         }
         #endregion
 
@@ -231,12 +180,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="BlobContainerResource" /> object. </returns>
         public static BlobContainerResource GetBlobContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BlobContainerResource.ValidateResourceId(id);
-                return new BlobContainerResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetBlobContainerResource(id);
         }
         #endregion
 
@@ -250,12 +194,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="ImmutabilityPolicyResource" /> object. </returns>
         public static ImmutabilityPolicyResource GetImmutabilityPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ImmutabilityPolicyResource.ValidateResourceId(id);
-                return new ImmutabilityPolicyResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetImmutabilityPolicyResource(id);
         }
         #endregion
 
@@ -269,12 +208,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="FileServiceResource" /> object. </returns>
         public static FileServiceResource GetFileServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FileServiceResource.ValidateResourceId(id);
-                return new FileServiceResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetFileServiceResource(id);
         }
         #endregion
 
@@ -288,12 +222,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="FileShareResource" /> object. </returns>
         public static FileShareResource GetFileShareResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FileShareResource.ValidateResourceId(id);
-                return new FileShareResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetFileShareResource(id);
         }
         #endregion
 
@@ -307,12 +236,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="QueueServiceResource" /> object. </returns>
         public static QueueServiceResource GetQueueServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                QueueServiceResource.ValidateResourceId(id);
-                return new QueueServiceResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetQueueServiceResource(id);
         }
         #endregion
 
@@ -326,12 +250,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="StorageQueueResource" /> object. </returns>
         public static StorageQueueResource GetStorageQueueResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageQueueResource.ValidateResourceId(id);
-                return new StorageQueueResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetStorageQueueResource(id);
         }
         #endregion
 
@@ -345,12 +264,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="TableServiceResource" /> object. </returns>
         public static TableServiceResource GetTableServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TableServiceResource.ValidateResourceId(id);
-                return new TableServiceResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetTableServiceResource(id);
         }
         #endregion
 
@@ -364,12 +278,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> Returns a <see cref="TableResource" /> object. </returns>
         public static TableResource GetTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TableResource.ValidateResourceId(id);
-                return new TableResource(client, id);
-            }
-            );
+            return GetStorageArmClientMockingExtension(client).GetTableResource(id);
         }
         #endregion
 
@@ -378,7 +287,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of StorageAccountResources and their operations over a StorageAccountResource. </returns>
         public static StorageAccountCollection GetStorageAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageAccounts();
+            return GetStorageResourceGroupMockingExtension(resourceGroupResource).GetStorageAccounts();
         }
 
         /// <summary>
@@ -403,7 +312,7 @@ namespace Azure.ResourceManager.Storage
         [ForwardsClientCalls]
         public static async Task<Response<StorageAccountResource>> GetStorageAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStorageAccounts().GetAsync(accountName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetStorageResourceGroupMockingExtension(resourceGroupResource).GetStorageAccountAsync(accountName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -428,7 +337,7 @@ namespace Azure.ResourceManager.Storage
         [ForwardsClientCalls]
         public static Response<StorageAccountResource> GetStorageAccount(this ResourceGroupResource resourceGroupResource, string accountName, StorageAccountExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStorageAccounts().Get(accountName, expand, cancellationToken);
+            return GetStorageResourceGroupMockingExtension(resourceGroupResource).GetStorageAccount(accountName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DeletedAccountResources in the SubscriptionResource. </summary>
@@ -436,7 +345,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An object representing collection of DeletedAccountResources and their operations over a DeletedAccountResource. </returns>
         public static DeletedAccountCollection GetDeletedAccounts(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccounts();
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).GetDeletedAccounts();
         }
 
         /// <summary>
@@ -461,7 +370,7 @@ namespace Azure.ResourceManager.Storage
         [ForwardsClientCalls]
         public static async Task<Response<DeletedAccountResource>> GetDeletedAccountAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetDeletedAccounts().GetAsync(location, deletedAccountName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageSubscriptionMockingExtension(subscriptionResource).GetDeletedAccountAsync(location, deletedAccountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -486,7 +395,7 @@ namespace Azure.ResourceManager.Storage
         [ForwardsClientCalls]
         public static Response<DeletedAccountResource> GetDeletedAccount(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedAccountName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetDeletedAccounts().Get(location, deletedAccountName, cancellationToken);
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).GetDeletedAccount(location, deletedAccountName, cancellationToken);
         }
 
         /// <summary>
@@ -507,7 +416,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageSkuInformation> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusAsync(cancellationToken);
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).GetSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -528,7 +437,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageSkuInformation> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkus(cancellationToken);
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).GetSkus(cancellationToken);
         }
 
         /// <summary>
@@ -550,9 +459,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckStorageAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetStorageSubscriptionMockingExtension(subscriptionResource).CheckStorageAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -574,9 +481,7 @@ namespace Azure.ResourceManager.Storage
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckStorageAccountNameAvailability(content, cancellationToken);
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).CheckStorageAccountNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -597,7 +502,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageAccountResource> GetStorageAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageAccountsAsync(cancellationToken);
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).GetStorageAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -618,7 +523,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageAccountResource> GetStorageAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageAccounts(cancellationToken);
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).GetStorageAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -639,7 +544,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="DeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -660,7 +565,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="DeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccounts(cancellationToken);
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).GetDeletedAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -682,7 +587,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> An async collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).GetUsagesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -704,7 +609,7 @@ namespace Azure.ResourceManager.Storage
         /// <returns> A collection of <see cref="StorageUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageUsage> GetUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
+            return GetStorageSubscriptionMockingExtension(subscriptionResource).GetUsagesByLocation(location, cancellationToken);
         }
     }
 }
