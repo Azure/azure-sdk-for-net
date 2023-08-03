@@ -1652,9 +1652,7 @@ namespace Azure.Storage.Queues
         /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
         /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
         /// </remarks>
-#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual Response<SendReceipt> SendMessage(string messageText) =>
-#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             SendMessage(
                 messageText,
                 null); // Pass anything else so we don't recurse on this overload
@@ -1681,9 +1679,7 @@ namespace Azure.Storage.Queues
         /// <see cref="QueueMessageEncoding.Base64"/> was the default behavior in the prior v11 library.  See
         /// <see href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.storage.queue.cloudqueue.encodemessage?view=azure-dotnet-legacy">CloudQueue.EncodeMessage</see>.
         /// </remarks>
-#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response<SendReceipt>> SendMessageAsync(string messageText) =>
-#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             await SendMessageAsync(
                 messageText,
                 null) // Pass anything else so we don't recurse on this overload
@@ -2059,9 +2055,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
         /// </returns>
-#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual Response<QueueMessage[]> ReceiveMessages() => ReceiveMessages(null); // Pass anything else so we don't recurse on this overload
-#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
 
         /// <summary>
         /// Retrieves one or more messages from the front of the queue.
@@ -2073,9 +2067,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response{T}"/> where T is an array of <see cref="QueueMessage"/>
         /// </returns>
-#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response<QueueMessage[]>> ReceiveMessagesAsync() =>
-#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
             await ReceiveMessagesAsync(null)  // Pass anything else so we don't recurse on this overload
             .ConfigureAwait(false);
 
