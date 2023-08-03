@@ -24,8 +24,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Defines the file source info to be used for play. </summary>
         public FileSourceInternal File { get; set; }
         /// <summary> Defines the text source info to be used for play. </summary>
-        public TextSourceInternal TextSource { get; set; }
+        public TextSourceInternal Text { get; set; }
         /// <summary> Defines the ssml(Speech Synthesis Markup Language) source info to be used for play. </summary>
-        public SsmlSourceInternal SsmlSource { get; set; }
+        public SsmlSourceInternal Ssml { get; set; }
     }
 }

@@ -200,27 +200,36 @@ namespace Azure.Communication.CallAutomation
             return new RecognizeCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation, recognitionType, recognizeResult);
         }
 
-        /// <summary> Initializes a new instance of CallTransferAccepted. </summary>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="transferee"> Transferee is the participant who is transferring the call.  </param>
-        /// <param name="transferTarget"> The identity of the target where call should be transferred to. </param>
-        /// <returns> A new <see cref="CallAutomation.CallTransferAccepted"/> instance for mocking. </returns>
-        public static CallTransferAccepted CallTransferAccepted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null, CommunicationIdentifier transferee = null, CommunicationIdentifier transferTarget = null)
+        /// <summary>
+        /// Initializes a new instance of SendDtmfTonesCompleted.
+        /// </summary>
+        /// <param name="callConnectionId"></param>
+        /// <param name="serverCallId"></param>
+        /// <param name="correlationId"></param>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"></param>
+        /// <returns></returns>
+        public static SendDtmfTonesCompleted SendDtmfTonesCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            var internalEvent =  new CallTransferAcceptedInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                operationContext,
-                resultInformation,
-                transferTarget == null ? null : CommunicationIdentifierSerializer.Serialize(transferTarget),
-                transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
-                );
-            return new CallTransferAccepted(internalEvent);
+            var internalObject = new SendDtmfTonesCompletedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+
+            return new SendDtmfTonesCompleted(internalObject);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of SendDtmfTonesFailed.
+        /// </summary>
+        /// <param name="callConnectionId"></param>
+        /// <param name="serverCallId"></param>
+        /// <param name="correlationId"></param>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"></param>
+        /// <returns></returns>
+        public static SendDtmfTonesFailed SendDtmfTonesFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            var internalObject = new SendDtmfTonesFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+
+            return new SendDtmfTonesFailed(internalObject);
         }
     }
 }

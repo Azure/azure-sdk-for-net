@@ -422,7 +422,7 @@ namespace Azure.Communication.CallAutomation
                     InitialSilenceTimeoutInSeconds = (int)recognizeChoiceOptions.InitialSilenceTimeout.TotalSeconds
                 };
 
-                recognizeChoiceOptions.RecognizeChoices
+                recognizeChoiceOptions.Choices
                     .ToList().ForEach(t => recognizeConfigurationsInternal.Choices.Add(t));
 
                 if (!String.IsNullOrEmpty(recognizeChoiceOptions.SpeechLanguage))
@@ -535,19 +535,19 @@ namespace Azure.Communication.CallAutomation
             else if (playSource != null && playSource is TextSource textSource)
             {
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Text);
-                sourceInternal.TextSource = new TextSourceInternal(textSource.Text);
-                sourceInternal.TextSource.SourceLocale = textSource.SourceLocale ?? null;
-                sourceInternal.TextSource.VoiceGender = textSource.VoiceGender ?? GenderType.Male;
-                sourceInternal.TextSource.VoiceName = textSource.VoiceName ?? null;
-                sourceInternal.TextSource.CustomVoiceEndpointId = textSource.CustomVoiceEndpointId ?? null;
+                sourceInternal.Text = new TextSourceInternal(textSource.Text);
+                sourceInternal.Text.SourceLocale = textSource.SourceLocale ?? null;
+                sourceInternal.Text.VoiceKind = textSource.VoiceKind ?? VoiceKind.Male;
+                sourceInternal.Text.VoiceName = textSource.VoiceName ?? null;
+                sourceInternal.Text.CustomVoiceEndpointId = textSource.CustomVoiceEndpointId ?? null;
                 sourceInternal.PlaySourceCacheId = textSource.PlaySourceCacheId;
                 return sourceInternal;
             }
             else if (playSource != null && playSource is SsmlSource ssmlSource)
             {
                 sourceInternal = new PlaySourceInternal(PlaySourceTypeInternal.Ssml);
-                sourceInternal.SsmlSource = new SsmlSourceInternal(ssmlSource.SsmlText);
-                sourceInternal.SsmlSource.CustomVoiceEndpointId = ssmlSource.CustomVoiceEndpointId ?? null;
+                sourceInternal.Ssml = new SsmlSourceInternal(ssmlSource.SsmlText);
+                sourceInternal.Ssml.CustomVoiceEndpointId = ssmlSource.CustomVoiceEndpointId ?? null;
                 sourceInternal.PlaySourceCacheId = ssmlSource.PlaySourceCacheId;
                 return sourceInternal;
             }
@@ -676,23 +676,24 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns a Response containing a SendDtmfResult object indicating the result of the send operation.</returns>
-        public virtual async Task<Response<SendDtmfResult>> SendDtmfAsync(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
+        public virtual async Task<Response<SendDtmfTonesResult>> SendDtmfTonesAsync(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
             string operationContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmfTones)}");
             scope.Start();
             try
             {
-                SendDtmfRequestInternal request = request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
-
-                request.OperationContext = operationContext;
+                SendDtmfTonesRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                {
+                    OperationContext = operationContext
+                };
 
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = await CallMediaRestClient.SendDtmfAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
 
-                var result = new SendDtmfResult();
+                var result = new SendDtmfTonesResult(response.Value.OperationContext);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
@@ -712,23 +713,24 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext">An optional context object containing information about the operation, such as a unique identifier or custom metadata.</param>
         /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
         /// <returns>Returns a Response containing a SendDtmfResult object indicating the result of the send operation.</returns>
-        public virtual Response<SendDtmfResult> SendDtmf(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
+        public virtual Response<SendDtmfTonesResult> SendDtmfTones(IEnumerable<DtmfTone> tones, CommunicationIdentifier targetParticipant,
             string operationContext = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmf)}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(SendDtmfTones)}");
             scope.Start();
             try
             {
-                SendDtmfRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant));
-
-                request.OperationContext = operationContext;
+                SendDtmfTonesRequestInternal request = new(tones, CommunicationIdentifierSerializer.Serialize(targetParticipant))
+                {
+                    OperationContext = operationContext
+                };
 
                 var repeatabilityHeaders = new RepeatabilityHeaders();
 
-                var response = CallMediaRestClient.SendDtmf(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
+                var response = CallMediaRestClient.SendDtmfTones(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
                     repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken);
 
-                var result = new SendDtmfResult();
+                var result = new SendDtmfTonesResult(response.Value.OperationContext);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());

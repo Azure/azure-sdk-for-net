@@ -13,13 +13,13 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The Choice. </summary>
-    public partial class RecognizeChoice
+    public partial class RecognitionChoice
     {
-        /// <summary> Initializes a new instance of RecognizeChoice. </summary>
+        /// <summary> Initializes a new instance of RecognitionChoice. </summary>
         /// <param name="label"> Identifier for a given choice. </param>
         /// <param name="phrases"> List of phrases to recognize. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> or <paramref name="phrases"/> is null. </exception>
-        public RecognizeChoice(string label, IEnumerable<string> phrases)
+        public RecognitionChoice(string label, IEnumerable<string> phrases)
         {
             Argument.AssertNotNull(label, nameof(label));
             Argument.AssertNotNull(phrases, nameof(phrases));
@@ -28,11 +28,11 @@ namespace Azure.Communication.CallAutomation
             Phrases = phrases.ToList();
         }
 
-        /// <summary> Initializes a new instance of RecognizeChoice. </summary>
+        /// <summary> Initializes a new instance of RecognitionChoice. </summary>
         /// <param name="label"> Identifier for a given choice. </param>
         /// <param name="phrases"> List of phrases to recognize. </param>
         /// <param name="tone"></param>
-        internal RecognizeChoice(string label, IList<string> phrases, DtmfTone? tone)
+        internal RecognitionChoice(string label, IList<string> phrases, DtmfTone? tone)
         {
             Label = label;
             Phrases = phrases;

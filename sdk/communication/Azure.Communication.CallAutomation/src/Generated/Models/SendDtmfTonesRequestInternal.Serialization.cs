@@ -10,18 +10,20 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class MuteParticipantsRequestInternal : IUtf8JsonSerializable
+    internal partial class SendDtmfTonesRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("targetParticipants"u8);
+            writer.WritePropertyName("tones"u8);
             writer.WriteStartArray();
-            foreach (var item in TargetParticipants)
+            foreach (var item in Tones)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("targetParticipant"u8);
+            writer.WriteObjectValue(TargetParticipant);
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
