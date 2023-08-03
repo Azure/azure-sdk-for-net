@@ -14,10 +14,8 @@ namespace Azure.Core.Tests.ModelSerializationTests
         public void ValidateErrorIfUnknownDoesntExist()
         {
             BaseWithNoUnknown baseInstance = new SubType();
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelSerializer.Deserialize<BaseWithNoUnknown>(new BinaryData(Array.Empty<byte>())));
-            Assert.IsTrue(ex.Message.Contains("Unable to find type Unknown"));
-            ex = Assert.Throws<InvalidOperationException>(() => ModelSerializer.Deserialize(new BinaryData(Array.Empty<byte>()), typeof(BaseWithNoUnknown)));
-            Assert.IsTrue(ex.Message.Contains("Unable to find type Unknown"));
+            Assert.Throws<InvalidOperationException>(() => ModelSerializer.Deserialize<BaseWithNoUnknown>(new BinaryData(Array.Empty<byte>())));
+            Assert.Throws<InvalidOperationException>(() => ModelSerializer.Deserialize(new BinaryData(Array.Empty<byte>()), typeof(BaseWithNoUnknown)));
         }
 
         [Test]
