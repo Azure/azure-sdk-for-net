@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataBox.Mocking;
 using Azure.ResourceManager.DataBox.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.DataBox
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataBox. </summary>
     public static partial class DataBoxExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataBoxArmClientMockingExtension GetDataBoxArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DataBoxArmClientMockingExtension(client);
+            });
+        }
+
+        private static DataBoxResourceGroupMockingExtension GetDataBoxResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataBoxResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataBoxSubscriptionMockingExtension GetDataBoxSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataBoxSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region DataBoxJobResource
         /// <summary>
         /// Gets an object representing a <see cref="DataBoxJobResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> Returns a <see cref="DataBoxJobResource" /> object. </returns>
         public static DataBoxJobResource GetDataBoxJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataBoxJobResource.ValidateResourceId(id);
-                return new DataBoxJobResource(client, id);
-            }
-            );
+            return GetDataBoxArmClientMockingExtension(client).GetDataBoxJobResource(id);
         }
         #endregion
 
@@ -74,7 +63,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An object representing collection of DataBoxJobResources and their operations over a DataBoxJobResource. </returns>
         public static DataBoxJobCollection GetDataBoxJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataBoxJobs();
+            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetDataBoxJobs();
         }
 
         /// <summary>
@@ -99,7 +88,7 @@ namespace Azure.ResourceManager.DataBox
         [ForwardsClientCalls]
         public static async Task<Response<DataBoxJobResource>> GetDataBoxJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataBoxJobs().GetAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetDataBoxJobAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -124,7 +113,7 @@ namespace Azure.ResourceManager.DataBox
         [ForwardsClientCalls]
         public static Response<DataBoxJobResource> GetDataBoxJob(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataBoxJobs().Get(jobName, expand, cancellationToken);
+            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetDataBoxJob(jobName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -148,9 +137,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableSkusAsync(location, content, cancellationToken);
+            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetAvailableSkusAsync(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -174,9 +161,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataBoxSkuInformation> GetAvailableSkus(this ResourceGroupResource resourceGroupResource, AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAvailableSkus(location, content, cancellationToken);
+            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetAvailableSkus(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -199,9 +184,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxResourceGroupMockingExtension(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -224,9 +207,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DataBoxValidationResult> ValidateInputs(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
+            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -249,9 +230,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -274,9 +253,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<RegionConfigurationResult> GetRegionConfiguration(this ResourceGroupResource resourceGroupResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRegionConfiguration(location, content, cancellationToken);
+            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetRegionConfiguration(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -298,7 +275,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataBoxJobResource> GetDataBoxJobsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataBoxJobsAsync(skipToken, cancellationToken);
+            return GetDataBoxSubscriptionMockingExtension(subscriptionResource).GetDataBoxJobsAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +297,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataBoxJobResource> GetDataBoxJobs(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataBoxJobs(skipToken, cancellationToken);
+            return GetDataBoxSubscriptionMockingExtension(subscriptionResource).GetDataBoxJobs(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -343,9 +320,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<AddressValidationOutput>> ValidateAddressAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxSubscriptionMockingExtension(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -368,9 +343,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<AddressValidationOutput> ValidateAddress(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateAddress(location, content, cancellationToken);
+            return GetDataBoxSubscriptionMockingExtension(subscriptionResource).ValidateAddress(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -393,9 +366,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxSubscriptionMockingExtension(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -418,9 +389,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DataBoxValidationResult> ValidateInputs(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateInputs(location, content, cancellationToken);
+            return GetDataBoxSubscriptionMockingExtension(subscriptionResource).ValidateInputs(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -443,9 +412,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataBoxSubscriptionMockingExtension(subscriptionResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -468,9 +435,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<RegionConfigurationResult> GetRegionConfiguration(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRegionConfiguration(location, content, cancellationToken);
+            return GetDataBoxSubscriptionMockingExtension(subscriptionResource).GetRegionConfiguration(location, content, cancellationToken);
         }
     }
 }
