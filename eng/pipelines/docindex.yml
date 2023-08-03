@@ -18,8 +18,6 @@ jobs:
       DocRepoLocation: $(Pipeline.Workspace)/docs
       DocRepoOwner: Azure
       DocRepoName: azure-docs-sdk-dotnet
-      TestBranch: djurek/test-onboarding-2
-      TestDailyBranch: djurek/test-onboarding-2-daily
     steps:
       # Checkout the eng folder from the SDK repo
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -40,7 +38,6 @@ jobs:
           Repositories:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
-              Commitish: $(TestBranch)
       # Install the tool for toc step to use
       - task: NuGetToolInstaller@1
         inputs:
@@ -87,7 +84,7 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
-          BaseRepoBranch: $(TestBranch)
+          BaseRepoBranch: $(DefaultBranch)
           BaseRepoOwner: $(DocRepoOwner)
           CommitMsg: "Update docs CI configuration"
           TargetRepoName: $(DocRepoName)
@@ -95,12 +92,12 @@ jobs:
           WorkingDirectory: $(DocRepoLocation)
 
       # Prepare daily docs CI
-      # - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
-      #   parameters:
-      #     DailyBranchVariableName: DailyDocsBranchName
+      - template: /eng/common/pipelines/templates/steps/set-daily-docs-branch-name.yml
+        parameters:
+          DailyBranchVariableName: DailyDocsBranchName
       - pwsh: |
           $ErrorActionPreference = "Continue"
-          git checkout "origin/$(TestDailyBranch)" 2>&1 | Out-Null
+          git checkout "origin/$(DailyDocsBranchName)" 2>&1 | Out-Null
           $LASTEXITCODE = 0 # This ignores any error from git checkout
           git status
         displayName: Checkout daily branch if it exists
@@ -154,7 +151,7 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
-          BaseRepoBranch: $(TestDailyBranch)
+          BaseRepoBranch: $(DailyDocsBranchName)
           BaseRepoOwner: $(DocRepoOwner)
           CommitMsg: "Update targeting packages based on release metadata. (Daily docs)"
           TargetRepoName: $(DocRepoName)
@@ -173,4 +170,4 @@ jobs:
             -Project "Content%20CI"
             -DefinitionId 397
             -AuthToken "$(azuresdk-apidrop-devops-queue-build-pat)"
-            -BuildParametersJson (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(TestDailyBranch)" } | ConvertTo-Json)
+            -BuildParametersJson (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)
