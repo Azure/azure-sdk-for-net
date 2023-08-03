@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.FluidRelay.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.FluidRelay
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.FluidRelay
     /// <summary> A class to add extension methods to Azure.ResourceManager.FluidRelay. </summary>
     public static partial class FluidRelayExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static FluidRelayArmClientMockingExtension GetFluidRelayArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new FluidRelayArmClientMockingExtension(client);
+            });
+        }
+
+        private static FluidRelayResourceGroupMockingExtension GetFluidRelayResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new FluidRelayResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static FluidRelaySubscriptionMockingExtension GetFluidRelaySubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new FluidRelaySubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region FluidRelayServerResource
         /// <summary>
         /// Gets an object representing a <see cref="FluidRelayServerResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> Returns a <see cref="FluidRelayServerResource" /> object. </returns>
         public static FluidRelayServerResource GetFluidRelayServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FluidRelayServerResource.ValidateResourceId(id);
-                return new FluidRelayServerResource(client, id);
-            }
-            );
+            return GetFluidRelayArmClientMockingExtension(client).GetFluidRelayServerResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> Returns a <see cref="FluidRelayContainerResource" /> object. </returns>
         public static FluidRelayContainerResource GetFluidRelayContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FluidRelayContainerResource.ValidateResourceId(id);
-                return new FluidRelayContainerResource(client, id);
-            }
-            );
+            return GetFluidRelayArmClientMockingExtension(client).GetFluidRelayContainerResource(id);
         }
         #endregion
 
@@ -92,7 +76,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> An object representing collection of FluidRelayServerResources and their operations over a FluidRelayServerResource. </returns>
         public static FluidRelayServerCollection GetFluidRelayServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetFluidRelayServers();
+            return GetFluidRelayResourceGroupMockingExtension(resourceGroupResource).GetFluidRelayServers();
         }
 
         /// <summary>
@@ -116,7 +100,7 @@ namespace Azure.ResourceManager.FluidRelay
         [ForwardsClientCalls]
         public static async Task<Response<FluidRelayServerResource>> GetFluidRelayServerAsync(this ResourceGroupResource resourceGroupResource, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetFluidRelayServers().GetAsync(fluidRelayServerName, cancellationToken).ConfigureAwait(false);
+            return await GetFluidRelayResourceGroupMockingExtension(resourceGroupResource).GetFluidRelayServerAsync(fluidRelayServerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -140,7 +124,7 @@ namespace Azure.ResourceManager.FluidRelay
         [ForwardsClientCalls]
         public static Response<FluidRelayServerResource> GetFluidRelayServer(this ResourceGroupResource resourceGroupResource, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetFluidRelayServers().Get(fluidRelayServerName, cancellationToken);
+            return GetFluidRelayResourceGroupMockingExtension(resourceGroupResource).GetFluidRelayServer(fluidRelayServerName, cancellationToken);
         }
 
         /// <summary>
@@ -161,7 +145,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> An async collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FluidRelayServerResource> GetFluidRelayServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFluidRelayServersAsync(cancellationToken);
+            return GetFluidRelaySubscriptionMockingExtension(subscriptionResource).GetFluidRelayServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +166,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> A collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FluidRelayServerResource> GetFluidRelayServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetFluidRelayServers(cancellationToken);
+            return GetFluidRelaySubscriptionMockingExtension(subscriptionResource).GetFluidRelayServers(cancellationToken);
         }
     }
 }

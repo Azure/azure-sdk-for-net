@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.GuestConfiguration.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration
@@ -18,111 +19,31 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// <summary> A class to add extension methods to Azure.ResourceManager.GuestConfiguration. </summary>
     public static partial class GuestConfigurationExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static GuestConfigurationArmClientMockingExtension GetGuestConfigurationArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new GuestConfigurationArmClientMockingExtension(client);
+            });
+        }
+
+        private static GuestConfigurationResourceGroupMockingExtension GetGuestConfigurationResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new GuestConfigurationResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static GuestConfigurationSubscriptionMockingExtension GetGuestConfigurationSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new GuestConfigurationSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region GuestConfigurationVmAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="GuestConfigurationVmAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestConfigurationVmAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestConfigurationVmAssignmentResource" /> object. </returns>
-        public static GuestConfigurationVmAssignmentResource GetGuestConfigurationVmAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                GuestConfigurationVmAssignmentResource.ValidateResourceId(id);
-                return new GuestConfigurationVmAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region GuestConfigurationHcrpAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="GuestConfigurationHcrpAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestConfigurationHcrpAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationHcrpAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestConfigurationHcrpAssignmentResource" /> object. </returns>
-        public static GuestConfigurationHcrpAssignmentResource GetGuestConfigurationHcrpAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                GuestConfigurationHcrpAssignmentResource.ValidateResourceId(id);
-                return new GuestConfigurationHcrpAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region GuestConfigurationVmssAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="GuestConfigurationVmssAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestConfigurationVmssAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmssAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestConfigurationVmssAssignmentResource" /> object. </returns>
-        public static GuestConfigurationVmssAssignmentResource GetGuestConfigurationVmssAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                GuestConfigurationVmssAssignmentResource.ValidateResourceId(id);
-                return new GuestConfigurationVmssAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of GuestConfigurationVmAssignmentResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of GuestConfigurationVmAssignmentResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.Compute/virtualMachines. </param>
         /// <returns> An object representing collection of GuestConfigurationVmAssignmentResources and their operations over a GuestConfigurationVmAssignmentResource. </returns>
@@ -132,9 +53,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachines", scope.ResourceType));
             }
-            return GetArmResourceExtensionClient(client, scope).GetGuestConfigurationVmAssignments();
+            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmAssignments(scope);
         }
-
         /// <summary>
         /// Get information about a guest configuration assignment
         /// <list type="bullet">
@@ -161,9 +81,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachines", scope.ResourceType));
             }
-            return await client.GetGuestConfigurationVmAssignments(scope).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmAssignmentAsync(scope, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Get information about a guest configuration assignment
         /// <list type="bullet">
@@ -190,10 +109,10 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachines", scope.ResourceType));
             }
-            return client.GetGuestConfigurationVmAssignments(scope).Get(guestConfigurationAssignmentName, cancellationToken);
+            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmAssignment(scope, guestConfigurationAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GuestConfigurationHcrpAssignmentResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of GuestConfigurationHcrpAssignmentResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.HybridCompute/machines. </param>
         /// <returns> An object representing collection of GuestConfigurationHcrpAssignmentResources and their operations over a GuestConfigurationHcrpAssignmentResource. </returns>
@@ -203,9 +122,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.HybridCompute/machines", scope.ResourceType));
             }
-            return GetArmResourceExtensionClient(client, scope).GetGuestConfigurationHcrpAssignments();
+            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationHcrpAssignments(scope);
         }
-
         /// <summary>
         /// Get information about a guest configuration assignment
         /// <list type="bullet">
@@ -232,9 +150,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.HybridCompute/machines", scope.ResourceType));
             }
-            return await client.GetGuestConfigurationHcrpAssignments(scope).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationHcrpAssignmentAsync(scope, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Get information about a guest configuration assignment
         /// <list type="bullet">
@@ -261,10 +178,10 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.HybridCompute/machines", scope.ResourceType));
             }
-            return client.GetGuestConfigurationHcrpAssignments(scope).Get(guestConfigurationAssignmentName, cancellationToken);
+            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationHcrpAssignment(scope, guestConfigurationAssignmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of GuestConfigurationVmssAssignmentResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of GuestConfigurationVmssAssignmentResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. Expected resource type includes the following: Microsoft.Compute/virtualMachineScaleSets. </param>
         /// <returns> An object representing collection of GuestConfigurationVmssAssignmentResources and their operations over a GuestConfigurationVmssAssignmentResource. </returns>
@@ -274,9 +191,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachineScaleSets", scope.ResourceType));
             }
-            return GetArmResourceExtensionClient(client, scope).GetGuestConfigurationVmssAssignments();
+            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmssAssignments(scope);
         }
-
         /// <summary>
         /// Get information about a guest configuration assignment for VMSS
         /// <list type="bullet">
@@ -303,9 +219,8 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachineScaleSets", scope.ResourceType));
             }
-            return await client.GetGuestConfigurationVmssAssignments(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmssAssignmentAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Get information about a guest configuration assignment for VMSS
         /// <list type="bullet">
@@ -332,7 +247,48 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachineScaleSets", scope.ResourceType));
             }
-            return client.GetGuestConfigurationVmssAssignments(scope).Get(name, cancellationToken);
+            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmssAssignment(scope, name, cancellationToken);
+        }
+
+        #region GuestConfigurationVmAssignmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestConfigurationVmAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestConfigurationVmAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GuestConfigurationVmAssignmentResource" /> object. </returns>
+        public static GuestConfigurationVmAssignmentResource GetGuestConfigurationVmAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmAssignmentResource(id);
+        }
+        #endregion
+
+        #region GuestConfigurationHcrpAssignmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestConfigurationHcrpAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestConfigurationHcrpAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationHcrpAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GuestConfigurationHcrpAssignmentResource" /> object. </returns>
+        public static GuestConfigurationHcrpAssignmentResource GetGuestConfigurationHcrpAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationHcrpAssignmentResource(id);
+        }
+        #endregion
+
+        #region GuestConfigurationVmssAssignmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestConfigurationVmssAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestConfigurationVmssAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmssAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GuestConfigurationVmssAssignmentResource" /> object. </returns>
+        public static GuestConfigurationVmssAssignmentResource GetGuestConfigurationVmssAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmssAssignmentResource(id);
         }
     }
 }

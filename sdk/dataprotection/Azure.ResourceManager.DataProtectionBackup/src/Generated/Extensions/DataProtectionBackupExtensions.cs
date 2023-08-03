@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataProtectionBackup.Mocking;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataProtectionBackup. </summary>
     public static partial class DataProtectionBackupExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataProtectionBackupArmClientMockingExtension GetDataProtectionBackupArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DataProtectionBackupArmClientMockingExtension(client);
+            });
+        }
+
+        private static DataProtectionBackupResourceGroupMockingExtension GetDataProtectionBackupResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataProtectionBackupResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataProtectionBackupSubscriptionMockingExtension GetDataProtectionBackupSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataProtectionBackupSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region DataProtectionBackupVaultResource
         /// <summary>
         /// Gets an object representing a <see cref="DataProtectionBackupVaultResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DataProtectionBackupVaultResource" /> object. </returns>
         public static DataProtectionBackupVaultResource GetDataProtectionBackupVaultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataProtectionBackupVaultResource.ValidateResourceId(id);
-                return new DataProtectionBackupVaultResource(client, id);
-            }
-            );
+            return GetDataProtectionBackupArmClientMockingExtension(client).GetDataProtectionBackupVaultResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DataProtectionBackupPolicyResource" /> object. </returns>
         public static DataProtectionBackupPolicyResource GetDataProtectionBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataProtectionBackupPolicyResource.ValidateResourceId(id);
-                return new DataProtectionBackupPolicyResource(client, id);
-            }
-            );
+            return GetDataProtectionBackupArmClientMockingExtension(client).GetDataProtectionBackupPolicyResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DataProtectionBackupInstanceResource" /> object. </returns>
         public static DataProtectionBackupInstanceResource GetDataProtectionBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataProtectionBackupInstanceResource.ValidateResourceId(id);
-                return new DataProtectionBackupInstanceResource(client, id);
-            }
-            );
+            return GetDataProtectionBackupArmClientMockingExtension(client).GetDataProtectionBackupInstanceResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DataProtectionBackupRecoveryPointResource" /> object. </returns>
         public static DataProtectionBackupRecoveryPointResource GetDataProtectionBackupRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataProtectionBackupRecoveryPointResource.ValidateResourceId(id);
-                return new DataProtectionBackupRecoveryPointResource(client, id);
-            }
-            );
+            return GetDataProtectionBackupArmClientMockingExtension(client).GetDataProtectionBackupRecoveryPointResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DataProtectionBackupJobResource" /> object. </returns>
         public static DataProtectionBackupJobResource GetDataProtectionBackupJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataProtectionBackupJobResource.ValidateResourceId(id);
-                return new DataProtectionBackupJobResource(client, id);
-            }
-            );
+            return GetDataProtectionBackupArmClientMockingExtension(client).GetDataProtectionBackupJobResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DeletedDataProtectionBackupInstanceResource" /> object. </returns>
         public static DeletedDataProtectionBackupInstanceResource GetDeletedDataProtectionBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DeletedDataProtectionBackupInstanceResource.ValidateResourceId(id);
-                return new DeletedDataProtectionBackupInstanceResource(client, id);
-            }
-            );
+            return GetDataProtectionBackupArmClientMockingExtension(client).GetDeletedDataProtectionBackupInstanceResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="ResourceGuardResource" /> object. </returns>
         public static ResourceGuardResource GetResourceGuardResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGuardResource.ValidateResourceId(id);
-                return new ResourceGuardResource(client, id);
-            }
-            );
+            return GetDataProtectionBackupArmClientMockingExtension(client).GetResourceGuardResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="ResourceGuardProxyBaseResource" /> object. </returns>
         public static ResourceGuardProxyBaseResource GetResourceGuardProxyBaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ResourceGuardProxyBaseResource.ValidateResourceId(id);
-                return new ResourceGuardProxyBaseResource(client, id);
-            }
-            );
+            return GetDataProtectionBackupArmClientMockingExtension(client).GetResourceGuardProxyBaseResource(id);
         }
         #endregion
 
@@ -207,7 +161,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of DataProtectionBackupVaultResources and their operations over a DataProtectionBackupVaultResource. </returns>
         public static DataProtectionBackupVaultCollection GetDataProtectionBackupVaults(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataProtectionBackupVaults();
+            return GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetDataProtectionBackupVaults();
         }
 
         /// <summary>
@@ -231,7 +185,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         [ForwardsClientCalls]
         public static async Task<Response<DataProtectionBackupVaultResource>> GetDataProtectionBackupVaultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataProtectionBackupVaults().GetAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return await GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetDataProtectionBackupVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -255,7 +209,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         [ForwardsClientCalls]
         public static Response<DataProtectionBackupVaultResource> GetDataProtectionBackupVault(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataProtectionBackupVaults().Get(vaultName, cancellationToken);
+            return GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetDataProtectionBackupVault(vaultName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ResourceGuardResources in the ResourceGroupResource. </summary>
@@ -263,7 +217,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An object representing collection of ResourceGuardResources and their operations over a ResourceGuardResource. </returns>
         public static ResourceGuardCollection GetResourceGuards(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetResourceGuards();
+            return GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetResourceGuards();
         }
 
         /// <summary>
@@ -287,7 +241,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         [ForwardsClientCalls]
         public static async Task<Response<ResourceGuardResource>> GetResourceGuardAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetResourceGuards().GetAsync(resourceGuardsName, cancellationToken).ConfigureAwait(false);
+            return await GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetResourceGuardAsync(resourceGuardsName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -311,7 +265,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         [ForwardsClientCalls]
         public static Response<ResourceGuardResource> GetResourceGuard(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetResourceGuards().Get(resourceGuardsName, cancellationToken);
+            return GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetResourceGuard(resourceGuardsName, cancellationToken);
         }
 
         /// <summary>
@@ -334,9 +288,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataProtectionBackupNameAvailabilityResult>> CheckDataProtectionBackupVaultNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -359,9 +311,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DataProtectionBackupNameAvailabilityResult> CheckDataProtectionBackupVaultNameAvailability(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailability(location, content, cancellationToken);
+            return GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -382,7 +332,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An async collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataProtectionBackupVaultsAsync(cancellationToken);
+            return GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).GetDataProtectionBackupVaultsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -403,7 +353,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataProtectionBackupVaults(cancellationToken);
+            return GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).GetDataProtectionBackupVaults(cancellationToken);
         }
 
         /// <summary>
@@ -426,9 +376,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(this SubscriptionResource subscriptionResource, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataProtectionBackupFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).CheckDataProtectionBackupFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -451,9 +399,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(this SubscriptionResource subscriptionResource, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataProtectionBackupFeatureSupport(location, content, cancellationToken);
+            return GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).CheckDataProtectionBackupFeatureSupport(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -474,7 +420,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An async collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceGuardResource> GetResourceGuardsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceGuardsAsync(cancellationToken);
+            return GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).GetResourceGuardsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -495,7 +441,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceGuardResource> GetResourceGuards(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceGuards(cancellationToken);
+            return GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).GetResourceGuards(cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevTestLabs.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.DevTestLabs
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevTestLabs. </summary>
     public static partial class DevTestLabsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DevTestLabsArmClientMockingExtension GetDevTestLabsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DevTestLabsArmClientMockingExtension(client);
+            });
+        }
+
+        private static DevTestLabsResourceGroupMockingExtension GetDevTestLabsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DevTestLabsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DevTestLabsSubscriptionMockingExtension GetDevTestLabsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DevTestLabsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region DevTestLabResource
         /// <summary>
         /// Gets an object representing a <see cref="DevTestLabResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabResource" /> object. </returns>
         public static DevTestLabResource GetDevTestLabResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabResource.ValidateResourceId(id);
-                return new DevTestLabResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabGlobalScheduleResource" /> object. </returns>
         public static DevTestLabGlobalScheduleResource GetDevTestLabGlobalScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabGlobalScheduleResource.ValidateResourceId(id);
-                return new DevTestLabGlobalScheduleResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabGlobalScheduleResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabScheduleResource" /> object. </returns>
         public static DevTestLabScheduleResource GetDevTestLabScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabScheduleResource.ValidateResourceId(id);
-                return new DevTestLabScheduleResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabScheduleResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabServiceFabricScheduleResource" /> object. </returns>
         public static DevTestLabServiceFabricScheduleResource GetDevTestLabServiceFabricScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabServiceFabricScheduleResource.ValidateResourceId(id);
-                return new DevTestLabServiceFabricScheduleResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabServiceFabricScheduleResource(id);
         }
         #endregion
 
@@ -135,12 +109,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabVmScheduleResource" /> object. </returns>
         public static DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabVmScheduleResource.ValidateResourceId(id);
-                return new DevTestLabVmScheduleResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabVmScheduleResource(id);
         }
         #endregion
 
@@ -154,12 +123,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabArtifactSourceResource" /> object. </returns>
         public static DevTestLabArtifactSourceResource GetDevTestLabArtifactSourceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabArtifactSourceResource.ValidateResourceId(id);
-                return new DevTestLabArtifactSourceResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabArtifactSourceResource(id);
         }
         #endregion
 
@@ -173,12 +137,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabArmTemplateResource" /> object. </returns>
         public static DevTestLabArmTemplateResource GetDevTestLabArmTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabArmTemplateResource.ValidateResourceId(id);
-                return new DevTestLabArmTemplateResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabArmTemplateResource(id);
         }
         #endregion
 
@@ -192,12 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabArtifactResource" /> object. </returns>
         public static DevTestLabArtifactResource GetDevTestLabArtifactResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabArtifactResource.ValidateResourceId(id);
-                return new DevTestLabArtifactResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabArtifactResource(id);
         }
         #endregion
 
@@ -211,12 +165,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabCostResource" /> object. </returns>
         public static DevTestLabCostResource GetDevTestLabCostResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabCostResource.ValidateResourceId(id);
-                return new DevTestLabCostResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabCostResource(id);
         }
         #endregion
 
@@ -230,12 +179,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabCustomImageResource" /> object. </returns>
         public static DevTestLabCustomImageResource GetDevTestLabCustomImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabCustomImageResource.ValidateResourceId(id);
-                return new DevTestLabCustomImageResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabCustomImageResource(id);
         }
         #endregion
 
@@ -249,12 +193,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabFormulaResource" /> object. </returns>
         public static DevTestLabFormulaResource GetDevTestLabFormulaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabFormulaResource.ValidateResourceId(id);
-                return new DevTestLabFormulaResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabFormulaResource(id);
         }
         #endregion
 
@@ -268,12 +207,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabNotificationChannelResource" /> object. </returns>
         public static DevTestLabNotificationChannelResource GetDevTestLabNotificationChannelResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabNotificationChannelResource.ValidateResourceId(id);
-                return new DevTestLabNotificationChannelResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabNotificationChannelResource(id);
         }
         #endregion
 
@@ -287,12 +221,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabPolicyResource" /> object. </returns>
         public static DevTestLabPolicyResource GetDevTestLabPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabPolicyResource.ValidateResourceId(id);
-                return new DevTestLabPolicyResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabPolicyResource(id);
         }
         #endregion
 
@@ -306,12 +235,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabServiceRunnerResource" /> object. </returns>
         public static DevTestLabServiceRunnerResource GetDevTestLabServiceRunnerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabServiceRunnerResource.ValidateResourceId(id);
-                return new DevTestLabServiceRunnerResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabServiceRunnerResource(id);
         }
         #endregion
 
@@ -325,12 +249,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabUserResource" /> object. </returns>
         public static DevTestLabUserResource GetDevTestLabUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabUserResource.ValidateResourceId(id);
-                return new DevTestLabUserResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabUserResource(id);
         }
         #endregion
 
@@ -344,12 +263,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabDiskResource" /> object. </returns>
         public static DevTestLabDiskResource GetDevTestLabDiskResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabDiskResource.ValidateResourceId(id);
-                return new DevTestLabDiskResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabDiskResource(id);
         }
         #endregion
 
@@ -363,12 +277,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabEnvironmentResource" /> object. </returns>
         public static DevTestLabEnvironmentResource GetDevTestLabEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabEnvironmentResource.ValidateResourceId(id);
-                return new DevTestLabEnvironmentResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabEnvironmentResource(id);
         }
         #endregion
 
@@ -382,12 +291,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabSecretResource" /> object. </returns>
         public static DevTestLabSecretResource GetDevTestLabSecretResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabSecretResource.ValidateResourceId(id);
-                return new DevTestLabSecretResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabSecretResource(id);
         }
         #endregion
 
@@ -401,12 +305,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabServiceFabricResource" /> object. </returns>
         public static DevTestLabServiceFabricResource GetDevTestLabServiceFabricResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabServiceFabricResource.ValidateResourceId(id);
-                return new DevTestLabServiceFabricResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabServiceFabricResource(id);
         }
         #endregion
 
@@ -420,12 +319,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabVmResource" /> object. </returns>
         public static DevTestLabVmResource GetDevTestLabVmResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabVmResource.ValidateResourceId(id);
-                return new DevTestLabVmResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabVmResource(id);
         }
         #endregion
 
@@ -439,12 +333,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> Returns a <see cref="DevTestLabVirtualNetworkResource" /> object. </returns>
         public static DevTestLabVirtualNetworkResource GetDevTestLabVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevTestLabVirtualNetworkResource.ValidateResourceId(id);
-                return new DevTestLabVirtualNetworkResource(client, id);
-            }
-            );
+            return GetDevTestLabsArmClientMockingExtension(client).GetDevTestLabVirtualNetworkResource(id);
         }
         #endregion
 
@@ -453,7 +342,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabResources and their operations over a DevTestLabResource. </returns>
         public static DevTestLabCollection GetDevTestLabs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevTestLabs();
+            return GetDevTestLabsResourceGroupMockingExtension(resourceGroupResource).GetDevTestLabs();
         }
 
         /// <summary>
@@ -478,7 +367,7 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public static async Task<Response<DevTestLabResource>> GetDevTestLabAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDevTestLabs().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDevTestLabsResourceGroupMockingExtension(resourceGroupResource).GetDevTestLabAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -503,7 +392,7 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public static Response<DevTestLabResource> GetDevTestLab(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDevTestLabs().Get(name, expand, cancellationToken);
+            return GetDevTestLabsResourceGroupMockingExtension(resourceGroupResource).GetDevTestLab(name, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevTestLabGlobalScheduleResources in the ResourceGroupResource. </summary>
@@ -511,7 +400,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An object representing collection of DevTestLabGlobalScheduleResources and their operations over a DevTestLabGlobalScheduleResource. </returns>
         public static DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevTestLabGlobalSchedules();
+            return GetDevTestLabsResourceGroupMockingExtension(resourceGroupResource).GetDevTestLabGlobalSchedules();
         }
 
         /// <summary>
@@ -536,7 +425,7 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public static async Task<Response<DevTestLabGlobalScheduleResource>> GetDevTestLabGlobalScheduleAsync(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDevTestLabGlobalSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            return await GetDevTestLabsResourceGroupMockingExtension(resourceGroupResource).GetDevTestLabGlobalScheduleAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -561,7 +450,7 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public static Response<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(this ResourceGroupResource resourceGroupResource, string name, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDevTestLabGlobalSchedules().Get(name, expand, cancellationToken);
+            return GetDevTestLabsResourceGroupMockingExtension(resourceGroupResource).GetDevTestLabGlobalSchedule(name, expand, cancellationToken);
         }
 
         /// <summary>
@@ -586,7 +475,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevTestLabResource> GetDevTestLabsAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevTestLabsAsync(expand, filter, top, orderby, cancellationToken);
+            return GetDevTestLabsSubscriptionMockingExtension(subscriptionResource).GetDevTestLabsAsync(expand, filter, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -611,7 +500,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevTestLabResource> GetDevTestLabs(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevTestLabs(expand, filter, top, orderby, cancellationToken);
+            return GetDevTestLabsSubscriptionMockingExtension(subscriptionResource).GetDevTestLabs(expand, filter, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -636,7 +525,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevTestLabGlobalSchedulesAsync(expand, filter, top, orderby, cancellationToken);
+            return GetDevTestLabsSubscriptionMockingExtension(subscriptionResource).GetDevTestLabGlobalSchedulesAsync(expand, filter, top, orderby, cancellationToken);
         }
 
         /// <summary>
@@ -661,7 +550,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevTestLabGlobalSchedules(expand, filter, top, orderby, cancellationToken);
+            return GetDevTestLabsSubscriptionMockingExtension(subscriptionResource).GetDevTestLabGlobalSchedules(expand, filter, top, orderby, cancellationToken);
         }
     }
 }
