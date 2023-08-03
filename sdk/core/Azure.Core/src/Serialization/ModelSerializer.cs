@@ -37,7 +37,7 @@ namespace Azure.Core.Serialization
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/></returns>
         public static BinaryData Serialize<T>(T model, ModelSerializerFormat format)
             where T : IModelSerializable<T>
-            => Serialize<T>(model, new ModelSerializerOptions(format));
+            => Serialize<T>(model, ModelSerializerOptions.GetOptions(format));
 
         /// <summary>
         /// Converts the value of a model into a <see cref="BinaryData"/>.
@@ -67,7 +67,7 @@ namespace Azure.Core.Serialization
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/></returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         public static BinaryData Serialize(object model, ModelSerializerFormat format)
-            => Serialize(model, new ModelSerializerOptions(format));
+            => Serialize(model, ModelSerializerOptions.GetOptions(format));
 
         /// <summary>
         /// Converts the <see cref="BinaryData"/> into a <typeparamref name="T"/>.
@@ -92,7 +92,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal default constructor.</exception>
         public static T Deserialize<T>(BinaryData data, ModelSerializerFormat format)
             where T : IModelSerializable<T>
-            => Deserialize<T>(data, new ModelSerializerOptions(format));
+            => Deserialize<T>(data, ModelSerializerOptions.GetOptions(format));
 
         /// <summary>
         /// Converts the <see cref="BinaryData"/> into a <paramref name="returnType"/>.
@@ -120,7 +120,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal default constructor.</exception>
         public static object Deserialize(BinaryData data, Type returnType, ModelSerializerFormat format)
-            => Deserialize(data, returnType, new ModelSerializerOptions(format));
+            => Deserialize(data, returnType, ModelSerializerOptions.GetOptions(format));
 
         /// <summary>
         /// Converts an <see cref="IModelJsonSerializable{T}"/> into a <see cref="BinaryData"/>.
@@ -149,7 +149,7 @@ namespace Azure.Core.Serialization
         /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
         /// <returns>A binary representation of the serialized model.</returns>
         public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerFormat format)
-            => ConvertToBinaryData(model, new ModelSerializerOptions(format));
+            => ConvertToBinaryData(model, ModelSerializerOptions.GetOptions(format));
 
         private static IModelSerializable<object> GetInstance(Type returnType)
         {
