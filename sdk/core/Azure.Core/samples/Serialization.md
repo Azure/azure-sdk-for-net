@@ -1,6 +1,6 @@
 # Azure.Core public serialization
 
-The `Azure.Core` library supports serialization and deserialization of most client library model types using the static `ModelSerializer` class. The `ModelSerializer` class offers users additional control over serialization through the `ModelSerializerOptions`. These options allow users to specify the desired `ModelSerializerFormat` type, either `Json` or `Wire`, and provide custom Serializer types for individual models.
+The .NET Azure SDK libraries support serialization and deserialization of most client library model types using the static `ModelSerializer` class. 
 
 ## Key Concepts
 
@@ -8,10 +8,9 @@ The `Azure.Core` library supports serialization and deserialization of most clie
 - [Using models with protocol methods](#using-models-with-protocol-methods)
 - [Using JsonSerializer](#using-jsonserializer)
 - [Envelope bring your own model case](#envelope-bring-your-own-model-case)
-- [ModelSerializerFormat description]("modelserializerformat-description")
 
 ## Using the ModelSerializer
-The ModelSerializer class enables users to serialize and deserialize any Azure models that implement the IModelSerializable interface.
+The `ModelSerializer` class enables users to serialize and deserialize any Azure models that implement the `IModelSerializable<T>` interface. The following example shows a Dog model being serialized and deserialized.
 
 ```C# Snippet:BaseModelSerializer
 Dog doggo = new Dog
@@ -20,16 +19,30 @@ Dog doggo = new Dog
     Age = 7
 };
 
-//Serializer
 BinaryData data = ModelSerializer.Serialize(doggo);
 
-//Deserializer
 Dog dog = ModelSerializer.Deserialize<Dog>(data);
+```
+
+By default, the ModelSerializer will give you the Json representation of the model. Some services accept XML so if you want to send the serialized data to an Azure service that accepts XML, you can use the `ModelSerializerFormat` enum to specify the format. By using the `Wire` format, the serializer automatically picks what the service would use.
+
+```C# Snippet:ModelSerializerWithFormat
+Dog doggo = new Dog
+{
+    Name = "Doggo",
+    Age = 7
+};
+
+ModelSerializerOptions options = new ModelSerializerOptions(format: ModelSerializerFormat.Wire);
+
+BinaryData data = ModelSerializer.Serialize(doggo, options);
+
+Dog dog = ModelSerializer.Deserialize<Dog>(data, options);
 ```
 
 ## Using models with protocol methods
 
-If you would like to convert the [protocol method][protocol_method] to the strongly typed model, you can use the explicit cast operator. This will allow you to use the strongly typed model for serialization and deserialization. There is also an implicit cast operator that can be used to convert the strongly typed model to `RequestContent`.
+If you would like to use the additional control that [protocol methods][protocol_method] give you but still have the convenience of strongly typed models, you can use the built-in cast operators.
 
 ```C# Snippet:CastOperations
 DefaultAzureCredential credential = new DefaultAzureCredential();
@@ -49,7 +62,7 @@ dog = (Dog)response;
 
 ## Using JsonSerializer
 
-If you have Json that needs to be converted into a specific object type, consider using the `ModelJsonConverter class`. This class can handle the deserialization of a model to a specific type and include additional metadata. 
+If you would like to use the `JsonSerializer`, you can add the `ModelJsonConverter` to your options which will allow `JsonSerializer` to serialize and deserialize any model that implements `IModelJsonSerializable<T>`. The following example shows a Dog model being serialized and deserialized using the ModelJsonConverter.
 
 ```C# Snippet:BaseModelConverter
 Dog dog = new Dog
@@ -107,9 +120,6 @@ options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new
 
 Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 ```
-
-## ModelSerializerFormat description
-This section further describes the `ModelSerializerFormat` enum and the differences between the `Json` and `Wire` formats. The default format is `Json`. To get the default type the Azure service returns - like XML, use the `Wire` format.
 
 ## Next steps
 

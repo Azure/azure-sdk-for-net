@@ -3,16 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Text.Json;
 using Azure.Core.Experimental.Tests;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.Public.ModelSerializationTests;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace Azure.Core.Samples
@@ -55,11 +51,28 @@ namespace Azure.Core.Samples
                 Age = 7
             };
 
-            //Serializer
             BinaryData data = ModelSerializer.Serialize(doggo);
 
-            //Deserializer
             Dog dog = ModelSerializer.Deserialize<Dog>(data);
+            #endregion
+        }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public void ModelSerializerWithFormat()
+        {
+            #region Snippet:ModelSerializerWithFormat
+            Dog doggo = new Dog
+            {
+                Name = "Doggo",
+                Age = 7
+            };
+
+            ModelSerializerOptions options = new ModelSerializerOptions(format: ModelSerializerFormat.Wire);
+
+            BinaryData data = ModelSerializer.Serialize(doggo, options);
+
+            Dog dog = ModelSerializer.Deserialize<Dog>(data, options);
             #endregion
         }
 
@@ -78,9 +91,9 @@ namespace Azure.Core.Samples
             // The ModelJsonConverter is able to serialize and deserialize any model that implements IModelJsonSerializable<T>.
             options.Converters.Add(new ModelJsonConverter());
 
-            string json = System.Text.Json.JsonSerializer.Serialize(dog, options);
+            string json = JsonSerializer.Serialize(dog, options);
 
-            dog = System.Text.Json.JsonSerializer.Deserialize<Dog>(json, options);
+            dog = JsonSerializer.Deserialize<Dog>(json, options);
             #endregion
         }
 
