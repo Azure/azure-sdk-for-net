@@ -87,6 +87,11 @@ namespace Azure.AI.OpenAI.Samples
             Parameters = BinaryData.FromString("<your binary data content>"),
         }
     },
+                FunctionCall = new FunctionDefinition("<name>")
+                {
+                    Description = "<Description>",
+                    Parameters = BinaryData.FromString("<your binary data content>"),
+                },
                 MaxTokens = 1234,
                 Temperature = 3.14f,
                 NucleusSamplingFactor = 3.14f,

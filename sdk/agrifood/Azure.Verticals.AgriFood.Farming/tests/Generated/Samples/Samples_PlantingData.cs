@@ -175,6 +175,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 plantingProductDetails = new[] {
         new {
             productName = "<productName>",
+            area = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalMaterial = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgMaterial = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
         }
     },
                 area = new
@@ -275,6 +287,18 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 plantingProductDetails = new[] {
         new {
             productName = "<productName>",
+            area = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalMaterial = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgMaterial = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
         }
     },
                 area = new
