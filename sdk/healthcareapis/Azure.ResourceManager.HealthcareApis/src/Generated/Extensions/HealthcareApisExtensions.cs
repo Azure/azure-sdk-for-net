@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HealthcareApis.Mocking;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.HealthcareApis
     /// <summary> A class to add extension methods to Azure.ResourceManager.HealthcareApis. </summary>
     public static partial class HealthcareApisExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static HealthcareApisArmClientMockingExtension GetHealthcareApisArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new HealthcareApisArmClientMockingExtension(client);
+            });
+        }
+
+        private static HealthcareApisResourceGroupMockingExtension GetHealthcareApisResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new HealthcareApisResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HealthcareApisSubscriptionMockingExtension GetHealthcareApisSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HealthcareApisSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region HealthcareApisServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="HealthcareApisServiceResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisServiceResource" /> object. </returns>
         public static HealthcareApisServiceResource GetHealthcareApisServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisServiceResource.ValidateResourceId(id);
-                return new HealthcareApisServiceResource(client, id);
-            }
-            );
+            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisServiceResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> object. </returns>
         public static HealthcareApisServicePrivateEndpointConnectionResource GetHealthcareApisServicePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisServicePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new HealthcareApisServicePrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisServicePrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> object. </returns>
         public static HealthcareApisWorkspacePrivateEndpointConnectionResource GetHealthcareApisWorkspacePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisWorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new HealthcareApisWorkspacePrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisWorkspacePrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisServicePrivateLinkResource" /> object. </returns>
         public static HealthcareApisServicePrivateLinkResource GetHealthcareApisServicePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisServicePrivateLinkResource.ValidateResourceId(id);
-                return new HealthcareApisServicePrivateLinkResource(client, id);
-            }
-            );
+            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisServicePrivateLinkResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateLinkResource" /> object. </returns>
         public static HealthcareApisWorkspacePrivateLinkResource GetHealthcareApisWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisWorkspacePrivateLinkResource.ValidateResourceId(id);
-                return new HealthcareApisWorkspacePrivateLinkResource(client, id);
-            }
-            );
+            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisWorkspacePrivateLinkResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisWorkspaceResource" /> object. </returns>
         public static HealthcareApisWorkspaceResource GetHealthcareApisWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisWorkspaceResource.ValidateResourceId(id);
-                return new HealthcareApisWorkspaceResource(client, id);
-            }
-            );
+            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisWorkspaceResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="DicomServiceResource" /> object. </returns>
         public static DicomServiceResource GetDicomServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DicomServiceResource.ValidateResourceId(id);
-                return new DicomServiceResource(client, id);
-            }
-            );
+            return GetHealthcareApisArmClientMockingExtension(client).GetDicomServiceResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisIotConnectorResource" /> object. </returns>
         public static HealthcareApisIotConnectorResource GetHealthcareApisIotConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisIotConnectorResource.ValidateResourceId(id);
-                return new HealthcareApisIotConnectorResource(client, id);
-            }
-            );
+            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisIotConnectorResource(id);
         }
         #endregion
 
@@ -212,12 +166,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisIotFhirDestinationResource" /> object. </returns>
         public static HealthcareApisIotFhirDestinationResource GetHealthcareApisIotFhirDestinationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthcareApisIotFhirDestinationResource.ValidateResourceId(id);
-                return new HealthcareApisIotFhirDestinationResource(client, id);
-            }
-            );
+            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisIotFhirDestinationResource(id);
         }
         #endregion
 
@@ -231,12 +180,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="FhirServiceResource" /> object. </returns>
         public static FhirServiceResource GetFhirServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FhirServiceResource.ValidateResourceId(id);
-                return new FhirServiceResource(client, id);
-            }
-            );
+            return GetHealthcareApisArmClientMockingExtension(client).GetFhirServiceResource(id);
         }
         #endregion
 
@@ -245,7 +189,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisServiceResources and their operations over a HealthcareApisServiceResource. </returns>
         public static HealthcareApisServiceCollection GetHealthcareApisServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthcareApisServices();
+            return GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisServices();
         }
 
         /// <summary>
@@ -269,7 +213,7 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public static async Task<Response<HealthcareApisServiceResource>> GetHealthcareApisServiceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHealthcareApisServices().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisServiceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -293,7 +237,7 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public static Response<HealthcareApisServiceResource> GetHealthcareApisService(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHealthcareApisServices().Get(resourceName, cancellationToken);
+            return GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisService(resourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of HealthcareApisWorkspaceResources in the ResourceGroupResource. </summary>
@@ -301,7 +245,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisWorkspaceResources and their operations over a HealthcareApisWorkspaceResource. </returns>
         public static HealthcareApisWorkspaceCollection GetHealthcareApisWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHealthcareApisWorkspaces();
+            return GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisWorkspaces();
         }
 
         /// <summary>
@@ -325,7 +269,7 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public static async Task<Response<HealthcareApisWorkspaceResource>> GetHealthcareApisWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHealthcareApisWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -349,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public static Response<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHealthcareApisWorkspaces().Get(workspaceName, cancellationToken);
+            return GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -370,7 +314,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An async collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthcareApisServiceResource> GetHealthcareApisServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisServicesAsync(cancellationToken);
+            return GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).GetHealthcareApisServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -391,7 +335,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> A collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HealthcareApisServiceResource> GetHealthcareApisServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisServices(cancellationToken);
+            return GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).GetHealthcareApisServices(cancellationToken);
         }
 
         /// <summary>
@@ -413,9 +357,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<HealthcareApisNameAvailabilityResult>> CheckHealthcareApisNameAvailabilityAsync(this SubscriptionResource subscriptionResource, HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckHealthcareApisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).CheckHealthcareApisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -437,9 +379,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<HealthcareApisNameAvailabilityResult> CheckHealthcareApisNameAvailability(this SubscriptionResource subscriptionResource, HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckHealthcareApisNameAvailability(content, cancellationToken);
+            return GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).CheckHealthcareApisNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -460,7 +400,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisWorkspacesAsync(cancellationToken);
+            return GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).GetHealthcareApisWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -481,7 +421,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHealthcareApisWorkspaces(cancellationToken);
+            return GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).GetHealthcareApisWorkspaces(cancellationToken);
         }
     }
 }

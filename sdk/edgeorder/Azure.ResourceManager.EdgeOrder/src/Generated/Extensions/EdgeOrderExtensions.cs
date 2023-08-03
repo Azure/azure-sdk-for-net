@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.EdgeOrder.Mocking;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A class to add extension methods to Azure.ResourceManager.EdgeOrder. </summary>
     public static partial class EdgeOrderExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static EdgeOrderArmClientMockingExtension GetEdgeOrderArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new EdgeOrderArmClientMockingExtension(client);
+            });
+        }
+
+        private static EdgeOrderResourceGroupMockingExtension GetEdgeOrderResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new EdgeOrderResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static EdgeOrderSubscriptionMockingExtension GetEdgeOrderSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new EdgeOrderSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region EdgeOrderAddressResource
         /// <summary>
         /// Gets an object representing an <see cref="EdgeOrderAddressResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="EdgeOrderAddressResource" /> object. </returns>
         public static EdgeOrderAddressResource GetEdgeOrderAddressResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                EdgeOrderAddressResource.ValidateResourceId(id);
-                return new EdgeOrderAddressResource(client, id);
-            }
-            );
+            return GetEdgeOrderArmClientMockingExtension(client).GetEdgeOrderAddressResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="EdgeOrderResource" /> object. </returns>
         public static EdgeOrderResource GetEdgeOrderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                EdgeOrderResource.ValidateResourceId(id);
-                return new EdgeOrderResource(client, id);
-            }
-            );
+            return GetEdgeOrderArmClientMockingExtension(client).GetEdgeOrderResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="EdgeOrderItemResource" /> object. </returns>
         public static EdgeOrderItemResource GetEdgeOrderItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                EdgeOrderItemResource.ValidateResourceId(id);
-                return new EdgeOrderItemResource(client, id);
-            }
-            );
+            return GetEdgeOrderArmClientMockingExtension(client).GetEdgeOrderItemResource(id);
         }
         #endregion
 
@@ -112,7 +91,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An object representing collection of EdgeOrderAddressResources and their operations over a EdgeOrderAddressResource. </returns>
         public static EdgeOrderAddressCollection GetEdgeOrderAddresses(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEdgeOrderAddresses();
+            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderAddresses();
         }
 
         /// <summary>
@@ -136,7 +115,7 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static async Task<Response<EdgeOrderAddressResource>> GetEdgeOrderAddressAsync(this ResourceGroupResource resourceGroupResource, string addressName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEdgeOrderAddresses().GetAsync(addressName, cancellationToken).ConfigureAwait(false);
+            return await GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderAddressAsync(addressName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -160,7 +139,7 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static Response<EdgeOrderAddressResource> GetEdgeOrderAddress(this ResourceGroupResource resourceGroupResource, string addressName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEdgeOrderAddresses().Get(addressName, cancellationToken);
+            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderAddress(addressName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EdgeOrderResources in the ResourceGroupResource. </summary>
@@ -168,7 +147,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An object representing collection of EdgeOrderResources and their operations over a EdgeOrderResource. </returns>
         public static EdgeOrderCollection GetEdgeOrders(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEdgeOrders();
+            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrders();
         }
 
         /// <summary>
@@ -193,7 +172,7 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static async Task<Response<EdgeOrderResource>> GetEdgeOrderAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEdgeOrders().GetAsync(location, orderName, cancellationToken).ConfigureAwait(false);
+            return await GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderAsync(location, orderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -218,7 +197,7 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static Response<EdgeOrderResource> GetEdgeOrder(this ResourceGroupResource resourceGroupResource, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEdgeOrders().Get(location, orderName, cancellationToken);
+            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrder(location, orderName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EdgeOrderItemResources in the ResourceGroupResource. </summary>
@@ -226,7 +205,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An object representing collection of EdgeOrderItemResources and their operations over a EdgeOrderItemResource. </returns>
         public static EdgeOrderItemCollection GetEdgeOrderItems(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEdgeOrderItems();
+            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderItems();
         }
 
         /// <summary>
@@ -251,7 +230,7 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static async Task<Response<EdgeOrderItemResource>> GetEdgeOrderItemAsync(this ResourceGroupResource resourceGroupResource, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEdgeOrderItems().GetAsync(orderItemName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderItemAsync(orderItemName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -276,7 +255,7 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static Response<EdgeOrderItemResource> GetEdgeOrderItem(this ResourceGroupResource resourceGroupResource, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEdgeOrderItems().Get(orderItemName, expand, cancellationToken);
+            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderItem(orderItemName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -298,7 +277,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this ResourceGroupResource resourceGroupResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEdgeOrdersAsync(skipToken, cancellationToken);
+            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrdersAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +299,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeOrderResource> GetEdgeOrders(this ResourceGroupResource resourceGroupResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetEdgeOrders(skipToken, cancellationToken);
+            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrders(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -343,7 +322,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeOrderAddressResource> GetEdgeOrderAddressesAsync(this SubscriptionResource subscriptionResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEdgeOrderAddressesAsync(filter, skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrderAddressesAsync(filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -366,7 +345,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeOrderAddressResource> GetEdgeOrderAddresses(this SubscriptionResource subscriptionResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEdgeOrderAddresses(filter, skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrderAddresses(filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -391,9 +370,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductFamily> GetProductFamiliesAsync(this SubscriptionResource subscriptionResource, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProductFamiliesAsync(content, expand, skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetProductFamiliesAsync(content, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -418,9 +395,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductFamily> GetProductFamilies(this SubscriptionResource subscriptionResource, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProductFamilies(content, expand, skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetProductFamilies(content, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -444,9 +419,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductConfiguration> GetConfigurationsAsync(this SubscriptionResource subscriptionResource, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationsAsync(content, skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetConfigurationsAsync(content, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -470,9 +443,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductConfiguration> GetConfigurations(this SubscriptionResource subscriptionResource, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurations(content, skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetConfigurations(content, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -494,7 +465,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductFamiliesMetadata" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductFamiliesMetadata> GetProductFamiliesMetadataAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProductFamiliesMetadataAsync(skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetProductFamiliesMetadataAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -516,7 +487,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductFamiliesMetadata" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductFamiliesMetadata> GetProductFamiliesMetadata(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProductFamiliesMetadata(skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetProductFamiliesMetadata(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -538,7 +509,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEdgeOrdersAsync(skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrdersAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -560,7 +531,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeOrderResource> GetEdgeOrders(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEdgeOrders(skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrders(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -584,7 +555,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEdgeOrderItemsAsync(filter, expand, skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrderItemsAsync(filter, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -608,7 +579,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeOrderItemResource> GetEdgeOrderItems(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetEdgeOrderItems(filter, expand, skipToken, cancellationToken);
+            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrderItems(filter, expand, skipToken, cancellationToken);
         }
     }
 }
