@@ -22,7 +22,7 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Utf8JsonReaderExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <!-- Test classes to share in public space-->
@@ -32,6 +32,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="ModelSerializationTests\TestData\ModelXml.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ModelSerializationTests\TestData\ModelXmlX.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="ModelSerializationTests\TestData\ResourceProviderData.json">

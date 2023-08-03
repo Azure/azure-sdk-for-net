@@ -3,7 +3,7 @@
 
 using BenchmarkDotNet.Attributes;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Perf.Serializations
 {
     public class BimodalRepro
     {

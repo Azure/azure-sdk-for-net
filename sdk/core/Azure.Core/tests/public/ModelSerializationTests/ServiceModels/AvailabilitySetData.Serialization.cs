@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ResourceManager.Compute.Models;
 using Azure.Core.Tests.Public.ResourceManager.Models;
 using Azure.Core.Tests.Public.ResourceManager.Resources.Models;
-using Newtonsoft.Json.Linq;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Compute
 {
@@ -25,7 +19,12 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<AvailabilitySetData>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        void IModelJsonSerializable<AvailabilitySetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<AvailabilitySetData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            Serialize(writer, options);
+        }
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -241,6 +240,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 
         AvailabilitySetData IModelSerializable<AvailabilitySetData>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             using var doc = JsonDocument.Parse(data);
             return DeserializeAvailabilitySetData(doc.RootElement, options);
         }
@@ -266,134 +267,17 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute
 
         AvailabilitySetData IModelJsonSerializable<AvailabilitySetData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<AvailabilitySetDataProperties>(options, SetProperty, out var properties))
-                return null;
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return new AvailabilitySetData(
-                properties.Id,
-                properties.Name,
-                properties.ResourceType,
-                properties.SystemData.Value,
-                Optional.ToDictionary(properties.Tags),
-                properties.Location,
-                properties.Sku.Value,
-                Optional.ToNullable(properties.PlatformUpdateDomainCount),
-                Optional.ToNullable(properties.PlatformFaultDomainCount),
-                Optional.ToList(properties.VirtualMachines),
-                properties.ProximityPlacementGroup,
-                Optional.ToList(properties.Statuses));
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvailabilitySetData(doc.RootElement, options);
         }
 
-        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref AvailabilitySetDataProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IModelSerializable<AvailabilitySetData>.Serialize(ModelSerializerOptions options)
         {
-            if (propertyName.SequenceEqual("tags"u8))
-            {
-                properties.Tags = reader.GetDictionary<string, string>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("sku"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Sku = reader.GetObject<ComputeSku>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("location"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Location = new AzureLocation(reader.GetString());
-                return;
-            }
-            if (propertyName.SequenceEqual("id"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Id = new ResourceIdentifier(reader.GetString());
-                return;
-            }
-            if (propertyName.SequenceEqual("name"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Name = reader.GetString();
-                return;
-            }
-            if (propertyName.SequenceEqual("type"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.ResourceType = new ResourceType(reader.GetString());
-                return;
-            }
-            if (propertyName.SequenceEqual("systemData"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.SystemData = reader.GetObject<SystemData>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("properties"u8))
-            {
-                //this is an inline object (from flatten?)
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.StartObject)
-                    throw new FormatException("Expected StartObject token");
-                while (reader.Read())
-                {
-                    if (reader.TokenType == JsonTokenType.EndObject)
-                        break;
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-                    if (reader.TokenType != JsonTokenType.PropertyName)
-                        throw new FormatException("Expected PropertyName token");
-
-                    var innerPropertyName = reader.ValueSpan;
-                    SetProperty(innerPropertyName, ref properties, ref reader, options);
-                }
-                return;
-            }
-            if (propertyName.SequenceEqual("platformUpdateDomainCount"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.PlatformUpdateDomainCount = reader.GetInt32();
-                return;
-            }
-            if (propertyName.SequenceEqual("platformFaultDomainCount"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.PlatformFaultDomainCount = reader.GetInt32();
-                return;
-            }
-            if (propertyName.SequenceEqual("virtualMachines"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                {
-                    properties.VirtualMachines = reader.GetList<WritableSubResource>(options);
-                }
-                return;
-            }
-            if (propertyName.SequenceEqual("proximityPlacementGroup"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.ProximityPlacementGroup = reader.GetObject<WritableSubResource>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("statuses"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                {
-                    properties.Statuses = reader.GetList<InstanceViewStatus>(options);
-                }
-                return;
-            }
-            reader.Skip();
+            return ModelSerializer.ConvertToBinaryData(this, options);
         }
-
-        BinaryData IModelSerializable<AvailabilitySetData>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

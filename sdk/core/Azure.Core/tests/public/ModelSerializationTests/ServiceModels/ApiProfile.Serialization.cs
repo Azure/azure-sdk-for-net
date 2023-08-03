@@ -70,10 +70,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 
         ApiProfile IModelJsonSerializable<ApiProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ApiProfileProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new ApiProfile(properties.ProfileVersion.Value, properties.ApiVersion.Value);
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiProfile(doc.RootElement, options);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ApiProfileProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)

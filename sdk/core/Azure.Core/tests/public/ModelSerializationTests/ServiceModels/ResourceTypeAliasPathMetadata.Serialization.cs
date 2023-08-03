@@ -78,10 +78,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 
         ResourceTypeAliasPathMetadata IModelJsonSerializable<ResourceTypeAliasPathMetadata>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ResourceTypeAliasPathMetadataProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new ResourceTypeAliasPathMetadata(Optional.ToNullable(properties.TokenType), Optional.ToNullable(properties.Attributes));
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeAliasPathMetadata(doc.RootElement, options);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ResourceTypeAliasPathMetadataProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)

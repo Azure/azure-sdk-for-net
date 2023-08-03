@@ -72,10 +72,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 
         WritableSubResource IModelJsonSerializable<WritableSubResource>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<WritableSubResourceProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new WritableSubResource(properties.Id);
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeWritableSubResource(doc.RootElement, options);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref WritableSubResourceProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)

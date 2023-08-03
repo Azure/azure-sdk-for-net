@@ -23,9 +23,9 @@ namespace Azure.Core
             public int Written;
         }
 
-        private Buffer[] _buffers; // this is an array so items can be accessed by ref
-        private int _count;
-        private int _bufferSize;
+        private volatile Buffer[] _buffers; // this is an array so items can be accessed by ref
+        private volatile int _count;
+        private int _segmentSize;
 
         /// <summary>
         /// Initializes a new instance of <see cref="SequenceWriter"/>.
@@ -33,7 +33,7 @@ namespace Azure.Core
         /// <param name="segmentSize">The size of each buffer segment.</param>
         public SequenceWriter(int segmentSize = 4096)
         {
-            _bufferSize = segmentSize;
+            _segmentSize = segmentSize;
             _buffers = Array.Empty<Buffer>();
         }
 
@@ -61,21 +61,23 @@ namespace Azure.Core
         public Memory<byte> GetMemory(int sizeHint = 0)
         {
             if (sizeHint < 256)
+            {
                 sizeHint = 256;
+            }
 
-            int sizeToRent = sizeHint > _bufferSize ? sizeHint : _bufferSize;
+            int sizeToRent = sizeHint > _segmentSize ? sizeHint : _segmentSize;
 
             if (_buffers.Length == 0)
             {
-                _buffers = new Buffer[1];
-                _buffers[0].Array = ArrayPool<byte>.Shared.Rent(sizeToRent);
-                _count = 1;
+                ExpandBuffers(sizeToRent);
             }
 
             ref Buffer last = ref _buffers[_count - 1];
-            var free = last.Array.AsMemory(last.Written);
+            Memory<byte> free = last.Array.AsMemory(last.Written);
             if (free.Length >= sizeHint)
+            {
                 return free;
+            }
 
             byte[] newArray = AddBuffer(sizeToRent);
             return newArray;
@@ -84,20 +86,27 @@ namespace Azure.Core
         private byte[] AddBuffer(int sizeToRent)
         {
             // else allocate a new buffer:
-            var newArray = ArrayPool<byte>.Shared.Rent(sizeToRent);
+            ExpandBuffers(sizeToRent);
 
-            // add buffer to _buffers
-            if (_buffers.Length == _count)
+            return _buffers[_count - 1].Array;
+        }
+
+        private readonly object _lock = new object();
+        private void ExpandBuffers(int sizeToRent)
+        {
+            lock (_lock)
             {
-                // resize _buffers
-                var resized = new Buffer[_buffers.Length * 2];
-                _buffers.CopyTo(resized, 0);
-                _buffers = resized;
-            }
+                int bufferCount = _count == 0 ? 1 : _count * 2;
 
-            _buffers[_count].Array = newArray;
-            _count++;
-            return newArray;
+                Buffer[] resized = new Buffer[bufferCount];
+                if (_count > 0)
+                {
+                    _buffers.CopyTo(resized, 0);
+                }
+                _buffers = resized;
+                _buffers[_count].Array = ArrayPool<byte>.Shared.Rent(sizeToRent);
+                _count = bufferCount == 1 ? bufferCount : _count + 1;
+            }
         }
 
         /// <summary>
@@ -116,15 +125,21 @@ namespace Azure.Core
         /// </summary>
         public void Dispose()
         {
-            // should we harden it? we really cannot afford use-after-free bugs. they might cause data corruption.
-            // should we lock other members on this instance when we are disposing?
-            for (int i = 0; i < _count; i++)
+            int bufferCountToFree;
+            Buffer[] buffersToFree;
+            lock (_lock)
             {
-                var buffer = _buffers[i];
-                ArrayPool<byte>.Shared.Return(buffer.Array);
+                bufferCountToFree = _count;
+                buffersToFree = _buffers;
+                _count = 0;
+                _buffers = Array.Empty<Buffer>();
             }
-            _buffers = Array.Empty<Buffer>();
-            _count = 0;
+
+            for (int i = 0; i < bufferCountToFree; i++)
+            {
+                ArrayPool<byte>.Shared.Return(buffersToFree[i].Array);
+            }
+
             SequenceSegment? current = _first;
             while (current is not null)
             {
@@ -140,8 +155,7 @@ namespace Azure.Core
             length = 0;
             for (int i = 0; i < _count; i++)
             {
-                var buffer = _buffers[i];
-                length += buffer.Written;
+                length += _buffers[i].Written;
             }
             return true;
         }
@@ -151,7 +165,7 @@ namespace Azure.Core
         {
             for (int i = 0; i < _count; i++)
             {
-                var buffer = _buffers[i];
+                Buffer buffer = _buffers[i];
                 stream.Write(buffer.Array, 0, buffer.Written);
             }
         }
@@ -161,7 +175,7 @@ namespace Azure.Core
         {
             for (int i = 0; i < _count; i++)
             {
-                var buffer = _buffers[i];
+                Buffer buffer = _buffers[i];
                 await stream.WriteAsync(buffer.Array, 0, buffer.Written, cancellation).ConfigureAwait(false);
             }
         }

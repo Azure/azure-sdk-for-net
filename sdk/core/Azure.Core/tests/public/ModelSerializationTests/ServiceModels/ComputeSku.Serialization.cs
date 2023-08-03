@@ -85,10 +85,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 
         ComputeSku IModelJsonSerializable<ComputeSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ComputeSkuProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new ComputeSku(properties.Name.Value, properties.Tier.Value, Optional.ToNullable(properties.Capacity));
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeSku(doc.RootElement, options);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ComputeSkuProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)

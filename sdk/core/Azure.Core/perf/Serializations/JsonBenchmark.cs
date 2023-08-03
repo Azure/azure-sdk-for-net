@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -13,10 +11,10 @@ using Azure.Core.TestFramework;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Perf.Serializations
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class JsonSerializationBenchmark<T> where T : class, IModelJsonSerializable<T>
+    public abstract class JsonBenchmark<T> where T : class, IModelJsonSerializable<T>
     {
         private string _json;
         protected T _model;
@@ -24,7 +22,6 @@ namespace Azure.Core.Perf
         protected ModelSerializerOptions _options;
         private BinaryData _data;
         private SequenceWriter _content;
-        private ReadOnlySequence<byte> _sequence;
         private JsonDocument _jsonDocument;
 
         protected abstract T Deserialize(JsonElement jsonElement);
@@ -40,7 +37,7 @@ namespace Azure.Core.Perf
         [GlobalSetup]
         public void SetUp()
         {
-            _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "SerializationBenchmark", "TestData", JsonFileName));
+            _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", JsonFileName));
             _data = BinaryData.FromString(_json);
             _model = ModelSerializer.Deserialize<T>(_data);
             _response = new MockResponse(200);
@@ -50,7 +47,6 @@ namespace Azure.Core.Perf
             using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
             _model.Serialize(writer, new ModelSerializerOptions());
             writer.Flush();
-            _sequence = _content.GetReadOnlySequence();
             _jsonDocument = JsonDocument.Parse(_json);
         }
 
@@ -174,20 +170,6 @@ namespace Azure.Core.Perf
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
             return _model.Deserialize(ref reader, _options);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("JsonDocument")]
-        public ReadOnlySequence<byte> GetSequence()
-        {
-            return _content.GetReadOnlySequence();
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("JsonDocument")]
-        public void JsonDocumentFromSequence()
-        {
-            using var doc = JsonDocument.Parse(_sequence);
         }
 
         [Benchmark]

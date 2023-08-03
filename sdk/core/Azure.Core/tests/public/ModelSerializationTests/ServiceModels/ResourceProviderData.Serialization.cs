@@ -88,6 +88,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
 
         ResourceProviderData IModelSerializable<ResourceProviderData>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
@@ -97,7 +99,12 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
         // only used for public access to internal serialize
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        void IModelJsonSerializable<ResourceProviderData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<ResourceProviderData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            Serialize(writer, options);
+        }
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -152,65 +159,17 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources
 
         ResourceProviderData IModelJsonSerializable<ResourceProviderData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize< ResourceProviderDataProperties>(options, SetProperty, out var properties))
-                return null;
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return new ResourceProviderData(
-                properties.Id.Value,
-                properties.Namespace.Value,
-                properties.RegistrationState.Value,
-                properties.RegistrationPolicy.Value,
-                Optional.ToList(properties.ResourceTypes),
-                Optional.ToNullable(properties.ProviderAuthorizationConsentState));
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ResourceProviderDataProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IModelSerializable<ResourceProviderData>.Serialize(ModelSerializerOptions options)
         {
-            if (propertyName.SequenceEqual("id"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Id = new ResourceIdentifier(reader.GetString());
-                return;
-            }
-            if (propertyName.SequenceEqual("namespace"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Namespace = reader.GetString();
-                return;
-            }
-            if (propertyName.SequenceEqual("registrationState"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.RegistrationState = reader.GetString();
-                return;
-            }
-            if (propertyName.SequenceEqual("registrationPolicy"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.RegistrationPolicy = reader.GetString();
-                return;
-            }
-            if (propertyName.SequenceEqual("resourceTypes"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.ResourceTypes = reader.GetList<ProviderResourceType>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("providerAuthorizationConsentState"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.ProviderAuthorizationConsentState = new ProviderAuthorizationConsentState(reader.GetString());
-                return;
-            }
-            reader.Skip();
-        }
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-        BinaryData IModelSerializable<ResourceProviderData>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
+            return ModelSerializer.ConvertToBinaryData(this, options);
+        }
     }
 }

@@ -4,9 +4,9 @@
 using System.Text.Json;
 using Azure.Core.Tests.Public.ResourceManager.Compute;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Perf.Serializations
 {
-    public class AvailabilitySetDataBenchmark : JsonSerializationBenchmark<AvailabilitySetData>
+    public class AvailabilitySetDataModel : JsonBenchmark<AvailabilitySetData>
     {
         protected override AvailabilitySetData Deserialize(JsonElement jsonElement)
         {

@@ -84,10 +84,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 
         ResourceTypeAliasPattern IModelJsonSerializable<ResourceTypeAliasPattern>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ResourceTypeAliasPatternProperites>(options, SetProperty, out var properties))
-                return null;
-
-            return new ResourceTypeAliasPattern(properties.Phrase.Value, properties.Variable.Value, Optional.ToNullable(properties.PatternType));
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeAliasPattern(doc.RootElement, options);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ResourceTypeAliasPatternProperites properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
