@@ -12,7 +12,7 @@
 
 ### Other Changes
 
-- Updated dependency `Azure.Identity` to version `1.9.0`
+- Updated dependency `Azure.Identity` to version `1.9.0`.
 
 ## 1.6.3 (2023-03-10)
 
