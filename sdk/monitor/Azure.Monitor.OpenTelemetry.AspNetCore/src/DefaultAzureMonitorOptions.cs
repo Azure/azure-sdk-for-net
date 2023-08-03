@@ -31,18 +31,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     _configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
 
                     // IConfiguration can read from EnvironmentVariables or InMemoryCollection if configured to do so.
-                    var connectionString = _configuration[ConnectionStringEnvironmentVariable];
-                    if (!string.IsNullOrEmpty(connectionString))
+                    var connectionStringFromIConfig = _configuration[ConnectionStringEnvironmentVariable];
+                    if (!string.IsNullOrEmpty(connectionStringFromIConfig))
                     {
-                        options.ConnectionString = connectionString;
+                        options.ConnectionString = connectionStringFromIConfig;
                     }
+                }
 
-                    // Environment Variable should take precedence.
-                    connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
-                    if (!string.IsNullOrEmpty(connectionString))
-                    {
-                        options.ConnectionString = connectionString;
-                    }
+                // Environment Variable should take precedence.
+                var connectionStringFromEnvVar = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
+                if (!string.IsNullOrEmpty(connectionStringFromEnvVar))
+                {
+                    options.ConnectionString = connectionStringFromEnvVar;
                 }
             }
             catch (Exception ex)

@@ -126,5 +126,23 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 #endif
+
+        [Fact]
+        public void VerifyConfig_SetsConnectionString_WithoutIConfig()
+        {
+            try
+            {
+                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, "testEnvVarValue");
+
+                var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions();
+                var azureMonitorOptions = new AzureMonitorOptions();
+                defaultAzureMonitorOptions.Configure(azureMonitorOptions);
+                Assert.Equal("testEnvVarValue", azureMonitorOptions.ConnectionString);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, null);
+            }
+        }
     }
 }
