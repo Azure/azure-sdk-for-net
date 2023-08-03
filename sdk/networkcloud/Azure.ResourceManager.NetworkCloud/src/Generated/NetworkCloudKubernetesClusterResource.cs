@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> RestartNodeAsync(WaitUntil waitUntil, KubernetesClusterRestartNodeContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> RestartNodeAsync(WaitUntil waitUntil, KubernetesClusterRestartNodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -376,9 +376,9 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = await _networkCloudKubernetesClusterKubernetesClustersRestClient.RestartNodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation(_networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateRestartNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateRestartNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation RestartNode(WaitUntil waitUntil, KubernetesClusterRestartNodeContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> RestartNode(WaitUntil waitUntil, KubernetesClusterRestartNodeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -414,9 +414,9 @@ namespace Azure.ResourceManager.NetworkCloud
             try
             {
                 var response = _networkCloudKubernetesClusterKubernetesClustersRestClient.RestartNode(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new NetworkCloudArmOperation(_networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateRestartNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics, Pipeline, _networkCloudKubernetesClusterKubernetesClustersRestClient.CreateRestartNodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)

@@ -174,9 +174,10 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // invoke the operation
             KubernetesClusterRestartNodeContent content = new KubernetesClusterRestartNodeContent("nodeName");
-            await networkCloudKubernetesCluster.RestartNodeAsync(WaitUntil.Completed, content);
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudKubernetesCluster.RestartNodeAsync(WaitUntil.Completed, content);
+            NetworkCloudOperationStatusResult result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }
