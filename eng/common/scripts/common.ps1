@@ -65,5 +65,4 @@ $GetEmitterPackageJsonPathFn = "Get-${Language}-EmitterPackageJsonPath"
 # Expected to be set in eng/scripts/docs/Docs-Onboarding.ps1
 $SetDocsPackageOnboarding = "Set-${Language}-DocsPackageOnboarding"
 $GetDocsPackagesAlreadyOnboarded = "Get-${Language}-DocsPackagesAlreadyOnboarded"
-$UpdatePackageMetadata = "Update-${Language}-PackageMetadata"
 $GetPackageIdentity = "Get-${Language}-PackageIdentity"
