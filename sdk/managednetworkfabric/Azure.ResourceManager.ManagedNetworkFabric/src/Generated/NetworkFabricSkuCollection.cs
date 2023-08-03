@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements Network Fabric Sku GET method.
+        /// Implements Network Fabric SKU GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFabricSkuName"> Name of the Network Fabric Sku. </param>
+        /// <param name="networkFabricSkuName"> Name of the Network Fabric SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements Network Fabric Sku GET method.
+        /// Implements Network Fabric SKU GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFabricSkuName"> Name of the Network Fabric Sku. </param>
+        /// <param name="networkFabricSkuName"> Name of the Network Fabric SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements NetworkFabricSkus list by subscription GET method.
+        /// Implements Network Fabric SKUs list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Implements NetworkFabricSkus list by subscription GET method.
+        /// Implements Network Fabric SKUs list by subscription GET method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFabricSkuName"> Name of the Network Fabric Sku. </param>
+        /// <param name="networkFabricSkuName"> Name of the Network Fabric SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFabricSkuName"> Name of the Network Fabric Sku. </param>
+        /// <param name="networkFabricSkuName"> Name of the Network Fabric SKU. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkFabricSkuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSkuName"/> is null. </exception>

@@ -15,17 +15,6 @@ namespace Azure.Communication.JobRouter.Models
     public partial class RouterWorker
     {
         /// <summary> Initializes a new instance of RouterWorker. </summary>
-        public RouterWorker()
-        {
-            _queueAssignments = new ChangeTrackingDictionary<string, object>();
-            _labels = new ChangeTrackingDictionary<string, object>();
-            _tags = new ChangeTrackingDictionary<string, object>();
-            _channelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
-            Offers = new ChangeTrackingList<RouterJobOffer>();
-            AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
-        }
-
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
         /// <param name="id"></param>
         /// <param name="state"> The current state of the worker. </param>
         /// <param name="queueAssignments"> The queue(s) that this worker can receive work from. </param>

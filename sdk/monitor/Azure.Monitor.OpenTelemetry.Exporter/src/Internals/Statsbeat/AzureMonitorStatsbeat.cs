@@ -61,8 +61,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             // Configure for attach statsbeat which has collection
             // schedule of 24 hrs == 86400000 milliseconds.
-            // TODO: Follow up in spec to confirm the behavior
-            // in case if the app exits before 24hrs duration.
             var exporterOptions = new AzureMonitorExporterOptions
             {
                 DisableOfflineStorage = true,
@@ -110,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     new Measurement<int>(1,
                         new("rp", _resourceProvider),
                         new("rpId", _resourceProviderId),
-                        new("attach", s_hasSdkPrefix ? "codeless" : "sdk"),
+                        new("attach", s_hasSdkPrefix ? "IntegratedAuto" : "Manual"),
                         new("cikey", _customer_Ikey),
                         new("runtimeVersion", s_runtimeVersion),
                         new("language", "dotnet"),

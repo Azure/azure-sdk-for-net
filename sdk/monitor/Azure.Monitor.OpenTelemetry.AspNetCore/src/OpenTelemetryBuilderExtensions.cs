@@ -11,6 +11,8 @@ using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.ResourceDetectors.Azure;
+using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
@@ -90,6 +92,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 builder.Services.Configure(configureAzureMonitor);
             }
 
+            builder.ConfigureResource(r => r.AddDetector(new AppServiceResourceDetector())
+                                             .AddDetector(new AzureVMResourceDetector()));
+
             builder.WithTracing(b => b
                             .AddSource("Azure.*")
                             .AddAspNetCoreInstrumentation()
@@ -120,6 +125,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             {
                 logging.AddOpenTelemetry(builderOptions =>
                 {
+                    builderOptions.SetResourceBuilder(ResourceBuilder.CreateDefault()
+                                                                     .AddDetector(new AppServiceResourceDetector())
+                                                                     .AddDetector(new AzureVMResourceDetector()));
                     builderOptions.IncludeFormattedMessage = true;
                     builderOptions.IncludeScopes = false;
                 });

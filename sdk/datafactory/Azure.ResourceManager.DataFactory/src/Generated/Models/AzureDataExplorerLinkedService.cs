@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Data Explorer (Kusto) linked service. </summary>
-    public partial class AzureDataExplorerLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class AzureDataExplorerLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of AzureDataExplorerLinkedService. </summary>
         /// <param name="endpoint"> The endpoint of Azure Data Explorer (the engine's endpoint). URL will be in the format https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net. Type: string (or Expression with resultType string). </param>

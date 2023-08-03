@@ -9,6 +9,11 @@
 * Location ip on server spans will now be set using `client.address` tag key on
   activity instead of `http.client_ip`.
   ([#37707](https://github.com/Azure/azure-sdk-for-net/pull/37707))
+* Removing `ServiceVersion.V2020_09_15_Preview`. This is no longer in use and
+  the exporter has already defaulted to the latest `ServiceVersion.v2_1`.
+  ([#37996](https://github.com/Azure/azure-sdk-for-net/pull/37996))
+* Remove Nullable Annotations from the Exporter's public API.
+  ([#37996](https://github.com/Azure/azure-sdk-for-net/pull/37996))
 
 ### Bugs Fixed
 
@@ -16,6 +21,10 @@
   ([#37807](https://github.com/Azure/azure-sdk-for-net/pull/37807))
 
 ### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
+  - OpenTelemetry 1.5.1
 
 ## 1.0.0-beta.13 (2023-07-13)
 

@@ -31,6 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
             try
             {
+                // TODO: should we replace this with IConfiguration?
                 string connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
 
                 if (!string.IsNullOrWhiteSpace(connectionString))
@@ -38,9 +39,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     options.ConnectionString = connectionString;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: Log Error.
+                AzureMonitorAspNetCoreEventSource.Log.ConfigureFailed(ex);
             }
         }
     }

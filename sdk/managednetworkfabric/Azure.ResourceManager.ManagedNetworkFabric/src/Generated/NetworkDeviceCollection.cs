@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Get the Network Device resource details.
+        /// Gets the Network Device resource details.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
-        /// Get the Network Device resource details.
+        /// Gets the Network Device resource details.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
