@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="provisioningState"> The provisioning state of the network slice resource. </param>
         /// <param name="snssai"> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </param>
         /// <param name="description"> An optional description for this network slice. </param>
-        internal SliceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, Snssai snssai, string description) : base(id, name, resourceType, systemData, tags, location)
+        internal SliceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, Snssai snssai, string description) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Snssai = snssai;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the network slice resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </summary>
         public Snssai Snssai { get; set; }
         /// <summary> An optional description for this network slice. </summary>

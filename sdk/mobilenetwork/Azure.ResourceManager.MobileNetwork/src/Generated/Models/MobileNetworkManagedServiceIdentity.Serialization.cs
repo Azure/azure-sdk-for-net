@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ManagedServiceIdentityType.ToString());
+            writer.WriteStringValue(IdentityType.ToString());
             if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            ManagedServiceIdentityType type = default;
+            MobileNetworkManagedServiceIdentityType type = default;
             Optional<IDictionary<string, UserAssignedIdentity>> userAssignedIdentities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ManagedServiceIdentityType(property.Value.GetString());
+                    type = new MobileNetworkManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))

@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the data network resource. </param>
         /// <param name="description"> An optional description for this data network. </param>
-        internal DataNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, string description) : base(id, name, resourceType, systemData, tags, location)
+        internal DataNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, string description) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             Description = description;
         }
 
         /// <summary> The provisioning state of the data network resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> An optional description for this data network. </summary>
         public string Description { get; set; }
     }

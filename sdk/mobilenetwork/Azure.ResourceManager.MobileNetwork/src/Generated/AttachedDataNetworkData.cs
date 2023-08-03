@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="userPlaneDataInterface"> The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </param>
         /// <param name="dnsAddresses"> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userPlaneDataInterface"/> or <paramref name="dnsAddresses"/> is null. </exception>
-        public AttachedDataNetworkData(AzureLocation location, InterfaceProperties userPlaneDataInterface, IEnumerable<string> dnsAddresses) : base(location)
+        public AttachedDataNetworkData(AzureLocation location, MobileNetworkInterfaceProperties userPlaneDataInterface, IEnumerable<string> dnsAddresses) : base(location)
         {
             Argument.AssertNotNull(userPlaneDataInterface, nameof(userPlaneDataInterface));
             Argument.AssertNotNull(dnsAddresses, nameof(dnsAddresses));
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// The packet core instance assigns an IP address to a UE when the UE sets up a PDU session. The static IP address for a specific UE is set in StaticIPConfiguration on the corresponding SIM resource.
         /// At least one of userEquipmentAddressPoolPrefix and userEquipmentStaticAddressPoolPrefix must be defined. If both are defined, they must be of the same size.
         /// </param>
-        internal AttachedDataNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, InterfaceProperties userPlaneDataInterface, IList<string> dnsAddresses, NaptConfiguration naptConfiguration, IList<string> userEquipmentAddressPoolPrefix, IList<string> userEquipmentStaticAddressPoolPrefix) : base(id, name, resourceType, systemData, tags, location)
+        internal AttachedDataNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkInterfaceProperties userPlaneDataInterface, IList<string> dnsAddresses, NaptConfiguration naptConfiguration, IList<string> userEquipmentAddressPoolPrefix, IList<string> userEquipmentStaticAddressPoolPrefix) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             UserPlaneDataInterface = userPlaneDataInterface;
@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the attached data network resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </summary>
-        public InterfaceProperties UserPlaneDataInterface { get; set; }
+        public MobileNetworkInterfaceProperties UserPlaneDataInterface { get; set; }
         /// <summary> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array. </summary>
         public IList<string> DnsAddresses { get; }
         /// <summary>

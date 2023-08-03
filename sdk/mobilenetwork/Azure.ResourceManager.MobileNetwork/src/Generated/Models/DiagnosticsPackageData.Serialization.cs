@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.MobileNetwork
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<DiagnosticsPackageStatus> status = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<MobileNetworkDiagnosticsPackageStatus> status = default;
             Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            status = new DiagnosticsPackageStatus(property0.Value.GetString());
+                            status = new MobileNetworkDiagnosticsPackageStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("reason"u8))

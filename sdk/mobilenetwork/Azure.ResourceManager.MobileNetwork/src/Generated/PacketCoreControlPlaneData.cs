@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="sku"> The SKU defining the throughput and SIM allowances for this packet core control plane deployment. </param>
         /// <param name="localDiagnosticsAccess"> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sites"/>, <paramref name="platform"/>, <paramref name="controlPlaneAccessInterface"/> or <paramref name="localDiagnosticsAccess"/> is null. </exception>
-        public PacketCoreControlPlaneData(AzureLocation location, IEnumerable<WritableSubResource> sites, PlatformConfiguration platform, InterfaceProperties controlPlaneAccessInterface, BillingSku sku, LocalDiagnosticsAccessConfiguration localDiagnosticsAccess) : base(location)
+        public PacketCoreControlPlaneData(AzureLocation location, IEnumerable<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkInterfaceProperties controlPlaneAccessInterface, MobileNetworkBillingSku sku, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess) : base(location)
         {
             Argument.AssertNotNull(sites, nameof(sites));
             Argument.AssertNotNull(platform, nameof(platform));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="localDiagnosticsAccess"> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </param>
         /// <param name="diagnosticsUpload"> Configuration for uploading packet core diagnostics. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
-        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, ProvisioningState? provisioningState, Installation installation, IList<WritableSubResource> sites, PlatformConfiguration platform, CoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, InterfaceProperties controlPlaneAccessInterface, BillingSku sku, int? ueMtu, LocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, BinaryData interopSettings) : base(id, name, resourceType, systemData, tags, location)
+        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, BinaryData interopSettings) : base(id, name, resourceType, systemData, tags, location)
         {
             UserAssignedIdentity = userAssignedIdentity;
             ProvisioningState = provisioningState;
@@ -87,15 +87,15 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> The identity used to retrieve the ingress certificate from Azure key vault. </summary>
         public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
         /// <summary> The provisioning state of the packet core control plane resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The installation state of the packet core control plane resource. </summary>
-        public Installation Installation { get; set; }
+        public MobileNetworkInstallation Installation { get; set; }
         /// <summary> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </summary>
         public IList<WritableSubResource> Sites { get; }
         /// <summary> The platform where the packet core is deployed. </summary>
-        public PlatformConfiguration Platform { get; set; }
+        public MobileNetworkPlatformConfiguration Platform { get; set; }
         /// <summary> The core network technology generation (5G core or EPC / 4G core). </summary>
-        public CoreNetworkType? CoreNetworkTechnology { get; set; }
+        public MobileNetworkCoreNetworkType? CoreNetworkTechnology { get; set; }
         /// <summary> The desired version of the packet core software. </summary>
         public string Version { get; set; }
         /// <summary> The currently installed version of the packet core software. </summary>
@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> The previous version of the packet core software that was deployed. Used when performing the rollback action. </summary>
         public string RollbackVersion { get; }
         /// <summary> The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface. </summary>
-        public InterfaceProperties ControlPlaneAccessInterface { get; set; }
+        public MobileNetworkInterfaceProperties ControlPlaneAccessInterface { get; set; }
         /// <summary> The SKU defining the throughput and SIM allowances for this packet core control plane deployment. </summary>
-        public BillingSku Sku { get; set; }
+        public MobileNetworkBillingSku Sku { get; set; }
         /// <summary> The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation. </summary>
         public int? UeMtu { get; set; }
         /// <summary> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </summary>
-        public LocalDiagnosticsAccessConfiguration LocalDiagnosticsAccess { get; set; }
+        public MobileNetworkLocalDiagnosticsAccessConfiguration LocalDiagnosticsAccess { get; set; }
         /// <summary> Configuration for uploading packet core diagnostics. </summary>
         internal DiagnosticsUploadConfiguration DiagnosticsUpload { get; set; }
         /// <summary> The Storage Account Container URL to upload diagnostics to. </summary>

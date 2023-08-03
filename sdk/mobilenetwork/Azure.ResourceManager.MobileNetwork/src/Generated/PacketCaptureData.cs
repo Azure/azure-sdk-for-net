@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. The default "0" means the entire packet is captured. </param>
         /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
-        internal PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, PacketCaptureStatus? status, string reason, DateTimeOffset? captureStartOn, IList<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds) : base(id, name, resourceType, systemData)
+        internal PacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkPacketCaptureStatus? status, string reason, DateTimeOffset? captureStartOn, IList<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the packet capture session resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The status of the packet capture session. </summary>
-        public PacketCaptureStatus? Status { get; }
+        public MobileNetworkPacketCaptureStatus? Status { get; }
         /// <summary> The reason the current packet capture session state. </summary>
         public string Reason { get; }
         /// <summary> The start time of the packet capture session. </summary>

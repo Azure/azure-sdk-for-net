@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.MobileNetwork
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<SimState> simState = default;
-            Optional<IReadOnlyDictionary<string, SiteProvisioningState>> siteProvisioningState = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<MobileNetworkSimState> simState = default;
+            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
             string internationalMobileSubscriberIdentity = default;
             Optional<string> integratedCircuitCardIdentifier = default;
             Optional<string> deviceType = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("simState"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            simState = new SimState(property0.Value.GetString());
+                            simState = new MobileNetworkSimState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("siteProvisioningState"u8))
@@ -143,10 +143,10 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            Dictionary<string, SiteProvisioningState> dictionary = new Dictionary<string, SiteProvisioningState>();
+                            Dictionary<string, MobileNetworkSiteProvisioningState> dictionary = new Dictionary<string, MobileNetworkSiteProvisioningState>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, new SiteProvisioningState(property1.Value.GetString()));
+                                dictionary.Add(property1.Name, new MobileNetworkSiteProvisioningState(property1.Value.GetString()));
                             }
                             siteProvisioningState = dictionary;
                             continue;

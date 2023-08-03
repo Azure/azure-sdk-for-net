@@ -106,18 +106,18 @@ namespace Azure.ResourceManager.MobileNetwork
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<Installation> installation = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<MobileNetworkInstallation> installation = default;
             IList<WritableSubResource> sites = default;
-            PlatformConfiguration platform = default;
-            Optional<CoreNetworkType> coreNetworkTechnology = default;
+            MobileNetworkPlatformConfiguration platform = default;
+            Optional<MobileNetworkCoreNetworkType> coreNetworkTechnology = default;
             Optional<string> version = default;
             Optional<string> installedVersion = default;
             Optional<string> rollbackVersion = default;
-            InterfaceProperties controlPlaneAccessInterface = default;
-            BillingSku sku = default;
+            MobileNetworkInterfaceProperties controlPlaneAccessInterface = default;
+            MobileNetworkBillingSku sku = default;
             Optional<int> ueMtu = default;
-            LocalDiagnosticsAccessConfiguration localDiagnosticsAccess = default;
+            MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = default;
             Optional<DiagnosticsUploadConfiguration> diagnosticsUpload = default;
             Optional<BinaryData> interopSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("installation"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            installation = Installation.DeserializeInstallation(property0.Value);
+                            installation = MobileNetworkInstallation.DeserializeMobileNetworkInstallation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sites"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("platform"u8))
                         {
-                            platform = PlatformConfiguration.DeserializePlatformConfiguration(property0.Value);
+                            platform = MobileNetworkPlatformConfiguration.DeserializeMobileNetworkPlatformConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("coreNetworkTechnology"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            coreNetworkTechnology = property0.Value.GetString().ToCoreNetworkType();
+                            coreNetworkTechnology = property0.Value.GetString().ToMobileNetworkCoreNetworkType();
                             continue;
                         }
                         if (property0.NameEquals("version"u8))
@@ -242,12 +242,12 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("controlPlaneAccessInterface"u8))
                         {
-                            controlPlaneAccessInterface = InterfaceProperties.DeserializeInterfaceProperties(property0.Value);
+                            controlPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))
                         {
-                            sku = new BillingSku(property0.Value.GetString());
+                            sku = new MobileNetworkBillingSku(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("ueMtu"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("localDiagnosticsAccess"u8))
                         {
-                            localDiagnosticsAccess = LocalDiagnosticsAccessConfiguration.DeserializeLocalDiagnosticsAccessConfiguration(property0.Value);
+                            localDiagnosticsAccess = MobileNetworkLocalDiagnosticsAccessConfiguration.DeserializeMobileNetworkLocalDiagnosticsAccessConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("diagnosticsUpload"u8))

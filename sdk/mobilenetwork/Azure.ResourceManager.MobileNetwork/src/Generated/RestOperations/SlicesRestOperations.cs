@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, TagsObject tagsObject)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, MobileNetworkTagsPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tagsObject);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="sliceName"> The name of the network slice. </param>
-        /// <param name="tagsObject"> Parameters supplied to update network slice tags. </param>
+        /// <param name="patch"> Parameters supplied to update network slice tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SliceData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public async Task<Response<SliceData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
             Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, mobileNetworkName, sliceName, tagsObject);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, mobileNetworkName, sliceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -351,19 +351,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="mobileNetworkName"> The name of the mobile network. </param>
         /// <param name="sliceName"> The name of the network slice. </param>
-        /// <param name="tagsObject"> Parameters supplied to update network slice tags. </param>
+        /// <param name="patch"> Parameters supplied to update network slice tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SliceData> UpdateTags(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public Response<SliceData> UpdateTags(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(mobileNetworkName, nameof(mobileNetworkName));
             Argument.AssertNotNullOrEmpty(sliceName, nameof(sliceName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, mobileNetworkName, sliceName, tagsObject);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, mobileNetworkName, sliceName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

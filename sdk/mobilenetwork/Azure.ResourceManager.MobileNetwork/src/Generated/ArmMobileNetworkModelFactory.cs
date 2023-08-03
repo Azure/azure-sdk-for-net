@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// At least one of userEquipmentAddressPoolPrefix and userEquipmentStaticAddressPoolPrefix must be defined. If both are defined, they must be of the same size.
         /// </param>
         /// <returns> A new <see cref="MobileNetwork.AttachedDataNetworkData"/> instance for mocking. </returns>
-        public static AttachedDataNetworkData AttachedDataNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, InterfaceProperties userPlaneDataInterface = null, IEnumerable<string> dnsAddresses = null, NaptConfiguration naptConfiguration = null, IEnumerable<string> userEquipmentAddressPoolPrefix = null, IEnumerable<string> userEquipmentStaticAddressPoolPrefix = null)
+        public static AttachedDataNetworkData AttachedDataNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkInterfaceProperties userPlaneDataInterface = null, IEnumerable<string> dnsAddresses = null, NaptConfiguration naptConfiguration = null, IEnumerable<string> userEquipmentAddressPoolPrefix = null, IEnumerable<string> userEquipmentStaticAddressPoolPrefix = null)
         {
             tags ??= new Dictionary<string, string>();
             dnsAddresses ??= new List<string>();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="provisioningState"> The provisioning state of the data network resource. </param>
         /// <param name="description"> An optional description for this data network. </param>
         /// <returns> A new <see cref="MobileNetwork.DataNetworkData"/> instance for mocking. </returns>
-        public static DataNetworkData DataNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, string description = null)
+        public static DataNetworkData DataNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, string description = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="status"> The status of the diagnostics package collection. </param>
         /// <param name="reason"> The reason for the current state of the diagnostics package collection. </param>
         /// <returns> A new <see cref="MobileNetwork.DiagnosticsPackageData"/> instance for mocking. </returns>
-        public static DiagnosticsPackageData DiagnosticsPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, DiagnosticsPackageStatus? status = null, string reason = null)
+        public static DiagnosticsPackageData DiagnosticsPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkDiagnosticsPackageStatus? status = null, string reason = null)
         {
             return new DiagnosticsPackageData(id, name, resourceType, systemData, provisioningState, status, reason);
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="publicLandMobileNetworkIdentifier"> The unique public land mobile network identifier for the network. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks. </param>
         /// <param name="serviceKey"> The mobile network resource identifier. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkData"/> instance for mocking. </returns>
-        public static MobileNetworkData MobileNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, PlmnId publicLandMobileNetworkIdentifier = null, string serviceKey = null)
+        public static MobileNetworkData MobileNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkPlmnId publicLandMobileNetworkIdentifier = null, string serviceKey = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCaptureData"/> instance for mocking. </returns>
-        public static PacketCaptureData PacketCaptureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, PacketCaptureStatus? status = null, string reason = null, DateTimeOffset? captureStartOn = null, IEnumerable<string> networkInterfaces = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null)
+        public static PacketCaptureData PacketCaptureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkPacketCaptureStatus? status = null, string reason = null, DateTimeOffset? captureStartOn = null, IEnumerable<string> networkInterfaces = null, long? bytesToCapturePerPacket = null, long? totalBytesPerSession = null, int? timeLimitInSeconds = null)
         {
             networkInterfaces ??= new List<string>();
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="diagnosticsUploadStorageAccountContainerUri"> Configuration for uploading packet core diagnostics. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCoreControlPlaneData"/> instance for mocking. </returns>
-        public static PacketCoreControlPlaneData PacketCoreControlPlaneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, ProvisioningState? provisioningState = null, Installation installation = null, IEnumerable<WritableSubResource> sites = null, PlatformConfiguration platform = null, CoreNetworkType? coreNetworkTechnology = null, string version = null, string installedVersion = null, string rollbackVersion = null, InterfaceProperties controlPlaneAccessInterface = null, BillingSku sku = default, int? ueMtu = null, LocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, Uri diagnosticsUploadStorageAccountContainerUri = null, BinaryData interopSettings = null)
+        public static PacketCoreControlPlaneData PacketCoreControlPlaneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkInstallation installation = null, IEnumerable<WritableSubResource> sites = null, MobileNetworkPlatformConfiguration platform = null, MobileNetworkCoreNetworkType? coreNetworkTechnology = null, string version = null, string installedVersion = null, string rollbackVersion = null, MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, MobileNetworkBillingSku sku = default, int? ueMtu = null, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, Uri diagnosticsUploadStorageAccountContainerUri = null, BinaryData interopSettings = null)
         {
             tags ??= new Dictionary<string, string>();
             sites ??= new List<WritableSubResource>();
@@ -171,51 +171,51 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new PacketCoreControlPlaneData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, installation, sites?.ToList(), platform, coreNetworkTechnology, version, installedVersion, rollbackVersion, controlPlaneAccessInterface, sku, ueMtu, localDiagnosticsAccess, diagnosticsUploadStorageAccountContainerUri != null ? new DiagnosticsUploadConfiguration(diagnosticsUploadStorageAccountContainerUri) : null, interopSettings);
         }
 
-        /// <summary> Initializes a new instance of Installation. </summary>
+        /// <summary> Initializes a new instance of MobileNetworkInstallation. </summary>
         /// <param name="desiredState"> The desired installation state. </param>
         /// <param name="state"> Installation state. </param>
         /// <param name="reinstallRequired"> Whether a reinstall of the packet core is required to pick up the latest configuration changes. </param>
         /// <param name="reasons"> Reason(s) for the current installation state of the packet core. </param>
         /// <param name="operationId"> A reference to an in-progress installation operation. </param>
-        /// <returns> A new <see cref="Models.Installation"/> instance for mocking. </returns>
-        public static Installation Installation(DesiredInstallationState? desiredState = null, InstallationState? state = null, ReinstallRequired? reinstallRequired = null, IEnumerable<InstallationReason> reasons = null, ResourceIdentifier operationId = null)
+        /// <returns> A new <see cref="Models.MobileNetworkInstallation"/> instance for mocking. </returns>
+        public static MobileNetworkInstallation MobileNetworkInstallation(DesiredInstallationState? desiredState = null, MobileNetworkInstallationState? state = null, MobileNetworkReinstallRequired? reinstallRequired = null, IEnumerable<MobileNetworkInstallationReason> reasons = null, ResourceIdentifier operationId = null)
         {
-            reasons ??= new List<InstallationReason>();
+            reasons ??= new List<MobileNetworkInstallationReason>();
 
-            return new Installation(desiredState, state, reinstallRequired, reasons?.ToList(), operationId != null ? ResourceManagerModelFactory.SubResource(operationId) : null);
+            return new MobileNetworkInstallation(desiredState, state, reinstallRequired, reasons?.ToList(), operationId != null ? ResourceManagerModelFactory.SubResource(operationId) : null);
         }
 
-        /// <summary> Initializes a new instance of PlatformConfiguration. </summary>
+        /// <summary> Initializes a new instance of MobileNetworkPlatformConfiguration. </summary>
         /// <param name="platformType"> The platform type where packet core is deployed. </param>
         /// <param name="azureStackEdgeDeviceId"> The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified. </param>
         /// <param name="azureStackEdgeDevices"> The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list. </param>
         /// <param name="azureStackHciClusterId"> The Azure Stack HCI cluster where the packet core is deployed. </param>
         /// <param name="connectedClusterId"> Azure Arc connected cluster where the packet core is deployed. </param>
         /// <param name="customLocationId"> Azure Arc custom location where the packet core is deployed. </param>
-        /// <returns> A new <see cref="Models.PlatformConfiguration"/> instance for mocking. </returns>
-        public static PlatformConfiguration PlatformConfiguration(PlatformType platformType = default, ResourceIdentifier azureStackEdgeDeviceId = null, IEnumerable<WritableSubResource> azureStackEdgeDevices = null, ResourceIdentifier azureStackHciClusterId = null, ResourceIdentifier connectedClusterId = null, ResourceIdentifier customLocationId = null)
+        /// <returns> A new <see cref="Models.MobileNetworkPlatformConfiguration"/> instance for mocking. </returns>
+        public static MobileNetworkPlatformConfiguration MobileNetworkPlatformConfiguration(MobileNetworkPlatformType platformType = default, ResourceIdentifier azureStackEdgeDeviceId = null, IEnumerable<WritableSubResource> azureStackEdgeDevices = null, ResourceIdentifier azureStackHciClusterId = null, ResourceIdentifier connectedClusterId = null, ResourceIdentifier customLocationId = null)
         {
             azureStackEdgeDevices ??= new List<WritableSubResource>();
 
-            return new PlatformConfiguration(platformType, azureStackEdgeDeviceId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackEdgeDeviceId) : null, azureStackEdgeDevices?.ToList(), azureStackHciClusterId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackHciClusterId) : null, connectedClusterId != null ? ResourceManagerModelFactory.WritableSubResource(connectedClusterId) : null, customLocationId != null ? ResourceManagerModelFactory.WritableSubResource(customLocationId) : null);
+            return new MobileNetworkPlatformConfiguration(platformType, azureStackEdgeDeviceId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackEdgeDeviceId) : null, azureStackEdgeDevices?.ToList(), azureStackHciClusterId != null ? ResourceManagerModelFactory.WritableSubResource(azureStackHciClusterId) : null, connectedClusterId != null ? ResourceManagerModelFactory.WritableSubResource(connectedClusterId) : null, customLocationId != null ? ResourceManagerModelFactory.WritableSubResource(customLocationId) : null);
         }
 
-        /// <summary> Initializes a new instance of HttpsServerCertificate. </summary>
+        /// <summary> Initializes a new instance of MobileNetworkHttpsServerCertificate. </summary>
         /// <param name="certificateUri"> The certificate URL, unversioned. For example: https://contosovault.vault.azure.net/certificates/ingress. </param>
         /// <param name="provisioning"> The provisioning state of the certificate. </param>
-        /// <returns> A new <see cref="Models.HttpsServerCertificate"/> instance for mocking. </returns>
-        public static HttpsServerCertificate HttpsServerCertificate(Uri certificateUri = null, CertificateProvisioning provisioning = null)
+        /// <returns> A new <see cref="Models.MobileNetworkHttpsServerCertificate"/> instance for mocking. </returns>
+        public static MobileNetworkHttpsServerCertificate MobileNetworkHttpsServerCertificate(Uri certificateUri = null, MobileNetworkCertificateProvisioning provisioning = null)
         {
-            return new HttpsServerCertificate(certificateUri, provisioning);
+            return new MobileNetworkHttpsServerCertificate(certificateUri, provisioning);
         }
 
-        /// <summary> Initializes a new instance of CertificateProvisioning. </summary>
+        /// <summary> Initializes a new instance of MobileNetworkCertificateProvisioning. </summary>
         /// <param name="state"> The certificate's provisioning state. </param>
         /// <param name="reason"> Reason for certificate provisioning failure. </param>
-        /// <returns> A new <see cref="Models.CertificateProvisioning"/> instance for mocking. </returns>
-        public static CertificateProvisioning CertificateProvisioning(CertificateProvisioningState? state = null, string reason = null)
+        /// <returns> A new <see cref="Models.MobileNetworkCertificateProvisioning"/> instance for mocking. </returns>
+        public static MobileNetworkCertificateProvisioning MobileNetworkCertificateProvisioning(CertificateProvisioningState? state = null, string reason = null)
         {
-            return new CertificateProvisioning(state, reason);
+            return new MobileNetworkCertificateProvisioning(state, reason);
         }
 
         /// <summary> Initializes a new instance of PacketCoreControlPlaneVersionData. </summary>
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="provisioningState"> The provisioning state of the packet core control plane version resource. </param>
         /// <param name="platforms"> Platform specific packet core control plane version properties. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCoreControlPlaneVersionData"/> instance for mocking. </returns>
-        public static PacketCoreControlPlaneVersionData PacketCoreControlPlaneVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, IEnumerable<Platform> platforms = null)
+        public static PacketCoreControlPlaneVersionData PacketCoreControlPlaneVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MobileNetworkProvisioningState? provisioningState = null, IEnumerable<MobileNetworkPlatform> platforms = null)
         {
-            platforms ??= new List<Platform>();
+            platforms ??= new List<MobileNetworkPlatform>();
 
             return new PacketCoreControlPlaneVersionData(id, name, resourceType, systemData, provisioningState, platforms?.ToList());
         }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="provisioningState"> The provisioning state of the packet core data plane resource. </param>
         /// <param name="userPlaneAccessInterface"> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCoreDataPlaneData"/> instance for mocking. </returns>
-        public static PacketCoreDataPlaneData PacketCoreDataPlaneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, InterfaceProperties userPlaneAccessInterface = null)
+        public static PacketCoreDataPlaneData PacketCoreDataPlaneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkInterfaceProperties userPlaneAccessInterface = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="serviceQosPolicy"> The QoS policy to use for packets matching this service. This can be overridden for particular flows using the ruleQosPolicy field in a PccRuleConfiguration. If this field is null then the UE's SIM policy will define the QoS settings. </param>
         /// <param name="pccRules"> The set of data flow policy rules that make up this service. </param>
         /// <returns> A new <see cref="MobileNetwork.ServiceData"/> instance for mocking. </returns>
-        public static ServiceData ServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, int servicePrecedence = default, QosPolicy serviceQosPolicy = null, IEnumerable<PccRuleConfiguration> pccRules = null)
+        public static ServiceData ServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, int servicePrecedence = default, MobileNetworkQosPolicy serviceQosPolicy = null, IEnumerable<PccRuleConfiguration> pccRules = null)
         {
             tags ??= new Dictionary<string, string>();
             pccRules ??= new List<PccRuleConfiguration>();
@@ -288,9 +288,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="authenticationKey"> The Ki value for the SIM. </param>
         /// <param name="operatorKeyCode"> The Opc value for the SIM. </param>
         /// <returns> A new <see cref="MobileNetwork.SimData"/> instance for mocking. </returns>
-        public static SimData SimData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProvisioningState? provisioningState = null, SimState? simState = null, IReadOnlyDictionary<string, SiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, ResourceIdentifier simPolicyId = null, IEnumerable<SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string authenticationKey = null, string operatorKeyCode = null)
+        public static SimData SimData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkSimState? simState = null, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = null, string internationalMobileSubscriberIdentity = null, string integratedCircuitCardIdentifier = null, string deviceType = null, ResourceIdentifier simPolicyId = null, IEnumerable<SimStaticIPProperties> staticIPConfiguration = null, string vendorName = null, string vendorKeyFingerprint = null, string authenticationKey = null, string operatorKeyCode = null)
         {
-            siteProvisioningState ??= new Dictionary<string, SiteProvisioningState>();
+            siteProvisioningState ??= new Dictionary<string, MobileNetworkSiteProvisioningState>();
             staticIPConfiguration ??= new List<SimStaticIPProperties>();
 
             return new SimData(id, name, resourceType, systemData, provisioningState, simState, siteProvisioningState, internationalMobileSubscriberIdentity, integratedCircuitCardIdentifier, deviceType, simPolicyId != null ? ResourceManagerModelFactory.WritableSubResource(simPolicyId) : null, staticIPConfiguration?.ToList(), vendorName, vendorKeyFingerprint, authenticationKey, operatorKeyCode);
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="keyUri"> A key to encrypt the SIM data that belongs to this SIM group. </param>
         /// <param name="mobileNetworkId"> Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group. </param>
         /// <returns> A new <see cref="MobileNetwork.SimGroupData"/> instance for mocking. </returns>
-        public static SimGroupData SimGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, ProvisioningState? provisioningState = null, Uri keyUri = null, ResourceIdentifier mobileNetworkId = null)
+        public static SimGroupData SimGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, MobileNetworkProvisioningState? provisioningState = null, Uri keyUri = null, ResourceIdentifier mobileNetworkId = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="registrationTimer"> UE periodic registration update timer (5G) or UE periodic tracking area update timer (4G), in seconds. </param>
         /// <param name="sliceConfigurations"> The allowed slices and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </param>
         /// <returns> A new <see cref="MobileNetwork.SimPolicyData"/> instance for mocking. </returns>
-        public static SimPolicyData SimPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, IReadOnlyDictionary<string, SiteProvisioningState> siteProvisioningState = null, Ambr ueAmbr = null, ResourceIdentifier defaultSliceId = null, int? rfspIndex = null, int? registrationTimer = null, IEnumerable<SliceConfiguration> sliceConfigurations = null)
+        public static SimPolicyData SimPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState = null, Ambr ueAmbr = null, ResourceIdentifier defaultSliceId = null, int? rfspIndex = null, int? registrationTimer = null, IEnumerable<MobileNetworkSliceConfiguration> sliceConfigurations = null)
         {
             tags ??= new Dictionary<string, string>();
-            siteProvisioningState ??= new Dictionary<string, SiteProvisioningState>();
-            sliceConfigurations ??= new List<SliceConfiguration>();
+            siteProvisioningState ??= new Dictionary<string, MobileNetworkSiteProvisioningState>();
+            sliceConfigurations ??= new List<MobileNetworkSliceConfiguration>();
 
             return new SimPolicyData(id, name, resourceType, systemData, tags, location, provisioningState, siteProvisioningState, ueAmbr, defaultSliceId != null ? ResourceManagerModelFactory.WritableSubResource(defaultSliceId) : null, rfspIndex, registrationTimer, sliceConfigurations?.ToList());
         }
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="networkFunctions"> An array of IDs of the network functions deployed in the site. Deleting the site will delete any network functions that are deployed in the site. </param>
         /// <returns> A new <see cref="MobileNetwork.SiteData"/> instance for mocking. </returns>
-        public static SiteData SiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, IEnumerable<SubResource> networkFunctions = null)
+        public static SiteData SiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, IEnumerable<SubResource> networkFunctions = null)
         {
             tags ??= new Dictionary<string, string>();
             networkFunctions ??= new List<SubResource>();
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="snssai"> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </param>
         /// <param name="description"> An optional description for this network slice. </param>
         /// <returns> A new <see cref="MobileNetwork.SliceData"/> instance for mocking. </returns>
-        public static SliceData SliceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ProvisioningState? provisioningState = null, Snssai snssai = null, string description = null)
+        public static SliceData SliceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkProvisioningState? provisioningState = null, Snssai snssai = null, string description = null)
         {
             tags ??= new Dictionary<string, string>();
 

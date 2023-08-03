@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="networkFunctions"> An array of IDs of the network functions deployed in the site. Deleting the site will delete any network functions that are deployed in the site. </param>
-        internal SiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, IReadOnlyList<SubResource> networkFunctions) : base(id, name, resourceType, systemData, tags, location)
+        internal SiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, IReadOnlyList<SubResource> networkFunctions) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             NetworkFunctions = networkFunctions;
         }
 
         /// <summary> The provisioning state of the site resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> An array of IDs of the network functions deployed in the site. Deleting the site will delete any network functions that are deployed in the site. </summary>
         public IReadOnlyList<SubResource> NetworkFunctions { get; }
     }

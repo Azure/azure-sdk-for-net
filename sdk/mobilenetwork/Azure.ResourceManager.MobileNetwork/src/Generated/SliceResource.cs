@@ -233,18 +233,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update network slice tags. </param>
+        /// <param name="patch"> Parameters supplied to update network slice tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<SliceResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<SliceResource>> UpdateAsync(MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sliceClientDiagnostics.CreateScope("SliceResource.Update");
             scope.Start();
             try
             {
-                var response = await _sliceRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _sliceRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SliceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -267,18 +267,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update network slice tags. </param>
+        /// <param name="patch"> Parameters supplied to update network slice tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<SliceResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<SliceResource> Update(MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _sliceClientDiagnostics.CreateScope("SliceResource.Update");
             scope.Start();
             try
             {
-                var response = _sliceRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken);
+                var response = _sliceRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new SliceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

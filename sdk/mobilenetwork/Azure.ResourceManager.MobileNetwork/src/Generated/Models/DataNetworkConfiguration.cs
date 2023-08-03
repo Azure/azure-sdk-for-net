@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
             DataNetwork = dataNetwork;
             SessionAmbr = sessionAmbr;
-            AdditionalAllowedSessionTypes = new ChangeTrackingList<PduSessionType>();
+            AdditionalAllowedSessionTypes = new ChangeTrackingList<MobileNetworkPduSessionType>();
             AllowedServices = allowedServices.ToList();
         }
 
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="additionalAllowedSessionTypes"> Allowed session types in addition to the default session type. Must not duplicate the default session type. </param>
         /// <param name="allowedServices"> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </param>
         /// <param name="maximumNumberOfBufferedPackets"> The maximum number of downlink packets to buffer at the user plane for High Latency Communication - Extended Buffering. See 3GPP TS29.272 v15.10.0 section 7.3.188 for a full description. This maximum is not guaranteed because there is a internal limit on buffered packets across all PDU sessions. </param>
-        internal DataNetworkConfiguration(WritableSubResource dataNetwork, Ambr sessionAmbr, int? fiveQi, int? allocationAndRetentionPriorityLevel, PreemptionCapability? preemptionCapability, PreemptionVulnerability? preemptionVulnerability, PduSessionType? defaultSessionType, IList<PduSessionType> additionalAllowedSessionTypes, IList<WritableSubResource> allowedServices, int? maximumNumberOfBufferedPackets)
+        internal DataNetworkConfiguration(WritableSubResource dataNetwork, Ambr sessionAmbr, int? fiveQi, int? allocationAndRetentionPriorityLevel, MobileNetworkPreemptionCapability? preemptionCapability, MobileNetworkPreemptionVulnerability? preemptionVulnerability, MobileNetworkPduSessionType? defaultSessionType, IList<MobileNetworkPduSessionType> additionalAllowedSessionTypes, IList<WritableSubResource> allowedServices, int? maximumNumberOfBufferedPackets)
         {
             DataNetwork = dataNetwork;
             SessionAmbr = sessionAmbr;
@@ -79,13 +79,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Default QoS Flow allocation and retention priority (ARP) level. Flows with higher priority preempt flows with lower priority, if the settings of `preemptionCapability` and `preemptionVulnerability` allow it. 1 is the highest level of priority. If this field is not specified then `5qi` is used to derive the ARP value. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
         public int? AllocationAndRetentionPriorityLevel { get; set; }
         /// <summary> Default QoS Flow preemption capability. The preemption capability of a QoS Flow controls whether it can preempt another QoS Flow with a lower priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
-        public PreemptionCapability? PreemptionCapability { get; set; }
+        public MobileNetworkPreemptionCapability? PreemptionCapability { get; set; }
         /// <summary> Default QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </summary>
-        public PreemptionVulnerability? PreemptionVulnerability { get; set; }
+        public MobileNetworkPreemptionVulnerability? PreemptionVulnerability { get; set; }
         /// <summary> The default PDU session type, which is used if the UE does not request a specific session type. </summary>
-        public PduSessionType? DefaultSessionType { get; set; }
+        public MobileNetworkPduSessionType? DefaultSessionType { get; set; }
         /// <summary> Allowed session types in addition to the default session type. Must not duplicate the default session type. </summary>
-        public IList<PduSessionType> AdditionalAllowedSessionTypes { get; }
+        public IList<MobileNetworkPduSessionType> AdditionalAllowedSessionTypes { get; }
         /// <summary> List of services that can be used as part of this SIM policy. The list must not contain duplicate items and must contain at least one item. The services must be in the same location as the SIM policy. </summary>
         public IList<WritableSubResource> AllowedServices { get; }
         /// <summary> The maximum number of downlink packets to buffer at the user plane for High Latency Communication - Extended Buffering. See 3GPP TS29.272 v15.10.0 section 7.3.188 for a full description. This maximum is not guaranteed because there is a internal limit on buffered packets across all PDU sessions. </summary>

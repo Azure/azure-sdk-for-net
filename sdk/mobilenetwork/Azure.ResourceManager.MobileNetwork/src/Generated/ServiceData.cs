@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="servicePrecedence"> A precedence value that is used to decide between services when identifying the QoS values to use for a particular SIM. A lower value means a higher priority. This value should be unique among all services configured in the mobile network. </param>
         /// <param name="serviceQosPolicy"> The QoS policy to use for packets matching this service. This can be overridden for particular flows using the ruleQosPolicy field in a PccRuleConfiguration. If this field is null then the UE's SIM policy will define the QoS settings. </param>
         /// <param name="pccRules"> The set of data flow policy rules that make up this service. </param>
-        internal ServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProvisioningState? provisioningState, int servicePrecedence, QosPolicy serviceQosPolicy, IList<PccRuleConfiguration> pccRules) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, int servicePrecedence, MobileNetworkQosPolicy serviceQosPolicy, IList<PccRuleConfiguration> pccRules) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             ServicePrecedence = servicePrecedence;
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the service resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A precedence value that is used to decide between services when identifying the QoS values to use for a particular SIM. A lower value means a higher priority. This value should be unique among all services configured in the mobile network. </summary>
         public int ServicePrecedence { get; set; }
         /// <summary> The QoS policy to use for packets matching this service. This can be overridden for particular flows using the ruleQosPolicy field in a PccRuleConfiguration. If this field is null then the UE's SIM policy will define the QoS settings. </summary>
-        public QosPolicy ServiceQosPolicy { get; set; }
+        public MobileNetworkQosPolicy ServiceQosPolicy { get; set; }
         /// <summary> The set of data flow policy rules that make up this service. </summary>
         public IList<PccRuleConfiguration> PccRules { get; }
     }

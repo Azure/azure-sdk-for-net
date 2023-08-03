@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="provisioningState"> The provisioning state of the SIM group resource. </param>
         /// <param name="encryptionKey"> A key to encrypt the SIM data that belongs to this SIM group. </param>
         /// <param name="mobileNetwork"> Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group. </param>
-        internal SimGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, ProvisioningState? provisioningState, KeyVaultKey encryptionKey, WritableSubResource mobileNetwork) : base(id, name, resourceType, systemData, tags, location)
+        internal SimGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, KeyVaultKey encryptionKey, WritableSubResource mobileNetwork) : base(id, name, resourceType, systemData, tags, location)
         {
             UserAssignedIdentity = userAssignedIdentity;
             ProvisioningState = provisioningState;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> The identity used to retrieve the encryption key from Azure key vault. </summary>
         public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
         /// <summary> The provisioning state of the SIM group resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A key to encrypt the SIM data that belongs to this SIM group. </summary>
         internal KeyVaultKey EncryptionKey { get; set; }
         /// <summary> The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey. </summary>

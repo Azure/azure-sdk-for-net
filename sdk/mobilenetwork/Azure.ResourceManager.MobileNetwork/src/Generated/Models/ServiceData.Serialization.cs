@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.MobileNetwork
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
             int servicePrecedence = default;
-            Optional<QosPolicy> serviceQosPolicy = default;
+            Optional<MobileNetworkQosPolicy> serviceQosPolicy = default;
             IList<PccRuleConfiguration> pccRules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("servicePrecedence"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            serviceQosPolicy = QosPolicy.DeserializeQosPolicy(property0.Value);
+                            serviceQosPolicy = MobileNetworkQosPolicy.DeserializeMobileNetworkQosPolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("pccRules"u8))

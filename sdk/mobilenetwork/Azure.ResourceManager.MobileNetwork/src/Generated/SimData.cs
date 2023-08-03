@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MobileNetwork
         {
             Argument.AssertNotNull(internationalMobileSubscriberIdentity, nameof(internationalMobileSubscriberIdentity));
 
-            SiteProvisioningState = new ChangeTrackingDictionary<string, SiteProvisioningState>();
+            SiteProvisioningState = new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
             InternationalMobileSubscriberIdentity = internationalMobileSubscriberIdentity;
             StaticIPConfiguration = new ChangeTrackingList<SimStaticIPProperties>();
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
         /// <param name="authenticationKey"> The Ki value for the SIM. </param>
         /// <param name="operatorKeyCode"> The Opc value for the SIM. </param>
-        internal SimData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, SimState? simState, IReadOnlyDictionary<string, SiteProvisioningState> siteProvisioningState, string internationalMobileSubscriberIdentity, string integratedCircuitCardIdentifier, string deviceType, WritableSubResource simPolicy, IList<SimStaticIPProperties> staticIPConfiguration, string vendorName, string vendorKeyFingerprint, string authenticationKey, string operatorKeyCode) : base(id, name, resourceType, systemData)
+        internal SimData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkSimState? simState, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState, string internationalMobileSubscriberIdentity, string integratedCircuitCardIdentifier, string deviceType, WritableSubResource simPolicy, IList<SimStaticIPProperties> staticIPConfiguration, string vendorName, string vendorKeyFingerprint, string authenticationKey, string operatorKeyCode) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             SimState = simState;
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the SIM resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The state of the SIM resource. </summary>
-        public SimState? SimState { get; }
+        public MobileNetworkSimState? SimState { get; }
         /// <summary> A dictionary of sites to the provisioning state of this SIM on that site. </summary>
-        public IReadOnlyDictionary<string, SiteProvisioningState> SiteProvisioningState { get; }
+        public IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> SiteProvisioningState { get; }
         /// <summary> The international mobile subscriber identity (IMSI) for the SIM. </summary>
         public string InternationalMobileSubscriberIdentity { get; set; }
         /// <summary> The integrated circuit card ID (ICCID) for the SIM. </summary>

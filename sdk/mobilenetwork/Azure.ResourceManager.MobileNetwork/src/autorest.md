@@ -50,6 +50,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  AAD: Aad
+  EPC: Epc
+  EPC5GC: Epc5GC
 
 rename-mapping:
   ManagedServiceIdentity: MobileNetworkManagedServiceIdentity
@@ -57,6 +60,54 @@ rename-mapping:
   IdentityAndTagsObject: MobileNetworkResourcePatch
   IdentityAndTagsObject.identity: UserAssignedIdentity
   PacketCoreControlPlane.identity: UserAssignedIdentity
+  CoreNetworkType: MobileNetworkCoreNetworkType
+  VersionState: MobileNetworkVersionState
+  TrafficControlPermission: MobileNetworkTrafficControlPermission
+  TagsObject: MobileNetworkTagsPatch
+  SliceConfiguration: MobileNetworkSliceConfiguration
+  SiteProvisioningState: MobileNetworkSiteProvisioningState
+  SimState: MobileNetworkSimState
+  ServiceDataFlowTemplate: MobileNetworkServiceDataFlowTemplate
+  SdfDirection: MobileNetworkSdfDirectionS
+  ReinstallRequired: MobileNetworkReinstallRequired
+  RecommendedVersion: MobileNetworkRecommendedVersion
+  QosPolicy: MobileNetworkQosPolicy
+  ProvisioningState: MobileNetworkProvisioningState
+  PreemptionVulnerability: MobileNetworkPreemptionVulnerability
+  PreemptionCapability: MobileNetworkPreemptionCapability
+  PortReuseHoldTimes: MobileNetworkPortReuseHoldTimes
+  PortRange: MobileNetworkPortRange
+  PlmnId: MobileNetworkPlmnId
+  PlatformType: MobileNetworkPlatformType
+  PlatformConfiguration: MobileNetworkPlatformConfiguration
+  Platform: MobileNetworkPlatform
+  PduSessionType: MobileNetworkPduSessionType
+  PacketCaptureStatus: MobileNetworkPacketCaptureStatus
+  ObsoleteVersion: MobileNetworkObsoleteVersion
+  NaptEnabled: NaptState
+  ManagedServiceIdentityType: MobileNetworkManagedServiceIdentityType
+  LocalDiagnosticsAccessConfiguration: MobileNetworkLocalDiagnosticsAccessConfiguration
+  InterfaceProperties: MobileNetworkInterfaceProperties
+  InstallationState: MobileNetworkInstallationState
+  InstallationReason: MobileNetworkInstallationReason
+  Installation: MobileNetworkInstallation
+  HttpsServerCertificate: MobileNetworkHttpsServerCertificate
+  DiagnosticsPackageStatus: MobileNetworkDiagnosticsPackageStatus
+  CertificateProvisioningStatus: MobileNetworkCertificateProvisioningStatus
+  CertificateProvisioning: MobileNetworkCertificateProvisioning
+  BillingSku: MobileNetworkBillingSku
+  AuthenticationType: MobileNetworkAuthenticationType
+  SliceData: MobileNetworkSliceData
+  SiteData: MobileNetworkSiteData
+  SimPolicyData: MobileNetworkSimPolicyData
+  SimGroupData: MobileNetworkSimGroupData
+  SimData: MobileNetworkSimData
+  ServiceData: MobileNetworkServiceData
+  PacketCaptureData: MobileNetworkPacketCaptureData
+  DiagnosticsPackageData: MobileNetworkDiagnosticsPackageData
+  DataNetworkData: MobileDataNetworkData
+  AttachedDataNetworkData: MobileAttachedDataNetworkData
+  
 
 directive:
   # CodeGen don't support some definitions in v4 & v5 common types, here is an issue https://github.com/Azure/autorest.csharp/issues/3537 opened to fix this problem

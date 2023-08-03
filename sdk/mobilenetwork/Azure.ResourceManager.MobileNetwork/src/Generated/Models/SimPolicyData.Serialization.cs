@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.MobileNetwork
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IReadOnlyDictionary<string, SiteProvisioningState>> siteProvisioningState = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState>> siteProvisioningState = default;
             Ambr ueAmbr = default;
             WritableSubResource defaultSlice = default;
             Optional<int> rfspIndex = default;
             Optional<int> registrationTimer = default;
-            IList<SliceConfiguration> sliceConfigurations = default;
+            IList<MobileNetworkSliceConfiguration> sliceConfigurations = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("siteProvisioningState"u8))
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            Dictionary<string, SiteProvisioningState> dictionary = new Dictionary<string, SiteProvisioningState>();
+                            Dictionary<string, MobileNetworkSiteProvisioningState> dictionary = new Dictionary<string, MobileNetworkSiteProvisioningState>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, new SiteProvisioningState(property1.Value.GetString()));
+                                dictionary.Add(property1.Name, new MobileNetworkSiteProvisioningState(property1.Value.GetString()));
                             }
                             siteProvisioningState = dictionary;
                             continue;
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.MobileNetwork
                         }
                         if (property0.NameEquals("sliceConfigurations"u8))
                         {
-                            List<SliceConfiguration> array = new List<SliceConfiguration>();
+                            List<MobileNetworkSliceConfiguration> array = new List<MobileNetworkSliceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SliceConfiguration.DeserializeSliceConfiguration(item));
+                                array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item));
                             }
                             sliceConfigurations = array;
                             continue;

@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.MobileNetwork
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            InterfaceProperties userPlaneDataInterface = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            MobileNetworkInterfaceProperties userPlaneDataInterface = default;
             IList<string> dnsAddresses = default;
             Optional<NaptConfiguration> naptConfiguration = default;
             Optional<IList<string>> userEquipmentAddressPoolPrefix = default;
@@ -149,12 +149,12 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("userPlaneDataInterface"u8))
                         {
-                            userPlaneDataInterface = InterfaceProperties.DeserializeInterfaceProperties(property0.Value);
+                            userPlaneDataInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("dnsAddresses"u8))

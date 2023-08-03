@@ -499,18 +499,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update mobile network tags. </param>
+        /// <param name="patch"> Parameters supplied to update mobile network tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<MobileNetworkResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<MobileNetworkResource>> UpdateAsync(MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _mobileNetworkClientDiagnostics.CreateScope("MobileNetworkResource.Update");
             scope.Start();
             try
             {
-                var response = await _mobileNetworkRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _mobileNetworkRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new MobileNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -533,18 +533,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update mobile network tags. </param>
+        /// <param name="patch"> Parameters supplied to update mobile network tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<MobileNetworkResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<MobileNetworkResource> Update(MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _mobileNetworkClientDiagnostics.CreateScope("MobileNetworkResource.Update");
             scope.Start();
             try
             {
-                var response = _mobileNetworkRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagsObject, cancellationToken);
+                var response = _mobileNetworkRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new MobileNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

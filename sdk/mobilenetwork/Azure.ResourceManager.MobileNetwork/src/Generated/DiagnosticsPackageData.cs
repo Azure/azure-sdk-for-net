@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="provisioningState"> The provisioning state of the diagnostics package resource. </param>
         /// <param name="status"> The status of the diagnostics package collection. </param>
         /// <param name="reason"> The reason for the current state of the diagnostics package collection. </param>
-        internal DiagnosticsPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, DiagnosticsPackageStatus? status, string reason) : base(id, name, resourceType, systemData)
+        internal DiagnosticsPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkDiagnosticsPackageStatus? status, string reason) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the diagnostics package resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The status of the diagnostics package collection. </summary>
-        public DiagnosticsPackageStatus? Status { get; }
+        public MobileNetworkDiagnosticsPackageStatus? Status { get; }
         /// <summary> The reason for the current state of the diagnostics package collection. </summary>
         public string Reason { get; }
     }

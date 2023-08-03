@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject)
+        internal HttpMessage CreateUpdateTagsRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, MobileNetworkTagsPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.MobileNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(tagsObject);
+            content.JsonWriter.WriteObjectValue(patch);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -318,19 +318,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="tagsObject"> Parameters supplied to update packet core data plane tags. </param>
+        /// <param name="patch"> Parameters supplied to update packet core data plane tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PacketCoreDataPlaneData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public async Task<Response<PacketCoreDataPlaneData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
             Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, tagsObject);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -351,19 +351,19 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
         /// <param name="packetCoreDataPlaneName"> The name of the packet core data plane. </param>
-        /// <param name="tagsObject"> Parameters supplied to update packet core data plane tags. </param>
+        /// <param name="patch"> Parameters supplied to update packet core data plane tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="tagsObject"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCoreDataPlaneName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCoreDataPlaneName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PacketCoreDataPlaneData> UpdateTags(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, TagsObject tagsObject, CancellationToken cancellationToken = default)
+        public Response<PacketCoreDataPlaneData> UpdateTags(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCoreDataPlaneName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(packetCoreControlPlaneName, nameof(packetCoreControlPlaneName));
             Argument.AssertNotNullOrEmpty(packetCoreDataPlaneName, nameof(packetCoreDataPlaneName));
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, tagsObject);
+            using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, packetCoreControlPlaneName, packetCoreDataPlaneName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

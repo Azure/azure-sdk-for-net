@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Data flow policy rule QoS policy. </summary>
-    public partial class PccRuleQosPolicy : QosPolicy
+    public partial class PccRuleQosPolicy : MobileNetworkQosPolicy
     {
         /// <summary> Initializes a new instance of PccRuleQosPolicy. </summary>
         /// <param name="maximumBitRate"> The maximum bit rate (MBR) for all service data flows that use this data flow policy rule or service. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="preemptionVulnerability"> QoS Flow preemption vulnerability. The preemption vulnerability of a QoS Flow controls whether it can be preempted by a QoS Flow with a higher priority level. See 3GPP TS23.501 section 5.7.2.2 for a full description of the ARP parameters. </param>
         /// <param name="maximumBitRate"> The maximum bit rate (MBR) for all service data flows that use this data flow policy rule or service. </param>
         /// <param name="guaranteedBitRate"> The guaranteed bit rate (GBR) for all service data flows that use this data flow policy rule. This is an optional setting. If you do not provide a value, there will be no GBR set for the data flow policy rule that uses this QoS definition. </param>
-        internal PccRuleQosPolicy(int? fiveQi, int? allocationAndRetentionPriorityLevel, PreemptionCapability? preemptionCapability, PreemptionVulnerability? preemptionVulnerability, Ambr maximumBitRate, Ambr guaranteedBitRate) : base(fiveQi, allocationAndRetentionPriorityLevel, preemptionCapability, preemptionVulnerability, maximumBitRate)
+        internal PccRuleQosPolicy(int? fiveQi, int? allocationAndRetentionPriorityLevel, MobileNetworkPreemptionCapability? preemptionCapability, MobileNetworkPreemptionVulnerability? preemptionVulnerability, Ambr maximumBitRate, Ambr guaranteedBitRate) : base(fiveQi, allocationAndRetentionPriorityLevel, preemptionCapability, preemptionVulnerability, maximumBitRate)
         {
             GuaranteedBitRate = guaranteedBitRate;
         }
