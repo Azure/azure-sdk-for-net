@@ -87,7 +87,7 @@ jobs:
 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
-          BaseRepoBranch: $(TestDailyBranch)
+          BaseRepoBranch: $(TestBranch)
           BaseRepoOwner: $(DocRepoOwner)
           CommitMsg: "Update docs CI configuration"
           TargetRepoName: $(DocRepoName)
