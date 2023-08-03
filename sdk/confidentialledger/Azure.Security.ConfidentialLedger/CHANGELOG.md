@@ -1,5 +1,11 @@
 # Release History
 
+## 1.2.0 (2023-08-03)
+
+### Bugs Fixed
+
+- Allow some `HttpStatusCode.NotFound` occurrences in `PostLedgerEntryOperation` to account for unexpected loss of session stickiness. These errors may occur when the connected node changes and transactions have not been fully replicated.
+
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
