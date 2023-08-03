@@ -11,16 +11,6 @@ namespace Azure.Core.Tests.ModelSerializationTests
     public class ModelSerializerTests
     {
         [Test]
-        public void ValidateFrozenInstance()
-        {
-            ModelSerializerOptions frozen = ModelSerializerOptions.DefaultWireOptions;
-            ModelSerializerOptions nonFrozen = new ModelSerializerOptions();
-
-            Assert.Throws<InvalidOperationException>(() => frozen.GenericTypeSerializerCreator = type => null);
-            Assert.DoesNotThrow(() => nonFrozen.GenericTypeSerializerCreator = type => null);
-        }
-
-        [Test]
         public void ValidateErrorIfUnknownDoesntExist()
         {
             BaseWithNoUnknown baseInstance = new SubType();

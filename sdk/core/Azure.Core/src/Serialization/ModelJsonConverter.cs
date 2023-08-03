@@ -30,7 +30,7 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="format"> The format to serialize to and deserialize from. </param>
         public ModelJsonConverter(ModelSerializerFormat format)
-            : this(new ModelSerializerOptions(format)) { }
+            : this(ModelSerializerOptions.GetOptions(format)) { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelJsonConverter"/>.
