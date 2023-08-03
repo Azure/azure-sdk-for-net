@@ -21,9 +21,11 @@
 - Renamed class `AzureBlobFileListSource` to `BlobFileListContentSource`.
 - In class `ClassifierDocumentTypeDetails`, properties `AzureBlobFileListSource` and `AzureBlobSource` have been replaced by a single polymorphic property `TrainingDataContentSource`.
 - In class `ClassifierDocumentTypeDetails`, all constructors have been replaced by a single constructor that takes a polymorphic parameter `trainingDataContentSource`.
-- In class `DocumentClassifierDetails`, renamed property `DocumentTypes` to `DocumentTypeDetails`.
 - In class `ResourceDetails`, renamed property `CustomNeuralDocumentModelBuilds` to `NeuralDocumentModelQuota`.
 - In class `DocumentClassifierDetails`, renamed property `ApiVersion` to `ServiceVersion`.
+- Renamed struct `FontStyle` to `DocumentFontStyle`.
+- Renamed struct `FontWeight` to `DocumentFontWeight`.
+- Renamed class `QuotaDetails` to `ResourceQuotaDetails`.
 
 ### Bugs Fixed
 - Fixed a bug where calling the `GetResourceDetails` API while targeting service version `2022-08-31` would throw an `ArgumentNullException`.

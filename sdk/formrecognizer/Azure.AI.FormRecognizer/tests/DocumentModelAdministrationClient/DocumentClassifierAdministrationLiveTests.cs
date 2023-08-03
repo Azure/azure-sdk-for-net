@@ -107,7 +107,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.Greater(classifier.CreatedOn, startTime);
             Assert.Greater(classifier.ExpiresOn, classifier.CreatedOn);
 
-            AssertDocumentTypeDictionariesAreEquivalent(documentTypes, classifier.DocumentTypeDetails);
+            AssertDocumentTypeDictionariesAreEquivalent(documentTypes, classifier.DocumentTypes);
         }
 
         [RecordedTest]
@@ -152,7 +152,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.Greater(classifier.CreatedOn, startTime);
             Assert.Greater(classifier.ExpiresOn, classifier.CreatedOn);
 
-            AssertDocumentTypeDictionariesAreEquivalent(documentTypes, classifier.DocumentTypeDetails);
+            AssertDocumentTypeDictionariesAreEquivalent(documentTypes, classifier.DocumentTypes);
         }
 
         #endregion Build
@@ -178,7 +178,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(expected.CreatedOn, classifier.CreatedOn);
             Assert.AreEqual(expected.ExpiresOn, classifier.ExpiresOn);
 
-            AssertDocumentTypeDictionariesAreEquivalent(expected.DocumentTypeDetails, classifier.DocumentTypeDetails);
+            AssertDocumentTypeDictionariesAreEquivalent(expected.DocumentTypes, classifier.DocumentTypes);
         }
 
         [RecordedTest]
@@ -240,7 +240,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.AreEqual(expected.CreatedOn, classifier.CreatedOn);
                 Assert.AreEqual(expected.ExpiresOn, classifier.ExpiresOn);
 
-                AssertDocumentTypeDictionariesAreEquivalent(expected.DocumentTypeDetails, classifier.DocumentTypeDetails);
+                AssertDocumentTypeDictionariesAreEquivalent(expected.DocumentTypes, classifier.DocumentTypes);
             }
         }
 

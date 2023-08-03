@@ -195,13 +195,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
         /// <param name="serviceVersion"> Service version used to create this document classifier. </param>
-        /// <param name="documentTypeDetails"> List of document types to classify against. </param>
+        /// <param name="documentTypes"> List of document types to classify against. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentClassifierDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string serviceVersion = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypeDetails = null)
+        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string serviceVersion = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes = null)
         {
-            documentTypeDetails ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
+            documentTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
 
-            return new DocumentClassifierDetails(classifierId, description, createdOn, expiresOn, serviceVersion, documentTypeDetails);
+            return new DocumentClassifierDetails(classifierId, description, createdOn, expiresOn, serviceVersion, documentTypes);
         }
 
         /// <summary> Initializes a new instance of DocumentField. </summary>
@@ -697,7 +697,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="color"> Foreground color in #rrggbb hexadecimal format. </param>
         /// <param name="backgroundColor"> Background color in #rrggbb hexadecimal format. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentStyle"/> instance for mocking. </returns>
-        public static DocumentStyle DocumentStyle(bool? isHandwritten = null, IEnumerable<DocumentSpan> spans = null, float confidence = default, string similarFontFamily = null, FontStyle? fontStyle = null, FontWeight? fontWeight = null, string color = null, string backgroundColor = null)
+        public static DocumentStyle DocumentStyle(bool? isHandwritten = null, IEnumerable<DocumentSpan> spans = null, float confidence = default, string similarFontFamily = null, DocumentFontStyle? fontStyle = null, DocumentFontWeight? fontWeight = null, string color = null, string backgroundColor = null)
         {
             spans ??= new List<DocumentSpan>();
 
@@ -823,18 +823,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return new OperationSummary(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, serviceVersion, tags);
         }
 
-        /// <summary>
-        /// Initializes a new instance of QuotaDetails.
-        /// </summary>
-        /// <param name="used"> Amount of the resource quota used. </param>
-        /// <param name="quota"> Resource quota limit. </param>
-        /// <param name="quotaResetsOn"> Date/time when the resource quota usage will be reset. </param>
-        /// <returns> A new <see cref="DocumentAnalysis.QuotaDetails"/> instance for mocking. </returns>
-        public static QuotaDetails QuotaDetails(int used = default, int quota = default, DateTimeOffset quotaResetsOn = default)
-        {
-            return new QuotaDetails(used, quota, quotaResetsOn);
-        }
-
         /// <summary> Initializes a new instance of ResourceDetails. </summary>
         /// <param name="customDocumentModelCount"> Number of custom models in the current resource. </param>
         /// <param name="customDocumentModelLimit"> Maximum number of custom models supported in the current resource. </param>
@@ -850,9 +838,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="customDocumentModelLimit"> Maximum number of custom models supported in the current resource. </param>
         /// <param name="neuralDocumentModelQuota"> Quota used, limit, and next reset date/time for custom neural document models. </param>
         /// <returns> A new <see cref="DocumentAnalysis.ResourceDetails"/> instance for mocking. </returns>
-        public static ResourceDetails ResourceDetails(int customDocumentModelCount = default, int customDocumentModelLimit = default, QuotaDetails neuralDocumentModelQuota = null)
+        public static ResourceDetails ResourceDetails(int customDocumentModelCount = default, int customDocumentModelLimit = default, ResourceQuotaDetails neuralDocumentModelQuota = null)
         {
             return new ResourceDetails(customDocumentModelCount, customDocumentModelLimit, neuralDocumentModelQuota);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of ResourceQuotaDetails.
+        /// </summary>
+        /// <param name="used"> Amount of the resource quota used. </param>
+        /// <param name="quota"> Resource quota limit. </param>
+        /// <param name="quotaResetsOn"> Date/time when the resource quota usage will be reset. </param>
+        /// <returns> A new <see cref="DocumentAnalysis.ResourceQuotaDetails"/> instance for mocking. </returns>
+        public static ResourceQuotaDetails ResourceQuotaDetails(int used = default, int quota = default, DateTimeOffset quotaResetsOn = default)
+        {
+            return new ResourceQuotaDetails(used, quota, quotaResetsOn);
         }
     }
 }

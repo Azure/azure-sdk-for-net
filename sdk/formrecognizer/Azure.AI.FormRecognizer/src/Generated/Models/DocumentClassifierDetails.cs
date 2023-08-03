@@ -18,18 +18,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="serviceVersion"> API version used to create this document classifier. </param>
-        /// <param name="documentTypeDetails"> List of document types to classify against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="serviceVersion"/> or <paramref name="documentTypeDetails"/> is null. </exception>
-        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypeDetails)
+        /// <param name="documentTypes"> List of document types to classify against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="serviceVersion"/> or <paramref name="documentTypes"/> is null. </exception>
+        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
         {
             Argument.AssertNotNull(classifierId, nameof(classifierId));
             Argument.AssertNotNull(serviceVersion, nameof(serviceVersion));
-            Argument.AssertNotNull(documentTypeDetails, nameof(documentTypeDetails));
+            Argument.AssertNotNull(documentTypes, nameof(documentTypes));
 
             ClassifierId = classifierId;
             CreatedOn = createdOn;
             ServiceVersion = serviceVersion;
-            DocumentTypeDetails = documentTypeDetails;
+            DocumentTypes = documentTypes;
         }
 
         /// <summary> Initializes a new instance of DocumentClassifierDetails. </summary>
@@ -38,15 +38,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
         /// <param name="serviceVersion"> API version used to create this document classifier. </param>
-        /// <param name="documentTypeDetails"> List of document types to classify against. </param>
-        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypeDetails)
+        /// <param name="documentTypes"> List of document types to classify against. </param>
+        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string serviceVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
         {
             ClassifierId = classifierId;
             Description = description;
             CreatedOn = createdOn;
             ExpiresOn = expiresOn;
             ServiceVersion = serviceVersion;
-            DocumentTypeDetails = documentTypeDetails;
+            DocumentTypes = documentTypes;
         }
 
         /// <summary> Unique document classifier name. </summary>

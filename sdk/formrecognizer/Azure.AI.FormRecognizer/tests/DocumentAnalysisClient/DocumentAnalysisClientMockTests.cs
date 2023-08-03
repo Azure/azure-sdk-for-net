@@ -461,8 +461,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var style = result.Styles[0];
 
             Assert.AreEqual("similarFontFamilyValue", style.SimilarFontFamily);
-            Assert.AreEqual(FontStyle.Italic, style.FontStyle);
-            Assert.AreEqual(FontWeight.Bold, style.FontWeight);
+            Assert.AreEqual(DocumentFontStyle.Italic, style.FontStyle);
+            Assert.AreEqual(DocumentFontWeight.Bold, style.FontWeight);
             Assert.AreEqual("colorValue", style.Color);
             Assert.AreEqual("backgroundColorValue", style.BackgroundColor);
         }
