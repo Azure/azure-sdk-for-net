@@ -129,7 +129,7 @@ namespace Azure.Core.TestFramework
 
             if (_proxyPortHttp == null || _proxyPortHttps == null)
             {
-                _ = CheckProxyOutputAsync();
+                CheckForErrors();
                 // if no errors, fallback to this exception
                 throw new InvalidOperationException("Failed to start the test proxy. One or both of the ports was not populated." + Environment.NewLine +
                                                     $"http: {_proxyPortHttp}" + Environment.NewLine +
@@ -235,6 +235,11 @@ namespace Azure.Core.TestFramework
                 }
             }
 
+            CheckForErrors();
+        }
+
+        private void CheckForErrors()
+        {
             if (_errorBuffer.Length > 0)
             {
                 var error = _errorBuffer.ToString();
