@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService.Tests.TestsCase
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            var webSiteConfigId = LogsSiteConfigResource.CreateResourceIdentifier(DefaultSubscription.Data.Id.ToString(), "deleteme0802", "issuefixtests");
+            var webSiteConfigId = LogsSiteConfigResource.CreateResourceIdentifier("db1ab6f0-4769-4b27-930e-01e2ef9c123c", "deleteme0802", "issuefixtests");
             var webSiteConfigResource = await Client.GetLogsSiteConfigResource(webSiteConfigId).GetAsync();
         }
     }

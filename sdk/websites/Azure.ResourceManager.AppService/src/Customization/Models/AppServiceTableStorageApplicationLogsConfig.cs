@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,5 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
         [EditorBrowsableAttribute(EditorBrowsableState.Never)]
         [ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
         public System.Uri SasUri { get; set; }
+
+        public AppServiceTableStorageApplicationLogsConfig(System.Uri SasUri)
+        {
+            Argument.AssertNotNull(SasUri, nameof(SasUri));
+        }
     }
 }
