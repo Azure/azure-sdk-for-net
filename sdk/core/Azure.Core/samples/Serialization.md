@@ -75,9 +75,9 @@ JsonSerializerOptions options = new JsonSerializerOptions();
 // The ModelJsonConverter is able to serialize and deserialize any model that implements IModelJsonSerializable<T>.
 options.Converters.Add(new ModelJsonConverter());
 
-string json = System.Text.Json.JsonSerializer.Serialize(dog, options);
+string json = JsonSerializer.Serialize(dog, options);
 
-dog = System.Text.Json.JsonSerializer.Deserialize<Dog>(json, options);
+dog = JsonSerializer.Deserialize<Dog>(json, options);
 ```
 
 ## Envelope bring your own model case
@@ -93,9 +93,7 @@ private class ModelT
 }
 ```
 
-### Serialization
-
-```C# Snippet:BYOMWithNewtonsoftSerialize
+```C# Snippet:BYOMWithNewtonsoft
 Envelope<ModelT> envelope = new Envelope<ModelT>();
 envelope.ModelA = new CatReadOnlyProperty();
 envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
@@ -104,21 +102,8 @@ ModelSerializerOptions options = new ModelSerializerOptions();
 options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
 
 BinaryData data = ModelSerializer.Serialize(envelope, options);
-```
 
-### Deserialization
-
-```C# Snippet:BYOMWithNewtonsoftDeserialize
-string serviceResponse =
-    "{\"readOnlyProperty\":\"read\"," +
-    "\"modelA\":{\"name\":\"Cat\",\"isHungry\":false,\"weight\":2.5}," +
-    "\"modelT\":{\"Name\":\"hello\",\"Age\":1}" +
-    "}";
-
-ModelSerializerOptions options = new ModelSerializerOptions();
-options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
-
-Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(data, options: options);
 ```
 
 ## Next steps

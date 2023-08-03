@@ -99,9 +99,9 @@ namespace Azure.Core.Samples
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
-        public void BYOMWithNewtonsoftSerialize()
+        public void BYOMWithNewtonsoft()
         {
-            #region Snippet:BYOMWithNewtonsoftSerialize
+            #region Snippet:BYOMWithNewtonsoft
             Envelope<ModelT> envelope = new Envelope<ModelT>();
             envelope.ModelA = new CatReadOnlyProperty();
             envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
@@ -110,24 +110,8 @@ namespace Azure.Core.Samples
             options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
 
             BinaryData data = ModelSerializer.Serialize(envelope, options);
-            #endregion
-        }
 
-        [Test]
-        [Ignore("Only verifying that the sample builds")]
-        public void BYOMWithNewtonsoftDeserialize()
-        {
-            #region Snippet:BYOMWithNewtonsoftDeserialize
-            string serviceResponse =
-                "{\"readOnlyProperty\":\"read\"," +
-                "\"modelA\":{\"name\":\"Cat\",\"isHungry\":false,\"weight\":2.5}," +
-                "\"modelT\":{\"Name\":\"hello\",\"Age\":1}" +
-                "}";
-
-            ModelSerializerOptions options = new ModelSerializerOptions();
-            options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
-
-            Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
+            Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(data, options: options);
             #endregion
         }
 
