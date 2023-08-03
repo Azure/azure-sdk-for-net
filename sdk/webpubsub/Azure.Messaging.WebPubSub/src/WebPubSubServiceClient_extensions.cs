@@ -293,9 +293,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
-#pragma warning disable AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         public virtual async Task<Response<bool>> GroupExistsAsync(string group, RequestContext context = default)
-#pragma warning restore AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         {
             var response = await GroupExistsImplAsync(group, context).ConfigureAwait(false);
             return Response.FromValue(response.Status == 200, response);
@@ -304,9 +302,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Check if there are any client connections inside the given group. </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
-#pragma warning disable AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         public virtual Response<bool> GroupExists(string group, RequestContext context = default)
-#pragma warning restore AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         {
             var response = GroupExistsImpl(group, context);
             return Response.FromValue(response.Status == 200, response);
@@ -315,9 +311,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Check if there are any client connections connected for the given user. </summary>
         /// <param name="userId"> Target user Id. </param>
         /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
-#pragma warning disable AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         public virtual async Task<Response<bool>> UserExistsAsync(string userId, RequestContext context = default)
-#pragma warning restore AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         {
             var response = await UserExistsImplAsync(userId, context).ConfigureAwait(false);
             return Response.FromValue(response.Status == 200, response);
@@ -326,9 +320,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Check if there are any client connections connected for the given user. </summary>
         /// <param name="userId"> Target user Id. </param>
         /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
-#pragma warning disable AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         public virtual Response<bool> UserExists(string userId, RequestContext context = default)
-#pragma warning restore AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         {
             var response = UserExistsImpl(userId, context);
             return Response.FromValue(response.Status == 200, response);
@@ -337,9 +329,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Check if the connection with the given connectionId exists. </summary>
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
-#pragma warning disable AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         public virtual async Task<Response<bool>> ConnectionExistsAsync(string connectionId, RequestContext context = default)
-#pragma warning restore AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         {
             var response = await ConnectionExistsImplAsync(connectionId, context).ConfigureAwait(false);
             return Response.FromValue(response.Status == 200, response);
@@ -348,9 +338,7 @@ namespace Azure.Messaging.WebPubSub
         /// <summary> Check if the connection with the given connectionId exists. </summary>
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
-#pragma warning disable AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         public virtual Response<bool> ConnectionExists(string connectionId, RequestContext context = default)
-#pragma warning restore AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         {
             var response = ConnectionExistsImpl(connectionId, context);
             return Response.FromValue(response.Status == 200, response);
@@ -405,9 +393,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
-#pragma warning disable AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         public virtual async Task<Response<bool>> CheckPermissionAsync(WebPubSubPermission permission, string connectionId, string targetName = null, RequestContext context = default)
-#pragma warning restore AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         {
             var response = await CheckPermissionAsync(PermissionToString(permission), connectionId, targetName, context).ConfigureAwait(false);
             return Response.FromValue((response.Status == 200), response);
@@ -418,9 +404,7 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context">Options specifying the cancellation token, controlling error reporting, etc.</param>
-#pragma warning disable AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         public virtual Response<bool> CheckPermission(WebPubSubPermission permission, string connectionId, string targetName = null, RequestContext context = default)
-#pragma warning restore AZC0018 // Protocol method should take a RequestContext parameter called `context` and not use a model as parameter or return types.
         {
             var response = CheckPermission(PermissionToString(permission), connectionId, targetName, context);
             return Response.FromValue((response.Status == 200), response);

@@ -811,7 +811,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobDownloadInfo>> DownloadAsync(
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken) =>
             await DownloadAsync(
                 conditions: default, // Pass anything else so we don't recurse on this overload
                 cancellationToken: cancellationToken)
