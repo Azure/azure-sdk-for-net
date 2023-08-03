@@ -565,6 +565,13 @@ var data = new {
     isCanceled = true,
     isRetried = true,
     rollbackPolicy = new {
+        update = new {
+            updateId = new {
+                provider = "<provider>",
+                name = "<name>",
+                version = "<version>",
+            },
+        },
         failure = new {
             devicesFailedPercentage = 1234,
             devicesFailedCount = 1234,
@@ -652,6 +659,13 @@ var data = new {
     isCanceled = true,
     isRetried = true,
     rollbackPolicy = new {
+        update = new {
+            updateId = new {
+                provider = "<provider>",
+                name = "<name>",
+                version = "<version>",
+            },
+        },
         failure = new {
             devicesFailedPercentage = 1234,
             devicesFailedCount = 1234,
