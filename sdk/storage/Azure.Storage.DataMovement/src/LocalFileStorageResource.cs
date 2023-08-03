@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Local File Storage Resource
     /// </summary>
-    public class LocalFileStorageResource : StorageResourceSingle
+    public class LocalFileStorageResource : StorageResourceItem
     {
         private string _path;
 
@@ -39,7 +39,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines the recommended Transfer Type of the resource
         /// </summary>
-        protected internal override TransferType TransferType => TransferType.Sequential;
+        protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
@@ -75,14 +75,14 @@ namespace Azure.Storage.DataMovement
         /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        protected internal override Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        protected internal override Task<StorageResourceReadStreamResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default)
         {
             FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.Read);
             stream.Position = position;
-            return Task.FromResult(new ReadStreamStorageResourceResult(stream));
+            return Task.FromResult(new StorageResourceReadStreamResult(stream));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        protected internal override async Task WriteFromStreamAsync(
+        protected internal override async Task CopyFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
@@ -169,7 +169,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         protected internal override Task CopyFromUriAsync(
-            StorageResourceSingle sourceResource,
+            StorageResourceItem sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
@@ -193,7 +193,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         protected internal override Task CopyBlockFromUriAsync(
-            StorageResourceSingle sourceResource,
+            StorageResourceItem sourceResource,
             HttpRange range,
             bool overwrite,
             long completeLength,

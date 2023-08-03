@@ -8,23 +8,23 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the status of the Transfer Job.
     /// </summary>
-    public enum StorageTransferStatus
+    public enum DataTransferStatus
     {
         /// <summary>
         /// Default value.
-        /// Equivalent to <see cref="StorageTransferStatus.None"/>.
+        /// Equivalent to <see cref="DataTransferStatus.None"/>.
         /// </summary>
         None = 0,
 
         /// <summary>
         /// The Job has been queued up but has not yet begun any transfers.
-        /// Equivalent to <see cref="StorageTransferStatus.Queued"/>.
+        /// Equivalent to <see cref="DataTransferStatus.Queued"/>.
         /// </summary>
         Queued = 1,
 
         /// <summary>
         /// The Job has started, but has not yet completed.
-        /// Equivalent to <see cref="StorageTransferStatus.InProgress"/>.
+        /// Equivalent to <see cref="DataTransferStatus.InProgress"/>.
         /// </summary>
         InProgress = 2,
 
@@ -33,7 +33,7 @@ namespace Azure.Storage.DataMovement
         /// this will be the value.
         ///
         /// This status is a resumable state, only
-        /// transfers that failed will be retried when <see cref="TransferManager.StartTransferAsync(StorageResource, StorageResource, TransferOptions, CancellationToken)"/>
+        /// transfers that failed will be retried when <see cref="TransferManager.StartTransferAsync(StorageResource, StorageResource, DataTransferOptions, CancellationToken)"/>
         /// with the respective transfer ID to resume.
         /// </summary>
         Paused = 3,

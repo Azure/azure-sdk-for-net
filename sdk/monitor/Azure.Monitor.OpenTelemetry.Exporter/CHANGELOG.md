@@ -9,6 +9,11 @@
 * Location ip on server spans will now be set using `client.address` tag key on
   activity instead of `http.client_ip`.
   ([#37707](https://github.com/Azure/azure-sdk-for-net/pull/37707))
+* Removing `ServiceVersion.V2020_09_15_Preview`. This is no longer in use and
+  the exporter has already defaulted to the latest `ServiceVersion.v2_1`.
+  ([#37996](https://github.com/Azure/azure-sdk-for-net/pull/37996))
+* Remove Nullable Annotations from the Exporter's public API.
+  ([#37996](https://github.com/Azure/azure-sdk-for-net/pull/37996))
 
 ### Bugs Fixed
 

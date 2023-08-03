@@ -21,9 +21,12 @@
     - `*BlobStorageResource.GetPropertiesAsync`
     - `*BlobStorageResource.ReadStreamAsync`
     - `*BlobStorageResource.WriteFromStreamAsync`
-- [BREAKING CHANGE] Removed `position` parameter from `*BlobStorageResource.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
+- [BREAKING CHANGE] Renamed `BlobStorageResourceProvider.MakeResourceAsync` to `BlobStorageResourceProvider.CreateResourceAsync`
+- [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.DirectoryPrefix` to `BlobDirectoryPrefix`
+- [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.ResourceOptions` to `BlobOptions`
+- [BREAKING CHANGE] Moved `BlobContainerClientTransferOptions` to the `Azure.Storage.DataMovement.Blobs` namespace
+- - [BREAKING CHANGE] Removed `position` parameter from `*BlobStorageResource.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
 - [BREAKING CHANGE] Made parameter `completeLength` from `*BlobStorageResource.CopyBlockFromUriAsync` mandatory.
-- 
 
 ### Bugs Fixed
 
