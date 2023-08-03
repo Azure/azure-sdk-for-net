@@ -79,10 +79,11 @@ namespace Azure.Security.ConfidentialLedger
                 }
 
                 // Add a 0.5 second delay between retries.
+                int delayTimeMs = 500;
                 if (async) {
-                    await Task.Delay(500).ConfigureAwait(false);
+                    await Task.Delay(delayTimeMs).ConfigureAwait(false);
                 } else {
-                    Thread.Sleep(500);
+                    Thread.Sleep(delayTimeMs);
                 }
             }
 
@@ -100,7 +101,6 @@ namespace Azure.Security.ConfidentialLedger
             {
                 return OperationState.Success(statusResponse);
             }
-
             return OperationState.Pending(statusResponse);
         }
 
