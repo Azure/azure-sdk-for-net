@@ -557,7 +557,9 @@ namespace Azure.Core
         public static implicit operator Azure.Core.RequestContent (System.BinaryData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (string content) { throw null; }
         public abstract bool TryComputeLength(out long length);
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Inherited methods require unreferenced code.")]
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Inherited methods require unreferenced code.")]
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
     }
     public abstract partial class RequestFailedDetailsParser

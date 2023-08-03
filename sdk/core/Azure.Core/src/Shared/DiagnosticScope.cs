@@ -140,6 +140,8 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="exception">The exception to associate with the failed scope.</param>
 #if NET6_0_OR_GREATER
+        [DynamicDependency(nameof(System.Exception.Message), typeof(Exception))]
+        [DynamicDependency(nameof(System.Exception.StackTrace), typeof(Exception))]
         [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("The exception is used in a call to DiagnosticSource.Write, all necessary properties need to be preserved on the exception type being passed in using DynamicDependency attributes.")]
 #endif
         public void Failed(Exception? exception = default)
