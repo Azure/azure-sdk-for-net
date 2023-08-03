@@ -94,7 +94,7 @@
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.15.0" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.2.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
-    <PackageReference Update="Azure.Identity" Version="1.7.0" />
+    <PackageReference Update="Azure.Identity" Version="1.9.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
@@ -174,7 +174,7 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230726.2" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230803.1" PrivateAssets="All" />
     <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230131.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" PrivateAssets="All" />
@@ -194,7 +194,7 @@
   <ItemGroup Condition="('$(IsTestProject)' == 'true') OR ('$(IsTestSupportProject)' == 'true') OR ('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true') OR ('$(IsSamplesProject)' == 'true')">
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="Azure.Identity" Version="1.7.0" />
+    <PackageReference Update="Azure.Identity" Version="1.9.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.14.1" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.15.0" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.0.0" />

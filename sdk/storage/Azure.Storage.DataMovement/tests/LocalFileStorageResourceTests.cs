@@ -97,7 +97,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-            ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync();
+            StorageResourceReadStreamResult result = await storageResource.ReadStreamAsync();
             using Stream content = result.Content;
 
             // Assert
@@ -119,7 +119,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             var readPosition = 5;
             LocalFileStorageResource storageResource = new LocalFileStorageResource(path);
-            ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync(position: readPosition);
+            StorageResourceReadStreamResult result = await storageResource.ReadStreamAsync(position: readPosition);
             using Stream content = result.Content;
 
             // Assert
@@ -162,7 +162,7 @@ namespace Azure.Storage.DataMovement.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(
+                await storageResource.CopyFromStreamAsync(
                     stream,
                     streamLength: length,
                     false,
@@ -191,7 +191,7 @@ namespace Azure.Storage.DataMovement.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(
+                await storageResource.CopyFromStreamAsync(
                     stream,
                     streamLength: length,
                     overwrite: false,
@@ -219,7 +219,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 using (var stream = new MemoryStream(data))
                 {
-                    await storageResource.WriteFromStreamAsync(stream, length, false);
+                    await storageResource.CopyFromStreamAsync(stream, length, false);
                 }
             }
             catch (IOException ex)

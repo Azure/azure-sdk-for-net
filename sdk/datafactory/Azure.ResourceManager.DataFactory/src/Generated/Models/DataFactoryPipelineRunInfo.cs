@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> The full or partial list of parameter name, value pair used in the pipeline run. </param>
         /// <param name="runDimensions"> Run dimensions emitted by Pipeline run. </param>
         /// <param name="invokedBy"> Entity that started the pipeline run. </param>
-        /// <param name="lastUpdated"> The last updated timestamp for the pipeline run event in ISO8601 format. </param>
-        /// <param name="runStart"> The start time of a pipeline run in ISO8601 format. </param>
-        /// <param name="runEnd"> The end time of a pipeline run in ISO8601 format. </param>
+        /// <param name="lastUpdatedOn"> The last updated timestamp for the pipeline run event in ISO8601 format. </param>
+        /// <param name="runStartOn"> The start time of a pipeline run in ISO8601 format. </param>
+        /// <param name="runEndOn"> The end time of a pipeline run in ISO8601 format. </param>
         /// <param name="durationInMs"> The duration of a pipeline run. </param>
         /// <param name="status"> The status of a pipeline run. Possible values: Queued, InProgress, Succeeded, Failed, Canceling, Cancelled. </param>
         /// <param name="message"> The message from a pipeline run. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFactoryPipelineRunInfo(Guid? runId, string runGroupId, bool? isLatest, string pipelineName, IReadOnlyDictionary<string, string> parameters, IReadOnlyDictionary<string, string> runDimensions, DataFactoryPipelineRunEntityInfo invokedBy, DateTimeOffset? lastUpdated, DateTimeOffset? runStart, DateTimeOffset? runEnd, int? durationInMs, string status, string message, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal DataFactoryPipelineRunInfo(Guid? runId, string runGroupId, bool? isLatest, string pipelineName, IReadOnlyDictionary<string, string> parameters, IReadOnlyDictionary<string, string> runDimensions, DataFactoryPipelineRunEntityInfo invokedBy, DateTimeOffset? lastUpdatedOn, DateTimeOffset? runStartOn, DateTimeOffset? runEndOn, int? durationInMs, string status, string message, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             RunId = runId;
             RunGroupId = runGroupId;
@@ -46,9 +46,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
             RunDimensions = runDimensions;
             InvokedBy = invokedBy;
-            LastUpdated = lastUpdated;
-            RunStart = runStart;
-            RunEnd = runEnd;
+            LastUpdatedOn = lastUpdatedOn;
+            RunStartOn = runStartOn;
+            RunEndOn = runEndOn;
             DurationInMs = durationInMs;
             Status = status;
             Message = message;
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Entity that started the pipeline run. </summary>
         public DataFactoryPipelineRunEntityInfo InvokedBy { get; }
         /// <summary> The last updated timestamp for the pipeline run event in ISO8601 format. </summary>
-        public DateTimeOffset? LastUpdated { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The start time of a pipeline run in ISO8601 format. </summary>
-        public DateTimeOffset? RunStart { get; }
+        public DateTimeOffset? RunStartOn { get; }
         /// <summary> The end time of a pipeline run in ISO8601 format. </summary>
-        public DateTimeOffset? RunEnd { get; }
+        public DateTimeOffset? RunEndOn { get; }
         /// <summary> The duration of a pipeline run. </summary>
         public int? DurationInMs { get; }
         /// <summary> The status of a pipeline run. Possible values: Queued, InProgress, Succeeded, Failed, Canceling, Cancelled. </summary>

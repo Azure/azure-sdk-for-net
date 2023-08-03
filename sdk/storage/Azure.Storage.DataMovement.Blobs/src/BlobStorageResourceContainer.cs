@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             _blobContainerClient = blobContainerClient;
             _options = options;
-            _directoryPrefix = _options?.DirectoryPrefix;
+            _directoryPrefix = _options?.BlobDirectoryPrefix;
 
             _uri = _directoryPrefix != null
                 ? new BlobUriBuilder(_blobContainerClient.Uri)
@@ -73,7 +73,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Retrieves a single blob resource based on this respective resource.
         /// </summary>
         /// <param name="path">The path to the storage resource, relative to the directory prefix if any.</param>
-        protected override StorageResourceSingle GetChildStorageResource(string path)
+        protected override StorageResourceItem GetStorageResourceReference(string path)
             => GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: _options?.BlobType ?? BlobType.Block);
 
         /// <summary>
@@ -84,10 +84,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="type">The type of <see cref="BlobType"/> that the storage resource is.</param>
         /// <param name="etagLock">Etag for the resource to lock on.</param>
         /// <returns>
-        /// <see cref="StorageResourceSingle"/> which represents the child blob client of
+        /// <see cref="StorageResourceItem"/> which represents the child blob client of
         /// this respective blob virtual directory resource.
         /// </returns>
-        private StorageResourceSingle GetBlobAsStorageResource(
+        private StorageResourceItem GetBlobAsStorageResource(
             string blobName,
             long? length = default,
             BlobType type = BlobType.Block,
