@@ -16,11 +16,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public void CanSetTestId()
         {
-            Test test = new()
-            {
-                TestId = "abc"
-            };
-
+            Test test = new("abc");
             Assert.AreEqual("abc", test.TestId);
         }
 
@@ -97,8 +93,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public void CanSetTestPassFailMetric()
         {
-            Test test = new();
-            test.TestId = "abc";
+            Test test = new("abc");
             test.PassFailCriteria.PassFailMetrics.Add("a", new PassFailMetric() { RequestName = "a"});
 
             Assert.AreEqual("a", test.PassFailCriteria.PassFailMetrics["a"].RequestName);
@@ -107,7 +102,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [Test]
         public void CanPatchTestPassFailMetric()
         {
-            Test test = new();
+            Test test = new("abc");
             test.PassFailCriteria.PassFailMetrics.Add("a", new PassFailMetric() { RequestName = "a" });
 
             Assert.AreEqual("a", test.PassFailCriteria.PassFailMetrics["a"].RequestName);

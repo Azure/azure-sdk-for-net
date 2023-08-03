@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using Azure.Core.Json;
 
 namespace Azure.Developer.LoadTesting.Models
@@ -17,9 +19,26 @@ namespace Azure.Developer.LoadTesting.Models
         private MutableJsonElement _element;
 
         /// <summary> Initializes a new instance of Test. </summary>
-        public Test()
+        public Test(string testId)
         {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
+            // testId is required for the client to create the request URI
+            // but it is not needed in the body of a PATCH request.
+
+            // Parse the initial element with this
+            BinaryData utf8Json;
+            using (MemoryStream stream = new())
+            {
+                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+                writer.WriteStartObject();
+                writer.WritePropertyName("testId");
+                writer.WriteStringValue(testId.AsSpan());
+                writer.WriteEndObject();
+                writer.Flush();
+                stream.Position = 0;
+                utf8Json = BinaryData.FromStream(stream);
+            }
+
+            _element = MutableJsonDocument.Parse(utf8Json).RootElement;
 
             // TODO: If we are suggesting a wholesale replacement of ChangeTrackingDictionary,
             // we will need to confirm that MJD provides the complete set of features this type provides.

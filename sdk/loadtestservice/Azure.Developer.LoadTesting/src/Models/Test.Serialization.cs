@@ -33,7 +33,12 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         // only used for public access to internal serialize
+        /// <summary>
+        /// </summary>
+        /// <param name="writer"></param>
+#pragma warning disable AZC0014 // don't use STJ types
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
+#pragma warning restore AZC0014 // don't use STJ types
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

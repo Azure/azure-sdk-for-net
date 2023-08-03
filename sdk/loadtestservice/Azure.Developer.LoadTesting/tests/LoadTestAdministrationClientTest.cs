@@ -48,8 +48,7 @@ namespace Azure.Developer.LoadTesting.Tests
         [RecordedTest]
         public async Task CreateOrUpdateTestConveninence()
         {
-            Test test = new Test();
-            test.TestId = _testId;
+            Test test = new Test(_testId);
             test.Description = "This test was created through loadtesting C# SDK";
             test.DisplayName = "Dotnet Testing Framework Loadtest";
             test.LoadTestConfiguration = new LoadTestConfiguration();
@@ -66,8 +65,7 @@ namespace Azure.Developer.LoadTesting.Tests
 
         private Test GetTest()
         {
-            Test test = new Test();
-            test.TestId = _testId;
+            Test test = new Test(_testId);
             test.Description = "This test was created through loadtesting C# SDK";
             test.DisplayName = "Dotnet Testing Framework Loadtest";
             test.LoadTestConfiguration = new LoadTestConfiguration();
