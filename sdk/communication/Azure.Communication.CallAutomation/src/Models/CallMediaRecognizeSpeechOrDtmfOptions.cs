@@ -13,12 +13,13 @@ namespace Azure.Communication.CallAutomation
     {
         private static readonly TimeSpan _defaultInterToneTimeout = TimeSpan.FromSeconds(2);
 
+        private IList<DtmfTone> _stopTones;
+
         /// <summary> Initializes a new instance of CallMediaRecognizeSpeechOrDtmfOptions. </summary>
         public CallMediaRecognizeSpeechOrDtmfOptions(CommunicationIdentifier targetParticipant, int maxTonesToCollect) : base(RecognizeInputType.SpeechOrDtmf, targetParticipant)
         {
             EndSilenceTimeout = _defaultInterToneTimeout;
             MaxTonesToCollect = maxTonesToCollect;
-            StopTones = Array.Empty<DtmfTone>();
         }
 
         /// <summary> The length of end silence when user stops speaking and cogservice send response. </summary>
@@ -38,6 +39,17 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// List of tones that will stop recognizing.
         /// </summary>
-        public IList<DtmfTone> StopTones { get; set; }
+        public IList<DtmfTone> StopTones
+        {
+            get
+            {
+                _stopTones ??= new List<DtmfTone>();
+                return _stopTones;
+            }
+            set
+            {
+                _stopTones = value;
+            }
+        }
     }
 }

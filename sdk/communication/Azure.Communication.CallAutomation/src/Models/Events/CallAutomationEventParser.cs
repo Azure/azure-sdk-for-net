@@ -130,10 +130,10 @@ namespace Azure.Communication.CallAutomation
                     return ContinuousDtmfRecognitionToneFailed.Deserialize(eventData);
                 case nameof(ContinuousDtmfRecognitionStopped):
                     return ContinuousDtmfRecognitionStopped.Deserialize(eventData);
-                case nameof(SendDtmfCompleted):
-                    return SendDtmfCompleted.Deserialize(eventData);
-                case nameof(SendDtmfFailed):
-                    return SendDtmfFailed.Deserialize(eventData);
+                case nameof(SendDtmfTonesCompleted):
+                    return SendDtmfTonesCompleted.Deserialize(eventData);
+                case nameof(SendDtmfTonesFailed):
+                    return SendDtmfTonesFailed.Deserialize(eventData);
                 default:
                     return null;
             }

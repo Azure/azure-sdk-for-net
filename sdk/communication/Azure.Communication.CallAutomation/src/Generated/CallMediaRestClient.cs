@@ -394,7 +394,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateSendDtmfRequest(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
+        internal HttpMessage CreateSendDtmfTonesRequest(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -403,7 +403,7 @@ namespace Azure.Communication.CallAutomation
             uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath(":sendDtmf", false);
+            uri.AppendPath(":sendDtmfTones", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             if (repeatabilityRequestID != null)
@@ -417,38 +417,38 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sendDtmfRequest);
+            content.JsonWriter.WriteObjectValue(sendDtmfTonesRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Send dtmf tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="sendDtmfRequest"> The send dtmf request. </param>
+        /// <param name="sendDtmfTonesRequest"> The send dtmf tones request. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
-        public async Task<Response<SendDtmfResponseInternal>> SendDtmfAsync(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequest"/> is null. </exception>
+        public async Task<Response<SendDtmfTonesResultInternal>> SendDtmfTonesAsync(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (sendDtmfRequest == null)
+            if (sendDtmfTonesRequest == null)
             {
-                throw new ArgumentNullException(nameof(sendDtmfRequest));
+                throw new ArgumentNullException(nameof(sendDtmfTonesRequest));
             }
 
-            using var message = CreateSendDtmfRequest(callConnectionId, sendDtmfRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequest, repeatabilityRequestID, repeatabilityFirstSent);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        SendDtmfResponseInternal value = default;
+                        SendDtmfTonesResultInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SendDtmfResponseInternal.DeserializeSendDtmfResponseInternal(document.RootElement);
+                        value = SendDtmfTonesResultInternal.DeserializeSendDtmfTonesResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -458,31 +458,31 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Send dtmf tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="sendDtmfRequest"> The send dtmf request. </param>
+        /// <param name="sendDtmfTonesRequest"> The send dtmf tones request. </param>
         /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
         /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
-        public Response<SendDtmfResponseInternal> SendDtmf(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequest"/> is null. </exception>
+        public Response<SendDtmfTonesResultInternal> SendDtmfTones(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (sendDtmfRequest == null)
+            if (sendDtmfTonesRequest == null)
             {
-                throw new ArgumentNullException(nameof(sendDtmfRequest));
+                throw new ArgumentNullException(nameof(sendDtmfTonesRequest));
             }
 
-            using var message = CreateSendDtmfRequest(callConnectionId, sendDtmfRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequest, repeatabilityRequestID, repeatabilityFirstSent);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        SendDtmfResponseInternal value = default;
+                        SendDtmfTonesResultInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SendDtmfResponseInternal.DeserializeSendDtmfResponseInternal(document.RootElement);
+                        value = SendDtmfTonesResultInternal.DeserializeSendDtmfTonesResultInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

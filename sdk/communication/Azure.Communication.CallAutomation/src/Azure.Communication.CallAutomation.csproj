@@ -33,7 +33,4 @@
     <PackageReference Include="Azure.Communication.Common" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Generated\" />
-  </ItemGroup>
 </Project>

@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("SendDtmfRequest")]
-    internal partial class SendDtmfRequestInternal
+    [CodeGenModel("SendDtmfTonesResult")]
+    internal partial class SendDtmfTonesResultInternal
     {
     }
 }
