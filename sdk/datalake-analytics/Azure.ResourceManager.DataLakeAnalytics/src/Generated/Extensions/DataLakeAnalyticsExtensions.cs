@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataLakeAnalytics.Mocking;
 using Azure.ResourceManager.DataLakeAnalytics.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataLakeAnalytics. </summary>
     public static partial class DataLakeAnalyticsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DataLakeAnalyticsArmClientMockingExtension GetDataLakeAnalyticsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DataLakeAnalyticsArmClientMockingExtension(client);
+            });
+        }
+
+        private static DataLakeAnalyticsResourceGroupMockingExtension GetDataLakeAnalyticsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DataLakeAnalyticsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DataLakeAnalyticsSubscriptionMockingExtension GetDataLakeAnalyticsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DataLakeAnalyticsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region DataLakeAnalyticsAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="DataLakeAnalyticsAccountResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeAnalyticsAccountResource" /> object. </returns>
         public static DataLakeAnalyticsAccountResource GetDataLakeAnalyticsAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataLakeAnalyticsAccountResource.ValidateResourceId(id);
-                return new DataLakeAnalyticsAccountResource(client, id);
-            }
-            );
+            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeAnalyticsAccountResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeStoreAccountInformationResource" /> object. </returns>
         public static DataLakeStoreAccountInformationResource GetDataLakeStoreAccountInformationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataLakeStoreAccountInformationResource.ValidateResourceId(id);
-                return new DataLakeStoreAccountInformationResource(client, id);
-            }
-            );
+            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeStoreAccountInformationResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> object. </returns>
         public static DataLakeAnalyticsStorageAccountInformationResource GetDataLakeAnalyticsStorageAccountInformationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataLakeAnalyticsStorageAccountInformationResource.ValidateResourceId(id);
-                return new DataLakeAnalyticsStorageAccountInformationResource(client, id);
-            }
-            );
+            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeAnalyticsStorageAccountInformationResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeAnalyticsStorageContainerResource" /> object. </returns>
         public static DataLakeAnalyticsStorageContainerResource GetDataLakeAnalyticsStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataLakeAnalyticsStorageContainerResource.ValidateResourceId(id);
-                return new DataLakeAnalyticsStorageContainerResource(client, id);
-            }
-            );
+            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeAnalyticsStorageContainerResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeAnalyticsComputePolicyResource" /> object. </returns>
         public static DataLakeAnalyticsComputePolicyResource GetDataLakeAnalyticsComputePolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataLakeAnalyticsComputePolicyResource.ValidateResourceId(id);
-                return new DataLakeAnalyticsComputePolicyResource(client, id);
-            }
-            );
+            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeAnalyticsComputePolicyResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeAnalyticsFirewallRuleResource" /> object. </returns>
         public static DataLakeAnalyticsFirewallRuleResource GetDataLakeAnalyticsFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataLakeAnalyticsFirewallRuleResource.ValidateResourceId(id);
-                return new DataLakeAnalyticsFirewallRuleResource(client, id);
-            }
-            );
+            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeAnalyticsFirewallRuleResource(id);
         }
         #endregion
 
@@ -169,7 +133,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An object representing collection of DataLakeAnalyticsAccountResources and their operations over a DataLakeAnalyticsAccountResource. </returns>
         public static DataLakeAnalyticsAccountCollection GetDataLakeAnalyticsAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataLakeAnalyticsAccounts();
+            return GetDataLakeAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetDataLakeAnalyticsAccounts();
         }
 
         /// <summary>
@@ -193,7 +157,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         [ForwardsClientCalls]
         public static async Task<Response<DataLakeAnalyticsAccountResource>> GetDataLakeAnalyticsAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataLakeAnalyticsAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetDataLakeAnalyticsAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -217,7 +181,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         [ForwardsClientCalls]
         public static Response<DataLakeAnalyticsAccountResource> GetDataLakeAnalyticsAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataLakeAnalyticsAccounts().Get(accountName, cancellationToken);
+            return GetDataLakeAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetDataLakeAnalyticsAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -239,9 +203,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeAnalyticsAccountBasic> GetAccountsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SubscriptionResourceGetAccountsOptions();
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccountsAsync(options, cancellationToken);
+            return GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).GetAccountsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -263,9 +225,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeAnalyticsAccountBasic> GetAccounts(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new SubscriptionResourceGetAccountsOptions();
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAccounts(options, cancellationToken);
+            return GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).GetAccounts(options, cancellationToken);
         }
 
         /// <summary>
@@ -288,9 +248,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataLakeAnalyticsAccountNameAvailabilityResult>> CheckDataLakeAnalyticsAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -313,9 +271,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DataLakeAnalyticsAccountNameAvailabilityResult> CheckDataLakeAnalyticsAccountNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailability(location, content, cancellationToken);
+            return GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -336,7 +292,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DataLakeAnalyticsCapabilityInformation>> GetCapabilityLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).GetCapabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -357,7 +313,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DataLakeAnalyticsCapabilityInformation> GetCapabilityLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilityLocation(location, cancellationToken);
+            return GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).GetCapabilityLocation(location, cancellationToken);
         }
     }
 }
