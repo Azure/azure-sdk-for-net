@@ -27,15 +27,15 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("file"u8);
                 writer.WriteObjectValue(File);
             }
-            if (Optional.IsDefined(TextSource))
+            if (Optional.IsDefined(Text))
             {
-                writer.WritePropertyName("textSource"u8);
-                writer.WriteObjectValue(TextSource);
+                writer.WritePropertyName("text"u8);
+                writer.WriteObjectValue(Text);
             }
-            if (Optional.IsDefined(SsmlSource))
+            if (Optional.IsDefined(Ssml))
             {
-                writer.WritePropertyName("ssmlSource"u8);
-                writer.WriteObjectValue(SsmlSource);
+                writer.WritePropertyName("ssml"u8);
+                writer.WriteObjectValue(Ssml);
             }
             writer.WriteEndObject();
         }

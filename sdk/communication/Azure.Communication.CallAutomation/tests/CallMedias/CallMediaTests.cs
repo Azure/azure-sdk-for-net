@@ -69,20 +69,19 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             "The third test string to be recognized by cognition service"
         };
 
-        private static RecognizeChoice _recognizeChoice1 = new RecognizeChoice("testLabel1", s_strings);
-        private static RecognizeChoice _recognizeChoice2 = new RecognizeChoice("testLabel2", s_strings);
+        private static RecognitionChoice _recognizeChoice1 = new RecognitionChoice("testLabel1", s_strings);
+        private static RecognitionChoice _recognizeChoice2 = new RecognitionChoice("testLabel2", s_strings);
 
-        private static readonly List<RecognizeChoice> s_recognizeChoices = new List<RecognizeChoice>()
+        private static readonly List<RecognitionChoice> s_recognizeChoices = new List<RecognitionChoice>()
         {
             _recognizeChoice1,
             _recognizeChoice2
         };
 
-        private static readonly CallMediaRecognizeOptions _dmtfRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 5)
+        private static readonly CallMediaRecognizeDtmfOptions _dtmfRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 5)
         {
             InterruptCallMediaOperation = true,
             InterToneTimeout = TimeSpan.FromSeconds(10),
-            StopTones = new DtmfTone[] { DtmfTone.Pound },
             InitialSilenceTimeout = TimeSpan.FromSeconds(5),
             InterruptPrompt = true,
             OperationContext = "operationContext",
@@ -98,7 +97,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Prompt = new TextSource("PlayTTS test text.")
             {
                 SourceLocale = "en-US",
-                VoiceGender = GenderType.Female,
+                VoiceKind = VoiceKind.Female,
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
@@ -115,7 +114,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Prompt = new TextSource("PlayTTS test text.")
             {
                 SourceLocale = "en-US",
-                VoiceGender = GenderType.Female,
+                VoiceKind = VoiceKind.Female,
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
@@ -132,7 +131,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Prompt = new TextSource("PlayTTS test text.")
             {
                 SourceLocale = "en-US",
-                VoiceGender = GenderType.Female,
+                VoiceKind = VoiceKind.Female,
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
@@ -147,6 +146,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         public void Setup()
         {
             _fileSource.PlaySourceCacheId = "PlaySourceCacheId";
+            _dtmfRecognizeOptions.StopTones.Add(DtmfTone.Pound);
         }
 
         private CallMedia GetCallMedia(int responseCode, object? responseContent = null)
@@ -183,7 +183,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
-        public async Task SendDtmfOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<SendDtmfResult>>> operation)
+        public async Task SendDtmfOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<SendDtmfTonesResult>>> operation)
         {
             _callMedia = GetCallMedia(202, "{ \"operationContext\": \"operationContext\" }");
             var result = await operation(_callMedia);
@@ -237,7 +237,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperations))]
-        public void SendDtmfOperations_Return202Accepted(Func<CallMedia, Response<SendDtmfResult>> operation)
+        public void SendDtmfOperations_Return202Accepted(Func<CallMedia, Response<SendDtmfTonesResult>> operation)
         {
             _callMedia = GetCallMedia(202, "{ \"operationContext\": \"operationContext\" }");
             var result = operation(_callMedia);
@@ -294,7 +294,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperationsAsync))]
-        public void SendDtmfOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<SendDtmfResult>>> operation)
+        public void SendDtmfOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response<SendDtmfTonesResult>>> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
@@ -345,7 +345,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [TestCaseSource(nameof(TestData_SendDtmfOperations))]
-        public void SendDtmfOperations_Return404NotFound(Func<CallMedia, Response<SendDtmfResult>> operation)
+        public void SendDtmfOperations_Return404NotFound(Func<CallMedia, Response<SendDtmfTonesResult>> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
@@ -443,7 +443,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
-                   callMedia => callMedia.StartRecognizingAsync(_dmtfRecognizeOptions)
+                   callMedia => callMedia.StartRecognizingAsync(_dtmfRecognizeOptions)
                 },
                 new Func<CallMedia, Task<Response<StartRecognizingCallMediaResult>>>?[]
                 {
@@ -512,7 +512,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
                 {
-                   callMedia => callMedia.StartRecognizing(_dmtfRecognizeOptions)
+                   callMedia => callMedia.StartRecognizing(_dtmfRecognizeOptions)
                 },
                 new Func<CallMedia, Response<StartRecognizingCallMediaResult>>?[]
                 {
@@ -537,9 +537,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             return new[]
             {
-                new Func<CallMedia, Response<SendDtmfResult>>?[]
+                new Func<CallMedia, Response<SendDtmfTonesResult>>?[]
                 {
-                   callMedia => callMedia.SendDtmf(
+                   callMedia => callMedia.SendDtmfTones(
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
                        new CommunicationUserIdentifier("targetUserId"),
                        "context"
@@ -552,9 +552,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         {
             return new[]
             {
-                new Func<CallMedia, Task<Response<SendDtmfResult>>>?[]
+                new Func<CallMedia, Task<Response<SendDtmfTonesResult>>>?[]
                 {
-                   callMedia => callMedia.SendDtmfAsync(
+                   callMedia => callMedia.SendDtmfTonesAsync(
                        new DtmfTone[] { DtmfTone.One, DtmfTone.Two, DtmfTone.Three, DtmfTone.Pound },
                        new CommunicationUserIdentifier("targetUserId")
                        )

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class SendDtmfCompleted
+    internal partial class SendDtmfTonesCompletedInternal
     {
-        internal static SendDtmfCompleted DeserializeSendDtmfCompleted(JsonElement element)
+        internal static SendDtmfTonesCompletedInternal DeserializeSendDtmfTonesCompletedInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new SendDtmfCompleted(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value);
+            return new SendDtmfTonesCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value);
         }
     }
 }
