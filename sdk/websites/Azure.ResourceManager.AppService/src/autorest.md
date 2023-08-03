@@ -126,7 +126,7 @@ override-operation-name:
 
 no-property-type-replacement:
 - ApiManagementConfig
-- SiteLogsConfigData
+- ResourceIdentifier
 
 format-by-name-rules:
   'tenantId': 'uuid'
