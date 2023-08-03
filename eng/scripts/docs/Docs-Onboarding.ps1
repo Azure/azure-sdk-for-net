@@ -32,11 +32,17 @@ function SetDocsCiConfigProperties($item, $moniker, $packageSourceOverride) {
         $properties = $item['DocsCiConfigProperties']
     }
 
+    # Set tfm to netstandard2.0 if not already set
+    if (!$properties.ContainsKey('tfm')) {
+        $properties['tfm'] = 'netstandard2.0'
+    }
+
     # When in the preview moniker, always set isPrerelease to true
     if ($moniker -eq 'preview') {
         $properties['isPrerelease'] = 'true'
     }
 
+    # Handle dev version overrides for daily docs
     if ($item['DevVersion'] -and $packageSourceOverride) {
         $properties['isPrerelease'] = 'true'
         $properties['customSource'] = $packageSourceOverride
@@ -101,15 +107,4 @@ function Get-dotnet-DocsPackagesAlreadyOnboarded($docRepoLocation, $moniker) {
         $onboardedPackageHash[$package.Name] = $packageProperties
     }
     return $onboardedPackageHash
-}
-
-# This method ensures that "DocsCiConfigProperties" is set when a new package is
-# published. The default value today is 'tfm=netstandard2.0'.
-# $UpdatePackageMetadata = "Update-${Language}-PackageMetadata"
-function Update-dotnet-PackageMetadata($packageInfo) { 
-    if (!$packageInfo.PSObject.Properties.Name.Contains('DocsCiConfigProperties')) {
-        $packageInfo | Add-Member -MemberType NoteProperty -Name DocsCiConfigProperties -Value @{ tfm = 'netstandard2.0' }
-    }
-
-    return $packageInfo
 }
