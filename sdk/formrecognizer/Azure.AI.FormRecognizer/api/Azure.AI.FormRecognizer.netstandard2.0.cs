@@ -623,7 +623,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind Ean8 { get { throw null; } }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind Itf { get { throw null; } }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind MaxiCode { get { throw null; } }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind MicroQqCode { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind MicroQrCode { get { throw null; } }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind Pdf417 { get { throw null; } }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind QrCode { get { throw null; } }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind Upca { get { throw null; } }

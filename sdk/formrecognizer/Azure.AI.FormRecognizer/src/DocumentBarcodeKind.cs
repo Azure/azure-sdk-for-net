@@ -29,6 +29,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Micro QR code, as defined in ISO/IEC 23941:2022. </summary>
         [CodeGenMember("MicroQRCode")]
-        public static DocumentBarcodeKind MicroQqCode { get; } = new DocumentBarcodeKind(MicroQqCodeValue);
+        public static DocumentBarcodeKind MicroQrCode { get; } = new DocumentBarcodeKind(MicroQrCodeValue);
     }
 }

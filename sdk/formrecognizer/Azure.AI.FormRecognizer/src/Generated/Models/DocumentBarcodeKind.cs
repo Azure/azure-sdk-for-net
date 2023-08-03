@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private const string CodabarValue = "Codabar";
         private const string DataBarExpandedValue = "DataBarExpanded";
         private const string ItfValue = "ITF";
-        private const string MicroQqCodeValue = "MicroQRCode";
+        private const string MicroQrCodeValue = "MicroQRCode";
         private const string AztecValue = "Aztec";
         private const string DataMatrixValue = "DataMatrix";
         private const string MaxiCodeValue = "MaxiCode";
