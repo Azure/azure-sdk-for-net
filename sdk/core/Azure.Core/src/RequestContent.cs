@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using Azure.Core.Buffers;
+using Azure.Core.Internal;
 using Azure.Core.Serialization;
 
 namespace Azure.Core
@@ -101,7 +102,7 @@ namespace Azure.Core
         /// <param name="model">The <see cref="IModelJsonSerializable{T}"/> to serialize.</param>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default) => new ModelSerializableContent(model, options ?? ModelSerializerOptions.DefaultWireOptions);
+        public static RequestContent Create(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default) => new ModelJsonSerializableContent(model, options ?? ModelSerializerOptions.DefaultWireOptions);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -237,109 +238,61 @@ namespace Azure.Core
             }
         }
 
-        private sealed class ModelSerializableContent : RequestContent
+        private sealed class ModelJsonSerializableContent : RequestContent
         {
-            private SequenceWriter? _writer;
-            private BinaryData? _data;
-            private readonly IModelSerializable<object> _model;
+            private readonly IModelJsonSerializable<object> _model;
             private readonly ModelSerializerOptions _options;
-            private bool _useJsonInterface;
 
-            public ModelSerializableContent(IModelSerializable<object> model, ModelSerializerOptions options)
-                : this(model, options, false) { }
-
-            public ModelSerializableContent(IModelJsonSerializable<object> model, ModelSerializerOptions options)
-                : this(model, options, true) { }
-
-            private ModelSerializableContent(IModelSerializable<object> model, ModelSerializerOptions options, bool useJsonInterface)
+            public ModelJsonSerializableContent(IModelJsonSerializable<object> model, ModelSerializerOptions options)
             {
                 _model = model;
                 _options = options;
-                _useJsonInterface = useJsonInterface;
             }
 
-            public override void Dispose() => _writer?.Dispose();
+            private SequenceWriterAccess? _writerAccess;
+            private SequenceWriterAccess WriterAccess => _writerAccess ??= new SequenceWriterAccess(_model, _options);
 
-            private SequenceWriter GetWriter(IModelJsonSerializable<object> model)
+            public override void Dispose() => _writerAccess?.Dispose();
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => WriterAccess.CopyTo(stream, cancellation);
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await WriterAccess.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+
+            public override bool TryComputeLength(out long length) => WriterAccess.TryComputeLength(out length);
+        }
+
+        private sealed class ModelSerializableContent : RequestContent
+        {
+            private readonly IModelSerializable<object> _model;
+            private readonly ModelSerializerOptions _options;
+
+            public ModelSerializableContent(IModelSerializable<object> model, ModelSerializerOptions options)
             {
-                if (_writer is null)
-                {
-                    var writer = new SequenceWriter();
-                    using var jsonWriter = new Utf8JsonWriter(writer);
-                    model.Serialize(jsonWriter, _options);
-                    jsonWriter.Flush();
-                    _writer = writer;
-                }
-                return _writer;
+                _model = model;
+                _options = options;
             }
 
-            private BinaryData GetBinaryData()
-            {
-                if (_data is null)
-                {
-                    _data = _model.Serialize(_options);
-                }
-                return _data;
-            }
+            public override void Dispose() { }
+
+            private BinaryData? _data;
+            private BinaryData Data => _data ??= _model.Serialize(_options);
 
 #if NETFRAMEWORK || NETSTANDARD2_0
             private byte[]? _bytes;
-            private byte[] GetBytes()
-            {
-                if (_bytes is null)
-                {
-                    _bytes = GetBinaryData().ToArray();
-                }
-                return _bytes;
-            }
-#endif
+            private byte[] Bytes => _bytes ??= Data.ToArray();
 
-            public override void WriteTo(Stream stream, CancellationToken cancellation)
-            {
-                // a model implements both xml and json we don't know the wire format and must let the model decide.
-                if (_model is IModelJsonSerializable<object> jsonSerializable && _useJsonInterface)
-                {
-                    GetWriter(jsonSerializable).CopyTo(stream, cancellation);
-                }
-                else
-                {
-#if NETFRAMEWORK || NETSTANDARD2_0
-                    var bytes = GetBytes();
-                    stream.Write(bytes, 0, bytes.Length);
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => stream.Write(Bytes, 0, Bytes.Length);
 #else
-                    var data = GetBinaryData();
-                    stream.Write(data.ToMemory().Span);
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => stream.Write(Data.ToMemory().Span);
 #endif
-                }
-            }
 
             public override bool TryComputeLength(out long length)
             {
-                if (_model is IModelJsonSerializable<object> jsonSerializable && _useJsonInterface)
-                {
-                    return GetWriter(jsonSerializable).TryComputeLength(out length);
-                }
-                else
-                {
-                    var data = GetBinaryData();
-
-                    length = data.ToMemory().Length;
-                    return true;
-                }
+                length = Data.ToMemory().Length;
+                return true;
             }
 
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
-            {
-                if (_model is IModelJsonSerializable<object> jsonSerializable && _useJsonInterface)
-                {
-                    await GetWriter(jsonSerializable).CopyToAsync(stream, cancellation).ConfigureAwait(false);
-                }
-                else
-                {
-                    var data = GetBinaryData();
-                    await stream.WriteAsync(data.ToMemory(), cancellation).ConfigureAwait(false);
-                }
-            }
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
         }
 
         private sealed class ArrayContent : RequestContent

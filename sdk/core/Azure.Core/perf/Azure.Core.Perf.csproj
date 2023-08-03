@@ -22,13 +22,13 @@
     <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="SerializationBenchmark\TestData\AvailabilitySetData.json">
+    <None Update="TestData\AvailabilitySetData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SerializationBenchmark\TestData\ModelXml.xml">
+    <None Update="TestData\ModelXml.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="SerializationBenchmark\TestData\ResourceProviderData.json">
+    <None Update="TestData\ResourceProviderData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\JsonFormattedString.json">
