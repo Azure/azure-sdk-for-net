@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CognitiveServices.Mocking;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.CognitiveServices. </summary>
     public static partial class CognitiveServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static CognitiveServicesArmClientMockingExtension GetCognitiveServicesArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new CognitiveServicesArmClientMockingExtension(client);
+            });
+        }
+
+        private static CognitiveServicesResourceGroupMockingExtension GetCognitiveServicesResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new CognitiveServicesResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static CognitiveServicesSubscriptionMockingExtension GetCognitiveServicesSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new CognitiveServicesSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region CognitiveServicesAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="CognitiveServicesAccountResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesAccountResource" /> object. </returns>
         public static CognitiveServicesAccountResource GetCognitiveServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CognitiveServicesAccountResource.ValidateResourceId(id);
-                return new CognitiveServicesAccountResource(client, id);
-            }
-            );
+            return GetCognitiveServicesArmClientMockingExtension(client).GetCognitiveServicesAccountResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesDeletedAccountResource" /> object. </returns>
         public static CognitiveServicesDeletedAccountResource GetCognitiveServicesDeletedAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CognitiveServicesDeletedAccountResource.ValidateResourceId(id);
-                return new CognitiveServicesDeletedAccountResource(client, id);
-            }
-            );
+            return GetCognitiveServicesArmClientMockingExtension(client).GetCognitiveServicesDeletedAccountResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesPrivateEndpointConnectionResource" /> object. </returns>
         public static CognitiveServicesPrivateEndpointConnectionResource GetCognitiveServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CognitiveServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new CognitiveServicesPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetCognitiveServicesArmClientMockingExtension(client).GetCognitiveServicesPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesAccountDeploymentResource" /> object. </returns>
         public static CognitiveServicesAccountDeploymentResource GetCognitiveServicesAccountDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CognitiveServicesAccountDeploymentResource.ValidateResourceId(id);
-                return new CognitiveServicesAccountDeploymentResource(client, id);
-            }
-            );
+            return GetCognitiveServicesArmClientMockingExtension(client).GetCognitiveServicesAccountDeploymentResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CommitmentPlanResource" /> object. </returns>
         public static CommitmentPlanResource GetCommitmentPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CommitmentPlanResource.ValidateResourceId(id);
-                return new CommitmentPlanResource(client, id);
-            }
-            );
+            return GetCognitiveServicesArmClientMockingExtension(client).GetCommitmentPlanResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesCommitmentPlanResource" /> object. </returns>
         public static CognitiveServicesCommitmentPlanResource GetCognitiveServicesCommitmentPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CognitiveServicesCommitmentPlanResource.ValidateResourceId(id);
-                return new CognitiveServicesCommitmentPlanResource(client, id);
-            }
-            );
+            return GetCognitiveServicesArmClientMockingExtension(client).GetCognitiveServicesCommitmentPlanResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CommitmentPlanAccountAssociationResource" /> object. </returns>
         public static CommitmentPlanAccountAssociationResource GetCommitmentPlanAccountAssociationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CommitmentPlanAccountAssociationResource.ValidateResourceId(id);
-                return new CommitmentPlanAccountAssociationResource(client, id);
-            }
-            );
+            return GetCognitiveServicesArmClientMockingExtension(client).GetCommitmentPlanAccountAssociationResource(id);
         }
         #endregion
 
@@ -188,7 +147,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An object representing collection of CognitiveServicesAccountResources and their operations over a CognitiveServicesAccountResource. </returns>
         public static CognitiveServicesAccountCollection GetCognitiveServicesAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCognitiveServicesAccounts();
+            return GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesAccounts();
         }
 
         /// <summary>
@@ -212,7 +171,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static async Task<Response<CognitiveServicesAccountResource>> GetCognitiveServicesAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCognitiveServicesAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,7 +195,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static Response<CognitiveServicesAccountResource> GetCognitiveServicesAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCognitiveServicesAccounts().Get(accountName, cancellationToken);
+            return GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesAccount(accountName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CognitiveServicesCommitmentPlanResources in the ResourceGroupResource. </summary>
@@ -244,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An object representing collection of CognitiveServicesCommitmentPlanResources and their operations over a CognitiveServicesCommitmentPlanResource. </returns>
         public static CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCognitiveServicesCommitmentPlans();
+            return GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesCommitmentPlans();
         }
 
         /// <summary>
@@ -268,7 +227,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static async Task<Response<CognitiveServicesCommitmentPlanResource>> GetCognitiveServicesCommitmentPlanAsync(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCognitiveServicesCommitmentPlans().GetAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesCommitmentPlanAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -292,7 +251,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static Response<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlan(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCognitiveServicesCommitmentPlans().Get(commitmentPlanName, cancellationToken);
+            return GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesCommitmentPlan(commitmentPlanName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CognitiveServicesDeletedAccountResources in the SubscriptionResource. </summary>
@@ -300,7 +259,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An object representing collection of CognitiveServicesDeletedAccountResources and their operations over a CognitiveServicesDeletedAccountResource. </returns>
         public static CognitiveServicesDeletedAccountCollection GetCognitiveServicesDeletedAccounts(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCognitiveServicesDeletedAccounts();
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesDeletedAccounts();
         }
 
         /// <summary>
@@ -326,7 +285,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static async Task<Response<CognitiveServicesDeletedAccountResource>> GetCognitiveServicesDeletedAccountAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetCognitiveServicesDeletedAccounts().GetAsync(location, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesDeletedAccountAsync(location, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -352,7 +311,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static Response<CognitiveServicesDeletedAccountResource> GetCognitiveServicesDeletedAccount(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetCognitiveServicesDeletedAccounts().Get(location, resourceGroupName, accountName, cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesDeletedAccount(location, resourceGroupName, accountName, cancellationToken);
         }
 
         /// <summary>
@@ -373,7 +332,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCognitiveServicesAccountsAsync(cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -394,7 +353,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesAccountResource> GetCognitiveServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCognitiveServicesAccounts(cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -415,7 +374,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesDeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -436,7 +395,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesDeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAccounts(cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetDeletedAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -457,7 +416,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="AvailableCognitiveServicesSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableCognitiveServicesSku> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceSkusAsync(cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetResourceSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -478,7 +437,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="AvailableCognitiveServicesSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableCognitiveServicesSku> GetResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetResourceSkus(cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetResourceSkus(cancellationToken);
         }
 
         /// <summary>
@@ -501,7 +460,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="ServiceAccountUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceAccountUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -524,7 +483,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="ServiceAccountUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceAccountUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, filter, cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetUsages(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -548,9 +507,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesSkuAvailabilityList" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSkuAvailabilityAsync(location, content, cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).CheckSkuAvailabilityAsync(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -574,9 +531,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesSkuAvailabilityList" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSkuAvailability(location, content, cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).CheckSkuAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -598,9 +553,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<CognitiveServicesDomainAvailabilityList>> CheckDomainAvailabilityAsync(this SubscriptionResource subscriptionResource, CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).CheckDomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -622,9 +575,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<CognitiveServicesDomainAvailabilityList> CheckDomainAvailability(this SubscriptionResource subscriptionResource, CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDomainAvailability(content, cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).CheckDomainAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -646,7 +597,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CommitmentTier" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CommitmentTier> GetCommitmentTiersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCommitmentTiersAsync(location, cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCommitmentTiersAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -668,7 +619,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CommitmentTier" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CommitmentTier> GetCommitmentTiers(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCommitmentTiers(location, cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCommitmentTiers(location, cancellationToken);
         }
 
         /// <summary>
@@ -690,7 +641,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesModel" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesModel> GetModelsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetModelsAsync(location, cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetModelsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -712,7 +663,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesModel" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesModel> GetModels(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetModels(location, cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetModels(location, cancellationToken);
         }
 
         /// <summary>
@@ -733,7 +684,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCognitiveServicesCommitmentPlansAsync(cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesCommitmentPlansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -754,7 +705,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCognitiveServicesCommitmentPlans(cancellationToken);
+            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesCommitmentPlans(cancellationToken);
         }
     }
 }

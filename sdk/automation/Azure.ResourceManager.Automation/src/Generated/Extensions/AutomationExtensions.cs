@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Automation.Mocking;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.Automation
     /// <summary> A class to add extension methods to Azure.ResourceManager.Automation. </summary>
     public static partial class AutomationExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AutomationArmClientMockingExtension GetAutomationArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new AutomationArmClientMockingExtension(client);
+            });
+        }
+
+        private static AutomationResourceGroupMockingExtension GetAutomationResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AutomationResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AutomationSubscriptionMockingExtension GetAutomationSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AutomationSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region AutomationPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing an <see cref="AutomationPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationPrivateEndpointConnectionResource" /> object. </returns>
         public static AutomationPrivateEndpointConnectionResource GetAutomationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new AutomationPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationAccountPython2PackageResource" /> object. </returns>
         public static AutomationAccountPython2PackageResource GetAutomationAccountPython2PackageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationAccountPython2PackageResource.ValidateResourceId(id);
-                return new AutomationAccountPython2PackageResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationAccountPython2PackageResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationAccountModuleResource" /> object. </returns>
         public static AutomationAccountModuleResource GetAutomationAccountModuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationAccountModuleResource.ValidateResourceId(id);
-                return new AutomationAccountModuleResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationAccountModuleResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="DscNodeResource" /> object. </returns>
         public static DscNodeResource GetDscNodeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DscNodeResource.ValidateResourceId(id);
-                return new DscNodeResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetDscNodeResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="DscNodeConfigurationResource" /> object. </returns>
         public static DscNodeConfigurationResource GetDscNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DscNodeConfigurationResource.ValidateResourceId(id);
-                return new DscNodeConfigurationResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetDscNodeConfigurationResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="DscCompilationJobResource" /> object. </returns>
         public static DscCompilationJobResource GetDscCompilationJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DscCompilationJobResource.ValidateResourceId(id);
-                return new DscCompilationJobResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetDscCompilationJobResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationSourceControlResource" /> object. </returns>
         public static AutomationSourceControlResource GetAutomationSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationSourceControlResource.ValidateResourceId(id);
-                return new AutomationSourceControlResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationSourceControlResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationAccountResource" /> object. </returns>
         public static AutomationAccountResource GetAutomationAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationAccountResource.ValidateResourceId(id);
-                return new AutomationAccountResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationAccountResource(id);
         }
         #endregion
 
@@ -212,12 +166,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationCertificateResource" /> object. </returns>
         public static AutomationCertificateResource GetAutomationCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationCertificateResource.ValidateResourceId(id);
-                return new AutomationCertificateResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationCertificateResource(id);
         }
         #endregion
 
@@ -231,12 +180,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationConnectionResource" /> object. </returns>
         public static AutomationConnectionResource GetAutomationConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationConnectionResource.ValidateResourceId(id);
-                return new AutomationConnectionResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationConnectionResource(id);
         }
         #endregion
 
@@ -250,12 +194,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationConnectionTypeResource" /> object. </returns>
         public static AutomationConnectionTypeResource GetAutomationConnectionTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationConnectionTypeResource.ValidateResourceId(id);
-                return new AutomationConnectionTypeResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationConnectionTypeResource(id);
         }
         #endregion
 
@@ -269,12 +208,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationCredentialResource" /> object. </returns>
         public static AutomationCredentialResource GetAutomationCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationCredentialResource.ValidateResourceId(id);
-                return new AutomationCredentialResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationCredentialResource(id);
         }
         #endregion
 
@@ -288,12 +222,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationJobScheduleResource" /> object. </returns>
         public static AutomationJobScheduleResource GetAutomationJobScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationJobScheduleResource.ValidateResourceId(id);
-                return new AutomationJobScheduleResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationJobScheduleResource(id);
         }
         #endregion
 
@@ -307,12 +236,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationScheduleResource" /> object. </returns>
         public static AutomationScheduleResource GetAutomationScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationScheduleResource.ValidateResourceId(id);
-                return new AutomationScheduleResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationScheduleResource(id);
         }
         #endregion
 
@@ -326,12 +250,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationVariableResource" /> object. </returns>
         public static AutomationVariableResource GetAutomationVariableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationVariableResource.ValidateResourceId(id);
-                return new AutomationVariableResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationVariableResource(id);
         }
         #endregion
 
@@ -345,12 +264,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationWatcherResource" /> object. </returns>
         public static AutomationWatcherResource GetAutomationWatcherResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationWatcherResource.ValidateResourceId(id);
-                return new AutomationWatcherResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationWatcherResource(id);
         }
         #endregion
 
@@ -364,12 +278,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="DscConfigurationResource" /> object. </returns>
         public static DscConfigurationResource GetDscConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DscConfigurationResource.ValidateResourceId(id);
-                return new DscConfigurationResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetDscConfigurationResource(id);
         }
         #endregion
 
@@ -383,12 +292,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationJobResource" /> object. </returns>
         public static AutomationJobResource GetAutomationJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationJobResource.ValidateResourceId(id);
-                return new AutomationJobResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationJobResource(id);
         }
         #endregion
 
@@ -402,12 +306,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="SoftwareUpdateConfigurationResource" /> object. </returns>
         public static SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SoftwareUpdateConfigurationResource.ValidateResourceId(id);
-                return new SoftwareUpdateConfigurationResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetSoftwareUpdateConfigurationResource(id);
         }
         #endregion
 
@@ -421,12 +320,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationRunbookResource" /> object. </returns>
         public static AutomationRunbookResource GetAutomationRunbookResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationRunbookResource.ValidateResourceId(id);
-                return new AutomationRunbookResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationRunbookResource(id);
         }
         #endregion
 
@@ -440,12 +334,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationWebhookResource" /> object. </returns>
         public static AutomationWebhookResource GetAutomationWebhookResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AutomationWebhookResource.ValidateResourceId(id);
-                return new AutomationWebhookResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetAutomationWebhookResource(id);
         }
         #endregion
 
@@ -459,12 +348,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="HybridRunbookWorkerResource" /> object. </returns>
         public static HybridRunbookWorkerResource GetHybridRunbookWorkerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridRunbookWorkerResource.ValidateResourceId(id);
-                return new HybridRunbookWorkerResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetHybridRunbookWorkerResource(id);
         }
         #endregion
 
@@ -478,12 +362,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="HybridRunbookWorkerGroupResource" /> object. </returns>
         public static HybridRunbookWorkerGroupResource GetHybridRunbookWorkerGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridRunbookWorkerGroupResource.ValidateResourceId(id);
-                return new HybridRunbookWorkerGroupResource(client, id);
-            }
-            );
+            return GetAutomationArmClientMockingExtension(client).GetHybridRunbookWorkerGroupResource(id);
         }
         #endregion
 
@@ -492,7 +371,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationAccountResources and their operations over a AutomationAccountResource. </returns>
         public static AutomationAccountCollection GetAutomationAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAutomationAccounts();
+            return GetAutomationResourceGroupMockingExtension(resourceGroupResource).GetAutomationAccounts();
         }
 
         /// <summary>
@@ -516,7 +395,7 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public static async Task<Response<AutomationAccountResource>> GetAutomationAccountAsync(this ResourceGroupResource resourceGroupResource, string automationAccountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAutomationAccounts().GetAsync(automationAccountName, cancellationToken).ConfigureAwait(false);
+            return await GetAutomationResourceGroupMockingExtension(resourceGroupResource).GetAutomationAccountAsync(automationAccountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -540,7 +419,7 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public static Response<AutomationAccountResource> GetAutomationAccount(this ResourceGroupResource resourceGroupResource, string automationAccountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAutomationAccounts().Get(automationAccountName, cancellationToken);
+            return GetAutomationResourceGroupMockingExtension(resourceGroupResource).GetAutomationAccount(automationAccountName, cancellationToken);
         }
 
         /// <summary>
@@ -561,7 +440,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomationAccountResource> GetAutomationAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutomationAccountsAsync(cancellationToken);
+            return GetAutomationSubscriptionMockingExtension(subscriptionResource).GetAutomationAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -582,7 +461,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomationAccountResource> GetAutomationAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAutomationAccounts(cancellationToken);
+            return GetAutomationSubscriptionMockingExtension(subscriptionResource).GetAutomationAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -603,7 +482,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAutomationAccountsBySubscriptionAsync(cancellationToken);
+            return GetAutomationSubscriptionMockingExtension(subscriptionResource).GetDeletedAutomationAccountsBySubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
@@ -624,7 +503,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDeletedAutomationAccountsBySubscription(cancellationToken);
+            return GetAutomationSubscriptionMockingExtension(subscriptionResource).GetDeletedAutomationAccountsBySubscription(cancellationToken);
         }
     }
 }
