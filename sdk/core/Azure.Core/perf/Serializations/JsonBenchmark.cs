@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Azure.Core.Perf.Serializations
         private BinaryData _data;
         private SequenceWriter _content;
         private JsonDocument _jsonDocument;
+        private ReadOnlySequence<byte> _sequence;
 
         protected abstract T Deserialize(JsonElement jsonElement);
 
@@ -47,6 +49,7 @@ namespace Azure.Core.Perf.Serializations
             using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
             _model.Serialize(writer, new ModelSerializerOptions());
             writer.Flush();
+            _sequence = _content.GetReadOnlySequence();
             _jsonDocument = JsonDocument.Parse(_json);
         }
 
@@ -185,6 +188,20 @@ namespace Azure.Core.Perf.Serializations
         public void JsonDocumentFromBinaryData()
         {
             using var doc = JsonDocument.Parse(_data);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonDocument")]
+        public ReadOnlySequence<byte> GetSequence()
+        {
+            return _content.GetReadOnlySequence();
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonDocument")]
+        public void JsonDocumentFromSequence()
+        {
+            using var doc = JsonDocument.Parse(_sequence);
         }
     }
 }

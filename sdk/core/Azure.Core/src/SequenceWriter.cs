@@ -12,7 +12,7 @@ namespace Azure.Core
     /// <summary>
     /// A buffer writer which writes large sequences of data into smaller shared buffers.
     /// </summary>
-    internal sealed class SequenceWriter : IBufferWriter<byte>, IDisposable
+    public sealed class SequenceWriter : IBufferWriter<byte>, IDisposable
     {
         private SequenceSegment? _first;
         private SequenceSegment? _last;
@@ -235,7 +235,7 @@ namespace Azure.Core
 
             // if there is anything written to the last buffer we need to add a new one to ensure previously returned sequences are not mutated
             if (_buffers[_count - 1].Written > 0)
-                AddBuffer(_bufferSize);
+                AddBuffer(_segmentSize);
 
             return new ReadOnlySequence<byte>(_first, 0, _last, _last.Memory.Length);
         }
