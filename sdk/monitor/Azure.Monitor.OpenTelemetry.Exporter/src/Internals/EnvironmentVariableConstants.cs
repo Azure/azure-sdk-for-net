@@ -6,7 +6,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal static class EnvironmentVariableConstants
     {
         /// <summary>
-        /// Used to set the Connection String.
+        /// Available for users to set their Connection String.
         /// </summary>
         /// <remarks>
         /// <see href="https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-configuration?#connection-string"/>.
@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string APPLICATIONINSIGHTS_CONNECTION_STRING = "APPLICATIONINSIGHTS_CONNECTION_STRING";
 
         /// <summary>
-        /// Used to turn off Statsbeat.
+        /// Available for users to opt-out of Statsbeat.
         /// </summary>
         /// <remarks>
         /// <see href="https://learn.microsoft.com/azure/azure-monitor/app/statsbeat"/>.
@@ -22,37 +22,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string APPLICATIONINSIGHTS_STATSBEAT_DISABLED = "APPLICATIONINSIGHTS_STATSBEAT_DISABLED";
 
         /// <summary>
-        /// Used by Statsbeat to identify if the Exporter is running within Azure Functions.
+        /// INTERNAL ONLY. Used by Statsbeat to identify if the Exporter is running within Azure Functions.
         /// </summary>
         public const string FUNCTIONS_WORKER_RUNTIME = "FUNCTIONS_WORKER_RUNTIME";
 
         /// <summary>
-        /// Used by PersistentStorage to identify a Windows temp directory to save telemetry.
+        /// INTERNAL ONLY. Used by PersistentStorage to identify a Windows temp directory to save telemetry.
         /// </summary>
         public const string LOCALAPPDATA = "LOCALAPPDATA";
 
         /// <summary>
-        /// Used by PersistentStorage to identify a Windows temp directory to save telemetry.
+        /// INTERNAL ONLY. Used by PersistentStorage to identify a Windows temp directory to save telemetry.
         /// </summary>
         public const string TEMP = "TEMP";
 
         /// <summary>
-        /// Used by PersistentStorage to identify a Linux temp directory to save telemetry.
+        /// INTERNAL ONLY. Used by PersistentStorage to identify a Linux temp directory to save telemetry.
         /// </summary>
         public const string TMPDIR = "TMPDIR";
 
         /// <summary>
-        /// Used by Statsbeat to get the App Service Host Name.
+        /// INTERNAL ONLY. Used by Statsbeat to get the App Service Host Name.
         /// </summary>
         public const string WEBSITE_HOME_STAMPNAME = "WEBSITE_HOME_STAMPNAME";
 
         /// <summary>
-        /// Used by Statsbeat to identify Azure Functions.
+        /// INTERNAL ONLY. Used by Statsbeat to identify Azure Functions.
         /// </summary>
         public const string WEBSITE_HOSTNAME = "WEBSITE_HOSTNAME";
 
         /// <summary>
-        /// Used by Statsbeat to get the App Service Website Name.
+        /// INTERNAL ONLY. Used by Statsbeat to get the App Service Website Name.
         /// </summary>
         public const string WEBSITE_SITE_NAME = "WEBSITE_SITE_NAME";
     }
