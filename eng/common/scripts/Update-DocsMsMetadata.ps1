@@ -205,10 +205,6 @@ function UpdateDocsMsMetadataForPackage($packageInfoJsonLocation) {
     Write-Host "The docs metadata json $packageMetadataName does not exist, creating a new one to docs repo..."
     New-Item -ItemType Directory -Path $packageInfoLocation -Force
   }
-  if ($UpdatePackageMetadata -and (Test-Path "Function:$UpdatePackageMetadata")) {
-    $packageInfo = &$UpdatePackageMetadata $packageInfo
-  }
-
   $packageInfoJson = ConvertTo-Json $packageInfo
   Set-Content `
     -Path $packageInfoLocation/$packageMetadataName `
