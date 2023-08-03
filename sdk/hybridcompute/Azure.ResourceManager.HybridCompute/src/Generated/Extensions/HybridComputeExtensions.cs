@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridCompute.Mocking;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.HybridCompute
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridCompute. </summary>
     public static partial class HybridComputeExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static HybridComputeArmClientMockingExtension GetHybridComputeArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new HybridComputeArmClientMockingExtension(client);
+            });
+        }
+
+        private static HybridComputeResourceGroupMockingExtension GetHybridComputeResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new HybridComputeResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HybridComputeSubscriptionMockingExtension GetHybridComputeSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HybridComputeSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region HybridComputeMachineResource
         /// <summary>
         /// Gets an object representing a <see cref="HybridComputeMachineResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="HybridComputeMachineResource" /> object. </returns>
         public static HybridComputeMachineResource GetHybridComputeMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridComputeMachineResource.ValidateResourceId(id);
-                return new HybridComputeMachineResource(client, id);
-            }
-            );
+            return GetHybridComputeArmClientMockingExtension(client).GetHybridComputeMachineResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="HybridComputeMachineExtensionResource" /> object. </returns>
         public static HybridComputeMachineExtensionResource GetHybridComputeMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridComputeMachineExtensionResource.ValidateResourceId(id);
-                return new HybridComputeMachineExtensionResource(client, id);
-            }
-            );
+            return GetHybridComputeArmClientMockingExtension(client).GetHybridComputeMachineExtensionResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="HybridComputePrivateLinkScopeResource" /> object. </returns>
         public static HybridComputePrivateLinkScopeResource GetHybridComputePrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridComputePrivateLinkScopeResource.ValidateResourceId(id);
-                return new HybridComputePrivateLinkScopeResource(client, id);
-            }
-            );
+            return GetHybridComputeArmClientMockingExtension(client).GetHybridComputePrivateLinkScopeResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="HybridComputePrivateLinkResource" /> object. </returns>
         public static HybridComputePrivateLinkResource GetHybridComputePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridComputePrivateLinkResource.ValidateResourceId(id);
-                return new HybridComputePrivateLinkResource(client, id);
-            }
-            );
+            return GetHybridComputeArmClientMockingExtension(client).GetHybridComputePrivateLinkResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="HybridComputePrivateEndpointConnectionResource" /> object. </returns>
         public static HybridComputePrivateEndpointConnectionResource GetHybridComputePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridComputePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new HybridComputePrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetHybridComputeArmClientMockingExtension(client).GetHybridComputePrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -150,7 +119,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An object representing collection of HybridComputeMachineResources and their operations over a HybridComputeMachineResource. </returns>
         public static HybridComputeMachineCollection GetHybridComputeMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHybridComputeMachines();
+            return GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputeMachines();
         }
 
         /// <summary>
@@ -175,7 +144,7 @@ namespace Azure.ResourceManager.HybridCompute
         [ForwardsClientCalls]
         public static async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(this ResourceGroupResource resourceGroupResource, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHybridComputeMachines().GetAsync(machineName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputeMachineAsync(machineName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -200,7 +169,7 @@ namespace Azure.ResourceManager.HybridCompute
         [ForwardsClientCalls]
         public static Response<HybridComputeMachineResource> GetHybridComputeMachine(this ResourceGroupResource resourceGroupResource, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHybridComputeMachines().Get(machineName, expand, cancellationToken);
+            return GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputeMachine(machineName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of HybridComputePrivateLinkScopeResources in the ResourceGroupResource. </summary>
@@ -208,7 +177,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An object representing collection of HybridComputePrivateLinkScopeResources and their operations over a HybridComputePrivateLinkScopeResource. </returns>
         public static HybridComputePrivateLinkScopeCollection GetHybridComputePrivateLinkScopes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHybridComputePrivateLinkScopes();
+            return GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputePrivateLinkScopes();
         }
 
         /// <summary>
@@ -232,7 +201,7 @@ namespace Azure.ResourceManager.HybridCompute
         [ForwardsClientCalls]
         public static async Task<Response<HybridComputePrivateLinkScopeResource>> GetHybridComputePrivateLinkScopeAsync(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHybridComputePrivateLinkScopes().GetAsync(scopeName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputePrivateLinkScopeAsync(scopeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute
         [ForwardsClientCalls]
         public static Response<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHybridComputePrivateLinkScopes().Get(scopeName, cancellationToken);
+            return GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputePrivateLinkScope(scopeName, cancellationToken);
         }
 
         /// <summary>
@@ -277,7 +246,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An async collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridComputeMachineResource> GetHybridComputeMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridComputeMachinesAsync(cancellationToken);
+            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetHybridComputeMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -298,7 +267,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> A collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridComputeMachineResource> GetHybridComputeMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridComputeMachines(cancellationToken);
+            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetHybridComputeMachines(cancellationToken);
         }
 
         /// <summary>
@@ -319,7 +288,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An async collection of <see cref="HybridComputePrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridComputePrivateLinkScopesAsync(cancellationToken);
+            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetHybridComputePrivateLinkScopesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -340,7 +309,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> A collection of <see cref="HybridComputePrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridComputePrivateLinkScopes(cancellationToken);
+            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetHybridComputePrivateLinkScopes(cancellationToken);
         }
 
         /// <summary>
@@ -364,9 +333,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkScopeId"/> is null. </exception>
         public static async Task<Response<PrivateLinkScopeValidationDetails>> GetValidationDetailsPrivateLinkScopeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkScopeId, nameof(privateLinkScopeId));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetValidationDetailsPrivateLinkScopeAsync(location, privateLinkScopeId, cancellationToken).ConfigureAwait(false);
+            return await GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetValidationDetailsPrivateLinkScopeAsync(location, privateLinkScopeId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -390,9 +357,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkScopeId"/> is null. </exception>
         public static Response<PrivateLinkScopeValidationDetails> GetValidationDetailsPrivateLinkScope(this SubscriptionResource subscriptionResource, AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateLinkScopeId, nameof(privateLinkScopeId));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetValidationDetailsPrivateLinkScope(location, privateLinkScopeId, cancellationToken);
+            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetValidationDetailsPrivateLinkScope(location, privateLinkScopeId, cancellationToken);
         }
     }
 }
