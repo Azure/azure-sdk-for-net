@@ -53,7 +53,6 @@ Describe 'SetDocsCiConfigProperties' {
 }
 
 Describe 'GetCiConfigPath' {
-    # TODO: These tests may fail on Windows due to path separator differences
     It 'returns <expected> when given <inputValue>' -ForEach @(
         @{ inputValue = 'preview'; expected = './bundlepackages/azure-dotnet-preview.csv' },
         @{ inputValue = 'legacy'; expected = './bundlepackages/azure-dotnet-legacy.csv' },
