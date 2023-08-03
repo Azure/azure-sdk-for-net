@@ -33,7 +33,7 @@ function SetDocsCiConfigProperties($item, $moniker, $packageSourceOverride) {
     }
 
     # Set tfm to netstandard2.0 if not already set
-    if (!$properties.ContainsKey('tfm')) {
+    if (!$properties.Keys -contains 'tfm') {
         $properties['tfm'] = 'netstandard2.0'
     }
 
