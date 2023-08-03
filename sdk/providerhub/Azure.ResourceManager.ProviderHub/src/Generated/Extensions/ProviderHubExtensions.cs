@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ProviderHub.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ProviderHub
@@ -18,21 +19,22 @@ namespace Azure.ResourceManager.ProviderHub
     /// <summary> A class to add extension methods to Azure.ResourceManager.ProviderHub. </summary>
     public static partial class ProviderHubExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ProviderHubArmClientMockingExtension GetProviderHubArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
+            return client.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ProviderHubArmClientMockingExtension(client);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ProviderHubSubscriptionMockingExtension GetProviderHubSubscriptionMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, scope);
+                return new ProviderHubSubscriptionMockingExtension(client, resource.Id);
             });
         }
+
         #region CustomRolloutResource
         /// <summary>
         /// Gets an object representing a <see cref="CustomRolloutResource" /> along with the instance operations that can be performed on it but with no data.
@@ -43,12 +45,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="CustomRolloutResource" /> object. </returns>
         public static CustomRolloutResource GetCustomRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CustomRolloutResource.ValidateResourceId(id);
-                return new CustomRolloutResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetCustomRolloutResource(id);
         }
         #endregion
 
@@ -62,12 +59,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="DefaultRolloutResource" /> object. </returns>
         public static DefaultRolloutResource GetDefaultRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DefaultRolloutResource.ValidateResourceId(id);
-                return new DefaultRolloutResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetDefaultRolloutResource(id);
         }
         #endregion
 
@@ -81,12 +73,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="NotificationRegistrationResource" /> object. </returns>
         public static NotificationRegistrationResource GetNotificationRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NotificationRegistrationResource.ValidateResourceId(id);
-                return new NotificationRegistrationResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetNotificationRegistrationResource(id);
         }
         #endregion
 
@@ -100,12 +87,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="ProviderRegistrationResource" /> object. </returns>
         public static ProviderRegistrationResource GetProviderRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProviderRegistrationResource.ValidateResourceId(id);
-                return new ProviderRegistrationResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetProviderRegistrationResource(id);
         }
         #endregion
 
@@ -119,12 +101,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="ResourceTypeRegistrationResource" /> object. </returns>
         public static ResourceTypeRegistrationResource GetResourceTypeRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ResourceTypeRegistrationResource.ValidateResourceId(id);
-                return new ResourceTypeRegistrationResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetResourceTypeRegistrationResource(id);
         }
         #endregion
 
@@ -138,12 +115,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="ResourceTypeSkuResource" /> object. </returns>
         public static ResourceTypeSkuResource GetResourceTypeSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ResourceTypeSkuResource.ValidateResourceId(id);
-                return new ResourceTypeSkuResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetResourceTypeSkuResource(id);
         }
         #endregion
 
@@ -157,12 +129,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="NestedResourceTypeFirstSkuResource" /> object. </returns>
         public static NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NestedResourceTypeFirstSkuResource.ValidateResourceId(id);
-                return new NestedResourceTypeFirstSkuResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetNestedResourceTypeFirstSkuResource(id);
         }
         #endregion
 
@@ -176,12 +143,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="NestedResourceTypeSecondSkuResource" /> object. </returns>
         public static NestedResourceTypeSecondSkuResource GetNestedResourceTypeSecondSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NestedResourceTypeSecondSkuResource.ValidateResourceId(id);
-                return new NestedResourceTypeSecondSkuResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetNestedResourceTypeSecondSkuResource(id);
         }
         #endregion
 
@@ -195,12 +157,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> Returns a <see cref="NestedResourceTypeThirdSkuResource" /> object. </returns>
         public static NestedResourceTypeThirdSkuResource GetNestedResourceTypeThirdSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                NestedResourceTypeThirdSkuResource.ValidateResourceId(id);
-                return new NestedResourceTypeThirdSkuResource(client, id);
-            }
-            );
+            return GetProviderHubArmClientMockingExtension(client).GetNestedResourceTypeThirdSkuResource(id);
         }
         #endregion
 
@@ -209,7 +166,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <returns> An object representing collection of ProviderRegistrationResources and their operations over a ProviderRegistrationResource. </returns>
         public static ProviderRegistrationCollection GetProviderRegistrations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProviderRegistrations();
+            return GetProviderHubSubscriptionMockingExtension(subscriptionResource).GetProviderRegistrations();
         }
 
         /// <summary>
@@ -233,7 +190,7 @@ namespace Azure.ResourceManager.ProviderHub
         [ForwardsClientCalls]
         public static async Task<Response<ProviderRegistrationResource>> GetProviderRegistrationAsync(this SubscriptionResource subscriptionResource, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetProviderRegistrations().GetAsync(providerNamespace, cancellationToken).ConfigureAwait(false);
+            return await GetProviderHubSubscriptionMockingExtension(subscriptionResource).GetProviderRegistrationAsync(providerNamespace, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -257,7 +214,7 @@ namespace Azure.ResourceManager.ProviderHub
         [ForwardsClientCalls]
         public static Response<ProviderRegistrationResource> GetProviderRegistration(this SubscriptionResource subscriptionResource, string providerNamespace, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetProviderRegistrations().Get(providerNamespace, cancellationToken);
+            return GetProviderHubSubscriptionMockingExtension(subscriptionResource).GetProviderRegistration(providerNamespace, cancellationToken);
         }
     }
 }
