@@ -11,7 +11,7 @@ The `Azure.Core` library supports serialization and deserialization of most clie
 - [ModelSerializerFormat description]("modelserializerformat-description")
 
 ## Using the ModelSerializer
-The ModelSerializer class enables users to serialize and deserialize any Azure models that implement the IModelSerializable interface with ease. 
+The ModelSerializer class enables users to serialize and deserialize any Azure models that implement the IModelSerializable interface.
 
 ```C# Snippet:BaseModelSerializer
 Dog doggo = new Dog
