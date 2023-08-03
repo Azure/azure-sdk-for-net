@@ -56,132 +56,69 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Equal("testJsonValue", azureMonitorOptions.StorageDirectory);
         }
 
-        [Fact]
-        public void VerifyConfigure_ViaJson_IConfigurationTakesPrecedence()
-        {
-            var appSettings = @"{""AzureMonitor"":{
-                ""ConnectionString"" : ""testJsonValue""
-                }}";
-
-            var configuration = new ConfigurationBuilder()
-                .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appSettings)))
-                .AddInMemoryCollection(new Dictionary<string, string?> { [ConnectionStringEnvironmentVariable] = "testValue" })
-                .Build();
-
-            var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
-
-            var azureMonitorOptions = new AzureMonitorOptions();
-
-            defaultAzureMonitorOptions.Configure(azureMonitorOptions);
-
-            Assert.Equal("testValue", azureMonitorOptions.ConnectionString);
-        }
-
-        [Fact]
-        public void VerifyConfigure_ViaJson_EnvironmentVarTakesPrecedence_UsingIConfiguration()
+        [Theory]
+        [InlineData(false, false, false, false, false, null)] // If nothing set, ConnectionString will be null.
+        [InlineData(true, false, false, false, false, "testJsonValue")] // only AzureMonitor in json
+        [InlineData(false, true, false, false, false, "testJsonEnvVarValue")] // only EnvVar in json
+        [InlineData(true, true, false, false, false, "testJsonEnvVarValue")] // both AzureMonitor & EnvVar in json
+        [InlineData(false, false, true, false, false, "testInMemoryCollectionValue")] // only IConfig InMemoryCollection
+        [InlineData(false, false, false, true, false, null)] // only IConfig EnvVars, without EnvVar set.
+        [InlineData(false, false, false, true, true, "testEnvVarValue")] // only IConfig EnvVars, with EnvVar set.
+        [InlineData(false, false, true, true, true, "testEnvVarValue")] // both IConfig InMemoryCollection & IConfig EnvVars with EnvVar set
+        [InlineData(false, false, true, true, false, "testInMemoryCollectionValue")] // both IConfig InMemoryCollection & IConfig EnvVars without EnvVar set
+        [InlineData(false, false, false, false, true, "testEnvVarValue")] // only EnvironmentVariable
+        [InlineData(true, true, true, true, true, "testEnvVarValue")]
+        public void VerifyConfigure_SetsConnectionString(bool jsonAzureMonitor, bool jsonEnvVar, bool iconfigCollection, bool iconfigEnvVar, bool setEnvVar, string expectedConnectionStringValue)
         {
             try
             {
-                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, "testEnvVarValue");
+                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, setEnvVar ? "testEnvVarValue" : null);
 
-                var appSettings = @"{""AzureMonitor"":{
-                    ""ConnectionString"" : ""testJsonValue""
-                    }}";
+                // BUILD JSON STRING
+                var jsonString = "{";
 
-                var configuration = new ConfigurationBuilder()
-                    .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appSettings)))
-                    .AddEnvironmentVariables()
-                    .Build();
+                if (jsonAzureMonitor)
+                {
+                    jsonString += @"""AzureMonitor"":{ ""ConnectionString"" : ""testJsonValue"" }";
+                }
 
+                if (jsonAzureMonitor && jsonEnvVar)
+                {
+                    jsonString += ",";
+                }
+
+                if (jsonEnvVar)
+                {
+                    jsonString += @"""APPLICATIONINSIGHTS_CONNECTION_STRING"" :  ""testJsonEnvVarValue""";
+                }
+
+                jsonString += "}";
+
+                // BUILD CONFIGURATION OBJECT
+                var configBulider = new ConfigurationBuilder();
+
+                if (jsonAzureMonitor || jsonEnvVar)
+                {
+                    configBulider.AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(jsonString)));
+                }
+
+                if (iconfigCollection)
+                {
+                    configBulider.AddInMemoryCollection(new Dictionary<string, string?> { [ConnectionStringEnvironmentVariable] = "testInMemoryCollectionValue" });
+                }
+
+                if (iconfigEnvVar)
+                {
+                    configBulider.AddEnvironmentVariables();
+                }
+
+                var configuration = configBulider.Build();
+
+                // RUN TEST
                 var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
-
                 var azureMonitorOptions = new AzureMonitorOptions();
-
                 defaultAzureMonitorOptions.Configure(azureMonitorOptions);
-
-                Assert.Equal("testEnvVarValue", azureMonitorOptions.ConnectionString);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, null);
-            }
-        }
-
-        [Fact]
-        public void VerifyConfigure_ViaJson_EnvironmentVarTakesPrecedence()
-        {
-            try
-            {
-                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, "testEnvVarValue");
-
-                var appSettings = @"{""AzureMonitor"":{
-                    ""ConnectionString"" : ""testJsonValue""
-                    }}";
-
-                var configuration = new ConfigurationBuilder()
-                    .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appSettings)))
-                    .Build();
-
-                var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
-
-                var azureMonitorOptions = new AzureMonitorOptions();
-
-                defaultAzureMonitorOptions.Configure(azureMonitorOptions);
-
-                Assert.Equal("testEnvVarValue", azureMonitorOptions.ConnectionString);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, null);
-            }
-        }
-
-        [Fact]
-        public void VerifyConfigure_ViaEnvironmentVarInsideJson()
-        {
-            var appSettings = @"{""AzureMonitor"":{
-                ""ConnectionString"" : ""testJsonValue""
-                },
-                ""APPLICATIONINSIGHTS_CONNECTION_STRING"" :  ""testJsonEnvVarValue""
-                }";
-
-            var configuration = new ConfigurationBuilder()
-                .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appSettings)))
-                .Build();
-
-            var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
-
-            var azureMonitorOptions = new AzureMonitorOptions();
-
-            defaultAzureMonitorOptions.Configure(azureMonitorOptions);
-
-            Assert.Equal("testJsonEnvVarValue", azureMonitorOptions.ConnectionString);
-        }
-
-        [Fact]
-        public void VerifyConfigure_ViaEnvironmentVarInsideJson_EnvironmentVarTakesPrecedence()
-        {
-            try
-            {
-                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, "testEnvVarValue");
-
-                var appSettings = @"{""AzureMonitor"":{
-                    ""ConnectionString"" : ""testJsonValue""
-                    },
-                    ""APPLICATIONINSIGHTS_CONNECTION_STRING"" :  ""testJsonEnvVarValue""
-                    }";
-
-                var configuration = new ConfigurationBuilder()
-                    .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appSettings)))
-                    .Build();
-
-                var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
-
-                var azureMonitorOptions = new AzureMonitorOptions();
-
-                defaultAzureMonitorOptions.Configure(azureMonitorOptions);
-
-                Assert.Equal("testEnvVarValue", azureMonitorOptions.ConnectionString);
+                Assert.Equal(expectedConnectionStringValue, azureMonitorOptions.ConnectionString);
             }
             finally
             {
@@ -189,70 +126,5 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             }
         }
 #endif
-
-        [Fact]
-        public void VerifyConfigure_ViaIConfiguration()
-        {
-            var configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string?> { [ConnectionStringEnvironmentVariable] = "testValue" })
-                .Build();
-
-            var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
-
-            var azureMonitorOptions = new AzureMonitorOptions();
-
-            defaultAzureMonitorOptions.Configure(azureMonitorOptions);
-
-            Assert.Equal("testValue", azureMonitorOptions.ConnectionString);
-        }
-
-        [Fact]
-        public void VerifyConfigure_ViaEnvironmentVar_UsingIConfiguration()
-        {
-            try
-            {
-                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, "testEnvVarValue");
-
-                var configuration = new ConfigurationBuilder()
-                    .AddEnvironmentVariables()
-                    .Build();
-
-                var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
-
-                var azureMonitorOptions = new AzureMonitorOptions();
-
-                defaultAzureMonitorOptions.Configure(azureMonitorOptions);
-
-                Assert.Equal("testEnvVarValue", azureMonitorOptions.ConnectionString);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, null);
-            }
-        }
-
-        [Fact]
-        public void VerifyConfigure_ViaEnvironmentVar()
-        {
-            try
-            {
-                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, "testEnvVarValue");
-
-                var configuration = new ConfigurationBuilder()
-                    .Build();
-
-                var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
-
-                var azureMonitorOptions = new AzureMonitorOptions();
-
-                defaultAzureMonitorOptions.Configure(azureMonitorOptions);
-
-                Assert.Equal("testEnvVarValue", azureMonitorOptions.ConnectionString);
-            }
-            finally
-            {
-                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, null);
-            }
-        }
     }
 }
