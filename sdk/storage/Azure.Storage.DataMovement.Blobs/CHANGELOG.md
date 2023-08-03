@@ -22,6 +22,8 @@
     - `*BlobStorageResource.ReadStreamAsync`
     - `*BlobStorageResource.WriteFromStreamAsync`
 - [BREAKING CHANGE] Removed `position` parameter from `*BlobStorageResource.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
+- [BREAKING CHANGE] Made parameter `completeLength` from `*BlobStorageResource.CopyBlockFromUriAsync` mandatory.
+- 
 
 ### Bugs Fixed
 

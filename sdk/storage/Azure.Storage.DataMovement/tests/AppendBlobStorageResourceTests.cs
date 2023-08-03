@@ -390,7 +390,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await destinationResource.CopyBlockFromUriAsync(
                 sourceResource: sourceResource,
                 overwrite: false,
-                range: new HttpRange(0, blockLength));
+                range: new HttpRange(0, blockLength),
+                completeLength: length);
 
             // Commit the block
             await destinationResource.CompleteTransferAsync(false);
@@ -438,6 +439,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -486,6 +488,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -533,6 +536,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -559,7 +563,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), false),
+                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), false, Constants.KB),
                 e =>
                 {
                     Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource");

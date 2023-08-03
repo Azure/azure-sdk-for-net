@@ -579,7 +579,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), false),
+                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), false, 0),
                 e =>
                 {
                     Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource");

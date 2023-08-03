@@ -366,7 +366,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
-            var data = GetRandomBuffer(4 * Constants.KB);
+            var length = 4 * Constants.KB;
+            var data = GetRandomBuffer(length);
             var blockLength = Constants.KB;
             using (var stream = new MemoryStream(data))
             {
@@ -381,7 +382,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await destinationResource.CopyBlockFromUriAsync(
                 sourceResource: sourceResource,
                 overwrite: false,
-                range: new HttpRange(0, blockLength));
+                range: new HttpRange(0, blockLength),
+                completeLength: length);
 
             // Commit the block
             await destinationResource.CompleteTransferAsync(false);
@@ -403,7 +405,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
-            var data = GetRandomBuffer(4 * Constants.KB);
+            var length = 4 * Constants.KB;
+            var data = GetRandomBuffer(length);
             var blockLength = Constants.KB;
             using (var stream = new MemoryStream(data))
             {
@@ -426,6 +429,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -446,7 +450,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
-            var data = GetRandomBuffer(4 * Constants.KB);
+            var length = 4 * Constants.KB;
+            var data = GetRandomBuffer(length);
             var blockLength = Constants.KB;
             using (var stream = new MemoryStream(data))
             {
@@ -473,6 +478,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -496,7 +502,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = test.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = test.Container.GetBlockBlobClient(GetNewBlobName());
 
-            var data = GetRandomBuffer(4 * Constants.KB);
+            var length = 4 * Constants.KB;
+            var data = GetRandomBuffer(length);
             var blockLength = Constants.KB;
             using (var stream = new MemoryStream(data))
             {
@@ -518,6 +525,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -543,7 +551,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), overwrite: false),
+                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), overwrite: false, completeLength: Constants.KB),
                 e =>
                 {
                     Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource");

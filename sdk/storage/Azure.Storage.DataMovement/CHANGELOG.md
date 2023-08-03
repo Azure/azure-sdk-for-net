@@ -22,6 +22,7 @@
     - `StorageResourceSingle.ReadStreamAsync`
     - `StorageResourceSingle.WriteFromStreamAsync`
 - [BREAKING CHANGE] Removed `position` parameter from `StorageResourceSingle.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
+- [BREAKING CHANGE] Made parameter `completeLength` from `StorageResourceSingle.CopyBlockFromUriAsync` mandatory.
 
 ### Bugs Fixed
 

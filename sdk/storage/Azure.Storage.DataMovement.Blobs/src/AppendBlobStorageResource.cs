@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceSingle sourceResource,
             HttpRange range,
             bool overwrite,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
