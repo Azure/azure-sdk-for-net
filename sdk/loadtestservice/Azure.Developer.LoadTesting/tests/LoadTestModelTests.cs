@@ -49,6 +49,24 @@ namespace Azure.Developer.LoadTesting.Tests
         }
 
         [Test]
+        public void RequiredPropertyIsNotAddedToPatchJson()
+        {
+            Test test = new("abc");
+
+            BinaryData utf8;
+            using (MemoryStream stream = new())
+            {
+                using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+                ((IJsonModelSerializable)test).Serialize(writer, new ModelSerializerOptions("P"));
+                writer.Flush();
+                stream.Position = 0;
+                utf8 = BinaryData.FromStream(stream);
+            }
+
+            CollectionAssert.AreEqual(""u8.ToArray(), utf8.ToArray());
+        }
+
+        [Test]
         public void CanPatchTestId_OneChange()
         {
             MutableJsonDocument doc = MutableJsonDocument.Parse("""{"testId":"abc"}""");
