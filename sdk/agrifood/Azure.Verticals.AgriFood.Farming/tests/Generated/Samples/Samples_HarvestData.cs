@@ -292,6 +292,30 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 harvestProductDetails = new[] {
         new {
             productName = "<productName>",
+            area = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalYield = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgYield = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgMoisture = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalWetMass = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgWetMass = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
         }
     },
                 area = new
@@ -419,6 +443,30 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                 harvestProductDetails = new[] {
         new {
             productName = "<productName>",
+            area = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalYield = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgYield = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgMoisture = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalWetMass = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgWetMass = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
         }
     },
                 area = new
