@@ -200,7 +200,7 @@ namespace Azure.Core.Serialization
                 return JsonSerializer.Deserialize<T>(element, _serializerOptions);
 #else
                 Utf8JsonReader reader = MutableJsonElement.GetReaderForElement(element);
-                return JsonSerializer.Deserialize<T>(ref reader, _serializerOptions);
+                return JsonSerializer.Deserialize<T>(ref reader, _serializerOptions); // change this to call private Deserialize method on Base class?
 #endif
             }
             catch (JsonException e)
