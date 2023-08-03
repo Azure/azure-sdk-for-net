@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Mutual TLS authentication settings for the Managed Environment. </summary>
         internal Mtls Mtls { get; set; }
         /// <summary> Boolean indicating whether the mutual TLS authentication is enabled. </summary>
-        public bool? IsEnabled
+        public bool? IsMtlsEnabled
         {
-            get => Mtls is null ? default : Mtls.IsEnabled;
+            get => Mtls is null ? default : Mtls.IsMtlsEnabled;
             set
             {
                 if (Mtls is null)
                     Mtls = new Mtls();
-                Mtls.IsEnabled = value;
+                Mtls.IsMtlsEnabled = value;
             }
         }
     }

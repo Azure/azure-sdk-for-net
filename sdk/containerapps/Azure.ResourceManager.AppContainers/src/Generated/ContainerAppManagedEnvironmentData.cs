@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Peer authentication settings for the Managed Environment. </summary>
         internal ManagedEnvironmentPropertiesPeerAuthentication PeerAuthentication { get; set; }
         /// <summary> Boolean indicating whether the mutual TLS authentication is enabled. </summary>
-        public bool? IsEnabled
+        public bool? IsMtlsEnabled
         {
-            get => PeerAuthentication is null ? default : PeerAuthentication.IsEnabled;
+            get => PeerAuthentication is null ? default : PeerAuthentication.IsMtlsEnabled;
             set
             {
                 if (PeerAuthentication is null)
                     PeerAuthentication = new ManagedEnvironmentPropertiesPeerAuthentication();
-                PeerAuthentication.IsEnabled = value;
+                PeerAuthentication.IsMtlsEnabled = value;
             }
         }
     }

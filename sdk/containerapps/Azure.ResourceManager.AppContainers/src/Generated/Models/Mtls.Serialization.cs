@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsMtlsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(IsMtlsEnabled.Value);
             }
             writer.WriteEndObject();
         }

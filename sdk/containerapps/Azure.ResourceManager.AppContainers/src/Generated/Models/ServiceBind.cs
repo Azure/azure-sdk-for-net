@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Configuration to bind a ContainerApp to a dev ContainerApp Service. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ServiceBind. </summary>
         /// <param name="serviceId"> Resource id of the target service. </param>
         /// <param name="name"> Name of the service bind. </param>
-        internal ServiceBind(string serviceId, string name)
+        internal ServiceBind(ResourceIdentifier serviceId, string name)
         {
             ServiceId = serviceId;
             Name = name;
         }
 
         /// <summary> Resource id of the target service. </summary>
-        public string ServiceId { get; set; }
+        public ResourceIdentifier ServiceId { get; set; }
         /// <summary> Name of the service bind. </summary>
         public string Name { get; set; }
     }

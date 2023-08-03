@@ -217,6 +217,7 @@ rename-mapping:
   Job: ContainerAppJob
   JobsCollection: ContainerAppJobsCollection
   ManagedCertificate: ContainerAppManagedCertificate
+  Mtls.enabled: IsMtlsEnabled
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -231,7 +232,7 @@ override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability
 
 # mgmt-debug:
-#   show-serialized-names: true
+#    show-serialized-names: true
 
 directive:
   - from: swagger-document
@@ -239,4 +240,8 @@ directive:
     transform: >
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
+  # Change type to ResourceIdentifier
+  - from: CommonDefinitions.json
+    where: $.definitions.ServiceBind.properties.serviceId
+    transform: $['x-ms-format'] = 'arm-id'
 ```

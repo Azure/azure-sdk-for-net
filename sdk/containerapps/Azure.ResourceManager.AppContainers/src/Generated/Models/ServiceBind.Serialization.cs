@@ -34,13 +34,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> serviceId = default;
+            Optional<ResourceIdentifier> serviceId = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceId"u8))
                 {
-                    serviceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

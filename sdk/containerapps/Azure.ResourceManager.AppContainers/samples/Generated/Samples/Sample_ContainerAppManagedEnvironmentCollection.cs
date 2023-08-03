@@ -257,7 +257,7 @@ MinimumNodeCount = 3,
 MaximumNodeCount = 6,
 },new ContainerAppWorkloadProfile("My-consumption-01","Consumption")
 },
-                IsEnabled = true,
+                IsMtlsEnabled = true,
             };
             ArmOperation<ContainerAppManagedEnvironmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, environmentName, data);
             ContainerAppManagedEnvironmentResource result = lro.Value;

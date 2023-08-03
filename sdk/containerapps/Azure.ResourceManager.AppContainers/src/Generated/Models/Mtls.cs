@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of Mtls. </summary>
-        /// <param name="isEnabled"> Boolean indicating whether the mutual TLS authentication is enabled. </param>
-        internal Mtls(bool? isEnabled)
+        /// <param name="isMtlsEnabled"> Boolean indicating whether the mutual TLS authentication is enabled. </param>
+        internal Mtls(bool? isMtlsEnabled)
         {
-            IsEnabled = isEnabled;
+            IsMtlsEnabled = isMtlsEnabled;
         }
 
         /// <summary> Boolean indicating whether the mutual TLS authentication is enabled. </summary>
-        public bool? IsEnabled { get; set; }
+        public bool? IsMtlsEnabled { get; set; }
     }
 }
