@@ -314,11 +314,11 @@ namespace Azure.Core.Json
                 end = patchPath.Slice(0, patchPathLength).Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
                 if (end == -1)
                 {
-                    // don't close a leaf node
-                    break;
+                    end = length - start;
                 }
 
-                if (end != 0)
+                // don't close a leaf node
+                if (end != 0 && start + end != length)
                 {
                     writer.WriteEndObject();
                     Debug.WriteLine("** writer: Writing '}' | CloseFinalObjects");
