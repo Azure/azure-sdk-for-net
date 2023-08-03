@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Subscription.Mocking;
 using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.Subscription
     /// <summary> A class to add extension methods to Azure.ResourceManager.Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SubscriptionArmClientMockingExtension GetSubscriptionArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new SubscriptionArmClientMockingExtension(client);
+            });
+        }
+
+        private static SubscriptionSubscriptionMockingExtension GetSubscriptionSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SubscriptionSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static SubscriptionTenantMockingExtension GetSubscriptionTenantMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new SubscriptionTenantMockingExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
         #region SubscriptionAliasResource
         /// <summary>
         /// Gets an object representing a <see cref="SubscriptionAliasResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="SubscriptionAliasResource" /> object. </returns>
         public static SubscriptionAliasResource GetSubscriptionAliasResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionAliasResource.ValidateResourceId(id);
-                return new SubscriptionAliasResource(client, id);
-            }
-            );
+            return GetSubscriptionArmClientMockingExtension(client).GetSubscriptionAliasResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
         public static TenantPolicyResource GetTenantPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TenantPolicyResource.ValidateResourceId(id);
-                return new TenantPolicyResource(client, id);
-            }
-            );
+            return GetSubscriptionArmClientMockingExtension(client).GetTenantPolicyResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="BillingAccountPolicyResource" /> object. </returns>
         public static BillingAccountPolicyResource GetBillingAccountPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BillingAccountPolicyResource.ValidateResourceId(id);
-                return new BillingAccountPolicyResource(client, id);
-            }
-            );
+            return GetSubscriptionArmClientMockingExtension(client).GetBillingAccountPolicyResource(id);
         }
         #endregion
 
@@ -124,7 +103,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<CanceledSubscriptionId>> CancelSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CancelSubscriptionAsync(cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSubscriptionMockingExtension(subscriptionResource).CancelSubscriptionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,7 +123,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<CanceledSubscriptionId> CancelSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CancelSubscription(cancellationToken);
+            return GetSubscriptionSubscriptionMockingExtension(subscriptionResource).CancelSubscription(cancellationToken);
         }
 
         /// <summary>
@@ -166,9 +145,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public static async Task<Response<RenamedSubscriptionId>> RenameSubscriptionAsync(this SubscriptionResource subscriptionResource, SubscriptionName body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).RenameSubscriptionAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSubscriptionMockingExtension(subscriptionResource).RenameSubscriptionAsync(body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -190,9 +167,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public static Response<RenamedSubscriptionId> RenameSubscription(this SubscriptionResource subscriptionResource, SubscriptionName body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).RenameSubscription(body, cancellationToken);
+            return GetSubscriptionSubscriptionMockingExtension(subscriptionResource).RenameSubscription(body, cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +187,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<EnabledSubscriptionId>> EnableSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).EnableSubscriptionAsync(cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSubscriptionMockingExtension(subscriptionResource).EnableSubscriptionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -232,7 +207,7 @@ namespace Azure.ResourceManager.Subscription
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<EnabledSubscriptionId> EnableSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).EnableSubscription(cancellationToken);
+            return GetSubscriptionSubscriptionMockingExtension(subscriptionResource).EnableSubscription(cancellationToken);
         }
 
         /// <summary> Gets a collection of SubscriptionAliasResources in the TenantResource. </summary>
@@ -240,7 +215,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> An object representing collection of SubscriptionAliasResources and their operations over a SubscriptionAliasResource. </returns>
         public static SubscriptionAliasCollection GetSubscriptionAliases(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetSubscriptionAliases();
+            return GetSubscriptionTenantMockingExtension(tenantResource).GetSubscriptionAliases();
         }
 
         /// <summary>
@@ -264,7 +239,7 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionAliasResource>> GetSubscriptionAliasAsync(this TenantResource tenantResource, string aliasName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetSubscriptionAliases().GetAsync(aliasName, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionTenantMockingExtension(tenantResource).GetSubscriptionAliasAsync(aliasName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -288,7 +263,7 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static Response<SubscriptionAliasResource> GetSubscriptionAlias(this TenantResource tenantResource, string aliasName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetSubscriptionAliases().Get(aliasName, cancellationToken);
+            return GetSubscriptionTenantMockingExtension(tenantResource).GetSubscriptionAlias(aliasName, cancellationToken);
         }
 
         /// <summary> Gets an object representing a TenantPolicyResource along with the instance operations that can be performed on it in the TenantResource. </summary>
@@ -296,7 +271,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
         public static TenantPolicyResource GetTenantPolicy(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetTenantPolicy();
+            return GetSubscriptionTenantMockingExtension(tenantResource).GetTenantPolicy();
         }
 
         /// <summary> Gets a collection of BillingAccountPolicyResources in the TenantResource. </summary>
@@ -304,7 +279,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> An object representing collection of BillingAccountPolicyResources and their operations over a BillingAccountPolicyResource. </returns>
         public static BillingAccountPolicyCollection GetBillingAccountPolicies(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingAccountPolicies();
+            return GetSubscriptionTenantMockingExtension(tenantResource).GetBillingAccountPolicies();
         }
 
         /// <summary>
@@ -328,7 +303,7 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static async Task<Response<BillingAccountPolicyResource>> GetBillingAccountPolicyAsync(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBillingAccountPolicies().GetAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionTenantMockingExtension(tenantResource).GetBillingAccountPolicyAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -352,7 +327,7 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static Response<BillingAccountPolicyResource> GetBillingAccountPolicy(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBillingAccountPolicies().Get(billingAccountId, cancellationToken);
+            return GetSubscriptionTenantMockingExtension(tenantResource).GetBillingAccountPolicy(billingAccountId, cancellationToken);
         }
 
         /// <summary>
@@ -377,10 +352,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation> AcceptSubscriptionOwnershipAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetTenantResourceExtensionClient(tenantResource).AcceptSubscriptionOwnershipAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionTenantMockingExtension(tenantResource).AcceptSubscriptionOwnershipAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -405,10 +377,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation AcceptSubscriptionOwnership(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).AcceptSubscriptionOwnership(waitUntil, subscriptionId, content, cancellationToken);
+            return GetSubscriptionTenantMockingExtension(tenantResource).AcceptSubscriptionOwnership(waitUntil, subscriptionId, content, cancellationToken);
         }
 
         /// <summary>
@@ -431,9 +400,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public static async Task<Response<AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetAcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionTenantMockingExtension(tenantResource).GetAcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -456,9 +423,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public static Response<AcceptOwnershipStatus> GetAcceptOwnershipStatus(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetAcceptOwnershipStatus(subscriptionId, cancellationToken);
+            return GetSubscriptionTenantMockingExtension(tenantResource).GetAcceptOwnershipStatus(subscriptionId, cancellationToken);
         }
     }
 }
