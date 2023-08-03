@@ -12,43 +12,37 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityDevOps.Mocking;
 
 namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityDevOps. </summary>
     public static partial class SecurityDevOpsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SecurityDevOpsArmClientMockingExtension GetSecurityDevOpsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new SecurityDevOpsArmClientMockingExtension(client);
+            });
+        }
+
+        private static SecurityDevOpsResourceGroupMockingExtension GetSecurityDevOpsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SecurityDevOpsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SecurityDevOpsSubscriptionMockingExtension GetSecurityDevOpsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SecurityDevOpsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region AzureDevOpsConnectorResource
         /// <summary>
         /// Gets an object representing an <see cref="AzureDevOpsConnectorResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="AzureDevOpsConnectorResource" /> object. </returns>
         public static AzureDevOpsConnectorResource GetAzureDevOpsConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AzureDevOpsConnectorResource.ValidateResourceId(id);
-                return new AzureDevOpsConnectorResource(client, id);
-            }
-            );
+            return GetSecurityDevOpsArmClientMockingExtension(client).GetAzureDevOpsConnectorResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="AzureDevOpsRepoResource" /> object. </returns>
         public static AzureDevOpsRepoResource GetAzureDevOpsRepoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AzureDevOpsRepoResource.ValidateResourceId(id);
-                return new AzureDevOpsRepoResource(client, id);
-            }
-            );
+            return GetSecurityDevOpsArmClientMockingExtension(client).GetAzureDevOpsRepoResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="AzureDevOpsOrgResource" /> object. </returns>
         public static AzureDevOpsOrgResource GetAzureDevOpsOrgResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AzureDevOpsOrgResource.ValidateResourceId(id);
-                return new AzureDevOpsOrgResource(client, id);
-            }
-            );
+            return GetSecurityDevOpsArmClientMockingExtension(client).GetAzureDevOpsOrgResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="AzureDevOpsProjectResource" /> object. </returns>
         public static AzureDevOpsProjectResource GetAzureDevOpsProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AzureDevOpsProjectResource.ValidateResourceId(id);
-                return new AzureDevOpsProjectResource(client, id);
-            }
-            );
+            return GetSecurityDevOpsArmClientMockingExtension(client).GetAzureDevOpsProjectResource(id);
         }
         #endregion
 
@@ -135,12 +109,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="GitHubConnectorResource" /> object. </returns>
         public static GitHubConnectorResource GetGitHubConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GitHubConnectorResource.ValidateResourceId(id);
-                return new GitHubConnectorResource(client, id);
-            }
-            );
+            return GetSecurityDevOpsArmClientMockingExtension(client).GetGitHubConnectorResource(id);
         }
         #endregion
 
@@ -154,12 +123,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="GitHubRepoResource" /> object. </returns>
         public static GitHubRepoResource GetGitHubRepoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GitHubRepoResource.ValidateResourceId(id);
-                return new GitHubRepoResource(client, id);
-            }
-            );
+            return GetSecurityDevOpsArmClientMockingExtension(client).GetGitHubRepoResource(id);
         }
         #endregion
 
@@ -173,12 +137,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> Returns a <see cref="GitHubOwnerResource" /> object. </returns>
         public static GitHubOwnerResource GetGitHubOwnerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GitHubOwnerResource.ValidateResourceId(id);
-                return new GitHubOwnerResource(client, id);
-            }
-            );
+            return GetSecurityDevOpsArmClientMockingExtension(client).GetGitHubOwnerResource(id);
         }
         #endregion
 
@@ -187,7 +146,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of AzureDevOpsConnectorResources and their operations over a AzureDevOpsConnectorResource. </returns>
         public static AzureDevOpsConnectorCollection GetAzureDevOpsConnectors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAzureDevOpsConnectors();
+            return GetSecurityDevOpsResourceGroupMockingExtension(resourceGroupResource).GetAzureDevOpsConnectors();
         }
 
         /// <summary>
@@ -211,7 +170,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         [ForwardsClientCalls]
         public static async Task<Response<AzureDevOpsConnectorResource>> GetAzureDevOpsConnectorAsync(this ResourceGroupResource resourceGroupResource, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAzureDevOpsConnectors().GetAsync(azureDevOpsConnectorName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityDevOpsResourceGroupMockingExtension(resourceGroupResource).GetAzureDevOpsConnectorAsync(azureDevOpsConnectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -235,7 +194,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         [ForwardsClientCalls]
         public static Response<AzureDevOpsConnectorResource> GetAzureDevOpsConnector(this ResourceGroupResource resourceGroupResource, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAzureDevOpsConnectors().Get(azureDevOpsConnectorName, cancellationToken);
+            return GetSecurityDevOpsResourceGroupMockingExtension(resourceGroupResource).GetAzureDevOpsConnector(azureDevOpsConnectorName, cancellationToken);
         }
 
         /// <summary> Gets a collection of GitHubConnectorResources in the ResourceGroupResource. </summary>
@@ -243,7 +202,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of GitHubConnectorResources and their operations over a GitHubConnectorResource. </returns>
         public static GitHubConnectorCollection GetGitHubConnectors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetGitHubConnectors();
+            return GetSecurityDevOpsResourceGroupMockingExtension(resourceGroupResource).GetGitHubConnectors();
         }
 
         /// <summary>
@@ -267,7 +226,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         [ForwardsClientCalls]
         public static async Task<Response<GitHubConnectorResource>> GetGitHubConnectorAsync(this ResourceGroupResource resourceGroupResource, string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetGitHubConnectors().GetAsync(gitHubConnectorName, cancellationToken).ConfigureAwait(false);
+            return await GetSecurityDevOpsResourceGroupMockingExtension(resourceGroupResource).GetGitHubConnectorAsync(gitHubConnectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -291,7 +250,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         [ForwardsClientCalls]
         public static Response<GitHubConnectorResource> GetGitHubConnector(this ResourceGroupResource resourceGroupResource, string gitHubConnectorName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetGitHubConnectors().Get(gitHubConnectorName, cancellationToken);
+            return GetSecurityDevOpsResourceGroupMockingExtension(resourceGroupResource).GetGitHubConnector(gitHubConnectorName, cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +271,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureDevOpsConnectorsAsync(cancellationToken);
+            return GetSecurityDevOpsSubscriptionMockingExtension(subscriptionResource).GetAzureDevOpsConnectorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -333,7 +292,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="AzureDevOpsConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAzureDevOpsConnectors(cancellationToken);
+            return GetSecurityDevOpsSubscriptionMockingExtension(subscriptionResource).GetAzureDevOpsConnectors(cancellationToken);
         }
 
         /// <summary>
@@ -354,7 +313,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An async collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GitHubConnectorResource> GetGitHubConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGitHubConnectorsAsync(cancellationToken);
+            return GetSecurityDevOpsSubscriptionMockingExtension(subscriptionResource).GetGitHubConnectorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -375,7 +334,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> A collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GitHubConnectorResource> GetGitHubConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGitHubConnectors(cancellationToken);
+            return GetSecurityDevOpsSubscriptionMockingExtension(subscriptionResource).GetGitHubConnectors(cancellationToken);
         }
     }
 }
