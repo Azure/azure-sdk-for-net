@@ -173,11 +173,17 @@ namespace Azure.Core.Serialization
 
         private static object GetObjectInstance(Type returnType)
         {
-            var typeToActivate = returnType.IsAbstract ? returnType.Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{returnType.Name}") : returnType;
-            if (typeToActivate is null)
+            Type typeToActivate = returnType;
+            if (returnType.IsAbstract)
             {
-                throw new InvalidOperationException($"Unable to find type Unknown{returnType.Name} in assembly {returnType.Assembly.FullName}.");
+                DefaultSubClassAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(DefaultSubClassAttribute)) as DefaultSubClassAttribute;
+                if (attribute is null)
+                {
+                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(DefaultSubClassAttribute)} to be used with {nameof(ModelSerializer)}");
+                }
+                typeToActivate = attribute.DefaultSubClass;
             }
+
             var obj = Activator.CreateInstance(typeToActivate, true);
             if (obj is null)
             {

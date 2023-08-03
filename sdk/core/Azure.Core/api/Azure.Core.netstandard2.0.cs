@@ -1076,6 +1076,12 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Core.Serialization
 {
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
+    public sealed partial class DefaultSubClassAttribute : System.Attribute
+    {
+        public DefaultSubClassAttribute(System.Type type) { }
+        public System.Type DefaultSubClass { get { throw null; } }
+    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {

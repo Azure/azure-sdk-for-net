@@ -8,6 +8,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
+    [DefaultSubClass(typeof(UnknownBaseModel))]
     public abstract class BaseModel : IUtf8JsonSerializable, IModelJsonSerializable<BaseModel>
     {
         public static implicit operator RequestContent(BaseModel baseModel)
