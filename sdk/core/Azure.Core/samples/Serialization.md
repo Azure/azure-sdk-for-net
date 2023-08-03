@@ -1,18 +1,19 @@
 # Azure.Core Public Serialization Guide
 
-The latest updates to the `Azure.Core` library have simplified serializing and deserializing of all public Azure models. With the addiion of the `ModelSerializer` class, we provide a public interface that exposes the currently internal serialization code so customers can access it without needing to use reflection or write their own translation. The recommended serialization approach is to use the static `ModelSerializer` class. The `ModelSerializer` class also has the `ModelSerializerOptions` which allows the user to set the serialization `ModelSerializerFormat` type (`Json` or `Wire`) and provide custom Serializer types for specific models.
+The latest updates to the `Azure.Core` library have simplified serializing and deserializing of all public Azure models. With the addiion of the `ModelSerializer` class, we provide a public interface that exposes the previously internal serialization code so customers can access it without needing to use reflection or write their own translation. The recommended serialization approach is to use the static `ModelSerializer` class. The `ModelSerializer` class also has `ModelSerializerOptions` which allows the user to set the serialization `ModelSerializerFormat` type (`Json` or `Wire`) and provide custom Serializer types for specific models.
 
 ## Key Concepts
 
+- [ModelSerializerFormat description]("modelserializerformat-description")
 - [Using the ModelSerializer](#using-the-modelserializer)
-- [Using explicit cast](#using-explicit-cast)
-- [Using the ModelJsonConverter](#using-the-modeljsonconverter)
-- [Envelope BYOM Case](#envelope-byom-case)
-- [Using ModelSerializer with generic IModelSerializable](#using-modelserializer-with-generic-imodelserializable)
+- [Interfacing with protocol methods](#interfacing-with-protocol-methods)
+- [Using JsonSerializer](#using-jsonserializer)
+- [Envelope bring your own model case](#envelope-bring-your-own-model-case)
+- [Interfacing with the low level interfaces](#interfacing-with-the-low-level-interfaces)
 
 ## Using the ModelSerializer
 
-The default serialization options can be overridden by passing in a `ModelSerializerOptions` object to the Serialize and Deserialize methods. Developers can set the format options to specify the serialization format such as XML, JSON, and BinaryData. Default `ModelSerializationOptions` use the `Wire` format and the `System.Text.Json` serializer. The following samples demonstrate how to use `ModelSerializer` class for `System.Text.Json` and `Newtonsoft.Json` serialization.
+The default serialization options can be overridden by passing in a `ModelSerializerOptions` object to the Serialize and Deserialize methods. Developers can set the format options to specify the serialization format such as XML or JSON. Default `ModelSerializationOptions` use the `Json` format and the `System.Text.Json` serializer. The following samples demonstrate how to use `ModelSerializer` class for `System.Text.Json` and `Newtonsoft.Json` serialization.
 
 ### Using ModelSerializer for System.Text.Json
 In the following sample, we are using the default `ModelSerializerOptions`. This will allow the `ModelSerializer` to use the `System.Text.Json` serializer for all models. In the Deserialization sample, we are setting the `ModelSerializerFormat` in the Options to `Json`. This will serialize all properties including read-only and additional properties.
@@ -69,7 +70,7 @@ string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"","
 DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(BinaryData.FromString(json), options);
 ```
 
-## Using explicit cast
+## Interfacing with protocol methods
 
 If you would like to convert the protocol model to the strongly typed model, you can use the explicit cast operator. This will allow you to use the strongly typed model for serialization and deserialization. There is also an explicit cast operator that can be used to convert the strongly typed model to the protocol RequestContent.
 
@@ -93,7 +94,7 @@ DogListProperty dog = (DogListProperty)response;
 Console.WriteLine(dog.IsHungry);
 ```
 
-## Using ModelJsonConverter for JsonSerializer
+## Using JsonSerializer
 
 If you have Json that needs to be converted into a specific object type, consider using the `ModelJsonConverter class`. This class can handle the deserialization of a model to a specific type and include additional metadata. 
 
@@ -125,7 +126,7 @@ options.Converters.Add(new ModelJsonConverter());
 DogListProperty dog = System.Text.Json.JsonSerializer.Deserialize<DogListProperty>(json, options);
 ```
 
-## Envelope BYOM Case
+## Envelope bring your own model case
 
 The following examples show a use case where a user brings a model unknown to the Serializer. The serialization used for each model can also be set in the `ModelSerializableOptions` options property `GenericTypeSerializerCreator`. 
 
@@ -164,7 +165,7 @@ options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new
 Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 ```
 
-## Using ModelSerializer with generic IModelSerializable
+## Interfacing with the low level interfaces
 
 In this example we demonstrate how we could use the exact same method / interface to serialize either Json or Xml.
 Above we demonstrate using `SerializeJson` and `SerializeXml` methods but this requires the user to know which serializer to use.
