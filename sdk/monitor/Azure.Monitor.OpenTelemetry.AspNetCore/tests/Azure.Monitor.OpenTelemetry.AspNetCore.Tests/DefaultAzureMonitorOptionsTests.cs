@@ -78,15 +78,15 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         }
 
         [Fact]
-        public void VerifyConfigure_ViaJson_EnvironmentVarTakesPrecedence()
+        public void VerifyConfigure_ViaJson_EnvironmentVarTakesPrecedence_UsingIConfiguration()
         {
             try
             {
                 Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, "testEnvVarValue");
 
                 var appSettings = @"{""AzureMonitor"":{
-                ""ConnectionString"" : ""testJsonValue""
-                }}";
+                    ""ConnectionString"" : ""testJsonValue""
+                    }}";
 
                 var configuration = new ConfigurationBuilder()
                     .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appSettings)))
@@ -106,6 +106,36 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
                 Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, null);
             }
         }
+
+        [Fact]
+        public void VerifyConfigure_ViaJson_EnvironmentVarTakesPrecedence()
+        {
+            try
+            {
+                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, "testEnvVarValue");
+
+                var appSettings = @"{""AzureMonitor"":{
+                    ""ConnectionString"" : ""testJsonValue""
+                    }}";
+
+                var configuration = new ConfigurationBuilder()
+                    .AddJsonStream(new MemoryStream(Encoding.UTF8.GetBytes(appSettings)))
+                    .Build();
+
+                var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
+
+                var azureMonitorOptions = new AzureMonitorOptions();
+
+                defaultAzureMonitorOptions.Configure(azureMonitorOptions);
+
+                Assert.Equal("testEnvVarValue", azureMonitorOptions.ConnectionString);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, null);
+            }
+        }
+
 #endif
 
         [Fact]
@@ -125,7 +155,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         }
 
         [Fact]
-        public void VerifyConfigure_ViaEnvironmentVar()
+        public void VerifyConfigure_ViaEnvironmentVar_UsingIConfiguration()
         {
             try
             {
@@ -133,6 +163,30 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
                 var configuration = new ConfigurationBuilder()
                     .AddEnvironmentVariables()
+                    .Build();
+
+                var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
+
+                var azureMonitorOptions = new AzureMonitorOptions();
+
+                defaultAzureMonitorOptions.Configure(azureMonitorOptions);
+
+                Assert.Equal("testEnvVarValue", azureMonitorOptions.ConnectionString);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, null);
+            }
+        }
+
+        [Fact]
+        public void VerifyConfigure_ViaEnvironmentVar()
+        {
+            try
+            {
+                Environment.SetEnvironmentVariable(ConnectionStringEnvironmentVariable, "testEnvVarValue");
+
+                var configuration = new ConfigurationBuilder()
                     .Build();
 
                 var defaultAzureMonitorOptions = new DefaultAzureMonitorOptions(configuration);
