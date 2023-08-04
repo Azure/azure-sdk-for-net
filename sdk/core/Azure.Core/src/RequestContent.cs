@@ -249,16 +249,16 @@ namespace Azure.Core
                 _options = options;
             }
 
-            private SequenceWriterAccess? _writerAccess;
-            private SequenceWriterAccess WriterAccess => _writerAccess ??= new SequenceWriterAccess(_model, _options);
+            private ModelWriter? _writer;
+            private ModelWriter Writer => _writer ??= new ModelWriter(_model, _options);
 
-            public override void Dispose() => _writerAccess?.Dispose();
+            public override void Dispose() => _writer?.Dispose();
 
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => WriterAccess.CopyTo(stream, cancellation);
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => Writer.CopyTo(stream, cancellation);
 
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await WriterAccess.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
 
-            public override bool TryComputeLength(out long length) => WriterAccess.TryComputeLength(out length);
+            public override bool TryComputeLength(out long length) => Writer.TryComputeLength(out length);
         }
 
         private sealed class ModelSerializableContent : RequestContent
