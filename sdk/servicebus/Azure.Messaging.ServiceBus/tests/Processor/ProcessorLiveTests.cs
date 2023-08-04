@@ -1505,8 +1505,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             }
         }
 
+        /// <summary>
+        /// Because the message lock renewal occurs on the mgmt link, even when the connection drops, message lock renewal continues
+        /// successfully. This is in contrast to session messages where the lock renewal requires the session to be locked,
+        /// so when the connection drops, the session is lost and the lock renewal fails.
+        /// </summary>
         [Test]
-        public async Task MessageLockLostEventRaisedAfterConnectionDropped()
+        public async Task MessageLockLostEventNotRaisedAfterConnectionDropped()
         {
             var lockDuration = TimeSpan.FromSeconds(30);
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
@@ -1534,8 +1539,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     };
                     SimulateNetworkFailure(client);
                     await Task.Delay(lockDuration.Add(lockDuration));
-                    Assert.IsTrue(messageLockLostRaised);
-                    Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
+                    Assert.IsFalse(messageLockLostRaised);
                     Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
                     tcs.SetResult(true);
                 }
