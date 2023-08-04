@@ -544,11 +544,11 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
@@ -557,9 +557,7 @@ namespace Azure.Core
         public static implicit operator Azure.Core.RequestContent (System.BinaryData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (string content) { throw null; }
         public abstract bool TryComputeLength(out long length);
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Inherited methods require unreferenced code.")]
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Inherited methods require unreferenced code.")]
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
     }
     public abstract partial class RequestFailedDetailsParser
@@ -1081,6 +1079,7 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Core.Serialization
 {
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -1115,22 +1114,18 @@ namespace Azure.Core.Serialization
     {
         string? ConvertMemberName(System.Reflection.MemberInfo member);
     }
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
         public JsonObjectSerializer() { }
         public JsonObjectSerializer(System.Text.Json.JsonSerializerOptions options) { }
         public static Azure.Core.Serialization.JsonObjectSerializer Default { get { throw null; } }
         string? Azure.Core.Serialization.IMemberNameConverter.ConvertMemberName(System.Reflection.MemberInfo member) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.Deserialize which requires unreferenced code.")]
         public override object? Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override System.Threading.Tasks.ValueTask<object?> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
         public override void Serialize(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
         public override System.BinaryData Serialize(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
         public override System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
         public override System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public enum JsonPropertyNames
@@ -1141,16 +1136,11 @@ namespace Azure.Core.Serialization
     public abstract partial class ObjectSerializer
     {
         protected ObjectSerializer() { }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Inherited methods require unreferenced code.")]
         public abstract object? Deserialize(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.ValueTask<object?> DeserializeAsync(System.IO.Stream stream, System.Type returnType, System.Threading.CancellationToken cancellationToken);
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Inherited methods require unreferenced code.")]
         public abstract void Serialize(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Inherited methods require unreferenced code.")]
         public virtual System.BinaryData Serialize(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Inherited methods require unreferenced code.")]
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Inherited methods require unreferenced code.")]
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
