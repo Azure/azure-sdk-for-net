@@ -6,7 +6,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Rehydrates a <see cref="StorageResource"/> for resume.
     /// </summary>
-    public abstract class StorageResourceRehydrator
+    public abstract class StorageResourceProvider
     {
         /// <summary>
         /// Type ID. For DataMovement to query.
@@ -16,11 +16,11 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets a source resource from the given transfer properties.
         /// </summary>
-        protected internal abstract StorageResource GetSourceResource(DataTransferProperties props);
+        protected internal abstract StorageResource FromSource(DataTransferProperties props);
 
         /// <summary>
         /// Gets a source resource from the given transfer properties.
         /// </summary>
-        protected internal abstract StorageResource GetDestinationResource(DataTransferProperties props);
+        protected internal abstract StorageResource FromDestination(DataTransferProperties props);
     }
 }

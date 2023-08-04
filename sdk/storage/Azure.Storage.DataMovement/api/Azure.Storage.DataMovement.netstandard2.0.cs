@@ -1,15 +1,5 @@
 namespace Azure.Storage.DataMovement
 {
-    public partial class AzureStorageCredentialSupplier
-    {
-        public AzureStorageCredentialSupplier() { }
-        public Azure.Storage.DataMovement.AzureStorageCredentialSupplier.GetSasCredential SasCredential { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.AzureStorageCredentialSupplier.GetSharedKeyCredential SharedKeyCredential { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.AzureStorageCredentialSupplier.GetTokenCredential TokenCredential { get { throw null; } set { } }
-        public delegate System.Threading.Tasks.Task<Azure.AzureSasCredential> GetSasCredential(string uri);
-        public delegate System.Threading.Tasks.Task<Azure.Storage.StorageSharedKeyCredential> GetSharedKeyCredential(string uri);
-        public delegate System.Threading.Tasks.Task<Azure.Core.TokenCredential> GetTokenCredential(string uri);
-    }
     public partial class DataTransfer
     {
         internal DataTransfer() { }
@@ -38,33 +28,13 @@ namespace Azure.Storage.DataMovement
         StopOnAllFailures = 0,
         ContinueOnFailure = 1,
     }
-    public partial class LocalDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
+    public partial class LocalFileStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
-        public LocalDirectoryStorageResourceContainer(string path) { }
-        protected internal override bool CanProduceUri { get { throw null; } }
-        public override string Path { get { throw null; } }
-        public override System.Uri Uri { get { throw null; } }
-        protected internal override Azure.Storage.DataMovement.StorageResourceSingle GetChildStorageResource(string childPath) { throw null; }
-        protected internal override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResource> GetStorageResourcesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class LocalFileStorageResource : Azure.Storage.DataMovement.StorageResourceSingle
-    {
-        public LocalFileStorageResource(string path) { }
-        protected internal override bool CanProduceUri { get { throw null; } }
-        protected internal override long? Length { get { throw null; } }
-        protected internal override long MaxChunkSize { get { throw null; } }
-        public override string Path { get { throw null; } }
-        protected internal override string ResourceId { get { throw null; } }
-        protected internal override Azure.Storage.DataMovement.TransferType TransferType { get { throw null; } }
-        public override System.Uri Uri { get { throw null; } }
-        protected internal override System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected internal override System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResourceSingle sourceResource, Azure.HttpRange range, bool overwrite, long completeLength = (long)0, Azure.Storage.DataMovement.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected internal override System.Threading.Tasks.Task CopyFromUriAsync(Azure.Storage.DataMovement.StorageResourceSingle sourceResource, bool overwrite, long completeLength, Azure.Storage.DataMovement.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected internal override System.Threading.Tasks.Task<bool> DeleteIfExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected internal override System.Threading.Tasks.Task<Azure.HttpAuthorization> GetCopyAuthorizationHeaderAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResourceProperties> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.ReadStreamStorageResourceResult> ReadStreamAsync(long position = (long)0, long? length = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected internal override System.Threading.Tasks.Task WriteFromStreamAsync(System.IO.Stream stream, long streamLength, bool overwrite, long position = (long)0, long completeLength = (long)0, Azure.Storage.DataMovement.StorageResourceWriteToOffsetOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public LocalFileStorageResourceProvider() { }
+        protected internal override string TypeId { get { throw null; } }
+        protected internal override Azure.Storage.DataMovement.StorageResource FromDestination(Azure.Storage.DataMovement.DataTransferProperties props) { throw null; }
+        public Azure.Storage.DataMovement.StorageResource FromPath(string path) { throw null; }
+        protected internal override Azure.Storage.DataMovement.StorageResource FromSource(Azure.Storage.DataMovement.DataTransferProperties props) { throw null; }
     }
     public partial class ProgressHandlerOptions
     {
@@ -116,12 +86,12 @@ namespace Azure.Storage.DataMovement
         public StorageResourceProperties(System.DateTimeOffset lastModified, System.DateTimeOffset createdOn, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, long blobSequenceNumber, int blobCommittedBlockCount, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope, string versionId, bool isLatestVersion, System.DateTimeOffset expiresOn, System.DateTimeOffset lastAccessed) { }
         public StorageResourceProperties(System.DateTimeOffset lastModified, System.DateTimeOffset createdOn, long contentLength, System.DateTimeOffset lastAccessed) { }
     }
-    public abstract partial class StorageResourceRehydrator
+    public abstract partial class StorageResourceProvider
     {
-        protected StorageResourceRehydrator() { }
+        protected StorageResourceProvider() { }
         protected internal abstract string TypeId { get; }
-        protected internal abstract Azure.Storage.DataMovement.StorageResource GetDestinationResource(Azure.Storage.DataMovement.DataTransferProperties props);
-        protected internal abstract Azure.Storage.DataMovement.StorageResource GetSourceResource(Azure.Storage.DataMovement.DataTransferProperties props);
+        protected internal abstract Azure.Storage.DataMovement.StorageResource FromDestination(Azure.Storage.DataMovement.DataTransferProperties props);
+        protected internal abstract Azure.Storage.DataMovement.StorageResource FromSource(Azure.Storage.DataMovement.DataTransferProperties props);
     }
     public abstract partial class StorageResourceSingle : Azure.Storage.DataMovement.StorageResource
     {
@@ -203,7 +173,7 @@ namespace Azure.Storage.DataMovement
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Storage.DataMovement.ErrorHandlingBehavior ErrorHandling { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
-        public void AddRehydrator(Azure.Storage.DataMovement.StorageResourceRehydrator rehydrator) { }
+        public System.Collections.Generic.List<Azure.Storage.DataMovement.StorageResourceProvider> ResumeProviders { get { throw null; } set { } }
     }
     public partial class TransferOptions : System.IEquatable<Azure.Storage.DataMovement.TransferOptions>
     {

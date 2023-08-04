@@ -43,18 +43,9 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public DiagnosticsOptions Diagnostics => ClientOptions.Diagnostics;
 
-        internal List<StorageResourceRehydrator> StorageResourceRehydrators = new()
-        {
-            new FileSystemStorageResourceRehydrator()
-        };
-
         /// <summary>
-        /// Adds a rehydrator for transfer resume.
+        /// Resource providers for use in resuming a transfer.
         /// </summary>
-        public void AddRehydrator(StorageResourceRehydrator rehydrator)
-        {
-            StorageResourceRehydrators.RemoveAll(r => r.TypeId == rehydrator.TypeId);
-            StorageResourceRehydrators.Add(rehydrator);
-        }
+        public List<StorageResourceProvider> ResumeProviders { get; set; }
     }
 }

@@ -47,8 +47,8 @@ namespace Azure.Storage.Blobs
         /// <returns>A <see cref="DataTransfer"/> instance which can be used track progress and wait for completion with <see cref="DataTransfer.WaitForCompletionAsync"/>.</returns>
         public static async Task<DataTransfer> StartUploadDirectoryAsync(this BlobContainerClient client, string localDirectoryPath, BlobContainerClientTransferOptions options)
         {
-            StorageResourceContainer localDirectory = new LocalDirectoryStorageResourceContainer(localDirectoryPath);
-            StorageResourceContainer blobDirectory = new BlobStorageResourceContainer(client, options?.BlobContainerOptions);
+            StorageResource localDirectory = new LocalFileStorageResourceProvider().FromPath(localDirectoryPath);
+            StorageResource blobDirectory = new BlobStorageResourceContainer(client, options?.BlobContainerOptions);
 
             return await s_defaultTransferManager.Value.StartTransferAsync(localDirectory, blobDirectory, options?.TransferOptions).ConfigureAwait(false);
         }
@@ -84,8 +84,8 @@ namespace Azure.Storage.Blobs
         /// <returns></returns>
         public static async Task<DataTransfer> StartDownloadToDirectoryAsync(this BlobContainerClient client, string localDirectoryPath, BlobContainerClientTransferOptions options)
         {
-            StorageResourceContainer localDirectory = new LocalDirectoryStorageResourceContainer(localDirectoryPath);
-            StorageResourceContainer blobDirectory = new BlobStorageResourceContainer(client, options?.BlobContainerOptions);
+            StorageResource localDirectory = new LocalFileStorageResourceProvider().FromPath(localDirectoryPath);
+            StorageResource blobDirectory = new BlobStorageResourceContainer(client, options?.BlobContainerOptions);
 
             return await s_defaultTransferManager.Value.StartTransferAsync(blobDirectory, localDirectory, options?.TransferOptions).ConfigureAwait(false);
         }

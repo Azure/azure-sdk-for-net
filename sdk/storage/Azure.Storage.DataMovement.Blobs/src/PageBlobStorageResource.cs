@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// The PageBlobStorageResource class.
     /// </summary>
-    public class PageBlobStorageResource : StorageResourceSingle
+    internal class PageBlobStorageResource : StorageResourceSingle
     {
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;

@@ -149,8 +149,8 @@ namespace Azure.Storage.DataMovement.Tests
         {
             if (!LocalStorageResources.TryGetResourceProviders(
                 info,
-                out LocalStorageResourceProvider sourceProvider,
-                out LocalStorageResourceProvider destinationProvider))
+                out LocalFileStorageResourceProvider sourceProvider,
+                out LocalFileStorageResourceProvider destinationProvider))
             {
                 return null;
             }
@@ -193,7 +193,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFileStorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => LocalFileStorageResource.RehydrateResource(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (LocalFileStorageResource)new LocalStorageResourceProvider(
+                RehydrateApi.ProviderInstance => (LocalFileStorageResource)new LocalFileStorageResourceProvider(
                     transferProperties, isSource, isFolder: false).MakeResource(),
                 RehydrateApi.PublicStaticApi => (LocalFileStorageResource)LocalStorageResourcesInlineTryGet(
                     transferProperties, isSource),
@@ -249,7 +249,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalDirectoryStorageResourceContainer storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => LocalDirectoryStorageResourceContainer.RehydrateResource(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (LocalDirectoryStorageResourceContainer)new LocalStorageResourceProvider(
+                RehydrateApi.ProviderInstance => (LocalDirectoryStorageResourceContainer)new LocalFileStorageResourceProvider(
                     transferProperties, isSource, isFolder: true).MakeResource(),
                 RehydrateApi.PublicStaticApi => (LocalDirectoryStorageResourceContainer)LocalStorageResourcesInlineTryGet(
                     transferProperties, isSource),
