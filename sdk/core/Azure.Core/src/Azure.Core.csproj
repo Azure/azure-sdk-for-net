@@ -17,6 +17,7 @@
       to give customers time to migrate without losing perf optimizations
      -->
     <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
+    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net461</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
