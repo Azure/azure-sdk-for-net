@@ -488,7 +488,7 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'J');
+            mdoc.WriteTo(stream, "J");
             stream.Flush();
             stream.Position = 0;
 
@@ -506,7 +506,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("foo").Set(2);
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -522,7 +522,7 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             Stream stream = new MemoryStream();
-            Assert.Throws<FormatException>(() => mdoc.WriteTo(stream, 'U'));
+            Assert.Throws<FormatException>(() => mdoc.WriteTo(stream, "U"));
         }
 
         [TestCaseSource(nameof(TestCases))]
@@ -694,7 +694,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("foo").Set(2);
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -712,7 +712,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("foo").Set(2);
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -731,7 +731,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("bar").Set("b");
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -753,7 +753,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("foo").Set(3);
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -763,7 +763,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CanWritePatchForNonRootElement()
+        public void CanWritePatchForChangeToNonRootElement()
         {
             string json = """
                 {
@@ -777,7 +777,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("parent").GetProperty("child").Set(false);
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -803,7 +803,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("a").GetProperty("b").GetProperty("c").Set(2);
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -835,7 +835,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("d").GetProperty("e").GetProperty("f").Set(3);
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -871,7 +871,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("d").GetProperty("e").GetProperty("f").Set(4);
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -916,7 +916,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -963,7 +963,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -985,7 +985,7 @@ namespace Azure.Core.Tests
             string expected = """[3, 1, 2]""";
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1015,7 +1015,7 @@ namespace Azure.Core.Tests
             """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1049,7 +1049,7 @@ namespace Azure.Core.Tests
             """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1084,7 +1084,7 @@ namespace Azure.Core.Tests
             """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1125,7 +1125,7 @@ namespace Azure.Core.Tests
             """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1175,7 +1175,7 @@ namespace Azure.Core.Tests
             """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1227,7 +1227,7 @@ namespace Azure.Core.Tests
             """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1279,7 +1279,7 @@ namespace Azure.Core.Tests
             """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1317,7 +1317,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1356,7 +1356,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1391,7 +1391,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1428,7 +1428,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1466,7 +1466,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1503,7 +1503,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1540,7 +1540,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1575,7 +1575,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1610,13 +1610,92 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
             string actual = BinaryData.FromStream(stream).ToString();
 
             AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchForNonRootElement()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": {
+                            "abc": 2
+                        }
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("ab").GetProperty("abc").Set(3);
+            mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("3");
+
+            string expectedRoot = """
+                {
+                    "a": {
+                        "ab": {
+                            "abc": 3
+                        }
+                    },
+                    "b": {
+                        "ba": "3"
+                    }
+                }
+                """;
+
+            using Stream streamRoot = new MemoryStream();
+            mdoc.WriteTo(streamRoot, "P");
+            streamRoot.Flush();
+            streamRoot.Position = 0;
+
+            string actual = BinaryData.FromStream(streamRoot).ToString();
+
+            AreEqualJson(expectedRoot, actual);
+
+            string expectedAb = """
+                {
+                    "ab": {
+                        "abc": 3
+                    }
+                }
+                """;
+
+            using Stream streamAb = new MemoryStream();
+            using Utf8JsonWriter writerAb = new Utf8JsonWriter(streamAb);
+            mdoc.RootElement.GetProperty("a").WriteTo(writerAb, "P");
+            writerAb.Flush();
+            streamAb.Position = 0;
+
+            string actualAb = BinaryData.FromStream(streamAb).ToString();
+
+            AreEqualJson(expectedAb, actualAb);
+
+            string expectedB = """
+                {
+                    "ba": "3"
+                }
+                """;
+
+            using Stream streamB = new MemoryStream();
+            using Utf8JsonWriter writerB = new Utf8JsonWriter(streamB);
+            mdoc.RootElement.GetProperty("b").WriteTo(writerB, "P");
+            writerB.Flush();
+            streamB.Position = 0;
+
+            string actualB = BinaryData.FromStream(streamB).ToString();
+
+            AreEqualJson(expectedB, actualB);
         }
 
         [Test]
@@ -1646,7 +1725,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 
@@ -1688,7 +1767,7 @@ namespace Azure.Core.Tests
                 """;
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'P');
+            mdoc.WriteTo(stream, "P");
             stream.Flush();
             stream.Position = 0;
 

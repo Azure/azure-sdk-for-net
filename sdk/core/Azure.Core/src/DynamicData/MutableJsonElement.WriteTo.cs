@@ -16,26 +16,20 @@ namespace Azure.Core.Json
             WriteElement(_path, _highWaterMark, _element, writer);
         }
 
-        internal void WriteTo(Utf8JsonWriter writer, StandardFormat format)
+        internal void WriteTo(Utf8JsonWriter writer, string format)
         {
-            // TODO: consolidate format switching with root
-            if (format != default && format.Symbol != 'J' && format.Symbol != 'P')
-            {
-                throw new FormatException($"Unsupported format {format.Symbol}. Supported formats are: 'J' - JSON, 'P' - JSON Merge Patch.");
-            }
+            _root.ValidateFormat(format);
 
-            switch (format.Symbol)
+            switch (format)
             {
-                case 'P':
+                case "P":
                     WritePatch(writer);
                     break;
-                case 'J':
+                case "J":
                 default:
                     WriteTo(writer);
                     break;
             }
-
-            // TODO: Test case: Make sure we write the current element, not the root
         }
 
         private void WriteElement(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)

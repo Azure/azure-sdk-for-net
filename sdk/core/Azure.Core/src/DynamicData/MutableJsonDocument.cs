@@ -48,24 +48,28 @@ namespace Azure.Core.Json
         /// <exception cref="ArgumentNullException">The <paramref name="stream"/> parameter is <see langword="null"/>.</exception>
         /// <exception cref="FormatException">Thrown if an unsupported value is passed for format.</exception>
         /// <remarks>The value of <paramref name="format"/> can be default or 'J' to write the document as JSON, or 'P' to write the changes as JSON Merge Patch.</remarks>
-        public void WriteTo(Stream stream, StandardFormat format = default)
+        public void WriteTo(Stream stream, string? format = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
+            ValidateFormat(format);
 
-            if (format != default && format.Symbol != 'J' && format.Symbol != 'P')
+            switch (format)
             {
-                throw new FormatException($"Unsupported format {format.Symbol}. Supported formats are: 'J' - JSON, 'P' - JSON Merge Patch.");
-            }
-
-            switch (format.Symbol)
-            {
-                case 'P':
+                case "P":
                     WritePatch(stream);
                     break;
-                case 'J':
+                case "J":
                 default:
                     WriteJson(stream);
                     break;
+            }
+        }
+
+        internal void ValidateFormat(string? format)
+        {
+            if (format != default && format != "J" && format != "P")
+            {
+                throw new FormatException($"Unsupported format {format}. Supported formats are: \"J\" - JSON, \"P\" - JSON Merge Patch.");
             }
         }
 
