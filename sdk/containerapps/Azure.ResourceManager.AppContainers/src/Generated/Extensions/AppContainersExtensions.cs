@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppContainers.Mocking;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppContainers. </summary>
     public static partial class AppContainersExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static AppContainersArmClientMockingExtension GetAppContainersArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new AppContainersArmClientMockingExtension(client);
+            });
+        }
+
+        private static AppContainersResourceGroupMockingExtension GetAppContainersResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new AppContainersResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static AppContainersSubscriptionMockingExtension GetAppContainersSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new AppContainersSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region ContainerAppAuthConfigResource
         /// <summary>
         /// Gets an object representing a <see cref="ContainerAppAuthConfigResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppAuthConfigResource" /> object. </returns>
         public static ContainerAppAuthConfigResource GetContainerAppAuthConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppAuthConfigResource.ValidateResourceId(id);
-                return new ContainerAppAuthConfigResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppAuthConfigResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentResource" /> object. </returns>
         public static ContainerAppConnectedEnvironmentResource GetContainerAppConnectedEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppConnectedEnvironmentResource.ValidateResourceId(id);
-                return new ContainerAppConnectedEnvironmentResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppConnectedEnvironmentResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentCertificateResource" /> object. </returns>
         public static ContainerAppConnectedEnvironmentCertificateResource GetContainerAppConnectedEnvironmentCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppConnectedEnvironmentCertificateResource.ValidateResourceId(id);
-                return new ContainerAppConnectedEnvironmentCertificateResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppConnectedEnvironmentCertificateResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentCertificateResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentCertificateResource GetContainerAppManagedEnvironmentCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppManagedEnvironmentCertificateResource.ValidateResourceId(id);
-                return new ContainerAppManagedEnvironmentCertificateResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentCertificateResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource" /> object. </returns>
         public static ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppConnectedEnvironmentDaprComponentResource.ValidateResourceId(id);
-                return new ContainerAppConnectedEnvironmentDaprComponentResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppConnectedEnvironmentDaprComponentResource(id);
         }
         #endregion
 
@@ -155,12 +124,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppManagedEnvironmentDaprComponentResource.ValidateResourceId(id);
-                return new ContainerAppManagedEnvironmentDaprComponentResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentDaprComponentResource(id);
         }
         #endregion
 
@@ -174,12 +138,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentStorageResource" /> object. </returns>
         public static ContainerAppConnectedEnvironmentStorageResource GetContainerAppConnectedEnvironmentStorageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppConnectedEnvironmentStorageResource.ValidateResourceId(id);
-                return new ContainerAppConnectedEnvironmentStorageResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppConnectedEnvironmentStorageResource(id);
         }
         #endregion
 
@@ -193,12 +152,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppResource" /> object. </returns>
         public static ContainerAppResource GetContainerAppResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppResource.ValidateResourceId(id);
-                return new ContainerAppResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppResource(id);
         }
         #endregion
 
@@ -212,12 +166,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource" /> object. </returns>
         public static ContainerAppDetectorPropertyResource GetContainerAppDetectorPropertyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppDetectorPropertyResource.ValidateResourceId(id);
-                return new ContainerAppDetectorPropertyResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppDetectorPropertyResource(id);
         }
         #endregion
 
@@ -231,12 +180,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppJobResource" /> object. </returns>
         public static ContainerAppJobResource GetContainerAppJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppJobResource.ValidateResourceId(id);
-                return new ContainerAppJobResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppJobResource(id);
         }
         #endregion
 
@@ -250,12 +194,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppRevisionResource" /> object. </returns>
         public static ContainerAppRevisionResource GetContainerAppRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppRevisionResource.ValidateResourceId(id);
-                return new ContainerAppRevisionResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppRevisionResource(id);
         }
         #endregion
 
@@ -269,12 +208,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyRevisionResource" /> object. </returns>
         public static ContainerAppDetectorPropertyRevisionResource GetContainerAppDetectorPropertyRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppDetectorPropertyRevisionResource.ValidateResourceId(id);
-                return new ContainerAppDetectorPropertyRevisionResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppDetectorPropertyRevisionResource(id);
         }
         #endregion
 
@@ -288,12 +222,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppReplicaResource" /> object. </returns>
         public static ContainerAppReplicaResource GetContainerAppReplicaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppReplicaResource.ValidateResourceId(id);
-                return new ContainerAppReplicaResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppReplicaResource(id);
         }
         #endregion
 
@@ -307,12 +236,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppDetectorResource" /> object. </returns>
         public static ContainerAppDetectorResource GetContainerAppDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppDetectorResource.ValidateResourceId(id);
-                return new ContainerAppDetectorResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppDetectorResource(id);
         }
         #endregion
 
@@ -326,12 +250,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentDetectorResource GetContainerAppManagedEnvironmentDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppManagedEnvironmentDetectorResource.ValidateResourceId(id);
-                return new ContainerAppManagedEnvironmentDetectorResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentDetectorResource(id);
         }
         #endregion
 
@@ -345,12 +264,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ValidateResourceId(id);
-                return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(id);
         }
         #endregion
 
@@ -364,12 +278,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentResource GetContainerAppManagedEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppManagedEnvironmentResource.ValidateResourceId(id);
-                return new ContainerAppManagedEnvironmentResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentResource(id);
         }
         #endregion
 
@@ -383,12 +292,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedCertificateResource" /> object. </returns>
         public static ContainerAppManagedCertificateResource GetContainerAppManagedCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppManagedCertificateResource.ValidateResourceId(id);
-                return new ContainerAppManagedCertificateResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedCertificateResource(id);
         }
         #endregion
 
@@ -402,12 +306,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentStorageResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentStorageResource GetContainerAppManagedEnvironmentStorageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppManagedEnvironmentStorageResource.ValidateResourceId(id);
-                return new ContainerAppManagedEnvironmentStorageResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentStorageResource(id);
         }
         #endregion
 
@@ -421,12 +320,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppSourceControlResource" /> object. </returns>
         public static ContainerAppSourceControlResource GetContainerAppSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerAppSourceControlResource.ValidateResourceId(id);
-                return new ContainerAppSourceControlResource(client, id);
-            }
-            );
+            return GetAppContainersArmClientMockingExtension(client).GetContainerAppSourceControlResource(id);
         }
         #endregion
 
@@ -435,7 +329,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppConnectedEnvironmentResources and their operations over a ContainerAppConnectedEnvironmentResource. </returns>
         public static ContainerAppConnectedEnvironmentCollection GetContainerAppConnectedEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerAppConnectedEnvironments();
+            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppConnectedEnvironments();
         }
 
         /// <summary>
@@ -459,7 +353,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppConnectedEnvironmentResource>> GetContainerAppConnectedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetContainerAppConnectedEnvironments().GetAsync(connectedEnvironmentName, cancellationToken).ConfigureAwait(false);
+            return await GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppConnectedEnvironmentAsync(connectedEnvironmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -483,7 +377,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironment(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetContainerAppConnectedEnvironments().Get(connectedEnvironmentName, cancellationToken);
+            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppConnectedEnvironment(connectedEnvironmentName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppResources in the ResourceGroupResource. </summary>
@@ -491,7 +385,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppResources and their operations over a ContainerAppResource. </returns>
         public static ContainerAppCollection GetContainerApps(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerApps();
+            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerApps();
         }
 
         /// <summary>
@@ -515,7 +409,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppResource>> GetContainerAppAsync(this ResourceGroupResource resourceGroupResource, string containerAppName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetContainerApps().GetAsync(containerAppName, cancellationToken).ConfigureAwait(false);
+            return await GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppAsync(containerAppName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -539,7 +433,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppResource> GetContainerApp(this ResourceGroupResource resourceGroupResource, string containerAppName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetContainerApps().Get(containerAppName, cancellationToken);
+            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerApp(containerAppName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppJobResources in the ResourceGroupResource. </summary>
@@ -547,7 +441,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppJobResources and their operations over a ContainerAppJobResource. </returns>
         public static ContainerAppJobCollection GetContainerAppJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerAppJobs();
+            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppJobs();
         }
 
         /// <summary>
@@ -571,7 +465,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppJobResource>> GetContainerAppJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetContainerAppJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+            return await GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppJobAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -595,7 +489,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppJobResource> GetContainerAppJob(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetContainerAppJobs().Get(jobName, cancellationToken);
+            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppJob(jobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentResources in the ResourceGroupResource. </summary>
@@ -603,7 +497,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An object representing collection of ContainerAppManagedEnvironmentResources and their operations over a ContainerAppManagedEnvironmentResource. </returns>
         public static ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerAppManagedEnvironments();
+            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppManagedEnvironments();
         }
 
         /// <summary>
@@ -627,7 +521,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppManagedEnvironmentResource>> GetContainerAppManagedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetContainerAppManagedEnvironments().GetAsync(environmentName, cancellationToken).ConfigureAwait(false);
+            return await GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppManagedEnvironmentAsync(environmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -651,7 +545,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironment(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetContainerAppManagedEnvironments().Get(environmentName, cancellationToken);
+            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppManagedEnvironment(environmentName, cancellationToken);
         }
 
         /// <summary>
@@ -673,7 +567,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableWorkloadProfilesAsync(location, cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetAvailableWorkloadProfilesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -695,7 +589,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfiles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAvailableWorkloadProfiles(location, cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetAvailableWorkloadProfiles(location, cancellationToken);
         }
 
         /// <summary>
@@ -717,7 +611,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBillingMetersAsync(location, cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetBillingMetersAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -739,7 +633,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetBillingMeters(location, cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetBillingMeters(location, cancellationToken);
         }
 
         /// <summary>
@@ -760,7 +654,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppConnectedEnvironmentsAsync(cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppConnectedEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -781,7 +675,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppConnectedEnvironments(cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppConnectedEnvironments(cancellationToken);
         }
 
         /// <summary>
@@ -802,7 +696,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppResource> GetContainerAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppsAsync(cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -823,7 +717,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppResource> GetContainerApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerApps(cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerApps(cancellationToken);
         }
 
         /// <summary>
@@ -844,7 +738,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppJobResource> GetContainerAppJobsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppJobsAsync(cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppJobsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -865,7 +759,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppJobResource> GetContainerAppJobs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppJobs(cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppJobs(cancellationToken);
         }
 
         /// <summary>
@@ -886,7 +780,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppManagedEnvironmentsAsync(cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppManagedEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -907,7 +801,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerAppManagedEnvironments(cancellationToken);
+            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppManagedEnvironments(cancellationToken);
         }
     }
 }
