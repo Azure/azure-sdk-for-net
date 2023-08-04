@@ -205,10 +205,55 @@ namespace Azure.Core.Json
                     writer.WriteNullValue();
                     Debug.WriteLine("** writer: Writing 'null' | foreach change");
                 }
-                else
+                else if (change.Value.ChangeKind == MutableJsonChangeKind.PropertyAddition)
                 {
                     patchElement.WriteTo(writer);
                     Debug.WriteLine($"** writer: Writing '{patchElement}' | foreach change");
+                }
+                else // Update
+                {
+                    if (patchElement.ValueKind != JsonValueKind.Object)
+                    {
+                        patchElement.WriteTo(writer);
+                    }
+                    else
+                    {
+                        // If an object has been updated, we need to check whether
+                        // any of its properties were incidentally deleted by not
+                        // being included in the update
+                        bool opened = false;
+                        JsonElement original = GetOriginalFromRoot(patchPath, patchPathLength);
+                        foreach (JsonProperty property in original.EnumerateObject())
+                        {
+                            if (!patchElement.TryGetProperty(property.Name, out _))
+                            {
+                                if (!opened)
+                                {
+                                    writer.WriteStartObject();
+                                    opened = true;
+                                }
+
+                                writer.WritePropertyName(property.Name);
+                                writer.WriteNullValue();
+                            }
+                        }
+
+                        if (opened)
+                        {
+                            // finish writing out the update values
+                            foreach ((string Name, MutableJsonElement Value) property in patchElement.EnumerateObject())
+                            {
+                                writer.WritePropertyName(property.Name);
+                                property.Value.WriteTo(writer);
+                            }
+
+                            writer.WriteEndObject();
+                        }
+                        else
+                        {
+                            patchElement.WriteTo(writer);
+                        }
+                    }
                 }
 
                 change = _root.Changes.GetNextMergePatchChange(currentPath.Slice(0, currentPathLength));
@@ -367,9 +412,8 @@ namespace Azure.Core.Json
                             break;
                         }
 
-                        if (patchElement.ValueKind != JsonValueKind.Object)
+                        if (patchElement.ValueKind == JsonValueKind.Array)
                         {
-                            // we're at a leaf node: array, number, etc.
                             break;
                         }
 
@@ -390,6 +434,38 @@ namespace Azure.Core.Json
                 start += end + 1;
             }
             while (start < length);
+        }
+
+        private JsonElement GetOriginalFromRoot(ReadOnlySpan<char> path, int pathLength)
+        {
+            JsonElement current = _root.RootElement._element;
+
+            if (pathLength == 0)
+            {
+                return current;
+            }
+
+            int length = pathLength;
+            int start = 0;
+            int end;
+            do
+            {
+                end = path.Slice(0, pathLength).Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                if (end == -1)
+                {
+                    end = length - start;
+                }
+
+                if (end != 0)
+                {
+                    current = current.GetProperty(path.Slice(start, end));
+                }
+
+                start += end + 1;
+            }
+            while (start < length);
+
+            return current;
         }
     }
 }
