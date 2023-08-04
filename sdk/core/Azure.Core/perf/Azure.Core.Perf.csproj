@@ -25,6 +25,9 @@
     <None Update="TestData\JsonFormattedString.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="..\tests\common\TestData\*.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
