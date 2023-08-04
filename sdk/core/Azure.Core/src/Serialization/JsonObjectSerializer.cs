@@ -15,6 +15,9 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// An <see cref="ObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> for serialization/deserialization.
     /// </summary>
+#if NET6_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
+#endif
     public class JsonObjectSerializer : ObjectSerializer, IMemberNameConverter
     {
         private const int JsonIgnoreConditionAlways = 1;
@@ -51,9 +54,6 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
-#endif
         public override void Serialize(Stream stream, object? value, Type inputType, CancellationToken cancellationToken)
         {
             var buffer = JsonSerializer.SerializeToUtf8Bytes(value, inputType, _options);
@@ -61,18 +61,12 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
-#endif
         public override async ValueTask SerializeAsync(Stream stream, object? value, Type inputType, CancellationToken cancellationToken)
         {
             await JsonSerializer.SerializeAsync(stream, value, inputType, _options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.Deserialize which requires unreferenced code.")]
-#endif
         public override object? Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken)
         {
             using var memoryStream = new MemoryStream();
@@ -87,22 +81,13 @@ namespace Azure.Core.Serialization
         }
 
         /// <inheritdoc />
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
-#endif
         public override BinaryData Serialize(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
             SerializeToBinaryDataInternal(value, inputType);
 
         /// <inheritdoc />
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
-#endif
         public override ValueTask<BinaryData> SerializeAsync(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
              new ValueTask<BinaryData>(SerializeToBinaryDataInternal(value, inputType));
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
-#endif
         private BinaryData SerializeToBinaryDataInternal(object? value, Type? inputType)
         {
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, inputType ?? value?.GetType() ?? typeof(object), _options);

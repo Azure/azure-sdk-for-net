@@ -601,9 +601,6 @@ namespace Azure.Core.Pipeline
                     _cancellationToken = cancellationToken;
                 }
 
-#if NET6_0_OR_GREATER
-               [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Implementations of RequestContent.WriteToAsync require unreferenced code.")]
-#endif
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context) => await _pipelineContent.WriteToAsync(stream, _cancellationToken).ConfigureAwait(false);
 
                 protected override bool TryComputeLength(out long length) => _pipelineContent.TryComputeLength(out length);

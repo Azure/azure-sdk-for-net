@@ -186,9 +186,6 @@ namespace Azure.Core
         /// <param name="stream"></param>
         /// <param name="cancellationToken"></param>
         ///
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(stream, nameof(stream));
@@ -232,9 +229,6 @@ namespace Azure.Core
         /// <param name="stream"></param>
         /// <param name="cancellation"></param>
         /// <returns></returns>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
         public override Task WriteToAsync(Stream stream, CancellationToken cancellation) =>
             SerializeToStreamAsync(stream, cancellation);
 

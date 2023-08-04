@@ -21,9 +21,6 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         /// <param name="inputType">The type of the <paramref name="value"/> to convert.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Inherited methods require unreferenced code.")]
-#endif
         public abstract void Serialize(Stream stream, object? value, Type inputType, CancellationToken cancellationToken);
 
         /// <summary>
@@ -33,9 +30,6 @@ namespace Azure.Core.Serialization
         /// <param name="value">The value to convert.</param>
         /// <param name="inputType">The type of the <paramref name="value"/> to convert.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Inherited methods require unreferenced code.")]
-#endif
         public abstract ValueTask SerializeAsync(Stream stream, object? value, Type inputType, CancellationToken cancellationToken);
 
         /// <summary>
@@ -45,9 +39,6 @@ namespace Azure.Core.Serialization
         /// <param name="stream">The <see cref="System.IO.Stream"/> to read from.</param>
         /// <param name="returnType">The type of the object to convert to and return.</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during deserialization.</param>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Inherited methods require unreferenced code.")]
-#endif
         public abstract object? Deserialize(Stream stream, Type returnType, CancellationToken cancellationToken);
 
         /// <summary>
@@ -66,9 +57,6 @@ namespace Azure.Core.Serialization
         /// <param name="inputType">The type to use when serializing <paramref name="value"/>. If omitted, the type will be determined using <see cref="object.GetType"/>().</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>The object's binary representation as <see cref="BinaryData"/>.</returns>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Inherited methods require unreferenced code.")]
-#endif
         public virtual BinaryData Serialize(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
             SerializeToBinaryDataInternalAsync(value, inputType, false, cancellationToken).EnsureCompleted();
 
@@ -79,9 +67,6 @@ namespace Azure.Core.Serialization
         /// <param name="inputType">The type to use when serializing <paramref name="value"/>. If omitted, the type will be determined using <see cref="object.GetType"/>().</param>
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use during serialization.</param>
         /// <returns>The object's binary representation as <see cref="BinaryData"/>.</returns>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Inherited methods require unreferenced code.")]
-#endif
         public virtual async ValueTask<BinaryData> SerializeAsync(object? value, Type? inputType = default, CancellationToken cancellationToken = default) =>
             await SerializeToBinaryDataInternalAsync(value, inputType, true, cancellationToken).ConfigureAwait(false);
 

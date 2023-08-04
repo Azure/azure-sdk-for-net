@@ -10,6 +10,7 @@ namespace Azure.Core.Json
     {
         private JsonElement? _serializedValue;
         private readonly JsonSerializerOptions _serializerOptions;
+        internal const string SerializationRequiresUnreferencedCode = "Calls JsonSerializer.SerializeToUtf8Bytes which is incompatible with trimming.";
 
         public MutableJsonChange(string path,
             int index,
@@ -49,7 +50,7 @@ namespace Azure.Core.Json
         public JsonValueKind ValueKind
         {
 #if NET6_0_OR_GREATER
-           [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+           [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
             get
             {
@@ -58,7 +59,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         internal JsonElement GetSerializedValue()
         {
@@ -98,7 +99,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         internal string AsString()
         {

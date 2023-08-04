@@ -55,9 +55,6 @@ namespace Azure.Core
 
         #region Serialization
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(stream, nameof(stream));
@@ -71,9 +68,6 @@ namespace Azure.Core
             }
         }
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
         public override void WriteTo(Stream stream, CancellationToken cancellationToken)
         {
             Argument.AssertNotNull(stream, nameof(stream));

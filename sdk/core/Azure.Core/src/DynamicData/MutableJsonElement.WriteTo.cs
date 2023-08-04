@@ -11,7 +11,7 @@ namespace Azure.Core.Json
     internal partial struct MutableJsonElement
     {
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         internal void WriteTo(Utf8JsonWriter writer)
         {
@@ -19,7 +19,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         private void WriteElement(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
@@ -76,7 +76,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         private void WriteObject(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
@@ -106,7 +106,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         private void WriteArray(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {

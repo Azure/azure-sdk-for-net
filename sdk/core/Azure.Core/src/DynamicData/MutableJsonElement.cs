@@ -17,6 +17,7 @@ namespace Azure.Core.Json
     [JsonConverter(typeof(MutableJsonElementConverter))]
     internal readonly partial struct MutableJsonElement
     {
+        internal const string SerializationRequiresUnreferencedCode = "Calls JsonSerializer.SerializeToUtf8Bytes which is incompatible with trimming.";
         private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
         private readonly string _path;
@@ -38,7 +39,7 @@ namespace Azure.Core.Json
         public JsonValueKind? ValueKind
         {
 #if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
             get
             {
@@ -138,7 +139,7 @@ namespace Azure.Core.Json
         /// </returns>
         /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetDouble(out double value)
         {
@@ -194,7 +195,7 @@ namespace Azure.Core.Json
         /// </returns>
         /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetInt32(out int value)
         {
@@ -245,7 +246,7 @@ namespace Azure.Core.Json
         /// </returns>
         /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetInt64(out long value)
         {
@@ -296,7 +297,7 @@ namespace Azure.Core.Json
         /// </returns>
         /// <exception cref="InvalidOperationException">This value's <see cref="ValueKind"/> is not <see cref="JsonValueKind.Number"/>.</exception>
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetSingle(out float value)
         {
@@ -344,7 +345,7 @@ namespace Azure.Core.Json
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public string? GetString()
         {
@@ -396,7 +397,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetByte(out byte value)
         {
@@ -502,7 +503,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetDecimal(out decimal value)
         {
@@ -573,7 +574,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetInt16(out short value)
         {
@@ -610,7 +611,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetSByte(out sbyte value)
         {
@@ -647,7 +648,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetUInt16(out ushort value)
         {
@@ -684,7 +685,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetUInt32(out uint value)
         {
@@ -721,7 +722,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public bool TryGetUInt64(out ulong value)
         {
@@ -1122,7 +1123,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         internal JsonElement GetJsonElement()
         {
@@ -1144,7 +1145,7 @@ namespace Azure.Core.Json
         }
 
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         private byte[] GetRawBytes()
         {

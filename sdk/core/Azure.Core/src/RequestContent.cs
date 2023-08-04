@@ -18,6 +18,7 @@ namespace Azure.Core
     /// </summary>
     public abstract class RequestContent : IDisposable
     {
+        internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace Azure.Core
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public static RequestContent Create(object serializable) => Create(serializable, JsonObjectSerializer.Default);
 
@@ -96,7 +97,7 @@ namespace Azure.Core
         /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public static RequestContent Create(object serializable, ObjectSerializer? serializer) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
 
@@ -108,7 +109,7 @@ namespace Azure.Core
         /// <param name="dateTimeFormat">The format to use for DateTime and DateTimeOffset values in the serialized content.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
 #if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
 #endif
         public static RequestContent Create(object serializable, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
@@ -145,9 +146,6 @@ namespace Azure.Core
         /// </summary>
         /// <param name="stream">The stream to write to.</param>
         /// <param name="cancellation">To cancellation token to use.</param>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Inherited methods require unreferenced code.")]
-#endif
         public abstract Task WriteToAsync(Stream stream, CancellationToken cancellation);
 
         /// <summary>
@@ -155,9 +153,6 @@ namespace Azure.Core
         /// </summary>
         /// <param name="stream">The stream to write to.</param>
         /// <param name="cancellation">To cancellation token to use.</param>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Inherited methods require unreferenced code.")]
-#endif
         public abstract void WriteTo(Stream stream, CancellationToken cancellation);
 
         /// <summary>
@@ -187,9 +182,6 @@ namespace Azure.Core
                 _stream = stream;
             }
 
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
             public override void WriteTo(Stream stream, CancellationToken cancellationToken)
             {
                 _stream.Seek(_origin, SeekOrigin.Begin);
@@ -226,9 +218,6 @@ namespace Azure.Core
                 return false;
             }
 
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 _stream.Seek(_origin, SeekOrigin.Begin);
@@ -258,9 +247,6 @@ namespace Azure.Core
 
             public override void Dispose() { }
 
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
                 stream.Write(_bytes, _contentStart, _contentLength);
@@ -272,9 +258,6 @@ namespace Azure.Core
                 return true;
             }
 
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
 #pragma warning disable CA1835 // WriteAsync(Memory<>) overload is not available in all targets
@@ -292,9 +275,6 @@ namespace Azure.Core
 
             public override void Dispose() { }
 
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
                 byte[] buffer = _bytes.ToArray();
@@ -307,9 +287,6 @@ namespace Azure.Core
                 return true;
             }
 
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
@@ -325,9 +302,6 @@ namespace Azure.Core
 
             public override void Dispose() { }
 
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
                 byte[] buffer = _bytes.ToArray();
@@ -340,9 +314,6 @@ namespace Azure.Core
                 return true;
             }
 
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Other inherited methods require unreferenced code.")]
-#endif
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
@@ -360,9 +331,6 @@ namespace Azure.Core
                 _data.Dispose();
             }
 
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
-#endif
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
                 _data.WriteTo(stream);
@@ -374,9 +342,6 @@ namespace Azure.Core
                 return false;
             }
 
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
-#endif
             public override Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 _data.WriteTo(stream);

@@ -21,6 +21,9 @@ namespace Azure.Core.Serialization
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [JsonConverter(typeof(DynamicDataJsonConverter))]
+#if NET6_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
+#endif
     public sealed partial class DynamicData : IDisposable
     {
         private static readonly MethodInfo GetPropertyMethod = typeof(DynamicData).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
@@ -40,9 +43,6 @@ namespace Azure.Core.Serialization
             _serializerOptions = DynamicDataOptions.ToSerializerOptions(options);
         }
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
-#endif
         internal void WriteTo(Stream stream)
         {
             using Utf8JsonWriter writer = new(stream);
@@ -299,9 +299,6 @@ namespace Azure.Core.Serialization
             };
         }
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
-#endif
         internal bool Equals(DynamicData other)
         {
             if (other is null)
@@ -325,9 +322,6 @@ namespace Azure.Core.Serialization
             };
         }
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("Calls JsonSerializer.SerializeToUtf8Bytes which requires unreferenced code.")]
-#endif
         private bool NumberEqual(DynamicData other)
         {
             if (_element.TryGetDouble(out double d))
