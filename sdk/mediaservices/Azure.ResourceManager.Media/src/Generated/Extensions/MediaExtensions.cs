@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Media.Mocking;
 using Azure.ResourceManager.Media.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.Media
     /// <summary> A class to add extension methods to Azure.ResourceManager.Media. </summary>
     public static partial class MediaExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MediaArmClientMockingExtension GetMediaArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new MediaArmClientMockingExtension(client);
+            });
+        }
+
+        private static MediaResourceGroupMockingExtension GetMediaResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MediaResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MediaSubscriptionMockingExtension GetMediaSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MediaSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region MediaServicesAccountFilterResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaServicesAccountFilterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaServicesAccountFilterResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesAccountFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesAccountFilterResource" /> object. </returns>
         public static MediaServicesAccountFilterResource GetMediaServicesAccountFilterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaServicesAccountFilterResource.ValidateResourceId(id);
-                return new MediaServicesAccountFilterResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaServicesAccountFilterResource(id);
         }
-        #endregion
 
-        #region MediaServicesAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaServicesAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaServicesAccountResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesAccountResource" /> object. </returns>
         public static MediaServicesAccountResource GetMediaServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaServicesAccountResource.ValidateResourceId(id);
-                return new MediaServicesAccountResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaServicesAccountResource(id);
         }
-        #endregion
 
-        #region MediaServicesPrivateLinkResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaServicesPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesPrivateLinkResource" /> object. </returns>
         public static MediaServicesPrivateLinkResource GetMediaServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaServicesPrivateLinkResource.ValidateResourceId(id);
-                return new MediaServicesPrivateLinkResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaServicesPrivateLinkResource(id);
         }
-        #endregion
 
-        #region MediaServicesPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaServicesPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,16 +89,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesPrivateEndpointConnectionResource" /> object. </returns>
         public static MediaServicesPrivateEndpointConnectionResource GetMediaServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaServicesPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new MediaServicesPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaServicesPrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region MediaAssetResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaAssetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaAssetResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,16 +101,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaAssetResource" /> object. </returns>
         public static MediaAssetResource GetMediaAssetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaAssetResource.ValidateResourceId(id);
-                return new MediaAssetResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaAssetResource(id);
         }
-        #endregion
 
-        #region MediaAssetFilterResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaAssetFilterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaAssetFilterResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -155,16 +113,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaAssetFilterResource" /> object. </returns>
         public static MediaAssetFilterResource GetMediaAssetFilterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaAssetFilterResource.ValidateResourceId(id);
-                return new MediaAssetFilterResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaAssetFilterResource(id);
         }
-        #endregion
 
-        #region MediaAssetTrackResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaAssetTrackResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaAssetTrackResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetTrackResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -174,16 +125,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaAssetTrackResource" /> object. </returns>
         public static MediaAssetTrackResource GetMediaAssetTrackResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaAssetTrackResource.ValidateResourceId(id);
-                return new MediaAssetTrackResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaAssetTrackResource(id);
         }
-        #endregion
 
-        #region ContentKeyPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="ContentKeyPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContentKeyPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ContentKeyPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -193,16 +137,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="ContentKeyPolicyResource" /> object. </returns>
         public static ContentKeyPolicyResource GetContentKeyPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContentKeyPolicyResource.ValidateResourceId(id);
-                return new ContentKeyPolicyResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetContentKeyPolicyResource(id);
         }
-        #endregion
 
-        #region MediaTransformResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaTransformResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaTransformResource.CreateResourceIdentifier" /> to create a <see cref="MediaTransformResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -212,16 +149,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaTransformResource" /> object. </returns>
         public static MediaTransformResource GetMediaTransformResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaTransformResource.ValidateResourceId(id);
-                return new MediaTransformResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaTransformResource(id);
         }
-        #endregion
 
-        #region MediaJobResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaJobResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaJobResource.CreateResourceIdentifier" /> to create a <see cref="MediaJobResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -231,16 +161,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaJobResource" /> object. </returns>
         public static MediaJobResource GetMediaJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaJobResource.ValidateResourceId(id);
-                return new MediaJobResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaJobResource(id);
         }
-        #endregion
 
-        #region StreamingPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="StreamingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StreamingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="StreamingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -250,16 +173,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="StreamingPolicyResource" /> object. </returns>
         public static StreamingPolicyResource GetStreamingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingPolicyResource.ValidateResourceId(id);
-                return new StreamingPolicyResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetStreamingPolicyResource(id);
         }
-        #endregion
 
-        #region StreamingLocatorResource
         /// <summary>
         /// Gets an object representing a <see cref="StreamingLocatorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StreamingLocatorResource.CreateResourceIdentifier" /> to create a <see cref="StreamingLocatorResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -269,16 +185,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="StreamingLocatorResource" /> object. </returns>
         public static StreamingLocatorResource GetStreamingLocatorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingLocatorResource.ValidateResourceId(id);
-                return new StreamingLocatorResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetStreamingLocatorResource(id);
         }
-        #endregion
 
-        #region MediaLiveEventResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaLiveEventResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaLiveEventResource.CreateResourceIdentifier" /> to create a <see cref="MediaLiveEventResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -288,16 +197,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaLiveEventResource" /> object. </returns>
         public static MediaLiveEventResource GetMediaLiveEventResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaLiveEventResource.ValidateResourceId(id);
-                return new MediaLiveEventResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaLiveEventResource(id);
         }
-        #endregion
 
-        #region MediaLiveOutputResource
         /// <summary>
         /// Gets an object representing a <see cref="MediaLiveOutputResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MediaLiveOutputResource.CreateResourceIdentifier" /> to create a <see cref="MediaLiveOutputResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -307,16 +209,9 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaLiveOutputResource" /> object. </returns>
         public static MediaLiveOutputResource GetMediaLiveOutputResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MediaLiveOutputResource.ValidateResourceId(id);
-                return new MediaLiveOutputResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetMediaLiveOutputResource(id);
         }
-        #endregion
 
-        #region StreamingEndpointResource
         /// <summary>
         /// Gets an object representing a <see cref="StreamingEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StreamingEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StreamingEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -326,21 +221,15 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="StreamingEndpointResource" /> object. </returns>
         public static StreamingEndpointResource GetStreamingEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StreamingEndpointResource.ValidateResourceId(id);
-                return new StreamingEndpointResource(client, id);
-            }
-            );
+            return GetMediaArmClientMockingExtension(client).GetStreamingEndpointResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of MediaServicesAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MediaServicesAccountResources and their operations over a MediaServicesAccountResource. </returns>
         public static MediaServicesAccountCollection GetMediaServicesAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMediaServicesAccounts();
+            return GetMediaResourceGroupMockingExtension(resourceGroupResource).GetMediaServicesAccounts();
         }
 
         /// <summary>
@@ -364,7 +253,7 @@ namespace Azure.ResourceManager.Media
         [ForwardsClientCalls]
         public static async Task<Response<MediaServicesAccountResource>> GetMediaServicesAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMediaServicesAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMediaResourceGroupMockingExtension(resourceGroupResource).GetMediaServicesAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -388,7 +277,7 @@ namespace Azure.ResourceManager.Media
         [ForwardsClientCalls]
         public static Response<MediaServicesAccountResource> GetMediaServicesAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMediaServicesAccounts().Get(accountName, cancellationToken);
+            return GetMediaResourceGroupMockingExtension(resourceGroupResource).GetMediaServicesAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -409,7 +298,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MediaServicesAccountResource> GetMediaServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMediaServicesAccountsAsync(cancellationToken);
+            return GetMediaSubscriptionMockingExtension(subscriptionResource).GetMediaServicesAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -430,7 +319,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MediaServicesAccountResource> GetMediaServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMediaServicesAccounts(cancellationToken);
+            return GetMediaSubscriptionMockingExtension(subscriptionResource).GetMediaServicesAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -453,9 +342,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<MediaServicesNameAvailabilityResult>> CheckMediaServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMediaServicesNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMediaSubscriptionMockingExtension(subscriptionResource).CheckMediaServicesNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -478,9 +365,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<MediaServicesNameAvailabilityResult> CheckMediaServicesNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckMediaServicesNameAvailability(locationName, content, cancellationToken);
+            return GetMediaSubscriptionMockingExtension(subscriptionResource).CheckMediaServicesNameAvailability(locationName, content, cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementPartner.Mocking;
 using Azure.ResourceManager.ManagementPartner.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,22 +20,22 @@ namespace Azure.ResourceManager.ManagementPartner
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagementPartner. </summary>
     public static partial class ManagementPartnerExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static ManagementPartnerArmClientMockingExtension GetManagementPartnerArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
+            return client.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new ManagementPartnerArmClientMockingExtension(client);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ManagementPartnerTenantMockingExtension GetManagementPartnerTenantMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new ManagementPartnerTenantMockingExtension(client, resource.Id);
             });
         }
-        #region PartnerResponseResource
+
         /// <summary>
         /// Gets an object representing a <see cref="PartnerResponseResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PartnerResponseResource.CreateResourceIdentifier" /> to create a <see cref="PartnerResponseResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -44,21 +45,15 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <returns> Returns a <see cref="PartnerResponseResource" /> object. </returns>
         public static PartnerResponseResource GetPartnerResponseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PartnerResponseResource.ValidateResourceId(id);
-                return new PartnerResponseResource(client, id);
-            }
-            );
+            return GetManagementPartnerArmClientMockingExtension(client).GetPartnerResponseResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of PartnerResponseResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PartnerResponseResources and their operations over a PartnerResponseResource. </returns>
         public static PartnerResponseCollection GetPartnerResponses(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetPartnerResponses();
+            return GetManagementPartnerTenantMockingExtension(tenantResource).GetPartnerResponses();
         }
 
         /// <summary>
@@ -82,7 +77,7 @@ namespace Azure.ResourceManager.ManagementPartner
         [ForwardsClientCalls]
         public static async Task<Response<PartnerResponseResource>> GetPartnerResponseAsync(this TenantResource tenantResource, string partnerId, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetPartnerResponses().GetAsync(partnerId, cancellationToken).ConfigureAwait(false);
+            return await GetManagementPartnerTenantMockingExtension(tenantResource).GetPartnerResponseAsync(partnerId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,7 +101,7 @@ namespace Azure.ResourceManager.ManagementPartner
         [ForwardsClientCalls]
         public static Response<PartnerResponseResource> GetPartnerResponse(this TenantResource tenantResource, string partnerId, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetPartnerResponses().Get(partnerId, cancellationToken);
+            return GetManagementPartnerTenantMockingExtension(tenantResource).GetPartnerResponse(partnerId, cancellationToken);
         }
 
         /// <summary>
@@ -127,7 +122,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationResponse> GetOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperationsAsync(cancellationToken);
+            return GetManagementPartnerTenantMockingExtension(tenantResource).GetOperationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +143,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationResponse> GetOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetOperations(cancellationToken);
+            return GetManagementPartnerTenantMockingExtension(tenantResource).GetOperations(cancellationToken);
         }
     }
 }
