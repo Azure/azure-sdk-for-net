@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Dns.Mocking;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.Dns
     /// <summary> A class to add extension methods to Azure.ResourceManager.Dns. </summary>
     public static partial class DnsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DnsArmClientMockingExtension GetDnsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DnsArmClientMockingExtension(client);
+            });
+        }
+
+        private static DnsResourceGroupMockingExtension GetDnsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DnsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DnsSubscriptionMockingExtension GetDnsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DnsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region DnsARecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsARecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsARecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsARecordResource" /> object. </returns>
         public static DnsARecordResource GetDnsARecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsARecordResource>(() =>
-            {
-                DnsARecordResource.ValidateResourceId(id);
-                return new DnsARecordResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsARecordResource(id);
         }
-        #endregion
 
-        #region DnsAaaaRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsAaaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsAaaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsAaaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsAaaaRecordResource" /> object. </returns>
         public static DnsAaaaRecordResource GetDnsAaaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsAaaaRecordResource>(() =>
-            {
-                DnsAaaaRecordResource.ValidateResourceId(id);
-                return new DnsAaaaRecordResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsAaaaRecordResource(id);
         }
-        #endregion
 
-        #region DnsCaaRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsCaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsCaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsCaaRecordResource" /> object. </returns>
         public static DnsCaaRecordResource GetDnsCaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsCaaRecordResource>(() =>
-            {
-                DnsCaaRecordResource.ValidateResourceId(id);
-                return new DnsCaaRecordResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsCaaRecordResource(id);
         }
-        #endregion
 
-        #region DnsCnameRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsCnameRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsCnameRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCnameRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,16 +89,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsCnameRecordResource" /> object. </returns>
         public static DnsCnameRecordResource GetDnsCnameRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsCnameRecordResource>(() =>
-            {
-                DnsCnameRecordResource.ValidateResourceId(id);
-                return new DnsCnameRecordResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsCnameRecordResource(id);
         }
-        #endregion
 
-        #region DnsMXRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsMXRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsMXRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsMXRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,16 +101,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsMXRecordResource" /> object. </returns>
         public static DnsMXRecordResource GetDnsMXRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsMXRecordResource>(() =>
-            {
-                DnsMXRecordResource.ValidateResourceId(id);
-                return new DnsMXRecordResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsMXRecordResource(id);
         }
-        #endregion
 
-        #region DnsNSRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsNSRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsNSRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNSRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -155,16 +113,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsNSRecordResource" /> object. </returns>
         public static DnsNSRecordResource GetDnsNSRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsNSRecordResource>(() =>
-            {
-                DnsNSRecordResource.ValidateResourceId(id);
-                return new DnsNSRecordResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsNSRecordResource(id);
         }
-        #endregion
 
-        #region DnsPtrRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsPtrRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsPtrRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsPtrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -174,16 +125,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsPtrRecordResource" /> object. </returns>
         public static DnsPtrRecordResource GetDnsPtrRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsPtrRecordResource>(() =>
-            {
-                DnsPtrRecordResource.ValidateResourceId(id);
-                return new DnsPtrRecordResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsPtrRecordResource(id);
         }
-        #endregion
 
-        #region DnsSoaRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsSoaRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsSoaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSoaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -193,16 +137,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsSoaRecordResource" /> object. </returns>
         public static DnsSoaRecordResource GetDnsSoaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsSoaRecordResource>(() =>
-            {
-                DnsSoaRecordResource.ValidateResourceId(id);
-                return new DnsSoaRecordResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsSoaRecordResource(id);
         }
-        #endregion
 
-        #region DnsSrvRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsSrvRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsSrvRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSrvRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -212,16 +149,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsSrvRecordResource" /> object. </returns>
         public static DnsSrvRecordResource GetDnsSrvRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsSrvRecordResource>(() =>
-            {
-                DnsSrvRecordResource.ValidateResourceId(id);
-                return new DnsSrvRecordResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsSrvRecordResource(id);
         }
-        #endregion
 
-        #region DnsTxtRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsTxtRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsTxtRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTxtRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -231,16 +161,9 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsTxtRecordResource" /> object. </returns>
         public static DnsTxtRecordResource GetDnsTxtRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsTxtRecordResource>(() =>
-            {
-                DnsTxtRecordResource.ValidateResourceId(id);
-                return new DnsTxtRecordResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsTxtRecordResource(id);
         }
-        #endregion
 
-        #region DnsZoneResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsZoneResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsZoneResource.CreateResourceIdentifier" /> to create a <see cref="DnsZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -250,21 +173,15 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsZoneResource" /> object. </returns>
         public static DnsZoneResource GetDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient<DnsZoneResource>(() =>
-            {
-                DnsZoneResource.ValidateResourceId(id);
-                return new DnsZoneResource(client, id);
-            }
-            );
+            return GetDnsArmClientMockingExtension(client).GetDnsZoneResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of DnsZoneResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DnsZoneResources and their operations over a DnsZoneResource. </returns>
         public static DnsZoneCollection GetDnsZones(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDnsZones();
+            return GetDnsResourceGroupMockingExtension(resourceGroupResource).GetDnsZones();
         }
 
         /// <summary>
@@ -288,7 +205,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public static async Task<Response<DnsZoneResource>> GetDnsZoneAsync(this ResourceGroupResource resourceGroupResource, string zoneName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDnsZones().GetAsync(zoneName, cancellationToken).ConfigureAwait(false);
+            return await GetDnsResourceGroupMockingExtension(resourceGroupResource).GetDnsZoneAsync(zoneName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -312,7 +229,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public static Response<DnsZoneResource> GetDnsZone(this ResourceGroupResource resourceGroupResource, string zoneName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDnsZones().Get(zoneName, cancellationToken);
+            return GetDnsResourceGroupMockingExtension(resourceGroupResource).GetDnsZone(zoneName, cancellationToken);
         }
 
         /// <summary>
@@ -334,7 +251,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> An async collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsZoneResource> GetDnsZonesAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsZonesAsync(top, cancellationToken);
+            return GetDnsSubscriptionMockingExtension(subscriptionResource).GetDnsZonesAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -356,7 +273,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> A collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsZoneResource> GetDnsZones(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsZones(top, cancellationToken);
+            return GetDnsSubscriptionMockingExtension(subscriptionResource).GetDnsZones(top, cancellationToken);
         }
 
         /// <summary>
@@ -378,9 +295,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetDnsSubscriptionMockingExtension(subscriptionResource).GetDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -402,9 +317,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsResourceReferencesByTargetResources(content, cancellationToken);
+            return GetDnsSubscriptionMockingExtension(subscriptionResource).GetDnsResourceReferencesByTargetResources(content, cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevSpaces.Mocking;
 using Azure.ResourceManager.DevSpaces.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.DevSpaces
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevSpaces. </summary>
     public static partial class DevSpacesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DevSpacesArmClientMockingExtension GetDevSpacesArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DevSpacesArmClientMockingExtension(client);
+            });
+        }
+
+        private static DevSpacesResourceGroupMockingExtension GetDevSpacesResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DevSpacesResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DevSpacesSubscriptionMockingExtension GetDevSpacesSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DevSpacesSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ControllerResource
         /// <summary>
         /// Gets an object representing a <see cref="ControllerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ControllerResource.CreateResourceIdentifier" /> to create a <see cref="ControllerResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,21 +53,15 @@ namespace Azure.ResourceManager.DevSpaces
         /// <returns> Returns a <see cref="ControllerResource" /> object. </returns>
         public static ControllerResource GetControllerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ControllerResource.ValidateResourceId(id);
-                return new ControllerResource(client, id);
-            }
-            );
+            return GetDevSpacesArmClientMockingExtension(client).GetControllerResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of ControllerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ControllerResources and their operations over a ControllerResource. </returns>
         public static ControllerCollection GetControllers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetControllers();
+            return GetDevSpacesResourceGroupMockingExtension(resourceGroupResource).GetControllers();
         }
 
         /// <summary>
@@ -98,7 +85,7 @@ namespace Azure.ResourceManager.DevSpaces
         [ForwardsClientCalls]
         public static async Task<Response<ControllerResource>> GetControllerAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetControllers().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetDevSpacesResourceGroupMockingExtension(resourceGroupResource).GetControllerAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,7 +109,7 @@ namespace Azure.ResourceManager.DevSpaces
         [ForwardsClientCalls]
         public static Response<ControllerResource> GetController(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetControllers().Get(name, cancellationToken);
+            return GetDevSpacesResourceGroupMockingExtension(resourceGroupResource).GetController(name, cancellationToken);
         }
 
         /// <summary>
@@ -145,9 +132,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public static async Task<Response<ContainerHostMapping>> GetContainerHostMappingContainerHostMappingAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerHostMappingContainerHostMappingAsync(location, containerHostMapping, cancellationToken).ConfigureAwait(false);
+            return await GetDevSpacesResourceGroupMockingExtension(resourceGroupResource).GetContainerHostMappingContainerHostMappingAsync(location, containerHostMapping, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -170,9 +155,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public static Response<ContainerHostMapping> GetContainerHostMappingContainerHostMapping(this ResourceGroupResource resourceGroupResource, AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(containerHostMapping, nameof(containerHostMapping));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerHostMappingContainerHostMapping(location, containerHostMapping, cancellationToken);
+            return GetDevSpacesResourceGroupMockingExtension(resourceGroupResource).GetContainerHostMappingContainerHostMapping(location, containerHostMapping, cancellationToken);
         }
 
         /// <summary>
@@ -193,7 +176,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <returns> An async collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ControllerResource> GetControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetControllersAsync(cancellationToken);
+            return GetDevSpacesSubscriptionMockingExtension(subscriptionResource).GetControllersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +197,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <returns> A collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ControllerResource> GetControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetControllers(cancellationToken);
+            return GetDevSpacesSubscriptionMockingExtension(subscriptionResource).GetControllers(cancellationToken);
         }
     }
 }

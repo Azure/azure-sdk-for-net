@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HDInsight.Mocking;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.HDInsight
     /// <summary> A class to add extension methods to Azure.ResourceManager.HDInsight. </summary>
     public static partial class HDInsightExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static HDInsightArmClientMockingExtension GetHDInsightArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new HDInsightArmClientMockingExtension(client);
+            });
+        }
+
+        private static HDInsightResourceGroupMockingExtension GetHDInsightResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new HDInsightResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HDInsightSubscriptionMockingExtension GetHDInsightSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HDInsightSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region HDInsightApplicationResource
         /// <summary>
         /// Gets an object representing a <see cref="HDInsightApplicationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HDInsightApplicationResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> Returns a <see cref="HDInsightApplicationResource" /> object. </returns>
         public static HDInsightApplicationResource GetHDInsightApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HDInsightApplicationResource.ValidateResourceId(id);
-                return new HDInsightApplicationResource(client, id);
-            }
-            );
+            return GetHDInsightArmClientMockingExtension(client).GetHDInsightApplicationResource(id);
         }
-        #endregion
 
-        #region HDInsightClusterResource
         /// <summary>
         /// Gets an object representing a <see cref="HDInsightClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HDInsightClusterResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> Returns a <see cref="HDInsightClusterResource" /> object. </returns>
         public static HDInsightClusterResource GetHDInsightClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HDInsightClusterResource.ValidateResourceId(id);
-                return new HDInsightClusterResource(client, id);
-            }
-            );
+            return GetHDInsightArmClientMockingExtension(client).GetHDInsightClusterResource(id);
         }
-        #endregion
 
-        #region HDInsightPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="HDInsightPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HDInsightPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> Returns a <see cref="HDInsightPrivateEndpointConnectionResource" /> object. </returns>
         public static HDInsightPrivateEndpointConnectionResource GetHDInsightPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HDInsightPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new HDInsightPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetHDInsightArmClientMockingExtension(client).GetHDInsightPrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region HDInsightPrivateLinkResource
         /// <summary>
         /// Gets an object representing a <see cref="HDInsightPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HDInsightPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,21 +89,15 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> Returns a <see cref="HDInsightPrivateLinkResource" /> object. </returns>
         public static HDInsightPrivateLinkResource GetHDInsightPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HDInsightPrivateLinkResource.ValidateResourceId(id);
-                return new HDInsightPrivateLinkResource(client, id);
-            }
-            );
+            return GetHDInsightArmClientMockingExtension(client).GetHDInsightPrivateLinkResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of HDInsightClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HDInsightClusterResources and their operations over a HDInsightClusterResource. </returns>
         public static HDInsightClusterCollection GetHDInsightClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHDInsightClusters();
+            return GetHDInsightResourceGroupMockingExtension(resourceGroupResource).GetHDInsightClusters();
         }
 
         /// <summary>
@@ -155,7 +121,7 @@ namespace Azure.ResourceManager.HDInsight
         [ForwardsClientCalls]
         public static async Task<Response<HDInsightClusterResource>> GetHDInsightClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHDInsightClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetHDInsightResourceGroupMockingExtension(resourceGroupResource).GetHDInsightClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -179,7 +145,7 @@ namespace Azure.ResourceManager.HDInsight
         [ForwardsClientCalls]
         public static Response<HDInsightClusterResource> GetHDInsightCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHDInsightClusters().Get(clusterName, cancellationToken);
+            return GetHDInsightResourceGroupMockingExtension(resourceGroupResource).GetHDInsightCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +166,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An async collection of <see cref="HDInsightClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HDInsightClusterResource> GetHDInsightClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHDInsightClustersAsync(cancellationToken);
+            return GetHDInsightSubscriptionMockingExtension(subscriptionResource).GetHDInsightClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -221,7 +187,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> A collection of <see cref="HDInsightClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HDInsightClusterResource> GetHDInsightClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHDInsightClusters(cancellationToken);
+            return GetHDInsightSubscriptionMockingExtension(subscriptionResource).GetHDInsightClusters(cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +208,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<HDInsightCapabilitiesResult>> GetHDInsightCapabilitiesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetHDInsightCapabilitiesAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetHDInsightSubscriptionMockingExtension(subscriptionResource).GetHDInsightCapabilitiesAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -263,7 +229,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<HDInsightCapabilitiesResult> GetHDInsightCapabilities(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHDInsightCapabilities(location, cancellationToken);
+            return GetHDInsightSubscriptionMockingExtension(subscriptionResource).GetHDInsightCapabilities(location, cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +251,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> An async collection of <see cref="HDInsightUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HDInsightUsage> GetHDInsightUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHDInsightUsagesAsync(location, cancellationToken);
+            return GetHDInsightSubscriptionMockingExtension(subscriptionResource).GetHDInsightUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -307,7 +273,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <returns> A collection of <see cref="HDInsightUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HDInsightUsage> GetHDInsightUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHDInsightUsages(location, cancellationToken);
+            return GetHDInsightSubscriptionMockingExtension(subscriptionResource).GetHDInsightUsages(location, cancellationToken);
         }
 
         /// <summary>
@@ -328,7 +294,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<HDInsightBillingSpecsListResult>> GetHDInsightBillingSpecsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetHDInsightBillingSpecsAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetHDInsightSubscriptionMockingExtension(subscriptionResource).GetHDInsightBillingSpecsAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -349,7 +315,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<HDInsightBillingSpecsListResult> GetHDInsightBillingSpecs(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHDInsightBillingSpecs(location, cancellationToken);
+            return GetHDInsightSubscriptionMockingExtension(subscriptionResource).GetHDInsightBillingSpecs(location, cancellationToken);
         }
 
         /// <summary>
@@ -372,9 +338,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckHDInsightNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetHDInsightSubscriptionMockingExtension(subscriptionResource).CheckHDInsightNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -397,9 +361,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckHDInsightNameAvailability(location, content, cancellationToken);
+            return GetHDInsightSubscriptionMockingExtension(subscriptionResource).CheckHDInsightNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -422,9 +384,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<HDInsightClusterCreationValidateResult>> ValidateHDInsightClusterCreationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateHDInsightClusterCreationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetHDInsightSubscriptionMockingExtension(subscriptionResource).ValidateHDInsightClusterCreationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -447,9 +407,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<HDInsightClusterCreationValidateResult> ValidateHDInsightClusterCreation(this SubscriptionResource subscriptionResource, AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).ValidateHDInsightClusterCreation(location, content, cancellationToken);
+            return GetHDInsightSubscriptionMockingExtension(subscriptionResource).ValidateHDInsightClusterCreation(location, content, cancellationToken);
         }
     }
 }
