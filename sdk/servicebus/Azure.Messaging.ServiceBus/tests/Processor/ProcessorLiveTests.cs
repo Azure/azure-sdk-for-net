@@ -1491,10 +1491,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     };
                     await args.CompleteMessageAsync(args.Message);
                     await Task.Delay(lockDuration.Add(lockDuration));
-                    Assert.IsTrue(messageLockLostRaised);
-                    Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
-                    Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
-                    tcs.SetResult(true);
+                    try
+                    {
+                        Assert.IsTrue(messageLockLostRaised);
+                        Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
+                        Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    }
+                    finally
+                    {
+                        tcs.SetResult(true);
+                    }
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
@@ -1539,9 +1545,16 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     };
                     SimulateNetworkFailure(client);
                     await Task.Delay(lockDuration.Add(lockDuration));
-                    Assert.IsFalse(messageLockLostRaised);
-                    Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
-                    tcs.SetResult(true);
+                    try
+                    {
+                        Assert.IsFalse(messageLockLostRaised);
+                        Assert.IsFalse(args.MessageLockCancellationToken.IsCancellationRequested);
+                        Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    }
+                    finally
+                    {
+                        tcs.SetResult(true);
+                    }
                 }
                 processor.ProcessMessageAsync += ProcessMessage;
                 processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
