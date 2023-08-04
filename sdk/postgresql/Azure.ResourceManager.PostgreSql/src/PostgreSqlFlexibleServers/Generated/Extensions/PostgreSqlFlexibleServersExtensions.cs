@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.PostgreSql.FlexibleServers. </summary>
-    public static partial class FlexibleServersExtensions
+    public static partial class PostgreSqlFlexibleServersExtensions
     {
         private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {

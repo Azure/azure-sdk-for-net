@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.PaloAltoNetworks.Ngfw. </summary>
-    public static partial class NgfwExtensions
+    public static partial class PaloAltoNetworksNgfwExtensions
     {
         private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {

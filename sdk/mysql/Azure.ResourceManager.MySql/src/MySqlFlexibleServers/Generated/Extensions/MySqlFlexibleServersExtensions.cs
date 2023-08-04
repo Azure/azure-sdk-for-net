@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.MySql.FlexibleServers. </summary>
-    public static partial class FlexibleServersExtensions
+    public static partial class MySqlFlexibleServersExtensions
     {
         private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
