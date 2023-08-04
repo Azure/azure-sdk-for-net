@@ -21,6 +21,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </remarks>
         public const string APPLICATIONINSIGHTS_STATSBEAT_DISABLED = "APPLICATIONINSIGHTS_STATSBEAT_DISABLED";
 
+        // TODO: RENAME
+        public const string AZUREMONITOREXPORTER_ENABLE_EVENTSOURCE = nameof(AZUREMONITOREXPORTER_ENABLE_EVENTSOURCE);
+
+        // TODO: RENAME
+        public const string AZUREMONITOREXPORTER_ENABLE_TELEMETRY = nameof(AZUREMONITOREXPORTER_ENABLE_TELEMETRY);
+
         /// <summary>
         /// INTERNAL ONLY. Used by Statsbeat to identify if the Exporter is running within Azure Functions.
         /// </summary>

@@ -10,6 +10,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 {
     internal class AzureMonitorExporterEventListener : EventListener
     {
+        internal static AzureMonitorExporterEventListener? Listener;
+
+        internal static void Initialize()
+        {
+            // TODO: Could take EventLevel as a parameter.
+            Listener = new AzureMonitorExporterEventListener();
+        }
+
         private readonly List<EventSource> eventSources = new List<EventSource>();
 
         public override void Dispose()

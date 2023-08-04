@@ -19,6 +19,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private RawRequestUriBuilder _rawRequestUriBuilder;
 
+        public bool ShouldWriteToDebugger { get; set; } = false;
+
         /// <summary>
         /// This operation sends a sequence of telemetry events that will be monitored by Azure Monitor.
         /// </summary>
@@ -89,14 +91,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 content.WriteNewLine();
             }
 
-            TelemetryDebugWriter.WriteTelemetry(content);
+            if (ShouldWriteToDebugger)
+            {
+                TelemetryDebugWriter.WriteTelemetry(content);
+            }
 
             return CreateRequest(RequestContent.Create(content.ToBytes()));
         }
 
         internal HttpMessage CreateTrackRequest(ReadOnlyMemory<byte> body)
         {
-            TelemetryDebugWriter.WriteTelemetryFromStorage(body);
+            if (ShouldWriteToDebugger)
+            {
+                TelemetryDebugWriter.WriteTelemetryFromStorage(body);
+            }
 
             return CreateRequest(RequestContent.Create(body));
         }
