@@ -782,7 +782,7 @@ namespace Azure.Core.Json
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value">The value to assign to the element.</param>
-        public MutableJsonElement SetProperty(string name, object? value)
+        public MutableJsonElement SetProperty(string name, object value)
         {
             if (TryGetProperty(name, out MutableJsonElement element))
             {
@@ -1005,7 +1005,7 @@ namespace Azure.Core.Json
         /// Sets the value of this element to the passed-in value.
         /// </summary>
         /// <param name="value">The value to assign to the element.</param>
-        public void Set(object? value)
+        public void Set(object value)
         {
             EnsureValid();
 
@@ -1068,10 +1068,8 @@ namespace Azure.Core.Json
             }
         }
 
-        private object GetSerializedValue(object? value)
+        private object GetSerializedValue(object value)
         {
-            // TODO: Handle null
-
             if (value is JsonDocument doc)
             {
                 return doc.RootElement;
