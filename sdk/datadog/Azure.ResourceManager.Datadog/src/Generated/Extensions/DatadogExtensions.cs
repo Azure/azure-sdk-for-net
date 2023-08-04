@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Datadog.Mocking;
 using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.Datadog
     /// <summary> A class to add extension methods to Azure.ResourceManager.Datadog. </summary>
     public static partial class DatadogExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DatadogArmClientMockingExtension GetDatadogArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DatadogArmClientMockingExtension(client);
+            });
+        }
+
+        private static DatadogResourceGroupMockingExtension GetDatadogResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DatadogResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DatadogSubscriptionMockingExtension GetDatadogSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DatadogSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region DatadogMonitorResource
         /// <summary>
         /// Gets an object representing a <see cref="DatadogMonitorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DatadogMonitorResource.CreateResourceIdentifier" /> to create a <see cref="DatadogMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> Returns a <see cref="DatadogMonitorResource" /> object. </returns>
         public static DatadogMonitorResource GetDatadogMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DatadogMonitorResource.ValidateResourceId(id);
-                return new DatadogMonitorResource(client, id);
-            }
-            );
+            return GetDatadogArmClientMockingExtension(client).GetDatadogMonitorResource(id);
         }
-        #endregion
 
-        #region MonitoringTagRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="MonitoringTagRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> Returns a <see cref="MonitoringTagRuleResource" /> object. </returns>
         public static MonitoringTagRuleResource GetMonitoringTagRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MonitoringTagRuleResource.ValidateResourceId(id);
-                return new MonitoringTagRuleResource(client, id);
-            }
-            );
+            return GetDatadogArmClientMockingExtension(client).GetMonitoringTagRuleResource(id);
         }
-        #endregion
 
-        #region DatadogSingleSignOnResource
         /// <summary>
         /// Gets an object representing a <see cref="DatadogSingleSignOnResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DatadogSingleSignOnResource.CreateResourceIdentifier" /> to create a <see cref="DatadogSingleSignOnResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,21 +77,15 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> Returns a <see cref="DatadogSingleSignOnResource" /> object. </returns>
         public static DatadogSingleSignOnResource GetDatadogSingleSignOnResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DatadogSingleSignOnResource.ValidateResourceId(id);
-                return new DatadogSingleSignOnResource(client, id);
-            }
-            );
+            return GetDatadogArmClientMockingExtension(client).GetDatadogSingleSignOnResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of DatadogMonitorResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DatadogMonitorResources and their operations over a DatadogMonitorResource. </returns>
         public static DatadogMonitorResourceCollection GetDatadogMonitorResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatadogMonitorResources();
+            return GetDatadogResourceGroupMockingExtension(resourceGroupResource).GetDatadogMonitorResources();
         }
 
         /// <summary>
@@ -136,7 +109,7 @@ namespace Azure.ResourceManager.Datadog
         [ForwardsClientCalls]
         public static async Task<Response<DatadogMonitorResource>> GetDatadogMonitorResourceAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatadogMonitorResources().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
+            return await GetDatadogResourceGroupMockingExtension(resourceGroupResource).GetDatadogMonitorResourceAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -160,7 +133,7 @@ namespace Azure.ResourceManager.Datadog
         [ForwardsClientCalls]
         public static Response<DatadogMonitorResource> GetDatadogMonitorResource(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatadogMonitorResources().Get(monitorName, cancellationToken);
+            return GetDatadogResourceGroupMockingExtension(resourceGroupResource).GetDatadogMonitorResource(monitorName, cancellationToken);
         }
 
         /// <summary>
@@ -181,7 +154,7 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> An async collection of <see cref="DatadogAgreementResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DatadogAgreementResource> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMarketplaceAgreementsAsync(cancellationToken);
+            return GetDatadogSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreementsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -202,7 +175,7 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> A collection of <see cref="DatadogAgreementResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DatadogAgreementResource> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMarketplaceAgreements(cancellationToken);
+            return GetDatadogSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreements(cancellationToken);
         }
 
         /// <summary>
@@ -223,7 +196,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DatadogAgreementResource>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, DatadogAgreementResource body = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CreateOrUpdateMarketplaceAgreementAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetDatadogSubscriptionMockingExtension(subscriptionResource).CreateOrUpdateMarketplaceAgreementAsync(body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -244,7 +217,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DatadogAgreementResource> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, DatadogAgreementResource body = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CreateOrUpdateMarketplaceAgreement(body, cancellationToken);
+            return GetDatadogSubscriptionMockingExtension(subscriptionResource).CreateOrUpdateMarketplaceAgreement(body, cancellationToken);
         }
 
         /// <summary>
@@ -265,7 +238,7 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> An async collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DatadogMonitorResource> GetDatadogMonitorResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDatadogMonitorResourcesAsync(cancellationToken);
+            return GetDatadogSubscriptionMockingExtension(subscriptionResource).GetDatadogMonitorResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -286,7 +259,7 @@ namespace Azure.ResourceManager.Datadog
         /// <returns> A collection of <see cref="DatadogMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DatadogMonitorResource> GetDatadogMonitorResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDatadogMonitorResources(cancellationToken);
+            return GetDatadogSubscriptionMockingExtension(subscriptionResource).GetDatadogMonitorResources(cancellationToken);
         }
     }
 }
