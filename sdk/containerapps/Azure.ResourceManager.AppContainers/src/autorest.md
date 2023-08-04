@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/905a9ad794ea9a1565ebe3857497b3a24872d553/specification/app/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/6b0792baeaa1e26ebb9fe61dfc77297fc95325af/specification/app/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -217,6 +217,7 @@ rename-mapping:
   Job: ContainerAppJob
   JobsCollection: ContainerAppJobsCollection
   ManagedCertificate: ContainerAppManagedCertificate
+  Mtls.enabled: IsMtlsEnabled
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -231,7 +232,7 @@ override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability
 
 # mgmt-debug:
-#   show-serialized-names: true
+#    show-serialized-names: true
 
 directive:
   - from: swagger-document
@@ -239,4 +240,8 @@ directive:
     transform: >
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
+  # Change type to ResourceIdentifier
+  - from: CommonDefinitions.json
+    where: $.definitions.ServiceBind.properties.serviceId
+    transform: $['x-ms-format'] = 'arm-id'
 ```
