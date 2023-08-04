@@ -70,5 +70,23 @@
                 return PayloadHelper.GetPayload("TokenIssuanceStart.NullResponse.json");
             }
         }
+
+        /// <summary> Gets the valid request payload </summary>
+        public static string ValidRequestPayload
+        {
+            get
+            {
+                return PayloadHelper.GetPayload("TokenIssuanceStart.ValidRequest.json");
+            }
+        }
+
+        /// <summary> Gets the request payload without source field </summary>
+        public static string RequestWithoutSourcePayload
+        {
+            get
+            {
+                return PayloadHelper.GetPayload("TokenIssuanceStart.RequestMissingSource.json");
+            }
+        }
     }
 }

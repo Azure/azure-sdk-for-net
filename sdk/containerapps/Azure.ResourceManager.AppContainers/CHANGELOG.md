@@ -4,6 +4,17 @@
 
 ### Features Added
 
+- Upgrade to 2023-04-01-preview api version
+- Add `runningState` and `runningStateDetails` for `ContainerAppReplica`
+- Add `TerminationGracePeriodSeconds` and `ServicBinds`for `ContainerAppTemplate`
+- Add `MountOptions` for `ContainerAppVolume`
+- Add `SubPath` for `ContainerAppVolumeMount`
+- Add Mtls Enabled for ContainerAppManagedEnvironment
+- Add `Kind` for  ContainerAppCredentials
+- Add `GitHubPersonalAccessToken` for `ContainerAppGitHubActionConfiguration`
+- Add `EventTriggerConfig` for JobConfiguration
+- Rename `ContainerAppJobTriggerType` value from `Scheduled` to `Schedule`
+
 ### Breaking Changes
 
 ### Bugs Fixed

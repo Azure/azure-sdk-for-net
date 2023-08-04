@@ -144,12 +144,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private void SetResourceProviderDetails(IPlatform platform)
         {
-            var appSvcWebsiteName = platform.GetEnvironmentVariable("WEBSITE_SITE_NAME");
+            var appSvcWebsiteName = platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_SITE_NAME);
             if (appSvcWebsiteName != null)
             {
                 _resourceProvider = "appsvc";
                 _resourceProviderId = appSvcWebsiteName;
-                var appSvcWebsiteHostName = platform.GetEnvironmentVariable("WEBSITE_HOME_STAMPNAME");
+                var appSvcWebsiteHostName = platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_HOME_STAMPNAME);
                 if (!string.IsNullOrEmpty(appSvcWebsiteHostName))
                 {
                     _resourceProviderId += "/" + appSvcWebsiteHostName;
@@ -158,11 +158,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 return;
             }
 
-            var functionsWorkerRuntime = platform.GetEnvironmentVariable("FUNCTIONS_WORKER_RUNTIME");
+            var functionsWorkerRuntime = platform.GetEnvironmentVariable(EnvironmentVariableConstants.FUNCTIONS_WORKER_RUNTIME);
             if (functionsWorkerRuntime != null)
             {
                 _resourceProvider = "functions";
-                _resourceProviderId = platform.GetEnvironmentVariable("WEBSITE_HOSTNAME");
+                _resourceProviderId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_HOSTNAME);
 
                 return;
             }
