@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DeploymentManager.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DeploymentManager
@@ -18,22 +19,22 @@ namespace Azure.ResourceManager.DeploymentManager
     /// <summary> A class to add extension methods to Azure.ResourceManager.DeploymentManager. </summary>
     public static partial class DeploymentManagerExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DeploymentManagerArmClientMockingExtension GetDeploymentManagerArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
+            return client.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DeploymentManagerArmClientMockingExtension(client);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static DeploymentManagerResourceGroupMockingExtension GetDeploymentManagerResourceGroupMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
+            return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, scope);
+                return new DeploymentManagerResourceGroupMockingExtension(client, resource.Id);
             });
         }
-        #region ServiceTopologyResource
+
         /// <summary>
         /// Gets an object representing a <see cref="ServiceTopologyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceTopologyResource.CreateResourceIdentifier" /> to create a <see cref="ServiceTopologyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -43,16 +44,9 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> Returns a <see cref="ServiceTopologyResource" /> object. </returns>
         public static ServiceTopologyResource GetServiceTopologyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceTopologyResource.ValidateResourceId(id);
-                return new ServiceTopologyResource(client, id);
-            }
-            );
+            return GetDeploymentManagerArmClientMockingExtension(client).GetServiceTopologyResource(id);
         }
-        #endregion
 
-        #region ServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -62,16 +56,9 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> Returns a <see cref="ServiceResource" /> object. </returns>
         public static ServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceResource.ValidateResourceId(id);
-                return new ServiceResource(client, id);
-            }
-            );
+            return GetDeploymentManagerArmClientMockingExtension(client).GetServiceResource(id);
         }
-        #endregion
 
-        #region ServiceUnitResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceUnitResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceUnitResource.CreateResourceIdentifier" /> to create a <see cref="ServiceUnitResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -81,16 +68,9 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> Returns a <see cref="ServiceUnitResource" /> object. </returns>
         public static ServiceUnitResource GetServiceUnitResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceUnitResource.ValidateResourceId(id);
-                return new ServiceUnitResource(client, id);
-            }
-            );
+            return GetDeploymentManagerArmClientMockingExtension(client).GetServiceUnitResource(id);
         }
-        #endregion
 
-        #region StepResource
         /// <summary>
         /// Gets an object representing a <see cref="StepResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StepResource.CreateResourceIdentifier" /> to create a <see cref="StepResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -100,16 +80,9 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> Returns a <see cref="StepResource" /> object. </returns>
         public static StepResource GetStepResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StepResource.ValidateResourceId(id);
-                return new StepResource(client, id);
-            }
-            );
+            return GetDeploymentManagerArmClientMockingExtension(client).GetStepResource(id);
         }
-        #endregion
 
-        #region RolloutResource
         /// <summary>
         /// Gets an object representing a <see cref="RolloutResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RolloutResource.CreateResourceIdentifier" /> to create a <see cref="RolloutResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -119,16 +92,9 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> Returns a <see cref="RolloutResource" /> object. </returns>
         public static RolloutResource GetRolloutResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RolloutResource.ValidateResourceId(id);
-                return new RolloutResource(client, id);
-            }
-            );
+            return GetDeploymentManagerArmClientMockingExtension(client).GetRolloutResource(id);
         }
-        #endregion
 
-        #region ArtifactSourceResource
         /// <summary>
         /// Gets an object representing an <see cref="ArtifactSourceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ArtifactSourceResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactSourceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -138,21 +104,15 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> Returns a <see cref="ArtifactSourceResource" /> object. </returns>
         public static ArtifactSourceResource GetArtifactSourceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ArtifactSourceResource.ValidateResourceId(id);
-                return new ArtifactSourceResource(client, id);
-            }
-            );
+            return GetDeploymentManagerArmClientMockingExtension(client).GetArtifactSourceResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of ServiceTopologyResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ServiceTopologyResources and their operations over a ServiceTopologyResource. </returns>
         public static ServiceTopologyResourceCollection GetServiceTopologyResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetServiceTopologyResources();
+            return GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetServiceTopologyResources();
         }
 
         /// <summary>
@@ -176,7 +136,7 @@ namespace Azure.ResourceManager.DeploymentManager
         [ForwardsClientCalls]
         public static async Task<Response<ServiceTopologyResource>> GetServiceTopologyResourceAsync(this ResourceGroupResource resourceGroupResource, string serviceTopologyName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetServiceTopologyResources().GetAsync(serviceTopologyName, cancellationToken).ConfigureAwait(false);
+            return await GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetServiceTopologyResourceAsync(serviceTopologyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -200,7 +160,7 @@ namespace Azure.ResourceManager.DeploymentManager
         [ForwardsClientCalls]
         public static Response<ServiceTopologyResource> GetServiceTopologyResource(this ResourceGroupResource resourceGroupResource, string serviceTopologyName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetServiceTopologyResources().Get(serviceTopologyName, cancellationToken);
+            return GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetServiceTopologyResource(serviceTopologyName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StepResources in the ResourceGroupResource. </summary>
@@ -208,7 +168,7 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> An object representing collection of StepResources and their operations over a StepResource. </returns>
         public static StepResourceCollection GetStepResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStepResources();
+            return GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetStepResources();
         }
 
         /// <summary>
@@ -232,7 +192,7 @@ namespace Azure.ResourceManager.DeploymentManager
         [ForwardsClientCalls]
         public static async Task<Response<StepResource>> GetStepResourceAsync(this ResourceGroupResource resourceGroupResource, string stepName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStepResources().GetAsync(stepName, cancellationToken).ConfigureAwait(false);
+            return await GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetStepResourceAsync(stepName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,7 +216,7 @@ namespace Azure.ResourceManager.DeploymentManager
         [ForwardsClientCalls]
         public static Response<StepResource> GetStepResource(this ResourceGroupResource resourceGroupResource, string stepName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStepResources().Get(stepName, cancellationToken);
+            return GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetStepResource(stepName, cancellationToken);
         }
 
         /// <summary> Gets a collection of RolloutResources in the ResourceGroupResource. </summary>
@@ -264,7 +224,7 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> An object representing collection of RolloutResources and their operations over a RolloutResource. </returns>
         public static RolloutCollection GetRollouts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetRollouts();
+            return GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetRollouts();
         }
 
         /// <summary>
@@ -289,7 +249,7 @@ namespace Azure.ResourceManager.DeploymentManager
         [ForwardsClientCalls]
         public static async Task<Response<RolloutResource>> GetRolloutAsync(this ResourceGroupResource resourceGroupResource, string rolloutName, int? retryAttempt = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetRollouts().GetAsync(rolloutName, retryAttempt, cancellationToken).ConfigureAwait(false);
+            return await GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetRolloutAsync(rolloutName, retryAttempt, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -314,7 +274,7 @@ namespace Azure.ResourceManager.DeploymentManager
         [ForwardsClientCalls]
         public static Response<RolloutResource> GetRollout(this ResourceGroupResource resourceGroupResource, string rolloutName, int? retryAttempt = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetRollouts().Get(rolloutName, retryAttempt, cancellationToken);
+            return GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetRollout(rolloutName, retryAttempt, cancellationToken);
         }
 
         /// <summary> Gets a collection of ArtifactSourceResources in the ResourceGroupResource. </summary>
@@ -322,7 +282,7 @@ namespace Azure.ResourceManager.DeploymentManager
         /// <returns> An object representing collection of ArtifactSourceResources and their operations over a ArtifactSourceResource. </returns>
         public static ArtifactSourceCollection GetArtifactSources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetArtifactSources();
+            return GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetArtifactSources();
         }
 
         /// <summary>
@@ -346,7 +306,7 @@ namespace Azure.ResourceManager.DeploymentManager
         [ForwardsClientCalls]
         public static async Task<Response<ArtifactSourceResource>> GetArtifactSourceAsync(this ResourceGroupResource resourceGroupResource, string artifactSourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetArtifactSources().GetAsync(artifactSourceName, cancellationToken).ConfigureAwait(false);
+            return await GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetArtifactSourceAsync(artifactSourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -370,7 +330,7 @@ namespace Azure.ResourceManager.DeploymentManager
         [ForwardsClientCalls]
         public static Response<ArtifactSourceResource> GetArtifactSource(this ResourceGroupResource resourceGroupResource, string artifactSourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetArtifactSources().Get(artifactSourceName, cancellationToken);
+            return GetDeploymentManagerResourceGroupMockingExtension(resourceGroupResource).GetArtifactSource(artifactSourceName, cancellationToken);
         }
     }
 }

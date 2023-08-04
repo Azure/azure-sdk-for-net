@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DevCenter.Mocking;
 using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.DevCenter
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevCenter. </summary>
     public static partial class DevCenterExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DevCenterArmClientMockingExtension GetDevCenterArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DevCenterArmClientMockingExtension(client);
+            });
+        }
+
+        private static DevCenterResourceGroupMockingExtension GetDevCenterResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DevCenterResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DevCenterSubscriptionMockingExtension GetDevCenterSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DevCenterSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region DevCenterResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterResource" /> object. </returns>
         public static DevCenterResource GetDevCenterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterResource.ValidateResourceId(id);
-                return new DevCenterResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevCenterResource(id);
         }
-        #endregion
 
-        #region DevCenterProjectResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterProjectResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterProjectResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterProjectResource" /> object. </returns>
         public static DevCenterProjectResource GetDevCenterProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterProjectResource.ValidateResourceId(id);
-                return new DevCenterProjectResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevCenterProjectResource(id);
         }
-        #endregion
 
-        #region ProjectAttachedNetworkConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="ProjectAttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProjectAttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectAttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="ProjectAttachedNetworkConnectionResource" /> object. </returns>
         public static ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectAttachedNetworkConnectionResource.ValidateResourceId(id);
-                return new ProjectAttachedNetworkConnectionResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetProjectAttachedNetworkConnectionResource(id);
         }
-        #endregion
 
-        #region AttachedNetworkConnectionResource
         /// <summary>
         /// Gets an object representing an <see cref="AttachedNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AttachedNetworkConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttachedNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,16 +89,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="AttachedNetworkConnectionResource" /> object. </returns>
         public static AttachedNetworkConnectionResource GetAttachedNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AttachedNetworkConnectionResource.ValidateResourceId(id);
-                return new AttachedNetworkConnectionResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetAttachedNetworkConnectionResource(id);
         }
-        #endregion
 
-        #region DevCenterGalleryResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterGalleryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterGalleryResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterGalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,16 +101,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterGalleryResource" /> object. </returns>
         public static DevCenterGalleryResource GetDevCenterGalleryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterGalleryResource.ValidateResourceId(id);
-                return new DevCenterGalleryResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevCenterGalleryResource(id);
         }
-        #endregion
 
-        #region DevCenterImageResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterImageResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterImageResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterImageResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -155,16 +113,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterImageResource" /> object. </returns>
         public static DevCenterImageResource GetDevCenterImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterImageResource.ValidateResourceId(id);
-                return new DevCenterImageResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevCenterImageResource(id);
         }
-        #endregion
 
-        #region ImageVersionResource
         /// <summary>
         /// Gets an object representing an <see cref="ImageVersionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ImageVersionResource.CreateResourceIdentifier" /> to create an <see cref="ImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -174,16 +125,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="ImageVersionResource" /> object. </returns>
         public static ImageVersionResource GetImageVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ImageVersionResource.ValidateResourceId(id);
-                return new ImageVersionResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetImageVersionResource(id);
         }
-        #endregion
 
-        #region DevCenterCatalogResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterCatalogResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterCatalogResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterCatalogResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -193,16 +137,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterCatalogResource" /> object. </returns>
         public static DevCenterCatalogResource GetDevCenterCatalogResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterCatalogResource.ValidateResourceId(id);
-                return new DevCenterCatalogResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevCenterCatalogResource(id);
         }
-        #endregion
 
-        #region DevCenterEnvironmentTypeResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterEnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterEnvironmentTypeResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterEnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -212,16 +149,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterEnvironmentTypeResource" /> object. </returns>
         public static DevCenterEnvironmentTypeResource GetDevCenterEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterEnvironmentTypeResource.ValidateResourceId(id);
-                return new DevCenterEnvironmentTypeResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevCenterEnvironmentTypeResource(id);
         }
-        #endregion
 
-        #region AllowedEnvironmentTypeResource
         /// <summary>
         /// Gets an object representing an <see cref="AllowedEnvironmentTypeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AllowedEnvironmentTypeResource.CreateResourceIdentifier" /> to create an <see cref="AllowedEnvironmentTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -231,16 +161,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="AllowedEnvironmentTypeResource" /> object. </returns>
         public static AllowedEnvironmentTypeResource GetAllowedEnvironmentTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AllowedEnvironmentTypeResource.ValidateResourceId(id);
-                return new AllowedEnvironmentTypeResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetAllowedEnvironmentTypeResource(id);
         }
-        #endregion
 
-        #region DevCenterProjectEnvironmentResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterProjectEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterProjectEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterProjectEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -250,16 +173,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterProjectEnvironmentResource" /> object. </returns>
         public static DevCenterProjectEnvironmentResource GetDevCenterProjectEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterProjectEnvironmentResource.ValidateResourceId(id);
-                return new DevCenterProjectEnvironmentResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevCenterProjectEnvironmentResource(id);
         }
-        #endregion
 
-        #region DevBoxDefinitionResource
         /// <summary>
         /// Gets an object representing a <see cref="DevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="DevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -269,16 +185,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevBoxDefinitionResource" /> object. </returns>
         public static DevBoxDefinitionResource GetDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevBoxDefinitionResource.ValidateResourceId(id);
-                return new DevBoxDefinitionResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevBoxDefinitionResource(id);
         }
-        #endregion
 
-        #region ProjectDevBoxDefinitionResource
         /// <summary>
         /// Gets an object representing a <see cref="ProjectDevBoxDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProjectDevBoxDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="ProjectDevBoxDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -288,16 +197,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="ProjectDevBoxDefinitionResource" /> object. </returns>
         public static ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectDevBoxDefinitionResource.ValidateResourceId(id);
-                return new ProjectDevBoxDefinitionResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetProjectDevBoxDefinitionResource(id);
         }
-        #endregion
 
-        #region DevCenterPoolResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterPoolResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -307,16 +209,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterPoolResource" /> object. </returns>
         public static DevCenterPoolResource GetDevCenterPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterPoolResource.ValidateResourceId(id);
-                return new DevCenterPoolResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevCenterPoolResource(id);
         }
-        #endregion
 
-        #region DevCenterScheduleResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterScheduleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterScheduleResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -326,16 +221,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterScheduleResource" /> object. </returns>
         public static DevCenterScheduleResource GetDevCenterScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterScheduleResource.ValidateResourceId(id);
-                return new DevCenterScheduleResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevCenterScheduleResource(id);
         }
-        #endregion
 
-        #region DevCenterNetworkConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="DevCenterNetworkConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DevCenterNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DevCenterNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -345,16 +233,9 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="DevCenterNetworkConnectionResource" /> object. </returns>
         public static DevCenterNetworkConnectionResource GetDevCenterNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DevCenterNetworkConnectionResource.ValidateResourceId(id);
-                return new DevCenterNetworkConnectionResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetDevCenterNetworkConnectionResource(id);
         }
-        #endregion
 
-        #region HealthCheckStatusDetailResource
         /// <summary>
         /// Gets an object representing a <see cref="HealthCheckStatusDetailResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HealthCheckStatusDetailResource.CreateResourceIdentifier" /> to create a <see cref="HealthCheckStatusDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -364,21 +245,15 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> Returns a <see cref="HealthCheckStatusDetailResource" /> object. </returns>
         public static HealthCheckStatusDetailResource GetHealthCheckStatusDetailResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HealthCheckStatusDetailResource.ValidateResourceId(id);
-                return new HealthCheckStatusDetailResource(client, id);
-            }
-            );
+            return GetDevCenterArmClientMockingExtension(client).GetHealthCheckStatusDetailResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of DevCenterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DevCenterResources and their operations over a DevCenterResource. </returns>
         public static DevCenterCollection GetDevCenters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenters();
+            return GetDevCenterResourceGroupMockingExtension(resourceGroupResource).GetDevCenters();
         }
 
         /// <summary>
@@ -402,7 +277,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static async Task<Response<DevCenterResource>> GetDevCenterAsync(this ResourceGroupResource resourceGroupResource, string devCenterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDevCenters().GetAsync(devCenterName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterResourceGroupMockingExtension(resourceGroupResource).GetDevCenterAsync(devCenterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -426,7 +301,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static Response<DevCenterResource> GetDevCenter(this ResourceGroupResource resourceGroupResource, string devCenterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDevCenters().Get(devCenterName, cancellationToken);
+            return GetDevCenterResourceGroupMockingExtension(resourceGroupResource).GetDevCenter(devCenterName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevCenterProjectResources in the ResourceGroupResource. </summary>
@@ -434,7 +309,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterProjectResources and their operations over a DevCenterProjectResource. </returns>
         public static DevCenterProjectCollection GetDevCenterProjects(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenterProjects();
+            return GetDevCenterResourceGroupMockingExtension(resourceGroupResource).GetDevCenterProjects();
         }
 
         /// <summary>
@@ -458,7 +333,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static async Task<Response<DevCenterProjectResource>> GetDevCenterProjectAsync(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDevCenterProjects().GetAsync(projectName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterResourceGroupMockingExtension(resourceGroupResource).GetDevCenterProjectAsync(projectName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -482,7 +357,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static Response<DevCenterProjectResource> GetDevCenterProject(this ResourceGroupResource resourceGroupResource, string projectName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDevCenterProjects().Get(projectName, cancellationToken);
+            return GetDevCenterResourceGroupMockingExtension(resourceGroupResource).GetDevCenterProject(projectName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DevCenterNetworkConnectionResources in the ResourceGroupResource. </summary>
@@ -490,7 +365,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterNetworkConnectionResources and their operations over a DevCenterNetworkConnectionResource. </returns>
         public static DevCenterNetworkConnectionCollection GetDevCenterNetworkConnections(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDevCenterNetworkConnections();
+            return GetDevCenterResourceGroupMockingExtension(resourceGroupResource).GetDevCenterNetworkConnections();
         }
 
         /// <summary>
@@ -514,7 +389,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static async Task<Response<DevCenterNetworkConnectionResource>> GetDevCenterNetworkConnectionAsync(this ResourceGroupResource resourceGroupResource, string networkConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDevCenterNetworkConnections().GetAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterResourceGroupMockingExtension(resourceGroupResource).GetDevCenterNetworkConnectionAsync(networkConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -538,7 +413,7 @@ namespace Azure.ResourceManager.DevCenter
         [ForwardsClientCalls]
         public static Response<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnection(this ResourceGroupResource resourceGroupResource, string networkConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDevCenterNetworkConnections().Get(networkConnectionName, cancellationToken);
+            return GetDevCenterResourceGroupMockingExtension(resourceGroupResource).GetDevCenterNetworkConnection(networkConnectionName, cancellationToken);
         }
 
         /// <summary>
@@ -560,7 +435,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterResource> GetDevCentersAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCentersAsync(top, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCentersAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -582,7 +457,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterResource> GetDevCenters(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenters(top, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenters(top, cancellationToken);
         }
 
         /// <summary>
@@ -604,7 +479,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterProjectResource> GetDevCenterProjectsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterProjectsAsync(top, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenterProjectsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -626,7 +501,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterProjectResource> GetDevCenterProjects(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterProjects(top, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenterProjects(top, cancellationToken);
         }
 
         /// <summary>
@@ -650,9 +525,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public static async Task<Response<DevCenterOperationStatus>> GetDevCenterOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenterOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -676,9 +549,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public static Response<DevCenterOperationStatus> GetDevCenterOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterOperationStatus(location, operationId, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenterOperationStatus(location, operationId, cancellationToken);
         }
 
         /// <summary>
@@ -700,7 +571,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterUsage> GetDevCenterUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocationAsync(location, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenterUsagesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -722,7 +593,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterUsage> GetDevCenterUsagesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterUsagesByLocation(location, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenterUsagesByLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -744,9 +615,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DevCenterNameAvailabilityResult>> CheckDevCenterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDevCenterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetDevCenterSubscriptionMockingExtension(subscriptionResource).CheckDevCenterNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -768,9 +637,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DevCenterNameAvailabilityResult> CheckDevCenterNameAvailability(this SubscriptionResource subscriptionResource, DevCenterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDevCenterNameAvailability(content, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).CheckDevCenterNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -792,7 +659,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterSkuDetails> GetDevCenterSkusBySubscriptionAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscriptionAsync(top, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenterSkusBySubscriptionAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -814,7 +681,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterSkuDetails" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterSkuDetails> GetDevCenterSkusBySubscription(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterSkusBySubscription(top, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenterSkusBySubscription(top, cancellationToken);
         }
 
         /// <summary>
@@ -836,7 +703,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An async collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnectionsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterNetworkConnectionsAsync(top, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenterNetworkConnectionsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -858,7 +725,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> A collection of <see cref="DevCenterNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DevCenterNetworkConnectionResource> GetDevCenterNetworkConnections(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDevCenterNetworkConnections(top, cancellationToken);
+            return GetDevCenterSubscriptionMockingExtension(subscriptionResource).GetDevCenterNetworkConnections(top, cancellationToken);
         }
     }
 }
