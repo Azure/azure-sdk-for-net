@@ -197,11 +197,13 @@ namespace Azure.Core.Serialization
             try
             {
 #if NET6_0_OR_GREATER
+
                 return JsonSerializer.Deserialize<T>(element, _serializerOptions);
 #else
                 Utf8JsonReader reader = MutableJsonElement.GetReaderForElement(element);
-                return JsonSerializer.Deserialize<T>(ref reader, _serializerOptions); // change this to call private Deserialize method on Base class?
+                return JsonSerializer.Deserialize<T>(ref reader, _serializerOptions);
 #endif
+
             }
             catch (JsonException e)
             {

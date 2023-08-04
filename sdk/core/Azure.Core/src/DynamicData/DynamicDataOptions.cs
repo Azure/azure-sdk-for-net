@@ -38,6 +38,7 @@ namespace Azure.Core.Serialization
                     new DynamicData.DynamicTimeSpanConverter(),
                     new DynamicData.DynamicDateTimeConverter(options.DateTimeFormat),
                     new DynamicData.DynamicDateTimeOffsetConverter(options.DateTimeFormat),
+                    new ModelJsonConverter(),
                 }
             };
 
