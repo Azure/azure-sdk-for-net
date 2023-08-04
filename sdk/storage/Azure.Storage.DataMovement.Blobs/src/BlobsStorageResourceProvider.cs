@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Constructs a BlobStorageResourceProvider with the given options.
         /// </summary>
-        public BlobStorageResourceProvider(GetCredentialAsync credentialProvider)
+        public BlobStorageResourceProvider(GetCredentialAsync credentialProvider = default)
         {
         }
 

@@ -312,6 +312,69 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             }
         }
 
+        [Test]
+        public async Task ProviderRefactor_BasicStartup()
+        {
+            string sourceLocalPath = CreateTempFile(SampleFileContent);
+            BlobContainerClient container = new BlobContainerClient(ConnectionString, Randomize("sample-container"));
+            await container.CreateIfNotExistsAsync();
+            string blobUri = container.GetBlobClient(Randomize("sample-blob")).Uri.ToString();
+            string logFile = CreateTempPath();
+            BlobStorageResourceProvider.GetCredentialAsync myCredentialCallback = default;
+
+            try
+            {
+                // Setup TransferManager with providers
+                LocalFileStorageResourceProvider files = new();
+                BlobStorageResourceProvider blobs = new(myCredentialCallback);
+                TransferManager transferManager = new(new TransferManagerOptions()
+                {
+                    ResumeProviders = new List<StorageResourceProvider> { blobs, files }
+                });
+
+                // Resume any incomplete transfers
+                List<DataTransfer> resumedDataTransfers = new();
+                await foreach (DataTransfer transfer in transferManager.ResumeAllTransfersAsync())
+                {
+                    resumedDataTransfers.Add(transfer);
+                }
+
+                // Additionally start a new transfer
+                DataTransfer newTransfer = await transferManager.StartTransferAsync(
+                    files.FromPath(sourceLocalPath), blobs.FromBlob(blobUri));
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task ProviderRefactor_StartFromClient()
+        {
+            string sourceLocalPath = CreateTempFile(SampleFileContent);
+            BlobContainerClient container = new BlobContainerClient(ConnectionString, Randomize("sample-container"));
+            await container.CreateIfNotExistsAsync();
+            BlobClient blobClient = container.GetBlobClient(Randomize("sample-blob"));
+            string logFile = CreateTempPath();
+
+            try
+            {
+                // Setup bare minimum for demonstration purposes
+                BlobStorageResourceProvider blobs = new();
+                LocalFileStorageResourceProvider files = new();
+                TransferManager transferManager = new();
+
+                // Start transfer using Azure SDK clients obtained elsewhere
+                DataTransfer transfer = await transferManager.StartTransferAsync(
+                    files.FromPath(sourceLocalPath), blobs.FromClient(blobClient));
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
         public async Task<string> CreateBlobContainerTestDirectory(BlobContainerClient client, int depth = 0, string basePath = default)
         {
             basePath = basePath ?? Path.GetTempFileName();
