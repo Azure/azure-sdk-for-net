@@ -143,22 +143,18 @@ namespace Azure.Core.Json
 
             internal MutableJsonChange? GetFirstMergePatchChange(out int maxPathLength)
             {
-                // This method gets changes from the list in sorted order by path.
-                // It is intended for use by JSON Merge Patch WriteTo routine.
+                // This method gets the first change from the list in sorted order by path
+                // It also returns the max path length of changes on the list.
 
                 maxPathLength = -1;
 
                 if (_changes == null)
                 {
-                    // null means there's no next change, we can exit a loop
                     return null;
                 }
 
                 MutableJsonChange? min = null;
 
-                // This implementation is based on the assumption that iterating through
-                // list elements is fast.
-                // Iterating backwards means we get the latest change for a given path.
                 for (int i = _changes!.Count - 1; i >= 0; i--)
                 {
                     MutableJsonChange c = _changes[i];
@@ -180,11 +176,9 @@ namespace Azure.Core.Json
             internal MutableJsonChange? GetNextMergePatchChange(ReadOnlySpan<char> lastChangePath)
             {
                 // This method gets changes from the list in sorted order by path.
-                // It is intended for use by JSON Merge Patch WriteTo routine.
 
                 if (_changes == null)
                 {
-                    // null means there's no next change, we can exit a loop
                     return null;
                 }
 

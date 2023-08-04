@@ -4,11 +4,9 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core.Serialization;
 
 namespace Azure.Core.Json
 {
@@ -1070,10 +1068,8 @@ namespace Azure.Core.Json
             }
         }
 
-        private object GetSerializedValue(object? value)
+        private object GetSerializedValue(object value)
         {
-            // TODO: handle null
-
             if (value is JsonDocument doc)
             {
                 return doc.RootElement;
