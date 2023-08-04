@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Kubernetes.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Kubernetes
@@ -18,38 +19,30 @@ namespace Azure.ResourceManager.Kubernetes
     /// <summary> A class to add extension methods to Azure.ResourceManager.Kubernetes. </summary>
     public static partial class KubernetesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static KubernetesArmClientMockingExtension GetKubernetesArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new KubernetesArmClientMockingExtension(client);
+            });
+        }
+
+        private static KubernetesResourceGroupMockingExtension GetKubernetesResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new KubernetesResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static KubernetesSubscriptionMockingExtension GetKubernetesSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new KubernetesSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ConnectedClusterResource
         /// <summary>
         /// Gets an object representing a <see cref="ConnectedClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ConnectedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ConnectedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -59,21 +52,15 @@ namespace Azure.ResourceManager.Kubernetes
         /// <returns> Returns a <see cref="ConnectedClusterResource" /> object. </returns>
         public static ConnectedClusterResource GetConnectedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ConnectedClusterResource.ValidateResourceId(id);
-                return new ConnectedClusterResource(client, id);
-            }
-            );
+            return GetKubernetesArmClientMockingExtension(client).GetConnectedClusterResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of ConnectedClusterResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ConnectedClusterResources and their operations over a ConnectedClusterResource. </returns>
         public static ConnectedClusterCollection GetConnectedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConnectedClusters();
+            return GetKubernetesResourceGroupMockingExtension(resourceGroupResource).GetConnectedClusters();
         }
 
         /// <summary>
@@ -97,7 +84,7 @@ namespace Azure.ResourceManager.Kubernetes
         [ForwardsClientCalls]
         public static async Task<Response<ConnectedClusterResource>> GetConnectedClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetConnectedClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetKubernetesResourceGroupMockingExtension(resourceGroupResource).GetConnectedClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,7 +108,7 @@ namespace Azure.ResourceManager.Kubernetes
         [ForwardsClientCalls]
         public static Response<ConnectedClusterResource> GetConnectedCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetConnectedClusters().Get(clusterName, cancellationToken);
+            return GetKubernetesResourceGroupMockingExtension(resourceGroupResource).GetConnectedCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +129,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <returns> An async collection of <see cref="ConnectedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConnectedClusterResource> GetConnectedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConnectedClustersAsync(cancellationToken);
+            return GetKubernetesSubscriptionMockingExtension(subscriptionResource).GetConnectedClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +150,7 @@ namespace Azure.ResourceManager.Kubernetes
         /// <returns> A collection of <see cref="ConnectedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConnectedClusterResource> GetConnectedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConnectedClusters(cancellationToken);
+            return GetKubernetesSubscriptionMockingExtension(subscriptionResource).GetConnectedClusters(cancellationToken);
         }
     }
 }

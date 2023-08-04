@@ -11,93 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServices.Mocking;
 
 namespace Azure.ResourceManager.ManagedServices
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedServices. </summary>
     public static partial class ManagedServicesExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static ManagedServicesArmClientMockingExtension GetManagedServicesArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
+            return client.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new ManagedServicesArmClientMockingExtension(client);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
-        }
-        #region ManagedServicesRegistrationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesRegistrationResource" /> object. </returns>
-        public static ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedServicesRegistrationResource.ValidateResourceId(id);
-                return new ManagedServicesRegistrationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ManagedServicesRegistrationAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesRegistrationAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesRegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource" /> object. </returns>
-        public static ManagedServicesRegistrationAssignmentResource GetManagedServicesRegistrationAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedServicesRegistrationAssignmentResource.ValidateResourceId(id);
-                return new ManagedServicesRegistrationAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ManagedServicesMarketplaceRegistrationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ManagedServicesMarketplaceRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedServicesMarketplaceRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesMarketplaceRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource" /> object. </returns>
-        public static ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ManagedServicesMarketplaceRegistrationResource.ValidateResourceId(id);
-                return new ManagedServicesMarketplaceRegistrationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of ManagedServicesRegistrationResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of ManagedServicesRegistrationResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ManagedServicesRegistrationResources and their operations over a ManagedServicesRegistrationResource. </returns>
         public static ManagedServicesRegistrationCollection GetManagedServicesRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetManagedServicesRegistrations();
+            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrations(scope);
         }
-
         /// <summary>
         /// Gets the registration definition details.
         /// <list type="bullet">
@@ -120,9 +56,8 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static async Task<Response<ManagedServicesRegistrationResource>> GetManagedServicesRegistrationAsync(this ArmClient client, ResourceIdentifier scope, string registrationId, CancellationToken cancellationToken = default)
         {
-            return await client.GetManagedServicesRegistrations(scope).GetAsync(registrationId, cancellationToken).ConfigureAwait(false);
+            return await GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationAsync(scope, registrationId, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Gets the registration definition details.
         /// <list type="bullet">
@@ -145,18 +80,17 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static Response<ManagedServicesRegistrationResource> GetManagedServicesRegistration(this ArmClient client, ResourceIdentifier scope, string registrationId, CancellationToken cancellationToken = default)
         {
-            return client.GetManagedServicesRegistrations(scope).Get(registrationId, cancellationToken);
+            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistration(scope, registrationId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedServicesRegistrationAssignmentResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of ManagedServicesRegistrationAssignmentResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ManagedServicesRegistrationAssignmentResources and their operations over a ManagedServicesRegistrationAssignmentResource. </returns>
         public static ManagedServicesRegistrationAssignmentCollection GetManagedServicesRegistrationAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetManagedServicesRegistrationAssignments();
+            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationAssignments(scope);
         }
-
         /// <summary>
         /// Gets the details of the specified registration assignment.
         /// <list type="bullet">
@@ -180,9 +114,8 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static async Task<Response<ManagedServicesRegistrationAssignmentResource>> GetManagedServicesRegistrationAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
-            return await client.GetManagedServicesRegistrationAssignments(scope).GetAsync(registrationAssignmentId, expandRegistrationDefinition, cancellationToken).ConfigureAwait(false);
+            return await GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationAssignmentAsync(scope, registrationAssignmentId, expandRegistrationDefinition, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Gets the details of the specified registration assignment.
         /// <list type="bullet">
@@ -206,18 +139,17 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static Response<ManagedServicesRegistrationAssignmentResource> GetManagedServicesRegistrationAssignment(this ArmClient client, ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
-            return client.GetManagedServicesRegistrationAssignments(scope).Get(registrationAssignmentId, expandRegistrationDefinition, cancellationToken);
+            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationAssignment(scope, registrationAssignmentId, expandRegistrationDefinition, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ManagedServicesMarketplaceRegistrationResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of ManagedServicesMarketplaceRegistrationResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of ManagedServicesMarketplaceRegistrationResources and their operations over a ManagedServicesMarketplaceRegistrationResource. </returns>
         public static ManagedServicesMarketplaceRegistrationCollection GetManagedServicesMarketplaceRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetManagedServicesMarketplaceRegistrations();
+            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesMarketplaceRegistrations(scope);
         }
-
         /// <summary>
         /// Get the marketplace registration definition for the marketplace identifier.
         /// <list type="bullet">
@@ -240,9 +172,8 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static async Task<Response<ManagedServicesMarketplaceRegistrationResource>> GetManagedServicesMarketplaceRegistrationAsync(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            return await client.GetManagedServicesMarketplaceRegistrations(scope).GetAsync(marketplaceIdentifier, cancellationToken).ConfigureAwait(false);
+            return await GetManagedServicesArmClientMockingExtension(client).GetManagedServicesMarketplaceRegistrationAsync(scope, marketplaceIdentifier, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Get the marketplace registration definition for the marketplace identifier.
         /// <list type="bullet">
@@ -265,7 +196,43 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static Response<ManagedServicesMarketplaceRegistrationResource> GetManagedServicesMarketplaceRegistration(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            return client.GetManagedServicesMarketplaceRegistrations(scope).Get(marketplaceIdentifier, cancellationToken);
+            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesMarketplaceRegistration(scope, marketplaceIdentifier, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedServicesRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedServicesRegistrationResource" /> object. </returns>
+        public static ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedServicesRegistrationAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesRegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource" /> object. </returns>
+        public static ManagedServicesRegistrationAssignmentResource GetManagedServicesRegistrationAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationAssignmentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManagedServicesMarketplaceRegistrationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedServicesMarketplaceRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesMarketplaceRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource" /> object. </returns>
+        public static ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesMarketplaceRegistrationResource(id);
         }
     }
 }
