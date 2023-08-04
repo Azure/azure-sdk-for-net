@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Grafana.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Grafana
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.Grafana
     /// <summary> A class to add extension methods to Azure.ResourceManager.Grafana. </summary>
     public static partial class GrafanaExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static GrafanaArmClientMockingExtension GetGrafanaArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new GrafanaArmClientMockingExtension(client);
+            });
+        }
+
+        private static GrafanaResourceGroupMockingExtension GetGrafanaResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new GrafanaResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static GrafanaSubscriptionMockingExtension GetGrafanaSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new GrafanaSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region ManagedGrafanaResource
         /// <summary>
         /// Gets an object representing a <see cref="ManagedGrafanaResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> Returns a <see cref="ManagedGrafanaResource" /> object. </returns>
         public static ManagedGrafanaResource GetManagedGrafanaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedGrafanaResource.ValidateResourceId(id);
-                return new ManagedGrafanaResource(client, id);
-            }
-            );
+            return GetGrafanaArmClientMockingExtension(client).GetManagedGrafanaResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> Returns a <see cref="GrafanaPrivateEndpointConnectionResource" /> object. </returns>
         public static GrafanaPrivateEndpointConnectionResource GetGrafanaPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GrafanaPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new GrafanaPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetGrafanaArmClientMockingExtension(client).GetGrafanaPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> Returns a <see cref="GrafanaPrivateLinkResource" /> object. </returns>
         public static GrafanaPrivateLinkResource GetGrafanaPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GrafanaPrivateLinkResource.ValidateResourceId(id);
-                return new GrafanaPrivateLinkResource(client, id);
-            }
-            );
+            return GetGrafanaArmClientMockingExtension(client).GetGrafanaPrivateLinkResource(id);
         }
         #endregion
 
@@ -111,7 +90,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An object representing collection of ManagedGrafanaResources and their operations over a ManagedGrafanaResource. </returns>
         public static ManagedGrafanaCollection GetManagedGrafanas(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedGrafanas();
+            return GetGrafanaResourceGroupMockingExtension(resourceGroupResource).GetManagedGrafanas();
         }
 
         /// <summary>
@@ -135,7 +114,7 @@ namespace Azure.ResourceManager.Grafana
         [ForwardsClientCalls]
         public static async Task<Response<ManagedGrafanaResource>> GetManagedGrafanaAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetManagedGrafanas().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetGrafanaResourceGroupMockingExtension(resourceGroupResource).GetManagedGrafanaAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -159,7 +138,7 @@ namespace Azure.ResourceManager.Grafana
         [ForwardsClientCalls]
         public static Response<ManagedGrafanaResource> GetManagedGrafana(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetManagedGrafanas().Get(workspaceName, cancellationToken);
+            return GetGrafanaResourceGroupMockingExtension(resourceGroupResource).GetManagedGrafana(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -180,7 +159,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedGrafanasAsync(cancellationToken);
+            return GetGrafanaSubscriptionMockingExtension(subscriptionResource).GetManagedGrafanasAsync(cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +180,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedGrafanaResource> GetManagedGrafanas(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedGrafanas(cancellationToken);
+            return GetGrafanaSubscriptionMockingExtension(subscriptionResource).GetManagedGrafanas(cancellationToken);
         }
     }
 }

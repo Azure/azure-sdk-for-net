@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ExtendedLocations.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ExtendedLocations
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.ExtendedLocations
     /// <summary> A class to add extension methods to Azure.ResourceManager.ExtendedLocations. </summary>
     public static partial class ExtendedLocationsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ExtendedLocationsArmClientMockingExtension GetExtendedLocationsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new ExtendedLocationsArmClientMockingExtension(client);
+            });
+        }
+
+        private static ExtendedLocationsResourceGroupMockingExtension GetExtendedLocationsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ExtendedLocationsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ExtendedLocationsSubscriptionMockingExtension GetExtendedLocationsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ExtendedLocationsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region CustomLocationResource
         /// <summary>
         /// Gets an object representing a <see cref="CustomLocationResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> Returns a <see cref="CustomLocationResource" /> object. </returns>
         public static CustomLocationResource GetCustomLocationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CustomLocationResource.ValidateResourceId(id);
-                return new CustomLocationResource(client, id);
-            }
-            );
+            return GetExtendedLocationsArmClientMockingExtension(client).GetCustomLocationResource(id);
         }
         #endregion
 
@@ -73,7 +62,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
         public static CustomLocationCollection GetCustomLocations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCustomLocations();
+            return GetExtendedLocationsResourceGroupMockingExtension(resourceGroupResource).GetCustomLocations();
         }
 
         /// <summary>
@@ -97,7 +86,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         [ForwardsClientCalls]
         public static async Task<Response<CustomLocationResource>> GetCustomLocationAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCustomLocations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetExtendedLocationsResourceGroupMockingExtension(resourceGroupResource).GetCustomLocationAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,7 +110,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         [ForwardsClientCalls]
         public static Response<CustomLocationResource> GetCustomLocation(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCustomLocations().Get(resourceName, cancellationToken);
+            return GetExtendedLocationsResourceGroupMockingExtension(resourceGroupResource).GetCustomLocation(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +131,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> An async collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomLocationResource> GetCustomLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomLocationsAsync(cancellationToken);
+            return GetExtendedLocationsSubscriptionMockingExtension(subscriptionResource).GetCustomLocationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +152,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> A collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomLocationResource> GetCustomLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCustomLocations(cancellationToken);
+            return GetExtendedLocationsSubscriptionMockingExtension(subscriptionResource).GetCustomLocations(cancellationToken);
         }
     }
 }

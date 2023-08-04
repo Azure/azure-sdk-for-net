@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DigitalTwins.Mocking;
 using Azure.ResourceManager.DigitalTwins.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.DigitalTwins
     /// <summary> A class to add extension methods to Azure.ResourceManager.DigitalTwins. </summary>
     public static partial class DigitalTwinsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static DigitalTwinsArmClientMockingExtension GetDigitalTwinsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new DigitalTwinsArmClientMockingExtension(client);
+            });
+        }
+
+        private static DigitalTwinsResourceGroupMockingExtension GetDigitalTwinsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new DigitalTwinsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static DigitalTwinsSubscriptionMockingExtension GetDigitalTwinsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new DigitalTwinsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region DigitalTwinsDescriptionResource
         /// <summary>
         /// Gets an object representing a <see cref="DigitalTwinsDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> Returns a <see cref="DigitalTwinsDescriptionResource" /> object. </returns>
         public static DigitalTwinsDescriptionResource GetDigitalTwinsDescriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DigitalTwinsDescriptionResource.ValidateResourceId(id);
-                return new DigitalTwinsDescriptionResource(client, id);
-            }
-            );
+            return GetDigitalTwinsArmClientMockingExtension(client).GetDigitalTwinsDescriptionResource(id);
         }
         #endregion
 
@@ -79,12 +68,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> Returns a <see cref="DigitalTwinsEndpointResource" /> object. </returns>
         public static DigitalTwinsEndpointResource GetDigitalTwinsEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DigitalTwinsEndpointResource.ValidateResourceId(id);
-                return new DigitalTwinsEndpointResource(client, id);
-            }
-            );
+            return GetDigitalTwinsArmClientMockingExtension(client).GetDigitalTwinsEndpointResource(id);
         }
         #endregion
 
@@ -98,12 +82,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> Returns a <see cref="DigitalTwinsPrivateLinkResource" /> object. </returns>
         public static DigitalTwinsPrivateLinkResource GetDigitalTwinsPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DigitalTwinsPrivateLinkResource.ValidateResourceId(id);
-                return new DigitalTwinsPrivateLinkResource(client, id);
-            }
-            );
+            return GetDigitalTwinsArmClientMockingExtension(client).GetDigitalTwinsPrivateLinkResource(id);
         }
         #endregion
 
@@ -117,12 +96,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> Returns a <see cref="DigitalTwinsPrivateEndpointConnectionResource" /> object. </returns>
         public static DigitalTwinsPrivateEndpointConnectionResource GetDigitalTwinsPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DigitalTwinsPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new DigitalTwinsPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetDigitalTwinsArmClientMockingExtension(client).GetDigitalTwinsPrivateEndpointConnectionResource(id);
         }
         #endregion
 
@@ -136,12 +110,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> Returns a <see cref="TimeSeriesDatabaseConnectionResource" /> object. </returns>
         public static TimeSeriesDatabaseConnectionResource GetTimeSeriesDatabaseConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                TimeSeriesDatabaseConnectionResource.ValidateResourceId(id);
-                return new TimeSeriesDatabaseConnectionResource(client, id);
-            }
-            );
+            return GetDigitalTwinsArmClientMockingExtension(client).GetTimeSeriesDatabaseConnectionResource(id);
         }
         #endregion
 
@@ -150,7 +119,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An object representing collection of DigitalTwinsDescriptionResources and their operations over a DigitalTwinsDescriptionResource. </returns>
         public static DigitalTwinsDescriptionCollection GetDigitalTwinsDescriptions(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDigitalTwinsDescriptions();
+            return GetDigitalTwinsResourceGroupMockingExtension(resourceGroupResource).GetDigitalTwinsDescriptions();
         }
 
         /// <summary>
@@ -174,7 +143,7 @@ namespace Azure.ResourceManager.DigitalTwins
         [ForwardsClientCalls]
         public static async Task<Response<DigitalTwinsDescriptionResource>> GetDigitalTwinsDescriptionAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDigitalTwinsDescriptions().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetDigitalTwinsResourceGroupMockingExtension(resourceGroupResource).GetDigitalTwinsDescriptionAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -198,7 +167,7 @@ namespace Azure.ResourceManager.DigitalTwins
         [ForwardsClientCalls]
         public static Response<DigitalTwinsDescriptionResource> GetDigitalTwinsDescription(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDigitalTwinsDescriptions().Get(resourceName, cancellationToken);
+            return GetDigitalTwinsResourceGroupMockingExtension(resourceGroupResource).GetDigitalTwinsDescription(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -219,7 +188,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> An async collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDigitalTwinsDescriptionsAsync(cancellationToken);
+            return GetDigitalTwinsSubscriptionMockingExtension(subscriptionResource).GetDigitalTwinsDescriptionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +209,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <returns> A collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDigitalTwinsDescriptions(cancellationToken);
+            return GetDigitalTwinsSubscriptionMockingExtension(subscriptionResource).GetDigitalTwinsDescriptions(cancellationToken);
         }
 
         /// <summary>
@@ -263,9 +232,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DigitalTwinsNameResult>> CheckDigitalTwinsNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDigitalTwinsNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetDigitalTwinsSubscriptionMockingExtension(subscriptionResource).CheckDigitalTwinsNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -288,9 +255,7 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DigitalTwinsNameResult> CheckDigitalTwinsNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckDigitalTwinsNameAvailability(location, content, cancellationToken);
+            return GetDigitalTwinsSubscriptionMockingExtension(subscriptionResource).CheckDigitalTwinsNameAvailability(location, content, cancellationToken);
         }
     }
 }
