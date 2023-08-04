@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.AppComplianceAutomation.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
@@ -18,22 +19,22 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppComplianceAutomation. </summary>
     public static partial class AppComplianceAutomationExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static AppComplianceAutomationArmClientMockingExtension GetAppComplianceAutomationArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
+            return client.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new AppComplianceAutomationArmClientMockingExtension(client);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static AppComplianceAutomationTenantMockingExtension GetAppComplianceAutomationTenantMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new AppComplianceAutomationTenantMockingExtension(client, resource.Id);
             });
         }
-        #region ReportResource
+
         /// <summary>
         /// Gets an object representing a <see cref="ReportResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ReportResource.CreateResourceIdentifier" /> to create a <see cref="ReportResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -43,16 +44,9 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> Returns a <see cref="ReportResource" /> object. </returns>
         public static ReportResource GetReportResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ReportResource.ValidateResourceId(id);
-                return new ReportResource(client, id);
-            }
-            );
+            return GetAppComplianceAutomationArmClientMockingExtension(client).GetReportResource(id);
         }
-        #endregion
 
-        #region SnapshotResource
         /// <summary>
         /// Gets an object representing a <see cref="SnapshotResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -62,21 +56,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
         public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SnapshotResource.ValidateResourceId(id);
-                return new SnapshotResource(client, id);
-            }
-            );
+            return GetAppComplianceAutomationArmClientMockingExtension(client).GetSnapshotResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of ReportResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ReportResources and their operations over a ReportResource. </returns>
         public static ReportResourceCollection GetReportResources(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetReportResources();
+            return GetAppComplianceAutomationTenantMockingExtension(tenantResource).GetReportResources();
         }
 
         /// <summary>
@@ -100,7 +88,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         [ForwardsClientCalls]
         public static async Task<Response<ReportResource>> GetReportResourceAsync(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetReportResources().GetAsync(reportName, cancellationToken).ConfigureAwait(false);
+            return await GetAppComplianceAutomationTenantMockingExtension(tenantResource).GetReportResourceAsync(reportName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -124,7 +112,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         [ForwardsClientCalls]
         public static Response<ReportResource> GetReportResource(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetReportResources().Get(reportName, cancellationToken);
+            return GetAppComplianceAutomationTenantMockingExtension(tenantResource).GetReportResource(reportName, cancellationToken);
         }
     }
 }
