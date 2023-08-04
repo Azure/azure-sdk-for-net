@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Quantum.Mocking;
 using Azure.ResourceManager.Quantum.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,37 +20,30 @@ namespace Azure.ResourceManager.Quantum
     /// <summary> A class to add extension methods to Azure.ResourceManager.Quantum. </summary>
     public static partial class QuantumExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static QuantumArmClientMockingExtension GetQuantumArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new QuantumArmClientMockingExtension(client);
+            });
+        }
+
+        private static QuantumResourceGroupMockingExtension GetQuantumResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new QuantumResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static QuantumSubscriptionMockingExtension GetQuantumSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new QuantumSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region QuantumWorkspaceResource
         /// <summary>
         /// Gets an object representing a <see cref="QuantumWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
@@ -60,12 +54,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> Returns a <see cref="QuantumWorkspaceResource" /> object. </returns>
         public static QuantumWorkspaceResource GetQuantumWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                QuantumWorkspaceResource.ValidateResourceId(id);
-                return new QuantumWorkspaceResource(client, id);
-            }
-            );
+            return GetQuantumArmClientMockingExtension(client).GetQuantumWorkspaceResource(id);
         }
         #endregion
 
@@ -74,7 +63,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> An object representing collection of QuantumWorkspaceResources and their operations over a QuantumWorkspaceResource. </returns>
         public static QuantumWorkspaceCollection GetQuantumWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetQuantumWorkspaces();
+            return GetQuantumResourceGroupMockingExtension(resourceGroupResource).GetQuantumWorkspaces();
         }
 
         /// <summary>
@@ -98,7 +87,7 @@ namespace Azure.ResourceManager.Quantum
         [ForwardsClientCalls]
         public static async Task<Response<QuantumWorkspaceResource>> GetQuantumWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetQuantumWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetQuantumResourceGroupMockingExtension(resourceGroupResource).GetQuantumWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,7 +111,7 @@ namespace Azure.ResourceManager.Quantum
         [ForwardsClientCalls]
         public static Response<QuantumWorkspaceResource> GetQuantumWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetQuantumWorkspaces().Get(workspaceName, cancellationToken);
+            return GetQuantumResourceGroupMockingExtension(resourceGroupResource).GetQuantumWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -143,7 +132,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> An async collection of <see cref="QuantumWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<QuantumWorkspaceResource> GetQuantumWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQuantumWorkspacesAsync(cancellationToken);
+            return GetQuantumSubscriptionMockingExtension(subscriptionResource).GetQuantumWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -164,7 +153,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> A collection of <see cref="QuantumWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<QuantumWorkspaceResource> GetQuantumWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQuantumWorkspaces(cancellationToken);
+            return GetQuantumSubscriptionMockingExtension(subscriptionResource).GetQuantumWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -188,9 +177,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> An async collection of <see cref="ProviderDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProviderDescription> GetOfferingsAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOfferingsAsync(locationName, cancellationToken);
+            return GetQuantumSubscriptionMockingExtension(subscriptionResource).GetOfferingsAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -214,9 +201,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> A collection of <see cref="ProviderDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProviderDescription> GetOfferings(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOfferings(locationName, cancellationToken);
+            return GetQuantumSubscriptionMockingExtension(subscriptionResource).GetOfferings(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -240,10 +225,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityWorkspaceAsync(this SubscriptionResource subscriptionResource, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityWorkspaceAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetQuantumSubscriptionMockingExtension(subscriptionResource).CheckNameAvailabilityWorkspaceAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -267,10 +249,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityWorkspace(this SubscriptionResource subscriptionResource, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityWorkspace(locationName, content, cancellationToken);
+            return GetQuantumSubscriptionMockingExtension(subscriptionResource).CheckNameAvailabilityWorkspace(locationName, content, cancellationToken);
         }
     }
 }
