@@ -125,3 +125,5 @@ foreach ($moniker in $MONIKERS) {
     exit 1
   }
 }
+
+exit 0
