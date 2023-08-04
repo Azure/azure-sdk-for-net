@@ -5,9 +5,6 @@ using System;
 
 namespace Azure.Core.Pipeline
 {
-#if NET6_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
-#endif
     internal class ReadClientRequestIdPolicy : HttpPipelineSynchronousPolicy
     {
         public const string MessagePropertyKey = "x-ms-client-request-id";

@@ -15,9 +15,6 @@ namespace Azure.Core.Shared
     /// across requests. It falls back only if no response is received from a request, i.e. any response is treated as an indication that the
     /// host is healthy.
     /// </summary>
-#if NET6_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
-#endif
     internal class GeoRedundantFallbackPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly Fallback _writeFallback;

@@ -3,9 +3,6 @@
 
 namespace Azure.Core.Pipeline
 {
-#if NET6_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
-#endif
     internal class TelemetryPolicy : HttpPipelineSynchronousPolicy
     {
         private readonly string _defaultHeader;
