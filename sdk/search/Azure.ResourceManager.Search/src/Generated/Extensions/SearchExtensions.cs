@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Search.Mocking;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.Search
     /// <summary> A class to add extension methods to Azure.ResourceManager.Search. </summary>
     public static partial class SearchExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SearchArmClientMockingExtension GetSearchArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new SearchArmClientMockingExtension(client);
+            });
+        }
+
+        private static SearchResourceGroupMockingExtension GetSearchResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SearchResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SearchSubscriptionMockingExtension GetSearchSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SearchSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region SearchServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="SearchServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SearchServiceResource.CreateResourceIdentifier" /> to create a <see cref="SearchServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.Search
         /// <returns> Returns a <see cref="SearchServiceResource" /> object. </returns>
         public static SearchServiceResource GetSearchServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SearchServiceResource.ValidateResourceId(id);
-                return new SearchServiceResource(client, id);
-            }
-            );
+            return GetSearchArmClientMockingExtension(client).GetSearchServiceResource(id);
         }
-        #endregion
 
-        #region SearchPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="SearchPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SearchPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SearchPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.Search
         /// <returns> Returns a <see cref="SearchPrivateEndpointConnectionResource" /> object. </returns>
         public static SearchPrivateEndpointConnectionResource GetSearchPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SearchPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new SearchPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetSearchArmClientMockingExtension(client).GetSearchPrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region SharedSearchServicePrivateLinkResource
         /// <summary>
         /// Gets an object representing a <see cref="SharedSearchServicePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SharedSearchServicePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedSearchServicePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,21 +77,15 @@ namespace Azure.ResourceManager.Search
         /// <returns> Returns a <see cref="SharedSearchServicePrivateLinkResource" /> object. </returns>
         public static SharedSearchServicePrivateLinkResource GetSharedSearchServicePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SharedSearchServicePrivateLinkResource.ValidateResourceId(id);
-                return new SharedSearchServicePrivateLinkResource(client, id);
-            }
-            );
+            return GetSearchArmClientMockingExtension(client).GetSharedSearchServicePrivateLinkResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of SearchServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SearchServiceResources and their operations over a SearchServiceResource. </returns>
         public static SearchServiceCollection GetSearchServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSearchServices();
+            return GetSearchResourceGroupMockingExtension(resourceGroupResource).GetSearchServices();
         }
 
         /// <summary>
@@ -137,7 +110,7 @@ namespace Azure.ResourceManager.Search
         [ForwardsClientCalls]
         public static async Task<Response<SearchServiceResource>> GetSearchServiceAsync(this ResourceGroupResource resourceGroupResource, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSearchServices().GetAsync(searchServiceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetSearchResourceGroupMockingExtension(resourceGroupResource).GetSearchServiceAsync(searchServiceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,7 +135,7 @@ namespace Azure.ResourceManager.Search
         [ForwardsClientCalls]
         public static Response<SearchServiceResource> GetSearchService(this ResourceGroupResource resourceGroupResource, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSearchServices().Get(searchServiceName, searchManagementRequestOptions, cancellationToken);
+            return GetSearchResourceGroupMockingExtension(resourceGroupResource).GetSearchService(searchServiceName, searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -184,7 +157,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> An async collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SearchServiceResource> GetSearchServicesAsync(this SubscriptionResource subscriptionResource, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSearchServicesAsync(searchManagementRequestOptions, cancellationToken);
+            return GetSearchSubscriptionMockingExtension(subscriptionResource).GetSearchServicesAsync(searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -206,7 +179,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> A collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SearchServiceResource> GetSearchServices(this SubscriptionResource subscriptionResource, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSearchServices(searchManagementRequestOptions, cancellationToken);
+            return GetSearchSubscriptionMockingExtension(subscriptionResource).GetSearchServices(searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -229,9 +202,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSearchServiceNameAvailabilityAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetSearchSubscriptionMockingExtension(subscriptionResource).CheckSearchServiceNameAvailabilityAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -254,9 +225,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSearchServiceNameAvailability(content, searchManagementRequestOptions, cancellationToken);
+            return GetSearchSubscriptionMockingExtension(subscriptionResource).CheckSearchServiceNameAvailability(content, searchManagementRequestOptions, cancellationToken);
         }
     }
 }
