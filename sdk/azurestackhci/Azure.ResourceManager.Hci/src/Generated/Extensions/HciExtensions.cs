@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Hci.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Hci
@@ -18,37 +19,30 @@ namespace Azure.ResourceManager.Hci
     /// <summary> A class to add extension methods to Azure.ResourceManager.Hci. </summary>
     public static partial class HciExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static HciArmClientMockingExtension GetHciArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new HciArmClientMockingExtension(client);
+            });
+        }
+
+        private static HciResourceGroupMockingExtension GetHciResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new HciResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static HciSubscriptionMockingExtension GetHciSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new HciSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
         #region ArcSettingResource
         /// <summary>
         /// Gets an object representing an <see cref="ArcSettingResource" /> along with the instance operations that can be performed on it but with no data.
@@ -59,12 +53,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="ArcSettingResource" /> object. </returns>
         public static ArcSettingResource GetArcSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ArcSettingResource.ValidateResourceId(id);
-                return new ArcSettingResource(client, id);
-            }
-            );
+            return GetHciArmClientMockingExtension(client).GetArcSettingResource(id);
         }
         #endregion
 
@@ -78,12 +67,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="HciClusterResource" /> object. </returns>
         public static HciClusterResource GetHciClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HciClusterResource.ValidateResourceId(id);
-                return new HciClusterResource(client, id);
-            }
-            );
+            return GetHciArmClientMockingExtension(client).GetHciClusterResource(id);
         }
         #endregion
 
@@ -97,12 +81,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="ArcExtensionResource" /> object. </returns>
         public static ArcExtensionResource GetArcExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ArcExtensionResource.ValidateResourceId(id);
-                return new ArcExtensionResource(client, id);
-            }
-            );
+            return GetHciArmClientMockingExtension(client).GetArcExtensionResource(id);
         }
         #endregion
 
@@ -116,12 +95,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="OfferResource" /> object. </returns>
         public static OfferResource GetOfferResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                OfferResource.ValidateResourceId(id);
-                return new OfferResource(client, id);
-            }
-            );
+            return GetHciArmClientMockingExtension(client).GetOfferResource(id);
         }
         #endregion
 
@@ -135,12 +109,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="PublisherResource" /> object. </returns>
         public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PublisherResource.ValidateResourceId(id);
-                return new PublisherResource(client, id);
-            }
-            );
+            return GetHciArmClientMockingExtension(client).GetPublisherResource(id);
         }
         #endregion
 
@@ -154,12 +123,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="HciSkuResource" /> object. </returns>
         public static HciSkuResource GetHciSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HciSkuResource.ValidateResourceId(id);
-                return new HciSkuResource(client, id);
-            }
-            );
+            return GetHciArmClientMockingExtension(client).GetHciSkuResource(id);
         }
         #endregion
 
@@ -173,12 +137,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="UpdateRunResource" /> object. </returns>
         public static UpdateRunResource GetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                UpdateRunResource.ValidateResourceId(id);
-                return new UpdateRunResource(client, id);
-            }
-            );
+            return GetHciArmClientMockingExtension(client).GetUpdateRunResource(id);
         }
         #endregion
 
@@ -192,12 +151,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="UpdateSummaryResource" /> object. </returns>
         public static UpdateSummaryResource GetUpdateSummaryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                UpdateSummaryResource.ValidateResourceId(id);
-                return new UpdateSummaryResource(client, id);
-            }
-            );
+            return GetHciArmClientMockingExtension(client).GetUpdateSummaryResource(id);
         }
         #endregion
 
@@ -211,12 +165,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="UpdateResource" /> object. </returns>
         public static UpdateResource GetUpdateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                UpdateResource.ValidateResourceId(id);
-                return new UpdateResource(client, id);
-            }
-            );
+            return GetHciArmClientMockingExtension(client).GetUpdateResource(id);
         }
         #endregion
 
@@ -225,7 +174,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of HciClusterResources and their operations over a HciClusterResource. </returns>
         public static HciClusterCollection GetHciClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHciClusters();
+            return GetHciResourceGroupMockingExtension(resourceGroupResource).GetHciClusters();
         }
 
         /// <summary>
@@ -249,7 +198,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static async Task<Response<HciClusterResource>> GetHciClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHciClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetHciResourceGroupMockingExtension(resourceGroupResource).GetHciClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,7 +222,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static Response<HciClusterResource> GetHciCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHciClusters().Get(clusterName, cancellationToken);
+            return GetHciResourceGroupMockingExtension(resourceGroupResource).GetHciCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -294,7 +243,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HciClusterResource> GetHciClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciClustersAsync(cancellationToken);
+            return GetHciSubscriptionMockingExtension(subscriptionResource).GetHciClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -315,7 +264,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HciClusterResource> GetHciClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHciClusters(cancellationToken);
+            return GetHciSubscriptionMockingExtension(subscriptionResource).GetHciClusters(cancellationToken);
         }
     }
 }
