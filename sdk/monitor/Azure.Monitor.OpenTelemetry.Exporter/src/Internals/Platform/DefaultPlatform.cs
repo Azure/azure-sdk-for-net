@@ -12,9 +12,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 {
     internal class DefaultPlatform : IPlatform
     {
-        public string? GetEnvironmentVariable(string name) => Environment.GetEnvironmentVariable(name);
+        private readonly IDictionary _environmentVariables = Environment.GetEnvironmentVariables();
 
-        public IDictionary GetEnvironmentVariables() => Environment.GetEnvironmentVariables();
+        public string? GetEnvironmentVariable(string name) => _environmentVariables[name]?.ToString();
 
         public string GetOSPlatformName()
         {
