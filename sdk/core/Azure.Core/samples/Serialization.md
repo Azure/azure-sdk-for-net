@@ -62,7 +62,7 @@ dog = (Dog)response;
 
 ## Using JsonSerializer
 
-If you would like to use the `JsonSerializer`, you can add the `ModelJsonConverter` to your options which will allow `JsonSerializer` to serialize and deserialize any model that implements `IModelJsonSerializable<T>`. The following example shows a Dog model being serialized and deserialized using the ModelJsonConverter.
+If you would like to use the `JsonSerializer`, you can add the `ModelJsonConverter` to your options, which allow `JsonSerializer` to serialize and deserialize any model that implements `IModelJsonSerializable<T>`. The following example shows a Dog model being serialized and deserialized using the ModelJsonConverter.
 
 ```C# Snippet:BaseModelConverter
 Dog dog = new Dog
@@ -108,7 +108,7 @@ Envelope<SearchResult> model = ModelSerializer.Deserialize<Envelope<SearchResult
 
 ## Next steps
 
-To learn more about serialization with Azure Core, see the [Azure.Core.Serialization class](https://learn.microsoft.com/en-us/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet).
+To learn more about serialization with `Azure.Core`, see the [Azure.Core.Serialization namespace](https://learn.microsoft.com/dotnet/api/azure.core.serialization.objectserializer?view=azure-dotnet).
 
 ## Contributing
 
