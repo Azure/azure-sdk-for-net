@@ -8,9 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml;
 using Azure.Core.Buffers;
-using Azure.Core.Internal;
 using Azure.Core.Serialization;
 
 namespace Azure.Core

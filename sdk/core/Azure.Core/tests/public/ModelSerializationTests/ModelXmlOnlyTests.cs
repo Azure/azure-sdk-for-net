@@ -10,12 +10,13 @@ using System;
 using System.Text.Json;
 using System.Xml;
 using System.Reflection;
+using Azure.Core.Tests.Common;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class ModelXmlOnlyTests : ModelTests<ModelXmlOnly>
     {
-        protected override string WirePayload => File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ModelXml.xml")).TrimEnd();
+        protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelXml.xml")).TrimEnd();
 
         protected override string JsonPayload => string.Empty;
 

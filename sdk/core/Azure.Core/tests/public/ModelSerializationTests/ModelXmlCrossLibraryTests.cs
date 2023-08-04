@@ -10,12 +10,13 @@ using System;
 using System.Text.Json;
 using System.Xml;
 using System.Reflection;
+using Azure.Core.Tests.Common;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class ModelXmlCrossLibraryTests : ModelTests<ModelXmlCrossLibrary>
     {
-        protected override string WirePayload => File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ModelXmlX.xml")).TrimEnd();
+        protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelXmlX.xml")).TrimEnd();
 
         protected override string JsonPayload => "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"childTag\":{\"childValue\":\"ChildRed\",\"childReadOnlyProperty\":\"ChildReadOnly\"}}";
 

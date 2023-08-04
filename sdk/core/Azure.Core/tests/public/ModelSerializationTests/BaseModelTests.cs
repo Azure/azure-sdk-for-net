@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 using NUnit.Framework;
@@ -12,7 +13,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         protected override BaseModel GetModelInstance()
         {
-            return new UnknownBaseModel();
+            var typeToActivate = typeof(BaseModel).Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{typeof(BaseModel).Name}");
+            return Activator.CreateInstance(typeToActivate, true) as BaseModel;
         }
 
         protected override string JsonPayload => WirePayload;

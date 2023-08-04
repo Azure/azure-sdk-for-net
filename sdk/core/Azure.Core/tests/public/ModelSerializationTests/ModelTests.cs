@@ -96,18 +96,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         [TestCase("J")]
         [TestCase("W")]
-        public void RoundTripWithJsonInterfaceSequenceWriter(string format)
+        public void RoundTripWithModelJsonConverter(string format)
         {
             if (ModelInstance is IModelJsonSerializable<T>)
-                RoundTripTest(format, new JsonInterfaceSequenceWriterStrategy<T>());
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithJsonInterfaceSequenceNonGenericWriter(string format)
-        {
-            if (ModelInstance is IModelJsonSerializable<T>)
-                RoundTripTest(format, new JsonInterfaceSequenceWriterNonGenericStrategy<T>());
+                RoundTripTest(format, new ModelJsonConverterStrategy<T>());
         }
 
         [Test]
@@ -130,9 +122,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             if (IsXmlWireFormat && (strategy.IsExplicitJsonDeserialize || strategy.IsExplicitJsonSerialize) && format == ModelSerializerFormat.Wire)
             {
                 if (strategy.IsExplicitJsonDeserialize)
-                    Assert.Throws<InvalidOperationException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+                {
+                    if (strategy is ModelJsonConverterStrategy<T>)
+                    {
+                        //we never get to the interface implementation because JsonSerializer errors before that
+                        Assert.Throws<JsonException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+                    }
+                    else
+                    {
+                        Assert.Throws<InvalidOperationException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+                    }
+                }
+
                 if (strategy.IsExplicitJsonSerialize)
+                {
                     Assert.Throws<InvalidOperationException>(() => { var data = strategy.Serialize(ModelInstance, options); });
+                }
             }
             else if (ModelInstance is not IModelJsonSerializable<T> && format == ModelSerializerFormat.Json)
             {
@@ -154,9 +159,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
         }
 
-        protected Dictionary<string, BinaryData> GetRawData(object model)
+        internal static Dictionary<string, BinaryData> GetRawData(object model)
         {
-            var propertyInfo = model.GetType().GetProperty("RawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            Type modelType = model.GetType();
+            while (modelType.BaseType != typeof(object))
+            {
+                modelType = modelType.BaseType;
+            }
+            var propertyInfo = modelType.GetField("_rawData", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             return propertyInfo.GetValue(model) as Dictionary<string, BinaryData>;
         }
 

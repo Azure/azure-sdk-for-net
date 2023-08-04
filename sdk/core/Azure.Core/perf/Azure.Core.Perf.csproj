@@ -22,15 +22,6 @@
     <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="TestData\AvailabilitySetData.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\ModelXml.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\ResourceProviderData.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="TestData\JsonFormattedString.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

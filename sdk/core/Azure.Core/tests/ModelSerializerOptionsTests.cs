@@ -7,7 +7,7 @@ using System.Reflection;
 using Azure.Core.Serialization;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.Tests.ModelSerialization
 {
     internal class ModelSerializerOptionsTests
     {

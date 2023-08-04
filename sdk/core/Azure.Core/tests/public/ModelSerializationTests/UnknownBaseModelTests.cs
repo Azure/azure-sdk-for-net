@@ -16,7 +16,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         protected override BaseModel GetModelInstance()
         {
-            return new UnknownBaseModel();
+            var typeToActivate = typeof(BaseModel).Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{typeof(BaseModel).Name}");
+            return Activator.CreateInstance(typeToActivate, true) as BaseModel;
         }
 
         protected override string JsonPayload => WirePayload;
@@ -29,8 +30,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         protected override void CompareModels(BaseModel model, BaseModel model2, ModelSerializerFormat format)
         {
-            Assert.IsTrue(model is UnknownBaseModel);
-            Assert.IsTrue(model2 is UnknownBaseModel);
+            Assert.AreEqual("UnknownBaseModel", model.GetType().Name);
+            Assert.AreEqual("UnknownBaseModel", model2.GetType().Name);
             Assert.AreEqual(model.Kind, model2.Kind);
             Assert.AreEqual(model.Name, model2.Name);
             var rawData = GetRawData(model);
@@ -56,7 +57,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         protected override void VerifyModel(BaseModel model, ModelSerializerFormat format)
         {
-            Assert.IsTrue(model is UnknownBaseModel);
+            Assert.AreEqual("UnknownBaseModel", model.GetType().Name);
             Assert.AreEqual("Z", model.Kind);
             Assert.AreEqual("zmodel", model.Name);
             var rawData = GetRawData(model);

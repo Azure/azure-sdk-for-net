@@ -178,6 +178,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeDogListProperty(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<DogListProperty>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
+        BinaryData IModelSerializable<DogListProperty>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var writer = new ModelWriter(this, options);
+            return writer.ToBinaryData();
+        }
     }
 }
