@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListContainerAppsByResourceGroup()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_ListByResourceGroup.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-04-01-preview/examples/ContainerApps_ListByResourceGroup.json
             // this example is just showing the usage of "ContainerApps_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-04-01-preview/examples/ContainerApps_Get.json
             // this example is just showing the usage of "ContainerApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-04-01-preview/examples/ContainerApps_Get.json
             // this example is just showing the usage of "ContainerApps_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateContainerApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-04-01-preview/examples/ContainerApps_CreateOrUpdate.json
             // this example is just showing the usage of "ContainerApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,6 +219,7 @@ Description = "Allowing all IP's within the subnet below to access containerapp"
                         IsApiLoggingEnabled = true,
                     },
                     MaxInactiveRevisions = 10,
+                    ServiceType = "redis",
                 },
                 Template = new ContainerAppTemplate()
                 {
@@ -288,6 +289,14 @@ Metadata =
 }
 },
                     },
+                    ServiceBinds =
+{
+new ServiceBind()
+{
+ServiceId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/containerApps/redisService"),
+Name = "redisService",
+}
+},
                 },
             };
             ArmOperation<ContainerAppResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerAppName, data);
@@ -305,7 +314,7 @@ Metadata =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateManagedByApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_ManagedBy_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-04-01-preview/examples/ContainerApps_ManagedBy_CreateOrUpdate.json
             // this example is just showing the usage of "ContainerApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -403,7 +412,7 @@ Metadata =
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateTcpApp()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/ContainerApps_TcpApp_CreateOrUpdate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-04-01-preview/examples/ContainerApps_TcpApp_CreateOrUpdate.json
             // this example is just showing the usage of "ContainerApps_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -220,8 +220,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     // ask DataMovement.Blobs if it can recreate source or destination resources to Blob Storage
                     if (BlobStorageResources.TryGetResourceProviders(
                         info,
-                        out BlobStorageResourceProvider blobSrcProvider,
-                        out BlobStorageResourceProvider blobDstProvider))
+                        out BlobsStorageResourceProvider blobSrcProvider,
+                        out BlobsStorageResourceProvider blobDstProvider))
                     {
                         sourceResource ??= await blobSrcProvider?.MakeResourceAsync(credential);
                         destinationResource ??= await blobSrcProvider?.MakeResourceAsync(credential);

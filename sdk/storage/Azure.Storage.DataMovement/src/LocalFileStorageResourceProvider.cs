@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement
         protected internal override StorageResource FromDestination(DataTransferProperties props)
             => GetResource(props, isSource: false);
 
-        private StorageResource GetResource(DataTransferProperties props,bool isSource)
+        private StorageResource GetResource(DataTransferProperties props, bool isSource)
         {
             if (props.IsContainer)
             {

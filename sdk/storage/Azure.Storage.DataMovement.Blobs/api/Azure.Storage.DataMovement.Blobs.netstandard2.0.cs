@@ -2,19 +2,10 @@ namespace Azure.Storage.Blobs
 {
     public static partial class BlobContainerClientExtensions
     {
-        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartDownloadToDirectoryAsync(this Azure.Storage.Blobs.BlobContainerClient client, string localDirectoryPath, Azure.Storage.Blobs.Models.BlobContainerClientTransferOptions options) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartDownloadToDirectoryAsync(this Azure.Storage.Blobs.BlobContainerClient client, string localDirectoryPath, Azure.Storage.DataMovement.Blobs.BlobContainerClientTransferOptions options) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartDownloadToDirectoryAsync(this Azure.Storage.Blobs.BlobContainerClient client, string localDirectoryPath, string blobDirectoryPrefix = null) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartUploadDirectoryAsync(this Azure.Storage.Blobs.BlobContainerClient client, string localDirectoryPath, Azure.Storage.Blobs.Models.BlobContainerClientTransferOptions options) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartUploadDirectoryAsync(this Azure.Storage.Blobs.BlobContainerClient client, string localDirectoryPath, Azure.Storage.DataMovement.Blobs.BlobContainerClientTransferOptions options) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.DataTransfer> StartUploadDirectoryAsync(this Azure.Storage.Blobs.BlobContainerClient client, string localDirectoryPath, string blobDirectoryPrefix = null) { throw null; }
-    }
-}
-namespace Azure.Storage.Blobs.Models
-{
-    public partial class BlobContainerClientTransferOptions
-    {
-        public BlobContainerClientTransferOptions() { }
-        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions BlobContainerOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.TransferOptions TransferOptions { get { throw null; } set { } }
     }
 }
 namespace Azure.Storage.DataMovement.Blobs
@@ -25,12 +16,18 @@ namespace Azure.Storage.DataMovement.Blobs
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions DestinationConditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions SourceConditions { get { throw null; } set { } }
     }
+    public partial class BlobContainerClientTransferOptions
+    {
+        public BlobContainerClientTransferOptions() { }
+        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions BlobContainerOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.DataTransferOptions TransferOptions { get { throw null; } set { } }
+    }
     public partial class BlobStorageResourceContainerOptions
     {
         public BlobStorageResourceContainerOptions() { }
+        public string BlobDirectoryPrefix { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions BlobOptions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobType BlobType { get { throw null; } set { } }
-        public string DirectoryPrefix { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions ResourceOptions { get { throw null; } set { } }
     }
     public partial class BlobStorageResourceOptions
     {

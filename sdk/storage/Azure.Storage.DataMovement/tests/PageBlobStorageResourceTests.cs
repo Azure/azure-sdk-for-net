@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             PageBlobStorageResource storageResource = new PageBlobStorageResource(blobClient);
 
             // Act
-            ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync();
+            StorageResourceReadStreamResult result = await storageResource.ReadStreamAsync();
 
             // Assert
             Assert.NotNull(result);
@@ -85,7 +85,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             PageBlobStorageResource storageResource = new PageBlobStorageResource(blobClient);
 
             // Act
-            ReadStreamStorageResourceResult result = await storageResource.ReadStreamAsync(position: readPosition);
+            StorageResourceReadStreamResult result = await storageResource.ReadStreamAsync(position: readPosition);
 
             // Assert
             Assert.NotNull(result);
@@ -131,7 +131,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
 
             // Act
-            ReadStreamStorageResourceResult result =
+            StorageResourceReadStreamResult result =
                 await storageResource.ReadStreamAsync(position: 0, length: Constants.KB);
 
             // Assert
@@ -152,7 +152,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(
+                await storageResource.CopyFromStreamAsync(
                     stream: stream,
                     streamLength: length,
                     completeLength: length,
@@ -185,7 +185,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.WriteFromStreamAsync(
+                await storageResource.CopyFromStreamAsync(
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
@@ -222,7 +222,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                storageResource.WriteFromStreamAsync(
+                storageResource.CopyFromStreamAsync(
                     stream: stream,
                     overwrite: false,
                     position: position,
@@ -643,7 +643,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
             {
-                await storageResource.WriteFromStreamAsync(
+                await storageResource.CopyFromStreamAsync(
                     stream: stream,
                     streamLength: length,
                     completeLength: length,

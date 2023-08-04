@@ -952,6 +952,20 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public async Task DeleteAsync_OAuth()
+        {
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(oauthService);
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            // Arrange
+            DataLakeFileClient fileClient = await directory.CreateFileAsync(GetNewFileName());
+
+            // Act
+            await fileClient.DeleteAsync();
+        }
+
+        [RecordedTest]
         public async Task DeleteFileAsync_Error()
         {
             await using DisposingFileSystem test = await GetNewFileSystem();

@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Route Policy Statement properties.. </summary>
-    public partial class RoutePolicyStatementProperties : AnnotationResource
+    /// <summary> Route Policy Statement properties. </summary>
+    public partial class RoutePolicyStatementProperties : AnnotationResourceProperties
     {
         /// <summary> Initializes a new instance of RoutePolicyStatementProperties. </summary>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>

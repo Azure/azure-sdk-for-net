@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory
             Optional<string> version = default;
             Optional<DataFactoryPurviewConfiguration> purviewConfiguration = default;
             Optional<FactoryRepoConfiguration> repoConfiguration = default;
-            Optional<IDictionary<string, DataFactoryGlobalParameterSpecification>> globalParameters = default;
+            Optional<IDictionary<string, DataFactoryGlobalParameterProperties>> globalParameters = default;
             Optional<DataFactoryEncryptionConfiguration> encryption = default;
             Optional<DataFactoryPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -225,10 +225,10 @@ namespace Azure.ResourceManager.DataFactory
                             {
                                 continue;
                             }
-                            Dictionary<string, DataFactoryGlobalParameterSpecification> dictionary = new Dictionary<string, DataFactoryGlobalParameterSpecification>();
+                            Dictionary<string, DataFactoryGlobalParameterProperties> dictionary = new Dictionary<string, DataFactoryGlobalParameterProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DataFactoryGlobalParameterSpecification.DeserializeDataFactoryGlobalParameterSpecification(property1.Value));
+                                dictionary.Add(property1.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property1.Value));
                             }
                             globalParameters = dictionary;
                             continue;

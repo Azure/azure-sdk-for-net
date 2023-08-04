@@ -60,5 +60,33 @@
                 return PayloadHelper.GetPayload("TokenIssuanceStart.QueryParameters.json");
             }
         }
+
+        /// <summary> Gets the payload error message when response is set to null </summary>
+        /// <value> The payload with error message </value>
+        public static string NullResponsePayload
+        {
+            get
+            {
+                return PayloadHelper.GetPayload("TokenIssuanceStart.NullResponse.json");
+            }
+        }
+
+        /// <summary> Gets the valid request payload </summary>
+        public static string ValidRequestPayload
+        {
+            get
+            {
+                return PayloadHelper.GetPayload("TokenIssuanceStart.ValidRequest.json");
+            }
+        }
+
+        /// <summary> Gets the request payload without source field </summary>
+        public static string RequestWithoutSourcePayload
+        {
+            get
+            {
+                return PayloadHelper.GetPayload("TokenIssuanceStart.RequestMissingSource.json");
+            }
+        }
     }
 }

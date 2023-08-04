@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="vaultBaseUri"> The url of the Azure Key Vault used for CMK. </param>
         /// <param name="keyVersion"> The version of the key used for CMK. If not provided, latest version will be used. </param>
         /// <param name="identity"> User assigned identity to use to authenticate to customer's key vault. If not provided Managed Service Identity will be used. </param>
-        internal DataFactoryEncryptionConfiguration(string keyName, Uri vaultBaseUri, string keyVersion, CmkIdentityDefinition identity)
+        internal DataFactoryEncryptionConfiguration(string keyName, Uri vaultBaseUri, string keyVersion, DataFactoryCmkIdentity identity)
         {
             KeyName = keyName;
             VaultBaseUri = vaultBaseUri;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The version of the key used for CMK. If not provided, latest version will be used. </summary>
         public string KeyVersion { get; set; }
         /// <summary> User assigned identity to use to authenticate to customer's key vault. If not provided Managed Service Identity will be used. </summary>
-        internal CmkIdentityDefinition Identity { get; set; }
+        internal DataFactoryCmkIdentity Identity { get; set; }
         /// <summary> The resource id of the user assigned identity to authenticate to customer's key vault. </summary>
         public string UserAssignedIdentity
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             set
             {
                 if (Identity is null)
-                    Identity = new CmkIdentityDefinition();
+                    Identity = new DataFactoryCmkIdentity();
                 Identity.UserAssignedIdentity = value;
             }
         }
