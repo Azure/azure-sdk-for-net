@@ -165,13 +165,10 @@ namespace Azure.Core.Json
 
             // Write the start of the PATCH JSON
             writer.WriteStartObject();
-            Debug.WriteLine("** writer: Writing '{' | start PATCH");
 
-            int i = 0;
             while (change != null)
             {
                 ReadOnlySpan<char> changePath = change.Value.Path.AsSpan();
-                Debug.WriteLine($"** Writing change {i++}: changePath is '{change.Value.Path}'");
 
                 // reset current path for this loop
                 currentPathLength = 0;
@@ -188,28 +185,16 @@ namespace Azure.Core.Json
                 // the node that contains the change we want to write into the PATCH JSON.
                 ReadOnlySpan<char> segment = GetLastSegment(currentPath.Slice(0, currentPathLength));
 
-                Debug.WriteLine($"** Writing changed element:");
-                Debug.WriteLine($"**   currentPath is '{GetString(currentPath, 0, currentPathLength)}'");
-                Debug.WriteLine($"**   patchPath is '{GetString(patchPath, 0, patchPathLength)}'");
-                if (change.Value.ChangeKind != MutableJsonChangeKind.PropertyRemoval)
-                {
-                    Debug.WriteLine($"**   patchElement is '{patchElement}'");
-                }
-                Debug.WriteLine($"**   segment is '{GetString(segment, 0, segment.Length)}'");
-
                 writer.WritePropertyName(segment);
-                Debug.WriteLine($"** writer: Writing '\"{GetString(segment, 0, segment.Length)}\"' | foreach change");
 
                 switch (change.Value.ChangeKind)
                 {
                     case MutableJsonChangeKind.PropertyRemoval:
                         writer.WriteNullValue();
-                        Debug.WriteLine("** writer: Writing 'null' | foreach change");
                         break;
 
                     case MutableJsonChangeKind.PropertyAddition:
                         patchElement.WriteTo(writer);
-                        Debug.WriteLine($"** writer: Writing '{patchElement}' | foreach change");
                         break;
 
                     case MutableJsonChangeKind.PropertyUpdate:
@@ -234,12 +219,10 @@ namespace Azure.Core.Json
             // The above loop will have written out the values of all the elements on the
             // list of changes, but if the last element was multiple levels down the object
             // tree, it may not have written the ends of its ancestor objects.  Do that now.
-            Debug.WriteLine($"** patchPath is '{GetString(patchPath, 0, patchPathLength)}'");
             CloseFinalObjects(writer, patchPath, patchPathLength);
 
             // Write the end of the PATCH JSON.
             writer.WriteEndObject();
-            Debug.WriteLine("** writer: Writing '}' | end PATCH");
         }
         private ReadOnlySpan<char> GetFirstSegment(ReadOnlySpan<char> path)
         {
@@ -263,27 +246,17 @@ namespace Azure.Core.Json
 
         private void CloseOpenObjects(Utf8JsonWriter writer, ReadOnlySpan<char> changePath, Span<char> patchPath, ref int patchPathLength, ref MutableJsonElement patchElement)
         {
-            Debug.WriteLine($"** Closing open objects:");
-            Debug.WriteLine($"**   firstSegment is '{GetString(changePath, 0, changePath.Length)}'");
-            Debug.WriteLine($"**   patchPath is '{GetString(patchPath, 0, patchPathLength)}'");
-            Debug.WriteLine($"**   patchElement is '{patchElement}'");
-
             // Pop the last segment because it was a leaf node
             MutableJsonDocument.ChangeTracker.PopProperty(patchPath, ref patchPathLength);
-            Debug.WriteLine($"**   UPDATING patchPatch: patchPath is '{GetString(patchPath, 0, patchPathLength)}'");
 
             while (!MutableJsonChange.IsDescendant(patchPath.Slice(0, patchPathLength), changePath))
             {
                 writer.WriteEndObject();
-                Debug.WriteLine("** writer: Writing '}' | CloseOpenObjects");
-
                 MutableJsonDocument.ChangeTracker.PopProperty(patchPath, ref patchPathLength);
-                Debug.WriteLine($"**   UPDATING patchPatch: patchPath is '{GetString(patchPath, 0, patchPathLength)}'");
             }
 
             // patchElement tracks patchPath
             patchElement = GetPropertyFromRoot(patchPath, patchPathLength);
-            Debug.WriteLine($"**   UPDATING patchElement: patchElement is '{patchElement}'");
         }
 
         private MutableJsonElement GetPropertyFromRoot(ReadOnlySpan<char> path, int pathLength)
@@ -320,9 +293,6 @@ namespace Azure.Core.Json
 
         private void CloseFinalObjects(Utf8JsonWriter writer, ReadOnlySpan<char> patchPath, int patchPathLength)
         {
-            Debug.WriteLine($"** Closing final objects:");
-            Debug.WriteLine($"**   patchPath is '{GetString(patchPath, 0, patchPathLength)}'");
-
             int length = patchPathLength;
             int start = 0;
             int end;
@@ -338,7 +308,6 @@ namespace Azure.Core.Json
                 if (end != 0 && start + end != length)
                 {
                     writer.WriteEndObject();
-                    Debug.WriteLine("** writer: Writing '}' | CloseFinalObjects");
                 }
 
                 start += end + 1;
@@ -348,11 +317,6 @@ namespace Azure.Core.Json
 
         private void OpenAncestorObjects(Utf8JsonWriter writer, ReadOnlySpan<char> path, Span<char> currentPath, ref int currentPathLength, Span<char> patchPath, ref int patchPathLength, ref MutableJsonElement patchElement)
         {
-            Debug.WriteLine($"** Opening ancestor objects:");
-            Debug.WriteLine($"**   currentPath is '{GetString(currentPath, 0, currentPathLength)}'");
-            Debug.WriteLine($"**   patchPath is '{GetString(patchPath, 0, patchPathLength)}'");
-            Debug.WriteLine($"**   patchElement is '{patchElement}'");
-
             int length = path.Length;
             int start = 0;
             int end;
@@ -367,7 +331,6 @@ namespace Azure.Core.Json
                 if (end != 0)
                 {
                     MutableJsonDocument.ChangeTracker.PushProperty(currentPath, ref currentPathLength, path.Slice(start), end);
-                    Debug.WriteLine($"**   UPDATING currentPath: currentPath is '{GetString(currentPath, 0, currentPathLength)}'");
 
                     // if we haven't opened this object yet in the PATCH JSON, open it and set
                     // currentElement to the corresponding element for the object.
@@ -375,7 +338,6 @@ namespace Azure.Core.Json
                         currentPath.Slice(0, currentPathLength).StartsWith(patchPath.Slice(0, patchPathLength)))
                     {
                         MutableJsonDocument.ChangeTracker.PushProperty(patchPath, ref patchPathLength, path.Slice(start), end);
-                        Debug.WriteLine($"**   UPDATING patchPatch: patchPath is '{GetString(patchPath, 0, patchPathLength)}'");
 
                         // patchElement tracks patchPatch
                         if (!patchElement.TryGetProperty(path.Slice(start, end), out patchElement))
@@ -396,10 +358,7 @@ namespace Azure.Core.Json
                         }
 
                         writer.WritePropertyName(path.Slice(start, end));
-                        Debug.WriteLine($"** writer: Writing '\"{GetString(path, start, end)}\"' | OpenAncestorObjects");
-
                         writer.WriteStartObject();
-                        Debug.WriteLine("** writer: Writing '{' | OpenAncestorObjects");
                     }
                 }
 

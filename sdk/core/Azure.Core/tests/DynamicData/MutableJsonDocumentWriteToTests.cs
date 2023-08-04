@@ -1619,6 +1619,84 @@ namespace Azure.Core.Tests
             AreEqualJson(expected, actual);
         }
 
+        [Test]
+        public void CanWritePatchRfc7396FirstExample()
+        {
+            string json = """
+                {
+                  "a": "b",
+                  "c": {
+                    "d": "e",
+                    "f": "g"
+                  }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").Set("z");
+            mdoc.RootElement.GetProperty("c").RemoveProperty("f");
+
+            string expected = """
+                {
+                  "a":"z",
+                  "c": {
+                    "f": null
+                  }
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchRfc7396SecondExample()
+        {
+            string json = """
+                {
+                  "title": "Goodbye!",
+                  "author" : {
+                    "givenName" : "John",
+                    "familyName" : "Doe"
+                  },
+                  "tags":[ "example", "sample" ],
+                  "content": "This will be unchanged"
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("title").Set("Hello!");
+            mdoc.RootElement.SetProperty("phoneNumber", "+01-123-456-7890");
+            mdoc.RootElement.GetProperty("author").RemoveProperty("familyName");
+            mdoc.RootElement.SetProperty("tags", new string[] { "example" });
+
+            string expected = """
+                {
+                  "author": {
+                    "familyName": null
+                  },
+                  "phoneNumber": "+01-123-456-7890",
+                  "tags": [ "example" ],
+                  "title": "Hello!"
+                }
+                """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
         #endregion
 
         #region Helpers
