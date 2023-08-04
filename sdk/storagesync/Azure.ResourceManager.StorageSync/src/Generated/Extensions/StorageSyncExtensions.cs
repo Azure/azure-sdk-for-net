@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageSync.Mocking;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.StorageSync
     /// <summary> A class to add extension methods to Azure.ResourceManager.StorageSync. </summary>
     public static partial class StorageSyncExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static StorageSyncArmClientMockingExtension GetStorageSyncArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new StorageSyncArmClientMockingExtension(client);
+            });
+        }
+
+        private static StorageSyncResourceGroupMockingExtension GetStorageSyncResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new StorageSyncResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static StorageSyncSubscriptionMockingExtension GetStorageSyncSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new StorageSyncSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region StorageSyncServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageSyncServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageSyncServiceResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> Returns a <see cref="StorageSyncServiceResource" /> object. </returns>
         public static StorageSyncServiceResource GetStorageSyncServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageSyncServiceResource.ValidateResourceId(id);
-                return new StorageSyncServiceResource(client, id);
-            }
-            );
+            return GetStorageSyncArmClientMockingExtension(client).GetStorageSyncServiceResource(id);
         }
-        #endregion
 
-        #region StorageSyncPrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageSyncPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageSyncPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> Returns a <see cref="StorageSyncPrivateEndpointConnectionResource" /> object. </returns>
         public static StorageSyncPrivateEndpointConnectionResource GetStorageSyncPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageSyncPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new StorageSyncPrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetStorageSyncArmClientMockingExtension(client).GetStorageSyncPrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region StorageSyncGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageSyncGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageSyncGroupResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> Returns a <see cref="StorageSyncGroupResource" /> object. </returns>
         public static StorageSyncGroupResource GetStorageSyncGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageSyncGroupResource.ValidateResourceId(id);
-                return new StorageSyncGroupResource(client, id);
-            }
-            );
+            return GetStorageSyncArmClientMockingExtension(client).GetStorageSyncGroupResource(id);
         }
-        #endregion
 
-        #region CloudEndpointResource
         /// <summary>
         /// Gets an object representing a <see cref="CloudEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CloudEndpointResource.CreateResourceIdentifier" /> to create a <see cref="CloudEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,16 +89,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> Returns a <see cref="CloudEndpointResource" /> object. </returns>
         public static CloudEndpointResource GetCloudEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CloudEndpointResource.ValidateResourceId(id);
-                return new CloudEndpointResource(client, id);
-            }
-            );
+            return GetStorageSyncArmClientMockingExtension(client).GetCloudEndpointResource(id);
         }
-        #endregion
 
-        #region StorageSyncServerEndpointResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageSyncServerEndpointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageSyncServerEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncServerEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,16 +101,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> Returns a <see cref="StorageSyncServerEndpointResource" /> object. </returns>
         public static StorageSyncServerEndpointResource GetStorageSyncServerEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageSyncServerEndpointResource.ValidateResourceId(id);
-                return new StorageSyncServerEndpointResource(client, id);
-            }
-            );
+            return GetStorageSyncArmClientMockingExtension(client).GetStorageSyncServerEndpointResource(id);
         }
-        #endregion
 
-        #region StorageSyncRegisteredServerResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageSyncRegisteredServerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageSyncRegisteredServerResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncRegisteredServerResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -155,16 +113,9 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> Returns a <see cref="StorageSyncRegisteredServerResource" /> object. </returns>
         public static StorageSyncRegisteredServerResource GetStorageSyncRegisteredServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageSyncRegisteredServerResource.ValidateResourceId(id);
-                return new StorageSyncRegisteredServerResource(client, id);
-            }
-            );
+            return GetStorageSyncArmClientMockingExtension(client).GetStorageSyncRegisteredServerResource(id);
         }
-        #endregion
 
-        #region StorageSyncWorkflowResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageSyncWorkflowResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageSyncWorkflowResource.CreateResourceIdentifier" /> to create a <see cref="StorageSyncWorkflowResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -174,21 +125,15 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> Returns a <see cref="StorageSyncWorkflowResource" /> object. </returns>
         public static StorageSyncWorkflowResource GetStorageSyncWorkflowResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageSyncWorkflowResource.ValidateResourceId(id);
-                return new StorageSyncWorkflowResource(client, id);
-            }
-            );
+            return GetStorageSyncArmClientMockingExtension(client).GetStorageSyncWorkflowResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of StorageSyncServiceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StorageSyncServiceResources and their operations over a StorageSyncServiceResource. </returns>
         public static StorageSyncServiceCollection GetStorageSyncServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageSyncServices();
+            return GetStorageSyncResourceGroupMockingExtension(resourceGroupResource).GetStorageSyncServices();
         }
 
         /// <summary>
@@ -212,7 +157,7 @@ namespace Azure.ResourceManager.StorageSync
         [ForwardsClientCalls]
         public static async Task<Response<StorageSyncServiceResource>> GetStorageSyncServiceAsync(this ResourceGroupResource resourceGroupResource, string storageSyncServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStorageSyncServices().GetAsync(storageSyncServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageSyncResourceGroupMockingExtension(resourceGroupResource).GetStorageSyncServiceAsync(storageSyncServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,7 +181,7 @@ namespace Azure.ResourceManager.StorageSync
         [ForwardsClientCalls]
         public static Response<StorageSyncServiceResource> GetStorageSyncService(this ResourceGroupResource resourceGroupResource, string storageSyncServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStorageSyncServices().Get(storageSyncServiceName, cancellationToken);
+            return GetStorageSyncResourceGroupMockingExtension(resourceGroupResource).GetStorageSyncService(storageSyncServiceName, cancellationToken);
         }
 
         /// <summary>
@@ -260,10 +205,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<StorageSyncNameAvailabilityResult>> CheckStorageSyncNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckStorageSyncNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetStorageSyncSubscriptionMockingExtension(subscriptionResource).CheckStorageSyncNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -287,10 +229,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public static Response<StorageSyncNameAvailabilityResult> CheckStorageSyncNameAvailability(this SubscriptionResource subscriptionResource, string locationName, StorageSyncNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckStorageSyncNameAvailability(locationName, content, cancellationToken);
+            return GetStorageSyncSubscriptionMockingExtension(subscriptionResource).CheckStorageSyncNameAvailability(locationName, content, cancellationToken);
         }
 
         /// <summary>
@@ -311,7 +250,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> An async collection of <see cref="StorageSyncServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageSyncServiceResource> GetStorageSyncServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageSyncServicesAsync(cancellationToken);
+            return GetStorageSyncSubscriptionMockingExtension(subscriptionResource).GetStorageSyncServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -332,7 +271,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> A collection of <see cref="StorageSyncServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageSyncServiceResource> GetStorageSyncServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageSyncServices(cancellationToken);
+            return GetStorageSyncSubscriptionMockingExtension(subscriptionResource).GetStorageSyncServices(cancellationToken);
         }
     }
 }
