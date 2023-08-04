@@ -50,14 +50,14 @@ namespace Azure.Core.Tests
 
             List<MutableJsonChange> changes = new();
 
-            MutableJsonChange? change = changeTracker.GetFirstMergePatchChange(out int length);
+            MutableJsonChange? change = changeTracker.GetFirstMergePatchChange(ReadOnlySpan<char>.Empty, out int length);
 
             Assert.AreEqual(3, length);
 
             while (change != null)
             {
                 changes.Add(change.Value);
-                change = changeTracker.GetNextMergePatchChange(change.Value.Path.AsSpan());
+                change = changeTracker.GetNextMergePatchChange(ReadOnlySpan<char>.Empty, change.Value.Path.AsSpan());
             }
 
             // Note, descendants are ignored

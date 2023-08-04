@@ -672,19 +672,6 @@ namespace Azure.Core.Tests
 
         #region JSON Merge Patch
 
-        // TODO: Validate that all of these are appropriately represented
-        // Test case: properties on the same descendant object are updated
-        // between updates to different descendant objects, but they group
-        // together correctly in the PATCH JSON.
-
-        // Test case: ancestor changes then descendant changes
-        // Test case: descendant changes then ancestor changes
-
-        // Test case: array elements change
-        // Test case: enum values change
-        // Test case: new property is added
-        // Test case: property is deleted
-
         [Test]
         public void CanWritePatchChangeRoot()
         {
@@ -1663,7 +1650,7 @@ namespace Azure.Core.Tests
 
             AreEqualJson(expectedRoot, actual);
 
-            string expectedAb = """
+            string expectedA = """
                 {
                     "ab": {
                         "abc": 3
@@ -1671,15 +1658,15 @@ namespace Azure.Core.Tests
                 }
                 """;
 
-            using Stream streamAb = new MemoryStream();
-            using Utf8JsonWriter writerAb = new Utf8JsonWriter(streamAb);
-            mdoc.RootElement.GetProperty("a").WriteTo(writerAb, "P");
-            writerAb.Flush();
-            streamAb.Position = 0;
+            using Stream streamA = new MemoryStream();
+            using Utf8JsonWriter writerA = new Utf8JsonWriter(streamA);
+            mdoc.RootElement.GetProperty("a").WriteTo(writerA, "P");
+            writerA.Flush();
+            streamA.Position = 0;
 
-            string actualAb = BinaryData.FromStream(streamAb).ToString();
+            string actualA = BinaryData.FromStream(streamA).ToString();
 
-            AreEqualJson(expectedAb, actualAb);
+            AreEqualJson(expectedA, actualA);
 
             string expectedB = """
                 {

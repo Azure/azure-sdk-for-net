@@ -141,7 +141,7 @@ namespace Azure.Core.Json
                 }
             }
 
-            internal MutableJsonChange? GetFirstMergePatchChange(out int maxPathLength)
+            internal MutableJsonChange? GetFirstMergePatchChange(ReadOnlySpan<char> rootPath, out int maxPathLength)
             {
                 // This method gets the first change from the list in sorted order by path
                 // It also returns the max path length of changes on the list.
@@ -159,7 +159,8 @@ namespace Azure.Core.Json
                 {
                     MutableJsonChange c = _changes[i];
 
-                    if (min == null || c.IsLessThan(min.Value.Path.AsSpan()))
+                    if (c.Path.AsSpan().StartsWith(rootPath) &&
+                        (min == null || c.IsLessThan(min.Value.Path.AsSpan())))
                     {
                         min = c;
                     }
@@ -173,7 +174,7 @@ namespace Azure.Core.Json
                 return min;
             }
 
-            internal MutableJsonChange? GetNextMergePatchChange(ReadOnlySpan<char> lastChangePath)
+            internal MutableJsonChange? GetNextMergePatchChange(ReadOnlySpan<char> rootPath, ReadOnlySpan<char> lastChangePath)
             {
                 // This method gets changes from the list in sorted order by path.
 
@@ -191,7 +192,8 @@ namespace Azure.Core.Json
                 {
                     MutableJsonChange c = _changes[i];
 
-                    if (c.IsGreaterThan(lastChangePath) &&
+                    if (c.Path.AsSpan().StartsWith(rootPath) &&
+                        c.IsGreaterThan(lastChangePath) &&
                         (min == null || c.IsLessThan(min.Value.Path.AsSpan())) &&
                         // Ignore descendant if its ancestor changed
                         !c.IsDescendant(lastChangePath))

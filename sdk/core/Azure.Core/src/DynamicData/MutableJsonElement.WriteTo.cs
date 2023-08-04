@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
@@ -129,19 +128,19 @@ namespace Azure.Core.Json
 
         internal void WritePatch(Utf8JsonWriter writer)
         {
-            if (!_root.Changes.HasChanges)
+            if (!Changes.HasChanges)
             {
                 return;
             }
 
             // For an array, if any element has changed, the entire array is replaced.
-            if (_root.RootElement.ValueKind == JsonValueKind.Array)
+            if (ValueKind == JsonValueKind.Array)
             {
-                _root.RootElement.WriteTo(writer);
+                WriteTo(writer);
                 return;
             }
 
-            MutableJsonChange? change = _root.Changes.GetFirstMergePatchChange(out int maxPathLength);
+            MutableJsonChange? change = Changes.GetFirstMergePatchChange(_path.AsSpan(), out int maxPathLength);
 
             // patchPath tracks the global path we're on in writing out the PATCH JSON.
             // We only iterate forward through the PATCH JSON.
@@ -150,7 +149,7 @@ namespace Azure.Core.Json
 
             // patchElement tracks the element we're currently writing into the PATCH JSON.
             // It should match the element indicated by patchPath.
-            MutableJsonElement patchElement = _root.RootElement;
+            MutableJsonElement patchElement = this;
 
             // currentPath tracks the path of the current change we're writing in
             // a given iteration of the loop over changes.
@@ -207,7 +206,7 @@ namespace Azure.Core.Json
                         break;
                 }
 
-                change = _root.Changes.GetNextMergePatchChange(currentPath.Slice(0, currentPathLength));
+                change = Changes.GetNextMergePatchChange(_path.AsSpan(), currentPath.Slice(0, currentPathLength));
             }
 
             // The above loop will have written out the values of all the elements on the
@@ -255,7 +254,7 @@ namespace Azure.Core.Json
 
         private MutableJsonElement GetPropertyFromRoot(ReadOnlySpan<char> path, int pathLength)
         {
-            MutableJsonElement current = _root.RootElement;
+            MutableJsonElement current = this;
 
             if (pathLength == 0)
             {
@@ -367,7 +366,7 @@ namespace Azure.Core.Json
             // any of its properties were incidentally deleted by not
             // being included in the update
             bool opened = false;
-            JsonElement original = GetOriginalFromRoot(path, pathLength);
+            JsonElement original = GetOriginal(path, pathLength);
             foreach (JsonProperty property in original.EnumerateObject())
             {
                 if (!patchElement.TryGetProperty(property.Name, out _))
@@ -400,7 +399,7 @@ namespace Azure.Core.Json
             }
         }
 
-        private JsonElement GetOriginalFromRoot(ReadOnlySpan<char> path, int pathLength)
+        private JsonElement GetOriginal(ReadOnlySpan<char> path, int pathLength)
         {
             JsonElement current = _root.RootElement._element;
 
