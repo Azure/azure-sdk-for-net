@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ContainerInstance.Mocking;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.ContainerInstance
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerInstance. </summary>
     public static partial class ContainerInstanceExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ContainerInstanceArmClientMockingExtension GetContainerInstanceArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new ContainerInstanceArmClientMockingExtension(client);
+            });
+        }
+
+        private static ContainerInstanceResourceGroupMockingExtension GetContainerInstanceResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ContainerInstanceResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ContainerInstanceSubscriptionMockingExtension GetContainerInstanceSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ContainerInstanceSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ContainerGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="ContainerGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerGroupResource.CreateResourceIdentifier" /> to create a <see cref="ContainerGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,21 +53,15 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> Returns a <see cref="ContainerGroupResource" /> object. </returns>
         public static ContainerGroupResource GetContainerGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ContainerGroupResource.ValidateResourceId(id);
-                return new ContainerGroupResource(client, id);
-            }
-            );
+            return GetContainerInstanceArmClientMockingExtension(client).GetContainerGroupResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of ContainerGroupResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerGroupResources and their operations over a ContainerGroupResource. </returns>
         public static ContainerGroupCollection GetContainerGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetContainerGroups();
+            return GetContainerInstanceResourceGroupMockingExtension(resourceGroupResource).GetContainerGroups();
         }
 
         /// <summary>
@@ -98,7 +85,7 @@ namespace Azure.ResourceManager.ContainerInstance
         [ForwardsClientCalls]
         public static async Task<Response<ContainerGroupResource>> GetContainerGroupAsync(this ResourceGroupResource resourceGroupResource, string containerGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetContainerGroups().GetAsync(containerGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerInstanceResourceGroupMockingExtension(resourceGroupResource).GetContainerGroupAsync(containerGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,7 +109,7 @@ namespace Azure.ResourceManager.ContainerInstance
         [ForwardsClientCalls]
         public static Response<ContainerGroupResource> GetContainerGroup(this ResourceGroupResource resourceGroupResource, string containerGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetContainerGroups().Get(containerGroupName, cancellationToken);
+            return GetContainerInstanceResourceGroupMockingExtension(resourceGroupResource).GetContainerGroup(containerGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -147,10 +134,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
         public static async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
-
-            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteSubnetServiceAssociationLinkAsync(waitUntil, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerInstanceResourceGroupMockingExtension(resourceGroupResource).DeleteSubnetServiceAssociationLinkAsync(waitUntil, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -175,10 +159,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
         public static ArmOperation DeleteSubnetServiceAssociationLink(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-            Argument.AssertNotNullOrEmpty(subnetName, nameof(subnetName));
-
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteSubnetServiceAssociationLink(waitUntil, virtualNetworkName, subnetName, cancellationToken);
+            return GetContainerInstanceResourceGroupMockingExtension(resourceGroupResource).DeleteSubnetServiceAssociationLink(waitUntil, virtualNetworkName, subnetName, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +180,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerGroupResource> GetContainerGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerGroupsAsync(cancellationToken);
+            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetContainerGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -220,7 +201,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerGroupResource> GetContainerGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetContainerGroups(cancellationToken);
+            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetContainerGroups(cancellationToken);
         }
 
         /// <summary>
@@ -242,7 +223,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesWithLocationAsync(location, cancellationToken);
+            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetUsagesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -264,7 +245,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerInstanceUsage> GetUsagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesWithLocation(location, cancellationToken);
+            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetUsagesWithLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -286,7 +267,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCachedImagesWithLocationAsync(location, cancellationToken);
+            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetCachedImagesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -308,7 +289,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CachedImages> GetCachedImagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCachedImagesWithLocation(location, cancellationToken);
+            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetCachedImagesWithLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -330,7 +311,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilitiesWithLocationAsync(location, cancellationToken);
+            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetCapabilitiesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -352,7 +333,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilitiesWithLocation(location, cancellationToken);
+            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetCapabilitiesWithLocation(location, cancellationToken);
         }
     }
 }

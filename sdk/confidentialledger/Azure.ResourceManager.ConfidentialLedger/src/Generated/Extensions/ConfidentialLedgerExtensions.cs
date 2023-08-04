@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ConfidentialLedger.Mocking;
 using Azure.ResourceManager.ConfidentialLedger.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.ConfidentialLedger
     /// <summary> A class to add extension methods to Azure.ResourceManager.ConfidentialLedger. </summary>
     public static partial class ConfidentialLedgerExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ConfidentialLedgerArmClientMockingExtension GetConfidentialLedgerArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new ConfidentialLedgerArmClientMockingExtension(client);
+            });
+        }
+
+        private static ConfidentialLedgerResourceGroupMockingExtension GetConfidentialLedgerResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ConfidentialLedgerResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ConfidentialLedgerSubscriptionMockingExtension GetConfidentialLedgerSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ConfidentialLedgerSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ConfidentialLedgerResource
         /// <summary>
         /// Gets an object representing a <see cref="ConfidentialLedgerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ConfidentialLedgerResource.CreateResourceIdentifier" /> to create a <see cref="ConfidentialLedgerResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> Returns a <see cref="ConfidentialLedgerResource" /> object. </returns>
         public static ConfidentialLedgerResource GetConfidentialLedgerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ConfidentialLedgerResource.ValidateResourceId(id);
-                return new ConfidentialLedgerResource(client, id);
-            }
-            );
+            return GetConfidentialLedgerArmClientMockingExtension(client).GetConfidentialLedgerResource(id);
         }
-        #endregion
 
-        #region ManagedCcfResource
         /// <summary>
         /// Gets an object representing a <see cref="ManagedCcfResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ManagedCcfResource.CreateResourceIdentifier" /> to create a <see cref="ManagedCcfResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,21 +65,15 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> Returns a <see cref="ManagedCcfResource" /> object. </returns>
         public static ManagedCcfResource GetManagedCcfResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ManagedCcfResource.ValidateResourceId(id);
-                return new ManagedCcfResource(client, id);
-            }
-            );
+            return GetConfidentialLedgerArmClientMockingExtension(client).GetManagedCcfResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of ConfidentialLedgerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ConfidentialLedgerResources and their operations over a ConfidentialLedgerResource. </returns>
         public static ConfidentialLedgerCollection GetConfidentialLedgers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfidentialLedgers();
+            return GetConfidentialLedgerResourceGroupMockingExtension(resourceGroupResource).GetConfidentialLedgers();
         }
 
         /// <summary>
@@ -117,7 +97,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         [ForwardsClientCalls]
         public static async Task<Response<ConfidentialLedgerResource>> GetConfidentialLedgerAsync(this ResourceGroupResource resourceGroupResource, string ledgerName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetConfidentialLedgers().GetAsync(ledgerName, cancellationToken).ConfigureAwait(false);
+            return await GetConfidentialLedgerResourceGroupMockingExtension(resourceGroupResource).GetConfidentialLedgerAsync(ledgerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -141,7 +121,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         [ForwardsClientCalls]
         public static Response<ConfidentialLedgerResource> GetConfidentialLedger(this ResourceGroupResource resourceGroupResource, string ledgerName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetConfidentialLedgers().Get(ledgerName, cancellationToken);
+            return GetConfidentialLedgerResourceGroupMockingExtension(resourceGroupResource).GetConfidentialLedger(ledgerName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedCcfResources in the ResourceGroupResource. </summary>
@@ -149,7 +129,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> An object representing collection of ManagedCcfResources and their operations over a ManagedCcfResource. </returns>
         public static ManagedCcfCollection GetManagedCcfs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetManagedCcfs();
+            return GetConfidentialLedgerResourceGroupMockingExtension(resourceGroupResource).GetManagedCcfs();
         }
 
         /// <summary>
@@ -173,7 +153,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         [ForwardsClientCalls]
         public static async Task<Response<ManagedCcfResource>> GetManagedCcfAsync(this ResourceGroupResource resourceGroupResource, string appName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetManagedCcfs().GetAsync(appName, cancellationToken).ConfigureAwait(false);
+            return await GetConfidentialLedgerResourceGroupMockingExtension(resourceGroupResource).GetManagedCcfAsync(appName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -197,7 +177,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         [ForwardsClientCalls]
         public static Response<ManagedCcfResource> GetManagedCcf(this ResourceGroupResource resourceGroupResource, string appName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetManagedCcfs().Get(appName, cancellationToken);
+            return GetConfidentialLedgerResourceGroupMockingExtension(resourceGroupResource).GetManagedCcf(appName, cancellationToken);
         }
 
         /// <summary>
@@ -219,9 +199,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<ConfidentialLedgerNameAvailabilityResult>> CheckConfidentialLedgerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckConfidentialLedgerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetConfidentialLedgerSubscriptionMockingExtension(subscriptionResource).CheckConfidentialLedgerNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -243,9 +221,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<ConfidentialLedgerNameAvailabilityResult> CheckConfidentialLedgerNameAvailability(this SubscriptionResource subscriptionResource, ConfidentialLedgerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckConfidentialLedgerNameAvailability(content, cancellationToken);
+            return GetConfidentialLedgerSubscriptionMockingExtension(subscriptionResource).CheckConfidentialLedgerNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -267,7 +243,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfidentialLedgerResource> GetConfidentialLedgersAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfidentialLedgersAsync(filter, cancellationToken);
+            return GetConfidentialLedgerSubscriptionMockingExtension(subscriptionResource).GetConfidentialLedgersAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -289,7 +265,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfidentialLedgerResource> GetConfidentialLedgers(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfidentialLedgers(filter, cancellationToken);
+            return GetConfidentialLedgerSubscriptionMockingExtension(subscriptionResource).GetConfidentialLedgers(filter, cancellationToken);
         }
 
         /// <summary>
@@ -311,7 +287,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> An async collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedCcfResource> GetManagedCcfsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedCcfsAsync(filter, cancellationToken);
+            return GetConfidentialLedgerSubscriptionMockingExtension(subscriptionResource).GetManagedCcfsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -333,7 +309,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <returns> A collection of <see cref="ManagedCcfResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedCcfResource> GetManagedCcfs(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetManagedCcfs(filter, cancellationToken);
+            return GetConfidentialLedgerSubscriptionMockingExtension(subscriptionResource).GetManagedCcfs(filter, cancellationToken);
         }
     }
 }
