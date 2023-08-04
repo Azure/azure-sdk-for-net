@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <returns> A new <see cref="Resources.GenericResourceData"/> instance for mocking. </returns>
-        public static GenericResourceData GenericResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ArmPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourceManagerSku sku = null, ManagedServiceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
+        public static GenericResourceData GenericResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ArmPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourcesSku sku = null, ManagedServiceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
