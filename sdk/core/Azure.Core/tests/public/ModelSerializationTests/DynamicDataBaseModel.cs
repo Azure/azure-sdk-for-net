@@ -10,7 +10,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class DynamicDataBaseModel : IUtf8JsonSerializable, IJsonModelSerializable, IJsonModelSerializable<DynamicDataBaseModel>
+    public class DynamicDataBaseModel : IUtf8JsonSerializable, IModelJsonSerializable<DynamicDataBaseModel>
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -41,7 +41,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("miniModel"u8);
-            ((IJsonModelSerializable)MiniModel).Serialize(writer, options);
+            ((IModelJsonSerializable<DynamicDataMiniModel>)MiniModel).Serialize(writer, options);
 
             if (options.Format == ModelSerializerFormat.Json)
             {
@@ -59,9 +59,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<DynamicDataBaseModel>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
 
-        void IJsonModelSerializable<DynamicDataBaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<DynamicDataBaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         internal static DynamicDataBaseModel DeserializeDynamicDataBaseModel(JsonElement element, ModelSerializerOptions options)
         {
@@ -92,31 +92,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         #endregion
 
         #region InterfaceImplementation
-
-        DynamicDataBaseModel IModelSerializable<DynamicDataBaseModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            return DeserializeDynamicDataBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
-        }
-
-        DynamicDataBaseModel IJsonModelSerializable<DynamicDataBaseModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        DynamicDataBaseModel IModelJsonSerializable<DynamicDataBaseModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeDynamicDataBaseModel(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<DynamicDataBaseModel>.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<DynamicDataBaseModel>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
+
+        DynamicDataBaseModel IModelSerializable<DynamicDataBaseModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
+            return DeserializeDynamicDataBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<DynamicDataBaseModel>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<DynamicDataBaseModel>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<DynamicDataBaseModel>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<DynamicDataBaseModel>)this).Serialize(options);
-
         #endregion
     }
 }

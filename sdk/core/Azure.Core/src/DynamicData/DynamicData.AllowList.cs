@@ -201,7 +201,7 @@ namespace Azure.Core.Serialization
             // Determines if type inherits from IModelSerializable<T> for any T
             private static bool DoesImplementIModelSerializable(Type type)
             {
-                return type.GetInterface(nameof(IModelSerializable)) != null;
+                return type.GetInterfaces().Any(i => i.GetGenericTypeDefinition() == typeof(IModelSerializable<>));
             }
         }
     }

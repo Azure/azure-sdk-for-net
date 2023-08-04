@@ -4,6 +4,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -1058,7 +1060,7 @@ namespace Azure.Core.Json
 
             // if value inherits from IModelSerializable, use the ModelSerializer serialize method otherwise use default JsonSerializer
             // need to return an object that can be serialized by JsonSerializer.SerializeToUtf8Bytes and not BinaryData
-            if (value is IModelSerializable)
+            if (value is IModelSerializable<>)
             {
                 return JsonDocument.Parse(ModelSerializer.Serialize(value)).RootElement;
             }
