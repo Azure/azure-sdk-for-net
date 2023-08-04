@@ -42,7 +42,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
         }
 
-        public static void CheckCats(CatReadOnlyProperty x, CatReadOnlyProperty y, ModelSerializerOptions options)
+        public static void CheckCats(Cat x, Cat y, ModelSerializerOptions options)
         {
             VerifyProperties(x, y, options);
             Assert.That(x.HasWhiskers, Is.EqualTo(y.HasWhiskers));

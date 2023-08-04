@@ -24,7 +24,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             ReadOnlyProperty = readOnlyProperty;
         }
 
-        internal Envelope(string readOnlyProperty, CatReadOnlyProperty modelA, T modelT, Dictionary<string, BinaryData> rawData)
+        internal Envelope(string readOnlyProperty, Cat modelA, T modelT, Dictionary<string, BinaryData> rawData)
         {
             ReadOnlyProperty = readOnlyProperty;
             ModelA = modelA;
@@ -32,7 +32,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             RawData = rawData;
         }
 
-        public CatReadOnlyProperty ModelA { get; set; }
+        public Cat ModelA { get; set; }
         public T ModelT { get; set; }
 
         public static implicit operator RequestContent(Envelope<T> envelope)
@@ -61,7 +61,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
 
             writer.WritePropertyName("modelA"u8);
-            ((IModelJsonSerializable<CatReadOnlyProperty>)ModelA).Serialize(writer, options);
+            ((IModelJsonSerializable<Cat>)ModelA).Serialize(writer, options);
             writer.WritePropertyName("modelC"u8);
             SerializeT(writer, options);
 
@@ -86,7 +86,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string readonlyProperty = "";
-            CatReadOnlyProperty modelA = new CatReadOnlyProperty();
+            Cat modelA = new Cat();
             T modelT = default(T);
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
 
@@ -99,7 +99,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
                 if (property.NameEquals("modelA"u8))
                 {
-                    modelA = CatReadOnlyProperty.DeserializeCatReadOnlyProperty(property.Value, options);
+                    modelA = Cat.DeserializeCatReadOnlyProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("modelC"u8))

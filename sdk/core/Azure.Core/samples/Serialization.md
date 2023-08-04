@@ -24,7 +24,7 @@ BinaryData data = ModelSerializer.Serialize(doggo);
 Dog dog = ModelSerializer.Deserialize<Dog>(data);
 ```
 
-By default, the ModelSerializer will give you the Json representation of the model. Some services accept XML so if you want to send the serialized data to an Azure service that accepts XML, you can use the `ModelSerializerFormat` enum to specify the format. By using the `Wire` format, the serializer automatically picks what the service would use.
+By default, the ModelSerializer gives you the Json representation of the model. Some services accept XML so if you want to send the serialized data to an Azure service that accepts XML, you can use the `ModelSerializerFormat` enum to specify the format. By using the `Wire` format, the serializer automatically picks what the service would use.
 
 ```C# Snippet:ModelSerializerWithFormat
 Dog doggo = new Dog
@@ -86,24 +86,24 @@ The following examples show a use case where a user brings a model unknown to th
 
 Model Being Used by User
 ```C# Snippet:Example_Model
-private class ModelT
+private class SearchResult
 {
-    public string Name { get; set; }
-    public int Age { get; set; }
+    public string X { get; set; }
+    public int Y { get; set; }
 }
 ```
 
 ```C# Snippet:BYOMWithNewtonsoft
-Envelope<ModelT> envelope = new Envelope<ModelT>();
-envelope.ModelA = new CatReadOnlyProperty();
-envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
+Envelope<SearchResult> envelope = new Envelope<SearchResult>();
+envelope.ModelA = new Cat();
+envelope.ModelT = new SearchResult { X = "Square", Y = 10 };
 
 ModelSerializerOptions options = new ModelSerializerOptions();
-options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
+options.GenericTypeSerializerCreator = type => type.Equals(typeof(SearchResult)) ? new NewtonsoftJsonObjectSerializer() : null;
 
 BinaryData data = ModelSerializer.Serialize(envelope, options);
 
-Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(data, options: options);
+Envelope<SearchResult> model = ModelSerializer.Deserialize<Envelope<SearchResult>>(data, options: options);
 ```
 
 ## Next steps

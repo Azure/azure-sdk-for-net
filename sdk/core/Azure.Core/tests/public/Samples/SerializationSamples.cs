@@ -102,24 +102,24 @@ namespace Azure.Core.Samples
         public void BYOMWithNewtonsoft()
         {
             #region Snippet:BYOMWithNewtonsoft
-            Envelope<ModelT> envelope = new Envelope<ModelT>();
-            envelope.ModelA = new CatReadOnlyProperty();
-            envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
+            Envelope<SearchResult> envelope = new Envelope<SearchResult>();
+            envelope.ModelA = new Cat();
+            envelope.ModelT = new SearchResult { X = "Square", Y = 10 };
 
             ModelSerializerOptions options = new ModelSerializerOptions();
-            options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
+            options.GenericTypeSerializerCreator = type => type.Equals(typeof(SearchResult)) ? new NewtonsoftJsonObjectSerializer() : null;
 
             BinaryData data = ModelSerializer.Serialize(envelope, options);
 
-            Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(data, options: options);
+            Envelope<SearchResult> model = ModelSerializer.Deserialize<Envelope<SearchResult>>(data, options: options);
             #endregion
         }
 
         #region Snippet:Example_Model
-        private class ModelT
+        private class SearchResult
         {
-            public string Name { get; set; }
-            public int Age { get; set; }
+            public string X { get; set; }
+            public int Y { get; set; }
         }
         #endregion
 
