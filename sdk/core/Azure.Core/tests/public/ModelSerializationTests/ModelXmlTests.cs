@@ -24,14 +24,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         protected override Func<Response, ModelXml> FromResponse => response => (ModelXml)response;
 
         [Test]
-        public void ThrowsIfUnknownFormat()
-        {
-            ModelSerializerOptions options = new ModelSerializerOptions("x");
-            Assert.Throws<InvalidOperationException>(() => ModelSerializer.Serialize(new ModelXml(), options));
-            Assert.Throws<InvalidOperationException>(() => ModelSerializer.Deserialize<ModelXml>(new BinaryData("x"), options));
-        }
-
-        [Test]
         public void ThrowsIfMismatch()
         {
             ModelSerializerOptions jsonOptions = new ModelSerializerOptions(ModelSerializerFormat.Json);
@@ -39,7 +31,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             Assert.Throws(Is.InstanceOf<JsonException>(), () => ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(WirePayload)), jsonOptions));
 
-            ModelSerializerOptions wireOptions = new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            ModelSerializerOptions wireOptions = ModelSerializerOptions.DefaultWireOptions;
             Assert.Throws<XmlException>(() => ModelSerializer.Deserialize<ModelXml>(new BinaryData(Encoding.UTF8.GetBytes(JsonPayload)), wireOptions));
         }
 
@@ -90,7 +82,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 Assert.AreEqual(model.ReadOnlyProperty, model2.ReadOnlyProperty);
             Assert.AreEqual(model.RenamedChildModelXml.ChildValue, model2.RenamedChildModelXml.ChildValue);
             //TODO this is broken until we update the IXmlSerializable interface to include ModelSerializerOptions
-            //if (format.Equals(ModelSerializerFormat.Data))
+            //if (format.Equals(ModelSerializerFormat.Json))
             //    Assert.AreEqual(model.RenamedChildModelXml.ChildReadOnlyProperty, model2.RenamedChildModelXml.ChildReadOnlyProperty);
         }
     }

@@ -54,7 +54,7 @@ namespace Azure.Core.Samples
                 FoodConsumed = { "kibble", "egg", "peanut butter" },
             };
             ModelSerializerOptions options = new ModelSerializerOptions();
-            options.UnknownTypeSerializationFallback = type => type.Equals(typeof(DogListProperty)) ? new NewtonsoftJsonObjectSerializer() : null;
+            options.GenericTypeSerializerCreator = type => type.Equals(typeof(DogListProperty)) ? new NewtonsoftJsonObjectSerializer() : null;
 
             BinaryData data = ModelSerializer.Serialize(dog, options);
             #endregion
@@ -66,7 +66,7 @@ namespace Azure.Core.Samples
         {
             #region Snippet:NewtonSoft_Deserialize
             ModelSerializerOptions options = new ModelSerializerOptions();
-            options.UnknownTypeSerializationFallback = type => type.Equals(typeof(DogListProperty)) ? new NewtonsoftJsonObjectSerializer() : null;
+            options.GenericTypeSerializerCreator = type => type.Equals(typeof(DogListProperty)) ? new NewtonsoftJsonObjectSerializer() : null;
             string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
             DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(BinaryData.FromString(json), options);
@@ -116,7 +116,7 @@ namespace Azure.Core.Samples
             envelope.ModelA = new CatReadOnlyProperty();
             envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
             ModelSerializerOptions options = new ModelSerializerOptions();
-            options.UnknownTypeSerializationFallback = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
+            options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
             BinaryData data = ModelSerializer.Serialize(envelope, options);
             #endregion
         }
@@ -133,7 +133,7 @@ namespace Azure.Core.Samples
                 "}";
 
             ModelSerializerOptions options = new ModelSerializerOptions();
-            options.UnknownTypeSerializationFallback = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
+            options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
 
             Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
             #endregion

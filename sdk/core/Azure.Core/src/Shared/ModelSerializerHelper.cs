@@ -2,33 +2,22 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.Text.Json;
-using System.Xml;
+using System.Runtime.CompilerServices;
+using Azure.Core.Serialization;
 
 namespace Azure.Core
 {
     internal static class ModelSerializerHelper
     {
-        public static BinaryData SerializeToBinaryData(Action<Utf8JsonWriter> serialize)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ValidateFormat(IModelSerializable<object> model, ModelSerializerFormat format)
         {
-            using var writer = new SequenceWriter();
-            using var jsonWriter = new Utf8JsonWriter(writer);
-            serialize(jsonWriter);
-            jsonWriter.Flush();
-            writer.TryComputeLength(out var length);
-            using var stream = new MemoryStream((int)length);
-            writer.WriteTo(stream, default);
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-        }
-
-        public static BinaryData SerializeToBinaryData(Action<XmlWriter> serialize)
-        {
-            using MemoryStream stream = new MemoryStream();
-            using XmlWriter writer = XmlWriter.Create(stream);
-            serialize(writer);
-            writer.Flush();
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            bool implementsJson = model is IModelJsonSerializable<object>;
+            bool isValid = (format == ModelSerializerFormat.Json && implementsJson) || format == ModelSerializerFormat.Wire;
+            if (!isValid)
+            {
+                throw new NotSupportedException($"The model {model.GetType().Name} does not support '{format}' format.");
+            }
         }
     }
 }

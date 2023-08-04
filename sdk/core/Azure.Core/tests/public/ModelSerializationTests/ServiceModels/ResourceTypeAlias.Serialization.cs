@@ -14,13 +14,13 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ResourceTypeAlias : IUtf8JsonSerializable, IJsonModelSerializable<ResourceTypeAlias>, IJsonModelSerializable
+    public partial class ResourceTypeAlias : IUtf8JsonSerializable, IModelJsonSerializable<ResourceTypeAlias>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ResourceTypeAlias>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ResourceTypeAlias>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -48,7 +48,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     List<ResourceTypeAliasPath> array = new List<ResourceTypeAliasPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item, options.Value));
+                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item, options));
                     }
                     paths = array;
                     continue;
@@ -73,7 +73,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value, options.Value);
+                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultMetadata"u8))
@@ -82,14 +82,14 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value, options.Value);
+                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value, options);
                     continue;
                 }
             }
             return new ResourceTypeAlias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value);
         }
 
-        void IJsonModelSerializable<ResourceTypeAlias>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<ResourceTypeAlias>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -142,65 +142,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public Optional<ResourceTypeAliasPathMetadata> DefaultMetadata { get; set; }
         }
 
-        ResourceTypeAlias IJsonModelSerializable<ResourceTypeAlias>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ResourceTypeAlias IModelJsonSerializable<ResourceTypeAlias>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ResourceTypeAliasProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new ResourceTypeAlias(
-                properties.Name.Value,
-                Optional.ToList(properties.Paths),
-                Optional.ToNullable(properties.AliasType),
-                properties.DefaultPath.Value,
-                properties.DefaultPattern.Value,
-                properties.DefaultMetadata.Value);
-        }
-
-        private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ResourceTypeAliasProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
-        {
-            if (propertyName.SequenceEqual("name"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Name = reader.GetString();
-                return;
-            }
-            if (propertyName.SequenceEqual("paths"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.Paths = reader.GetList<ResourceTypeAliasPath>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("type"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.AliasType = reader.GetString().ToResourceTypeAliasType();
-                return;
-            }
-            if (propertyName.SequenceEqual("defaultPath"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.DefaultPath = reader.GetString();
-                return;
-            }
-            if (propertyName.SequenceEqual("defaultPattern"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.DefaultPattern = reader.GetObject<ResourceTypeAliasPattern>(options);
-                return;
-            }
-            if (propertyName.SequenceEqual("defaultMetadata"u8))
-            {
-                reader.Read();
-                if (reader.TokenType != JsonTokenType.Null)
-                    properties.DefaultMetadata = reader.GetObject<ResourceTypeAliasPathMetadata>(options);
-                return;
-            }
-            reader.Skip();
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeAlias(doc.RootElement, options);
         }
 
         ResourceTypeAlias IModelSerializable<ResourceTypeAlias>.Deserialize(BinaryData data, ModelSerializerOptions options)
@@ -209,17 +154,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeResourceTypeAlias(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ResourceTypeAlias>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ResourceTypeAlias>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ResourceTypeAlias>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ResourceTypeAlias>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ResourceTypeAlias>)this).Serialize(options);
+        BinaryData IModelSerializable<ResourceTypeAlias>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

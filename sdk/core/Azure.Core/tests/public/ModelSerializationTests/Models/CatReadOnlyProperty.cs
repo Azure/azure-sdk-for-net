@@ -8,7 +8,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public class CatReadOnlyProperty : Animal, IJsonModelSerializable<CatReadOnlyProperty>, IUtf8JsonSerializable, IJsonModelSerializable
+    public class CatReadOnlyProperty : Animal, IModelJsonSerializable<CatReadOnlyProperty>, IUtf8JsonSerializable
     {
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
@@ -29,9 +29,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public bool HasWhiskers { get; private set; } = true;
 
         #region Serialization
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<CatReadOnlyProperty>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<CatReadOnlyProperty>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        void IJsonModelSerializable<CatReadOnlyProperty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<CatReadOnlyProperty>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -67,9 +67,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             writer.WriteEndObject();
         }
 
-        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions? options = default)
+        internal static CatReadOnlyProperty DeserializeCatReadOnlyProperty(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             double weight = default;
             string name = "";
@@ -106,7 +106,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     hasWhiskers = property.Value.GetBoolean();
                     continue;
                 }
-                if (options.Value.Format == ModelSerializerFormat.Json)
+                if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means its an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -120,23 +120,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeCatReadOnlyProperty(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        CatReadOnlyProperty IJsonModelSerializable<CatReadOnlyProperty>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        CatReadOnlyProperty IModelJsonSerializable<CatReadOnlyProperty>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeCatReadOnlyProperty(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<CatReadOnlyProperty>.Serialize(ModelSerializerOptions options) =>
-            ModelSerializerHelper.SerializeToBinaryData(writer => Serialize(writer, options));
+        BinaryData IModelSerializable<CatReadOnlyProperty>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
 
         #endregion
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<CatReadOnlyProperty>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<CatReadOnlyProperty>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<CatReadOnlyProperty>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<CatReadOnlyProperty>)this).Serialize(options);
     }
 }

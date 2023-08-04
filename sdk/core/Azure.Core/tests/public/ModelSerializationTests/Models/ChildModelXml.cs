@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
@@ -12,7 +13,7 @@ using Azure.Core.Serialization;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("ChildTag")]
-    public class ChildModelXml : IXmlSerializable, IXmlModelSerializable<ChildModelXml>, IJsonModelSerializable<ChildModelXml>, IUtf8JsonSerializable, IXmlModelSerializable, IJsonModelSerializable
+    public class ChildModelXml : IXmlSerializable, IModelSerializable<ChildModelXml>, IModelJsonSerializable<ChildModelXml>, IUtf8JsonSerializable
     {
         internal ChildModelXml() { }
 
@@ -35,15 +36,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string ChildReadOnlyProperty { get; }
 
         void IXmlSerializable.Write(XmlWriter writer, string nameHint) =>
-            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire), nameHint);
-
-        void IXmlModelSerializable<ChildModelXml>.Serialize(XmlWriter writer, ModelSerializerOptions options)
-        {
-            if (options.Format != ModelSerializerFormat.Wire)
-                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Wire}' format when calling the {nameof(IXmlModelSerializable)} interface");
-
-            Serialize(writer, options, null);
-        }
+            Serialize(writer, ModelSerializerOptions.DefaultWireOptions, nameHint);
 
         private void Serialize(XmlWriter writer, ModelSerializerOptions options, string nameHint)
         {
@@ -60,9 +53,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndElement();
         }
 
-        internal static ChildModelXml DeserializeChildModelXml(XElement element, ModelSerializerOptions? options = default)
+        internal static ChildModelXml DeserializeChildModelXml(XElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string value = default;
             string readonlyProperty = default;
@@ -77,9 +70,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return new ChildModelXml(value, readonlyProperty);
         }
 
-        internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ChildModelXml DeserializeChildModelXml(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             string childValue = default;
             string childReadOnlyProperty = default;
@@ -103,29 +96,36 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         ChildModelXml IModelSerializable<ChildModelXml>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             if (options.Format == ModelSerializerFormat.Json)
             {
                 using var doc = JsonDocument.Parse(data);
                 return DeserializeChildModelXml(doc.RootElement, options);
             }
-            if (options.Format == ModelSerializerFormat.Wire)
+            else
             {
                 return DeserializeChildModelXml(XElement.Load(data.ToStream()), options);
             }
-            throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
         BinaryData IModelSerializable<ChildModelXml>.Serialize(ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             if (options.Format == ModelSerializerFormat.Json)
             {
-                return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
+                return ModelSerializer.ConvertToBinaryData(this, options);
             }
-            if (options.Format == ModelSerializerFormat.Wire)
+            else
             {
-                return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options, null); });
+                options ??= ModelSerializerOptions.DefaultWireOptions;
+                using MemoryStream stream = new MemoryStream();
+                using XmlWriter writer = XmlWriter.Create(stream);
+                Serialize(writer, options, null);
+                writer.Flush();
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
             }
-            throw new InvalidOperationException($"Unsupported format '{options.Format}' request for '{GetType().Name}'");
         }
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
@@ -141,30 +141,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             writer.WriteEndObject();
         }
 
-        void IJsonModelSerializable<ChildModelXml>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) =>
-            Serialize(writer, options);
-
-        ChildModelXml IJsonModelSerializable<ChildModelXml>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        void IModelJsonSerializable<ChildModelXml>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            Serialize(writer, options);
+        }
+
+        ChildModelXml IModelJsonSerializable<ChildModelXml>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeChildModelXml(doc.RootElement, options);
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) =>
-            Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ChildModelXml>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ChildModelXml>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ChildModelXml>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ChildModelXml>)this).Serialize(options);
-
-        void IXmlModelSerializable<object>.Serialize(XmlWriter writer, ModelSerializerOptions options) => ((IXmlModelSerializable<ChildModelXml>)this).Serialize(writer, options);
-
-        ChildModelXml IXmlModelSerializable<ChildModelXml>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeChildModelXml(root, options);
-
-        object IXmlModelSerializable<object>.Deserialize(XElement root, ModelSerializerOptions options) => DeserializeChildModelXml(root, options);
+            Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
     }
 }

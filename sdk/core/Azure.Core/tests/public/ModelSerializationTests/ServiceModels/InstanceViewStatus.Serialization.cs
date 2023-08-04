@@ -14,11 +14,11 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
-    public partial class InstanceViewStatus : IUtf8JsonSerializable, IJsonModelSerializable<InstanceViewStatus>, IJsonModelSerializable
+    public partial class InstanceViewStatus : IUtf8JsonSerializable, IModelJsonSerializable<InstanceViewStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<InstanceViewStatus>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<InstanceViewStatus>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        void IJsonModelSerializable<InstanceViewStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<InstanceViewStatus>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -51,9 +51,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelSerializerOptions? options = default)
+        internal static InstanceViewStatus DeserializeInstanceViewStatus(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -112,17 +112,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             public Optional<DateTimeOffset> Time { get; set; }
         }
 
-        InstanceViewStatus IJsonModelSerializable<InstanceViewStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        InstanceViewStatus IModelJsonSerializable<InstanceViewStatus>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<InstanceViewStatusProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new InstanceViewStatus(
-                properties.Code.Value,
-                Optional.ToNullable(properties.Level),
-                properties.DisplayStatus.Value,
-                properties.Message.Value,
-                Optional.ToNullable(properties.Time));
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceViewStatus(doc.RootElement, options);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref InstanceViewStatusProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
@@ -171,17 +164,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             return DeserializeInstanceViewStatus(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<InstanceViewStatus>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<InstanceViewStatus>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<InstanceViewStatus>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<InstanceViewStatus>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<InstanceViewStatus>)this).Serialize(options);
+        BinaryData IModelSerializable<InstanceViewStatus>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

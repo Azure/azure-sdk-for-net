@@ -14,13 +14,13 @@ using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
 {
-    public partial class ApiProfile : IUtf8JsonSerializable, IJsonModelSerializable<ApiProfile>, IJsonModelSerializable
+    public partial class ApiProfile : IUtf8JsonSerializable, IModelJsonSerializable<ApiProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ApiProfile>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ApiProfile>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        internal static ApiProfile DeserializeApiProfile(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ApiProfile DeserializeApiProfile(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -44,7 +44,7 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return new ApiProfile(profileVersion.Value, apiVersion.Value);
         }
 
-        void IJsonModelSerializable<ApiProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<ApiProfile>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -68,12 +68,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             public Optional<string> ApiVersion { get; set; }
         }
 
-        ApiProfile IJsonModelSerializable<ApiProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ApiProfile IModelJsonSerializable<ApiProfile>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ApiProfileProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new ApiProfile(properties.ProfileVersion.Value, properties.ApiVersion.Value);
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiProfile(doc.RootElement, options);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ApiProfileProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
@@ -101,17 +99,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Resources.Models
             return DeserializeApiProfile(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ApiProfile>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ApiProfile>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ApiProfile>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ApiProfile>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ApiProfile>)this).Serialize(options);
+        BinaryData IModelSerializable<ApiProfile>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

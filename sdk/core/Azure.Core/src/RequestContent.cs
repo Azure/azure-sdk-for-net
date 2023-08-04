@@ -8,7 +8,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core.Buffers;
+using Azure.Core.Internal;
 using Azure.Core.Serialization;
 
 namespace Azure.Core
@@ -89,9 +91,18 @@ namespace Azure.Core
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
-        /// <param name="writer">The <see cref="SequenceWriter"/> that contains the serialized data.</param>
+        /// <param name="model">The <see cref="IModelSerializable{T}"/> to serialize.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-        public static RequestContent Create(SequenceWriter writer) => new SequenceWriterContent(writer);
+        public static RequestContent Create(IModelSerializable<object> model, ModelSerializerOptions? options = default) => new ModelSerializableContent(model, options ?? ModelSerializerOptions.DefaultWireOptions);
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="model">The <see cref="IModelJsonSerializable{T}"/> to serialize.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
+        public static RequestContent Create(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default) => new ModelJsonSerializableContent(model, options ?? ModelSerializerOptions.DefaultWireOptions);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -227,22 +238,61 @@ namespace Azure.Core
             }
         }
 
-        private sealed class SequenceWriterContent : RequestContent
+        private sealed class ModelJsonSerializableContent : RequestContent
         {
-            private readonly SequenceWriter _writer;
+            private readonly IModelJsonSerializable<object> _model;
+            private readonly ModelSerializerOptions _options;
 
-            public SequenceWriterContent(SequenceWriter writer)
+            public ModelJsonSerializableContent(IModelJsonSerializable<object> model, ModelSerializerOptions options)
             {
-                _writer = writer;
+                _model = model;
+                _options = options;
             }
 
-            public override void Dispose() => _writer.Dispose();
+            private ModelWriter? _writer;
+            private ModelWriter Writer => _writer ??= new ModelWriter(_model, _options);
 
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => _writer.WriteTo(stream, cancellation);
+            public override void Dispose() => _writer?.Dispose();
 
-            public override bool TryComputeLength(out long length) => _writer.TryComputeLength(out length);
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => Writer.CopyTo(stream, cancellation);
 
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await _writer.WriteToAsync(stream, cancellation).ConfigureAwait(false);
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+
+            public override bool TryComputeLength(out long length) => Writer.TryComputeLength(out length);
+        }
+
+        private sealed class ModelSerializableContent : RequestContent
+        {
+            private readonly IModelSerializable<object> _model;
+            private readonly ModelSerializerOptions _options;
+
+            public ModelSerializableContent(IModelSerializable<object> model, ModelSerializerOptions options)
+            {
+                _model = model;
+                _options = options;
+            }
+
+            public override void Dispose() { }
+
+            private BinaryData? _data;
+            private BinaryData Data => _data ??= _model.Serialize(_options);
+
+#if NETFRAMEWORK || NETSTANDARD2_0
+            private byte[]? _bytes;
+            private byte[] Bytes => _bytes ??= Data.ToArray();
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => stream.Write(Bytes, 0, Bytes.Length);
+#else
+            public override void WriteTo(Stream stream, CancellationToken cancellation) => stream.Write(Data.ToMemory().Span);
+#endif
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = Data.ToMemory().Length;
+                return true;
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
         }
 
         private sealed class ArrayContent : RequestContent

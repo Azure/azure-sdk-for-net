@@ -2,122 +2,179 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Reflection;
+using System.Linq;
+using Azure.Core.Internal;
 
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Serializer class for Azure models.
+    /// Provides functionality to serialize and deserialize Azure models.
     /// </summary>
     public static class ModelSerializer
     {
         /// <summary>
-        /// Serialize a model.
+        /// Converts the value of a model into a <see cref="BinaryData"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="model"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of the value to serialize.</typeparam>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/></returns>
         public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
-            var serializer = options.Value.UnknownTypeSerializationFallback is not null ? options.Value.UnknownTypeSerializationFallback(typeof(T)) : null;
-            if (serializer is not null)
-                return serializer.Serialize(model);
-
-            return model.Serialize(options.Value);
+            return model.Serialize(options);
         }
 
         /// <summary>
-        /// Serialize a model.
+        /// Converts the value of a model into a <see cref="BinaryData"/>.
         /// </summary>
-        /// <param name="model"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        /// <typeparam name="T">The type of the value to serialize.</typeparam>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/></returns>
+        public static BinaryData Serialize<T>(T model, ModelSerializerFormat format)
+            where T : IModelSerializable<T>
+            => Serialize<T>(model, ModelSerializerOptions.GetOptions(format));
+
+        /// <summary>
+        /// Converts the value of a model into a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/></returns>
+        /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         public static BinaryData Serialize(object model, ModelSerializerOptions? options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
-            var iModel = model as IModelSerializable;
+            var iModel = model as IModelSerializable<object>;
             if (iModel is null)
-                throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable)}");
-
-            var serializer = options.Value.UnknownTypeSerializationFallback is not null ? options.Value.UnknownTypeSerializationFallback(model.GetType()) : null;
-            if (serializer is not null)
-                return serializer.Serialize(model);
-
-            return iModel.Serialize(options.Value);
-        }
-
-        /// <summary>
-        /// Serialize a XML model. Todo: collapse this method when working - need compile check over runtime
-        /// </summary>
-        /// <returns></returns>
-        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : class, IModelSerializable<T>
-        {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
-
-            var genericDeserialize = GenericDeserialize(data, typeof(T), options.Value);
-            if (genericDeserialize is not null)
-                return (T)genericDeserialize;
-
-            var model = Activator.CreateInstance(typeof(T), true) as IModelSerializable<T>;
-
-            return model!.Deserialize(data, options.Value);
-        }
-
-        /// <summary>
-        /// .
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="typeToConvert"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
-        public static object Deserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions? options = default)
-        {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
-
-            var genericDeserialize = GenericDeserialize(data, typeToConvert, options.Value);
-            if (genericDeserialize is not null)
-                return genericDeserialize;
-
-            var model = Activator.CreateInstance(typeToConvert, true) as IModelSerializable;
-
-            return model!.Deserialize(data, options.Value);
-        }
-
-        private static object? GenericDeserialize(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
-        {
-            var serializer = options.UnknownTypeSerializationFallback is not null ? options.UnknownTypeSerializationFallback(typeToConvert) : null;
-            if (serializer is not null)
             {
-                var obj = serializer.Deserialize(data.ToStream(), typeToConvert, default);
-                return obj ?? throw new InvalidOperationException();
+                throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable<object>)}");
             }
 
-            if (typeToConvert.IsAbstract)
-                return DeserializeObject(data, typeToConvert, options);
-
-            return null;
+            return iModel.Serialize(options);
         }
 
-        private static readonly Type[] _combinedDeserializeMethodParameters = new Type[] { typeof(BinaryData), typeof(ModelSerializerOptions) };
+        /// <summary>
+        /// Converts the value of a model into a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/></returns>
+        /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
+        public static BinaryData Serialize(object model, ModelSerializerFormat format)
+            => Serialize(model, ModelSerializerOptions.GetOptions(format));
 
-        internal static object DeserializeObject(BinaryData data, Type typeToConvert, ModelSerializerOptions options)
+        /// <summary>
+        /// Converts the <see cref="BinaryData"/> into a <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
+        /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal default constructor.</exception>
+        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
-            var classNameInMethod = typeToConvert.Name.AsSpan();
-            int backtickIndex = classNameInMethod.IndexOf('`');
-            if (backtickIndex != -1)
-                classNameInMethod = classNameInMethod.Slice(0, backtickIndex);
-            var methodName = $"Deserialize{classNameInMethod.ToString()}";
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
-            var method = typeToConvert.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Static, null, _combinedDeserializeMethodParameters, null);
-            if (method is null)
-                throw new NotSupportedException($"{typeToConvert.Name} does not have a deserialize method defined.");
+            return GetInstance<T>().Deserialize(data, options);
+        }
 
-            return method.Invoke(null, new object[] { data, options })!;
+        /// <summary>
+        /// Converts the <see cref="BinaryData"/> into a <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
+        /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
+        /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
+        /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal default constructor.</exception>
+        public static T Deserialize<T>(BinaryData data, ModelSerializerFormat format)
+            where T : IModelSerializable<T>
+            => Deserialize<T>(data, ModelSerializerOptions.GetOptions(format));
+
+        /// <summary>
+        /// Converts the <see cref="BinaryData"/> into a <paramref name="returnType"/>.
+        /// </summary>
+        /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
+        /// <param name="returnType">The type of the objec to convert and return.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
+        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
+        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal default constructor.</exception>
+        public static object Deserialize(BinaryData data, Type returnType, ModelSerializerOptions? options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+
+            return GetInstance(returnType).Deserialize(data, options);
+        }
+
+        /// <summary>
+        /// Converts the <see cref="BinaryData"/> into a <paramref name="returnType"/>.
+        /// </summary>
+        /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
+        /// <param name="returnType">The type of the objec to convert and return.</param>
+        /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
+        /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
+        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
+        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal default constructor.</exception>
+        public static object Deserialize(BinaryData data, Type returnType, ModelSerializerFormat format)
+            => Deserialize(data, returnType, ModelSerializerOptions.GetOptions(format));
+
+        /// <summary>
+        /// Converts an <see cref="IModelJsonSerializable{T}"/> into a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>A binary representation of the serialized model.</returns>
+        public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default)
+        {
+            options ??= ModelSerializerOptions.DefaultWireOptions;
+            using var writer = new ModelWriter(model, options);
+            return writer.ToBinaryData();
+        }
+
+        /// <summary>
+        /// Converts an <see cref="IModelJsonSerializable{T}"/> into a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
+        /// <returns>A binary representation of the serialized model.</returns>
+        public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerFormat format)
+            => ConvertToBinaryData(model, ModelSerializerOptions.GetOptions(format));
+
+        private static IModelSerializable<object> GetInstance(Type returnType)
+        {
+            var model = GetObjectInstance(returnType) as IModelSerializable<object>;
+            if (model is null)
+            {
+                throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IModelSerializable<object>)}");
+            }
+            return model;
+        }
+
+        private static IModelSerializable<T> GetInstance<T>() where T : IModelSerializable<T>
+        {
+            var model = GetObjectInstance(typeof(T)) as IModelSerializable<T>;
+            if (model is null)
+            {
+                throw new InvalidOperationException($"{typeof(T).Name} does not implement {nameof(IModelSerializable<T>)}");
+            }
+            return model;
+        }
+
+        private static object GetObjectInstance(Type returnType)
+        {
+            var typeToActivate = returnType.IsAbstract ? returnType.Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{returnType.Name}") : returnType;
+            if (typeToActivate is null)
+            {
+                throw new InvalidOperationException($"Unable to find type Unknown{returnType.Name} in assembly {returnType.Assembly.FullName}.");
+            }
+            var obj = Activator.CreateInstance(typeToActivate, true);
+            if (obj is null)
+            {
+                throw new InvalidOperationException($"Unable to create instance of {typeToActivate.Name}.");
+            }
+            return obj;
         }
     }
 }

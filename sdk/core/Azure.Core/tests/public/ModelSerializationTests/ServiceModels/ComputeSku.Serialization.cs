@@ -13,11 +13,11 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
 {
-    public partial class ComputeSku : IUtf8JsonSerializable, IJsonModelSerializable<ComputeSku>, IJsonModelSerializable
+    public partial class ComputeSku : IUtf8JsonSerializable, IModelJsonSerializable<ComputeSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<ComputeSku>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ComputeSku>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        void IJsonModelSerializable<ComputeSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<ComputeSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -40,9 +40,9 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             writer.WriteEndObject();
         }
 
-        internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelSerializerOptions? options = default)
+        internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -83,12 +83,10 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             public Optional<long> Capacity { get; set; }
         }
 
-        ComputeSku IJsonModelSerializable<ComputeSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ComputeSku IModelJsonSerializable<ComputeSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<ComputeSkuProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new ComputeSku(properties.Name.Value, properties.Tier.Value, Optional.ToNullable(properties.Capacity));
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeSku(doc.RootElement, options);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref ComputeSkuProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
@@ -123,17 +121,6 @@ namespace Azure.Core.Tests.Public.ResourceManager.Compute.Models
             return DeserializeComputeSku(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<ComputeSku>.Serialize(ModelSerializerOptions options)
-        {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
-        }
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<ComputeSku>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<ComputeSku>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<ComputeSku>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<ComputeSku>)this).Serialize(options);
+        BinaryData IModelSerializable<ComputeSku>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
     }
 }

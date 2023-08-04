@@ -3,26 +3,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Azure.Core.Serialization;
-using Azure.Core;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
-    public abstract class BaseModel : IUtf8JsonSerializable, IJsonModelSerializable<BaseModel>, IJsonModelSerializable
+    public abstract class BaseModel : IUtf8JsonSerializable, IModelJsonSerializable<BaseModel>
     {
+        public static implicit operator RequestContent(BaseModel baseModel)
+        {
+            return RequestContent.Create(baseModel, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        public static explicit operator BaseModel(Response response)
+        {
+            using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
+            return DeserializeBaseModel(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
+        }
+
         private Dictionary<string, BinaryData> RawData { get; set; } = new Dictionary<string, BinaryData>();
 
         public string Kind { get; internal set; }
         public string Name { get; set; }
 
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModelSerializable<BaseModel>)this).Serialize(writer, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<BaseModel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
-        void IJsonModelSerializable<BaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => Serialize(writer, options);
+        void IModelJsonSerializable<BaseModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            Serialize(writer, options);
+        }
 
         private void Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
@@ -53,9 +64,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         internal static BaseModel DeserializeBaseModel(BinaryData data, ModelSerializerOptions options)
             => DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
 
-        internal static BaseModel DeserializeBaseModel(JsonElement element, ModelSerializerOptions? options = default)
+        internal static BaseModel DeserializeBaseModel(JsonElement element, ModelSerializerOptions options = default)
         {
-            options ??= new ModelSerializerOptions(ModelSerializerFormat.Wire);
+            options ??= ModelSerializerOptions.DefaultWireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -66,34 +77,57 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 switch (discriminator.GetString())
                 {
                     case "X":
-                        return ModelX.DeserializeModelX(element, options.Value);
+                        return ModelX.DeserializeModelX(element, options);
                     case "Y":
-                        return ModelY.DeserializeModelY(element, options.Value);
+                        return ModelY.DeserializeModelY(element, options);
                 }
             }
-            return UnknownBaseModel.DeserializeUnknownBaseModel(element, options.Value);
+
+            //Deserialize unknown subtype
+            string kind = default;
+            Optional<string> name = default;
+            Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format == ModelSerializerFormat.Json)
+                {
+                    //this means it's an unknown property we got
+                    rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            return new UnknownBaseModel(kind, name, rawData);
         }
 
         BaseModel IModelSerializable<BaseModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
-            => DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
-
-        BaseModel IJsonModelSerializable<BaseModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
+        }
+
+        BaseModel IModelJsonSerializable<BaseModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeBaseModel(doc.RootElement, options);
         }
 
         BinaryData IModelSerializable<BaseModel>.Serialize(ModelSerializerOptions options)
         {
-            return ModelSerializerHelper.SerializeToBinaryData((writer) => { Serialize(writer, options); });
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.ConvertToBinaryData(this, options);
         }
-
-        void IJsonModelSerializable<object>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IJsonModelSerializable<BaseModel>)this).Serialize(writer, options);
-
-        object IJsonModelSerializable<object>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options) => ((IJsonModelSerializable<BaseModel>)this).Deserialize(ref reader, options);
-
-        object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options) => ((IModelSerializable<BaseModel>)this).Deserialize(data, options);
-
-        BinaryData IModelSerializable<object>.Serialize(ModelSerializerOptions options) => ((IModelSerializable<BaseModel>)this).Serialize(options);
     }
 }

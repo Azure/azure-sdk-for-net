@@ -2,29 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using Azure.Core.Internal;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Perf.Serializations
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class JsonSerializationBenchmark<T> where T : class, IJsonModelSerializable<T>
+    public abstract class JsonBenchmark<T> where T : class, IModelJsonSerializable<T>
     {
         private string _json;
         protected T _model;
         protected Response _response;
         protected ModelSerializerOptions _options;
         private BinaryData _data;
-        private SequenceWriter _content;
-        private ReadOnlySequence<byte> _sequence;
         private JsonDocument _jsonDocument;
 
         protected abstract T Deserialize(JsonElement jsonElement);
@@ -40,17 +37,12 @@ namespace Azure.Core.Perf
         [GlobalSetup]
         public void SetUp()
         {
-            _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "SerializationBenchmark", "TestData", JsonFileName));
+            _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", JsonFileName));
             _data = BinaryData.FromString(_json);
             _model = ModelSerializer.Deserialize<T>(_data);
             _response = new MockResponse(200);
             _response.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(_json));
-            _options = new ModelSerializerOptions(ModelSerializerFormat.Wire);
-            _content = new SequenceWriter();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(_content);
-            _model.Serialize(writer, new ModelSerializerOptions());
-            writer.Flush();
-            _sequence = _content.GetReadOnlySequence();
+            _options = ModelSerializerOptions.DefaultWireOptions;
             _jsonDocument = JsonDocument.Parse(_json);
         }
 
@@ -90,13 +82,6 @@ namespace Azure.Core.Perf
         }
 
         [Benchmark]
-        [BenchmarkCategory("Cast")]
-        public RequestContent CreateRequestContent()
-        {
-            return RequestContent.Create(_content);
-        }
-
-        [Benchmark]
         [BenchmarkCategory("ModelJsonConverter")]
         public string Serialize_ModelJsonConverter()
         {
@@ -114,6 +99,13 @@ namespace Azure.Core.Perf
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
+        public BinaryData Serialize_ConvertToBinary()
+        {
+            return ModelSerializer.ConvertToBinaryData(_model, _options);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("ModelSerializer")]
         public BinaryData Serialize_ModelSerializerNonGeneric()
         {
             return ModelSerializer.Serialize((object)_model, _options);
@@ -123,8 +115,8 @@ namespace Azure.Core.Perf
         [BenchmarkCategory("PublicInterface")]
         public void Serialize_PublicInterface()
         {
-            using var content = new SequenceWriter();
-            using var writer = new Utf8JsonWriter(content);
+            using var stream = new MemoryStream(_data.ToMemory().Length);
+            using var writer = new Utf8JsonWriter(stream);
             _model.Serialize(writer, _options);
             writer.Flush();
         }
@@ -181,20 +173,6 @@ namespace Azure.Core.Perf
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
             return _model.Deserialize(ref reader, _options);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("JsonDocument")]
-        public ReadOnlySequence<byte> GetSequence()
-        {
-            return _content.GetReadOnlySequence();
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("JsonDocument")]
-        public void JsonDocumentFromSequence()
-        {
-            using var doc = JsonDocument.Parse(_sequence);
         }
 
         [Benchmark]

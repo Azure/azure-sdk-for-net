@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Text.Json;
 using Azure.Core.Tests.Public.ResourceManager.Resources;
 using BenchmarkDotNet.Attributes;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Perf.Serializations
 {
-    [Config(typeof(SerializationBenchmarkConfig))]
-    public class ResourceProviderDataBenchmark : JsonSerializationBenchmark<ResourceProviderData>
+    [Config(typeof(BenchmarkConfig))]
+    public class ResourceProviderDataModel : JsonBenchmark<ResourceProviderData>
     {
         protected override string JsonFileName => "ResourceProviderData.json";
 

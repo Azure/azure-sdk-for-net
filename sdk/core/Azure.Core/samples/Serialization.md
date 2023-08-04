@@ -41,7 +41,7 @@ DogListProperty dog = new DogListProperty
     FoodConsumed = { "kibble", "egg", "peanut butter" },
 };
 ModelSerializerOptions options = new ModelSerializerOptions();
-options.UnknownTypeSerializationFallback = type => type.Equals(typeof(DogListProperty)) ? new NewtonsoftJsonObjectSerializer() : null;
+options.GenericTypeSerializerCreator = type => type.Equals(typeof(DogListProperty)) ? new NewtonsoftJsonObjectSerializer() : null;
 
 BinaryData data = ModelSerializer.Serialize(dog, options);
 ```
@@ -50,7 +50,7 @@ BinaryData data = ModelSerializer.Serialize(dog, options);
 
 ```C# Snippet:NewtonSoft_Deserialize
 ModelSerializerOptions options = new ModelSerializerOptions();
-options.UnknownTypeSerializationFallback = type => type.Equals(typeof(DogListProperty)) ? new NewtonsoftJsonObjectSerializer() : null;
+options.GenericTypeSerializerCreator = type => type.Equals(typeof(DogListProperty)) ? new NewtonsoftJsonObjectSerializer() : null;
 string json = @"[{""LatinName"":""Animalia"",""Weight"":1.1,""Name"":""Doggo"",""IsHungry"":false,""FoodConsumed"":[""kibble"",""egg"",""peanut butter""],""NumberOfLegs"":4}]";
 
 DogListProperty dog = ModelSerializer.Deserialize<DogListProperty>(BinaryData.FromString(json), options);
@@ -115,7 +115,7 @@ Envelope<ModelT> envelope = new Envelope<ModelT>();
 envelope.ModelA = new CatReadOnlyProperty();
 envelope.ModelT = new ModelT { Name = "Fluffy", Age = 10 };
 ModelSerializerOptions options = new ModelSerializerOptions();
-options.UnknownTypeSerializationFallback = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
+options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
 BinaryData data = ModelSerializer.Serialize(envelope, options);
 ```
 
@@ -129,7 +129,7 @@ string serviceResponse =
     "}";
 
 ModelSerializerOptions options = new ModelSerializerOptions();
-options.UnknownTypeSerializationFallback = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
+options.GenericTypeSerializerCreator = type => type.Equals(typeof(ModelT)) ? new NewtonsoftJsonObjectSerializer() : null;
 
 Envelope<ModelT> model = ModelSerializer.Deserialize<Envelope<ModelT>>(new BinaryData(Encoding.UTF8.GetBytes(serviceResponse)), options: options);
 ```
