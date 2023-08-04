@@ -1025,6 +1025,270 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanWritePatchForNestedArray()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": {
+                    "b": [0, 1]
+                }
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetIndexElement(1).Set(2);
+
+            string expected = """
+            {
+                "a": {
+                    "b": [0, 2]
+                }
+            }
+            """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchForNestedArrayMultipleChanges()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": {
+                    "b": [0, 1]
+                }
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetIndexElement(0).Set(2);
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetIndexElement(1).Set(3);
+
+            string expected = """
+            {
+                "a": {
+                    "b": [2, 3]
+                }
+            }
+            """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchForArrayOfObjects()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a":
+                [
+                    { "b": 1 },
+                    { "c": 2 },
+                    { "d": 3 }
+                ]
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetIndexElement(0).GetProperty("b").Set(4);
+            mdoc.RootElement.GetProperty("a").GetIndexElement(2).GetProperty("d").Set(5);
+
+            string expected = """
+            {
+                "a":
+                [
+                    { "b": 4 },
+                    { "c": 2 },
+                    { "d": 5 }
+                ]
+            }
+            """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchForArraysAtDifferentLevels()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": {
+                    "aa": [0, 1]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, false]
+                    }
+                },
+                "c": [null, null, {"cc": "hi"}]
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(2);
+            mdoc.RootElement.GetProperty("b").GetProperty("bb").GetProperty("bbb").GetIndexElement(1).Set(true);
+            mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(new { cd = "cd" });
+
+            string expected = """
+            {
+                "a": {
+                    "aa": [2, 1]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, true]
+                    }
+                },
+                "c": [null, {"cd": "cd"}, {"cc": "hi"}]
+            }
+            """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchInterleaveArrayChanges()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": {
+                    "aa": [0, 1]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, false]
+                    }
+                },
+                "c": [null, null, {"cc": "hi"}]
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(2);
+            mdoc.RootElement.GetProperty("b").GetProperty("bb").GetProperty("bbb").GetIndexElement(1).Set(true);
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(3);
+            mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(new { cd = "cd" });
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(1).Set(4);
+
+            string expected = """
+            {
+                "a": {
+                    "aa": [3, 4]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, true]
+                    }
+                },
+                "c": [null, {"cd": "cd"}, {"cc": "hi"}]
+            }
+            """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
+        public void CanWritePatchInterleaveParentAndChildArrayChanges()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": {
+                    "aa": [0, 1]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, false]
+                    }
+                },
+                "c": [null, null, {"cc": "hi"}]
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(2);
+            mdoc.RootElement.GetProperty("b").GetProperty("bb").GetProperty("bbb").GetIndexElement(1).Set(true);
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(new int[] { 2, 3 });
+            mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(new { cd = "cd" });
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(1).Set(4);
+
+            string expected = """
+            {
+                "a": {
+                    "aa": [2, 4]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, true]
+                    }
+                },
+                "c": [null, {"cd": "cd"}, {"cc": "hi"}]
+            }
+            """;
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, 'P');
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        [Test]
         public void CanWritePatchReplaceObject()
         {
             string json = """

@@ -1068,8 +1068,10 @@ namespace Azure.Core.Json
             }
         }
 
-        private object GetSerializedValue(object value)
+        private object GetSerializedValue(object? value)
         {
+            // TODO: Handle null
+
             if (value is JsonDocument doc)
             {
                 return doc.RootElement;
