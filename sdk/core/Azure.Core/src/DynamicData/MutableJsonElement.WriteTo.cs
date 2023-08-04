@@ -200,60 +200,32 @@ namespace Azure.Core.Json
                 writer.WritePropertyName(segment);
                 Debug.WriteLine($"** writer: Writing '\"{GetString(segment, 0, segment.Length)}\"' | foreach change");
 
-                if (change.Value.ChangeKind == MutableJsonChangeKind.PropertyRemoval)
+                switch (change.Value.ChangeKind)
                 {
-                    writer.WriteNullValue();
-                    Debug.WriteLine("** writer: Writing 'null' | foreach change");
-                }
-                else if (change.Value.ChangeKind == MutableJsonChangeKind.PropertyAddition)
-                {
-                    patchElement.WriteTo(writer);
-                    Debug.WriteLine($"** writer: Writing '{patchElement}' | foreach change");
-                }
-                else // Update
-                {
-                    if (patchElement.ValueKind != JsonValueKind.Object)
-                    {
+                    case MutableJsonChangeKind.PropertyRemoval:
+                        writer.WriteNullValue();
+                        Debug.WriteLine("** writer: Writing 'null' | foreach change");
+                        break;
+
+                    case MutableJsonChangeKind.PropertyAddition:
                         patchElement.WriteTo(writer);
-                    }
-                    else
-                    {
-                        // If an object has been updated, we need to check whether
-                        // any of its properties were incidentally deleted by not
-                        // being included in the update
-                        bool opened = false;
-                        JsonElement original = GetOriginalFromRoot(patchPath, patchPathLength);
-                        foreach (JsonProperty property in original.EnumerateObject())
+                        Debug.WriteLine($"** writer: Writing '{patchElement}' | foreach change");
+                        break;
+
+                    case MutableJsonChangeKind.PropertyUpdate:
+                        if (patchElement.ValueKind == JsonValueKind.Object)
                         {
-                            if (!patchElement.TryGetProperty(property.Name, out _))
-                            {
-                                if (!opened)
-                                {
-                                    writer.WriteStartObject();
-                                    opened = true;
-                                }
-
-                                writer.WritePropertyName(property.Name);
-                                writer.WriteNullValue();
-                            }
-                        }
-
-                        if (opened)
-                        {
-                            // finish writing out the update values
-                            foreach ((string Name, MutableJsonElement Value) property in patchElement.EnumerateObject())
-                            {
-                                writer.WritePropertyName(property.Name);
-                                property.Value.WriteTo(writer);
-                            }
-
-                            writer.WriteEndObject();
+                            WriteObjectUpdate(writer, patchPath, patchPathLength, patchElement);
                         }
                         else
                         {
                             patchElement.WriteTo(writer);
                         }
-                    }
+                        break;
+
+                    default:
+                        Debug.Assert(false, $"Unknown change kind: '{change.Value.ChangeKind}'");
+                        break;
                 }
 
                 change = _root.Changes.GetNextMergePatchChange(currentPath.Slice(0, currentPathLength));
@@ -434,6 +406,45 @@ namespace Azure.Core.Json
                 start += end + 1;
             }
             while (start < length);
+        }
+
+        private void WriteObjectUpdate(Utf8JsonWriter writer, ReadOnlySpan<char> path, int pathLength, MutableJsonElement patchElement)
+        {
+            // If an object has been updated, we need to check whether
+            // any of its properties were incidentally deleted by not
+            // being included in the update
+            bool opened = false;
+            JsonElement original = GetOriginalFromRoot(path, pathLength);
+            foreach (JsonProperty property in original.EnumerateObject())
+            {
+                if (!patchElement.TryGetProperty(property.Name, out _))
+                {
+                    if (!opened)
+                    {
+                        writer.WriteStartObject();
+                        opened = true;
+                    }
+
+                    writer.WritePropertyName(property.Name);
+                    writer.WriteNullValue();
+                }
+            }
+
+            if (opened)
+            {
+                // finish writing out the update values
+                foreach ((string Name, MutableJsonElement Value) property in patchElement.EnumerateObject())
+                {
+                    writer.WritePropertyName(property.Name);
+                    property.Value.WriteTo(writer);
+                }
+
+                writer.WriteEndObject();
+            }
+            else
+            {
+                patchElement.WriteTo(writer);
+            }
         }
 
         private JsonElement GetOriginalFromRoot(ReadOnlySpan<char> path, int pathLength)
