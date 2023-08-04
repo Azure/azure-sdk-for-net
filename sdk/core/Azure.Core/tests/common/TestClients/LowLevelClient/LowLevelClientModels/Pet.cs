@@ -3,9 +3,7 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Experimental.Tests.Models
 {

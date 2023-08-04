@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 using NUnit.Framework;

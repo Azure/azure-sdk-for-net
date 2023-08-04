@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Serialization;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {

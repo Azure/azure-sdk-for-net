@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Reflection;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Common;
 using Azure.Core.Tests.ResourceManager.Resources;

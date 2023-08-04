@@ -1,16 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
-using System.Text;
-using NUnit.Framework;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
-using Azure.Core.Serialization;
 using System;
-using System.Text.Json;
-using System.Xml;
-using System.Reflection;
+using System.IO;
+using Azure.Core.Serialization;
 using Azure.Core.Tests.Common;
+using Azure.Core.Tests.Public.ModelSerializationTests.Models;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {

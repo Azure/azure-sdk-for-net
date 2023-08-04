@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Serialization;
-using NUnit.Framework;
-using System.Text.Json;
-using System.IO;
-using System.Xml;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
