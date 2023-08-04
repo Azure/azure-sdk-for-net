@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceManagerSku : IUtf8JsonSerializable
+    public partial class ResourcesSku : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WriteEndObject();
         }
 
-        internal static ResourceManagerSku DeserializeResourceManagerSku(JsonElement element)
+        internal static ResourcesSku DeserializeResourcesSku(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Resources.Models
                     continue;
                 }
             }
-            return new ResourceManagerSku(name.Value, tier.Value, size.Value, family.Value, model.Value, Optional.ToNullable(capacity));
+            return new ResourcesSku(name.Value, tier.Value, size.Value, family.Value, model.Value, Optional.ToNullable(capacity));
         }
     }
 }

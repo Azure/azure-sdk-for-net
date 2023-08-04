@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourceManagerSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation)
+        internal GenericResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ArmPlan plan, BinaryData properties, string kind, string managedBy, ResourcesSku sku, ManagedServiceIdentity identity, DateTimeOffset? createdOn, DateTimeOffset? changedOn, string provisioningState) : base(id, name, resourceType, systemData, tags, location, extendedLocation)
         {
             Plan = plan;
             Properties = properties;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> ID of the resource that manages this resource. </summary>
         public string ManagedBy { get; set; }
         /// <summary> The SKU of the resource. </summary>
-        public ResourceManagerSku Sku { get; set; }
+        public ResourcesSku Sku { get; set; }
         /// <summary> The identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The created time of the resource. This is only present if requested via the $expand query parameter. </summary>
