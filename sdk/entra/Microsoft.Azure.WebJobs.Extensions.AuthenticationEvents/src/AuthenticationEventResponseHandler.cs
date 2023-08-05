@@ -6,7 +6,6 @@ using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using System;
 using System.Buffers;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Net.Http;
@@ -69,7 +68,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     AuthenticationEventResponse response = Request.GetResponseObject();
                     if (response == null)
                     {
-                        throw new InvalidOperationException(AuthenticationEventResource.Ex_Missing_Request_Response);
+                        throw new RequestValidationException(AuthenticationEventResource.Ex_Missing_Request_Response);
                     }
 
                     Response = GetActionResult(result, response);
