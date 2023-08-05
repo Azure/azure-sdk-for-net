@@ -15,12 +15,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
     {
         [Test]
         [TestCaseSource(nameof(TestScenarios))]
-        [Ignore("Test needs to be refactored to remove the secret, even though non-impactful.")]
         public void TestRequestCreateInstance(object testObject, string message, bool success, string exceptionMessage)
         {
             string payload = testObject.ToString();
             AuthenticationEventMetadata eventMetadata = AuthenticationEventMetadataLoader.GetEventMetadata(payload);
-            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post,"<< REDACTED: FIX ME >>");
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post,"https://localhost.net/");
 
             if (success == false)
             {
