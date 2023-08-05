@@ -76,6 +76,10 @@ namespace Azure.AI.OpenAI.Samples
 {
         Name = "<Name>",
         FunctionCall = new FunctionCall("<name>", "<arguments>"),
+        AzureExtensionsContext = new AzureChatExtensionsMessageContext()
+{
+            Messages = {},
+        },
     }
             })
             {

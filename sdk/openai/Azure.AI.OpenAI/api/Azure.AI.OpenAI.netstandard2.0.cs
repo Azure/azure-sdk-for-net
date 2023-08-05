@@ -1,5 +1,22 @@
 namespace Azure.AI.OpenAI
 {
+    public partial class AzureChatDataSourceConfiguration
+    {
+        public AzureChatDataSourceConfiguration() { }
+        public AzureChatDataSourceConfiguration(string type, System.BinaryData parameters) { }
+        public System.BinaryData Parameters { get { throw null; } set { } }
+        public string Type { get { throw null; } set { } }
+    }
+    public partial class AzureChatExtensionsMessageContext
+    {
+        public AzureChatExtensionsMessageContext() { }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.ChatMessage> Messages { get { throw null; } }
+    }
+    public partial class AzureChatExtensionsOptions
+    {
+        public AzureChatExtensionsOptions() { }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.AzureChatDataSourceConfiguration> DataSources { get { throw null; } }
+    }
     public static partial class AzureOpenAIModelFactory
     {
         public static Azure.AI.OpenAI.ChatChoice ChatChoice(Azure.AI.OpenAI.ChatMessage message = null, int index = 0, Azure.AI.OpenAI.CompletionsFinishReason finishReason = default(Azure.AI.OpenAI.CompletionsFinishReason), Azure.AI.OpenAI.ChatMessage deltaMessage = null, Azure.AI.OpenAI.ContentFilterResults contentFilterResults = null) { throw null; }
@@ -42,6 +59,7 @@ namespace Azure.AI.OpenAI
     {
         public ChatCompletionsOptions() { }
         public ChatCompletionsOptions(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessage> messages) { }
+        public Azure.AI.OpenAI.AzureChatExtensionsOptions AzureExtensionsOptions { get { throw null; } set { } }
         public int? ChoiceCount { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
         public Azure.AI.OpenAI.FunctionDefinition FunctionCall { get { throw null; } set { } }
@@ -59,6 +77,7 @@ namespace Azure.AI.OpenAI
     {
         public ChatMessage() { }
         public ChatMessage(Azure.AI.OpenAI.ChatRole role, string content) { }
+        public Azure.AI.OpenAI.AzureChatExtensionsMessageContext AzureExtensionsContext { get { throw null; } set { } }
         public string Content { get { throw null; } set { } }
         public Azure.AI.OpenAI.FunctionCall FunctionCall { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
@@ -297,13 +316,14 @@ namespace Azure.AI.OpenAI
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
-        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_07_01_Preview) { }
+        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_08_01_Preview) { }
         public enum ServiceVersion
         {
             V2022_12_01 = 1,
             V2023_05_15 = 2,
             V2023_06_01_Preview = 3,
             V2023_07_01_Preview = 4,
+            V2023_08_01_Preview = 5,
         }
     }
     public partial class PromptFilterResult
