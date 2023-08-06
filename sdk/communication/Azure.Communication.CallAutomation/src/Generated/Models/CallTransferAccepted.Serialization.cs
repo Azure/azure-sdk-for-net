@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class CallTransferAcceptedInternal
+    public partial class CallTransferAccepted
     {
-        internal static CallTransferAcceptedInternal DeserializeCallTransferAcceptedInternal(JsonElement element)
+        internal static CallTransferAccepted DeserializeCallTransferAccepted(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CallTransferAcceptedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value);
+            return new CallTransferAccepted(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value);
         }
     }
 }
