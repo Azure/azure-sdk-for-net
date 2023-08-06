@@ -833,7 +833,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
-        public void SendDtmfCompletedEventParsed_Test()
+        public void SendDtmfTonesCompletedEventParsed_Test()
         {
             SendDtmfTonesCompleted @event = CallAutomationModelFactory.SendDtmfTonesCompleted(
                 callConnectionId: "callConnectionId",
@@ -844,13 +844,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.SendDtmfTonesCompleted");
-            if (parsedEvent is SendDtmfTonesCompleted SendDtmfCompleted)
+            if (parsedEvent is SendDtmfTonesCompleted SendDtmfTonesCompleted)
             {
-                Assert.AreEqual("callConnectionId", SendDtmfCompleted.CallConnectionId);
-                Assert.AreEqual("operationContext", SendDtmfCompleted.OperationContext);
-                Assert.AreEqual("correlationId", SendDtmfCompleted.CorrelationId);
-                Assert.AreEqual("serverCallId", SendDtmfCompleted.ServerCallId);
-                Assert.AreEqual(200, SendDtmfCompleted.ResultInformation?.Code);
+                Assert.AreEqual("callConnectionId", SendDtmfTonesCompleted.CallConnectionId);
+                Assert.AreEqual("operationContext", SendDtmfTonesCompleted.OperationContext);
+                Assert.AreEqual("correlationId", SendDtmfTonesCompleted.CorrelationId);
+                Assert.AreEqual("serverCallId", SendDtmfTonesCompleted.ServerCallId);
+                Assert.AreEqual(200, SendDtmfTonesCompleted.ResultInformation?.Code);
             }
             else
             {

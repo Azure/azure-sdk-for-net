@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The SendDtmfCompleted event.
+    /// The SendDtmfTonesCompleted event.
     /// </summary>
 
     public class SendDtmfTonesCompleted : CallAutomationEventBase

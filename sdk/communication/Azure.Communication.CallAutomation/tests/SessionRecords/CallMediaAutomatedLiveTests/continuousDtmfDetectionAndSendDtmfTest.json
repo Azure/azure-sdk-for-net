@@ -309,7 +309,7 @@
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://sanitized.skype.com/calling/callConnections/421f0700-e1ab-43ed-b470-491d7c034c29:sendDtmf?api-version=2023-06-15-preview",
+      "RequestUri": "https://sanitized.skype.com/calling/callConnections/421f0700-e1ab-43ed-b470-491d7c034c29:sendDtmfTones?api-version=2023-06-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
