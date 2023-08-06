@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// The source caller Id, a phone number, that&apos;s shown to the PSTN participant being invited.
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
         /// Required only when inviting a PSTN participant.
         /// </summary>
         public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }

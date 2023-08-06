@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The call transfer accepted event. </summary>
@@ -22,18 +20,14 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="transferTarget"> Traffer target: the user that transferee will be transferred to. </param>
-        /// <param name="transferee"> Transferee: the participant being transferred away. </param>
-        internal CallTransferAcceptedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel transferTarget, CommunicationIdentifierModel transferee)
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        internal CallTransferAcceptedInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
-            TransferTarget = transferTarget;
-            Transferee = transferee;
         }
 
         /// <summary> Call connection ID. </summary>
@@ -44,11 +38,7 @@ namespace Azure.Communication.CallAutomation
         public string CorrelationId { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; }
-        /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
+        /// <summary> Contains the resulting SIP code, sub-code and message. </summary>
         public ResultInformation ResultInformation { get; }
-        /// <summary> Traffer target: the user that transferee will be transferred to. </summary>
-        public CommunicationIdentifierModel TransferTarget { get; }
-        /// <summary> Transferee: the participant being transferred away. </summary>
-        public CommunicationIdentifierModel Transferee { get; }
     }
 }

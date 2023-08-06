@@ -394,7 +394,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateSendDtmfTonesRequest(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, Guid? repeatabilityRequestID, DateTimeOffset? repeatabilityFirstSent)
+        internal HttpMessage CreateSendDtmfTonesRequest(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -406,14 +406,8 @@ namespace Azure.Communication.CallAutomation
             uri.AppendPath(":sendDtmfTones", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (repeatabilityRequestID != null)
-            {
-                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
-            }
-            if (repeatabilityFirstSent != null)
-            {
-                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent.Value, "R");
-            }
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -425,11 +419,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Send dtmf tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="sendDtmfTonesRequest"> The send dtmf tones request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequest"/> is null. </exception>
-        public async Task<Response<SendDtmfTonesResultInternal>> SendDtmfTonesAsync(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SendDtmfTonesResultInternal>> SendDtmfTonesAsync(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -440,7 +432,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(sendDtmfTonesRequest));
             }
 
-            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -459,11 +451,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Send dtmf tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="sendDtmfTonesRequest"> The send dtmf tones request. </param>
-        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
-        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequest"/> is null. </exception>
-        public Response<SendDtmfTonesResultInternal> SendDtmfTones(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, Guid? repeatabilityRequestID = null, DateTimeOffset? repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
+        public Response<SendDtmfTonesResultInternal> SendDtmfTones(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -474,7 +464,7 @@ namespace Azure.Communication.CallAutomation
                 throw new ArgumentNullException(nameof(sendDtmfTonesRequest));
             }
 
-            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequest, repeatabilityRequestID, repeatabilityFirstSent);
+            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
