@@ -12,6 +12,8 @@ Install the Storage Blobs extension with [NuGet][nuget]:
 dotnet add package Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 ```
 
+For isolated worker process functions, use [Microsoft.Azure.Functions.Worker.Extensions.Storage.Blobs nuget package](https://www.nuget.org/packages/Microsoft.Azure.Functions.Worker.Extensions.Storage.Blobs).
+
 ### Prerequisites
 
 You need an [Azure subscription][azure_sub] and a
