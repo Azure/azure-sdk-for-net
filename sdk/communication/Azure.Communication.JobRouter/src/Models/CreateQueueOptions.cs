@@ -47,6 +47,6 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, Value> Labels { get; } = new Dictionary<string, Value>();
     }
 }

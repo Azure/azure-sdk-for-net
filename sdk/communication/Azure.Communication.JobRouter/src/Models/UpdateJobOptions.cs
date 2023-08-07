@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue?> Labels { get; } = new Dictionary<string, LabelValue?>();
+        public IDictionary<string, Value?> Labels { get; } = new Dictionary<string, Value?>();
 
         /// <summary> Reference to an external parent context, eg. call ID. </summary>
         public string? ChannelReference { get; set; }
@@ -62,7 +62,7 @@ namespace Azure.Communication.JobRouter
         public List<RouterJobNote?> Notes { get; } = new List<RouterJobNote?>();
 
         /// <summary> A set of non-identifying attributes attached to this job. </summary>
-        public IDictionary<string, LabelValue?> Tags { get; } = new Dictionary<string, LabelValue?>();
+        public IDictionary<string, Value?> Tags { get; } = new Dictionary<string, Value?>();
 
         /// <summary>
         /// If provided, will determine how job matching will be carried out.

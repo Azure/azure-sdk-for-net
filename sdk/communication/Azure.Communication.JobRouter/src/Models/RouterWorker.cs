@@ -15,8 +15,8 @@ namespace Azure.Communication.JobRouter.Models
         internal RouterWorker()
         {
             _queueAssignments = new ChangeTrackingDictionary<string, object>();
-            _labels = new ChangeTrackingDictionary<string, object>();
-            _tags = new ChangeTrackingDictionary<string, object>();
+            Labels = new ChangeTrackingDictionary<string, Value>();
+            Tags = new ChangeTrackingDictionary<string, Value>();
             _channelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
             Offers = new ChangeTrackingList<RouterJobOffer>();
             AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
@@ -25,12 +25,14 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        [CodeGenMember("Labels")]
+        public IDictionary<string, Value> Labels { get; }
 
         /// <summary>
         /// A set of non-identifying attributes attached to this worker.
         /// </summary>
-        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        [CodeGenMember("Tags")]
+        public IDictionary<string, Value> Tags { get; }
 
         /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
         public IDictionary<string, ChannelConfiguration> ChannelConfigurations { get; } = new Dictionary<string, ChannelConfiguration>();
@@ -43,48 +45,6 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
         public bool? AvailableForOffers { get; internal set; }
-
-        [CodeGenMember("Labels")]
-        internal IDictionary<string, object> _labels
-        {
-            get
-            {
-                return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
-            }
-            set
-            {
-                if (value != null && value.Count != 0)
-                {
-                    foreach (var label in value)
-                    {
-                        Labels[label.Key] = new LabelValue(label.Value);
-                    }
-                }
-            }
-        }
-
-        [CodeGenMember("Tags")]
-        internal IDictionary<string, object> _tags
-        {
-            get
-            {
-                return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
-            }
-            set
-            {
-                if (value != null && value.Count != 0)
-                {
-                    foreach (var tag in value)
-                    {
-                        Tags[tag.Key] = new LabelValue(tag.Value);
-                    }
-                }
-            }
-        }
 
         [CodeGenMember("ChannelConfigurations")]
         internal IDictionary<string, ChannelConfiguration> _channelConfigurations {

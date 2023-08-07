@@ -10,25 +10,15 @@ namespace Azure.Communication.JobRouter
     [CodeGenSuppress("RouterQueueSelector", typeof(string), typeof(LabelOperator))]
     public partial class RouterQueueSelector
     {
-        [CodeGenMember("Value")]
-        private object _value {
-            get
-            {
-                return Value.Value;
-            }
-            set
-            {
-                Value = new LabelValue(value);
-            } }
-
         /// <summary> The value to compare against the actual label value with the given operator. </summary>
-        public LabelValue Value { get; set; }
+        [CodeGenMember("Value")]
+        public Value Value { get; set; }
 
         /// <summary> Initializes a new instance of QueueSelector. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>
         /// <param name="value"> The value to compare against the actual label value with the given operator. </param>
-        public RouterQueueSelector(string key, LabelOperator labelOperator, LabelValue value)
+        public RouterQueueSelector(string key, LabelOperator labelOperator, Value value)
         {
             Key = key;
             LabelOperator = labelOperator;

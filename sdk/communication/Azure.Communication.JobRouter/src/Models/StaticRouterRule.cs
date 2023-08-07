@@ -13,23 +13,12 @@ namespace Azure.Communication.JobRouter
     public partial class StaticRouterRule : RouterRule
     {
         /// <summary> The static value this rule always returns. </summary>
-        public LabelValue Value { get; set; }
-
         [CodeGenMember("Value")]
-        internal object _value {
-            get
-            {
-                return Value.Value;
-            }
-            set
-            {
-                Value = new LabelValue(value);
-            }
-        }
+        public Value Value { get; set; }
 
         /// <summary> Initializes a new instance of StaticRule. </summary>
         /// <param name="value"> The static value this rule always returns. </param>
-        public StaticRouterRule(LabelValue value) : this(null, value.Value)
+        public StaticRouterRule(Value value) : this(null, value)
         {
         }
     }

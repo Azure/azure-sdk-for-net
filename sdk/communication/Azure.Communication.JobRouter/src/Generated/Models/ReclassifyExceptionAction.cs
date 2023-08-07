@@ -20,7 +20,6 @@ namespace Azure.Communication.JobRouter
         internal ReclassifyExceptionAction(string kind, string classificationPolicyId, IDictionary<string, object> labelsToUpsert) : base(kind)
         {
             ClassificationPolicyId = classificationPolicyId;
-            _labelsToUpsert = labelsToUpsert;
             Kind = kind ?? "reclassify";
         }
 

@@ -9,31 +9,17 @@ namespace Azure.Communication.JobRouter.Models
     [CodeGenModel("RouterQueue")]
     public partial class RouterQueue
     {
-        [CodeGenMember("Labels")]
-        internal IDictionary<string, object> _labels
+        /// <summary> Initializes a new instance of JobQueue. </summary>
+        internal RouterQueue()
         {
-            get
-            {
-                return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
-            }
-            set
-            {
-                if (value != null && value.Count != 0)
-                {
-                    foreach (var label in value)
-                    {
-                        Labels[label.Key] = new LabelValue(label.Value);
-                    }
-                }
-            }
+            Labels = new ChangeTrackingDictionary<string, Value>();
         }
 
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        [CodeGenMember("Labels")]
+        public IDictionary<string, Value> Labels { get; }
 
         /// <summary> The name of this queue. </summary>
         public string Name { get; internal set; }
@@ -43,11 +29,5 @@ namespace Azure.Communication.JobRouter.Models
 
         /// <summary> (Optional) The ID of the exception policy that determines various job escalation rules. </summary>
         public string ExceptionPolicyId { get; internal set; }
-
-        /// <summary> Initializes a new instance of JobQueue. </summary>
-        internal RouterQueue()
-        {
-            _labels = new ChangeTrackingDictionary<string, object>();
-        }
     }
 }
