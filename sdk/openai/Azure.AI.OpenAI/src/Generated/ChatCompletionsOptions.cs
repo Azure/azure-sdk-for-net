@@ -89,7 +89,7 @@ namespace Azure.AI.OpenAI
         ///   The data source configuration entries for Azure OpenAI extensions that use them.
         ///   This configuration information is only compatible with Azure OpenAI.
         /// </param>
-        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName, IList<AzureChatDataSourceConfiguration> internalAzureExtensionsDataSources)
+        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName, IList<AzureChatExtensionConfiguration> internalAzureExtensionsDataSources)
         {
             Messages = messages;
             Functions = functions;

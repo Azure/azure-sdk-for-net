@@ -6,26 +6,31 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary>
-    ///   A representation of configuration data for a single Azure OpenAI data source as used with chat extensions to
-    ///   augment the behavior of a chat completions request. The use of this configuration is compatible only with
-    ///   Azure OpenAI.
+    ///   A representation of configuration data for a single Azure OpenAI chat extension as used by a corresponding chat
+    ///   completions request that should use Azure OpenAI chat extensions to augment its behavior.
+    ///   The use of this configuration is compatible only with Azure OpenAI.
     /// </summary>
-    public partial class AzureChatDataSourceConfiguration
+    public partial class AzureChatExtensionConfiguration
     {
-        /// <summary> Initializes a new instance of AzureChatDataSourceConfiguration. </summary>
-        public AzureChatDataSourceConfiguration()
+        /// <summary> Initializes a new instance of AzureChatExtensionConfiguration. </summary>
+        public AzureChatExtensionConfiguration()
         {
         }
 
-        /// <summary>  The label for the type of an Azure chat extension data source, corresponding to a matching Azure resource. </summary>
+        /// <summary>
+        ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
+        ///   Azure chat extensions are only compatible with Azure OpenAI.
+        /// </summary>
         public string Type { get; set; }
         /// <summary>
-        ///   The configuration payload used for the data source, with structure and payload details specific to the data source
-        ///   being specified.
+        ///   The configuration payload used for the Azure chat extension. The structure payload details are specific to the
+        ///   extension being configured.
+        ///   Azure chat extensions are only compatible with Azure OpenAI.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

@@ -39,8 +39,8 @@ namespace Azure.AI.OpenAI
 
         /// <summary>
         /// Gets chat completions for the provided chat messages.
-        /// This is an Azure-specific version of Chat Completions that supports integration with configured data sources and
-        /// other augmentations to the base Chat Completions capability.
+        /// This is an Azure-specific version of chat completions that supports integration with configured data sources and
+        /// other augmentations to the base chat completions capabilities.
         /// </summary>
         /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
         /// <param name="chatCompletionsOptions">
@@ -64,8 +64,8 @@ namespace Azure.AI.OpenAI
 
         /// <summary>
         /// Gets chat completions for the provided chat messages.
-        /// This is an Azure-specific version of Chat Completions that supports integration with configured data sources and
-        /// other augmentations to the base Chat Completions capability.
+        /// This is an Azure-specific version of chat completions that supports integration with configured data sources and
+        /// other augmentations to the base chat completions capabilities.
         /// </summary>
         /// <param name="deploymentId"> Specifies either the model deployment name (when using Azure OpenAI) or model name (when using non-Azure OpenAI) to use for this request. </param>
         /// <param name="chatCompletionsOptions">
@@ -89,8 +89,8 @@ namespace Azure.AI.OpenAI
 
         /// <summary>
         /// [Protocol Method] Gets chat completions for the provided chat messages.
-        /// This is an Azure-specific version of Chat Completions that supports integration with configured data sources and
-        /// other augmentations to the base Chat Completions capability.
+        /// This is an Azure-specific version of chat completions that supports integration with configured data sources and
+        /// other augmentations to the base chat completions capabilities.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -133,8 +133,8 @@ namespace Azure.AI.OpenAI
 
         /// <summary>
         /// [Protocol Method] Gets chat completions for the provided chat messages.
-        /// This is an Azure-specific version of Chat Completions that supports integration with configured data sources and
-        /// other augmentations to the base Chat Completions capability.
+        /// This is an Azure-specific version of chat completions that supports integration with configured data sources and
+        /// other augmentations to the base chat completions capabilities.
         /// <list type="bullet">
         /// <item>
         /// <description>

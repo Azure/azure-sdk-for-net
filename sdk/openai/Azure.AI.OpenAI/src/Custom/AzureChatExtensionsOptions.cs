@@ -16,18 +16,22 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class AzureChatExtensionsOptions
     {
+        // CUSTOM CODE NOTE: this wrapper type for /extensions/chat/completions data sources is currently "client
+        //                      only" and not yet reflected in the REST wire format. This will likely converge in
+        //                      future versions but for exists outside of code generation.
+
         /// <summary>
         /// Gets the collection of data source configurations to use with Azure OpenAI extensions for chat
         /// completions.
         /// </summary>
-        public IList<AzureChatDataSourceConfiguration> DataSources { get; }
+        public IList<AzureChatExtensionConfiguration> Extensions { get; }
 
         /// <summary>
         /// Instantiates a new instance of AzureChatExtensionsOptions.
         /// </summary>
         public AzureChatExtensionsOptions()
         {
-            DataSources = new List<AzureChatDataSourceConfiguration>();
+            Extensions = new List<AzureChatExtensionConfiguration>();
         }
     }
 }

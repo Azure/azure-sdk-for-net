@@ -20,7 +20,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
 
     [RecordedTest]
     [TestCase(OpenAIClientServiceTarget.Azure)]
-    public async Task WorksWithNoDataSources(OpenAIClientServiceTarget serviceTarget)
+    public async Task StubbedTestForDevelopment(OpenAIClientServiceTarget serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
@@ -37,20 +37,26 @@ public class AzureChatExtensionsTests : OpenAITestBase
             MaxTokens = 512,
             AzureExtensionsOptions = new()
             {
-                //DataSources =
-                //{
-                //    new AzureChatDataSourceConfiguration()
-                //    {
-                //        Type = "TestDataSourceType",
-                //        Parameters = BinaryData.FromObjectAsJson(new
-                //        {
-                //        }),
-                //    }
-                //},
+                Extensions =
+                {
+                    new AzureChatExtensionConfiguration()
+                    {
+                        Type = "TestAzureChatExtensionType",
+                        Parameters = BinaryData.FromObjectAsJson(new
+                        {
+                            SomeProperty = "SomeValue",
+                        },
+                        new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+                    },
+                }
             },
         };
 
         Response<ChatCompletions> response = await client.GetChatCompletionsAsync(deploymentOrModelName, requestOptions);
         Assert.That(response, Is.Not.Null);
+
+        AzureChatExtensionsMessageContext context = response.Value.Choices[0].Message.AzureExtensionsContext;
+        Assert.That(context, Is.Not.Null);
+        Assert.That(context.Messages, Is.Not.Null.Or.Empty);
     }
 }

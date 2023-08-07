@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class AzureChatDataSourceConfiguration : IUtf8JsonSerializable
+    public partial class AzureChatExtensionConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

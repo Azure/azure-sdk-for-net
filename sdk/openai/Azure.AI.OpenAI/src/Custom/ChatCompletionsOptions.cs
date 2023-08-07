@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
 
         // CUSTOM CODE NOTE: the following properties are forward declared here as internal as their behavior is
         //                      otherwise handled in the custom implementation.
-        internal IList<AzureChatDataSourceConfiguration> InternalAzureExtensionsDataSources { get; set; }
+        internal IList<AzureChatExtensionConfiguration> InternalAzureExtensionsDataSources { get; set; }
         internal string InternalNonAzureModelName { get; set; }
         internal bool? InternalShouldStreamResponse { get; set; }
         internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
@@ -110,7 +110,7 @@ namespace Azure.AI.OpenAI
             InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
             StopSequences = new ChangeTrackingList<string>();
             Functions = new ChangeTrackingList<FunctionDefinition>();
-            InternalAzureExtensionsDataSources = new ChangeTrackingList<AzureChatDataSourceConfiguration>();
+            InternalAzureExtensionsDataSources = new ChangeTrackingList<AzureChatExtensionConfiguration>();
             AzureExtensionsOptions = null;
         }
     }

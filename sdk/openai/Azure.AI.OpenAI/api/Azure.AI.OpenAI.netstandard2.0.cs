@@ -1,9 +1,9 @@
 namespace Azure.AI.OpenAI
 {
-    public partial class AzureChatDataSourceConfiguration
+    public partial class AzureChatExtensionConfiguration
     {
-        public AzureChatDataSourceConfiguration() { }
-        public AzureChatDataSourceConfiguration(string type, System.BinaryData parameters) { }
+        public AzureChatExtensionConfiguration() { }
+        public AzureChatExtensionConfiguration(string type, System.BinaryData parameters) { }
         public System.BinaryData Parameters { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
     }
@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     public partial class AzureChatExtensionsOptions
     {
         public AzureChatExtensionsOptions() { }
-        public System.Collections.Generic.IList<Azure.AI.OpenAI.AzureChatDataSourceConfiguration> DataSources { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.AI.OpenAI.AzureChatExtensionConfiguration> Extensions { get { throw null; } }
     }
     public static partial class AzureOpenAIModelFactory
     {

@@ -17,7 +17,7 @@ namespace Azure.AI.OpenAI
             // CUSTOM CODE NOTE: dataSources deserialize directly into the parent options payload.
             writer.WritePropertyName("dataSources");
             writer.WriteStartArray();
-            foreach (AzureChatDataSourceConfiguration dataSource in DataSources)
+            foreach (AzureChatExtensionConfiguration dataSource in Extensions)
             {
                 (dataSource as IUtf8JsonSerializable).Write(writer);
             }
