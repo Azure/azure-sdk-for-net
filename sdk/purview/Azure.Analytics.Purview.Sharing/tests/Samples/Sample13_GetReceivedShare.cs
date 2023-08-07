@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
+using System;
 
 namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 {
@@ -20,16 +21,16 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://my-account-name.purview.azure.com/share";
+            var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
             var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 #else
             var receivedSharesClient = GetReceivedSharesClient();
 #endif
 
 #if SNIPPET
-            Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId");
+            Response operation = await receivedSharesClient.GetReceivedShareAsync("receivedShareId", new());
 #else
-            Response operation = await receivedSharesClient.GetReceivedShareAsync("bb00baac-b768-4004-a712-c5b942dc9e83");
+            Response operation = await receivedSharesClient.GetReceivedShareAsync("11726395-c265-4d91-acc8-7bb2cc650f5c", new());
 #endif
 
 #endregion

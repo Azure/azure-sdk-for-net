@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Updates &apos;tags&apos; and &apos;enabled&apos; fields in an existing Alert rule. This method is used to update the Alert rule tags, and to enable or disable the Alert rule. To update other fields use CreateOrUpdate operation.
+        /// Updates 'tags' and 'enabled' fields in an existing Alert rule. This method is used to update the Alert rule tags, and to enable or disable the Alert rule. To update other fields use CreateOrUpdate operation.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Updates &apos;tags&apos; and &apos;enabled&apos; fields in an existing Alert rule. This method is used to update the Alert rule tags, and to enable or disable the Alert rule. To update other fields use CreateOrUpdate operation.
+        /// Updates 'tags' and 'enabled' fields in an existing Alert rule. This method is used to update the Alert rule tags, and to enable or disable the Alert rule. To update other fields use CreateOrUpdate operation.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

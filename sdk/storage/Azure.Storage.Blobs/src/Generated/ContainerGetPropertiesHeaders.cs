@@ -21,7 +21,7 @@ namespace Azure.Storage.Blobs
             _response = response;
         }
         public IDictionary<string, string> Metadata => _response.Headers.TryGetValue("x-ms-meta-", out IDictionary<string, string> value) ? value : null;
-        /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob&apos;s metadata or properties, changes the last-modified time of the blob. </summary>
+        /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob. </summary>
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> When a blob is leased, specifies whether the lease is of infinite or fixed duration. </summary>
         public LeaseDurationType? LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value.ToLeaseDurationType() : null;
@@ -39,7 +39,7 @@ namespace Azure.Storage.Blobs
         public bool? HasLegalHold => _response.Headers.TryGetValue("x-ms-has-legal-hold", out bool? value) ? value : null;
         /// <summary> The default encryption scope for the container. </summary>
         public string DefaultEncryptionScope => _response.Headers.TryGetValue("x-ms-default-encryption-scope", out string value) ? value : null;
-        /// <summary> Indicates whether the container&apos;s default encryption scope can be overriden. </summary>
+        /// <summary> Indicates whether the container's default encryption scope can be overriden. </summary>
         public bool? DenyEncryptionScopeOverride => _response.Headers.TryGetValue("x-ms-deny-encryption-scope-override", out bool? value) ? value : null;
         /// <summary> Indicates whether version level worm is enabled on a container. </summary>
         public bool? IsImmutableStorageWithVersioningEnabled => _response.Headers.TryGetValue("x-ms-immutable-storage-with-versioning-enabled", out bool? value) ? value : null;

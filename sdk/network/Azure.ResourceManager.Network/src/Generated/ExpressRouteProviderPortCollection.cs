@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq &apos;{state}&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ExpressRouteProviderPortResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteProviderPortResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq &apos;{state}&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ExpressRouteProviderPortResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteProviderPortResource> GetAll(string filter = null, CancellationToken cancellationToken = default)

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Factory&apos;s VSTS repo information. </summary>
+    /// <summary> Factory's VSTS repo information. </summary>
     public partial class FactoryVstsConfiguration : FactoryRepoConfiguration
     {
         /// <summary> Initializes a new instance of FactoryVstsConfiguration. </summary>
@@ -39,9 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="collaborationBranch"> Collaboration branch. </param>
         /// <param name="rootFolder"> Root folder. </param>
         /// <param name="lastCommitId"> Last commit id. </param>
+        /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
         /// <param name="projectName"> VSTS project name. </param>
         /// <param name="tenantId"> VSTS tenant id. </param>
-        internal FactoryVstsConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, string projectName, Guid? tenantId) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId)
+        internal FactoryVstsConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish, string projectName, Guid? tenantId) : base(factoryRepoConfigurationType, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId, disablePublish)
         {
             ProjectName = projectName;
             TenantId = tenantId;

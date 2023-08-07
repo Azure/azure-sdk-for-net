@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail.
+        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing 'SharedKey'. If the Batch account doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail.
+        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing 'SharedKey'. If the Batch account doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail.
+        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing 'SharedKey'. If the Batch account doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -766,7 +766,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail.
+        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing 'SharedKey'. If the Batch account doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

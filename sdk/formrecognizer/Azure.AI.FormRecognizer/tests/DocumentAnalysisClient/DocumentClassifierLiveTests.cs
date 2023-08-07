@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            ValidateIrs1040ClassifierResult(operation.Value);
+            ValidateIrs1040ClassifierResult(operation.Value, classifierId);
         }
 
         [RecordedTest]
@@ -66,7 +66,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            ValidateGenericClassifierResult(operation.Value);
+            ValidateGenericClassifierResult(operation.Value, classifierId);
         }
 
         [RecordedTest]
@@ -82,12 +82,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(operation.HasValue);
 
-            ValidateIrs1040ClassifierResult(operation.Value);
+            ValidateIrs1040ClassifierResult(operation.Value, classifierId);
         }
 
-        private void ValidateGenericClassifierResult(AnalyzeResult analyzeResult)
+        private void ValidateGenericClassifierResult(AnalyzeResult analyzeResult, string expectedClassifierId)
         {
-            Assert.IsNull(analyzeResult.ModelId);
+            Assert.AreEqual(expectedClassifierId, analyzeResult.ModelId);
+
             Assert.IsEmpty(analyzeResult.Content);
             Assert.IsEmpty(analyzeResult.Paragraphs);
             Assert.IsEmpty(analyzeResult.Tables);
@@ -132,9 +133,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
         }
 
-        private void ValidateIrs1040ClassifierResult(AnalyzeResult analyzeResult)
+        private void ValidateIrs1040ClassifierResult(AnalyzeResult analyzeResult, string expectedClassifierId)
         {
-            ValidateGenericClassifierResult(analyzeResult);
+            ValidateGenericClassifierResult(analyzeResult, expectedClassifierId);
 
             Assert.AreEqual(4, analyzeResult.Pages.Count);
 

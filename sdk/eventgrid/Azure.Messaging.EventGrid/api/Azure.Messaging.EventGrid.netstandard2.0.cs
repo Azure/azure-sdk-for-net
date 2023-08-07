@@ -131,7 +131,14 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget ContainerRegistryEventTarget(string mediaType = null, long? size = default(long?), string digest = null, long? length = default(long?), string repository = null, string url = null, string tag = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryImageDeletedEventData ContainerRegistryImageDeletedEventData(string id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest request = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor actor = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource source = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryImagePushedEventData ContainerRegistryImagePushedEventData(string id = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), string action = null, string location = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventTarget target = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventRequest request = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventActor actor = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventSource source = null, Azure.Messaging.EventGrid.SystemEvents.ContainerRegistryEventConnectedRegistry connectedRegistry = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndedEventData ContainerServiceClusterSupportEndedEventData(string kubernetesVersion = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEndingEventData ContainerServiceClusterSupportEndingEventData(string kubernetesVersion = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEventData ContainerServiceClusterSupportEventData(string kubernetesVersion = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNewKubernetesVersionAvailableEventData ContainerServiceNewKubernetesVersionAvailableEventData(string latestSupportedKubernetesVersion = null, string latestStableKubernetesVersion = null, string lowestMinorKubernetesVersion = null, string latestPreviewKubernetesVersion = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingEventData ContainerServiceNodePoolRollingEventData(string nodePoolName = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingFailedEventData ContainerServiceNodePoolRollingFailedEventData(string nodePoolName = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingStartedEventData ContainerServiceNodePoolRollingStartedEventData(string nodePoolName = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingSucceededEventData ContainerServiceNodePoolRollingSucceededEventData(string nodePoolName = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyCompletedEventData DataBoxCopyCompletedEventData(string serialNumber = null, Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName? stageName = default(Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName?), System.DateTimeOffset? stageTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DataBoxCopyStartedEventData DataBoxCopyStartedEventData(string serialNumber = null, Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName? stageName = default(Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName?), System.DateTimeOffset? stageTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.DataBoxOrderCompletedEventData DataBoxOrderCompletedEventData(string serialNumber = null, Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName? stageName = default(Azure.Messaging.EventGrid.SystemEvents.DataBoxStageName?), System.DateTimeOffset? stageTime = default(System.DateTimeOffset?)) { throw null; }
@@ -380,7 +387,12 @@ namespace Azure.Messaging.EventGrid
         public const string ContainerRegistryChartPushed = "Microsoft.ContainerRegistry.ChartPushed";
         public const string ContainerRegistryImageDeleted = "Microsoft.ContainerRegistry.ImageDeleted";
         public const string ContainerRegistryImagePushed = "Microsoft.ContainerRegistry.ImagePushed";
+        public const string ContainerServiceClusterSupportEnded = "Microsoft.ContainerService.ClusterSupportEnded";
+        public const string ContainerServiceClusterSupportEnding = "Microsoft.ContainerService.ClusterSupportEnding";
         public const string ContainerServiceNewKubernetesVersionAvailable = "Microsoft.ContainerService.NewKubernetesVersionAvailable";
+        public const string ContainerServiceNodePoolRollingFailed = "Microsoft.ContainerService.NodePoolRollingFailed";
+        public const string ContainerServiceNodePoolRollingStarted = "Microsoft.ContainerService.NodePoolRollingStarted";
+        public const string ContainerServiceNodePoolRollingSucceeded = "Microsoft.ContainerService.NodePoolRollingSucceeded";
         public const string DataBoxCopyCompleted = "Microsoft.DataBox.CopyCompleted";
         public const string DataBoxCopyStarted = "Microsoft.DataBox.CopyStarted";
         public const string DataBoxOrderCompleted = "Microsoft.DataBox.OrderCompleted";
@@ -1247,6 +1259,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal ContainerRegistryImagePushedEventData() { }
     }
+    public partial class ContainerServiceClusterSupportEndedEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEventData
+    {
+        internal ContainerServiceClusterSupportEndedEventData() { }
+    }
+    public partial class ContainerServiceClusterSupportEndingEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerServiceClusterSupportEventData
+    {
+        internal ContainerServiceClusterSupportEndingEventData() { }
+    }
+    public partial class ContainerServiceClusterSupportEventData
+    {
+        internal ContainerServiceClusterSupportEventData() { }
+        public string KubernetesVersion { get { throw null; } }
+    }
     public partial class ContainerServiceNewKubernetesVersionAvailableEventData
     {
         internal ContainerServiceNewKubernetesVersionAvailableEventData() { }
@@ -1254,6 +1279,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string LatestStableKubernetesVersion { get { throw null; } }
         public string LatestSupportedKubernetesVersion { get { throw null; } }
         public string LowestMinorKubernetesVersion { get { throw null; } }
+    }
+    public partial class ContainerServiceNodePoolRollingEventData
+    {
+        internal ContainerServiceNodePoolRollingEventData() { }
+        public string NodePoolName { get { throw null; } }
+    }
+    public partial class ContainerServiceNodePoolRollingFailedEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingEventData
+    {
+        internal ContainerServiceNodePoolRollingFailedEventData() { }
+    }
+    public partial class ContainerServiceNodePoolRollingStartedEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingEventData
+    {
+        internal ContainerServiceNodePoolRollingStartedEventData() { }
+    }
+    public partial class ContainerServiceNodePoolRollingSucceededEventData : Azure.Messaging.EventGrid.SystemEvents.ContainerServiceNodePoolRollingEventData
+    {
+        internal ContainerServiceNodePoolRollingSucceededEventData() { }
     }
     public partial class DataBoxCopyCompletedEventData
     {

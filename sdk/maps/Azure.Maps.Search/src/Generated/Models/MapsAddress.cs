@@ -37,7 +37,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="countryCode"> Country (Note: This is a two-letter code, not a country name.). </param>
         /// <param name="country"> Country name. </param>
         /// <param name="countryCodeIso3"> ISO alpha-3 country code. </param>
-        /// <param name="freeformAddress"> An address line formatted according to the formatting rules of a Result&apos;s country of origin, or in the case of a country, its full country name. </param>
+        /// <param name="freeformAddress"> An address line formatted according to the formatting rules of a Result's country of origin, or in the case of a country, its full country name. </param>
         /// <param name="countrySubdivisionName"> The full name of a first level of country administrative hierarchy. This field appears only in case countrySubdivision is presented in an abbreviated form. Only supported for USA, Canada, and Great Britain. </param>
         /// <param name="localName"> An address component which represents the name of a geographic area or locality that groups a number of addressable objects for addressing purposes, without being an administrative unit. This field is used to build the `freeformAddress` property. </param>
         /// <param name="boundingBoxInternal"> The bounding box of the location. </param>
@@ -98,7 +98,7 @@ namespace Azure.Maps.Search.Models
         public string CountryCode { get; }
         /// <summary> Country name. </summary>
         public string Country { get; }
-        /// <summary> An address line formatted according to the formatting rules of a Result&apos;s country of origin, or in the case of a country, its full country name. </summary>
+        /// <summary> An address line formatted according to the formatting rules of a Result's country of origin, or in the case of a country, its full country name. </summary>
         public string FreeformAddress { get; }
         /// <summary> The full name of a first level of country administrative hierarchy. This field appears only in case countrySubdivision is presented in an abbreviated form. Only supported for USA, Canada, and Great Britain. </summary>
         public string CountrySubdivisionName { get; }

@@ -14,7 +14,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// A Class representing a ComponentLinkedStorageAccount along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ComponentLinkedStorageAccountResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetComponentLinkedStorageAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetComponentLinkedStorageAccount method.
+    /// Otherwise you can get one from its parent resource <see cref="ApplicationInsightsComponentResource" /> using the GetComponentLinkedStorageAccount method.
     /// </summary>
     public partial class ComponentLinkedStorageAccountResource : ArmResource
     {

@@ -19,10 +19,10 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A Class representing a GlobalRulestackResource along with the instance operations that can be performed on it.
+    /// A Class representing a GlobalRulestack along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GlobalRulestackResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetGlobalRulestackResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetGlobalRulestackResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetGlobalRulestack method.
     /// </summary>
     public partial class GlobalRulestackResource : ArmResource
     {
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _globalRulestackResourceGlobalRulestackClientDiagnostics;
-        private readonly GlobalRulestackRestOperations _globalRulestackResourceGlobalRulestackRestClient;
-        private readonly GlobalRulestackResourceData _data;
+        private readonly ClientDiagnostics _globalRulestackClientDiagnostics;
+        private readonly GlobalRulestackRestOperations _globalRulestackRestClient;
+        private readonly GlobalRulestackData _data;
 
         /// <summary> Initializes a new instance of the <see cref="GlobalRulestackResource"/> class for mocking. </summary>
         protected GlobalRulestackResource()
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <summary> Initializes a new instance of the <see cref = "GlobalRulestackResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GlobalRulestackResource(ArmClient client, GlobalRulestackResourceData data) : this(client, data.Id)
+        internal GlobalRulestackResource(ArmClient client, GlobalRulestackData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GlobalRulestackResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _globalRulestackResourceGlobalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string globalRulestackResourceGlobalRulestackApiVersion);
-            _globalRulestackResourceGlobalRulestackRestClient = new GlobalRulestackRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, globalRulestackResourceGlobalRulestackApiVersion);
+            _globalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string globalRulestackApiVersion);
+            _globalRulestackRestClient = new GlobalRulestackRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, globalRulestackApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual GlobalRulestackResourceData Data
+        public virtual GlobalRulestackData Data
         {
             get
             {
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CertificateObjectGlobalRulestackResources in the GlobalRulestackResource. </summary>
-        /// <returns> An object representing collection of CertificateObjectGlobalRulestackResources and their operations over a CertificateObjectGlobalRulestackResource. </returns>
-        public virtual CertificateObjectGlobalRulestackResourceCollection GetCertificateObjectGlobalRulestackResources()
+        /// <summary> Gets a collection of GlobalRulestackCertificateObjectResources in the GlobalRulestack. </summary>
+        /// <returns> An object representing collection of GlobalRulestackCertificateObjectResources and their operations over a GlobalRulestackCertificateObjectResource. </returns>
+        public virtual GlobalRulestackCertificateObjectCollection GetGlobalRulestackCertificateObjects()
         {
-            return GetCachedClient(Client => new CertificateObjectGlobalRulestackResourceCollection(Client, Id));
+            return GetCachedClient(Client => new GlobalRulestackCertificateObjectCollection(Client, Id));
         }
 
         /// <summary>
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CertificateObjectGlobalRulestackResource>> GetCertificateObjectGlobalRulestackResourceAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GlobalRulestackCertificateObjectResource>> GetGlobalRulestackCertificateObjectAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetCertificateObjectGlobalRulestackResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetGlobalRulestackCertificateObjects().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -136,39 +136,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CertificateObjectGlobalRulestackResource> GetCertificateObjectGlobalRulestackResource(string name, CancellationToken cancellationToken = default)
+        public virtual Response<GlobalRulestackCertificateObjectResource> GetGlobalRulestackCertificateObject(string name, CancellationToken cancellationToken = default)
         {
-            return GetCertificateObjectGlobalRulestackResources().Get(name, cancellationToken);
+            return GetGlobalRulestackCertificateObjects().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FqdnListGlobalRulestackResources in the GlobalRulestackResource. </summary>
-        /// <returns> An object representing collection of FqdnListGlobalRulestackResources and their operations over a FqdnListGlobalRulestackResource. </returns>
-        public virtual FqdnListGlobalRulestackResourceCollection GetFqdnListGlobalRulestackResources()
+        /// <summary> Gets a collection of GlobalRulestackFqdnResources in the GlobalRulestack. </summary>
+        /// <returns> An object representing collection of GlobalRulestackFqdnResources and their operations over a GlobalRulestackFqdnResource. </returns>
+        public virtual GlobalRulestackFqdnCollection GetGlobalRulestackFqdns()
         {
-            return GetCachedClient(Client => new FqdnListGlobalRulestackResourceCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a FqdnListGlobalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>FqdnListGlobalRulestack_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> fqdn list name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<FqdnListGlobalRulestackResource>> GetFqdnListGlobalRulestackResourceAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetFqdnListGlobalRulestackResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new GlobalRulestackFqdnCollection(Client, Id));
         }
 
         /// <summary>
@@ -189,16 +166,39 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FqdnListGlobalRulestackResource> GetFqdnListGlobalRulestackResource(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GlobalRulestackFqdnResource>> GetGlobalRulestackFqdnAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetFqdnListGlobalRulestackResources().Get(name, cancellationToken);
+            return await GetGlobalRulestackFqdns().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of PostRulesResources in the GlobalRulestackResource. </summary>
-        /// <returns> An object representing collection of PostRulesResources and their operations over a PostRulesResource. </returns>
-        public virtual PostRulesResourceCollection GetPostRulesResources()
+        /// <summary>
+        /// Get a FqdnListGlobalRulestackResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/fqdnlists/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FqdnListGlobalRulestack_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> fqdn list name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GlobalRulestackFqdnResource> GetGlobalRulestackFqdn(string name, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new PostRulesResourceCollection(Client, Id));
+            return GetGlobalRulestackFqdns().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PostRulestackRuleResources in the GlobalRulestack. </summary>
+        /// <returns> An object representing collection of PostRulestackRuleResources and their operations over a PostRulestackRuleResource. </returns>
+        public virtual PostRulestackRuleCollection GetPostRulestackRules()
+        {
+            return GetCachedClient(Client => new PostRulestackRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -219,9 +219,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PostRulesResource>> GetPostRulesResourceAsync(string priority, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostRulestackRuleResource>> GetPostRulestackRuleAsync(string priority, CancellationToken cancellationToken = default)
         {
-            return await GetPostRulesResources().GetAsync(priority, cancellationToken).ConfigureAwait(false);
+            return await GetPostRulestackRules().GetAsync(priority, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -242,39 +242,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PostRulesResource> GetPostRulesResource(string priority, CancellationToken cancellationToken = default)
+        public virtual Response<PostRulestackRuleResource> GetPostRulestackRule(string priority, CancellationToken cancellationToken = default)
         {
-            return GetPostRulesResources().Get(priority, cancellationToken);
+            return GetPostRulestackRules().Get(priority, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrefixListGlobalRulestackResources in the GlobalRulestackResource. </summary>
-        /// <returns> An object representing collection of PrefixListGlobalRulestackResources and their operations over a PrefixListGlobalRulestackResource. </returns>
-        public virtual PrefixListGlobalRulestackResourceCollection GetPrefixListGlobalRulestackResources()
+        /// <summary> Gets a collection of GlobalRulestackPrefixResources in the GlobalRulestack. </summary>
+        /// <returns> An object representing collection of GlobalRulestackPrefixResources and their operations over a GlobalRulestackPrefixResource. </returns>
+        public virtual GlobalRulestackPrefixCollection GetGlobalRulestackPrefixes()
         {
-            return GetCachedClient(Client => new PrefixListGlobalRulestackResourceCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a PrefixListGlobalRulestackResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrefixListGlobalRulestack_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> Local Rule priority. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrefixListGlobalRulestackResource>> GetPrefixListGlobalRulestackResourceAsync(string name, CancellationToken cancellationToken = default)
-        {
-            return await GetPrefixListGlobalRulestackResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new GlobalRulestackPrefixCollection(Client, Id));
         }
 
         /// <summary>
@@ -295,16 +272,39 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrefixListGlobalRulestackResource> GetPrefixListGlobalRulestackResource(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GlobalRulestackPrefixResource>> GetGlobalRulestackPrefixAsync(string name, CancellationToken cancellationToken = default)
         {
-            return GetPrefixListGlobalRulestackResources().Get(name, cancellationToken);
+            return await GetGlobalRulestackPrefixes().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of PreRulesResources in the GlobalRulestackResource. </summary>
-        /// <returns> An object representing collection of PreRulesResources and their operations over a PreRulesResource. </returns>
-        public virtual PreRulesResourceCollection GetPreRulesResources()
+        /// <summary>
+        /// Get a PrefixListGlobalRulestackResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/prefixlists/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrefixListGlobalRulestack_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Local Rule priority. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GlobalRulestackPrefixResource> GetGlobalRulestackPrefix(string name, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new PreRulesResourceCollection(Client, Id));
+            return GetGlobalRulestackPrefixes().Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PreRulestackRuleResources in the GlobalRulestack. </summary>
+        /// <returns> An object representing collection of PreRulestackRuleResources and their operations over a PreRulestackRuleResource. </returns>
+        public virtual PreRulestackRuleCollection GetPreRulestackRules()
+        {
+            return GetCachedClient(Client => new PreRulestackRuleCollection(Client, Id));
         }
 
         /// <summary>
@@ -325,9 +325,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PreRulesResource>> GetPreRulesResourceAsync(string priority, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PreRulestackRuleResource>> GetPreRulestackRuleAsync(string priority, CancellationToken cancellationToken = default)
         {
-            return await GetPreRulesResources().GetAsync(priority, cancellationToken).ConfigureAwait(false);
+            return await GetPreRulestackRules().GetAsync(priority, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -348,9 +348,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PreRulesResource> GetPreRulesResource(string priority, CancellationToken cancellationToken = default)
+        public virtual Response<PreRulestackRuleResource> GetPreRulestackRule(string priority, CancellationToken cancellationToken = default)
         {
-            return GetPreRulesResources().Get(priority, cancellationToken);
+            return GetPreRulestackRules().Get(priority, cancellationToken);
         }
 
         /// <summary>
@@ -369,11 +369,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<GlobalRulestackResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Get");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Get");
             scope.Start();
             try
             {
-                var response = await _globalRulestackResourceGlobalRulestackRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _globalRulestackRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
@@ -401,11 +401,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<GlobalRulestackResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Get");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Get");
             scope.Start();
             try
             {
-                var response = _globalRulestackResourceGlobalRulestackRestClient.Get(Id.Name, cancellationToken);
+                var response = _globalRulestackRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
@@ -434,12 +434,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Delete");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Delete");
             scope.Start();
             try
             {
-                var response = await _globalRulestackResourceGlobalRulestackRestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation(_globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, _globalRulestackResourceGlobalRulestackRestClient.CreateDeleteRequest(Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _globalRulestackRestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateDeleteRequest(Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -468,12 +468,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Delete");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Delete");
             scope.Start();
             try
             {
-                var response = _globalRulestackResourceGlobalRulestackRestClient.Delete(Id.Name, cancellationToken);
-                var operation = new NgfwArmOperation(_globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, _globalRulestackResourceGlobalRulestackRestClient.CreateDeleteRequest(Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _globalRulestackRestClient.Delete(Id.Name, cancellationToken);
+                var operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateDeleteRequest(Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -501,15 +501,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<GlobalRulestackResource>> UpdateAsync(GlobalRulestackResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GlobalRulestackResource>> UpdateAsync(GlobalRulestackPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Update");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Update");
             scope.Start();
             try
             {
-                var response = await _globalRulestackResourceGlobalRulestackRestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _globalRulestackRestClient.UpdateAsync(Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -535,15 +535,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<GlobalRulestackResource> Update(GlobalRulestackResourcePatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<GlobalRulestackResource> Update(GlobalRulestackPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Update");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Update");
             scope.Start();
             try
             {
-                var response = _globalRulestackResourceGlobalRulestackRestClient.Update(Id.Name, patch, cancellationToken);
+                var response = _globalRulestackRestClient.Update(Id.Name, patch, cancellationToken);
                 return Response.FromValue(new GlobalRulestackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -570,12 +570,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> CommitAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Commit");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Commit");
             scope.Start();
             try
             {
-                var response = await _globalRulestackResourceGlobalRulestackRestClient.CommitAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NgfwArmOperation(_globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, _globalRulestackResourceGlobalRulestackRestClient.CreateCommitRequest(Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _globalRulestackRestClient.CommitAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateCommitRequest(Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -604,12 +604,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Commit(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Commit");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Commit");
             scope.Start();
             try
             {
-                var response = _globalRulestackResourceGlobalRulestackRestClient.Commit(Id.Name, cancellationToken);
-                var operation = new NgfwArmOperation(_globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, _globalRulestackResourceGlobalRulestackRestClient.CreateCommitRequest(Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _globalRulestackRestClient.Commit(Id.Name, cancellationToken);
+                var operation = new NgfwArmOperation(_globalRulestackClientDiagnostics, Pipeline, _globalRulestackRestClient.CreateCommitRequest(Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -635,13 +635,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Changelog>> GetChangeLogAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RulestackChangelog>> GetChangeLogAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetChangeLog");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetChangeLog");
             scope.Start();
             try
             {
-                var response = await _globalRulestackResourceGlobalRulestackRestClient.GetChangeLogAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _globalRulestackRestClient.GetChangeLogAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -665,13 +665,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Changelog> GetChangeLog(CancellationToken cancellationToken = default)
+        public virtual Response<RulestackChangelog> GetChangeLog(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetChangeLog");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetChangeLog");
             scope.Start();
             try
             {
-                var response = _globalRulestackResourceGlobalRulestackRestClient.GetChangeLog(Id.Name, cancellationToken);
+                var response = _globalRulestackRestClient.GetChangeLog(Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -694,17 +694,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The AdvSecurityObjectTypeEnum to use. </param>
+        /// <param name="type"> The AdvancedSecurityObjectType to use. </param>
         /// <param name="skip"> The String to use. </param>
         /// <param name="top"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AdvSecurityObjectListResponse>> GetAdvancedSecurityObjectsAsync(AdvSecurityObjectTypeEnum type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvancedSecurityObjectListResult>> GetAdvancedSecurityObjectsAsync(AdvancedSecurityObjectType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetAdvancedSecurityObjects");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetAdvancedSecurityObjects");
             scope.Start();
             try
             {
-                var response = await _globalRulestackResourceGlobalRulestackRestClient.ListAdvancedSecurityObjectsAsync(Id.Name, type, skip, top, cancellationToken).ConfigureAwait(false);
+                var response = await _globalRulestackRestClient.ListAdvancedSecurityObjectsAsync(Id.Name, type, skip, top, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -727,17 +727,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The AdvSecurityObjectTypeEnum to use. </param>
+        /// <param name="type"> The AdvancedSecurityObjectType to use. </param>
         /// <param name="skip"> The String to use. </param>
         /// <param name="top"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AdvSecurityObjectListResponse> GetAdvancedSecurityObjects(AdvSecurityObjectTypeEnum type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<AdvancedSecurityObjectListResult> GetAdvancedSecurityObjects(AdvancedSecurityObjectType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetAdvancedSecurityObjects");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetAdvancedSecurityObjects");
             scope.Start();
             try
             {
-                var response = _globalRulestackResourceGlobalRulestackRestClient.ListAdvancedSecurityObjects(Id.Name, type, skip, top, cancellationToken);
+                var response = _globalRulestackRestClient.ListAdvancedSecurityObjects(Id.Name, type, skip, top, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -768,8 +768,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetAppIdsAsync(string appIdVersion = null, string appPrefix = null, string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackResourceGlobalRulestackRestClient.CreateListAppIdsRequest(Id.Name, appIdVersion, appPrefix, skip, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetAppIds", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListAppIdsRequest(Id.Name, appIdVersion, appPrefix, skip, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetAppIds", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -793,8 +793,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetAppIds(string appIdVersion = null, string appPrefix = null, string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackResourceGlobalRulestackRestClient.CreateListAppIdsRequest(Id.Name, appIdVersion, appPrefix, skip, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetAppIds", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListAppIdsRequest(Id.Name, appIdVersion, appPrefix, skip, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetAppIds", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -813,11 +813,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="skip"> The String to use. </param>
         /// <param name="top"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Country" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Country> GetCountriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="RulestackCountry" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RulestackCountry> GetCountriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackResourceGlobalRulestackRestClient.CreateListCountriesRequest(Id.Name, skip, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Country.DeserializeCountry, _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetCountries", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListCountriesRequest(Id.Name, skip, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetCountries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -836,11 +836,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="skip"> The String to use. </param>
         /// <param name="top"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Country" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Country> GetCountries(string skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="RulestackCountry" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RulestackCountry> GetCountries(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackResourceGlobalRulestackRestClient.CreateListCountriesRequest(Id.Name, skip, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, Country.DeserializeCountry, _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetCountries", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListCountriesRequest(Id.Name, skip, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, RulestackCountry.DeserializeRulestackCountry, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetCountries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -860,8 +860,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<string> GetFirewallsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackResourceGlobalRulestackRestClient.CreateListFirewallsRequest(Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetFirewalls", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListFirewallsRequest(Id.Name);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetFirewalls", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -881,8 +881,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<string> GetFirewalls(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackResourceGlobalRulestackRestClient.CreateListFirewallsRequest(Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetFirewalls", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListFirewallsRequest(Id.Name);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetFirewalls", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -904,8 +904,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An async collection of <see cref="PredefinedUrlCategory" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PredefinedUrlCategory> GetPredefinedUrlCategoriesAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackResourceGlobalRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.Name, skip, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.Name, skip, top);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -927,8 +927,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> A collection of <see cref="PredefinedUrlCategory" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PredefinedUrlCategory> GetPredefinedUrlCategories(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackResourceGlobalRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.Name, skip, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _globalRulestackResourceGlobalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _globalRulestackRestClient.CreateListPredefinedUrlCategoriesRequest(Id.Name, skip, top);
+            return PageableHelpers.CreatePageable(FirstPageRequest, null, PredefinedUrlCategory.DeserializePredefinedUrlCategory, _globalRulestackClientDiagnostics, Pipeline, "GlobalRulestackResource.GetPredefinedUrlCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -944,17 +944,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The SecurityServicesTypeEnum to use. </param>
+        /// <param name="type"> The RulestackSecurityServiceType to use. </param>
         /// <param name="skip"> The String to use. </param>
         /// <param name="top"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecurityServicesResponse>> GetSecurityServicesAsync(SecurityServicesTypeEnum type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RulestackSecurityServiceListResult>> GetSecurityServicesAsync(RulestackSecurityServiceType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetSecurityServices");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetSecurityServices");
             scope.Start();
             try
             {
-                var response = await _globalRulestackResourceGlobalRulestackRestClient.ListSecurityServicesAsync(Id.Name, type, skip, top, cancellationToken).ConfigureAwait(false);
+                var response = await _globalRulestackRestClient.ListSecurityServicesAsync(Id.Name, type, skip, top, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -977,17 +977,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The SecurityServicesTypeEnum to use. </param>
+        /// <param name="type"> The RulestackSecurityServiceType to use. </param>
         /// <param name="skip"> The String to use. </param>
         /// <param name="top"> The Integer to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecurityServicesResponse> GetSecurityServices(SecurityServicesTypeEnum type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual Response<RulestackSecurityServiceListResult> GetSecurityServices(RulestackSecurityServiceType type, string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetSecurityServices");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.GetSecurityServices");
             scope.Start();
             try
             {
-                var response = _globalRulestackResourceGlobalRulestackRestClient.ListSecurityServices(Id.Name, type, skip, top, cancellationToken);
+                var response = _globalRulestackRestClient.ListSecurityServices(Id.Name, type, skip, top, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1013,11 +1013,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RevertAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Revert");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Revert");
             scope.Start();
             try
             {
-                var response = await _globalRulestackResourceGlobalRulestackRestClient.RevertAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _globalRulestackRestClient.RevertAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1043,11 +1043,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Revert(CancellationToken cancellationToken = default)
         {
-            using var scope = _globalRulestackResourceGlobalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Revert");
+            using var scope = _globalRulestackClientDiagnostics.CreateScope("GlobalRulestackResource.Revert");
             scope.Start();
             try
             {
-                var response = _globalRulestackResourceGlobalRulestackRestClient.Revert(Id.Name, cancellationToken);
+                var response = _globalRulestackRestClient.Revert(Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

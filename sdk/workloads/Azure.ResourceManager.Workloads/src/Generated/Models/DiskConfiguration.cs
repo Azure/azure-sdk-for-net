@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of DiskConfiguration. </summary>
-        /// <param name="diskVolumeConfigurations"> The disk configuration for the db volume. For HANA, Required volumes are: [&apos;hana/data&apos;, &apos;hana/log&apos;, hana/shared&apos;, &apos;usr/sap&apos;, &apos;os&apos;], Optional volume : [&apos;backup&apos;]. </param>
+        /// <param name="diskVolumeConfigurations"> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </param>
         internal DiskConfiguration(IDictionary<string, DiskVolumeConfiguration> diskVolumeConfigurations)
         {
             DiskVolumeConfigurations = diskVolumeConfigurations;
         }
 
-        /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: [&apos;hana/data&apos;, &apos;hana/log&apos;, hana/shared&apos;, &apos;usr/sap&apos;, &apos;os&apos;], Optional volume : [&apos;backup&apos;]. </summary>
+        /// <summary> The disk configuration for the db volume. For HANA, Required volumes are: ['hana/data', 'hana/log', hana/shared', 'usr/sap', 'os'], Optional volume : ['backup']. </summary>
         public IDictionary<string, DiskVolumeConfiguration> DiskVolumeConfigurations { get; }
     }
 }

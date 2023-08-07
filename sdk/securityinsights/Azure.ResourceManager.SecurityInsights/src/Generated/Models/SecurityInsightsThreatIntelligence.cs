@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="providerName"> Name of the provider from whom this Threat Intelligence information was received. </param>
         /// <param name="reportLink"> Report link. </param>
         /// <param name="threatDescription"> Threat description (free text). </param>
-        /// <param name="threatName"> Threat name (e.g. &quot;Jedobot malware&quot;). </param>
-        /// <param name="threatType"> Threat type (e.g. &quot;Botnet&quot;). </param>
+        /// <param name="threatName"> Threat name (e.g. "Jedobot malware"). </param>
+        /// <param name="threatType"> Threat type (e.g. "Botnet"). </param>
         internal SecurityInsightsThreatIntelligence(double? confidence, string providerName, string reportLink, string threatDescription, string threatName, string threatType)
         {
             Confidence = confidence;
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string ReportLink { get; }
         /// <summary> Threat description (free text). </summary>
         public string ThreatDescription { get; }
-        /// <summary> Threat name (e.g. &quot;Jedobot malware&quot;). </summary>
+        /// <summary> Threat name (e.g. "Jedobot malware"). </summary>
         public string ThreatName { get; }
-        /// <summary> Threat type (e.g. &quot;Botnet&quot;). </summary>
+        /// <summary> Threat type (e.g. "Botnet"). </summary>
         public string ThreatType { get; }
     }
 }

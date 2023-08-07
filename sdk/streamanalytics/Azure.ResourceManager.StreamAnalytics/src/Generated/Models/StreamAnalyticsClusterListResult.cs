@@ -11,7 +11,7 @@ using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> A list of clusters populated by a &apos;list&apos; operation. </summary>
+    /// <summary> A list of clusters populated by a 'list' operation. </summary>
     internal partial class StreamAnalyticsClusterListResult
     {
         /// <summary> Initializes a new instance of StreamAnalyticsClusterListResult. </summary>

@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="policyId"> ARM ID of the policy. </param>
         /// <param name="policyName"> Name of the policy. </param>
         /// <param name="isProgressEnabled"> Indicated whether progress is enabled for the job. </param>
-        /// <param name="progressUri"> Url which contains job&apos;s progress. </param>
+        /// <param name="progressUri"> Url which contains job's progress. </param>
         /// <param name="restoreType"> It indicates the sub type of operation i.e. in case of Restore it can be ALR/OLR. </param>
         /// <param name="sourceResourceGroup"> Resource Group Name of the Datasource. </param>
         /// <param name="sourceSubscriptionId"> SubscriptionId corresponding to the DataSource. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string PolicyName { get; }
         /// <summary> Indicated whether progress is enabled for the job. </summary>
         public bool IsProgressEnabled { get; set; }
-        /// <summary> Url which contains job&apos;s progress. </summary>
+        /// <summary> Url which contains job's progress. </summary>
         public Uri ProgressUri { get; }
         /// <summary> It indicates the sub type of operation i.e. in case of Restore it can be ALR/OLR. </summary>
         public string RestoreType { get; }

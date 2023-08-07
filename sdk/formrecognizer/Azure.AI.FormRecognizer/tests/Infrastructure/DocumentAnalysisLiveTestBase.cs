@@ -127,8 +127,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
                 ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
                 ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
-                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrl,
-                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrl,
                 _ => TestEnvironment.BlobContainerSasUrl,
             };
             var trainingFilesUri = new Uri(trainingFiles);
@@ -169,9 +167,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             Singleforms,
             MultipageFiles,
-            SelectionMarks,
-            TableVariableRows,
-            TableFixedRows
+            SelectionMarks
         }
     }
 }

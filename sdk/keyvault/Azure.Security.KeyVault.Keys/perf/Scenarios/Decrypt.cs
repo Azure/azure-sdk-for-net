@@ -38,21 +38,11 @@ namespace Azure.Security.KeyVault.Keys.Perf.Scenarios
         public override void Run(CancellationToken cancellationToken)
         {
             DecryptResult result = CryptographyClient.Decrypt(s_algorithm, _ciphertext);
-            byte[] plaintext = result.Plaintext;
-
-#if DEBUG
-            Assert.AreEqual(_plaintext, plaintext);
-#endif
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             DecryptResult result = await CryptographyClient.DecryptAsync(s_algorithm, _ciphertext);
-            byte[] plaintext = result.Plaintext;
-
-#if DEBUG
-            Assert.AreEqual(_plaintext, plaintext);
-#endif
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a list of the logical database&apos;s transparent data encryption. </summary>
+        /// <summary> Gets a list of the logical database's transparent data encryption. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of the logical database&apos;s transparent data encryption. </summary>
+        /// <summary> Gets a list of the logical database's transparent data encryption. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a logical database&apos;s transparent data encryption. </summary>
+        /// <summary> Gets a logical database's transparent data encryption. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a logical database&apos;s transparent data encryption. </summary>
+        /// <summary> Gets a logical database's transparent data encryption. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Updates a logical database&apos;s transparent data encryption configuration. </summary>
+        /// <summary> Updates a logical database's transparent data encryption configuration. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Updates a logical database&apos;s transparent data encryption configuration. </summary>
+        /// <summary> Updates a logical database's transparent data encryption configuration. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a list of the logical database&apos;s transparent data encryption. </summary>
+        /// <summary> Gets a list of the logical database's transparent data encryption. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of the logical database&apos;s transparent data encryption. </summary>
+        /// <summary> Gets a list of the logical database's transparent data encryption. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>

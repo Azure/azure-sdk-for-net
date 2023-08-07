@@ -110,7 +110,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with &apos;key&apos; and &apos;label&apos; filters. </param>
+        /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with 'key' and 'label' filters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -146,7 +146,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with &apos;key&apos; and &apos;label&apos; filters. </param>
+        /// <param name="snapshot"> A filter used get key-values for a snapshot. Not valid when used with 'key' and 'label' filters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -179,7 +179,7 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key"> The key of the key-value to create. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/*+json&quot; | &quot;application/json&quot; | &quot;application/json-patch+json&quot; | &quot;application/vnd.microsoft.appconfig.kv+json&quot; | &quot;application/vnd.microsoft.appconfig.kvset+json&quot; | &quot;text/json&quot;. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/*+json" | "application/json" | "application/json-patch+json" | "application/vnd.microsoft.appconfig.kv+json" | "application/vnd.microsoft.appconfig.kvset+json" | "text/json". </param>
         /// <param name="label"> The label of the key-value to create. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -218,7 +218,7 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key"> The key of the key-value to create. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/*+json&quot; | &quot;application/json&quot; | &quot;application/json-patch+json&quot; | &quot;application/vnd.microsoft.appconfig.kv+json&quot; | &quot;application/vnd.microsoft.appconfig.kvset+json&quot; | &quot;text/json&quot;. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/*+json" | "application/json" | "application/json-patch+json" | "application/vnd.microsoft.appconfig.kv+json" | "application/vnd.microsoft.appconfig.kvset+json" | "text/json". </param>
         /// <param name="label"> The label of the key-value to create. </param>
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -950,7 +950,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="snapshot"> A filter used get key-values for a snapshot. The value should be the name of the snapshot. Not valid when used with &apos;key&apos; and &apos;label&apos; filters. </param>
+        /// <param name="snapshot"> A filter used get key-values for a snapshot. The value should be the name of the snapshot. Not valid when used with 'key' and 'label' filters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -977,7 +977,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="after"> Instructs the server to return elements that appear after the element referred to by the specified token. </param>
         /// <param name="acceptDatetime"> Requests the server to respond with the state of the resource at the specified time. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="snapshot"> A filter used get key-values for a snapshot. The value should be the name of the snapshot. Not valid when used with &apos;key&apos; and &apos;label&apos; filters. </param>
+        /// <param name="snapshot"> A filter used get key-values for a snapshot. The value should be the name of the snapshot. Not valid when used with 'key' and 'label' filters. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -1104,7 +1104,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the key-value snapshot to create. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;application/vnd.microsoft.appconfig.snapshot+json&quot;. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/json" | "application/vnd.microsoft.appconfig.snapshot+json". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1143,7 +1143,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the key-value snapshot to create. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Body Parameter content-type. Allowed values: &quot;application/json&quot; | &quot;application/vnd.microsoft.appconfig.snapshot+json&quot;. </param>
+        /// <param name="contentType"> Body Parameter content-type. Allowed values: "application/json" | "application/vnd.microsoft.appconfig.snapshot+json". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1187,6 +1187,7 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQuery("After", after, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1195,7 +1196,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
             return message;
         }
 
@@ -1258,6 +1258,7 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQuery("snapshot", snapshot, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1266,7 +1267,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 
@@ -1330,6 +1330,7 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1338,7 +1339,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1361,11 +1361,11 @@ namespace Azure.Data.AppConfiguration
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1390,11 +1390,11 @@ namespace Azure.Data.AppConfiguration
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (ifMatch != null)
             {
                 request.Headers.Add("If-Match", ifMatch.Value);
@@ -1462,11 +1462,11 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQueryDelimited("Status", status, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
             return message;
         }
 
@@ -1506,11 +1506,11 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1529,11 +1529,11 @@ namespace Azure.Data.AppConfiguration
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             request.Headers.Add("Content-Type", contentType.ToString());
             request.Content = content;
             return message;
@@ -1550,11 +1550,11 @@ namespace Azure.Data.AppConfiguration
             uri.AppendPath(name, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshot+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1608,6 +1608,7 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1616,7 +1617,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
             return message;
         }
 
@@ -1668,11 +1668,11 @@ namespace Azure.Data.AppConfiguration
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1695,11 +1695,11 @@ namespace Azure.Data.AppConfiguration
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kv+json, application/problem+json");
             if (matchConditions != null)
             {
                 request.Headers.Add(matchConditions);
@@ -1733,6 +1733,7 @@ namespace Azure.Data.AppConfiguration
                 uri.AppendQueryDelimited("$Select", select, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1741,7 +1742,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 
@@ -1806,6 +1806,7 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1814,7 +1815,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.keyset+json, application/problem+json");
             return message;
         }
 
@@ -1827,6 +1827,7 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1835,7 +1836,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 
@@ -1848,11 +1848,11 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.snapshotset+json, application/problem+json");
             return message;
         }
 
@@ -1865,6 +1865,7 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1873,7 +1874,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.labelset+json, application/problem+json");
             return message;
         }
 
@@ -1886,6 +1886,7 @@ namespace Azure.Data.AppConfiguration
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             if (_syncToken != null)
             {
                 request.Headers.Add("Sync-Token", _syncToken);
@@ -1894,7 +1895,6 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.Add("Accept-Datetime", acceptDatetime);
             }
-            request.Headers.Add("Accept", "application/vnd.microsoft.appconfig.kvset+json, application/problem+json");
             return message;
         }
 

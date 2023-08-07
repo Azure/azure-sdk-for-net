@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DevCenter.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DisabledValue = "Disabled";
-        private const string EnabledValue = "Enabled";
+        private const string IsDisabledValue = "Disabled";
+        private const string IsEnabledValue = "Enabled";
 
         /// <summary> Disabled. </summary>
-        public static LocalAdminStatus Disabled { get; } = new LocalAdminStatus(DisabledValue);
+        public static LocalAdminStatus IsDisabled { get; } = new LocalAdminStatus(IsDisabledValue);
         /// <summary> Enabled. </summary>
-        public static LocalAdminStatus Enabled { get; } = new LocalAdminStatus(EnabledValue);
+        public static LocalAdminStatus IsEnabled { get; } = new LocalAdminStatus(IsEnabledValue);
         /// <summary> Determines if two <see cref="LocalAdminStatus"/> values are the same. </summary>
         public static bool operator ==(LocalAdminStatus left, LocalAdminStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LocalAdminStatus"/> values are not the same. </summary>

@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Automanage
         }
 
         /// <summary>
-        /// Retrieve a list of configuration profile version for a configuration profile 
+        /// Retrieve a list of configuration profile version for a configuration profile
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Automanage
         }
 
         /// <summary>
-        /// Retrieve a list of configuration profile version for a configuration profile 
+        /// Retrieve a list of configuration profile version for a configuration profile
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

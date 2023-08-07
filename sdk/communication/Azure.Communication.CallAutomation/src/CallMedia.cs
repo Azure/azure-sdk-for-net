@@ -685,10 +685,9 @@ namespace Azure.Communication.CallAutomation
                     OperationContext = operationContext
                 };
 
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-
-                var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
+                var response = await CallMediaRestClient.SendDtmfTonesAsync(CallConnectionId,
+                    request,
+                    cancellationToken).ConfigureAwait(false);
 
                 var result = new SendDtmfTonesResult(response.Value.OperationContext);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
@@ -722,10 +721,9 @@ namespace Azure.Communication.CallAutomation
                     OperationContext = operationContext
                 };
 
-                var repeatabilityHeaders = new RepeatabilityHeaders();
-
-                var response = CallMediaRestClient.SendDtmfTones(CallConnectionId, request, repeatabilityHeaders.RepeatabilityRequestId,
-                    repeatabilityHeaders.RepeatabilityFirstSent, cancellationToken);
+                var response = CallMediaRestClient.SendDtmfTones(CallConnectionId,
+                    request,
+                    cancellationToken);
 
                 var result = new SendDtmfTonesResult(response.Value.OperationContext);
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);

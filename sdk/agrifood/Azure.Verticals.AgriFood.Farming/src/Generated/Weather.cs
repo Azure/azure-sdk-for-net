@@ -66,7 +66,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Weather.xml" path="doc/members/member[@name='GetDataDeleteJobDetailsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetDataDeleteJobDetailsAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -101,7 +101,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Weather.xml" path="doc/members/member[@name='GetDataDeleteJobDetails(string,RequestContext)']/*" />
-        public virtual Response GetDataDeleteJobDetails(string jobId, RequestContext context = null)
+        public virtual Response GetDataDeleteJobDetails(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -136,7 +136,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Weather.xml" path="doc/members/member[@name='GetDataIngestionJobDetailsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestContext context = null)
+        public virtual async Task<Response> GetDataIngestionJobDetailsAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -171,7 +171,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Weather.xml" path="doc/members/member[@name='GetDataIngestionJobDetails(string,RequestContext)']/*" />
-        public virtual Response GetDataIngestionJobDetails(string jobId, RequestContext context = null)
+        public virtual Response GetDataIngestionJobDetails(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
@@ -216,7 +216,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Weather.xml" path="doc/members/member[@name='GetWeathersAsync(string,string,string,string,string,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetWeathersAsync(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetWeathersAsync(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));
@@ -256,7 +256,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/Weather.xml" path="doc/members/member[@name='GetWeathers(string,string,string,string,string,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetWeathers(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, int? maxPageSize = null, string skipToken = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetWeathers(string partyId, string boundaryId, string extensionId, string weatherDataType, string granularity, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, int? maxPageSize, string skipToken, RequestContext context)
         {
             Argument.AssertNotNull(partyId, nameof(partyId));
             Argument.AssertNotNull(boundaryId, nameof(boundaryId));

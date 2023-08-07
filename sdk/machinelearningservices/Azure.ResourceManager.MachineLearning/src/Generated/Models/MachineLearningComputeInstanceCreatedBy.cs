@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceCreatedBy. </summary>
         /// <param name="userName"> Name of the user. </param>
-        /// <param name="userOrgId"> Uniquely identifies user&apos; Azure Active Directory organization. </param>
+        /// <param name="userOrgId"> Uniquely identifies user' Azure Active Directory organization. </param>
         /// <param name="userId"> Uniquely identifies the user within his/her organization. </param>
         internal MachineLearningComputeInstanceCreatedBy(string userName, string userOrgId, string userId)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Name of the user. </summary>
         public string UserName { get; }
-        /// <summary> Uniquely identifies user&apos; Azure Active Directory organization. </summary>
+        /// <summary> Uniquely identifies user' Azure Active Directory organization. </summary>
         public string UserOrgId { get; }
         /// <summary> Uniquely identifies the user within his/her organization. </summary>
         public string UserId { get; }

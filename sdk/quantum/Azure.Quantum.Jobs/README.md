@@ -52,7 +52,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -68,11 +68,11 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 Create an instance of the QuantumJobClient by passing in these parameters:
 - [Subscription][subscriptions] - looks like XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX and can be found in your list of subscriptions on azure
-- [Resource Group][resource-groups] - a container that holds related resources for an Azure solution 
+- [Resource Group][resource-groups] - a container that holds related resources for an Azure solution
 - [Workspace][workspaces] - a collection of assets associated with running quantum or optimization applications
-- [Location][location] - choose the best data center by geographical region 
-- [StorageContainerName][blob-storage] - your blob storage 
-- [Credential][credentials] - used to authenticate 
+- [Location][location] - choose the best data center by geographical region
+- [StorageContainerName][blob-storage] - your blob storage
+- [Credential][credentials] - used to authenticate
 
 ```C# Snippet:Azure_Quantum_Jobs_CreateClient
 // Create a QuantumJobClient

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter.Models
 {
-    /// <summary> The state of the Job. </summary>
+    /// <summary> The status of the Job. </summary>
     public readonly partial struct RouterJobStatus : IEquatable<RouterJobStatus>
     {
         private readonly string _value;

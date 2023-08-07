@@ -108,15 +108,9 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
                 return;
             }
             FrontendCollection frontends = GetFrontends(tc);
-            if (Mode == RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
-                    PublicIPAddressResource pip = publicIPAddresses.GetAsync(pipName).Result;
-                    await pip.DeleteAsync(WaitUntil.Started);
-                }
-            }
+            PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
+            PublicIPAddressResource pip = publicIPAddresses.GetAsync(pipName).Result;
+            await pip.DeleteAsync(WaitUntil.Started);
         }
 
         private async Task<ArmOperation<AssociationResource>> CreateAssociationAsync(string resourceGroup, string associationName, TrafficControllerResource tc, string location)
@@ -186,18 +180,12 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             }
             AssociationCollection associations = GetAssociations(tc);
 
-            if (Mode==RecordedTestMode.Record)
-            {
-                using (Recording.DisableRecording())
-                {
-                    VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
-                    VirtualNetworkResource vnet = vnets.GetAsync(vnetName).Result;
+            VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
+            VirtualNetworkResource vnet = vnets.GetAsync(vnetName).Result;
 
-                    SubnetResource subnet = vnet.GetSubnetAsync(subnetName).Result;
-                    await subnet.DeleteAsync(WaitUntil.Started);
-                    await vnet.DeleteAsync(WaitUntil.Started);
-                }
-            }
+            SubnetResource subnet = vnet.GetSubnetAsync(subnetName).Result;
+            await subnet.DeleteAsync(WaitUntil.Started);
+            await vnet.DeleteAsync(WaitUntil.Started);
         }
 
         private async Task DeleteAssociation(AssociationResource association)

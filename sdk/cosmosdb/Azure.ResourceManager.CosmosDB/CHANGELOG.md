@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -10,12 +10,32 @@
 
 ### Other Changes
 
-## 1.4.0-beta.1 (2023-04-28)
+## 1.4.0-beta.3 (2023-07-31)
+
+### Features Added
+ - Updated Microsoft.DocumentDB RP API version to `2023-03-15-preview`
+ - Adds support for Database partition merge operation.
+ - Adds support for Materialized view in Collections.
+## 1.4.0-beta.2 (2023-05-29)
 
 ### Features Added
 
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Bugs Fixed
+
+- Fixed an issue that `System.UriFormatException` is thrown when `Uri` type field is empty during serialization of `CosmosDBAccountData`.
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.4.0-beta.1 (2023-04-28)
+### Features Added
+
 - Updated Microsoft.DocumentDB RP API version to `2022-11-15-preview`
-- Added support for restoring deleted table and gremlin resources within the same account 
+- Added support for restoring deleted table and gremlin resources within the same account
 - Added support for cross region restore
 - Added support for enabling burst capacity of the CosmosDB account
 

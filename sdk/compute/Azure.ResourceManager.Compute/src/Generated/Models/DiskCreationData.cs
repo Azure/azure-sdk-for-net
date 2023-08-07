@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Compute.Models
     public partial class DiskCreationData
     {
         /// <summary> Initializes a new instance of DiskCreationData. </summary>
-        /// <param name="createOption"> This enumerates the possible sources of a disk&apos;s creation. </param>
+        /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         public DiskCreationData(DiskCreateOption createOption)
         {
             CreateOption = createOption;
         }
 
         /// <summary> Initializes a new instance of DiskCreationData. </summary>
-        /// <param name="createOption"> This enumerates the possible sources of a disk&apos;s creation. </param>
+        /// <param name="createOption"> This enumerates the possible sources of a disk's creation. </param>
         /// <param name="storageAccountId"> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </param>
         /// <param name="imageReference"> Disk source information for PIR or user images. </param>
         /// <param name="galleryImageReference"> Required if creating from a Gallery Image. The id/sharedGalleryImageId/communityGalleryImageId of the ImageDiskReference will be the ARM id of the shared galley image version from which to create a disk. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
             IsPerformancePlusEnabled = isPerformancePlusEnabled;
         }
 
-        /// <summary> This enumerates the possible sources of a disk&apos;s creation. </summary>
+        /// <summary> This enumerates the possible sources of a disk's creation. </summary>
         public DiskCreateOption CreateOption { get; set; }
         /// <summary> Required if createOption is Import. The Azure Resource Manager identifier of the storage account containing the blob to import as a disk. </summary>
         public ResourceIdentifier StorageAccountId { get; set; }

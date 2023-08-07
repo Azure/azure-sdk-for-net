@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Storage.Models
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </summary>
         public AllowedCopyScope? AllowedCopyScope { get; set; }
-        /// <summary> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Allow or disallow public network access to Storage Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public StoragePublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> SasPolicy assigned to the storage account. </summary>
         public StorageAccountSasPolicy SasPolicy { get; set; }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageAccountEncryption Encryption { get; set; }
         /// <summary> Network rule set. </summary>
         public StorageAccountNetworkRuleSet NetworkRuleSet { get; set; }
-        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The &apos;Premium&apos; access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
+        /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
         public StorageAccountAccessTier? AccessTier { get; set; }
         /// <summary> Provides the identity based authentication settings for Azure Files. </summary>
         public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get; set; }

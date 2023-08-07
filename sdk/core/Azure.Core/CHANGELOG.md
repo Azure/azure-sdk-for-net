@@ -1,6 +1,6 @@
 # Release History
 
-## 1.33.0-beta.1 (Unreleased)
+## 1.35.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.34.0 (2023-07-11)
+
+### Features Added
+
+- Added `IsCaeEnabled` property to `TokenRequestContext` to enabled per-request support for Continuous Access Evaluation
+- Updated dependency on System.Diagnostics.DiagnosticSource
+- Added `ContentLengthLong` property to `ResponseHeaders`
+
+## 1.33.0 (2023-06-16)
+
+### Features Added
+
+- Added `BinaryData.ToDynamicFromJson()` extension method to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamiccontent](https://aka.ms/azsdk/net/dynamiccontent) for further details.
+
+### Other Changes
+
+- Client redirects are now disabled by default and can be enabled by setting providing a custom transport in `ClientOptions'. Client Authors can also enable redirects by setting `HttpPipelineTransportOptions.IsClientRedirectEnabled` to `true` on the transport options passed to `HttpPipelineBuilder.Build`.
 
 ## 1.32.0 (2023-05-09)
 

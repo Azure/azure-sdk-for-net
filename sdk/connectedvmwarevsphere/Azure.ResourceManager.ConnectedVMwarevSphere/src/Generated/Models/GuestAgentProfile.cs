@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         }
 
         /// <summary> Initializes a new instance of GuestAgentProfile. </summary>
-        /// <param name="vmUuid"> Specifies the VM&apos;s unique SMBIOS ID. </param>
+        /// <param name="vmUuid"> Specifies the VM's unique SMBIOS ID. </param>
         /// <param name="status"> The status of the hybrid machine agent. </param>
         /// <param name="lastStatusChange"> The time of the last status change. </param>
         /// <param name="agentVersion"> The hybrid machine agent full version. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             ErrorDetails = errorDetails;
         }
 
-        /// <summary> Specifies the VM&apos;s unique SMBIOS ID. </summary>
+        /// <summary> Specifies the VM's unique SMBIOS ID. </summary>
         public string VmUuid { get; }
         /// <summary> The status of the hybrid machine agent. </summary>
         public StatusType? Status { get; }

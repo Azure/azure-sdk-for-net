@@ -222,6 +222,11 @@
     <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
+  <!-- DataFactory Project Specific Overrides-->
+  <ItemGroup Condition="$(MSBuildProjectName) == 'Azure.ResourceManager.DataFactory'">
+    <PackageReference Include="Azure.Core.Expressions.DataFactory"/>
+  </ItemGroup>
+
   <!-- Management Client TEST Project Specific Overrides -->
   <ItemGroup Condition="('$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true') or '$(IsStorageTest)' == 'true'">
     <ProjectReference Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" Include="$(AzureCoreTestFramework)" />

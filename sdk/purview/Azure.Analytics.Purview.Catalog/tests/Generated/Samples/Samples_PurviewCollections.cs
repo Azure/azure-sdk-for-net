@@ -139,6 +139,29 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         {
                             key = new { },
                         },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         customAttributes = new
@@ -150,6 +173,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         isIncomplete = true,
                         labels = new[] {
                 "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
             },
                         provenanceType = 123.45f,
                         proxy = true,
@@ -185,7 +222,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateEntity("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -373,6 +410,29 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         {
                             key = new { },
                         },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         customAttributes = new
@@ -384,6 +444,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         isIncomplete = true,
                         labels = new[] {
                 "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
             },
                         provenanceType = 123.45f,
                         proxy = true,
@@ -419,7 +493,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateEntityAsync("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -602,6 +676,29 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         {
                             key = new { },
                         },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         customAttributes = new
@@ -613,6 +710,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         isIncomplete = true,
                         labels = new[] {
                 "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
             },
                         provenanceType = 123.45f,
                         proxy = true,
@@ -648,7 +759,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = client.CreateOrUpdateEntityInBulk("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -831,6 +942,29 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         {
                             key = new { },
                         },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         customAttributes = new
@@ -842,6 +976,20 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         isIncomplete = true,
                         labels = new[] {
                 "<String>"
+            },
+                        meanings = new[] {
+                new {
+                    confidence = 1234,
+                    createdBy = "<createdBy>",
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DISCOVERED",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
             },
                         provenanceType = 123.45f,
                         proxy = true,
@@ -877,7 +1025,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 },
             };
 
-            Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -976,7 +1124,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = client.MoveEntitiesToCollection("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());
@@ -1075,7 +1223,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
     },
             };
 
-            Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data), new RequestContext());
+            Response response = await client.MoveEntitiesToCollectionAsync("<collection>", RequestContent.Create(data));
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("guidAssignments").GetProperty("<test>").ToString());

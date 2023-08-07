@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile&apos;s access rules. </summary>
+    /// <summary> This determines if traffic is allowed over public network. By default it is enabled. If value is SecuredByPerimeter then Inbound and Outbound communication is controlled by the network security perimeter and profile's access rules. </summary>
     public readonly partial struct EventHubsPublicNetworkAccessFlag : IEquatable<EventHubsPublicNetworkAccessFlag>
     {
         private readonly string _value;

@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.Shares
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
         /// <summary> The value of this header is set to true if the contents of the request are successfully encrypted using the specified algorithm, and false otherwise. </summary>
         public bool? IsServerEncrypted => _response.Headers.TryGetValue("x-ms-request-server-encrypted", out bool? value) ? value : null;
-        /// <summary> Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file&apos;s metadata or properties, changes the last-modified time of the file. </summary>
+        /// <summary> Returns the date and time the file was last modified. Any operation that modifies the file, including an update of the file's metadata or properties, changes the last-modified time of the file. </summary>
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
     }
 }

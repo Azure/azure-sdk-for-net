@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a SQL pool&apos;s transparent data encryption configuration.
+        /// Get a SQL pool's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a SQL pool&apos;s transparent data encryption configuration.
+        /// Get a SQL pool's transparent data encryption configuration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s connection policy, which is used with table auditing.
+        /// Get a Sql pool's connection policy, which is used with table auditing.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s connection policy, which is used with table auditing.
+        /// Get a Sql pool's connection policy, which is used with table auditing.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Gets the Sql pool&apos;s vulnerability assessment.
+        /// Gets the Sql pool's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Gets the Sql pool&apos;s vulnerability assessment.
+        /// Gets the Sql pool's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s security alert policy.
+        /// Get a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s security alert policy.
+        /// Get a Sql pool's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s workload group.
+        /// Get a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a Sql pool&apos;s workload group.
+        /// Get a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

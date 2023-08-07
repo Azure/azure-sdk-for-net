@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks);netstandard2.1;net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
     <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Blobs client library</AssemblyTitle>
-    <Version>12.0.0-beta.3</Version>
+    <Version>12.0.0-beta.4</Version>
     <DefineConstants>BlobDataMovementSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage DataMovement, DataMovement, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
     <Description>
@@ -92,13 +92,21 @@
     <Compile Include="$(AzureStorageSharedSources)ISupportsTenantIdChallenges.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageDataMovementSharedSources)CheckpointerExtensions.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)Errors.DataMovement.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementConstants.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)JobPlanExtensions.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)PartitionedProgressIncrementer.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)ProgressMultipleParititonedStream.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)PathScanner.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)PathScannerFactory.cs" LinkBase="Shared\DataMovement" />
-    <Compile Include="$(AzureStorageDataMovementSharedSources)StorageManagerTransferStatus.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)ResponseExtensions.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)LocalTransferCheckpointer.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementSharedSources)TransferCheckpointer.cs" LinkBase="Shared\DataMovement" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageDataMovementSharedSources)\JobPlan\*" LinkBase="Shared\DataMovement\JobPlan" />
+
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageBlobsSharedSources)BlobErrors.cs" LinkBase="Shared\Blobs" />

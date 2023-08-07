@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <summary> Initializes a new instance of HierarchyHit. </summary>
         /// <param name="name"> Name of the hierarchy node. May be empty, cannot be null. </param>
-        /// <param name="cumulativeInstanceCount"> Total number of instances that belong to this node and it&apos;s subtrees matching the query. </param>
+        /// <param name="cumulativeInstanceCount"> Total number of instances that belong to this node and it's subtrees matching the query. </param>
         /// <param name="hierarchyNodes"> Child hierarchy nodes of this node. May be empty or null. </param>
         internal HierarchyHit(string name, int? cumulativeInstanceCount, SearchHierarchyNodesResponse hierarchyNodes)
         {
@@ -28,7 +28,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <summary> Name of the hierarchy node. May be empty, cannot be null. </summary>
         public string Name { get; }
-        /// <summary> Total number of instances that belong to this node and it&apos;s subtrees matching the query. </summary>
+        /// <summary> Total number of instances that belong to this node and it's subtrees matching the query. </summary>
         public int? CumulativeInstanceCount { get; }
         /// <summary> Child hierarchy nodes of this node. May be empty or null. </summary>
         public SearchHierarchyNodesResponse HierarchyNodes { get; }

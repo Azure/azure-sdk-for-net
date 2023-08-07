@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    /// <summary> Snapshot&apos;s download request. </summary>
+    /// <summary> Snapshot's download request. </summary>
     public partial class SnapshotDownloadContent
     {
         /// <summary> Initializes a new instance of SnapshotDownloadContent. </summary>

@@ -90,11 +90,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Analyze document. </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="features"> List of optional analysis features. </param>
-        /// <param name="queryFields"> List of additional fields to extract.  Ex. &quot;NumberOfGuests,StoreNumber&quot;. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
@@ -120,11 +120,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Analyze document. </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="features"> List of optional analysis features. </param>
-        /// <param name="queryFields"> List of additional fields to extract.  Ex. &quot;NumberOfGuests,StoreNumber&quot;. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
@@ -193,11 +193,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Analyze document. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="features"> List of optional analysis features. </param>
-        /// <param name="queryFields"> List of additional fields to extract.  Ex. &quot;NumberOfGuests,StoreNumber&quot;. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
@@ -224,11 +224,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Analyze document. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="contentType"> Upload file type. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="features"> List of optional analysis features. </param>
-        /// <param name="queryFields"> List of additional fields to extract.  Ex. &quot;NumberOfGuests,StoreNumber&quot;. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
@@ -296,11 +296,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Analyze document. </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="features"> List of optional analysis features. </param>
-        /// <param name="queryFields"> List of additional fields to extract.  Ex. &quot;NumberOfGuests,StoreNumber&quot;. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
@@ -326,11 +326,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
         /// <summary> Analyze document. </summary>
         /// <param name="modelId"> Unique document model name. </param>
-        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. &quot;1-3,5,7-9&quot;. </param>
-        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. &quot;en&quot;, &quot;fr&quot;) or BCP 47 language tag (ex. &quot;en-US&quot;). </param>
+        /// <param name="pages"> List of 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale"> Locale hint for text recognition and document analysis.  Value may contain only the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US"). </param>
         /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
         /// <param name="features"> List of optional analysis features. </param>
-        /// <param name="queryFields"> List of additional fields to extract.  Ex. &quot;NumberOfGuests,StoreNumber&quot;. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
         /// <param name="analyzeRequest"> Analyze request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>

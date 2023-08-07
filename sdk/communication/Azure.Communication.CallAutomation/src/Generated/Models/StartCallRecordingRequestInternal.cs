@@ -39,14 +39,14 @@ namespace Azure.Communication.CallAutomation
         public RecordingFormat? RecordingFormatType { get; set; }
         /// <summary>
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
-        /// When &apos;recordingChannelType&apos; is set to &apos;unmixed&apos; and `audioChannelParticipantOrdering is not specified,
+        /// When 'recordingChannelType' is set to 'unmixed' and `audioChannelParticipantOrdering is not specified,
         /// the audio channel to participant mapping will be automatically assigned based on the order in which participant
         /// first audio was detected.  Channel to participant mapping details can be found in the metadata of the recording.
         /// </summary>
         public IList<CommunicationIdentifierModel> AudioChannelParticipantOrdering { get; }
         /// <summary>
         /// The channel affinity of call recording
-        /// When &apos;recordingChannelType&apos; is set to &apos;unmixed&apos;, if channelAffinity is not specified, &apos;channel&apos; will be automatically assigned.
+        /// When 'recordingChannelType' is set to 'unmixed', if channelAffinity is not specified, 'channel' will be automatically assigned.
         /// Channel-Participant mapping details can be found in the metadata of the recording.
         /// ///
         /// </summary>

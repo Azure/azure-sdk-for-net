@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
-                writer.WriteObjectValue(SchemaLinkedService);
+                JsonSerializer.Serialize(writer, SchemaLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                JsonSerializer.Serialize(writer, LinkedService);
             }
             if (Optional.IsDefined(Flowlet))
             {
@@ -57,11 +58,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<string> script = default;
-            Optional<FactoryLinkedServiceReference> schemaLinkedService = default;
+            Optional<DataFactoryLinkedServiceReference> schemaLinkedService = default;
             string name = default;
             Optional<string> description = default;
             Optional<DatasetReference> dataset = default;
-            Optional<FactoryLinkedServiceReference> linkedService = default;
+            Optional<DataFactoryLinkedServiceReference> linkedService = default;
             Optional<DataFlowReference> flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    schemaLinkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    schemaLinkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("flowlet"u8))
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new PowerQuerySource(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value, schemaLinkedService.Value, script.Value);
+            return new PowerQuerySource(name, description.Value, dataset.Value, linkedService, flowlet.Value, schemaLinkedService, script.Value);
         }
     }
 }

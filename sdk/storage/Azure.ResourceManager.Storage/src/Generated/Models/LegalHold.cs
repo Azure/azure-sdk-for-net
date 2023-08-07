@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of LegalHold. </summary>
         /// <param name="hasLegalHold"> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </param>
         /// <param name="tags"> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </param>
-        /// <param name="allowProtectedAppendWritesAll"> When enabled, new blocks can be written to both &apos;Append and Bock Blobs&apos; while maintaining legal hold protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </param>
+        /// <param name="allowProtectedAppendWritesAll"> When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining legal hold protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </param>
         internal LegalHold(bool? hasLegalHold, IList<string> tags, bool? allowProtectedAppendWritesAll)
         {
             HasLegalHold = hasLegalHold;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage.Models
         public bool? HasLegalHold { get; }
         /// <summary> Each tag should be 3 to 23 alphanumeric characters and is normalized to lower case at SRP. </summary>
         public IList<string> Tags { get; }
-        /// <summary> When enabled, new blocks can be written to both &apos;Append and Bock Blobs&apos; while maintaining legal hold protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </summary>
+        /// <summary> When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining legal hold protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </summary>
         public bool? AllowProtectedAppendWritesAll { get; set; }
     }
 }

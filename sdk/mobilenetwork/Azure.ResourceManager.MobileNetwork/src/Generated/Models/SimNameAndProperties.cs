@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public string InternationalMobileSubscriberIdentity { get; }
         /// <summary> The integrated circuit card ID (ICCID) for the SIM. </summary>
         public string IntegratedCircuitCardIdentifier { get; set; }
-        /// <summary> An optional free-form text field that can be used to record the device type this SIM is associated with, for example &apos;Video camera&apos;. The Azure portal allows SIMs to be grouped and filtered based on this value. </summary>
+        /// <summary> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </summary>
         public string DeviceType { get; set; }
         /// <summary> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </summary>
         internal WritableSubResource SimPolicy { get; set; }

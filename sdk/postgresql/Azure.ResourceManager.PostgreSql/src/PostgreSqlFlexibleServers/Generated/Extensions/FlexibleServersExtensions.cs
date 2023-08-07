@@ -180,6 +180,44 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
         #endregion
 
+        #region PostgreSqlMigrationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PostgreSqlMigrationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlMigrationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlMigrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PostgreSqlMigrationResource" /> object. </returns>
+        public static PostgreSqlMigrationResource GetPostgreSqlMigrationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PostgreSqlMigrationResource.ValidateResourceId(id);
+                return new PostgreSqlMigrationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PostgreSqlLtrServerBackupOperationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PostgreSqlLtrServerBackupOperationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlLtrServerBackupOperationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlLtrServerBackupOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PostgreSqlLtrServerBackupOperationResource" /> object. </returns>
+        public static PostgreSqlLtrServerBackupOperationResource GetPostgreSqlLtrServerBackupOperationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PostgreSqlLtrServerBackupOperationResource.ValidateResourceId(id);
+                return new PostgreSqlLtrServerBackupOperationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         /// <summary> Gets a collection of PostgreSqlFlexibleServerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PostgreSqlFlexibleServerResources and their operations over a PostgreSqlFlexibleServerResource. </returns>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01";
+            _apiVersion = apiVersion ?? "2023-04-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        /// <summary> Lists all scripts&apos; execution history for the specified cluster. </summary>
+        /// <summary> Lists all scripts' execution history for the specified cluster. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
-        /// <summary> Lists all scripts&apos; execution history for the specified cluster. </summary>
+        /// <summary> Lists all scripts' execution history for the specified cluster. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        /// <summary> Lists all scripts&apos; execution history for the specified cluster. </summary>
+        /// <summary> Lists all scripts' execution history for the specified cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
-        /// <summary> Lists all scripts&apos; execution history for the specified cluster. </summary>
+        /// <summary> Lists all scripts' execution history for the specified cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>

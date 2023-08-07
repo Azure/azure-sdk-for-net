@@ -3,6 +3,7 @@
 Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
+deserialize-null-collection-as-null-value: true
 batch:
   - tag: release_2_1
   - tag: 2023-02-28-preview

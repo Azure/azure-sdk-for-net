@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This enumerates the possible sources of a disk&apos;s creation. </summary>
+    /// <summary> This enumerates the possible sources of a disk's creation. </summary>
     public readonly partial struct DiskCreateOption : IEquatable<DiskCreateOption>
     {
         private readonly string _value;

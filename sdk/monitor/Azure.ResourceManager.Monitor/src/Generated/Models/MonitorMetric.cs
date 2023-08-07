@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricType"> the resource type of the metric resource. </param>
         /// <param name="name"> the name and the display name of the metric, i.e. it is localizable string. </param>
         /// <param name="displayDescription"> Detailed description of this metric. </param>
-        /// <param name="errorCode"> &apos;Success&apos; or the error details on query failures for this metric. </param>
+        /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
         /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="timeseries"> the time series returned when a data query is performed. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public MonitorLocalizableString Name { get; }
         /// <summary> Detailed description of this metric. </summary>
         public string DisplayDescription { get; }
-        /// <summary> &apos;Success&apos; or the error details on query failures for this metric. </summary>
+        /// <summary> 'Success' or the error details on query failures for this metric. </summary>
         public string ErrorCode { get; }
         /// <summary> Error message encountered querying this specific metric. </summary>
         public string ErrorMessage { get; }

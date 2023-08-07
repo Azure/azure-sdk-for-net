@@ -17,4 +17,13 @@
     <Compile Include="$(AzureCoreSharedSources)\HttpPipelineMessageHandler.cs" LinkBase="Shared" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Workaround to fix CI build failure in macOS. This package is being used indirectly by Azure analyzers. -->
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
+
 </Project>

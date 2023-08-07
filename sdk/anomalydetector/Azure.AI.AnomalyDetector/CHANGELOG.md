@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Introduced model factory `Azure.AI.AnomalyDetector.AnomalyDetectorModelFactory` for mocking.
+
 ### Breaking Changes
 
 ### Bugs Fixed

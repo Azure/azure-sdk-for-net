@@ -8,7 +8,7 @@ This sample shows how to call GetLedgerIdentityAsync with required parameters an
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerCertificateClient(endpoint);
 
-Response response = await client.GetLedgerIdentityAsync("<ledgerId>", new RequestContext());
+Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("ledgerId").ToString());
@@ -23,7 +23,7 @@ This sample shows how to call GetLedgerIdentity with required parameters and par
 var endpoint = new Uri("<https://my-service.azure.com>");
 var client = new ConfidentialLedgerCertificateClient(endpoint);
 
-Response response = client.GetLedgerIdentity("<ledgerId>", new RequestContext());
+Response response = client.GetLedgerIdentity("<ledgerId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("ledgerId").ToString());

@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="description"> IP restriction rule description. </param>
         /// <param name="headers">
         /// IP restriction rule headers.
-        /// X-Forwarded-Host (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples). 
+        /// X-Forwarded-Host (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples).
         /// The matching logic is ..
         /// - If the property is null or empty (default), all hosts(or lack of) are allowed.
         /// - A value is compared using ordinal-ignore-case (excluding port number).
-        /// - Subdomain wildcards are permitted but don&apos;t match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com
+        /// - Subdomain wildcards are permitted but don't match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com
         ///  but not the root domain contoso.com or multi-level foo.bar.contoso.com
         /// - Unicode host names are allowed but are converted to Punycode for matching.
-        /// 
+        ///
         /// X-Forwarded-For (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#Examples).
         /// The matching logic is ..
         /// - If the property is null or empty (default), any forwarded-for chains (or lack of) are allowed.
         /// - If any address (excluding port number) in the chain (comma separated) matches the CIDR defined by the property.
-        /// 
+        ///
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
         /// </param>
@@ -95,19 +95,19 @@ namespace Azure.ResourceManager.AppService.Models
         public string Description { get; set; }
         /// <summary>
         /// IP restriction rule headers.
-        /// X-Forwarded-Host (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples). 
+        /// X-Forwarded-Host (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples).
         /// The matching logic is ..
         /// - If the property is null or empty (default), all hosts(or lack of) are allowed.
         /// - A value is compared using ordinal-ignore-case (excluding port number).
-        /// - Subdomain wildcards are permitted but don&apos;t match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com
+        /// - Subdomain wildcards are permitted but don't match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com
         ///  but not the root domain contoso.com or multi-level foo.bar.contoso.com
         /// - Unicode host names are allowed but are converted to Punycode for matching.
-        /// 
+        ///
         /// X-Forwarded-For (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#Examples).
         /// The matching logic is ..
         /// - If the property is null or empty (default), any forwarded-for chains (or lack of) are allowed.
         /// - If any address (excluding port number) in the chain (comma separated) matches the CIDR defined by the property.
-        /// 
+        ///
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
         /// </summary>

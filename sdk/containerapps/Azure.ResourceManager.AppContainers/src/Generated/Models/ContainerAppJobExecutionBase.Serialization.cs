@@ -10,24 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJobExecutionBase : IUtf8JsonSerializable
+    public partial class ContainerAppJobExecutionBase
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static ContainerAppJobExecutionBase DeserializeContainerAppJobExecutionBase(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

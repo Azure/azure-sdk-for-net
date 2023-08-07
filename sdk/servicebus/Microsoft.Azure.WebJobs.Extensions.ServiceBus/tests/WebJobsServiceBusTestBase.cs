@@ -351,7 +351,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 }
                 // if the formatted message is not null and it contains "ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"
                 // then it's an expected exception
-                if (logMessage.FormattedMessage != null && logMessage.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"))
+                if (logMessage.FormattedMessage != null &&
+                    (logMessage.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException") ||
+                     // this condition can be removed when https://github.com/Azure/azure-sdk-for-net/issues/37713 is fixed
+                     logMessage.FormattedMessage.Contains("Put token failed. status-code: 404, status-description: The messaging entity")))
                 {
                     return false;
                 }

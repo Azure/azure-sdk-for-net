@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of BgpSettings. </summary>
-        /// <param name="asn"> The BGP speaker&apos;s ASN. </param>
+        /// <param name="asn"> The BGP speaker's ASN. </param>
         /// <param name="bgpPeeringAddress"> The BGP peering address and BGP identifier of this BGP speaker. </param>
         /// <param name="peerWeight"> The weight added to routes learned from this BGP speaker. </param>
         /// <param name="bgpPeeringAddresses"> BGP peering address with IP configuration ID for virtual network gateway. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
             BgpPeeringAddresses = bgpPeeringAddresses;
         }
 
-        /// <summary> The BGP speaker&apos;s ASN. </summary>
+        /// <summary> The BGP speaker's ASN. </summary>
         public long? Asn { get; set; }
         /// <summary> The BGP peering address and BGP identifier of this BGP speaker. </summary>
         public string BgpPeeringAddress { get; set; }

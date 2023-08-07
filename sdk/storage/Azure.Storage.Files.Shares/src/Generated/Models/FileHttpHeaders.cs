@@ -17,17 +17,17 @@ namespace Azure.Storage.Files.Shares.Models
         {
         }
 
-        /// <summary> Sets the MIME content type of the file. The default type is &apos;application/octet-stream&apos;. </summary>
+        /// <summary> Sets the MIME content type of the file. The default type is 'application/octet-stream'. </summary>
         public string FileContentType { get; set; }
         /// <summary> Specifies which content encodings have been applied to the file. </summary>
         public string FileContentEncoding { get; set; }
         /// <summary> Specifies the natural languages used by this resource. </summary>
         public string FileContentLanguage { get; set; }
-        /// <summary> Sets the file&apos;s cache control. The File service stores this value but does not use or modify it. </summary>
+        /// <summary> Sets the file's cache control. The File service stores this value but does not use or modify it. </summary>
         public string FileCacheControl { get; set; }
-        /// <summary> Sets the file&apos;s MD5 hash. </summary>
+        /// <summary> Sets the file's MD5 hash. </summary>
         public byte[] FileContentMD5 { get; set; }
-        /// <summary> Sets the file&apos;s Content-Disposition header. </summary>
+        /// <summary> Sets the file's Content-Disposition header. </summary>
         public string FileContentDisposition { get; set; }
     }
 }

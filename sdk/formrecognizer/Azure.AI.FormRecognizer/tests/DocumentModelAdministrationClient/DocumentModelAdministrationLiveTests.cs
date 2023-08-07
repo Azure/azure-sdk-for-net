@@ -17,7 +17,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class DocumentModelAdministrationLiveTests : DocumentAnalysisLiveTestBase
     {
         private static readonly DocumentBuildMode[] s_buildDocumentModelTestCases = new[]
@@ -69,9 +68,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             if (buildMode == DocumentBuildMode.Neural && Recording.Mode == RecordedTestMode.Live)
             {
                 // Test takes too long to finish running, and seems to cause multiple failures in our
-                // live test pipeline. Until we find a way to run it without flakiness, this test will
-                // be ignored when running in Live mode.
-                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/27042");
+                // live test pipeline. For this reason, this test is ignored when running in Live mode.
+                Assert.Ignore();
             }
 
             var client = CreateDocumentModelAdministrationClient();
@@ -118,14 +116,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
             else
             {
-                // We have changed the following validation because of a service bug. This needs to be updated once the bug is fixed.
-                // More information: https://github.com/Azure/azure-sdk-for-net/issues/35809
-
-                // The expected behavior. This must be added back once the service bug is fixed.
-                // Assert.IsNull(model.ExpiresOn);
-
-                // The current behavior. This assertion must be removed once the service bug is fixed.
-                Assert.Greater(model.ExpiresOn, model.CreatedOn);
+                Assert.IsNull(model.ExpiresOn);
             }
 
             CollectionAssert.AreEquivalent(options.Tags, model.Tags);
@@ -225,7 +216,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             CollectionAssert.AreEquivalent(tags, model.Tags);
 
-            AssertDocumentTypeDictionariesAreEquivalent(sourceModel.DocumentTypes, model.DocumentTypes);
+            // (TODO) Reenable validation once the following service issue has been fixed: https://github.com/Azure/azure-sdk-for-net/issues/37172
+            // AssertDocumentTypeDictionariesAreEquivalent(sourceModel.DocumentTypes, model.DocumentTypes);
         }
 
         #endregion Copy
@@ -271,7 +263,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual(description, model.Description);
             Assert.AreEqual(ServiceVersionString, model.ApiVersion);
             Assert.Greater(model.CreatedOn, startTime);
-            Assert.Greater(model.ExpiresOn, model.CreatedOn);
+
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            {
+                Assert.Greater(model.ExpiresOn, model.CreatedOn);
+            }
+            else
+            {
+                Assert.IsNull(model.ExpiresOn);
+            }
 
             CollectionAssert.AreEquivalent(tags, model.Tags);
 

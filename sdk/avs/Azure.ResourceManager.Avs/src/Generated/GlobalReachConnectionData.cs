@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="authorizationKey"> Authorization key from the peer express route used for the global reach connection. </param>
         /// <param name="circuitConnectionStatus"> The connection status of the global reach connection. </param>
         /// <param name="peerExpressRouteCircuit"> Identifier of the ExpressRoute Circuit to peer with in the global reach connection. </param>
-        /// <param name="expressRouteId"> The ID of the Private Cloud&apos;s ExpressRoute Circuit that is participating in the global reach connection. </param>
+        /// <param name="expressRouteId"> The ID of the Private Cloud's ExpressRoute Circuit that is participating in the global reach connection. </param>
         internal GlobalReachConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GlobalReachConnectionProvisioningState? provisioningState, string addressPrefix, string authorizationKey, GlobalReachConnectionStatus? circuitConnectionStatus, ResourceIdentifier peerExpressRouteCircuit, ResourceIdentifier expressRouteId) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs
         public GlobalReachConnectionStatus? CircuitConnectionStatus { get; }
         /// <summary> Identifier of the ExpressRoute Circuit to peer with in the global reach connection. </summary>
         public ResourceIdentifier PeerExpressRouteCircuit { get; set; }
-        /// <summary> The ID of the Private Cloud&apos;s ExpressRoute Circuit that is participating in the global reach connection. </summary>
+        /// <summary> The ID of the Private Cloud's ExpressRoute Circuit that is participating in the global reach connection. </summary>
         public ResourceIdentifier ExpressRouteId { get; set; }
     }
 }

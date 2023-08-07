@@ -21,7 +21,6 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             IReadOnlyList<EmbeddingItem> data = default;
-            Optional<string> model = default;
             EmbeddingsUsage usage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -35,18 +34,13 @@ namespace Azure.AI.OpenAI
                     data = array;
                     continue;
                 }
-                if (property.NameEquals("model"u8))
-                {
-                    model = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("usage"u8))
                 {
                     usage = EmbeddingsUsage.DeserializeEmbeddingsUsage(property.Value);
                     continue;
                 }
             }
-            return new Embeddings(data, model, usage);
+            return new Embeddings(data, usage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

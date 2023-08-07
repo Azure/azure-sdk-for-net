@@ -8,11 +8,11 @@
         "Authorization": "Sanitized",
         "Content-Length": "137",
         "Content-Type": "application/json",
-        "traceparent": "00-e2bd49e8a834c445099860d6dbe99517-67375c11c73117a0-00",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230515.1 (.NET 7.0.5; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "9d6cbd388daec94bfc126672664988a7",
+        "traceparent": "00-f2ba849a4fbb2b17fd23e8282315a1f2-fc8121dbb20c6b8f-00",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230620.1 (.NET 7.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "a6126989908f530968647206ece9bbf6",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Mon, 15 May 2023 15:55:25 GMT",
+        "x-ms-date": "Wed, 21 Jun 2023 01:17:20 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -27,15 +27,15 @@
       },
       "StatusCode": 400,
       "ResponseHeaders": {
-        "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01, 2022-12-02-preview2",
+        "api-supported-versions": "2021-03-07, 2022-01-11-preview2, 2022-06-01-preview, 2022-12-01, 2022-12-02-preview2, 2023-05-01-preview",
         "Content-Type": "application/json",
-        "Date": "Mon, 15 May 2023 15:55:26 GMT",
-        "MS-CV": "KUMpXBtkiESI4lh1Byl0Rg.0",
+        "Date": "Wed, 21 Jun 2023 01:17:19 GMT",
+        "MS-CV": "C9aZQhv2Ok2Hsiy3wsDdYA.0",
         "Strict-Transport-Security": "max-age=2592000",
         "Transfer-Encoding": "chunked",
-        "X-Azure-Ref": "07lViZAAAAAD4tRJD7OLASYcZKcLpsN\u002BgU0FPMzFFREdFMTIxMgA5ZmM3YjUxOS1hOGNjLTRmODktOTM1ZS1jOTE0OGFlMDllODE=",
+        "X-Azure-Ref": "0n0\u002BSZAAAAABfIQ/tk49sRYHnh/jMGh1xV1NURURHRTAxMDkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "1033ms"
+        "X-Processing-Time": "403ms"
       },
       "ResponseBody": {
         "error": {
@@ -51,6 +51,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "550604775"
+    "RandomSeed": "1333660397"
   }
 }

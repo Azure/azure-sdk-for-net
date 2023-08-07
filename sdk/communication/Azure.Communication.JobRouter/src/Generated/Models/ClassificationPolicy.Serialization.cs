@@ -27,11 +27,11 @@ namespace Azure.Communication.JobRouter.Models
                 writer.WritePropertyName("fallbackQueueId"u8);
                 writer.WriteStringValue(FallbackQueueId);
             }
-            if (Optional.IsCollectionDefined(QueueSelectors))
+            if (Optional.IsCollectionDefined(_queueSelectors))
             {
                 writer.WritePropertyName("queueSelectors"u8);
                 writer.WriteStartArray();
-                foreach (var item in QueueSelectors)
+                foreach (var item in _queueSelectors)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -42,11 +42,11 @@ namespace Azure.Communication.JobRouter.Models
                 writer.WritePropertyName("prioritizationRule"u8);
                 writer.WriteObjectValue(PrioritizationRule);
             }
-            if (Optional.IsCollectionDefined(WorkerSelectors))
+            if (Optional.IsCollectionDefined(_workerSelectors))
             {
                 writer.WritePropertyName("workerSelectors"u8);
                 writer.WriteStartArray();
-                foreach (var item in WorkerSelectors)
+                foreach (var item in _workerSelectors)
                 {
                     writer.WriteObjectValue(item);
                 }

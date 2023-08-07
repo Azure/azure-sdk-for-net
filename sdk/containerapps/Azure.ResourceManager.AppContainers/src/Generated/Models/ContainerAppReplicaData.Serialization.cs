@@ -31,6 +31,16 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(InitContainers))
+            {
+                writer.WritePropertyName("initContainers"u8);
+                writer.WriteStartArray();
+                foreach (var item in InitContainers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -46,7 +56,10 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdTime = default;
+            Optional<ContainerAppReplicaRunningState> runningState = default;
+            Optional<string> runningStateDetails = default;
             Optional<IList<ContainerAppReplicaContainer>> containers = default;
+            Optional<IList<ContainerAppReplicaContainer>> initContainers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -91,6 +104,20 @@ namespace Azure.ResourceManager.AppContainers
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("runningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runningState = new ContainerAppReplicaRunningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("runningStateDetails"u8))
+                        {
+                            runningStateDetails = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("containers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -105,11 +132,25 @@ namespace Azure.ResourceManager.AppContainers
                             containers = array;
                             continue;
                         }
+                        if (property0.NameEquals("initContainers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ContainerAppReplicaContainer> array = new List<ContainerAppReplicaContainer>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item));
+                            }
+                            initContainers = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToList(containers));
+            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(runningState), runningStateDetails.Value, Optional.ToList(containers), Optional.ToList(initContainers));
         }
     }
 }

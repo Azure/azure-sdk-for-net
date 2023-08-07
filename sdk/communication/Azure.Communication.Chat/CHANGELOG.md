@@ -3,13 +3,18 @@
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
-- Optimized the logic for deserializing types derived from the `CommunicationIdentifier`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.2 (2023-06-19)
+
+### Features Added
+- Optimized the logic for deserializing types derived from the `CommunicationIdentifier`.
+- Added factory methods for `public` models in `ChatModelFactory`.
 
 ## 1.1.1 (2022-09-16)
 

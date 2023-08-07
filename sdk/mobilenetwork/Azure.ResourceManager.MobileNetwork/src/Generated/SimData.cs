@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
         /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
         /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
-        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example &apos;Video camera&apos;. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
+        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
         /// <param name="simPolicy"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
         /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
         /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork
         public string InternationalMobileSubscriberIdentity { get; set; }
         /// <summary> The integrated circuit card ID (ICCID) for the SIM. </summary>
         public string IntegratedCircuitCardIdentifier { get; set; }
-        /// <summary> An optional free-form text field that can be used to record the device type this SIM is associated with, for example &apos;Video camera&apos;. The Azure portal allows SIMs to be grouped and filtered based on this value. </summary>
+        /// <summary> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </summary>
         public string DeviceType { get; set; }
         /// <summary> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </summary>
         internal WritableSubResource SimPolicy { get; set; }

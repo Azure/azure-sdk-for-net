@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="metadata"> Metadata about the resource. </param>
         /// <param name="streamDeclarations"> Declaration of custom streams used in this rule. </param>
         /// <param name="dataSources">
-        /// The specification of data sources. 
+        /// The specification of data sources.
         /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
         /// </param>
         /// <param name="destinations"> The specification of destinations. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> Declaration of custom streams used in this rule. </summary>
         public IDictionary<string, DataStreamDeclaration> StreamDeclarations { get; }
         /// <summary>
-        /// The specification of data sources. 
+        /// The specification of data sources.
         /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
         /// </summary>
         public DataCollectionRuleDataSources DataSources { get; set; }

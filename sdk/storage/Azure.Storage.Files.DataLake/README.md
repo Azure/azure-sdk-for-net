@@ -2,8 +2,8 @@
 
 > Server Version: 2021-02-12, 2020-12-06, 2020-10-02, 2020-08-04, 2020-06-12, 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2019-02-02
 
-Azure Data Lake includes all the capabilities required to make it easy for developers, data scientists, 
-and analysts to store data of any size, shape, and speed, and do all types of processing and analytics 
+Azure Data Lake includes all the capabilities required to make it easy for developers, data scientists,
+and analysts to store data of any size, shape, and speed, and do all types of processing and analytics
 across platforms and languages. It removes the complexities of ingesting and storing all of your data
 while making it faster to get up and running with batch, streaming, and interactive analytics.
 
@@ -59,7 +59,7 @@ Data Lake Storage Gen2 offers two types of resources:
 
 |ADLS Gen2 	                | Blob       |
 | --------------------------| ---------- |
-|Filesystem                 | Container  | 
+|Filesystem                 | Container  |
 |Path (File or Directory)   | Blob       |
 
 Note: This client library does not support hierarchical namespace (HNS) disabled storage accounts.
@@ -74,7 +74,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 

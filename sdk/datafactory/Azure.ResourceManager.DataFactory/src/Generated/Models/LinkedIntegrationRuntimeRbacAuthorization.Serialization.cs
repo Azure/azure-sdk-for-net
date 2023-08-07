@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            string resourceId = default;
-            Optional<FactoryCredentialReference> credential = default;
+            ResourceIdentifier resourceId = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             string authorizationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("credential"u8))
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
                     continue;
                 }
                 if (property.NameEquals("authorizationType"u8))

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="state"> The state of the encryption scope. Possible values (case-insensitive):  Enabled, Disabled. </param>
         /// <param name="createdOn"> Gets the creation date and time of the encryption scope in UTC. </param>
         /// <param name="lastModifiedOn"> Gets the last modification date and time of the encryption scope in UTC. </param>
-        /// <param name="keyVaultProperties"> The key vault properties for the encryption scope. This is a required field if encryption scope &apos;source&apos; attribute is set to &apos;Microsoft.KeyVault&apos;. </param>
+        /// <param name="keyVaultProperties"> The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'. </param>
         /// <param name="requireInfrastructureEncryption"> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </param>
         internal EncryptionScopeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EncryptionScopeSource? source, EncryptionScopeState? state, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, EncryptionScopeKeyVaultProperties keyVaultProperties, bool? requireInfrastructureEncryption) : base(id, name, resourceType, systemData)
         {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Gets the last modification date and time of the encryption scope in UTC. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
-        /// <summary> The key vault properties for the encryption scope. This is a required field if encryption scope &apos;source&apos; attribute is set to &apos;Microsoft.KeyVault&apos;. </summary>
+        /// <summary> The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'. </summary>
         public EncryptionScopeKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> A boolean indicating whether or not the service applies a secondary layer of encryption with platform managed keys for data at rest. </summary>
         public bool? RequireInfrastructureEncryption { get; set; }

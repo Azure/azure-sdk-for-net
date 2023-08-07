@@ -2,68 +2,62 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Storage.Blobs;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.DataMovement;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// The PageBlobStorageResource class.
     /// </summary>
-    public class PageBlobStorageResource : StorageResource
+    public class PageBlobStorageResource : StorageResourceItem
     {
-        private PageBlobClient _blobClient;
-        private PageBlobStorageResourceOptions _options;
-        private long? _length;
+        internal PageBlobClient BlobClient { get; set; }
+        internal PageBlobStorageResourceOptions _options;
+        internal long? _length;
+        internal ETag? _etagDownloadLock = default;
+
+        /// <summary>
+        /// The identifier for the type of storage resource.
+        /// </summary>
+        protected override string ResourceId => "PageBlob";
 
         /// <summary>
         /// Gets the URL of the storage resource.
         /// </summary>
-        public override Uri Uri => _blobClient.Uri;
+        public override Uri Uri => BlobClient.Uri;
 
         /// <summary>
         /// Gets the path of the resource.
         /// </summary>
-        public override string Path => _blobClient.Name;
+        public override string Path => BlobClient.Name;
 
         /// <summary>
-        /// Defines whether the storage resource type can produce a URL.
+        /// Defines whether the storage resource type can produce a web URL.
         /// </summary>
-        public override ProduceUriType CanProduceUri => ProduceUriType.ProducesUri;
-
-        /// <summary>
-        /// Returns the preferred method of how to perform service to service
-        /// transfers. See <see cref="TransferCopyMethod"/>. This value can be set when specifying
-        /// the options bag, see <see cref="PageBlobStorageResourceOptions.CopyMethod"/>.
-        /// </summary>
-        public override TransferCopyMethod ServiceCopyMethod => _options?.CopyMethod ?? TransferCopyMethod.SyncCopy;
+        protected override bool CanProduceUri => true;
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
         /// </summary>
-        public override TransferType TransferType => TransferType.Concurrent;
+        protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
 
         /// <summary>
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
-        public override long MaxChunkSize => Constants.Blob.Page.MaxPageBlockBytes;
+        protected override long MaxChunkSize => Constants.Blob.Page.MaxPageBlockBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is obtained during a GetStorageResources API call.
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
-        public override long? Length => _length;
+        protected override long? Length => _length;
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="PageBlobStorageResource"/>
@@ -73,7 +67,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="options"></param>
         public PageBlobStorageResource(PageBlobClient blobClient, PageBlobStorageResourceOptions options = default)
         {
-            _blobClient = blobClient;
+            BlobClient = blobClient;
             _options = options;
         }
 
@@ -82,14 +76,17 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
         /// <param name="length">The content length of the blob.</param>
+        /// <param name="etagLock">Preset etag to lock on for reads.</param>
         /// <param name="options">Options for the storage resource. See <see cref="PageBlobStorageResourceOptions"/>.</param>
         internal PageBlobStorageResource(
             PageBlobClient blobClient,
             long? length,
+            ETag? etagLock,
             PageBlobStorageResourceOptions options = default)
             : this(blobClient, options)
         {
             _length = length;
+            _etagDownloadLock = etagLock;
         }
 
         /// <summary>
@@ -105,14 +102,14 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
-        /// <returns>The <see cref="ReadStreamStorageResourceResult"/> resulting from the upload operation.</returns>
-        public override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        /// <returns>The <see cref="StorageResourceReadStreamResult"/> resulting from the upload operation.</returns>
+        protected override async Task<StorageResourceReadStreamResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default)
         {
-            Response<BlobDownloadStreamingResult> response = await _blobClient.DownloadStreamingAsync(
-                _options.ToBlobDownloadOptions(new HttpRange(position, length)),
+            Response<BlobDownloadStreamingResult> response = await BlobClient.DownloadStreamingAsync(
+                _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
                 cancellationToken).ConfigureAwait(false);
             return response.Value.ToReadStreamStorageResourceInfo();
         }
@@ -139,7 +136,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task WriteFromStreamAsync(
+        protected override async Task CopyFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
@@ -151,14 +148,14 @@ namespace Azure.Storage.DataMovement.Blobs
             // Create the blob first before uploading the pages
             if (position == 0)
             {
-                await _blobClient.CreateAsync(
+                await BlobClient.CreateAsync(
                     size: completeLength,
                     options: _options.ToCreateOptions(overwrite),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
             {
-                await _blobClient.UploadPagesAsync(
+                await BlobClient.UploadPagesAsync(
                     content: stream,
                     offset: position,
                     options: _options.ToUploadPagesOptions(overwrite),
@@ -169,7 +166,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResource"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceItem"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if it currently exists.
@@ -183,31 +180,28 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task CopyFromUriAsync(
-            StorageResource sourceResource,
+        protected override async Task CopyFromUriAsync(
+            StorageResourceItem sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            if (ServiceCopyMethod == TransferCopyMethod.AsyncCopy)
-            {
-                await _blobClient.StartCopyFromUriAsync(
-                    sourceResource.Uri,
-                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-            }
-            else //(ServiceCopyMethod == TransferCopyMethod.SyncCopy)
-            {
-                await _blobClient.CreateAsync(
-                    size: completeLength,
-                    options: _options.ToCreateOptions(overwrite),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            await BlobClient.CreateAsync(
+                size: completeLength,
+                options: _options.ToCreateOptions(overwrite),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                // TODO: subject to change as we scale to suppport resource types outside of blobs.
-                await _blobClient.SyncCopyFromUriAsync(
+            // There is no synchronous single-call copy API for Append/Page -> Page Blob
+            // so use a single Put Page from URL instead.
+            if (completeLength > 0)
+            {
+                HttpRange range = new HttpRange(0, completeLength);
+                await BlobClient.UploadPagesFromUriAsync(
                     sourceResource.Uri,
-                    _options.ToBlobCopyFromUriOptions(overwrite, options?.SourceAuthentication),
+                    sourceRange: range,
+                    range: range,
+                    options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -215,7 +209,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a url
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResource"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceItem"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         ///  If set to true, will overwrite the blob if it already exists.
@@ -230,40 +224,28 @@ namespace Azure.Storage.DataMovement.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        public override async Task CopyBlockFromUriAsync(
-            StorageResource sourceResource,
+        protected override async Task CopyBlockFromUriAsync(
+            StorageResourceItem sourceResource,
             HttpRange range,
             bool overwrite,
             long completeLength = 0,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            if (ServiceCopyMethod == TransferCopyMethod.SyncCopy)
+            // Create the blob first before uploading the pages
+            if (range.Offset == 0)
             {
-                // Create the blob first before uploading the pages
-                PageBlobRequestConditions conditions = new PageBlobRequestConditions
-                {
-                    // TODO: copy over the other conditions from the uploadOptions
-                    IfNoneMatch = overwrite ? null : new ETag(Constants.Wildcard),
-                };
-                if (range.Offset == 0)
-                {
-                    await _blobClient.CreateAsync(
-                        size: completeLength,
-                        _options.ToCreateOptions(overwrite),
-                        cancellationToken).ConfigureAwait(false);
-                }
-                await _blobClient.UploadPagesFromUriAsync(
-                    sourceResource.Uri,
-                    sourceRange: range,
-                    range: range,
-                    options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                await BlobClient.CreateAsync(
+                    size: completeLength,
+                    _options.ToCreateOptions(overwrite),
+                    cancellationToken).ConfigureAwait(false);
             }
-            else
-            {
-                throw new NotSupportedException("TransferCopyMethod specified is not supported in this resource");
-            }
+            await BlobClient.UploadPagesFromUriAsync(
+                sourceResource.Uri,
+                sourceRange: range,
+                range: range,
+                options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -272,16 +254,33 @@ namespace Azure.Storage.DataMovement.Blobs
         /// See <see cref="StorageResourceProperties"/>.
         /// </summary>
         /// <returns>Returns the properties of the Page Blob Storage Resource. See <see cref="StorageResourceProperties"/></returns>
-        public override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            BlobProperties properties = await _blobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            return properties.ToStorageResourceProperties();
+            Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            GrabEtag(response.GetRawResponse());
+            return response.Value.ToStorageResourceProperties();
+        }
+
+        /// <summary>
+        /// Gets the Authorization Header for the storage resource if available.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Gets the HTTP Authorization header for the storage resource if available. If not available
+        /// will return default.
+        /// </returns>
+        protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        {
+            return await BlobBaseClientInternals.GetCopyAuthorizationTokenAsync(BlobClient, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        public override Task CompleteTransferAsync(CancellationToken cancellationToken = default)
+        protected override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;
@@ -298,9 +297,178 @@ namespace Azure.Storage.DataMovement.Blobs
         /// If the storage resource exists and is deleted, true will be returned.
         /// Otherwise if the storage resource does not exist, false will be returned.
         /// </returns>
-        public override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
+        protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            return await _blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<PageBlobStorageResource> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            PageBlobStorageResourceOptions options =
+                await checkpointer.GetPageBlobResourceOptionsAsync(
+                    transferProperties.TransferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            return new PageBlobStorageResource(
+                new PageBlobClient(new Uri(storedPath)),
+                options);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="sharedKeyCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<PageBlobStorageResource> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            StorageSharedKeyCredential sharedKeyCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            PageBlobStorageResourceOptions options =
+                await checkpointer.GetPageBlobResourceOptionsAsync(
+                    transferProperties.TransferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            return new PageBlobStorageResource(
+                new PageBlobClient(new Uri(storedPath), sharedKeyCredential),
+                options);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<PageBlobStorageResource> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            TokenCredential tokenCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            PageBlobStorageResourceOptions options =
+                await checkpointer.GetPageBlobResourceOptionsAsync(
+                    transferProperties.TransferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            // TODO: get options PageBlobStorageResourceOptions from stored file
+            return new PageBlobStorageResource(
+                new PageBlobClient(new Uri(storedPath), tokenCredential),
+                options);
+        }
+
+        /// <summary>
+        /// Rehydrates from Checkpointer.
+        /// </summary>
+        /// <param name="transferProperties">
+        /// The properties of the transfer to rehydrate.
+        /// </param>
+        /// <param name="isSource">
+        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
+        /// </param>
+        /// <param name="sasCredential">
+        /// Credentials which allows the storage resource to authenticate during the transfer.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Whether or not to cancel the operation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
+        /// a stored checkpointed transfer state.
+        /// </returns>
+        internal static async Task<PageBlobStorageResource> RehydrateResourceAsync(
+            DataTransferProperties transferProperties,
+            bool isSource,
+            AzureSasCredential sasCredential,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(transferProperties, nameof(transferProperties));
+            TransferCheckpointer checkpointer = transferProperties.Checkpointer.GetCheckpointer();
+
+            PageBlobStorageResourceOptions options =
+                await checkpointer.GetPageBlobResourceOptionsAsync(
+                    transferProperties.TransferId,
+                    isSource,
+                    cancellationToken).ConfigureAwait(false);
+
+            string storedPath = isSource ? transferProperties.SourcePath : transferProperties.DestinationPath;
+
+            return new PageBlobStorageResource(
+                new PageBlobClient(new Uri(storedPath), sasCredential),
+                options);
+        }
+
+        private void GrabEtag(Response response)
+        {
+            if (_etagDownloadLock == default && response.TryExtractStorageEtag(out ETag etag))
+            {
+                _etagDownloadLock = etag;
+            }
         }
     }
 }

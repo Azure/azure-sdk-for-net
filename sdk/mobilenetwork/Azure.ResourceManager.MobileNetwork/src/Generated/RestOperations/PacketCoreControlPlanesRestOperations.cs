@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.MobileNetwork
             return message;
         }
 
-        /// <summary> Roll back the specified packet core control plane to the previous version, &quot;rollbackVersion&quot;. Multiple consecutive rollbacks are not possible. This action may cause a service outage. </summary>
+        /// <summary> Roll back the specified packet core control plane to the previous version, "rollbackVersion". Multiple consecutive rollbacks are not possible. This action may cause a service outage. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        /// <summary> Roll back the specified packet core control plane to the previous version, &quot;rollbackVersion&quot;. Multiple consecutive rollbacks are not possible. This action may cause a service outage. </summary>
+        /// <summary> Roll back the specified packet core control plane to the previous version, "rollbackVersion". Multiple consecutive rollbacks are not possible. This action may cause a service outage. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="packetCoreControlPlaneName"> The name of the packet core control plane. </param>

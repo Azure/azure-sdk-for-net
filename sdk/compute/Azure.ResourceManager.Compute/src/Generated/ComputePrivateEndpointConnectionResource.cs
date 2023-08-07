@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection.
+        /// Approve or reject a private endpoint connection under disk access resource, this can't be used to create a new private endpoint connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Approve or reject a private endpoint connection under disk access resource, this can&apos;t be used to create a new private endpoint connection.
+        /// Approve or reject a private endpoint connection under disk access resource, this can't be used to create a new private endpoint connection.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

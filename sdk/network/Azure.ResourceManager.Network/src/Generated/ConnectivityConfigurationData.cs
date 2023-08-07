@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -38,8 +39,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="appliesToGroups"> Groups for configuration. </param>
         /// <param name="provisioningState"> The provisioning state of the connectivity configuration resource. </param>
         /// <param name="deleteExistingPeering"> Flag if need to remove current existing peerings. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal ConnectivityConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ConnectivityTopology? connectivityTopology, IList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, ETag? etag) : base(id, name, resourceType, systemData)
+        internal ConnectivityConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, ConnectivityTopology? connectivityTopology, IList<ConnectivityHub> hubs, GlobalMeshSupportFlag? isGlobal, IList<ConnectivityGroupItem> appliesToGroups, NetworkProvisioningState? provisioningState, DeleteExistingPeering? deleteExistingPeering, Guid? resourceGuid, ETag? etag) : base(id, name, resourceType, systemData)
         {
             Description = description;
             ConnectivityTopology = connectivityTopology;
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.Network
             AppliesToGroups = appliesToGroups;
             ProvisioningState = provisioningState;
             DeleteExistingPeering = deleteExistingPeering;
+            ResourceGuid = resourceGuid;
             ETag = etag;
         }
 
@@ -65,6 +68,8 @@ namespace Azure.ResourceManager.Network
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Flag if need to remove current existing peerings. </summary>
         public DeleteExistingPeering? DeleteExistingPeering { get; set; }
+        /// <summary> Unique identifier for this resource. </summary>
+        public Guid? ResourceGuid { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
     }

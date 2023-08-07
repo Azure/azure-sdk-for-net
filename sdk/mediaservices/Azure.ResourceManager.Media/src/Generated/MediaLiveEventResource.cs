@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Resets an existing live event. All live outputs for the live event are deleted and the live event is stopped and will be started again. All assets used by the live outputs and streaming locators created on these assets are unaffected. 
+        /// Resets an existing live event. All live outputs for the live event are deleted and the live event is stopped and will be started again. All assets used by the live outputs and streaming locators created on these assets are unaffected.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Media
         }
 
         /// <summary>
-        /// Resets an existing live event. All live outputs for the live event are deleted and the live event is stopped and will be started again. All assets used by the live outputs and streaming locators created on these assets are unaffected. 
+        /// Resets an existing live event. All live outputs for the live event are deleted and the live event is stopped and will be started again. All assets used by the live outputs and streaming locators created on these assets are unaffected.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

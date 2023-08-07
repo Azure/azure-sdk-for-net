@@ -35,7 +35,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new HealthApiClient("<https://my-service.azure.com>");
 
-            Response response = client.GetServiceStatus(new RequestContext());
+            Response response = client.GetServiceStatus();
             Console.WriteLine(response.Status);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new HealthApiClient("<https://my-service.azure.com>");
 
-            Response response = await client.GetServiceStatusAsync(new RequestContext());
+            Response response = await client.GetServiceStatusAsync();
             Console.WriteLine(response.Status);
         }
     }

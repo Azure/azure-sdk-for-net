@@ -466,7 +466,7 @@ namespace Azure.AI.AnomalyDetector
         /// <remarks>
         /// Create and train a multivariate anomaly detection model. The request must
         /// include a source parameter to indicate an Azure Blob
-        /// Storage URI that&apos;s accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
+        /// Storage URI that's accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
         /// Storage folder that contains multiple CSV files, where each CSV file has
         /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
         /// time stamp column.
@@ -492,7 +492,7 @@ namespace Azure.AI.AnomalyDetector
         /// <remarks>
         /// Create and train a multivariate anomaly detection model. The request must
         /// include a source parameter to indicate an Azure Blob
-        /// Storage URI that&apos;s accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
+        /// Storage URI that's accessible to the service. There are two types of data input. The Blob Storage URI can point to an Azure Blob
         /// Storage folder that contains multiple CSV files, where each CSV file has
         /// two columns, time stamp and variable. Or the Blob Storage URI can point to a single blob that contains a CSV file that has all the variables and a
         /// time stamp column.

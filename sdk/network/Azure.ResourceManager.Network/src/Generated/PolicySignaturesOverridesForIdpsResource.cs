@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Will update the status of policy&apos;s signature overrides for IDPS
+        /// Will update the status of policy's signature overrides for IDPS
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Will update the status of policy&apos;s signature overrides for IDPS
+        /// Will update the status of policy's signature overrides for IDPS
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Will override/create a new signature overrides for the policy&apos;s IDPS
+        /// Will override/create a new signature overrides for the policy's IDPS
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Will override/create a new signature overrides for the policy&apos;s IDPS
+        /// Will override/create a new signature overrides for the policy's IDPS
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The restriction level applied to the cluster&apos;s node resource group. </summary>
+    /// <summary> The restriction level applied to the cluster's node resource group. </summary>
     public readonly partial struct ManagedClusterNodeResourceGroupRestrictionLevel : IEquatable<ManagedClusterNodeResourceGroupRestrictionLevel>
     {
         private readonly string _value;

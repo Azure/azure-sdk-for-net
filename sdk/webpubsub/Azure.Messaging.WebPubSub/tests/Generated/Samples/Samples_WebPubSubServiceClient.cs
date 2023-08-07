@@ -35,7 +35,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = client.CloseAllConnections(new string[] { "<excluded>" }, "<reason>", new RequestContext());
+            Response response = client.CloseAllConnections(new string[] { "<excluded>" }, "<reason>");
             Console.WriteLine(response.Status);
         }
 
@@ -55,7 +55,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = await client.CloseAllConnectionsAsync(new string[] { "<excluded>" }, "<reason>", new RequestContext());
+            Response response = await client.CloseAllConnectionsAsync(new string[] { "<excluded>" }, "<reason>");
             Console.WriteLine(response.Status);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = client.SendToAll(RequestContent.Create(data), ContentType.ApplicationOctetStream, new string[] { "<excluded>" }, "<filter>", new RequestContext());
+            Response response = client.SendToAll(RequestContent.Create(data), ContentType.ApplicationOctetStream, new string[] { "<excluded>" }, "<filter>");
             Console.WriteLine(response.Status);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = await client.SendToAllAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream, new string[] { "<excluded>" }, "<filter>", new RequestContext());
+            Response response = await client.SendToAllAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream, new string[] { "<excluded>" }, "<filter>");
             Console.WriteLine(response.Status);
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = client.CloseConnection("<connectionId>", "<reason>", new RequestContext());
+            Response response = client.CloseConnection("<connectionId>", "<reason>");
             Console.WriteLine(response.Status);
         }
 
@@ -143,7 +143,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = await client.CloseConnectionAsync("<connectionId>", "<reason>", new RequestContext());
+            Response response = await client.CloseConnectionAsync("<connectionId>", "<reason>");
             Console.WriteLine(response.Status);
         }
 
@@ -167,7 +167,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = client.SendToConnection("<connectionId>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new RequestContext());
+            Response response = client.SendToConnection("<connectionId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
             Console.WriteLine(response.Status);
         }
 
@@ -191,7 +191,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = await client.SendToConnectionAsync("<connectionId>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new RequestContext());
+            Response response = await client.SendToConnectionAsync("<connectionId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
             Console.WriteLine(response.Status);
         }
 
@@ -211,7 +211,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = client.RemoveConnectionFromAllGroups("<connectionId>", new RequestContext());
+            Response response = client.RemoveConnectionFromAllGroups("<connectionId>");
             Console.WriteLine(response.Status);
         }
 
@@ -231,7 +231,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = await client.RemoveConnectionFromAllGroupsAsync("<connectionId>", new RequestContext());
+            Response response = await client.RemoveConnectionFromAllGroupsAsync("<connectionId>");
             Console.WriteLine(response.Status);
         }
 
@@ -251,7 +251,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = client.CloseGroupConnections("<group>", new string[] { "<excluded>" }, "<reason>", new RequestContext());
+            Response response = client.CloseGroupConnections("<group>", new string[] { "<excluded>" }, "<reason>");
             Console.WriteLine(response.Status);
         }
 
@@ -271,7 +271,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = await client.CloseGroupConnectionsAsync("<group>", new string[] { "<excluded>" }, "<reason>", new RequestContext());
+            Response response = await client.CloseGroupConnectionsAsync("<group>", new string[] { "<excluded>" }, "<reason>");
             Console.WriteLine(response.Status);
         }
 
@@ -295,7 +295,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = client.SendToGroup("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new string[] { "<excluded>" }, "<filter>", new RequestContext());
+            Response response = client.SendToGroup("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new string[] { "<excluded>" }, "<filter>");
             Console.WriteLine(response.Status);
         }
 
@@ -319,7 +319,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = await client.SendToGroupAsync("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new string[] { "<excluded>" }, "<filter>", new RequestContext());
+            Response response = await client.SendToGroupAsync("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new string[] { "<excluded>" }, "<filter>");
             Console.WriteLine(response.Status);
         }
 
@@ -339,7 +339,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = client.RemoveConnectionFromGroup("<group>", "<connectionId>", new RequestContext());
+            Response response = client.RemoveConnectionFromGroup("<group>", "<connectionId>");
             Console.WriteLine(response.Status);
         }
 
@@ -359,7 +359,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = await client.RemoveConnectionFromGroupAsync("<group>", "<connectionId>", new RequestContext());
+            Response response = await client.RemoveConnectionFromGroupAsync("<group>", "<connectionId>");
             Console.WriteLine(response.Status);
         }
 
@@ -379,7 +379,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = client.AddConnectionToGroup("<group>", "<connectionId>", new RequestContext());
+            Response response = client.AddConnectionToGroup("<group>", "<connectionId>");
             Console.WriteLine(response.Status);
         }
 
@@ -399,7 +399,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = await client.AddConnectionToGroupAsync("<group>", "<connectionId>", new RequestContext());
+            Response response = await client.AddConnectionToGroupAsync("<group>", "<connectionId>");
             Console.WriteLine(response.Status);
         }
 
@@ -419,7 +419,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = client.CloseUserConnections("<userId>", new string[] { "<excluded>" }, "<reason>", new RequestContext());
+            Response response = client.CloseUserConnections("<userId>", new string[] { "<excluded>" }, "<reason>");
             Console.WriteLine(response.Status);
         }
 
@@ -439,7 +439,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = await client.CloseUserConnectionsAsync("<userId>", new string[] { "<excluded>" }, "<reason>", new RequestContext());
+            Response response = await client.CloseUserConnectionsAsync("<userId>", new string[] { "<excluded>" }, "<reason>");
             Console.WriteLine(response.Status);
         }
 
@@ -463,7 +463,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = client.SendToUser("<userId>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<filter>", new RequestContext());
+            Response response = client.SendToUser("<userId>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<filter>");
             Console.WriteLine(response.Status);
         }
 
@@ -487,7 +487,7 @@ namespace Azure.Messaging.WebPubSub.Samples
 
             var data = File.OpenRead("<filePath>");
 
-            Response response = await client.SendToUserAsync("<userId>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<filter>", new RequestContext());
+            Response response = await client.SendToUserAsync("<userId>", RequestContent.Create(data), ContentType.ApplicationOctetStream, "<filter>");
             Console.WriteLine(response.Status);
         }
 
@@ -507,7 +507,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = client.RemoveUserFromAllGroups("<userId>", new RequestContext());
+            Response response = client.RemoveUserFromAllGroups("<userId>");
             Console.WriteLine(response.Status);
         }
 
@@ -527,7 +527,7 @@ namespace Azure.Messaging.WebPubSub.Samples
         {
             var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
 
-            Response response = await client.RemoveUserFromAllGroupsAsync("<userId>", new RequestContext());
+            Response response = await client.RemoveUserFromAllGroupsAsync("<userId>");
             Console.WriteLine(response.Status);
         }
     }

@@ -177,7 +177,7 @@ namespace Azure.Messaging.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -214,7 +214,7 @@ namespace Azure.Messaging.WebPubSub
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -394,7 +394,7 @@ namespace Azure.Messaging.WebPubSub
         /// </summary>
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -432,7 +432,7 @@ namespace Azure.Messaging.WebPubSub
         /// </summary>
         /// <param name="connectionId"> The connection Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -684,7 +684,7 @@ namespace Azure.Messaging.WebPubSub
         /// </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -724,7 +724,7 @@ namespace Azure.Messaging.WebPubSub
         /// </summary>
         /// <param name="group"> Target group name, which length should be greater than 0 and less than 1025. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="excluded"> Excluded connection Ids. </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -910,7 +910,7 @@ namespace Azure.Messaging.WebPubSub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: "sendToGroup" | "joinLeaveGroup". </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -948,7 +948,7 @@ namespace Azure.Messaging.WebPubSub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: "sendToGroup" | "joinLeaveGroup". </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, revoke the permission for all targets. If set, revoke the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -986,7 +986,7 @@ namespace Azure.Messaging.WebPubSub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: "sendToGroup" | "joinLeaveGroup". </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1024,7 +1024,7 @@ namespace Azure.Messaging.WebPubSub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: "sendToGroup" | "joinLeaveGroup". </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, get the permission for all targets. If set, get the permission for the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1062,7 +1062,7 @@ namespace Azure.Messaging.WebPubSub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: "sendToGroup" | "joinLeaveGroup". </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1100,7 +1100,7 @@ namespace Azure.Messaging.WebPubSub
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: &quot;sendToGroup&quot; | &quot;joinLeaveGroup&quot;. </param>
+        /// <param name="permission"> The permission: current supported actions are joinLeaveGroup and sendToGroup. Allowed values: "sendToGroup" | "joinLeaveGroup". </param>
         /// <param name="connectionId"> Target connection Id. </param>
         /// <param name="targetName"> Optional. If not set, grant the permission to all the targets. If set, grant the permission to the specific target. The meaning of the target depends on the specific permission. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1284,7 +1284,7 @@ namespace Azure.Messaging.WebPubSub
         /// </summary>
         /// <param name="userId"> The user Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>
@@ -1323,7 +1323,7 @@ namespace Azure.Messaging.WebPubSub
         /// </summary>
         /// <param name="userId"> The user Id. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> Upload file type. Allowed values: &quot;application/json&quot; | &quot;application/octet-stream&quot; | &quot;text/plain&quot;. </param>
+        /// <param name="contentType"> Upload file type. Allowed values: "application/json" | "application/octet-stream" | "text/plain". </param>
         /// <param name="filter"> Following OData filter syntax to filter out the subscribers receiving the messages. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> or <paramref name="content"/> is null. </exception>

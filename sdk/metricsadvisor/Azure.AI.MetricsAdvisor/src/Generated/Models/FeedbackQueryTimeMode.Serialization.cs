@@ -11,7 +11,6 @@ namespace Azure.AI.MetricsAdvisor
 {
     internal static partial class FeedbackQueryTimeModeExtensions
     {
-
         public static FeedbackQueryTimeMode ToFeedbackQueryTimeMode(this string value)
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "MetricTimestamp")) return FeedbackQueryTimeMode.MetricTimestamp;

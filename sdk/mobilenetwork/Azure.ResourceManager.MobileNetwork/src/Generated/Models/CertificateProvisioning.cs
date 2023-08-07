@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of CertificateProvisioning. </summary>
-        /// <param name="state"> The certificate&apos;s provisioning state. </param>
+        /// <param name="state"> The certificate's provisioning state. </param>
         /// <param name="reason"> Reason for certificate provisioning failure. </param>
         internal CertificateProvisioning(CertificateProvisioningState? state, string reason)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Reason = reason;
         }
 
-        /// <summary> The certificate&apos;s provisioning state. </summary>
+        /// <summary> The certificate's provisioning state. </summary>
         public CertificateProvisioningState? State { get; }
         /// <summary> Reason for certificate provisioning failure. </summary>
         public string Reason { get; }

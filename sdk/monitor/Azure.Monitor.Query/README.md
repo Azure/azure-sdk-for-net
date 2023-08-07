@@ -81,7 +81,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -140,19 +140,24 @@ To find the resource ID:
 1. In the resulting JSON, copy the value of the `id` property.
 
 ```C# Snippet:QueryResource
-string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
 
-Response<LogsQueryResult> result = await client.QueryResourceAsync(
+string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
+string tableName = "<table_name>";
+Response<LogsQueryResult> results = await client.QueryResourceAsync(
     new ResourceIdentifier(resourceId),
-    "AzureActivity | top 10 by TimeGenerated",
-    new QueryTimeRange(TimeSpan.FromDays(1)));
+    $"{tableName} | distinct * | project TimeGenerated",
+    new QueryTimeRange(TimeSpan.FromDays(7)));
 
-LogsTable table = result.Value.Table;
-
-foreach (LogsTableRow row in table.Rows)
+LogsTable resultTable = results.Value.Table;
+foreach (LogsTableRow row in resultTable.Rows)
 {
     Console.WriteLine($"{row["OperationName"]} {row["ResourceGroup"]}");
+}
+
+foreach (LogsTableColumn columns in resultTable.Columns)
+{
+    Console.WriteLine("Name: " + columns.Name + " Type: " + columns.Type);
 }
 ```
 
@@ -464,7 +469,7 @@ var client = new MetricsQueryClient(new DefaultAzureCredential());
 
 Response<MetricsQueryResult> results = await client.QueryResourceAsync(
     resourceId,
-    new[] { "Query Success Rate", "Query Count" }
+    new[] { "AvailabilityRate_Query", "Query Count" }
 );
 
 foreach (MetricResult metric in results.Value.Metrics)

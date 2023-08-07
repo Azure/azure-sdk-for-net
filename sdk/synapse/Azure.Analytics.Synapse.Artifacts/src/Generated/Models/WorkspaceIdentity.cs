@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of WorkspaceIdentity. </summary>
-        /// <param name="type"> The identity type. Currently the only supported type is &apos;SystemAssigned&apos;. </param>
+        /// <param name="type"> The identity type. Currently the only supported type is 'SystemAssigned'. </param>
         /// <param name="principalId"> The principal id of the identity. </param>
         /// <param name="tenantId"> The client tenant id of the identity. </param>
         internal WorkspaceIdentity(WorkspaceIdentityType type, string principalId, string tenantId)
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             TenantId = tenantId;
         }
 
-        /// <summary> The identity type. Currently the only supported type is &apos;SystemAssigned&apos;. </summary>
+        /// <summary> The identity type. Currently the only supported type is 'SystemAssigned'. </summary>
         public WorkspaceIdentityType Type { get; }
         /// <summary> The principal id of the identity. </summary>
         public string PrincipalId { get; }

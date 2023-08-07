@@ -1,8 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using Azure.Storage.DataMovement.Models;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement
 {
@@ -12,16 +11,18 @@ namespace Azure.Storage.DataMovement
     public class TransferManagerOptions
     {
         /// <summary>
-        /// Optional. An object for tracking progress of all transfers.
-        /// See <see cref="StorageTransferProgress"/> for details on what is tracked.
+        /// Define an implementation of ClientOptions such that DiagnosticOptions can be used.
+        /// Don't want to expose full ClientOptions.
         /// </summary>
-        internal IProgress<StorageTransferProgress> ProgressHandler { get; set; }
+        internal class TransferManagerClientOptions : ClientOptions
+        {
+        }
 
         /// <summary>
         /// Optional. Sets the way errors during a transfer will be handled.
-        /// Default is <see cref="ErrorHandlingOptions.StopOnAllFailures"/>.
+        /// Default is <see cref="DataTransferErrorMode.StopOnAnyFailure"/>.
         /// </summary>
-        public ErrorHandlingOptions ErrorHandling { get; set; }
+        public DataTransferErrorMode ErrorHandling { get; set; }
 
         /// <summary>
         /// The maximum number of workers that may be used in a parallel transfer.
@@ -32,6 +33,13 @@ namespace Azure.Storage.DataMovement
         /// Optional. Defines the options for creating a checkpointer which is used for saving
         /// transfer state so transfers can be resumed.
         /// </summary>
-        public TransferCheckpointerOptions CheckpointerOptions { get; set; }
+        public TransferCheckpointStoreOptions CheckpointerOptions { get; set; }
+
+        internal TransferManagerClientOptions ClientOptions { get; } = new();
+
+        /// <summary>
+        /// Gets the transfer manager diagnostic options.
+        /// </summary>
+        public DiagnosticsOptions Diagnostics => ClientOptions.Diagnostics;
     }
 }

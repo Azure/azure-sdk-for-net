@@ -27,14 +27,7 @@ To get the inferred pTNM staging and histology codes for an oncology patient, ca
 
 ```C# Snippet:HealthInsightsOncoPhenotypeData
 // Create Patient
-PatientRecord patient1 = new PatientRecord("patient_id")
-{
-    Info = new PatientInfo
-    {
-        BirthDate = new System.DateTime(1979, 10, 08),
-        Sex = PatientInfoSex.Female
-    }
-};
+PatientRecord patient1 = new PatientRecord("patient_id");
 
 // Add imaging document
 string docContent1 = @"
@@ -133,8 +126,8 @@ PatientDocument patientDocument3 = new PatientDocument(DocumentType.Note,
 };
 patient1.Data.Add(patientDocument3);
 
-// Set configuration to include evidence for the cancer staging inferences
-var configuration = new OncoPhenotypeModelConfiguration() { IncludeEvidence = true };
+// Set configuration to include evidence for the cancer staging inferences and to check for whether a cancer case exists in the text
+var configuration = new OncoPhenotypeModelConfiguration() { IncludeEvidence = true, CheckForCancerCase = true };
 
 // Create OncoPhenotypeData with patient and configration
 var oncoPhenotypeData = new OncoPhenotypeData(new List<PatientRecord> { patient1 }) { Configuration = configuration };

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
         protected SubscriptionResource DefaultSubscription { get; private set; }
         public AzureLocation DefaultLocation => AzureLocation.EastUS;
         public const string DefaultResourceGroupNamePrefix = "DiagnosticsRp-Synthetics-Public-Global";
-        public const string SubId = "db1ab6f0-4769-4b27-930e-01e2ef9c123c";
+        public const string SubId = "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba";
 
         protected SelfHelpManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)

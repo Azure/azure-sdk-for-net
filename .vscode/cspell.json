@@ -1,5 +1,5 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "language": "en_US",
   "languageId": "csharp",
   "dictionaries": [
@@ -31,6 +31,7 @@
     "*.sln",
     "*.user",
     ".vscode/cspell.json",
+    "assets.json",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -42,11 +43,14 @@
     "sdk/insights/*/api/*.cs",
     "sdk/machinelearningservices/*/api/*.cs",
     "sdk/modelsrepository/*/api/*.cs",
-    "sdk/monitor/*/api/*.cs",
+    "sdk/monitor/Azure.ResourceManager.Monitor/api/*.cs",
+    "sdk/monitor/Microsoft.Azure.Management.Monitor/**/*.cs",
     "sdk/objectanchors/*/api/*.cs",
     "sdk/purview/*/api/*.cs",
     "sdk/remoterendering/*/api/*.cs",
-    "sdk/videoanalyzer/*/api/*.cs"
+    "sdk/videoanalyzer/*/api/*.cs",
+    "sdk/newrelicobservability/*/api/*.cs",
+    "sdk/paloaltonetworks.ngfw/*/api/*.cs"
   ],
   // cspell is not case sensitive
   // Sort words alphabetically to make this list easier to use
@@ -54,6 +58,7 @@
     "apos",
     "azsdk",
     "blazor",
+    "centralus",
     "contoso",
     "cref",
     "deduplication",
@@ -61,21 +66,28 @@
     "deserializes",
     "diagnoser",
     "dicom",
+    "distro",
     "dont",
     "dotnetcli",
     "dtmf",
+    "eastus",
     "epsg",
     "expando",
     "fhir",
     "finalizer",
     "finalizers",
     "hnsw",
+    "ienumerable",
     "illumos",
     "interventional",
     "ints",
     "kubernetes",
+    "kusto",
     "lucene",
     "mgmt",
+    "msal",
+    "Mtls",
+    "northcentralus",
     "nunit",
     "odata",
     "onco",
@@ -93,6 +105,7 @@
     "retriable",
     "signup",
     "skus",
+    "southcentralus",
     "structs",
     "uints",
     "unbilled",
@@ -100,8 +113,10 @@
     "unformattable",
     "unhold",
     "uninstrumented",
+    "vcpus",
     "vmss",
     "vnet",
+    "westcentralus",
     "westus",
     "xunit"
   ],
@@ -214,7 +229,14 @@
         "swappable",
         "ssdzrs",
         "dscp",
-        "vmguest"
+        "vmguest",
+        "vhdx"
+      ]
+    },
+    {
+      "filename": "**/sdk/confidentialledger/**/*.cs",
+      "words": [
+        "ccfs"
       ]
     },
     {
@@ -283,6 +305,19 @@
       ]
     },
     {
+      "filename": "**/sdk/cosmosdbforpostgresql/**/*",
+      "words": [
+        "Citus"
+      ]
+    },
+    {
+      "filename": "**/sdk/costmanagement/**/*",
+      "words": [
+        "ahub",
+        "kpis"
+      ]
+    },
+    {
       "filename": "**/sdk/customer-insights/**/*.cs",
       "words": [
         "kpis"
@@ -348,8 +383,7 @@
     {
       "filename": "**/sdk/datashare/**/*.cs",
       "words": [
-        "adls",
-        "kusto"
+        "adls"
       ]
     },
     {
@@ -552,13 +586,13 @@
       "words": [
         "Azfw",
         "Conditon",
+        "Diffie",
         "Ddos",
-        "ddos",
         "Dnat",
         "Dscp",
-        "dscp",
         "Eapmscha",
         "Eaptls",
+        "Fips",
         "Fqdns",
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
@@ -579,11 +613,29 @@
         "WAFV",
         "Wans",
         "Idps",
-        "idps",
         "Ocsp",
         "Afri",
         "Apac",
         "Latam"
+      ]
+    },
+    {
+      "filename": "**/sdk/networkcloud/**/*.cs",
+      "words": [
+        "Reimage",
+        "Uncordon",
+        "Uncordoned",
+        "Ipam",
+        "Virtio",
+        "nics",
+        "Lldp",
+        "Nics",
+        "Dpdk",
+        "Sriov",
+        "Sata",
+        "Uefi",
+        "Ipvlan",
+        "Macvlan"
       ]
     },
     {
@@ -603,7 +655,6 @@
     {
       "filename": "**/sdk/kusto/**/*.cs",
       "words": [
-        "kusto",
         "tbps",
         "scsv",
         "sohsv",
@@ -615,6 +666,15 @@
       "words": [
         "reimage",
         "reimaging"
+      ]
+    },
+    {
+      "filename": "**/sdk/managednetworkfabric/**/*.cs",
+      "words": [
+        "evpn",
+        "mbps",
+        "gshut",
+        "dscp"
       ]
     },
     {
@@ -630,9 +690,46 @@
       ]
     },
     {
+      "filename": "**/sdk/monitor/**/*",
+      "words": [
+        "AMPM",
+        "bcdr",
+        "cikey",
+        "faas",
+        "gzipped",
+        "gzipping",
+        "DDYYYYHHMMSS",
+        "hmac",
+        "HMACSHA",
+        "ikey",
+        "itsm",
+        "jdbc",
+        "jioindiacentral",
+        "jioindiawest",
+        "kaby",
+        "khtml",
+        "Localizable",
+        "Milli",
+        "msdocs",
+        "mslinks",
+        "myvm",
+        "onboarded",
+        "opinsights",
+        "OTELRESOURCE",
+        "otlp",
+        "TMPDIR",
+        "uaecentral",
+        "uaenorth",
+        "uksouth",
+        "ukwest",
+        "webwk"
+      ]
+    },
+    {
       "filename": "**/sdk/mysql/**/*.cs",
       "words": [
-        "byok"
+        "byok",
+        "gtid"
       ]
     },
     {
@@ -836,6 +933,12 @@
       ]
     },
     {
+      "filename": "**/sdk/sphere/**/*.cs",
+      "words": [
+        "Nwfs"
+      ]
+    },
+    {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
         "CIAS",
@@ -926,6 +1029,8 @@
         "byoa",
         "distcp",
         "eloqua",
+        "ename",
+        "evalue",
         "exfiltration",
         "fqdns",
         "hana",
@@ -947,6 +1052,8 @@
         "vertica",
         "xero",
         "Asana",
+        "Ename",
+        "Evalue",
         "Twilio"
       ]
     },
@@ -959,7 +1066,6 @@
     {
       "filename": "**/sdk/synapse/**/*.cs",
       "words": [
-        "kusto",
         "nchar",
         "ntext",
         "nvarchar",
@@ -993,7 +1099,8 @@
         "Zilla",
         "Guage",
         "Plex",
-        "Vstsrm"
+        "Vstsrm",
+        "Localizable"
       ]
     },
     {
@@ -1069,6 +1176,18 @@
         "Probs",
         "Logprobs",
         "Logit"
+      ]
+    },
+    {
+      "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
+      "words": [
+        "RELRO",
+        "Relro",
+        "relro",
+        "Rpath",
+        "rpath",
+        "runpath",
+        "Cves"
       ]
     }
   ],

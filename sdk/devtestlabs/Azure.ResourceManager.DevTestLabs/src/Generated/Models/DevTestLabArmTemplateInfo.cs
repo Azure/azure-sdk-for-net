@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabArmTemplateInfo. </summary>
-        /// <param name="template"> The template&apos;s contents. </param>
+        /// <param name="template"> The template's contents. </param>
         /// <param name="parameters"> The parameters of the ARM template. </param>
         internal DevTestLabArmTemplateInfo(BinaryData template, BinaryData parameters)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary>
-        /// The template&apos;s contents.
+        /// The template's contents.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

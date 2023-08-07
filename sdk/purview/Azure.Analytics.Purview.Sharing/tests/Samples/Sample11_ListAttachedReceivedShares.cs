@@ -23,14 +23,14 @@ namespace Azure.Analytics.Purview.Sharing.Tests.Samples
 
 #if SNIPPET
             var credential = new DefaultAzureCredential();
-            var endPoint = "https://my-account-name.purview.azure.com/share";
+            var endPoint = new Uri("https://my-account-name.purview.azure.com/share");
             var receivedSharesClient = new ReceivedSharesClient(endPoint, credential);
 
-            List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("referenceName").ToEnumerableAsync();
+            List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("referenceName", null, null, new()).ToEnumerableAsync();
 #else
             var receivedSharesClient = GetReceivedSharesClient();
 
-            List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("/subscriptions/0f3dcfc3-18f8-4099-b381-8353e19d43a7/resourceGroups/faisalaltell/providers/Microsoft.Storage/storageAccounts/ftreceiversan").ToEnumerableAsync();
+            List<BinaryData> createResponse = await receivedSharesClient.GetAllAttachedReceivedSharesAsync("/subscriptions/d941aad1-e4af-44a5-a70e-0381a9f702f1/resourcegroups/dev-rg/providers/Microsoft.Storage/storageAccounts/consumeraccount", null, null, new()).ToEnumerableAsync();
 #endif
 
             #endregion

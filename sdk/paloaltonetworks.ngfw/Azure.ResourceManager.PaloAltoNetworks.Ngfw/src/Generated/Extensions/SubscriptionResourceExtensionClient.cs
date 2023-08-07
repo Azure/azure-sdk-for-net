@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _firewallResourceFirewallsClientDiagnostics;
-        private FirewallsRestOperations _firewallResourceFirewallsRestClient;
-        private ClientDiagnostics _localRulestackResourceLocalRulestacksClientDiagnostics;
-        private LocalRulestacksRestOperations _localRulestackResourceLocalRulestacksRestClient;
+        private ClientDiagnostics _paloAltoNetworksFirewallFirewallsClientDiagnostics;
+        private FirewallsRestOperations _paloAltoNetworksFirewallFirewallsRestClient;
+        private ClientDiagnostics _localRulestackClientDiagnostics;
+        private LocalRulestacksRestOperations _localRulestackRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
         }
 
-        private ClientDiagnostics FirewallResourceFirewallsClientDiagnostics => _firewallResourceFirewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", FirewallResource.ResourceType.Namespace, Diagnostics);
-        private FirewallsRestOperations FirewallResourceFirewallsRestClient => _firewallResourceFirewallsRestClient ??= new FirewallsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FirewallResource.ResourceType));
-        private ClientDiagnostics LocalRulestackResourceLocalRulestacksClientDiagnostics => _localRulestackResourceLocalRulestacksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", LocalRulestackResource.ResourceType.Namespace, Diagnostics);
-        private LocalRulestacksRestOperations LocalRulestackResourceLocalRulestacksRestClient => _localRulestackResourceLocalRulestacksRestClient ??= new LocalRulestacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LocalRulestackResource.ResourceType));
+        private ClientDiagnostics PaloAltoNetworksFirewallFirewallsClientDiagnostics => _paloAltoNetworksFirewallFirewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", PaloAltoNetworksFirewallResource.ResourceType.Namespace, Diagnostics);
+        private FirewallsRestOperations PaloAltoNetworksFirewallFirewallsRestClient => _paloAltoNetworksFirewallFirewallsRestClient ??= new FirewallsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PaloAltoNetworksFirewallResource.ResourceType));
+        private ClientDiagnostics LocalRulestackClientDiagnostics => _localRulestackClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", LocalRulestackResource.ResourceType.Namespace, Diagnostics);
+        private LocalRulestacksRestOperations LocalRulestackRestClient => _localRulestackRestClient ??= new LocalRulestacksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LocalRulestackResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirewallResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FirewallResource> GetFirewallResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PaloAltoNetworksFirewallResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewallsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FirewallResourceFirewallsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirewallResourceFirewallsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirewallResource(Client, FirewallResourceData.DeserializeFirewallResourceData(e)), FirewallResourceFirewallsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFirewallResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PaloAltoNetworksFirewallFirewallsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PaloAltoNetworksFirewallFirewallsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), PaloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPaloAltoNetworksFirewalls", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirewallResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FirewallResource> GetFirewallResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewalls(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FirewallResourceFirewallsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FirewallResourceFirewallsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirewallResource(Client, FirewallResourceData.DeserializeFirewallResourceData(e)), FirewallResourceFirewallsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetFirewallResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => PaloAltoNetworksFirewallFirewallsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PaloAltoNetworksFirewallFirewallsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PaloAltoNetworksFirewallResource(Client, PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(e)), PaloAltoNetworksFirewallFirewallsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPaloAltoNetworksFirewalls", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LocalRulestackResource> GetLocalRulestackResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LocalRulestackResource> GetLocalRulestacksAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LocalRulestackResourceLocalRulestacksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocalRulestackResourceLocalRulestacksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackResourceData.DeserializeLocalRulestackResourceData(e)), LocalRulestackResourceLocalRulestacksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocalRulestackResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocalRulestackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocalRulestackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), LocalRulestackClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocalRulestacks", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -125,11 +125,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LocalRulestackResource> GetLocalRulestackResources(CancellationToken cancellationToken = default)
+        public virtual Pageable<LocalRulestackResource> GetLocalRulestacks(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LocalRulestackResourceLocalRulestacksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocalRulestackResourceLocalRulestacksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackResourceData.DeserializeLocalRulestackResourceData(e)), LocalRulestackResourceLocalRulestacksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocalRulestackResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LocalRulestackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocalRulestackRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LocalRulestackResource(Client, LocalRulestackData.DeserializeLocalRulestackData(e)), LocalRulestackClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocalRulestacks", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -1,22 +1,67 @@
 # Release History
 
-## 5.3.0-beta.4 (Unreleased)
+## 5.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+### Bugs Fixed
+
+### Other Changes
+
+## 5.3.0 (2023-06-19)
+
+### Features Added
+
+- Added the following methods: `TextAnalyticsClient.AnalyzeActions` and `TextAnalyticsClient.AnalyzeActionsAsync`.
+- Hid `TextAnalyticsClient.StartAnalyzeActions` and `TextAnalyticsClient.StartAnalyzeActionsAsync` in favor of `TextAnalyticsClient.AnalyzeActions` and `TextAnalyticsClient.AnalyzeActionsAsync`. These methods can still be used but are not shown in code suggestions.
+- Added the following methods: `TextAnalyticsClient.AnalyzeHealthcareEntities` and `TextAnalyticsClient.AnalyzeHealthcareEntitiesAsync`.
+- Hid `TextAnalyticsClient.StartAnalyzeHealthcareEntities` and `TextAnalyticsClient.StartAnalyzeHealthcareEntitiesAsync` in favor of `TextAnalyticsClient.AnalyzeHealthcareEntities` and `TextAnalyticsClient.AnalyzeHealthcareEntitiesAsync`. These methods can still be used but are not shown in code suggestions.
+- Added the following methods: `TextAnalyticsClient.SingleLabelClassify` and `TextAnalyticsClient.SingleLabelClassifyAsync`.
+- Hid `TextAnalyticsClient.StartSingleLabelClassify` and `TextAnalyticsClient.StartSingleLabelClassifyAsync` in favor of `TextAnalyticsClient.SingleLabelClassify` and `TextAnalyticsClient.SingleLabelClassifyAsync`. These methods can still be used but are not shown in code suggestions.
+- Added the following methods: `TextAnalyticsClient.MultiLabelClassify` and `TextAnalyticsClient.MultiLabelClassifyAsync`.
+- Hid `TextAnalyticsClient.StartMultiLabelClassify` and `TextAnalyticsClient.StartMultiLabelClassifyAsync` in favor of `TextAnalyticsClient.MultiLabelClassify` and `TextAnalyticsClient.MultiLabelClassifyAsync`. These methods can still be used but are not shown in code suggestions.
+- Added the following methods: `TextAnalyticsClient.RecognizeCustomEntities` and `TextAnalyticsClient.RecognizeCustomEntitiesAsync`.
+- Hid `TextAnalyticsClient.StartRecognizeCustomEntities` and `TextAnalyticsClient.StartRecognizeCustomEntitiesAsync` in favor of `TextAnalyticsClient.RecognizeCustomEntities` and `TextAnalyticsClient.RecognizeCustomEntitiesAsync`. These methods can still be used but are not shown in code suggestions.
+
+### Breaking Changes
+
 > Note: The following breaking changes only apply when upgrading from the previous beta versions (5.3.0-beta.*) and do not impact stable versions.
 
-- Removed support for dynamic classification.
+- Changes to extractive summarization:
+  - Renamed the `TextAnalyticsClient.StartExtractSummary` and `TextAnalyticsClient.StartExtractSummaryAsync` methods to `TextAnalyticsClient.ExtractiveSummarize` and `TextAnalyticsClient.ExtractiveSummarizeAsync` respectively.
+  - Renamed the `TextAnalyticsActions.ExtractSummaryActions` property to `TextAnalyticsActions.ExtractiveSummarizeActions`.
+  - Renamed the `AnalyzeActionResult.ExtractSummaryResults` property to `AnalyzeActionResult.ExtractiveSummarizeResults`.
+  - Renamed the `ExtractSummaryAction` class to `ExtractiveSummarizeAction`.
+  - Renamed the `ExtractSummaryActionResult` class to `ExtractiveSummarizeActionResult`.
+  - Renamed the `ExtractSummaryOperation` class to `ExtractiveSummarizeOperation`.
+  - Renamed the `ExtractSummaryOptions` class to `ExtractiveSummarizeOptions`.
+  - Renamed the `ExtractSummaryResult` class to `ExtractiveSummarizeResult`.
+  - Renamed the `ExtractSummaryResultCollection` class to `ExtractiveSummarizeResultCollection`.
+  - Renamed the `SummarySentencesOrder` enum to `ExtractiveSummarySentencesOrder`.
+  - Renamed the `SummarySentence` class to `ExtractiveSummarySentence`.
+- Changes to abstractive summarization:
+  - Renamed the `TextAnalyticsClient.StartAbstractSummary` and `TextAnalyticsClient.StartAbstractSummaryAsync` methods to `TextAnalyticsClient.AbstractiveSummarize` and `TextAnalyticsClient.AbstractiveSummarizeAsync` respectively.
+  - Renamed the `TextAnalyticsActions.AbstractSummaryActions` property to `TextAnalyticsActions.AbstractiveSummarizeActions`.
+  - Renamed the `AnalyzeActionResult.AbstractSummaryResults` property to `AnalyzeActionResult.AbstractiveSummarizeResults`.
+  - Renamed the `AbstractSummaryAction` class to `AbstractiveSummarizeAction`.
+  - Renamed the `AbstractSummaryActionResult` class to `AbstractiveSummarizeActionResult`.
+  - Renamed the `AbstractSummaryOperation` class to `AbstractiveSummarizeOperation`.
+  - Renamed the `AbstractSummaryOptions` class to `AbstractiveSummarizeOptions`.
+  - Renamed the `AbstractSummaryResult` class to `AbstractiveSummarizeResult`.
+  - Renamed the `AbstractSummaryResultCollection` class to `AbstractiveSummarizeResultCollection`.
+  - Renamed the `AbstractSummaryAction` class to `AbstractiveSummaryAction`.
+  - Renamed the `SummaryContext` class to `AbstractiveSummaryContext`.
+- Removed support for dynamic classification:
   - Removed the following methods: `TextAnalyticsClient.DynamicClassify` and `TextAnalyticsClient.DynamicClassifyAsync`.
   - Removed the following methods: `TextAnalyticsClient.DynamicClassifyBatch` and `TextAnalyticsClient.DynamicClassifyBatchAsync`.
   - Removed the `DynamicClassifyDocumentResultCollection` class.
   - Removed the `ClassificationType` enum.
 
-### Bugs Fixed
-
 ### Other Changes
+
+The client now defaults to targeting service API version `2023-04-01`.
 
 ## 5.3.0-beta.3 (2023-03-11)
 

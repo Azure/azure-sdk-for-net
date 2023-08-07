@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create an invitation 
+        /// Create an invitation
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create an invitation 
+        /// Create an invitation
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

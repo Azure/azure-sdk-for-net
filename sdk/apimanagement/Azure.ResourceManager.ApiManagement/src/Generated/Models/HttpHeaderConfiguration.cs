@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> HTTP header and it&apos;s value. </summary>
+    /// <summary> HTTP header and it's value. </summary>
     public partial class HttpHeaderConfiguration
     {
         /// <summary> Initializes a new instance of HttpHeaderConfiguration. </summary>

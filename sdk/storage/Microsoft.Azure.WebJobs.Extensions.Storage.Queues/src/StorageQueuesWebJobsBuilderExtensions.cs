@@ -7,9 +7,11 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Queues;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Config;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Queues;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -60,6 +62,32 @@ namespace Microsoft.Extensions.Hosting
                         options.MaxPollingInterval = TimeSpan.FromSeconds(2);
                     }
                 });
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Adds the Storage Queues extension to the provided <see cref="IWebJobsBuilder"/>.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="triggerMetadata">Trigger metadata.</param>
+        /// <returns></returns>
+        public static IWebJobsBuilder AddAzureStorageQueuesScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
+        {
+            IServiceProvider serviceProvider = null;
+            Lazy<QueueScalerProvider> scalerProvider = new Lazy<QueueScalerProvider>(() => new QueueScalerProvider(serviceProvider, triggerMetadata));
+
+            builder.Services.AddSingleton<IScaleMonitorProvider>(resolvedServiceProvider =>
+            {
+                serviceProvider = serviceProvider ?? resolvedServiceProvider;
+                return scalerProvider.Value;
+            });
+
+            builder.Services.AddSingleton<ITargetScalerProvider>(resolvedServiceProvider =>
+            {
+                serviceProvider = serviceProvider ?? resolvedServiceProvider;
+                return scalerProvider.Value;
+            });
 
             return builder;
         }

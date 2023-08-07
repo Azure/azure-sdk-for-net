@@ -9,9 +9,9 @@ namespace Azure.Communication.JobRouter
     public class GetWorkersOptions
     {
         /// <summary>
-        /// If specified, filter workers by worker status.
+        /// If specified, filter workers by worker state.
         /// </summary>
-        public WorkerStateSelector Status { get; set; }
+        public RouterWorkerStateSelector? State { get; set; } = null;
 
         /// <summary>
         /// Worker available in the particular channel.

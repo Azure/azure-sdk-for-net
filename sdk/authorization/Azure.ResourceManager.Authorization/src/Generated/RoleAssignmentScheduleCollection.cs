@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo(&apos;{userId}&apos;) to return all role assignment schedules for the current user. Use $filter=asTarget() to return all role assignment schedules created for the current user. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo('{userId}') to return all role assignment schedules for the current user. Use $filter=asTarget() to return all role assignment schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleAssignmentScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleAssignmentScheduleResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo(&apos;{userId}&apos;) to return all role assignment schedules for the current user. Use $filter=asTarget() to return all role assignment schedules created for the current user. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo('{userId}') to return all role assignment schedules for the current user. Use $filter=asTarget() to return all role assignment schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleAssignmentScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleAssignmentScheduleResource> GetAll(string filter = null, CancellationToken cancellationToken = default)

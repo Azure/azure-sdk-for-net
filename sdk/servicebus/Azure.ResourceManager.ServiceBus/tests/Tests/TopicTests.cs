@@ -8,11 +8,10 @@ using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ServiceBus.Models;
-using Azure.ResourceManager.ServiceBus.Tests.Helpers;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
-    public class TopicTests : ServiceBusTestBase
+    public class TopicTests : ServiceBusManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private ServiceBusTopicCollection _topicCollection;

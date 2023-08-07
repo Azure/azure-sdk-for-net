@@ -4,7 +4,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
@@ -14,6 +13,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 operation-id-mappings:
   CdnEndpoint:
@@ -63,7 +63,7 @@ rename-rules:
   SHA256: Sha256
   EndpointPropertiesUpdateParametersDeliveryPolicy: EndpointDeliveryPolicy
 
-no-property-type-replacement: 
+no-property-type-replacement:
   - ContinentsResponseContinentsItem
   - EndpointPropertiesUpdateParametersDefaultOriginGroup
   - EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink
@@ -91,7 +91,7 @@ rename-mapping:
   CacheLevel: CdnCacheLevel
   SslProtocol: DeliveryRuleSslProtocol
   SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
-  
+
 directive:
   - from: swagger-document
     where: $.definitions..parameters

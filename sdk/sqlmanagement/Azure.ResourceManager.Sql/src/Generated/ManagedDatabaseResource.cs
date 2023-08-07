@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the database&apos;s vulnerability assessment.
+        /// Gets the database's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets the database&apos;s vulnerability assessment.
+        /// Gets the database's vulnerability assessment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s short term retention policy.
+        /// Gets a managed database's short term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s short term retention policy.
+        /// Gets a managed database's short term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s security alert policy.
+        /// Gets a managed database's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s security alert policy.
+        /// Gets a managed database's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s transparent data encryption.
+        /// Gets a managed database's transparent data encryption.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s transparent data encryption.
+        /// Gets a managed database's transparent data encryption.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s long term retention policy.
+        /// Gets a managed database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s long term retention policy.
+        /// Gets a managed database's long term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s Advanced Threat Protection state.
+        /// Gets a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s Advanced Threat Protection state.
+        /// Gets a managed database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

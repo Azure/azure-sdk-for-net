@@ -220,7 +220,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
 
         private ParameterBindingData ConvertToParameterBindingData(BlobAttribute blobAttribute)
         {
-            var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
+            var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath, isParameterBindingData: true);
             return CreateParameterBindingData(blobAttribute.Connection, blobPath.BlobName, blobPath.ContainerName);
         }
 

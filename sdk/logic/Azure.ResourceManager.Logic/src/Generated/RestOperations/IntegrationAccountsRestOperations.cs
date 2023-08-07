@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Logic
             return message;
         }
 
-        /// <summary> Gets the integration account&apos;s Key Vault keys. </summary>
+        /// <summary> Gets the integration account's Key Vault keys. </summary>
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        /// <summary> Gets the integration account&apos;s Key Vault keys. </summary>
+        /// <summary> Gets the integration account's Key Vault keys. </summary>
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Logic
             return message;
         }
 
-        /// <summary> Logs the integration account&apos;s tracking events. </summary>
+        /// <summary> Logs the integration account's tracking events. </summary>
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        /// <summary> Logs the integration account&apos;s tracking events. </summary>
+        /// <summary> Logs the integration account's tracking events. </summary>
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>

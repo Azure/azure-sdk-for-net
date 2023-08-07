@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProjectDevBoxDefinitionResource" /> and their operations.
-    /// Each <see cref="ProjectDevBoxDefinitionResource" /> in the collection will belong to the same instance of <see cref="ProjectResource" />.
-    /// To get a <see cref="ProjectDevBoxDefinitionCollection" /> instance call the GetProjectDevBoxDefinitions method from an instance of <see cref="ProjectResource" />.
+    /// Each <see cref="ProjectDevBoxDefinitionResource" /> in the collection will belong to the same instance of <see cref="DevCenterProjectResource" />.
+    /// To get a <see cref="ProjectDevBoxDefinitionCollection" /> instance call the GetProjectDevBoxDefinitions method from an instance of <see cref="DevCenterProjectResource" />.
     /// </summary>
     public partial class ProjectDevBoxDefinitionCollection : ArmCollection, IEnumerable<ProjectDevBoxDefinitionResource>, IAsyncEnumerable<ProjectDevBoxDefinitionResource>
     {
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProjectResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProjectResource.ResourceType), nameof(id));
+            if (id.ResourceType != DevCenterProjectResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevCenterProjectResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ProjectDevBoxDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProjectDevBoxDefinitionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ProjectDevBoxDefinitionResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProjectDevBoxDefinitionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)

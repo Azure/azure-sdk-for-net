@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.EnergyServices.Models
 {
-    /// <summary> The list of Energy services resource&apos;s Data Partition Names. </summary>
+    /// <summary> The list of Energy services resource's Data Partition Names. </summary>
     public partial class DataPartitionName
     {
         /// <summary> Initializes a new instance of DataPartitionName. </summary>

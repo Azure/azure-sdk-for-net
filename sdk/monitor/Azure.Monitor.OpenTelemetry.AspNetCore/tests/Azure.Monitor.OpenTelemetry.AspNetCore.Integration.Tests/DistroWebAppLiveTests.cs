@@ -13,7 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 #if NET6_0_OR_GREATER
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
@@ -35,9 +37,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         public DistroWebAppLiveTests(bool isAsync) : base(isAsync) { }
 
         [RecordedTest]
+        [SyncOnly] // This test cannot run concurrently with another test because OTel instruments the process and will cause side effects.
+        [Ignore("Test fails in Mac-OS.")]
         public async Task VerifyDistro()
         {
-            // SETUP TELEMETRY CLIENT (FOR QUERIYNG LOG ANALYTICS)
+            // SETUP TELEMETRY CLIENT (FOR QUERYING LOG ANALYTICS)
             _logsQueryClient = InstrumentClient(new LogsQueryClient(
                 TestEnvironment.LogsEndpoint,
                 TestEnvironment.Credential,
@@ -88,11 +92,13 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
 
             // SHUTDOWN
+            var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
+            tracerProvider.ForceFlush();
+            tracerProvider.Shutdown();
 
-            // NOTE: If this test starts failing, Flushing may be necessary.
-            //var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
-            //tracerProvider.ForceFlush();
-            //tracerProvider.Shutdown();
+            var meterProvider = app.Services.GetRequiredService<MeterProvider>();
+            meterProvider.ForceFlush();
+            meterProvider.Shutdown();
 
             await app.StopAsync(); // shutdown to prevent collecting the log queries.
 
@@ -127,11 +133,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             var rowCount = table?.Rows.Count;
             if (rowCount == null || rowCount == 0)
             {
-                Assert.Inconclusive($"No telemetry records were found: {description}");
+                Assert.Fail($"No telemetry records were found: {description}");
             }
             else
             {
-                Assert.True(true);
+                Assert.Pass();
             }
         }
     }

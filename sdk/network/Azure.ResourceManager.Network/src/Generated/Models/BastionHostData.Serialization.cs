@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enableTunneling"u8);
                 writer.WriteBooleanValue(EnableTunneling.Value);
             }
+            if (Optional.IsDefined(EnableKerberos))
+            {
+                writer.WritePropertyName("enableKerberos"u8);
+                writer.WriteBooleanValue(EnableKerberos.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -117,6 +122,7 @@ namespace Azure.ResourceManager.Network
             Optional<bool> enableIPConnect = default;
             Optional<bool> enableShareableLink = default;
             Optional<bool> enableTunneling = default;
+            Optional<bool> enableKerberos = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -274,11 +280,20 @@ namespace Azure.ResourceManager.Network
                             enableTunneling = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enableKerberos"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableKerberos = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling));
+            return new BastionHostData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(etag), sku.Value, Optional.ToList(ipConfigurations), dnsName.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(scaleUnits), Optional.ToNullable(disableCopyPaste), Optional.ToNullable(enableFileCopy), Optional.ToNullable(enableIPConnect), Optional.ToNullable(enableShareableLink), Optional.ToNullable(enableTunneling), Optional.ToNullable(enableKerberos));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of ODataError. </summary>
-        /// <param name="code"> The machine-readable description of the error, such as &apos;InvalidRequest&apos; or &apos;InternalServerError&apos;. </param>
+        /// <param name="code"> The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'. </param>
         /// <param name="message"> The human-readable description of the error. </param>
         /// <param name="details"> Inner errors that caused this error. </param>
         internal ODataError(string code, string message, IReadOnlyList<ODataError> details)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Details = details;
         }
 
-        /// <summary> The machine-readable description of the error, such as &apos;InvalidRequest&apos; or &apos;InternalServerError&apos;. </summary>
+        /// <summary> The machine-readable description of the error, such as 'InvalidRequest' or 'InternalServerError'. </summary>
         public string Code { get; }
         /// <summary> The human-readable description of the error. </summary>
         public string Message { get; }

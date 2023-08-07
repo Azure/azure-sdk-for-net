@@ -3,14 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -39,7 +33,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 // Assert
                 Assert.AreEqual(path, storageResource.Path);
-                Assert.AreEqual(ProduceUriType.NoUri, storageResource.CanProduceUri);
+                Assert.IsFalse(storageResource.CanProduceUri);
             }
         }
 
@@ -72,7 +66,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             List<string> resultPaths = new List<string>();
-            await foreach (StorageResourceBase resource in containerResource.GetStorageResourcesAsync())
+            await foreach (StorageResource resource in containerResource.GetStorageResourcesAsync())
             {
                 resultPaths.Add(resource.Path);
             }
@@ -101,7 +95,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
             foreach (string fileName in fileNames)
             {
-                StorageResource resource = containerResource.GetChildStorageResource(fileName);
+                StorageResourceItem resource = containerResource.GetStorageResourceReference(fileName);
                 // Assert
                 await resource.GetPropertiesAsync().ConfigureAwait(false);
             }
@@ -133,7 +127,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceContainer containerResource = new LocalDirectoryStorageResourceContainer(folderPath);
             foreach (string fileName in fileNames)
             {
-                StorageResource resource = containerResource.GetChildStorageResource(fileName);
+                StorageResourceItem resource = containerResource.GetStorageResourceReference(fileName);
                 // Assert
                 await resource.GetPropertiesAsync().ConfigureAwait(false);
             }

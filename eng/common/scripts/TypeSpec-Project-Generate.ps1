@@ -5,8 +5,8 @@ param (
     [Parameter(Position=0)]
     [ValidateNotNullOrEmpty()]
     [string] $ProjectDirectory,
-    [Parameter(Position=1)]
-    [string] $typespecAdditionalOptions ## addtional typespec emitter options, separated by semicolon if more than one, e.g. option1=value1;option2=value2
+    [string] $TypespecAdditionalOptions = $null, ## addtional typespec emitter options, separated by semicolon if more than one, e.g. option1=value1;option2=value2
+    [switch] $SaveInputs = $false ## saves the temporary files during execution, default false
 )
 
 $ErrorActionPreference = "Stop"
@@ -38,13 +38,21 @@ function NpmInstallForProject([string]$workingDirectory) {
 
         #default to root/eng/emitter-package.json but you can override by writing
         #Get-${Language}-EmitterPackageJsonPath in your Language-Settings.ps1
-        $replacementPackageJson = "$PSScriptRoot/../../emitter-package.json"
+        $replacementPackageJson = Join-Path $PSScriptRoot "../../emitter-package.json"
         if (Test-Path "Function:$GetEmitterPackageJsonPathFn") {
             $replacementPackageJson = &$GetEmitterPackageJsonPathFn
         }
 
         Write-Host("Copying package.json from $replacementPackageJson")
         Copy-Item -Path $replacementPackageJson -Destination "package.json" -Force
+
+        $useAlphaNpmRegistry = (Get-Content $replacementPackageJson -Raw).Contains("-alpha.")
+
+        if($useAlphaNpmRegistry) {
+            Write-Host "Package.json contains '-alpha.' in the version, Creating .npmrc using public/azure-sdk-for-js-test-autorest feed."
+            "registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/ `n`nalways-auth=true" | Out-File '.npmrc'
+        }
+
         npm install --no-lock-file
         if ($LASTEXITCODE) { exit $LASTEXITCODE }
     }
@@ -80,12 +88,17 @@ try {
         }
     }
     $typespecCompileCommand = "npx tsp compile $mainTypeSpecFile --emit $emitterName$emitterAdditionalOptions"
-    if ($typespecAdditionalOptions) {
-        $options = $typespecAdditionalOptions.Split(";");
+    if ($TypespecAdditionalOptions) {
+        $options = $TypespecAdditionalOptions.Split(";");
         foreach ($option in $options) {
             $typespecCompileCommand += " --option $emitterName.$option"
         }
     }
+
+    if ($SaveInputs) {
+        $typespecCompileCommand += " --option $emitterName.save-inputs=true"
+    }
+
     Write-Host($typespecCompileCommand)
     Invoke-Expression $typespecCompileCommand
 
@@ -95,7 +108,8 @@ finally {
     Pop-Location
 }
 
-$shouldCleanUp = $configuration["cleanup"] ?? $true
+$shouldCleanUp = !$SaveInputs
 if ($shouldCleanUp) {
     Remove-Item $tempFolder -Recurse -Force
 }
+exit 0

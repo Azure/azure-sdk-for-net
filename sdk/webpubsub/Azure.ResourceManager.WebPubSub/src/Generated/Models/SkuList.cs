@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="value"> The list of skus available for the resource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
         internal SkuList(IReadOnlyList<WebPubSubSku> value, string nextLink)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public IReadOnlyList<WebPubSubSku> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

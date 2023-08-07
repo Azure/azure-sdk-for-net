@@ -147,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             }
 
             BlobPath blobPath;
-            if (!BlobPath.TryParse(path, false, out blobPath))
+            if (!BlobPath.TryParse(path, false, false, out blobPath))
             {
                 return null;
             }

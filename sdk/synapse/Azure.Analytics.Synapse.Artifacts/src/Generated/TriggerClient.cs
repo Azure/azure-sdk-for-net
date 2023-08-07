@@ -99,7 +99,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Get a trigger&apos;s event subscription status. </summary>
+        /// <summary> Get a trigger's event subscription status. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TriggerSubscriptionOperationStatus>> GetEventSubscriptionStatusAsync(string triggerName, CancellationToken cancellationToken = default)
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             }
         }
 
-        /// <summary> Get a trigger&apos;s event subscription status. </summary>
+        /// <summary> Get a trigger's event subscription status. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TriggerSubscriptionOperationStatus> GetEventSubscriptionStatus(string triggerName, CancellationToken cancellationToken = default)

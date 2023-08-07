@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> Initializes a new instance of AttachedDataNetworkData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="userPlaneDataInterface"> The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </param>
-        /// <param name="dnsAddresses"> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don&apos;t want DNS servers, you must provide an empty array. </param>
+        /// <param name="dnsAddresses"> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userPlaneDataInterface"/> or <paramref name="dnsAddresses"/> is null. </exception>
         public AttachedDataNetworkData(AzureLocation location, InterfaceProperties userPlaneDataInterface, IEnumerable<string> dnsAddresses) : base(location)
         {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> The provisioning state of the attached data network resource. </param>
         /// <param name="userPlaneDataInterface"> The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </param>
-        /// <param name="dnsAddresses"> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don&apos;t want DNS servers, you must provide an empty array. </param>
+        /// <param name="dnsAddresses"> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array. </param>
         /// <param name="naptConfiguration">
         /// The network address and port translation (NAPT) configuration.
         /// If this is not specified, the attached data network will use a default NAPT configuration with NAPT enabled.
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MobileNetwork
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The user plane interface on the data network. For 5G networks, this is the N6 interface. For 4G networks, this is the SGi interface. </summary>
         public InterfaceProperties UserPlaneDataInterface { get; set; }
-        /// <summary> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don&apos;t want DNS servers, you must provide an empty array. </summary>
+        /// <summary> The DNS servers to signal to UEs to use for this attached data network. This configuration is mandatory - if you don't want DNS servers, you must provide an empty array. </summary>
         public IList<string> DnsAddresses { get; }
         /// <summary>
         /// The network address and port translation (NAPT) configuration.

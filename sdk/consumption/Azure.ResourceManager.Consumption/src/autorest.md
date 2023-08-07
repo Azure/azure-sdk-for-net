@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: Consumption
 namespace: Azure.ResourceManager.Consumption
@@ -56,9 +55,6 @@ override-operation-name:
   Tags_Get: GetConsumptionTags
   UsageDetails_List: GetConsumptionUsageDetails
 
-mgmt-debug:
-  show-serialized-names: true
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -88,6 +84,14 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+models-to-treat-empty-string-as-null:
+  - ConsumptionLegacyReservationRecommendation
+  - ConsumptionLegacyUsageDetail
+  - ConsumptionMarketplace
+  - ConsumptionModernReservationRecommendation
+  - ConsumptionModernUsageDetail
+  - PriceSheetProperties
 
 rename-mapping:
   Budget: ConsumptionBudget

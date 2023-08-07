@@ -3056,8 +3056,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
                             blobContentMD5: options?.HttpHeaders?.ContentHash,
                             blobCacheControl: options?.HttpHeaders?.CacheControl,
-                            // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
-                            // metadata: options?.Metadata,
+                            metadata: options?.Metadata,
                             leaseId: options?.DestinationConditions?.LeaseId,
                             blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -3093,8 +3092,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
                             blobContentMD5: options?.HttpHeaders?.ContentHash,
                             blobCacheControl: options?.HttpHeaders?.CacheControl,
-                            // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
-                            // metadata: options?.Metadata,
+                            metadata: options?.Metadata,
                             leaseId: options?.DestinationConditions?.LeaseId,
                             blobContentDisposition: options?.HttpHeaders?.ContentDisposition,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,

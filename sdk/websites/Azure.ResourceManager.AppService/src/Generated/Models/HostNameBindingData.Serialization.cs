@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -60,14 +59,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("sslState"u8);
                 writer.WriteStringValue(SslState.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Thumbprint))
+            if (Optional.IsDefined(ThumbprintString))
             {
                 writer.WritePropertyName("thumbprint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Thumbprint);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(ThumbprintString);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -91,7 +86,7 @@ namespace Azure.ResourceManager.AppService
             Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
             Optional<AppServiceHostNameType> hostNameType = default;
             Optional<HostNameBindingSslState> sslState = default;
-            Optional<BinaryData> thumbprint = default;
+            Optional<string> thumbprint = default;
             Optional<string> virtualIP = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -186,11 +181,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("thumbprint"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
+                            thumbprint = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("virtualIP"u8))

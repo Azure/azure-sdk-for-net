@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> Azure Synapse secure string definition. The string value will be masked with asterisks &apos;*&apos; during Get or List API calls. </summary>
+    /// <summary> Azure Synapse secure string definition. The string value will be masked with asterisks '*' during Get or List API calls. </summary>
     public partial class SynapseSecureString : SynapseSecretBase
     {
         /// <summary> Initializes a new instance of SynapseSecureString. </summary>

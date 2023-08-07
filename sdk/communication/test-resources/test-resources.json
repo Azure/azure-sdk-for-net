@@ -45,7 +45,7 @@
   "resources": [
       {
           "type": "Microsoft.Communication/CommunicationServices",
-          "apiVersion": "2020-08-20-preview",
+          "apiVersion": "2023-03-31",
           "name": "[variables('uniqueSubDomainName')]",
           "location": "global",
           "properties": {
@@ -54,7 +54,7 @@
       },
       {
           "type": "Microsoft.Authorization/roleAssignments",
-          "apiVersion": "2019-04-01-preview",
+          "apiVersion": "2022-04-01",
           "name": "[guid(resourceGroup().id, deployment().name, parameters('baseName'), variables('contributorRoleId'))]",
           "properties": {
               "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
@@ -78,7 +78,7 @@
       },
       "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": {
           "type": "string",
-          "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2020-08-20-preview').primaryConnectionString]"
+          "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2023-03-31').primaryConnectionString]"
       },
       "RESOURCE_GROUP_NAME": {
           "type": "string",

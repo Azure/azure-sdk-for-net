@@ -20,7 +20,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class DocumentAnalysisClientLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -444,54 +443,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [RecordedTest]
-        public async Task AnalyzeDocumentWithCustomModelWithTableDynamicRows()
-        {
-            var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
-            AnalyzeDocumentOperation operation;
-
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.TableVariableRows);
-
-            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableDynamicRows);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
-            }
-
-            AnalyzeResult result = operation.Value;
-
-            ValidateAnalyzeResult(
-                result,
-                customModel.ModelId,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
-        }
-
-        [RecordedTest]
-        public async Task AnalyzeDocumentWithCustomModelWithTableFixedRows()
-        {
-            var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
-            AnalyzeDocumentOperation operation;
-
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.TableFixedRows);
-
-            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableFixedRows);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
-            }
-
-            AnalyzeResult result = operation.Value;
-
-            ValidateAnalyzeResult(
-                result,
-                customModel.ModelId,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
-        }
-
-        [RecordedTest]
         [Ignore("Service error. Issue https://github.com/Azure/azure-sdk-for-net/issues/24995")]
         public async Task AnalyzeDocumentWithCustomModelCanParseBlankPage()
         {
@@ -617,7 +568,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.True(style.IsHandwritten);
 
-            Assert.AreEqual(38, result.Paragraphs.Count);
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            {
+                Assert.AreEqual(52, result.Paragraphs.Count);
+            }
+            else
+            {
+                Assert.AreEqual(38, result.Paragraphs.Count);
+            }
 
             DocumentParagraph sampleParagraph = result.Paragraphs[1];
 
@@ -1432,7 +1390,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 if (documentIndex == 0)
                 {
-                    Assert.AreEqual("$14,50", sampleField.Content);
+                    Assert.AreEqual("$14.50", sampleField.Content);
                 }
                 else if (documentIndex == 1)
                 {
@@ -1474,7 +1432,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 if (pageIndex == 0 || pageIndex == 2)
                 {
-                    var expectedContent = pageIndex == 0 ? "$14,50" : "1203.39";
+                    var expectedContent = pageIndex == 0 ? "$14.50" : "1203.39";
 
                     Assert.True(page.Words.Any(w => w.Content == expectedContent));
                 }

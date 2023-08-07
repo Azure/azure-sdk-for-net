@@ -10,7 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes a virtual machines scale set IP Configuration&apos;s PublicIPAddress configuration. </summary>
+    /// <summary> Describes a virtual machines scale set IP Configuration's PublicIPAddress configuration. </summary>
     public partial class VirtualMachineScaleSetUpdatePublicIPAddressConfiguration
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdatePublicIPAddressConfiguration. </summary>

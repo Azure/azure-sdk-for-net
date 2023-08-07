@@ -433,6 +433,11 @@ namespace Azure.ResourceManager.PrivateDns
 }
 namespace Azure.ResourceManager.PrivateDns.Models
 {
+    public static partial class ArmPrivateDnsModelFactory
+    {
+        public static Azure.ResourceManager.PrivateDns.PrivateDnsZoneData PrivateDnsZoneData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), long? maxNumberOfRecords = default(long?), long? numberOfRecords = default(long?), long? maxNumberOfVirtualNetworkLinks = default(long?), long? numberOfVirtualNetworkLinks = default(long?), long? maxNumberOfVirtualNetworkLinksWithRegistration = default(long?), long? numberOfVirtualNetworkLinksWithRegistration = default(long?), Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? privateDnsProvisioningState = default(Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState?), string internalId = null) { throw null; }
+        public static Azure.ResourceManager.PrivateDns.VirtualNetworkLinkData VirtualNetworkLinkData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.Core.ResourceIdentifier virtualNetworkId = null, bool? registrationEnabled = default(bool?), Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState? virtualNetworkLinkState = default(Azure.ResourceManager.PrivateDns.Models.VirtualNetworkLinkState?), Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? privateDnsProvisioningState = default(Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState?)) { throw null; }
+    }
     public partial class PrivateDnsAaaaRecordInfo
     {
         public PrivateDnsAaaaRecordInfo() { }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <param name="name"> Azure Marketplace plan name. </param>
         /// <param name="publisher"> Azure Marketplace publisher ID. </param>
         /// <param name="product"> Azure Marketplace product code. </param>
-        /// <param name="version"> Azure Marketplace plan&apos;s version. </param>
+        /// <param name="version"> Azure Marketplace plan's version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/>, <paramref name="product"/> or <paramref name="version"/> is null. </exception>
         public ManagedServicesPlan(string name, string publisher, string product, string version)
         {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
         public string Publisher { get; set; }
         /// <summary> Azure Marketplace product code. </summary>
         public string Product { get; set; }
-        /// <summary> Azure Marketplace plan&apos;s version. </summary>
+        /// <summary> Azure Marketplace plan's version. </summary>
         public string Version { get; set; }
     }
 }

@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,8 +16,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SnowflakeSource : CopyActivitySource
     {
         /// <summary> Initializes a new instance of SnowflakeSource. </summary>
-        public SnowflakeSource()
+        /// <param name="exportSettings"> Snowflake export settings. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exportSettings"/> is null. </exception>
+        public SnowflakeSource(SnowflakeExportCopyCommand exportSettings)
         {
+            Argument.AssertNotNull(exportSettings, nameof(exportSettings));
+
+            ExportSettings = exportSettings;
             CopySourceType = "SnowflakeSource";
         }
 
@@ -28,44 +35,15 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="query"> Snowflake Sql query. Type: string (or Expression with resultType string). </param>
         /// <param name="exportSettings"> Snowflake export settings. </param>
-        internal SnowflakeSource(string copySourceType, BinaryData sourceRetryCount, BinaryData sourceRetryWait, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, BinaryData query, SnowflakeExportCopyCommand exportSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
+        internal SnowflakeSource(string copySourceType, DataFactoryElement<int> sourceRetryCount, DataFactoryElement<string> sourceRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> query, SnowflakeExportCopyCommand exportSettings) : base(copySourceType, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             Query = query;
             ExportSettings = exportSettings;
             CopySourceType = copySourceType ?? "SnowflakeSource";
         }
 
-        /// <summary>
-        /// Snowflake Sql query. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Query { get; set; }
+        /// <summary> Snowflake Sql query. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Query { get; set; }
         /// <summary> Snowflake export settings. </summary>
         public SnowflakeExportCopyCommand ExportSettings { get; set; }
     }

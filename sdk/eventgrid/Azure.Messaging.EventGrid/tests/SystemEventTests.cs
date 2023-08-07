@@ -26,7 +26,9 @@ namespace Azure.Messaging.EventGrid.Tests
             {
                 // skip base types
                 if (systemEvent == typeof(ContainerRegistryArtifactEventData) ||
-                    systemEvent == typeof(ContainerRegistryEventData))
+                    systemEvent == typeof(ContainerRegistryEventData) ||
+                    systemEvent == typeof(ContainerServiceClusterSupportEventData) ||
+                    systemEvent == typeof(ContainerServiceNodePoolRollingEventData))
                 {
                     continue;
                 }

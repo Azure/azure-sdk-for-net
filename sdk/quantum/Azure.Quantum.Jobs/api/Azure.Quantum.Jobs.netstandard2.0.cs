@@ -206,7 +206,7 @@ namespace Azure.Quantum.Jobs.Models
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Quantum.Jobs.Models.QuantumJobQuota> Value { get { throw null; } }
     }
-    public static partial class QuantumModelFactory
+    public static partial class QuantumJobsModelFactory
     {
         public static Azure.Quantum.Jobs.Models.CostEstimate CostEstimate(string currencyCode = null, System.Collections.Generic.IEnumerable<Azure.Quantum.Jobs.Models.UsageEvent> events = null, float? estimatedTotal = default(float?)) { throw null; }
         public static Azure.Quantum.Jobs.Models.ErrorData ErrorData(string code = null, string message = null) { throw null; }

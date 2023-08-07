@@ -12,7 +12,7 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public partial class ConfigurationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2022_11_01_Preview;
 
         /// <summary>
         /// The versions of the App Configuration service supported by this client library.

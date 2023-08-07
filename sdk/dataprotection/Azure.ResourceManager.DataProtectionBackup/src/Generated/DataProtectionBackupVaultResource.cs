@@ -310,6 +310,59 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return GetDeletedDataProtectionBackupInstances().Get(backupInstanceName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of ResourceGuardProxyBaseResources in the DataProtectionBackupVault. </summary>
+        /// <returns> An object representing collection of ResourceGuardProxyBaseResources and their operations over a ResourceGuardProxyBaseResource. </returns>
+        public virtual ResourceGuardProxyBaseResourceCollection GetResourceGuardProxyBaseResources()
+        {
+            return GetCachedClient(Client => new ResourceGuardProxyBaseResourceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Returns the ResourceGuardProxy object associated with the vault, and that matches the name in the request
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DppResourceGuardProxy_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ResourceGuardProxyBaseResource>> GetResourceGuardProxyBaseResourceAsync(string resourceGuardProxyName, CancellationToken cancellationToken = default)
+        {
+            return await GetResourceGuardProxyBaseResources().GetAsync(resourceGuardProxyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns the ResourceGuardProxy object associated with the vault, and that matches the name in the request
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupResourceGuardProxies/{resourceGuardProxyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DppResourceGuardProxy_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardProxyName"> name of the resource guard proxy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardProxyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardProxyName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ResourceGuardProxyBaseResource> GetResourceGuardProxyBaseResource(string resourceGuardProxyName, CancellationToken cancellationToken = default)
+        {
+            return GetResourceGuardProxyBaseResources().Get(resourceGuardProxyName, cancellationToken);
+        }
+
         /// <summary>
         /// Returns a resource belonging to a resource group.
         /// <list type="bullet">

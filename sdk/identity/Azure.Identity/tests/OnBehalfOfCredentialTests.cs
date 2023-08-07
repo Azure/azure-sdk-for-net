@@ -52,7 +52,8 @@ namespace Azure.Identity.Tests
             {
                 Transport = config.Transport,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
-                DisableInstanceDiscovery = config.DisableInstanceDiscovery
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(
@@ -60,7 +61,7 @@ namespace Azure.Identity.Tests
                     config.TenantId,
                     ClientId,
                     "secret",
-                    Guid.NewGuid().ToString(),
+                    expectedUserAssertion,
                     options,
                     pipeline,
                     null));

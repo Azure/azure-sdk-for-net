@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
+            if (Optional.IsDefined(DisablePublish))
+            {
+                writer.WritePropertyName("disablePublish"u8);
+                writer.WriteBooleanValue(DisablePublish.Value);
+            }
             writer.WriteEndObject();
         }
 

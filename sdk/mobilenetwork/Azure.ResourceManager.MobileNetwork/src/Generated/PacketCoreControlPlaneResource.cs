@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary>
-        /// Roll back the specified packet core control plane to the previous version, &quot;rollbackVersion&quot;. Multiple consecutive rollbacks are not possible. This action may cause a service outage.
+        /// Roll back the specified packet core control plane to the previous version, "rollbackVersion". Multiple consecutive rollbacks are not possible. This action may cause a service outage.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary>
-        /// Roll back the specified packet core control plane to the previous version, &quot;rollbackVersion&quot;. Multiple consecutive rollbacks are not possible. This action may cause a service outage.
+        /// Roll back the specified packet core control plane to the previous version, "rollbackVersion". Multiple consecutive rollbacks are not possible. This action may cause a service outage.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

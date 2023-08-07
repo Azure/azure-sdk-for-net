@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response<MigrationConfigurationResource>> GetMigrationConfigurationAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<MigrationConfigurationResource> GetMigrationConfiguration(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

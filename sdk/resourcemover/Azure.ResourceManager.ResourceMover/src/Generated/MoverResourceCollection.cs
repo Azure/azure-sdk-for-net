@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq &apos;Succeeded&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq 'Succeeded'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MoverResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MoverResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq &apos;Succeeded&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq 'Succeeded'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MoverResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MoverResource> GetAll(string filter = null, CancellationToken cancellationToken = default)

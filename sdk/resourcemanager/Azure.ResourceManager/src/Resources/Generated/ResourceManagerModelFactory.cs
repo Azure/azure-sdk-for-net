@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="displayName"> The display name of the policy assignment. </param>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
         /// <param name="scope"> The scope for the policy assignment. </param>
-        /// <param name="excludedScopes"> The policy&apos;s excluded scopes. </param>
+        /// <param name="excludedScopes"> The policy's excluded scopes. </param>
         /// <param name="parameters"> The parameter values for the assigned policy rule. The keys are the parameter names. </param>
         /// <param name="description"> This message will be part of response in case of policy violation. </param>
         /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="aliasType"> The type of the alias. </param>
         /// <param name="defaultPath"> The default path for an alias. </param>
         /// <param name="defaultPattern"> The default pattern for an alias. </param>
-        /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn&apos;t have metadata. </param>
+        /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceTypeAlias"/> instance for mocking. </returns>
         public static ResourceTypeAlias ResourceTypeAlias(string name = null, IEnumerable<ResourceTypeAliasPath> paths = null, ResourceTypeAliasType? aliasType = null, string defaultPath = null, ResourceTypeAliasPattern defaultPattern = null, ResourceTypeAliasPathMetadata defaultMetadata = null)
         {
@@ -422,10 +422,10 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of DataManifestCustomResourceFunctionDefinition. </summary>
-        /// <param name="name"> The function name as it will appear in the policy rule. eg - &apos;vault&apos;. </param>
-        /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - &apos;Microsoft.KeyVault/vaults&apos;. </param>
-        /// <param name="defaultProperties"> The top-level properties that can be selected on the function&apos;s output. eg - [ &quot;name&quot;, &quot;location&quot; ] if vault().name and vault().location are supported. </param>
-        /// <param name="allowCustomProperties"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault(&apos;2019-06-01&apos;). </param>
+        /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
+        /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
+        /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </param>
+        /// <param name="allowCustomProperties"> A value indicating whether the custom properties within the property bag are allowed. Needs api-version to be specified in the policy rule eg - vault('2019-06-01'). </param>
         /// <returns> A new <see cref="Resources.Models.DataManifestCustomResourceFunctionDefinition"/> instance for mocking. </returns>
         public static DataManifestCustomResourceFunctionDefinition DataManifestCustomResourceFunctionDefinition(string name = null, ResourceType? fullyQualifiedResourceType = null, IEnumerable<string> defaultProperties = null, bool? allowCustomProperties = null)
         {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can&apos;t modify or delete it. </param>
+        /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </param>
         /// <param name="notes"> Notes about the lock. Maximum of 512 characters. </param>
         /// <param name="owners"> The owners of the lock. </param>
         /// <returns> A new <see cref="Resources.ManagementLockData"/> instance for mocking. </returns>
@@ -451,22 +451,25 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of LocationExpanded. </summary>
-        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </param>
+        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="name"> The location name. </param>
         /// <param name="locationType"> The location type. </param>
         /// <param name="displayName"> The display name of the location. </param>
         /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
         /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
+        /// <param name="availabilityZoneMappings"> The availability zone mappings for this region. </param>
         /// <returns> A new <see cref="Resources.Models.LocationExpanded"/> instance for mocking. </returns>
-        public static LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, LocationType? locationType = null, string displayName = null, string regionalDisplayName = null, LocationMetadata metadata = null)
+        public static LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, LocationType? locationType = null, string displayName = null, string regionalDisplayName = null, LocationMetadata metadata = null, IEnumerable<AvailabilityZoneMappings> availabilityZoneMappings = null)
         {
-            return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata);
+            availabilityZoneMappings ??= new List<AvailabilityZoneMappings>();
+
+            return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata, availabilityZoneMappings?.ToList());
         }
 
         /// <summary> Initializes a new instance of PairedRegion. </summary>
         /// <param name="name"> The name of the paired region. </param>
-        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </param>
+        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <returns> A new <see cref="Resources.Models.PairedRegion"/> instance for mocking. </returns>
         public static PairedRegion PairedRegion(string name = null, string id = null, string subscriptionId = null)
@@ -474,14 +477,23 @@ namespace Azure.ResourceManager.Models
             return new PairedRegion(name, id, subscriptionId);
         }
 
+        /// <summary> Initializes a new instance of AvailabilityZoneMappings. </summary>
+        /// <param name="logicalZone"> The logical zone id for the availability zone. </param>
+        /// <param name="physicalZone"> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </param>
+        /// <returns> A new <see cref="Resources.Models.AvailabilityZoneMappings"/> instance for mocking. </returns>
+        public static AvailabilityZoneMappings AvailabilityZoneMappings(string logicalZone = null, string physicalZone = null)
+        {
+            return new AvailabilityZoneMappings(logicalZone, physicalZone);
+        }
+
         /// <summary> Initializes a new instance of SubscriptionData. </summary>
-        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>
         /// <param name="tenantId"> The subscription tenant ID. </param>
         /// <param name="state"> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </param>
         /// <param name="subscriptionPolicies"> The subscription policies. </param>
-        /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, &apos;Legacy, RoleBased&apos;. </param>
+        /// <param name="authorizationSource"> The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'. </param>
         /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
         /// <returns> A new <see cref="Resources.SubscriptionData"/> instance for mocking. </returns>
@@ -512,16 +524,16 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of TenantData. </summary>
-        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/00000000-0000-0000-0000-000000000000. </param>
-        /// <param name="tenantId"> The tenant ID. For example, 00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </param>
+        /// <param name="tenantId"> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="tenantCategory"> Category of the tenant. </param>
         /// <param name="country"> Country/region name of the address for the tenant. </param>
         /// <param name="countryCode"> Country/region abbreviation for the tenant. </param>
         /// <param name="displayName"> The display name of the tenant. </param>
         /// <param name="domains"> The list of domains for the tenant. </param>
         /// <param name="defaultDomain"> The default domain for the tenant. </param>
-        /// <param name="tenantType"> The tenant type. Only available for &apos;Home&apos; tenant category. </param>
-        /// <param name="tenantBrandingLogoUri"> The tenant&apos;s branding logo URL. Only available for &apos;Home&apos; tenant category. </param>
+        /// <param name="tenantType"> The tenant type. Only available for 'Home' tenant category. </param>
+        /// <param name="tenantBrandingLogoUri"> The tenant's branding logo URL. Only available for 'Home' tenant category. </param>
         /// <returns> A new <see cref="Resources.TenantData"/> instance for mocking. </returns>
         public static TenantData TenantData(string id = null, Guid? tenantId = null, TenantCategory? tenantCategory = null, string country = null, string countryCode = null, string displayName = null, IEnumerable<string> domains = null, string defaultDomain = null, string tenantType = null, Uri tenantBrandingLogoUri = null)
         {

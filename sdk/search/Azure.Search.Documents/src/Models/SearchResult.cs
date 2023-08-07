@@ -54,6 +54,11 @@ namespace Azure.Search.Documents.Models
         public IList<CaptionResult> Captions { get; internal set; }
 
         /// <summary>
+        /// Contains debugging information that can be used to further explore your search results.
+        /// </summary>
+        public IList<DocumentDebugInfo> DocumentDebugInfo { get; internal set; }
+
+        /// <summary>
         /// The document found by the search query.
         /// </summary>
         public T Document { get; internal set; }
@@ -123,6 +128,16 @@ namespace Azure.Search.Documents.Models
                     foreach (JsonElement captionValue in prop.Value.EnumerateArray())
                     {
                         result.Captions.Add(CaptionResult.DeserializeCaptionResult(captionValue));
+                    }
+                }
+                else if (prop.NameEquals(Constants.SearchDocumentDebugInfoKeyJson.EncodedUtf8Bytes) &&
+                    prop.Value.ValueKind != JsonValueKind.Null)
+                {
+                    result.DocumentDebugInfo = new List<DocumentDebugInfo>();
+
+                    foreach (JsonElement documentDebugInfoValue in prop.Value.EnumerateArray())
+                    {
+                        result.DocumentDebugInfo.Add(Models.DocumentDebugInfo.DeserializeDocumentDebugInfo(documentDebugInfoValue));
                     }
                 }
             }

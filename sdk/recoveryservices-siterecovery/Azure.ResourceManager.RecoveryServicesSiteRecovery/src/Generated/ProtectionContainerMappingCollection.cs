@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProtectionContainerMappingResource" /> and their operations.
-    /// Each <see cref="ProtectionContainerMappingResource" /> in the collection will belong to the same instance of <see cref="ProtectionContainerResource" />.
-    /// To get a <see cref="ProtectionContainerMappingCollection" /> instance call the GetProtectionContainerMappings method from an instance of <see cref="ProtectionContainerResource" />.
+    /// Each <see cref="ProtectionContainerMappingResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource" />.
+    /// To get a <see cref="ProtectionContainerMappingCollection" /> instance call the GetProtectionContainerMappings method from an instance of <see cref="SiteRecoveryProtectionContainerResource" />.
     /// </summary>
     public partial class ProtectionContainerMappingCollection : ArmCollection, IEnumerable<ProtectionContainerMappingResource>, IAsyncEnumerable<ProtectionContainerMappingResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProtectionContainerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProtectionContainerResource.ResourceType), nameof(id));
+            if (id.ResourceType != SiteRecoveryProtectionContainerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryProtectionContainerResource.ResourceType), nameof(id));
         }
 
         /// <summary>

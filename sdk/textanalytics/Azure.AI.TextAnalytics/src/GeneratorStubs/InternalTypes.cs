@@ -13,8 +13,20 @@ namespace Azure.AI.TextAnalytics.Models
     [CodeGenModel("CustomLabelClassificationResultDocumentsItem")]
     internal partial class CustomLabelClassificationResultDocumentsItem { }
 
+    [CodeGenModel("EntitiesResultDocumentsItem")]
+    internal partial class EntitiesResultDocumentsItem { }
+
+    [CodeGenModel("EntityLinkingResultDocumentsItem")]
+    internal partial class EntityLinkingResultDocumentsItem { }
+
+    [CodeGenModel("HealthcareResultDocumentsItem")]
+    internal partial class HealthcareResultDocumentsItem { }
+
     [CodeGenModel("KeyPhraseResultDocumentsItem")]
     internal partial class KeyPhraseResultDocumentsItem { }
+
+    [CodeGenModel("PiiResultDocumentsItem")]
+    internal partial class PiiResultDocumentsItem { }
 
     [CodeGenModel("SentimentResponseDocumentsItem")]
     internal partial class SentimentResponseDocumentsItem { }

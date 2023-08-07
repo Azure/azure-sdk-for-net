@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningTrialComponent
     {
         /// <summary> Initializes a new instance of MachineLearningTrialComponent. </summary>
-        /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="environmentId"/> is null. </exception>
         public MachineLearningTrialComponent(string command, ResourceIdentifier environmentId)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of MachineLearningTrialComponent. </summary>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
-        /// <param name="command"> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </param>
+        /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="distribution">
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.
         /// Please note <see cref="MachineLearningDistributionConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> ARM resource ID of the code asset. </summary>
         public ResourceIdentifier CodeId { get; set; }
-        /// <summary> [Required] The command to execute on startup of the job. eg. &quot;python train.py&quot;. </summary>
+        /// <summary> [Required] The command to execute on startup of the job. eg. "python train.py". </summary>
         public string Command { get; set; }
         /// <summary>
         /// Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null.

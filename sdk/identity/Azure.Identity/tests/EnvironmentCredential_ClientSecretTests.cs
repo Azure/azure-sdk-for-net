@@ -45,7 +45,8 @@ namespace Azure.Identity.Tests
                 var options = new EnvironmentCredentialOptions
                 {
                     Transport = config.Transport,
-                    DisableInstanceDiscovery = config.DisableInstanceDiscovery
+                    DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
                 };
 
                 var pipeline = CredentialPipeline.GetInstance(options);

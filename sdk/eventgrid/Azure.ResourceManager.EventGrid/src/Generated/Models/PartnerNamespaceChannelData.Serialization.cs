@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("partnerTopicInfo"u8);
                 writer.WriteObjectValue(PartnerTopicInfo);
             }
+            if (Optional.IsDefined(PartnerDestinationInfo))
+            {
+                writer.WritePropertyName("partnerDestinationInfo"u8);
+                writer.WriteObjectValue(PartnerDestinationInfo);
+            }
             if (Optional.IsDefined(MessageForActivation))
             {
                 writer.WritePropertyName("messageForActivation"u8);
@@ -66,6 +71,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<SystemData> systemData = default;
             Optional<PartnerNamespaceChannelType> channelType = default;
             Optional<PartnerTopicInfo> partnerTopicInfo = default;
+            Optional<PartnerDestinationInfo> partnerDestinationInfo = default;
             Optional<string> messageForActivation = default;
             Optional<PartnerNamespaceChannelProvisioningState> provisioningState = default;
             Optional<PartnerTopicReadinessState> readinessState = default;
@@ -123,6 +129,15 @@ namespace Azure.ResourceManager.EventGrid
                             partnerTopicInfo = PartnerTopicInfo.DeserializePartnerTopicInfo(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("partnerDestinationInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            partnerDestinationInfo = PartnerDestinationInfo.DeserializePartnerDestinationInfo(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("messageForActivation"u8))
                         {
                             messageForActivation = property0.Value.GetString();
@@ -159,7 +174,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Optional.ToNullable(channelType), partnerTopicInfo.Value, messageForActivation.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(readinessState), Optional.ToNullable(expirationTimeIfNotActivatedUtc));
+            return new PartnerNamespaceChannelData(id, name, type, systemData.Value, Optional.ToNullable(channelType), partnerTopicInfo.Value, partnerDestinationInfo.Value, messageForActivation.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(readinessState), Optional.ToNullable(expirationTimeIfNotActivatedUtc));
         }
     }
 }

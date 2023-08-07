@@ -33,23 +33,15 @@ namespace Azure.AI.OpenAI
         /// Normal termination typically provides "stop" and encountering token limits in a request typically
         /// provides "length." If no value is present, this StreamingChoice is still in progress.
         /// </remarks>
-        public string FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
+        public CompletionsFinishReason? FinishReason => GetLocked(() => _baseChoices.Last().FinishReason);
 
-        internal bool StreamingDoneSignalReceived
-        {
-            get => _streamingDoneSignalReceived;
-            set
-            {
-                _streamingDoneSignalReceived = value;
-                _updateAvailableEvent.Set();
-            }
-        }
-        private bool _streamingDoneSignalReceived;
+        private bool _isFinishedStreaming { get; set; } = false;
 
         /// <summary>
         /// Gets the log probabilities associated with tokens in this Choice.
         /// </summary>
-        public CompletionsLogProbability Logprobs => GetLocked(() => _baseChoices.Last().Logprobs);
+        public CompletionsLogProbabilityModel LogProbabilityModel
+            => GetLocked(() => _baseChoices.Last().LogProbabilityModel);
 
         internal StreamingChoice(Choice originalBaseChoice)
         {
@@ -62,6 +54,10 @@ namespace Azure.AI.OpenAI
             lock (_baseChoicesLock)
             {
                 _baseChoices.Add(streamingChoice);
+            }
+            if (streamingChoice.FinishReason != null)
+            {
+                EnsureFinishStreaming();
             }
             _updateAvailableEvent.Set();
         }
@@ -86,11 +82,9 @@ namespace Azure.AI.OpenAI
                     lock (_baseChoicesLock)
                     {
                         Choice mostRecentChoice = _baseChoices.Last();
-                        string mostRecentFinishReason = mostRecentChoice.FinishReason;
-                        bool choiceIsComplete = !string.IsNullOrEmpty(mostRecentFinishReason) || StreamingDoneSignalReceived;
 
-                        doneWaiting = choiceIsComplete || i < _baseChoices.Count;
-                        isFinalIndex = choiceIsComplete && i >= _baseChoices.Count - 1;
+                        doneWaiting = _isFinishedStreaming || i < _baseChoices.Count;
+                        isFinalIndex = _isFinishedStreaming && i >= _baseChoices.Count - 1;
                     }
 
                     if (!doneWaiting)
@@ -112,6 +106,15 @@ namespace Azure.AI.OpenAI
                 {
                     yield return newText;
                 }
+            }
+        }
+
+        internal void EnsureFinishStreaming()
+        {
+            if (!_isFinishedStreaming)
+            {
+                _isFinishedStreaming = true;
+                _updateAvailableEvent.Set();
             }
         }
 

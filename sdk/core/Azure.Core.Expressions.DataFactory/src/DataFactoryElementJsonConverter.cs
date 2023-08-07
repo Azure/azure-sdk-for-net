@@ -195,9 +195,13 @@ namespace Azure.Core.Expressions.DataFactory
                         break;
                 }
             }
+            else if (element.Kind == DataFactoryElementKind.Expression)
+            {
+                SerializeExpression(writer, element.ExpressionString!);
+            }
             else
             {
-                SerializeObject(writer, element.Kind!, element.StringValue!);
+                writer.WriteObjectValue(element.Secret!);
             }
         }
 
@@ -219,23 +223,27 @@ namespace Azure.Core.Expressions.DataFactory
                 }
                 writer.WriteEndArray();
             }
+            else if (element.Kind == DataFactoryElementKind.Expression)
+            {
+                SerializeExpression(writer, element.ExpressionString!);
+            }
             else
             {
-                SerializeObject(writer, element.Kind, element.StringValue!);
+                writer.WriteObjectValue(element.Secret!);
             }
         }
 
-        private static void SerializeObject(Utf8JsonWriter writer, DataFactoryElementKind kind, string value)
+        private static void SerializeExpression(Utf8JsonWriter writer, string value)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type");
-            writer.WriteStringValue(kind.ToString());
+            writer.WriteStringValue("Expression");
             writer.WritePropertyName("value");
             writer.WriteStringValue(value);
             writer.WriteEndObject();
         }
 
-        private static DataFactoryElement<IList<T?>> DeserializeGenericList<T>(JsonElement json)
+        private static DataFactoryElement<IList<T?>?> DeserializeGenericList<T>(JsonElement json)
         {
             if (json.ValueKind == JsonValueKind.Array)
             {
@@ -245,10 +253,11 @@ namespace Azure.Core.Expressions.DataFactory
                     list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<T>(item.GetRawText()!));
                 }
 
-                return new DataFactoryElement<IList<T?>>(list);
+                return new DataFactoryElement<IList<T?>?>(list);
             }
 
-            if (json.ValueKind == JsonValueKind.Object && TryGetReservedElement(json, out DataFactoryElement<IList<T?>>? element))
+            // Expression, SecretString, and AzureKeyVaultReference handling
+            if (TryGetNonLiteral(json, out DataFactoryElement<IList<T?>?>? element))
             {
                 return element!;
             }
@@ -265,11 +274,13 @@ namespace Azure.Core.Expressions.DataFactory
                 return null;
             }
 
-            if (TryGetReservedElement(json, out DataFactoryElement<T?>? element))
+            // Expression, SecretString, and AzureKeyVaultReference handling
+            if (TryGetNonLiteral(json, out DataFactoryElement<T?>? element))
             {
                 return element;
             }
 
+            // Literal handling
             if (json.ValueKind == JsonValueKind.Object && typeof(T) == typeof(IDictionary<string, string>))
             {
                 var dictionary = new Dictionary<string, string>();
@@ -314,34 +325,25 @@ namespace Azure.Core.Expressions.DataFactory
             return new DataFactoryElement<T?>(value);
         }
 
-        private static bool TryGetReservedElement<T>(JsonElement json, out DataFactoryElement<T>? element)
+        private static bool TryGetNonLiteral<T>(JsonElement json, out DataFactoryElement<T?>? element)
         {
-            string? type = null;
-            string? value = null;
-            int propertyCount = 0;
             element = null;
-
-            if (json.ValueKind != JsonValueKind.Object)
+            if (json.ValueKind == JsonValueKind.Object && json.TryGetProperty("type", out JsonElement typeValue))
             {
-                return false;
-            }
-
-            foreach (var property in json.EnumerateObject())
-            {
-                propertyCount++;
-                if (property.NameEquals("type") && property.Value.ValueKind == JsonValueKind.String)
+                if (typeValue.ValueEquals("Expression"))
                 {
-                    type = property.Value.GetString();
+                    if (json.EnumerateObject().Count() != 2)
+                    {
+                        // Expression should only have two properties: type and value
+                        return false;
+                    }
+                    var expressionValue = json.GetProperty("value").GetString();
+                    element = new DataFactoryElement<T?>(expressionValue, DataFactoryElementKind.Expression);
                 }
-                else if (property.NameEquals("value") && property.Value.ValueKind == JsonValueKind.String)
+                else
                 {
-                    value = property.Value.GetString();
+                    element = DataFactoryElement<T?>.FromSecretBase(DataFactorySecretBaseDefinition.DeserializeDataFactorySecretBaseDefinition(json)!);
                 }
-            }
-
-            if (type != null && value != null && propertyCount == 2)
-            {
-                element = new DataFactoryElement<T>(value, new DataFactoryElementKind(type));
             }
 
             return element != null;

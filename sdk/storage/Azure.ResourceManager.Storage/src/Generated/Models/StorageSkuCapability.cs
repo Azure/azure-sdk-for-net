@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of StorageSkuCapability. </summary>
         /// <param name="name"> The name of capability, The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </param>
-        /// <param name="value"> A string value to indicate states of given capability. Possibly &apos;true&apos; or &apos;false&apos;. </param>
+        /// <param name="value"> A string value to indicate states of given capability. Possibly 'true' or 'false'. </param>
         internal StorageSkuCapability(string name, string value)
         {
             Name = name;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The name of capability, The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
         public string Name { get; }
-        /// <summary> A string value to indicate states of given capability. Possibly &apos;true&apos; or &apos;false&apos;. </summary>
+        /// <summary> A string value to indicate states of given capability. Possibly 'true' or 'false'. </summary>
         public string Value { get; }
     }
 }

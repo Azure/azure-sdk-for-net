@@ -14,14 +14,13 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="ComponentLinkedStorageAccountResource" /> and their operations.
-    /// Each <see cref="ComponentLinkedStorageAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ComponentLinkedStorageAccountCollection" /> instance call the GetComponentLinkedStorageAccounts method from an instance of <see cref="ResourceGroupResource" />.
+    /// Each <see cref="ComponentLinkedStorageAccountResource" /> in the collection will belong to the same instance of <see cref="ApplicationInsightsComponentResource" />.
+    /// To get a <see cref="ComponentLinkedStorageAccountCollection" /> instance call the GetComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource" />.
     /// </summary>
     public partial class ComponentLinkedStorageAccountCollection : ArmCollection
     {
@@ -48,8 +47,8 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != ApplicationInsightsComponentResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApplicationInsightsComponentResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -66,22 +65,19 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="data"> Properties that need to be specified to update linked storage accounts for an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ComponentLinkedStorageAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, StorageType storageType, ComponentLinkedStorageAccountData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ComponentLinkedStorageAccountResource>> CreateOrUpdateAsync(WaitUntil waitUntil, StorageType storageType, ComponentLinkedStorageAccountData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _componentLinkedStorageAccountRestClient.CreateAndUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, storageType, data, cancellationToken).ConfigureAwait(false);
+                var response = await _componentLinkedStorageAccountRestClient.CreateAndUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageType, data, cancellationToken).ConfigureAwait(false);
                 var operation = new ApplicationInsightsArmOperation<ComponentLinkedStorageAccountResource>(Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -108,22 +104,19 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="data"> Properties that need to be specified to update linked storage accounts for an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ComponentLinkedStorageAccountResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, StorageType storageType, ComponentLinkedStorageAccountData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ComponentLinkedStorageAccountResource> CreateOrUpdate(WaitUntil waitUntil, StorageType storageType, ComponentLinkedStorageAccountData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _componentLinkedStorageAccountRestClient.CreateAndUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, storageType, data, cancellationToken);
+                var response = _componentLinkedStorageAccountRestClient.CreateAndUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageType, data, cancellationToken);
                 var operation = new ApplicationInsightsArmOperation<ComponentLinkedStorageAccountResource>(Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -149,20 +142,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual async Task<Response<ComponentLinkedStorageAccountResource>> GetAsync(string resourceName, StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComponentLinkedStorageAccountResource>> GetAsync(StorageType storageType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = await _componentLinkedStorageAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, storageType, cancellationToken).ConfigureAwait(false);
+                var response = await _componentLinkedStorageAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageType, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -187,20 +175,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual Response<ComponentLinkedStorageAccountResource> Get(string resourceName, StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual Response<ComponentLinkedStorageAccountResource> Get(StorageType storageType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountCollection.Get");
             scope.Start();
             try
             {
-                var response = _componentLinkedStorageAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, storageType, cancellationToken);
+                var response = _componentLinkedStorageAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageType, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ComponentLinkedStorageAccountResource(Client, response.Value), response.GetRawResponse());
@@ -225,20 +208,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string resourceName, StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(StorageType storageType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _componentLinkedStorageAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, storageType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _componentLinkedStorageAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageType, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -261,20 +239,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        public virtual Response<bool> Exists(string resourceName, StorageType storageType, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(StorageType storageType, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
             using var scope = _componentLinkedStorageAccountClientDiagnostics.CreateScope("ComponentLinkedStorageAccountCollection.Exists");
             scope.Start();
             try
             {
-                var response = _componentLinkedStorageAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, storageType, cancellationToken: cancellationToken);
+                var response = _componentLinkedStorageAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, storageType, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

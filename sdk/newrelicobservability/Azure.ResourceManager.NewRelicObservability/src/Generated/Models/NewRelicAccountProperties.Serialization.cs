@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 return null;
             }
             Optional<string> userId = default;
-            Optional<AccountInfo> accountInfo = default;
-            Optional<OrganizationInfo> organizationInfo = default;
+            Optional<NewRelicObservabilityAccountInfo> accountInfo = default;
+            Optional<NewRelicObservabilityOrganizationInfo> organizationInfo = default;
             Optional<NewRelicSingleSignOnProperties> singleSignOnProperties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    accountInfo = AccountInfo.DeserializeAccountInfo(property.Value);
+                    accountInfo = NewRelicObservabilityAccountInfo.DeserializeNewRelicObservabilityAccountInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("organizationInfo"u8))
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    organizationInfo = OrganizationInfo.DeserializeOrganizationInfo(property.Value);
+                    organizationInfo = NewRelicObservabilityOrganizationInfo.DeserializeNewRelicObservabilityOrganizationInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))

@@ -77,7 +77,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetKeyVaultReferenceAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetKeyVaultReferenceAsync(string keyVaultName, RequestContext context = null)
+        public virtual async Task<Response> GetKeyVaultReferenceAsync(string keyVaultName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
@@ -112,7 +112,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetKeyVaultReference(string,RequestContext)']/*" />
-        public virtual Response GetKeyVaultReference(string keyVaultName, RequestContext context = null)
+        public virtual Response GetKeyVaultReference(string keyVaultName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
@@ -221,7 +221,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='DeleteKeyVaultReferenceAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteKeyVaultReferenceAsync(string keyVaultName, RequestContext context = null)
+        public virtual async Task<Response> DeleteKeyVaultReferenceAsync(string keyVaultName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
@@ -256,7 +256,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='DeleteKeyVaultReference(string,RequestContext)']/*" />
-        public virtual Response DeleteKeyVaultReference(string keyVaultName, RequestContext context = null)
+        public virtual Response DeleteKeyVaultReference(string keyVaultName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(keyVaultName, nameof(keyVaultName));
 
@@ -291,7 +291,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetScanRulesetAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetScanRulesetAsync(string scanRulesetName, RequestContext context = null)
+        public virtual async Task<Response> GetScanRulesetAsync(string scanRulesetName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
@@ -326,7 +326,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetScanRuleset(string,RequestContext)']/*" />
-        public virtual Response GetScanRuleset(string scanRulesetName, RequestContext context = null)
+        public virtual Response GetScanRuleset(string scanRulesetName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
@@ -433,7 +433,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='DeleteScanRulesetAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteScanRulesetAsync(string scanRulesetName, RequestContext context = null)
+        public virtual async Task<Response> DeleteScanRulesetAsync(string scanRulesetName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
@@ -468,7 +468,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='DeleteScanRuleset(string,RequestContext)']/*" />
-        public virtual Response DeleteScanRuleset(string scanRulesetName, RequestContext context = null)
+        public virtual Response DeleteScanRuleset(string scanRulesetName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
@@ -496,14 +496,14 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsForDataSourceAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSystemRulesetsForDataSourceAsync(string dataSourceType, RequestContext context = null)
+        public virtual async Task<Response> GetSystemRulesetsForDataSourceAsync(string dataSourceType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(dataSourceType, nameof(dataSourceType));
 
@@ -531,14 +531,14 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsForDataSource(string,RequestContext)']/*" />
-        public virtual Response GetSystemRulesetsForDataSource(string dataSourceType, RequestContext context = null)
+        public virtual Response GetSystemRulesetsForDataSource(string dataSourceType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(dataSourceType, nameof(dataSourceType));
 
@@ -567,12 +567,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </list>
         /// </summary>
         /// <param name="version"> The Int32 to use. </param>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsForVersionAsync(int,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSystemRulesetsForVersionAsync(int version, string dataSourceType = null, RequestContext context = null)
+        public virtual async Task<Response> GetSystemRulesetsForVersionAsync(int version, string dataSourceType, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForVersion");
             scope.Start();
@@ -599,12 +599,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </list>
         /// </summary>
         /// <param name="version"> The Int32 to use. </param>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsForVersion(int,string,RequestContext)']/*" />
-        public virtual Response GetSystemRulesetsForVersion(int version, string dataSourceType = null, RequestContext context = null)
+        public virtual Response GetSystemRulesetsForVersion(int version, string dataSourceType, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetSystemRulesetsForVersion");
             scope.Start();
@@ -630,12 +630,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetLatestSystemRulesetsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetLatestSystemRulesetsAsync(string dataSourceType = null, RequestContext context = null)
+        public virtual async Task<Response> GetLatestSystemRulesetsAsync(string dataSourceType, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetLatestSystemRulesets");
             scope.Start();
@@ -661,12 +661,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetLatestSystemRulesets(string,RequestContext)']/*" />
-        public virtual Response GetLatestSystemRulesets(string dataSourceType = null, RequestContext context = null)
+        public virtual Response GetLatestSystemRulesets(string dataSourceType, RequestContext context)
         {
             using var scope = ClientDiagnostics.CreateScope("PurviewScanningServiceClient.GetLatestSystemRulesets");
             scope.Start();
@@ -696,7 +696,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetKeyVaultReferencesAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetKeyVaultReferencesAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetKeyVaultReferencesAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeyVaultReferencesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
@@ -717,7 +717,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetKeyVaultReferences(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetKeyVaultReferences(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetKeyVaultReferences(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetKeyVaultReferencesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetKeyVaultReferencesNextPageRequest(nextLink, context);
@@ -738,7 +738,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetClassificationRulesAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetClassificationRulesAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetClassificationRulesAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationRulesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationRulesNextPageRequest(nextLink, context);
@@ -759,7 +759,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetClassificationRules(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetClassificationRules(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetClassificationRules(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassificationRulesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassificationRulesNextPageRequest(nextLink, context);
@@ -780,7 +780,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetDataSourcesAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDataSourcesAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDataSourcesAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataSourcesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataSourcesNextPageRequest(nextLink, context);
@@ -801,7 +801,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetDataSources(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDataSources(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDataSources(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataSourcesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataSourcesNextPageRequest(nextLink, context);
@@ -822,7 +822,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetScanRulesetsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetScanRulesetsAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetScanRulesetsAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScanRulesetsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScanRulesetsNextPageRequest(nextLink, context);
@@ -843,7 +843,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetScanRulesets(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetScanRulesets(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetScanRulesets(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetScanRulesetsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetScanRulesetsNextPageRequest(nextLink, context);
@@ -864,7 +864,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSystemRulesetsAsync(RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSystemRulesetsAsync(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsNextPageRequest(nextLink, context);
@@ -885,7 +885,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesets(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSystemRulesets(RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSystemRulesets(RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsNextPageRequest(nextLink, context);
@@ -902,12 +902,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsVersionsAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetSystemRulesetsVersionsAsync(string dataSourceType = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSystemRulesetsVersionsAsync(string dataSourceType, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsVersionsRequest(dataSourceType, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);
@@ -924,12 +924,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
+        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsVersions(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetSystemRulesetsVersions(string dataSourceType = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetSystemRulesetsVersions(string dataSourceType, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSystemRulesetsVersionsRequest(dataSourceType, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSystemRulesetsVersionsNextPageRequest(nextLink, dataSourceType, context);

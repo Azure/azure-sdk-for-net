@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
@@ -232,11 +233,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 {
                     if (_isSessionsEnabled)
                     {
-                        await _sessionMessageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
+                        await _sessionMessageProcessor.Value.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
-                        await _messageProcessor.Value.Processor.CloseAsync(cancellationToken).ConfigureAwait(false);
+                        await _messageProcessor.Value.Processor.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
                     }
                 }
                 else
@@ -253,8 +254,6 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                     // Try to dispatch any already received messages.
                     await DispatchRemainingMessages(_monitoringCycleReceiver, _monitoringCycleMessageActions, _monitoringCycleReceiveActions, cancellationToken).ConfigureAwait(false);
-
-                    await _batchReceiver.Value.CloseAsync(cancellationToken).ConfigureAwait(false);
                 }
 
                 Started = false;
@@ -304,6 +303,13 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 _messageProcessor.Value.Processor.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
+            }
+
+            if (_sessionMessageProcessor.IsValueCreated)
+            {
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
+                _sessionMessageProcessor.Value.Processor.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 
@@ -631,7 +637,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         {
             using DiagnosticScope scope = _clientDiagnostics.Value.CreateScope(
                             _isSessionsEnabled ? Constants.ProcessSessionMessagesActivityName : Constants.ProcessMessagesActivityName,
-                            DiagnosticScope.ActivityKind.Consumer,
+                            ActivityKind.Consumer,
                             MessagingDiagnosticOperation.Process);
 
             scope.SetMessageData(messagesArray);
