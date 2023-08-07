@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,11 +20,12 @@ namespace Azure.Core.Serialization
         private readonly ModelSerializerOptions _options;
 
         private volatile SequenceBuilder? _sequenceBuilder;
+        private volatile bool _isDisposed;
 
-        // write lock is used to synchronize between dispose and serialization
-        // read lock is used to block disposing while a copy to is in progress
-        private ReaderWriterLockSlim? _lock;
-        private ReaderWriterLockSlim Lock => _lock ??= new ReaderWriterLockSlim();
+        private volatile int _readCount;
+
+        private ManualResetEvent? _readersFinished;
+        private ManualResetEvent ReadersFinished => _readersFinished ??= new ManualResetEvent(true);
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelWriter"/>.
@@ -36,12 +38,12 @@ namespace Azure.Core.Serialization
             _options = options;
         }
 
+        private readonly object _sequenceLock = new object();
         private SequenceBuilder GetSequenceBuilder()
         {
             if (_sequenceBuilder is null)
             {
-                Lock.EnterWriteLock();
-                try
+                lock (_sequenceLock)
                 {
                     if (_sequenceBuilder is null)
                     {
@@ -52,71 +54,46 @@ namespace Azure.Core.Serialization
                         _sequenceBuilder = sequenceBuilder;
                     }
                 }
-                finally
-                {
-                    Lock.ExitWriteLock();
-                }
             }
             return _sequenceBuilder;
         }
 
         internal void CopyTo(Stream stream, CancellationToken cancellation)
         {
-            //can't get the write lock from inside the read lock
-            SequenceBuilder sequenceBuilder = GetSequenceBuilder();
-            Lock.EnterReadLock();
+            IncrementRead();
             try
             {
-                sequenceBuilder.CopyTo(stream, cancellation);
+                GetSequenceBuilder().CopyTo(stream, cancellation);
             }
             finally
             {
-                Lock.ExitReadLock();
+                DecrementRead();
             }
         }
 
         internal bool TryComputeLength(out long length)
         {
-            //can't get the write lock from inside the read lock
-            SequenceBuilder sequenceBuilder = GetSequenceBuilder();
-            Lock.EnterReadLock();
+            IncrementRead();
             try
             {
-                return sequenceBuilder.TryComputeLength(out length);
+                return GetSequenceBuilder().TryComputeLength(out length);
             }
             finally
             {
-                Lock.ExitReadLock();
+                DecrementRead();
             }
         }
 
         internal async Task CopyToAsync(Stream stream, CancellationToken cancellation)
         {
-            //can't get the write lock from inside the read lock
-            SequenceBuilder sequenceBuilder = GetSequenceBuilder();
-            Lock.EnterReadLock();
+            IncrementRead();
             try
             {
-                await sequenceBuilder.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+                await GetSequenceBuilder().CopyToAsync(stream, cancellation).ConfigureAwait(false);
             }
             finally
             {
-                Lock.ExitReadLock();
-            }
-        }
-
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-            Lock.EnterWriteLock();
-            try
-            {
-                _sequenceBuilder?.Dispose();
-                _sequenceBuilder = null;
-            }
-            finally
-            {
-                Lock.ExitWriteLock();
+                DecrementRead();
             }
         }
 
@@ -126,11 +103,10 @@ namespace Azure.Core.Serialization
         /// <returns>A <see cref="BinaryData"/> representation of the serialized <see cref="IModelJsonSerializable{T}"/> in JSON format.</returns>
         public BinaryData ToBinaryData()
         {
-            //can't get the write lock from inside the read lock
-            SequenceBuilder sequenceBuilder = GetSequenceBuilder();
-            Lock.EnterReadLock();
+            IncrementRead();
             try
             {
+                SequenceBuilder sequenceBuilder = GetSequenceBuilder();
                 bool gotLength = sequenceBuilder.TryComputeLength(out long length);
                 Debug.Assert(gotLength);
                 using var stream = new MemoryStream((int)length);
@@ -139,7 +115,60 @@ namespace Azure.Core.Serialization
             }
             finally
             {
-                Lock.ExitReadLock();
+                DecrementRead();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            if (!_isDisposed)
+            {
+                lock (_sequenceLock)
+                {
+                    if (!_isDisposed)
+                    {
+                        _isDisposed = true;
+
+                        if (_readersFinished is null || _readersFinished.WaitOne())
+                        {
+                            // if we never get this event safer to leak than corrupt memory with use-after-free
+                            _sequenceBuilder?.Dispose();
+                        }
+
+                        _sequenceBuilder = null;
+                        _readersFinished?.Dispose();
+                        _readersFinished = null;
+                    }
+                }
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void IncrementRead()
+        {
+            if (_isDisposed)
+            {
+                throw new ObjectDisposedException(nameof(ModelWriter));
+            }
+            if (Interlocked.Increment(ref _readCount) > 0)
+            {
+                ReadersFinished.Reset();
+            }
+            if (_isDisposed)
+            {
+                DecrementRead();
+                throw new ObjectDisposedException(nameof(ModelWriter));
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void DecrementRead()
+        {
+            if (Interlocked.Decrement(ref _readCount) == 0)
+            {
+                // notify we reached zero readers in case dispose is waiting
+                ReadersFinished.Set();
             }
         }
     }
