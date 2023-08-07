@@ -19,6 +19,9 @@ namespace Azure.Core.Serialization
         private readonly IModelJsonSerializable<object> _model;
         private readonly ModelSerializerOptions _options;
 
+        private readonly object _writeLock = new object();
+        private readonly object _readLock = new object();
+
         private volatile SequenceBuilder? _sequenceBuilder;
         private volatile bool _isDisposed;
 
@@ -38,13 +41,17 @@ namespace Azure.Core.Serialization
             _options = options;
         }
 
-        private readonly object _sequenceLock = new object();
         private SequenceBuilder GetSequenceBuilder()
         {
             if (_sequenceBuilder is null)
             {
-                lock (_sequenceLock)
+                lock (_writeLock)
                 {
+                    if (_isDisposed)
+                    {
+                        throw new ObjectDisposedException(nameof(ModelWriter));
+                    }
+
                     if (_sequenceBuilder is null)
                     {
                         SequenceBuilder sequenceBuilder = new SequenceBuilder();
@@ -60,10 +67,11 @@ namespace Azure.Core.Serialization
 
         internal void CopyTo(Stream stream, CancellationToken cancellation)
         {
+            SequenceBuilder builder = GetSequenceBuilder();
             IncrementRead();
             try
             {
-                GetSequenceBuilder().CopyTo(stream, cancellation);
+                builder.CopyTo(stream, cancellation);
             }
             finally
             {
@@ -73,10 +81,11 @@ namespace Azure.Core.Serialization
 
         internal bool TryComputeLength(out long length)
         {
+            SequenceBuilder builder = GetSequenceBuilder();
             IncrementRead();
             try
             {
-                return GetSequenceBuilder().TryComputeLength(out length);
+                return builder.TryComputeLength(out length);
             }
             finally
             {
@@ -86,10 +95,11 @@ namespace Azure.Core.Serialization
 
         internal async Task CopyToAsync(Stream stream, CancellationToken cancellation)
         {
+            SequenceBuilder builder = GetSequenceBuilder();
             IncrementRead();
             try
             {
-                await GetSequenceBuilder().CopyToAsync(stream, cancellation).ConfigureAwait(false);
+                await builder.CopyToAsync(stream, cancellation).ConfigureAwait(false);
             }
             finally
             {
@@ -103,14 +113,14 @@ namespace Azure.Core.Serialization
         /// <returns>A <see cref="BinaryData"/> representation of the serialized <see cref="IModelJsonSerializable{T}"/> in JSON format.</returns>
         public BinaryData ToBinaryData()
         {
+            SequenceBuilder builder = GetSequenceBuilder();
             IncrementRead();
             try
             {
-                SequenceBuilder sequenceBuilder = GetSequenceBuilder();
-                bool gotLength = sequenceBuilder.TryComputeLength(out long length);
+                bool gotLength = builder.TryComputeLength(out long length);
                 Debug.Assert(gotLength);
                 using var stream = new MemoryStream((int)length);
-                sequenceBuilder.CopyTo(stream, default);
+                builder.CopyTo(stream, default);
                 return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
             }
             finally
@@ -124,7 +134,7 @@ namespace Azure.Core.Serialization
         {
             if (!_isDisposed)
             {
-                lock (_sequenceLock)
+                lock (_writeLock)
                 {
                     if (!_isDisposed)
                     {
@@ -132,7 +142,7 @@ namespace Azure.Core.Serialization
 
                         if (_readersFinished is null || _readersFinished.WaitOne())
                         {
-                            // if we never get this event safer to leak than corrupt memory with use-after-free
+                            //only dispose if no readers ever happened or if all readers are done
                             _sequenceBuilder?.Dispose();
                         }
 
@@ -151,10 +161,13 @@ namespace Azure.Core.Serialization
             {
                 throw new ObjectDisposedException(nameof(ModelWriter));
             }
-            if (Interlocked.Increment(ref _readCount) > 0)
+
+            lock (_readLock)
             {
+                Interlocked.Increment(ref _readCount);
                 ReadersFinished.Reset();
             }
+
             if (_isDisposed)
             {
                 DecrementRead();
@@ -165,10 +178,13 @@ namespace Azure.Core.Serialization
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void DecrementRead()
         {
-            if (Interlocked.Decrement(ref _readCount) == 0)
+            lock (_readLock)
             {
-                // notify we reached zero readers in case dispose is waiting
-                ReadersFinished.Set();
+                if (Interlocked.Decrement(ref _readCount) == 0)
+                {
+                    // notify we reached zero readers in case dispose is waiting
+                    ReadersFinished.Set();
+                }
             }
         }
     }
