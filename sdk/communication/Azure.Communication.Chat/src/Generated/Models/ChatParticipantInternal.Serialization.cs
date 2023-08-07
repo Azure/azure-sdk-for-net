@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication;
 using Azure.Core;
@@ -29,6 +30,17 @@ namespace Azure.Communication.Chat
                 writer.WritePropertyName("shareHistoryTime"u8);
                 writer.WriteStringValue(ShareHistoryTime.Value, "O");
             }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
         }
 
@@ -41,6 +53,7 @@ namespace Azure.Communication.Chat
             CommunicationIdentifierModel communicationIdentifier = default;
             Optional<string> displayName = default;
             Optional<DateTimeOffset> shareHistoryTime = default;
+            Optional<IDictionary<string, string>> metadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("communicationIdentifier"u8))
@@ -62,8 +75,22 @@ namespace Azure.Communication.Chat
                     shareHistoryTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
             }
-            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime));
+            return new ChatParticipantInternal(communicationIdentifier, displayName.Value, Optional.ToNullable(shareHistoryTime), Optional.ToDictionary(metadata));
         }
     }
 }
