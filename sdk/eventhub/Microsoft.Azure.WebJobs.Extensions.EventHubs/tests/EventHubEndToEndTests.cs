@@ -154,6 +154,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
+                await jobHost.StopAsync();
             }
 
             AssertSingleDispatchLogs(host);
