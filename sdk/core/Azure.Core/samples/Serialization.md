@@ -72,8 +72,8 @@ Dog dog = new Dog
 };
 
 JsonSerializerOptions options = new JsonSerializerOptions();
-// The ModelJSONConverter is able to serialize and deserialize any model that implements IModelJSONSerializable<T>.
-options.Converters.Add(new ModelJSONConverter());
+// The ModelJsonConverter is able to serialize and deserialize any model that implements IModelJsonSerializable<T>.
+options.Converters.Add(new ModelJsonConverter());
 
 string json = JsonSerializer.Serialize(dog, options);
 
@@ -99,7 +99,7 @@ envelope.ModelA = new Cat();
 envelope.ModelT = new SearchResult { X = "Square", Y = 10 };
 
 ModelSerializerOptions options = new ModelSerializerOptions();
-options.GenericTypeSerializerCreator = type => type.Equals(typeof(SearchResult)) ? new NewtonsoftJSONObjectSerializer() : null;
+options.GenericTypeSerializerCreator = type => type.Equals(typeof(SearchResult)) ? new NewtonsoftJsonObjectSerializer() : null;
 
 BinaryData data = ModelSerializer.Serialize(envelope, options);
 
