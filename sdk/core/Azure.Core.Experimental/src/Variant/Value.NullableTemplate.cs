@@ -3,7 +3,8 @@
 
 using System.Runtime.InteropServices;
 
-namespace Azure {
+namespace Azure
+{
     public readonly partial struct Value
     {
         [StructLayout(LayoutKind.Sequential)]
