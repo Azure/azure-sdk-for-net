@@ -39,7 +39,7 @@ namespace Azure
             }
             finally
             {
-                File.Delete("cloudconfig.json");
+                File.Delete("cloudmachine.json");
             }
         }
     }
