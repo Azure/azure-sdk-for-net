@@ -1325,7 +1325,7 @@ using Azure.Core.Pipeline;
                     request.QueueAssignments[queueAssignment.Key] = queueAssignment.Value;
                 }
 
-                foreach (var label in options.Labels)
+                foreach (KeyValuePair<string, Value> label in options.Labels)
                 {
                     request.Labels[label.Key] = label.Value;
                 }
