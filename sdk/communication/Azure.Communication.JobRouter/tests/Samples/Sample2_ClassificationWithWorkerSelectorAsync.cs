@@ -68,9 +68,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Classification_Policy_O365",
                     WorkerSelectors =
                     {
-                        new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Location", LabelOperator.Equal, new LabelValue("United States"))),
-                        new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us"))),
-                        new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")))
+                        new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Location", LabelOperator.Equal, new Value("United States"))),
+                        new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Language", LabelOperator.Equal, new Value("en-us"))),
+                        new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Geo", LabelOperator.Equal, new Value("NA")))
                     }
                 });
 
@@ -109,10 +109,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
                     Labels =
                     {
-                        ["Location"] = new LabelValue("United States"),
-                        ["Language"] = new LabelValue("en-us"),
-                        ["Geo"] = new LabelValue("NA"),
-                        ["Skill_English_Lvl"] = new LabelValue(7),
+                        ["Location"] = new Value("United States"),
+                        ["Language"] = new Value("en-us"),
+                        ["Geo"] = new Value("NA"),
+                        ["Skill_English_Lvl"] = new Value(7),
                     }, // attaching labels associated with worker
                     QueueAssignments = { [queueId] = new RouterQueueAssignment() }
                 });
@@ -124,7 +124,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 {
                     AvailableForOffers = true, // registering worker at the time of creation
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
-                    Labels = { ["Skill_English_Lvl"] = new LabelValue(7) }, // attaching labels associated with worker
+                    Labels = { ["Skill_English_Lvl"] = new Value(7) }, // attaching labels associated with worker
                     QueueAssignments = { [queueId] = new RouterQueueAssignment() }
                 });
 
@@ -215,17 +215,17 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                             condition: new ExpressionRouterRule("If(job.Location = \"United States\", true, false)"),
                             workerSelectors: new List<RouterWorkerSelector>()
                             {
-                                new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us")),
-                                new RouterWorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")),
-                                new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
+                                new RouterWorkerSelector("Language", LabelOperator.Equal, new Value("en-us")),
+                                new RouterWorkerSelector("Geo", LabelOperator.Equal, new Value("NA")),
+                                new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new Value(5))
                             }),
                         new ConditionalWorkerSelectorAttachment(
                             condition: new ExpressionRouterRule("If(job.Location = \"Canada\", true, false)"),
                             workerSelectors: new List<RouterWorkerSelector>()
                             {
-                                new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-ca")),
-                                new RouterWorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")),
-                                new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
+                                new RouterWorkerSelector("Language", LabelOperator.Equal, new Value("en-ca")),
+                                new RouterWorkerSelector("Geo", LabelOperator.Equal, new Value("NA")),
+                                new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new Value(5))
                             }),
                     }
                 });
@@ -239,7 +239,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
                     Labels = // we will attach a label to the job which will affects its classification
                     {
-                        ["Location"] = new LabelValue("United States"),
+                        ["Location"] = new Value("United States"),
                     }
                 });
 
@@ -269,9 +269,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
                     Labels =
                     {
-                        ["Language"] = new LabelValue("en-us"),
-                        ["Geo"] = new LabelValue("NA"),
-                        ["Skill_English_Lvl"] = new LabelValue(7)
+                        ["Language"] = new Value("en-us"),
+                        ["Geo"] = new Value("NA"),
+                        ["Skill_English_Lvl"] = new Value(7)
                     }, // attaching labels associated with worker
                     QueueAssignments = { [queueId] = new RouterQueueAssignment() }
                 });
@@ -284,9 +284,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10) },
                     Labels =
                     {
-                        ["Language"] = new LabelValue("en-ca"),
-                        ["Geo"] = new LabelValue("NA"),
-                        ["Skill_English_Lvl"] = new LabelValue(7)
+                        ["Language"] = new Value("en-ca"),
+                        ["Geo"] = new Value("NA"),
+                        ["Skill_English_Lvl"] = new Value(7)
                     }, // attaching labels associated with worker
                     QueueAssignments = { [queueId] = new RouterQueueAssignment() }
                 });
@@ -372,7 +372,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                         new PassThroughWorkerSelectorAttachment("Geo", LabelOperator.Equal),
                         new PassThroughWorkerSelectorAttachment("Language", LabelOperator.Equal),
                         new PassThroughWorkerSelectorAttachment("Dept", LabelOperator.Equal),
-                        new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))),
+                        new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new Value(5))),
                     }
                 });
 
@@ -385,10 +385,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
                     Labels = // we will attach a label to the job which will affects its classification
                     {
-                        ["Location"] = new LabelValue("United States"),
-                        ["Geo"] = new LabelValue("NA"),
-                        ["Language"] = new LabelValue("en-us"),
-                        ["Dept"] = new LabelValue("O365")
+                        ["Location"] = new Value("United States"),
+                        ["Geo"] = new Value("NA"),
+                        ["Language"] = new Value("en-us"),
+                        ["Dept"] = new Value("O365")
                     }
                 });
 
@@ -400,10 +400,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
                     Labels = // we will attach a label to the job which will affects its classification
                     {
-                        ["Location"] = new LabelValue("United States"),
-                        ["Geo"] = new LabelValue("NA"),
-                        ["Language"] = new LabelValue("en-us"),
-                        ["Dept"] = new LabelValue("Xbox")
+                        ["Location"] = new Value("United States"),
+                        ["Geo"] = new Value("NA"),
+                        ["Language"] = new Value("en-us"),
+                        ["Dept"] = new Value("Xbox")
                     }
                 });
 
@@ -439,11 +439,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
                     Labels =
                     {
-                        ["Location"] = new LabelValue("United States"),
-                        ["Geo"] = new LabelValue("NA"),
-                        ["Language"] = new LabelValue("en-us"),
-                        ["Dept"] = new LabelValue("O365"),
-                        ["Skill_English_Lvl"] = new LabelValue(10),
+                        ["Location"] = new Value("United States"),
+                        ["Geo"] = new Value("NA"),
+                        ["Language"] = new Value("en-us"),
+                        ["Dept"] = new Value("O365"),
+                        ["Skill_English_Lvl"] = new Value(10),
                     }, // attaching labels associated with worker
                     QueueAssignments = { [queueId] = new RouterQueueAssignment() }
                 });
@@ -457,11 +457,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
                     Labels =
                     {
-                        ["Location"] = new LabelValue("United States"),
-                        ["Geo"] = new LabelValue("NA"),
-                        ["Language"] = new LabelValue("en-us"),
-                        ["Dept"] = new LabelValue("Xbox"),
-                        ["Skill_English_Lvl"] = new LabelValue(10),
+                        ["Location"] = new Value("United States"),
+                        ["Geo"] = new Value("NA"),
+                        ["Language"] = new Value("en-us"),
+                        ["Dept"] = new Value("Xbox"),
+                        ["Skill_English_Lvl"] = new Value(10),
                     }, // attaching labels associated with worker
                     QueueAssignments = { [queueId] = new RouterQueueAssignment() }
                 });

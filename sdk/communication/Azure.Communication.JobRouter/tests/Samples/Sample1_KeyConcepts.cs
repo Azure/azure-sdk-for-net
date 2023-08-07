@@ -58,7 +58,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Priority = 1,
                     RequestedWorkerSelectors =
                     {
-                        new RouterWorkerSelector("Some-Skill", LabelOperator.GreaterThan, new LabelValue(10))
+                        new RouterWorkerSelector("Some-Skill", LabelOperator.GreaterThan, new Value(10))
                     },
                 });
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign
@@ -69,7 +69,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateWorkerOptions(workerId: "worker-1", totalCapacity: 1)
                 {
                     QueueAssignments = { [queue.Value.Id] = new RouterQueueAssignment() },
-                    Labels = { ["Some-Skill"] = new LabelValue(11) },
+                    Labels = { ["Some-Skill"] = new Value(11) },
                     ChannelConfigurations = { ["my-channel"] = new ChannelConfiguration(1) },
                     AvailableForOffers = true,
                 }

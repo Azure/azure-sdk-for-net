@@ -46,7 +46,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             string worker2Id = "worker-Id-2";
 
             // Worker 1 can handle escalation
-            Dictionary<string, LabelValue> worker1Labels = new Dictionary<string, LabelValue>()
+            Dictionary<string, Value> worker1Labels = new Dictionary<string, Value>()
             ;
 
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
@@ -54,7 +54,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 {
                     AvailableForOffers = true,
                     ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
-                    Labels = { ["HandleEscalation"] = new LabelValue(true), ["IT_Support"] = new LabelValue(true) },
+                    Labels = { ["HandleEscalation"] = new Value(true), ["IT_Support"] = new Value(true) },
                     QueueAssignments = { [jobQueueId] = new RouterQueueAssignment(), }
                 });
 
@@ -64,7 +64,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 {
                     AvailableForOffers = true,
                     ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
-                    Labels = { ["IT_Support"] = new LabelValue(true), },
+                    Labels = { ["IT_Support"] = new Value(true), },
                     QueueAssignments = { [jobQueueId] = new RouterQueueAssignment(), },
                 });
 
@@ -73,7 +73,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterJob> job = await routerClient.CreateJobAsync(
                 options: new CreateJobOptions(jobId: jobId, channelId: channelId, queueId: jobQueueId)
                 {
-                    RequestedWorkerSelectors = { new RouterWorkerSelector("IT_Support", LabelOperator.Equal, new LabelValue(true))},
+                    RequestedWorkerSelectors = { new RouterWorkerSelector("IT_Support", LabelOperator.Equal, new Value(true))},
                     Priority = 100,
                 });
 
@@ -131,12 +131,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
-                        ["HighPrioritySupport"] = new LabelValue(true),
-                        ["HardwareSupport"] = new LabelValue(true),
-                        ["Support_XBOX_SERIES_X"] = new LabelValue(true),
-                        ["English"] = new LabelValue(10),
-                        ["ChatSupport"] = new LabelValue(true),
-                        ["XboxSupport"] = new LabelValue(true)
+                        ["HighPrioritySupport"] = new Value(true),
+                        ["HardwareSupport"] = new Value(true),
+                        ["Support_XBOX_SERIES_X"] = new Value(true),
+                        ["English"] = new Value(10),
+                        ["ChatSupport"] = new Value(true),
+                        ["XboxSupport"] = new Value(true)
                     },
                     ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
                     AvailableForOffers = true,
@@ -150,20 +150,20 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
-                        ["HighPrioritySupport"] = new LabelValue(true),
-                        ["HardwareSupport"] = new LabelValue(true),
-                        ["Support_XBOX_SERIES_X"] = new LabelValue(true),
-                        ["Support_XBOX_SERIES_S"] = new LabelValue(true),
-                        ["English"] = new LabelValue(8),
-                        ["ChatSupport"] = new LabelValue(true),
-                        ["XboxSupport"] = new LabelValue(true)
+                        ["HighPrioritySupport"] = new Value(true),
+                        ["HardwareSupport"] = new Value(true),
+                        ["Support_XBOX_SERIES_X"] = new Value(true),
+                        ["Support_XBOX_SERIES_S"] = new Value(true),
+                        ["English"] = new Value(8),
+                        ["ChatSupport"] = new Value(true),
+                        ["XboxSupport"] = new Value(true)
                     },
                     ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
                     AvailableForOffers = true,
                 });
 
             string workerId3 = "worker-Id-3";
-            Dictionary<string, LabelValue> worker3Labels = new Dictionary<string, LabelValue>()
+            Dictionary<string, Value> worker3Labels = new Dictionary<string, Value>()
             ;
 
             Response<RouterWorker> worker3 = await routerClient.CreateWorkerAsync(
@@ -172,12 +172,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
                     Labels =
                     {
-                        ["HighPrioritySupport"] = new LabelValue(false),
-                        ["HardwareSupport"] = new LabelValue(true),
-                        ["Support_XBOX"] = new LabelValue(true),
-                        ["English"] = new LabelValue(7),
-                        ["ChatSupport"] = new LabelValue(true),
-                        ["XboxSupport"] = new LabelValue(true),
+                        ["HighPrioritySupport"] = new Value(false),
+                        ["HardwareSupport"] = new Value(true),
+                        ["Support_XBOX"] = new Value(true),
+                        ["English"] = new Value(7),
+                        ["ChatSupport"] = new Value(true),
+                        ["XboxSupport"] = new Value(true),
                     },
                     ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
                     AvailableForOffers = true,
@@ -192,18 +192,18 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     queueId: queueId)
                 {
                     Labels = {
-                        ["CommunicationType"] = new LabelValue("Chat"),
-                        ["IssueType"] = new LabelValue("XboxSupport"),
-                        ["Language"] = new LabelValue("en"),
-                        ["HighPriority"] = new LabelValue(true),
-                        ["SubIssueType"] = new LabelValue("ConsoleMalfunction"),
-                        ["ConsoleType"] = new LabelValue("XBOX_SERIES_X"),
-                        ["Model"] = new LabelValue("XBOX_SERIES_X_1TB")
+                        ["CommunicationType"] = new Value("Chat"),
+                        ["IssueType"] = new Value("XboxSupport"),
+                        ["Language"] = new Value("en"),
+                        ["HighPriority"] = new Value(true),
+                        ["SubIssueType"] = new Value("ConsoleMalfunction"),
+                        ["ConsoleType"] = new Value("XBOX_SERIES_X"),
+                        ["Model"] = new Value("XBOX_SERIES_X_1TB")
                     },
                     RequestedWorkerSelectors = {
-                        new RouterWorkerSelector("English", LabelOperator.GreaterThanEqual, new LabelValue(7)),
-                        new RouterWorkerSelector("ChatSupport", LabelOperator.Equal, new LabelValue(true)),
-                        new RouterWorkerSelector("XboxSupport", LabelOperator.Equal, new LabelValue(true))
+                        new RouterWorkerSelector("English", LabelOperator.GreaterThanEqual, new Value(7)),
+                        new RouterWorkerSelector("ChatSupport", LabelOperator.Equal, new Value(true)),
+                        new RouterWorkerSelector("XboxSupport", LabelOperator.Equal, new Value(true))
                     },
                     Priority = 100,
                 });

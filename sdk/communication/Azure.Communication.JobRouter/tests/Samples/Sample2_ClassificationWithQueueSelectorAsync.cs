@@ -60,7 +60,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Classification_Policy_O365",
                     QueueSelectors =
                     {
-                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queue1.Value.Id)))
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new Value(queue1.Value.Id)))
                     },
                 });
 
@@ -70,7 +70,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Classification_Policy_XBox",
                     QueueSelectors =
                     {
-                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queue2.Value.Id)))
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new Value(queue2.Value.Id)))
                     }
                 });
 
@@ -160,7 +160,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Queue_365",
                     Labels =
                     {
-                        ["ProductDetail"] = new LabelValue("Office_Support")
+                        ["ProductDetail"] = new Value("Office_Support")
                     }
                 });
 
@@ -172,7 +172,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Queue_XBox",
                     Labels =
                     {
-                        ["ProductDetail"] = new LabelValue("XBox_Support")
+                        ["ProductDetail"] = new Value("XBox_Support")
                     }
                 });
 
@@ -185,13 +185,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                             condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
-                                new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("Office_Support"))
+                                new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new Value("Office_Support"))
                             }),
                         new ConditionalQueueSelectorAttachment(
                             condition: new ExpressionRouterRule("If(job.Product = \"XBx\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
-                                new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("XBox_Support"))
+                                new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new Value("XBox_Support"))
                             })
                     }
                 });
@@ -205,9 +205,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelReference = "12345",
                     Labels =
                     {
-                        ["Language"] = new LabelValue("en"),
-                        ["Product"] = new LabelValue("O365"),
-                        ["Geo"] = new LabelValue("North America"),
+                        ["Language"] = new Value("en"),
+                        ["Product"] = new Value("O365"),
+                        ["Geo"] = new Value("North America"),
                     },
                 });
 
@@ -220,9 +220,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelReference = "12345",
                     Labels =
                     {
-                        ["Language"] = new LabelValue("en"),
-                        ["Product"] = new LabelValue("XBx"),
-                        ["Geo"] = new LabelValue("North America"),
+                        ["Language"] = new Value("en"),
+                        ["Product"] = new Value("XBx"),
+                        ["Geo"] = new Value("North America"),
                     },
                 });
 
@@ -296,9 +296,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Queue_365_EN_EMEA",
                     Labels =
                     {
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Language"] = new LabelValue("en"),
-                        ["Region"] = new LabelValue("EMEA"),
+                        ["ProductDetail"] = new Value("Office_Support"),
+                        ["Language"] = new Value("en"),
+                        ["Region"] = new Value("EMEA"),
                     },
                 });
 
@@ -310,9 +310,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Queue_365_FR_EMEA",
                     Labels =
                     {
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Language"] = new LabelValue("fr"),
-                        ["Region"] = new LabelValue("EMEA"),
+                        ["ProductDetail"] = new Value("Office_Support"),
+                        ["Language"] = new Value("fr"),
+                        ["Region"] = new Value("EMEA"),
                     },
                 });
 
@@ -324,9 +324,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Name = "Queue_365_EN_NA",
                     Labels =
                     {
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Language"] = new LabelValue("en"),
-                        ["Region"] = new LabelValue("NA"),
+                        ["ProductDetail"] = new Value("Office_Support"),
+                        ["Language"] = new Value("en"),
+                        ["Region"] = new Value("NA"),
                     },
                 });
 
@@ -350,11 +350,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelReference = "12345",
                     Labels =
                     {
-                        ["Language"] = new LabelValue("en"),
-                        ["Product"] = new LabelValue("O365"),
-                        ["Geo"] = new LabelValue("Europe, Middle East, Africa"),
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Region"] = new LabelValue("EMEA"),
+                        ["Language"] = new Value("en"),
+                        ["Product"] = new Value("O365"),
+                        ["Geo"] = new Value("Europe, Middle East, Africa"),
+                        ["ProductDetail"] = new Value("Office_Support"),
+                        ["Region"] = new Value("EMEA"),
                     },
                 });
 
@@ -367,11 +367,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelReference = "12345",
                     Labels =
                     {
-                        ["Language"] = new LabelValue("fr"),
-                        ["Product"] = new LabelValue("O365"),
-                        ["Geo"] = new LabelValue("Europe, Middle East, Africa"),
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Region"] = new LabelValue("EMEA"),
+                        ["Language"] = new Value("fr"),
+                        ["Product"] = new Value("O365"),
+                        ["Geo"] = new Value("Europe, Middle East, Africa"),
+                        ["ProductDetail"] = new Value("Office_Support"),
+                        ["Region"] = new Value("EMEA"),
                     },
                 });
 
@@ -384,11 +384,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelReference = "12345",
                     Labels =
                     {
-                        ["Language"] = new LabelValue("en"),
-                        ["Product"] = new LabelValue("O365"),
-                        ["Geo"] = new LabelValue("North America"),
-                        ["ProductDetail"] = new LabelValue("Office_Support"),
-                        ["Region"] = new LabelValue("NA"),
+                        ["Language"] = new Value("en"),
+                        ["Product"] = new Value("O365"),
+                        ["Geo"] = new Value("North America"),
+                        ["ProductDetail"] = new Value("Office_Support"),
+                        ["Region"] = new Value("NA"),
                     },
                 });
 

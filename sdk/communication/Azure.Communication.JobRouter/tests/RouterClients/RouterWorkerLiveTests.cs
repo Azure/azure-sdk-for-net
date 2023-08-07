@@ -38,10 +38,10 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             {
                 ["ACS_Chat_Channel"] = channelConfig1
             };
-            var workerLabels = new Dictionary<string, LabelValue?>()
+            var workerLabels = new Dictionary<string, Value>()
             {
-                ["test_label_1"] = new LabelValue("testLabel"),
-                ["test_label_2"] = new LabelValue(12),
+                ["test_label_1"] = new Value("testLabel"),
+                ["test_label_2"] = new Value(12),
             };
 
             var queueAssignments = new Dictionary<string, RouterQueueAssignment?> {{ createQueueResponse.Value.Id, new RouterQueueAssignment() }};
@@ -52,8 +52,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     QueueAssignments = { { createQueueResponse.Value.Id, new RouterQueueAssignment() } },
                     Labels =
                     {
-                        ["test_label_1"] = new LabelValue("testLabel"),
-                        ["test_label_2"] = new LabelValue(12),
+                        ["test_label_1"] = new Value("testLabel"),
+                        ["test_label_2"] = new Value(12),
                     },
                     ChannelConfigurations = { ["ACS_Chat_Channel"] = channelConfig1 }
                 });
@@ -264,12 +264,12 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 ["ACS_Chat_Channel"] = new(20) { MaxNumberOfJobs = 5 },
                 ["ACS_Voice_Channel"] = new(10) { MaxNumberOfJobs = 3}
             };
-            var workerLabels = new Dictionary<string, LabelValue?>()
+            var workerLabels = new Dictionary<string, Value>()
             {
                 ["test_label_1"] = new("testLabel"),
                 ["test_label_2"] = new(12),
             };
-            var workerTags = new Dictionary<string, LabelValue?>()
+            var workerTags = new Dictionary<string, Value>()
             {
                 ["test_tag_1"] = new("tag"),
                 ["test_tag_2"] = new(12),
@@ -296,8 +296,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             // Remove queue assignment, channel configuration and label
             queueAssignments[createQueueResponse.Value.Id] = null;
             channelConfigList[channelConfigList.First().Key] = null;
-            workerLabels[workerLabels.First().Key] = null;
-            workerTags[workerTags.First().Key] = null;
+            // TODO: null
+            //workerLabels[workerLabels.First().Key] = null;
+            //workerTags[workerTags.First().Key] = null;
 
             var updateWorkerOptions = new UpdateWorkerOptions(workerId)
             {

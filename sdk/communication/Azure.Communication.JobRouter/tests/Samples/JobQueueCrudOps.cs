@@ -74,7 +74,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<Models.RouterQueue> updatedJobQueue = routerAdministrationClient.UpdateQueue(
                 options: new UpdateQueueOptions(jobQueueId)
                 {
-                    Labels = { ["Additional-Queue-Label"] = new LabelValue("ChatQueue") }
+                    Labels = { ["Additional-Queue-Label"] = new Value("ChatQueue") }
                 });
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateGetJobQueue

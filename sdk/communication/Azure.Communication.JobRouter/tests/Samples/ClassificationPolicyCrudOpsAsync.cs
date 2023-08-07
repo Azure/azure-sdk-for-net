@@ -30,16 +30,16 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 options: new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
                     Name = "Sample classification policy",
-                    PrioritizationRule = new StaticRouterRule(new LabelValue(10)),
+                    PrioritizationRule = new StaticRouterRule(new Value(10)),
                     QueueSelectors =
                     {
-                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Region", LabelOperator.Equal, new LabelValue("NA"))),
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Region", LabelOperator.Equal, new Value("NA"))),
                         new ConditionalQueueSelectorAttachment(
                             condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
-                                new RouterQueueSelector("Product", LabelOperator.Equal, new LabelValue("O365")),
-                                new RouterQueueSelector("QGroup", LabelOperator.Equal, new LabelValue("NA_O365"))
+                                new RouterQueueSelector("Product", LabelOperator.Equal, new Value("O365")),
+                                new RouterQueueSelector("QGroup", LabelOperator.Equal, new Value("NA_O365"))
                             }),
                     },
                     WorkerSelectors =
@@ -48,14 +48,14 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                             condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             workerSelectors: new List<RouterWorkerSelector>()
                             {
-                                new RouterWorkerSelector("Skill_O365", LabelOperator.Equal, new LabelValue(true)),
-                                new RouterWorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(1))
+                                new RouterWorkerSelector("Skill_O365", LabelOperator.Equal, new Value(true)),
+                                new RouterWorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, new Value(1))
                             }),
                         new ConditionalWorkerSelectorAttachment(
                             condition: new ExpressionRouterRule("If(job.HighPriority = \"true\", true, false)"),
                             workerSelectors: new List<RouterWorkerSelector>()
                             {
-                                new RouterWorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(10))
+                                new RouterWorkerSelector("Skill_O365_Lvl", LabelOperator.GreaterThanEqual, new Value(10))
                             })
                     }
                 });

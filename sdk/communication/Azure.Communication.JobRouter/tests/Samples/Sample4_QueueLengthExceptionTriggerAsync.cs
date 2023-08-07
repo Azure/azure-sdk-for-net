@@ -63,7 +63,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 Priority = 10,
                 WorkerSelectors =
                 {
-                    new RouterWorkerSelector("ExceptionTriggered", LabelOperator.Equal, new LabelValue(true))
+                    new RouterWorkerSelector("ExceptionTriggered", LabelOperator.Equal, new Value(true))
                 }
             };
 

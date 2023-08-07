@@ -53,9 +53,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueSelectors =
                     {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal,
-                            new LabelValue(jobQueue.Value.Id))),
+                            new Value(jobQueue.Value.Id))),
                     },
-                    PrioritizationRule = new StaticRouterRule(new LabelValue(10))
+                    PrioritizationRule = new StaticRouterRule(new Value(10))
                 });
 
             string jobWithCpId = "job-with-cp-id";
