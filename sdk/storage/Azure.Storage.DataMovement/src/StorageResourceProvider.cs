@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
+using System.Threading.Tasks;
+
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
@@ -16,11 +19,11 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets a source resource from the given transfer properties.
         /// </summary>
-        protected internal abstract StorageResource FromSource(DataTransferProperties props);
+        protected internal abstract Task<StorageResource> FromSourceAsync(DataTransferProperties props, CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets a source resource from the given transfer properties.
         /// </summary>
-        protected internal abstract StorageResource FromDestination(DataTransferProperties props);
+        protected internal abstract Task<StorageResource> FromDestinationAsync(DataTransferProperties props, CancellationToken cancellationToken);
     }
 }

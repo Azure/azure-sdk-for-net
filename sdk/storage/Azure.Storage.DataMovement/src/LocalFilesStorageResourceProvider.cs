@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement
 {
@@ -21,12 +23,12 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        protected internal override StorageResource FromSource(DataTransferProperties props)
-            => FromTransferProperties(props, getSource: true);
+        protected internal override Task<StorageResource> FromSourceAsync(DataTransferProperties props, CancellationToken cancellationToken)
+            => Task.FromResult(FromTransferProperties(props, getSource: true));
 
         /// <inheritdoc/>
-        protected internal override StorageResource FromDestination(DataTransferProperties props)
-            => FromTransferProperties(props, getSource: false);
+        protected internal override Task<StorageResource> FromDestinationAsync(DataTransferProperties props, CancellationToken cancellationToken)
+            => Task.FromResult(FromTransferProperties(props, getSource: false));
 
         private StorageResource FromTransferProperties(DataTransferProperties props, bool getSource)
         {

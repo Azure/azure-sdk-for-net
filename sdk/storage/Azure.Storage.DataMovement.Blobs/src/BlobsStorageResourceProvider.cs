@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 
@@ -34,15 +34,35 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <inheritdoc/>
-        protected override StorageResource FromSource(DataTransferProperties props)
-        {
-            throw new NotImplementedException();
-        }
+        protected override async Task<StorageResource> FromSourceAsync(DataTransferProperties props, CancellationToken cancellationToken)
+            => await FromTransferPropertiesAsync(props, getSource: true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc/>
-        protected override StorageResource FromDestination(DataTransferProperties props)
+        protected override async Task<StorageResource> FromDestinationAsync(DataTransferProperties props, CancellationToken cancellationToken)
+            => await FromTransferPropertiesAsync(props, getSource: false, cancellationToken).ConfigureAwait(false);
+
+        private async Task<StorageResource> FromTransferPropertiesAsync(
+            DataTransferProperties props,
+            bool getSource,
+            CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            ResourceType type = GetType(getSource ? props.SourceTypeId : props.DestinationTypeId, props.IsContainer);
+            return type switch
+            {
+                ResourceType.BlockBlob => await BlockBlobStorageResource
+                    .RehydrateResourceAsync(props, getSource, cancellationToken)
+                    .ConfigureAwait(false),
+                ResourceType.PageBlob => await PageBlobStorageResource
+                    .RehydrateResourceAsync(props, getSource, cancellationToken)
+                    .ConfigureAwait(false),
+                ResourceType.AppendBlob => await AppendBlobStorageResource
+                    .RehydrateResourceAsync(props, getSource, cancellationToken)
+                    .ConfigureAwait(false),
+                ResourceType.BlobContainer => await BlobStorageResourceContainer
+                    .RehydrateResourceAsync(props, getSource, cancellationToken)
+                    .ConfigureAwait(false),
+                _ => throw BadResourceTypeException(type),
+            };
         }
 
         /// <summary>
