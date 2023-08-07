@@ -17,9 +17,7 @@ namespace Azure.Communication.JobRouter
         /// (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs
         /// </summary>
         [CodeGenMember("LabelsToUpsert")]
-#pragma warning disable CA2227 // Collection properties should be read only
         public IDictionary<string, Value> LabelsToUpsert { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
 
         /// <summary> Initializes a new instance of ReclassifyExceptionAction. </summary>
         /// <param name="classificationPolicyId"> (optional) The new classification policy that will determine queue, priority and worker selectors. </param>
