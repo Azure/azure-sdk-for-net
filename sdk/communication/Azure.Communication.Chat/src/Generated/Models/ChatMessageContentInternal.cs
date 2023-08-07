@@ -24,7 +24,7 @@ namespace Azure.Communication.Chat
         /// <param name="message"> Chat message content for messages of types text or html. </param>
         /// <param name="topic"> Chat message content for messages of type topicUpdated. </param>
         /// <param name="participants"> Chat message content for messages of types participantAdded or participantRemoved. </param>
-        /// <param name="initiatorCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
+        /// <param name="initiatorCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         internal ChatMessageContentInternal(string message, string topic, IReadOnlyList<ChatParticipantInternal> participants, CommunicationIdentifierModel initiatorCommunicationIdentifier)
         {
             Message = message;
@@ -39,7 +39,7 @@ namespace Azure.Communication.Chat
         public string Topic { get; }
         /// <summary> Chat message content for messages of types participantAdded or participantRemoved. </summary>
         public IReadOnlyList<ChatParticipantInternal> Participants { get; }
-        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel InitiatorCommunicationIdentifier { get; }
     }
 }

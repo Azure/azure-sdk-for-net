@@ -11,9 +11,15 @@ If any of the new objects needs to be overwritten, add the required changes to t
 
 ``` yaml
 title: Chat
-tag: package-chat-2021-09-07
+tag: package-chat-2023-07-01-preview
 model-namespace: false
 require:
-    -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/d0d60267975bf5823a9173ce0c926659bc9775bb/specification/communication/data-plane/Chat/readme.md
+    -  https://github.com/Azure/azure-rest-api-specs/blob/320e44c22609a1921424f6da30fa8fe4518bd5ca/specification/communication/data-plane/Chat/readme.md
 payload-flattening-threshold: 10
 generation1-convenience-client: true
+directive:
+  # Temporarily remove retention policy changes
+  - where-model: ChatMessageContent
+    remove-property: attachments
+  - remove-model: AttachmentType
+  - remove-model: ChatAttachment

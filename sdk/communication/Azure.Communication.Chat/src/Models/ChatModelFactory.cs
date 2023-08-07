@@ -85,15 +85,27 @@ namespace Azure.Communication.Chat
         public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatThreadProperties"/> class.
+        /// Initializes a new instance of the <see cref="Chat.ChatThreadProperties"/> class.
         /// </summary>
         /// <param name="id"> Chat message. </param>
         /// <param name="topic"> Topic of the message content. </param>
         /// <param name="createdOn"> Created on date time </param>
         /// <param name="createdBy"> Created by </param>
         /// <param name="deletedOn"> Deleted on date time </param>
-        /// <returns>A new <see cref="ChatThreadProperties"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="Chat.ChatThreadProperties"/> instance for mocking.</returns>
         public static ChatThreadProperties ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn) => new ChatThreadProperties(id, topic, createdOn, createdBy, deletedOn);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Chat.ChatThreadProperties"/> class.
+        /// </summary>
+        /// <param name="id"> Chat message. </param>
+        /// <param name="topic"> Topic of the message content. </param>
+        /// <param name="createdOn"> Created on date time </param>
+        /// <param name="createdBy"> Created by </param>
+        /// <param name="deletedOn"> Deleted on date time </param>
+        /// <param name="metadata"> Property bag of chat thread metadata key - value pairs. </param>
+        /// <returns>A new <see cref="Chat.ChatThreadProperties"/> instance for mocking.</returns>
+        public static ChatThreadProperties ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn, IDictionary<string, string> metadata ) => new ChatThreadProperties(id, topic, createdOn, createdBy, deletedOn);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateChatThreadResult"/> class.
@@ -104,13 +116,23 @@ namespace Azure.Communication.Chat
         public static CreateChatThreadResult CreateChatThreadResult(ChatThreadProperties chatThread, IEnumerable<ChatError> invalidParticipants) => new CreateChatThreadResult(chatThread, invalidParticipants);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatParticipant"/> class.
+        /// Initializes a new instance of the <see cref="Chat.ChatParticipant"/> class.
         /// </summary>
         /// <param name="user"> User </param>
         /// <param name="displayName">Display name for the chat thread member.</param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`.</param>
-        /// <returns>A new <see cref="ChatParticipant"/> instance for mocking.</returns>
-        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime) => new ChatParticipant(user, displayName, shareHistoryTime);
+        /// <param name="Metadata"> Property bag of chat participant metadata key - value pairs. </param>
+        /// <returns>A new <see cref="Chat.ChatParticipant"/> instance for mocking.</returns>
+        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime, IDictionary<string, string> Metadata) => new ChatParticipant(user, displayName, shareHistoryTime);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Chat.ChatParticipant"/> class.
+        /// </summary>
+        /// <param name="user"> User </param>
+        /// <param name="displayName">Display name for the chat thread member.</param>
+        /// <param name="shareHistoryTime"> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`.</param>
+        /// <returns>A new <see cref="Chat.ChatParticipant"/> instance for mocking.</returns>
+        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime) => ChatParticipant(user, displayName, shareHistoryTime, null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendChatMessageResult"/> class.
