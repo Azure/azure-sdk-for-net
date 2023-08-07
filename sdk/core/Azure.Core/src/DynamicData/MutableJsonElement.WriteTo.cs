@@ -193,7 +193,7 @@ namespace Azure.Core.Json
                     case MutableJsonChangeKind.PropertyUpdate:
                         if (patchElement.ValueKind == JsonValueKind.Object)
                         {
-                            WriteObjectUpdate(writer, patchPath, patchPathLength, patchElement);
+                            WriteObjectUpdate(writer, patchPath.Slice(0, patchPathLength), patchElement);
                         }
                         else
                         {
@@ -360,13 +360,13 @@ namespace Azure.Core.Json
             while (start < length);
         }
 
-        private void WriteObjectUpdate(Utf8JsonWriter writer, ReadOnlySpan<char> path, int pathLength, MutableJsonElement patchElement)
+        private void WriteObjectUpdate(Utf8JsonWriter writer, ReadOnlySpan<char> path, MutableJsonElement patchElement)
         {
             // If an object has been updated, we need to check whether
             // any of its properties were incidentally deleted by not
             // being included in the update
             bool opened = false;
-            JsonElement original = GetOriginal(path, pathLength);
+            JsonElement original = GetOriginal(path);
             foreach (JsonProperty property in original.EnumerateObject())
             {
                 if (!patchElement.TryGetProperty(property.Name, out _))
@@ -399,21 +399,21 @@ namespace Azure.Core.Json
             }
         }
 
-        private JsonElement GetOriginal(ReadOnlySpan<char> path, int pathLength)
+        private JsonElement GetOriginal(ReadOnlySpan<char> path)
         {
             JsonElement current = _root.RootElement._element;
 
-            if (pathLength == 0)
+            if (path.Length == 0)
             {
                 return current;
             }
 
-            int length = pathLength;
+            int length = path.Length;
             int start = 0;
             int end;
             do
             {
-                end = path.Slice(0, pathLength).Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                end = path.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
                 if (end == -1)
                 {
                     end = length - start;
