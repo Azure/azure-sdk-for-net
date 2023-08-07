@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public static partial class ArmManagedNetworkFabricModelFactory
     {
         /// <summary>
-        /// 
+        /// This constructor is added for the backward compatibility
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary>
-        /// 
+        /// This constructor is added for the backward compatibility
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
