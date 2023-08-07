@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
+using System.IO;
 
 namespace Azure.Storage.DataMovement
 {
@@ -22,14 +22,17 @@ namespace Azure.Storage.DataMovement
 
         /// <inheritdoc/>
         protected internal override StorageResource FromSource(DataTransferProperties props)
-        {
-            throw new NotImplementedException();
-        }
+            => FromTransferProperties(props, getSource: true);
 
         /// <inheritdoc/>
         protected internal override StorageResource FromDestination(DataTransferProperties props)
+            => FromTransferProperties(props, getSource: false);
+
+        private StorageResource FromTransferProperties(DataTransferProperties props, bool getSource)
         {
-            throw new NotImplementedException();
+            return props.IsContainer
+                ? LocalDirectoryStorageResourceContainer.RehydrateResource(props, getSource)
+                : LocalFileStorageResource.RehydrateResource(props, getSource);
         }
 
         /// <summary>
@@ -43,7 +46,10 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         public StorageResource FromPath(string path)
         {
-            throw new NotImplementedException();
+            FileAttributes attributes = File.GetAttributes(path);
+            return attributes.HasFlag(FileAttributes.Directory)
+                ? new LocalDirectoryStorageResourceContainer(path)
+                : new LocalFileStorageResource(path);
         }
     }
 }
