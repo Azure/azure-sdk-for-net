@@ -79,7 +79,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </returns>
         public StorageResource FromContainer(string containerUri, BlobStorageResourceContainerOptions options = default)
         {
-            throw new NotImplementedException();
+            return new BlobStorageResourceContainer(new BlobContainerClient(new Uri(containerUri)), options);
         }
 
         /// <summary>
@@ -107,7 +107,19 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </returns>
         public StorageResource FromBlob(string blobUri, BlobStorageResourceOptions options = default)
         {
-            throw new NotImplementedException();
+            if (options is BlockBlobStorageResourceOptions)
+            {
+                return new BlockBlobStorageResource(new BlockBlobClient(new Uri(blobUri)), options as BlockBlobStorageResourceOptions);
+            }
+            if (options is PageBlobStorageResourceOptions)
+            {
+                return new PageBlobStorageResource(new PageBlobClient(new Uri(blobUri)), options as PageBlobStorageResourceOptions);
+            }
+            if (options is AppendBlobStorageResourceOptions)
+            {
+                return new AppendBlobStorageResource(new AppendBlobClient(new Uri(blobUri)), options as AppendBlobStorageResourceOptions);
+            }
+            return new BlockBlobStorageResource(new BlockBlobClient(new Uri(blobUri)), new BlockBlobStorageResourceOptions(options));
         }
 
         /// <summary>
@@ -126,45 +138,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobContainerClient client,
             BlobStorageResourceContainerOptions options = default)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Creates a storage resource pointing towards the given Azure SDK client.
-        /// </summary>
-        /// <param name="client">
-        /// Target resource presented within an Azure SDK client.
-        /// </param>
-        /// <param name="options">
-        /// Options for creating the storage resource.
-        /// </param>
-        /// <returns>
-        /// The configured storage resource.
-        /// </returns>
-        public StorageResource FromClient(
-            BlobBaseClient client,
-            BlobStorageResourceOptions options = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Creates a storage resource pointing towards the given Azure SDK client.
-        /// </summary>
-        /// <param name="client">
-        /// Target resource presented within an Azure SDK client.
-        /// </param>
-        /// <param name="options">
-        /// Options for creating the storage resource.
-        /// </param>
-        /// <returns>
-        /// The configured storage resource.
-        /// </returns>
-        public StorageResource FromClient(
-            BlobClient client,
-            BlobStorageResourceOptions options = default)
-        {
-            throw new NotImplementedException();
+            return new BlobStorageResourceContainer(client, options);
         }
 
         /// <summary>
@@ -183,7 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlockBlobClient client,
             BlockBlobStorageResourceOptions options = default)
         {
-            throw new NotImplementedException();
+            return new BlockBlobStorageResource(client, options);
         }
 
         /// <summary>
@@ -202,7 +176,7 @@ namespace Azure.Storage.DataMovement.Blobs
             PageBlobClient client,
             PageBlobStorageResourceOptions options = default)
         {
-            throw new NotImplementedException();
+            return new PageBlobStorageResource(client, options);
         }
 
         /// <summary>
@@ -221,7 +195,7 @@ namespace Azure.Storage.DataMovement.Blobs
             AppendBlobClient client,
             AppendBlobStorageResourceOptions options = default)
         {
-            throw new NotImplementedException();
+            return new AppendBlobStorageResource(client, options);
         }
 
         private static ResourceType GetType(string typeId, bool isContainer)
