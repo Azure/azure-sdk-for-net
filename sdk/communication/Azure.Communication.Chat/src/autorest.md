@@ -19,12 +19,6 @@ payload-flattening-threshold: 10
 generation1-convenience-client: true
 directive:
   # Temporarily remove retention policy changes
-  - where-model: CreateChatThreadRequest
-    remove-property: retentionPolicy
-  - where-model: ChatThreadProperties
-    remove-property: retentionPolicy
-  - where-model: ChatThreadItem
-    remove-property: retentionPolicy
   - where-model: ChatMessageContent
     remove-property: attachments
   - remove-model: AttachmentType
