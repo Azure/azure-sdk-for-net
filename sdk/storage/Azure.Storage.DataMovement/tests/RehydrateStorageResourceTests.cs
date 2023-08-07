@@ -147,14 +147,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// </summary>
         private StorageResource LocalStorageResourcesInlineTryGet(DataTransferProperties info, bool getSource)
         {
-            if (!LocalStorageResources.TryGetResourceProviders(
-                info,
-                out LocalStorageResourceProvider sourceProvider,
-                out LocalStorageResourceProvider destinationProvider))
-            {
-                return null;
-            }
-            return getSource ? sourceProvider.CreateResource() : destinationProvider.CreateResource();
+            throw new NotImplementedException("Reimplementing resource construction and rehydration.");
         }
 
         [Test]
@@ -193,8 +186,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFileStorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => LocalFileStorageResource.RehydrateResource(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (LocalFileStorageResource)new LocalStorageResourceProvider(
-                    transferProperties, isSource, isFolder: false).CreateResource(),
+                RehydrateApi.ProviderInstance => throw new NotImplementedException("Reimplementing resource construction and rehydration."),
                 RehydrateApi.PublicStaticApi => (LocalFileStorageResource)LocalStorageResourcesInlineTryGet(
                     transferProperties, isSource),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
@@ -249,8 +241,7 @@ namespace Azure.Storage.DataMovement.Tests
             LocalDirectoryStorageResourceContainer storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => LocalDirectoryStorageResourceContainer.RehydrateResource(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (LocalDirectoryStorageResourceContainer)new LocalStorageResourceProvider(
-                    transferProperties, isSource, isFolder: true).CreateResource(),
+                RehydrateApi.ProviderInstance => throw new NotImplementedException("Reimplementing resource construction and rehydration."),
                 RehydrateApi.PublicStaticApi => (LocalDirectoryStorageResourceContainer)LocalStorageResourcesInlineTryGet(
                     transferProperties, isSource),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
