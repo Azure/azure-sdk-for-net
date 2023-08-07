@@ -27,6 +27,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         private readonly ILoggerFactory _loggerFactory;
         private readonly ILogger _logger;
         private string _details;
+        private CancellationTokenSource _disposingCancellationTokenSource;
 
         public EventHubListener(
             string functionId,
@@ -45,6 +46,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             _checkpointStore = checkpointStore;
             _options = options;
             _logger = _loggerFactory.CreateLogger<EventHubListener>();
+            _disposingCancellationTokenSource = new CancellationTokenSource();
 
             EventHubMetricsProvider metricsProvider = new EventHubMetricsProvider(functionId, consumerClient, checkpointStore, _loggerFactory.CreateLogger<EventHubMetricsProvider>());
 
@@ -68,19 +70,22 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         }
 
         /// <summary>
-        /// Cancel any in progress listen operation.
+        /// Cancel should be called prior to Dispose. We just validate that we are not already disposed.
+        /// This is consistent with the Service Bus listener behavior.
         /// </summary>
         void IListener.Cancel()
         {
-#pragma warning disable AZC0102
-            StopAsync(CancellationToken.None).GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+            if (_disposingCancellationTokenSource.IsCancellationRequested)
+            {
+                throw new ObjectDisposedException(nameof(IListener));
+            }
         }
 
         void IDisposable.Dispose()
         {
+            _disposingCancellationTokenSource.Cancel();
 #pragma warning disable AZC0102
-            StopAsync(CancellationToken.None).GetAwaiter().GetResult();
+            _eventProcessorHost.DisposeAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102
         }
 
@@ -101,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
         IEventProcessor IEventProcessorFactory.CreatePartitionProcessor()
         {
-            return new PartitionProcessor(_options, _executor, _loggerFactory.CreateLogger<PartitionProcessor>(), _singleDispatch);
+            return new PartitionProcessor(_options, _executor, _loggerFactory.CreateLogger<PartitionProcessor>(), _singleDispatch, _disposingCancellationTokenSource.Token);
         }
 
         public IScaleMonitor GetMonitor()

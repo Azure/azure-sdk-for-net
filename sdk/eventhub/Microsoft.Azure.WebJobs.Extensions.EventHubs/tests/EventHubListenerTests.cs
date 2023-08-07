@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var loggerMock = new Mock<ILogger>();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, default);
 
             for (int i = 0; i < 100; i++)
             {
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var loggerMock = new Mock<ILogger>();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default);
 
             for (int i = 0; i < 100; i++)
             {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
 
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default);
 
             for (int i = 0; i < 60; i++)
             {
@@ -191,7 +191,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
 
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default);
 
             for (int i = 0; i < 60; i++)
             {
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
 
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default);
 
             for (int i = 0; i < 60; i++)
             {
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 })
                 .ReturnsAsync(new FunctionResult(true));
 
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, false, default);
 
             for (int i = 0; i < 60; i++)
             {
@@ -370,7 +370,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var loggerMock = new Mock<ILogger>();
 
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, default);
 
             await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
 
@@ -397,7 +397,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var loggerMock = new Mock<ILogger>();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
 
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, default);
 
             List<EventData> events = new List<EventData>();
             List<FunctionResult> results = new List<FunctionResult>();
@@ -452,7 +452,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             int execution = 0;
             var loggerMock = new Mock<ILogger>();
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, default);
 
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
             {
@@ -496,7 +496,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             int execution = 0;
             var loggerMock = new Mock<ILogger>();
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, default);
 
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
             {
@@ -528,7 +528,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var loggerMock = new Mock<ILogger>();
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, default);
 
             await eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown);
 
@@ -550,7 +550,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var loggerMock = new Mock<ILogger>();
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, default);
             var mockStoredEvents = new Queue<EventData>();
             mockStoredEvents.Enqueue(new EventData("E1"));
             eventProcessor.CachedEventsManager.CachedEvents = mockStoredEvents;
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var options = new EventHubOptions();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var testLogger = new TestLogger("Test");
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, testLogger, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, testLogger, true, default);
 
             var ex = new InvalidOperationException("My InvalidOperationException!");
 
@@ -585,7 +585,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             var options = new EventHubOptions();
             var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
             var testLogger = new TestLogger("Test");
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, testLogger, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, testLogger, true, default);
 
             var disconnectedEx = new EventHubsException(true, "My ReceiverDisconnectedException!", EventHubsException.FailureReason.ConsumerDisconnected);
 
@@ -696,7 +696,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 }
             })
             .ReturnsAsync(new FunctionResult(true));
-            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true);
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, default);
             List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
             CancellationTokenSource source = new CancellationTokenSource();
             // Start another thread to cancel execution

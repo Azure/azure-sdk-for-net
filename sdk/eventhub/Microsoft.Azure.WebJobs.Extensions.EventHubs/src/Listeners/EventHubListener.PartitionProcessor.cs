@@ -44,13 +44,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private Task _cachedEventsBackgroundTask;
             private CancellationTokenSource _cachedEventsBackgroundTaskCts;
             private SemaphoreSlim _cachedEventsGuard;
+            private readonly CancellationToken _disposingToken;
 
             /// <summary>
             /// When we have a minimum batch size greater than 1, this class manages caching events.
             /// </summary>
             internal PartitionProcessorEventsManager CachedEventsManager { get; }
 
-            public PartitionProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
+            public PartitionProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch, CancellationToken disposingToken)
             {
                 _executor = executor;
                 _singleDispatch = singleDispatch;
@@ -58,7 +59,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _logger = logger;
                 _firstFunctionInvocation = true;
                 _maxWaitTime = options.MaxWaitTime;
-                _minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default
+                _minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default'
+                _disposingToken = disposingToken;
 
                 // Events are only cached when building a batch of minimum size.
                 if (_minimumBatchesEnabled)
@@ -135,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
                         };
 
-                        await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
+                        await _executor.TryExecuteAsync(input, _disposingToken).ConfigureAwait(false);
                         _firstFunctionInvocation = false;
                         eventToCheckpoint = events[i];
                     }
@@ -168,7 +170,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                                 _logger.LogDebug($"Partition Processor received events and is attempting to invoke function ({details})");
 
                                 UpdateCheckpointContext(triggerEvents, context);
-                                await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
+                                await TriggerExecute(triggerEvents, context, _disposingToken).ConfigureAwait(false);
                                 eventToCheckpoint = triggerEvents.Last();
 
                                 // If there is a background timer task, cancel it and dispose of the cancellation token. If there
@@ -201,7 +203,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     else
                     {
                         UpdateCheckpointContext(events, context);
-                        await TriggerExecute(events, context, linkedCts.Token).ConfigureAwait(false);
+                        await TriggerExecute(events, context, _disposingToken).ConfigureAwait(false);
                         eventToCheckpoint = events.LastOrDefault();
                     }
 
@@ -276,7 +278,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         var details = GetOperationDetails(_mostRecentPartitionContext, "MaxWaitTimeElapsed");
                         _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation and is attempting to invoke function on all held events ({details})");
 
-                        await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
+                        await TriggerExecute(triggerEvents, _mostRecentPartitionContext, _disposingToken).ConfigureAwait(false);
                         if (!backgroundCancellationTokenSource.Token.IsCancellationRequested)
                         {
                             await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
