@@ -242,10 +242,8 @@ namespace Azure.Storage.DataMovement
                     await _destinationResource.CopyFromStreamAsync(
                             stream: stream,
                             overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
-                            position: 0,
                             streamLength: blockSize,
                             completeLength: expectedLength,
-                            options: default,
                             cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                     // Report bytes written before completion
@@ -273,10 +271,8 @@ namespace Azure.Storage.DataMovement
                             stream: slicedStream,
                             streamLength: blockSize,
                             overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
-                            position: 0,
                             completeLength: expectedLength,
-                            default,
-                            _cancellationToken).ConfigureAwait(false);
+                            cancellationToken: _cancellationToken).ConfigureAwait(false);
                     }
 
                     ReportBytesWritten(blockSize);
@@ -345,10 +341,12 @@ namespace Azure.Storage.DataMovement
                         stream: slicedStream,
                         streamLength: blockLength,
                         overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
-                        position: offset,
                         completeLength: completeLength,
-                        default,
-                        _cancellationToken).ConfigureAwait(false);
+                        options: new StorageResourceWriteToOffsetOptions()
+                        {
+                            Position = offset,
+                        },
+                        cancellationToken: _cancellationToken).ConfigureAwait(false);
                 }
                 // Invoke event handler to keep track of all the stage blocks
                 await _commitBlockHandler.InvokeEvent(
