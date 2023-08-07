@@ -38,8 +38,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var classifierId = Recording.GenerateId();
 
             var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
+            var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
 
             var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
@@ -74,8 +74,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var startTime = Recording.UtcNow;
 
             var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
+            var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
 
             var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
@@ -103,7 +103,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.AreEqual(classifierId, classifier.ClassifierId);
             Assert.AreEqual(description, classifier.Description);
-            Assert.AreEqual(ServiceVersionString, classifier.ApiVersion);
+            Assert.AreEqual(ServiceVersionString, classifier.ServiceVersion);
             Assert.Greater(classifier.CreatedOn, startTime);
             Assert.Greater(classifier.ExpiresOn, classifier.CreatedOn);
 
@@ -119,8 +119,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var startTime = Recording.UtcNow;
 
             var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobFileListSource(trainingFilesUri, "IRS-1040-A.jsonl");
-            var sourceB = new AzureBlobFileListSource(trainingFilesUri, "IRS-1040-B.jsonl");
+            var sourceA = new BlobFileListContentSource(trainingFilesUri, "IRS-1040-A.jsonl");
+            var sourceB = new BlobFileListContentSource(trainingFilesUri, "IRS-1040-B.jsonl");
 
             var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
@@ -148,7 +148,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.AreEqual(classifierId, classifier.ClassifierId);
             Assert.AreEqual(description, classifier.Description);
-            Assert.AreEqual(ServiceVersionString, classifier.ApiVersion);
+            Assert.AreEqual(ServiceVersionString, classifier.ServiceVersion);
             Assert.Greater(classifier.CreatedOn, startTime);
             Assert.Greater(classifier.ExpiresOn, classifier.CreatedOn);
 
@@ -174,7 +174,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.AreEqual(expected.ClassifierId, classifier.ClassifierId);
             Assert.AreEqual(expected.Description, classifier.Description);
-            Assert.AreEqual(expected.ApiVersion, classifier.ApiVersion);
+            Assert.AreEqual(expected.ServiceVersion, classifier.ServiceVersion);
             Assert.AreEqual(expected.CreatedOn, classifier.CreatedOn);
             Assert.AreEqual(expected.ExpiresOn, classifier.ExpiresOn);
 
@@ -236,7 +236,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
                 Assert.AreEqual(expected.ClassifierId, classifier.ClassifierId);
                 Assert.AreEqual(expected.Description, classifier.Description);
-                Assert.AreEqual(expected.ApiVersion, classifier.ApiVersion);
+                Assert.AreEqual(expected.ServiceVersion, classifier.ServiceVersion);
                 Assert.AreEqual(expected.CreatedOn, classifier.CreatedOn);
                 Assert.AreEqual(expected.ExpiresOn, classifier.ExpiresOn);
 
@@ -284,14 +284,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 ClassifierDocumentTypeDetails docType1 = docTypes1[key];
                 ClassifierDocumentTypeDetails docType2 = docTypes2[key];
 
-                if (docType1.AzureBlobSource == null)
+                Assert.AreEqual(docType1.TrainingDataContentSource.Kind, docType2.TrainingDataContentSource.Kind);
+
+                if (docType1.TrainingDataContentSource.Kind == ContentSourceKind.Blob)
                 {
-                    Assert.Null(docType2.AzureBlobSource);
-                }
-                else
-                {
-                    AzureBlobContentSource source1 = docType1.AzureBlobSource;
-                    AzureBlobContentSource source2 = docType2.AzureBlobSource;
+                    var source1 = docType1.TrainingDataContentSource as BlobContentSource;
+                    var source2 = docType2.TrainingDataContentSource as BlobContentSource;
 
                     // The URI returned by the service does not include query parameters, so we're
                     // making sure they're not included in our comparison.
@@ -301,15 +299,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     Assert.AreEqual(uri1, uri2);
                     Assert.AreEqual(source1.Prefix, source2.Prefix);
                 }
-
-                if (docType1.AzureBlobFileListSource == null)
+                else if (docType1.TrainingDataContentSource.Kind == ContentSourceKind.BlobFileList)
                 {
-                    Assert.Null(docType2.AzureBlobFileListSource);
-                }
-                else
-                {
-                    AzureBlobFileListSource source1 = docType1.AzureBlobFileListSource;
-                    AzureBlobFileListSource source2 = docType2.AzureBlobFileListSource;
+                    var source1 = docType1.TrainingDataContentSource as BlobFileListContentSource;
+                    var source2 = docType2.TrainingDataContentSource as BlobFileListContentSource;
 
                     // The URI returned by the service does not include query parameters, so we're
                     // making sure they're not included in our comparison.

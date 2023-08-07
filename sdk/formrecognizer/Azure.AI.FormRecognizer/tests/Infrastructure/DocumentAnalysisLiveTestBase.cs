@@ -145,11 +145,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateDocumentModelAdministrationClient();
             var trainingFilesUri = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
-            var sourceC = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-C/train" };
-            var sourceD = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-D/train" };
-            var sourceE = new AzureBlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-E/train" };
+            var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
+            var sourceC = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-C/train" };
+            var sourceD = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-D/train" };
+            var sourceE = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-E/train" };
 
             var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {

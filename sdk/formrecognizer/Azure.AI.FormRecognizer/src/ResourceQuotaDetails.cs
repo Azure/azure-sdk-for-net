@@ -6,7 +6,8 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class QuotaDetails
+    [CodeGenModel("QuotaDetails")]
+    public partial class ResourceQuotaDetails
     {
         /// <summary>
         /// Date/time when the resource quota usage will be reset.
