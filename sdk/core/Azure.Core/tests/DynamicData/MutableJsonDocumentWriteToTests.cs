@@ -680,14 +680,7 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("foo").Set(2);
 
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson("""{"foo": 2}""", actual);
+            ValidatePatch("""{"foo": 2}""", mdoc);
         }
 
         [Test]
@@ -698,14 +691,7 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("foo").Set(2);
 
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson("""{"foo": 2}""", actual);
+            ValidatePatch("""{"foo": 2}""", mdoc);
         }
 
         [Test]
@@ -717,17 +703,10 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("foo").Set(2);
             mdoc.RootElement.GetProperty("bar").Set("b");
 
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
             // TODO: does order matter?  This fails:
             //AreEqualJson("""{"foo": 2, "bar": "b"}""", actual);
 
-            AreEqualJson("""{"bar": "b", "foo": 2}""", actual);
+            ValidatePatch("""{"bar": "b", "foo": 2}""", mdoc);
         }
 
         [Test]
@@ -739,14 +718,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("foo").Set(2);
             mdoc.RootElement.GetProperty("foo").Set(3);
 
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson("""{"foo": 3}""", actual);
+            ValidatePatch("""{"foo": 3}""", mdoc);
         }
 
         [Test]
@@ -763,14 +735,7 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("parent").GetProperty("child").Set(false);
 
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson("""{"parent": {"child": false}}""", actual);
+            ValidatePatch("""{"parent": {"child": false}}""", mdoc);
         }
 
         [Test]
@@ -789,14 +754,7 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("a").GetProperty("b").GetProperty("c").Set(2);
 
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson("""{"a": {"b": {"c": 2}}}""", actual);
+            ValidatePatch("""{"a": {"b": {"c": 2}}}""", mdoc);
         }
 
         [Test]
@@ -821,14 +779,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("a").GetProperty("b").GetProperty("c").Set(2);
             mdoc.RootElement.GetProperty("d").GetProperty("e").GetProperty("f").Set(3);
 
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson("""{"a": {"b": {"c": 2}}, "d": {"e": {"f": 3}}}""", actual);
+            ValidatePatch("""{"a": {"b": {"c": 2}}, "d": {"e": {"f": 3}}}""", mdoc);
         }
 
         [Test]
@@ -857,14 +808,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("a").GetProperty("bb").GetProperty("cc").Set(3);
             mdoc.RootElement.GetProperty("d").GetProperty("e").GetProperty("f").Set(4);
 
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson("""{"a": {"b": {"c": 2}, "bb": {"cc": 3}}, "d": {"e": {"f": 4}}}""", actual);
+            ValidatePatch("""{"a": {"b": {"c": 2}, "bb": {"cc": 3}}, "d": {"e": {"f": 4}}}""", mdoc);
         }
 
         [Test]
@@ -890,7 +834,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("4");
             mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(5);
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "a": {
                         "aa": 5,
@@ -900,16 +844,7 @@ namespace Azure.Core.Tests
                         "ba": "4"
                     }
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -936,7 +871,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("5");
             mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(5);
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "a": {
                         "aa": 5,
@@ -947,16 +882,7 @@ namespace Azure.Core.Tests
                         "bb": "4"
                     }
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -969,16 +895,7 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
             mdoc.RootElement.GetIndexElement(0).Set(3);
 
-            string expected = """[3, 1, 2]""";
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+            ValidatePatch("""[3, 1, 2]""", mdoc);
         }
 
         [Test]
@@ -995,20 +912,11 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
             mdoc.RootElement.GetProperty("a").GetIndexElement(0).Set(2);
 
-            string expected = """
+            ValidatePatch("""
             {
                 "a": [2, 1]
             }
-            """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+            """, mdoc);
         }
 
         [Test]
@@ -1027,22 +935,13 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
             mdoc.RootElement.GetProperty("a").GetProperty("b").GetIndexElement(1).Set(2);
 
-            string expected = """
+            ValidatePatch("""
             {
                 "a": {
                     "b": [0, 2]
                 }
             }
-            """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+            """, mdoc);
         }
 
         [Test]
@@ -1062,22 +961,13 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("a").GetProperty("b").GetIndexElement(0).Set(2);
             mdoc.RootElement.GetProperty("a").GetProperty("b").GetIndexElement(1).Set(3);
 
-            string expected = """
+            ValidatePatch("""
             {
                 "a": {
                     "b": [2, 3]
                 }
             }
-            """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+            """, mdoc);
         }
 
         [Test]
@@ -1100,7 +990,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("a").GetIndexElement(0).GetProperty("b").Set(4);
             mdoc.RootElement.GetProperty("a").GetIndexElement(2).GetProperty("d").Set(5);
 
-            string expected = """
+            ValidatePatch("""
             {
                 "a":
                 [
@@ -1109,16 +999,7 @@ namespace Azure.Core.Tests
                     { "d": 5 }
                 ]
             }
-            """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+            """, mdoc);
         }
 
         [Test]
@@ -1146,7 +1027,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("b").GetProperty("bb").GetProperty("bbb").GetIndexElement(1).Set(true);
             mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(new { cd = "cd" });
 
-            string expected = """
+            ValidatePatch("""
             {
                 "a": {
                     "aa": [2, 1]
@@ -1159,16 +1040,7 @@ namespace Azure.Core.Tests
                 },
                 "c": [null, {"cd": "cd"}, {"cc": "hi"}]
             }
-            """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+            """, mdoc);
         }
 
         [Test]
@@ -1198,7 +1070,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(new { cd = "cd" });
             mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(1).Set(4);
 
-            string expected = """
+            ValidatePatch("""
             {
                 "a": {
                     "aa": [3, 4]
@@ -1211,16 +1083,7 @@ namespace Azure.Core.Tests
                 },
                 "c": [null, {"cd": "cd"}, {"cc": "hi"}]
             }
-            """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+            """, mdoc);
         }
 
         [Test]
@@ -1250,7 +1113,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(new { cd = "cd" });
             mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(1).Set(4);
 
-            string expected = """
+            ValidatePatch("""
             {
                 "a": {
                     "aa": [2, 4]
@@ -1263,16 +1126,7 @@ namespace Azure.Core.Tests
                 },
                 "c": [null, {"cd": "cd"}, {"cc": "hi"}]
             }
-            """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+            """, mdoc);
         }
 
         [Test]
@@ -1294,23 +1148,14 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("a").Set(new { aa = 3, ab = 4 });
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "a": {
                         "aa": 3,
                         "ab": 4
                     }
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -1332,7 +1177,7 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("a").Set(new { ac = 3 });
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "a": {
                         "aa": null,
@@ -1340,16 +1185,7 @@ namespace Azure.Core.Tests
                         "ac": 3
                     }
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -1371,20 +1207,11 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.SetProperty("c", 3);
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "c": 3
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -1406,22 +1233,13 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("b").SetProperty("bc", "3");
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "b": {
                         "bc": "3"
                     }
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -1443,23 +1261,14 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.SetProperty("c", new { ca = true, cb = false });
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "c": {
                         "ca": true,
                         "cb": false
                     }
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -1481,22 +1290,13 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(null);
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "a": {
                         "aa": null
                     }
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -1518,22 +1318,13 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("a").RemoveProperty("aa");
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "a": {
                         "aa": null
                     }
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -1555,20 +1346,11 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.RemoveProperty("b");
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "b": null
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -1590,20 +1372,11 @@ namespace Azure.Core.Tests
 
             mdoc.RootElement.GetProperty("b").Set(null);
 
-            string expected = """
+            ValidatePatch("""
                 {
                     "b": null
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -1628,7 +1401,8 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("a").GetProperty("ab").GetProperty("abc").Set(3);
             mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("3");
 
-            string expectedRoot = """
+            // Validate the root writes the full patch
+            ValidatePatch("""
                 {
                     "a": {
                         "ab": {
@@ -1639,50 +1413,23 @@ namespace Azure.Core.Tests
                         "ba": "3"
                     }
                 }
-                """;
+                """, mdoc);
 
-            using Stream streamRoot = new MemoryStream();
-            mdoc.WriteTo(streamRoot, "P");
-            streamRoot.Flush();
-            streamRoot.Position = 0;
-
-            string actual = BinaryData.FromStream(streamRoot).ToString();
-
-            AreEqualJson(expectedRoot, actual);
-
-            string expectedA = """
+            // Validate element "a" writes just the patch for that subtree
+            ValidatePatch("""
                 {
                     "ab": {
                         "abc": 3
                     }
                 }
-                """;
+                """, mdoc.RootElement.GetProperty("a"));
 
-            using Stream streamA = new MemoryStream();
-            using Utf8JsonWriter writerA = new Utf8JsonWriter(streamA);
-            mdoc.RootElement.GetProperty("a").WriteTo(writerA, "P");
-            writerA.Flush();
-            streamA.Position = 0;
-
-            string actualA = BinaryData.FromStream(streamA).ToString();
-
-            AreEqualJson(expectedA, actualA);
-
-            string expectedB = """
+            // Validate element "b" writes just the patch for that subtree
+            ValidatePatch("""
                 {
                     "ba": "3"
                 }
-                """;
-
-            using Stream streamB = new MemoryStream();
-            using Utf8JsonWriter writerB = new Utf8JsonWriter(streamB);
-            mdoc.RootElement.GetProperty("b").WriteTo(writerB, "P");
-            writerB.Flush();
-            streamB.Position = 0;
-
-            string actualB = BinaryData.FromStream(streamB).ToString();
-
-            AreEqualJson(expectedB, actualB);
+                """, mdoc.RootElement.GetProperty("b"));
         }
 
         [Test]
@@ -1702,23 +1449,14 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("a").Set("z");
             mdoc.RootElement.GetProperty("c").RemoveProperty("f");
 
-            string expected = """
+            ValidatePatch("""
                 {
                   "a":"z",
                   "c": {
                     "f": null
                   }
                 }
-                """;
-
-            using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, "P");
-            stream.Flush();
-            stream.Position = 0;
-
-            string actual = BinaryData.FromStream(stream).ToString();
-
-            AreEqualJson(expected, actual);
+                """, mdoc);
         }
 
         [Test]
@@ -1742,7 +1480,7 @@ namespace Azure.Core.Tests
             mdoc.RootElement.GetProperty("author").RemoveProperty("familyName");
             mdoc.RootElement.SetProperty("tags", new string[] { "example" });
 
-            string expected = """
+            ValidatePatch("""
                 {
                   "author": {
                     "familyName": null
@@ -1751,8 +1489,14 @@ namespace Azure.Core.Tests
                   "tags": [ "example" ],
                   "title": "Hello!"
                 }
-                """;
+                """, mdoc);
+        }
 
+        #endregion
+
+        #region Helpers
+        private static void ValidatePatch(string expected, MutableJsonDocument mdoc)
+        {
             using Stream stream = new MemoryStream();
             mdoc.WriteTo(stream, "P");
             stream.Flush();
@@ -1763,9 +1507,19 @@ namespace Azure.Core.Tests
             AreEqualJson(expected, actual);
         }
 
-        #endregion
+        private static void ValidatePatch(string expected, MutableJsonElement mje)
+        {
+            using Stream stream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            mje.WriteTo(writer, "P");
+            writer.Flush();
+            stream.Position = 0;
 
-        #region Helpers
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
         private static void AreEqualJson(string expected, string actual)
         {
             JsonDocument doc = JsonDocument.Parse(expected);
