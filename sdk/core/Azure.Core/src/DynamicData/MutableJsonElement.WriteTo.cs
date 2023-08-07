@@ -212,7 +212,7 @@ namespace Azure.Core.Json
             // The above loop will have written out the values of all the elements on the
             // list of changes, but if the last element was multiple levels down the object
             // tree, it may not have written the ends of its ancestor objects.  Do that now.
-            CloseFinalObjects(writer, patchPath, patchPathLength);
+            CloseFinalObjects(writer, patchPath.Slice(0, patchPathLength));
 
             // Write the end of the PATCH JSON.
             writer.WriteEndObject();
@@ -249,24 +249,24 @@ namespace Azure.Core.Json
             }
 
             // patchElement tracks patchPath
-            patchElement = GetPropertyFromRoot(patchPath, patchPathLength);
+            patchElement = GetPropertyFromRoot(patchPath.Slice(0, patchPathLength));
         }
 
-        private MutableJsonElement GetPropertyFromRoot(ReadOnlySpan<char> path, int pathLength)
+        private MutableJsonElement GetPropertyFromRoot(ReadOnlySpan<char> path)
         {
             MutableJsonElement current = this;
 
-            if (pathLength == 0)
+            if (path.Length == 0)
             {
                 return current;
             }
 
-            int length = pathLength;
+            int length = path.Length;
             int start = 0;
             int end;
             do
             {
-                end = path.Slice(0, pathLength).Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                end = path.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
                 if (end == -1)
                 {
                     end = length - start;
@@ -284,14 +284,14 @@ namespace Azure.Core.Json
             return current;
         }
 
-        private void CloseFinalObjects(Utf8JsonWriter writer, ReadOnlySpan<char> patchPath, int patchPathLength)
+        private void CloseFinalObjects(Utf8JsonWriter writer, ReadOnlySpan<char> patchPath)
         {
-            int length = patchPathLength;
+            int length = patchPath.Length;
             int start = 0;
             int end;
             do
             {
-                end = patchPath.Slice(0, patchPathLength).Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                end = patchPath.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
                 if (end == -1)
                 {
                     end = length - start;
