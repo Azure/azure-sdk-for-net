@@ -243,6 +243,30 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_Dispose()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestSingleDispose>();
+
+            bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+            Assert.True(result);
+            host.Dispose();
+            _waitHandle2.Set();
+        }
+
+        [Test]
+        public async Task TestBatch_Dispose()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestBatchDispose>();
+
+            bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+            Assert.True(result);
+            host.Dispose();
+            _waitHandle2.Set();
+        }
+
+        [Test]
         public async Task TestSingle_AutoCompleteDisabledOnTrigger_AbandonsWhenException()
         {
             await TestAutoCompleteDisabledOnTrigger_AbandonsWhenException<TestSingleAutoCompleteMessagesEnabledOnTriggerException>();
@@ -1588,6 +1612,34 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        public class TestSingleDispose
+        {
+            public static void RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage message,
+                CancellationToken cancellationToken)
+            {
+                _waitHandle1.Set();
+                bool result = _waitHandle2.WaitOne(SBTimeoutMills);
+                Assert.IsTrue(result);
+                Assert.IsTrue(cancellationToken.IsCancellationRequested);
+            }
+        }
+
+        public class TestBatchDispose
+        {
+            public static void RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage[] message,
+                CancellationToken cancellationToken)
+            {
+                _waitHandle1.Set();
+                bool result = _waitHandle2.WaitOne(SBTimeoutMills);
+                Assert.IsTrue(result);
+                Assert.IsTrue(cancellationToken.IsCancellationRequested);
+            }
+        }
+
         public class TestCrossEntityTransaction
         {
             public static async Task RunAsync(
@@ -1750,8 +1802,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 logger.LogInformation($"DrainModeValidationFunctions.QueueNoSessions: message data {msg.Body}");
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
-                Assert.True(cancellationToken.IsCancellationRequested);
+                Assert.False(cancellationToken.IsCancellationRequested);
                 await messageActions.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
             }
@@ -1768,8 +1819,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 logger.LogInformation($"DrainModeValidationFunctions.NoSessions: message data {msg.Body}");
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
-                Assert.True(cancellationToken.IsCancellationRequested);
+                Assert.False(cancellationToken.IsCancellationRequested);
                 await messageActions.CompleteMessageAsync(msg);
                 _drainValidationPostDelay.Set();
             }
@@ -1787,8 +1837,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(array.Length > 0);
                 logger.LogInformation($"DrainModeTestJobBatch.QueueNoSessionsBatch: received {array.Length} messages");
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
-                Assert.True(cancellationToken.IsCancellationRequested);
+                Assert.False(cancellationToken.IsCancellationRequested);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
                     await messageActions.CompleteMessageAsync(msg);
@@ -1808,8 +1857,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(array.Length > 0);
                 logger.LogInformation($"DrainModeTestJobBatch.TopicNoSessionsBatch: received {array.Length} messages");
                 _drainValidationPreDelay.Set();
-                await DrainModeHelper.WaitForCancellationAsync(cancellationToken);
-                Assert.True(cancellationToken.IsCancellationRequested);
+                Assert.False(cancellationToken.IsCancellationRequested);
                 foreach (ServiceBusReceivedMessage msg in array)
                 {
                     // validate that manual lock renewal works

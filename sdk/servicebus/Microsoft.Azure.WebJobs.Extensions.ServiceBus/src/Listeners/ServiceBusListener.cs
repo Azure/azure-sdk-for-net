@@ -29,7 +29,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly string _entityPath;
         private readonly bool _isSessionsEnabled;
         private readonly bool _autoCompleteMessages;
-        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSource _stoppingCancellationTokenSource;
+        private readonly CancellationTokenSource _disposingCancellationTokenSource;
         private readonly ServiceBusOptions _serviceBusOptions;
         private readonly bool _singleDispatch;
         private readonly ILogger<ServiceBusListener> _logger;
@@ -85,7 +86,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _isSessionsEnabled = isSessionsEnabled;
             _autoCompleteMessages = autoCompleteMessages;
             _triggerExecutor = triggerExecutor;
-            _cancellationTokenSource = new CancellationTokenSource();
+            _stoppingCancellationTokenSource = new CancellationTokenSource();
+            _disposingCancellationTokenSource = new CancellationTokenSource();
             _logger = loggerFactory.CreateLogger<ServiceBusListener>();
             _functionId = functionId;
 
@@ -195,7 +197,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 }
                 else
                 {
-                    _batchLoop = RunBatchReceiveLoopAsync(_cancellationTokenSource);
+                    _batchLoop = RunBatchReceiveLoopAsync(_stoppingCancellationTokenSource);
                 }
             }
             catch
@@ -226,7 +228,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 }
 
                 // This will also cancel the background monitoring task through the linked cancellation token source.
-                _cancellationTokenSource.Cancel();
+                _stoppingCancellationTokenSource.Cancel();
 
                 // CloseAsync method stop new messages from being processed while allowing in-flight messages to be processed.
                 if (_singleDispatch)
@@ -273,7 +275,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         public void Cancel()
         {
             ThrowIfDisposed();
-            _cancellationTokenSource.Cancel();
+            _stoppingCancellationTokenSource.Cancel();
         }
 
         [SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed", MessageId = "_cancellationTokenSource")]
@@ -290,7 +292,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             // Mark it canceled but don't dispose of the source while the callers are running.
             // Otherwise, callers would receive ObjectDisposedException when calling token.Register.
             // For now, rely on finalization to clean up _cancellationTokenSource's wait handle (if allocated).
-            _cancellationTokenSource.Cancel();
+            _stoppingCancellationTokenSource.Cancel();
+            _disposingCancellationTokenSource.Cancel();
 
             if (_batchReceiver.IsValueCreated)
             {
@@ -299,14 +302,17 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 
-            if (_messageProcessor.IsValueCreated)
+            // Only close the processor if it is not processing. If it is still processing, then calling CloseAsync would wait
+            // for the processing to complete, which is not what we want to do here since this is the final step of shutdown.
+            // The connection will still be closed when the client is disposed.
+            if (_messageProcessor.IsValueCreated && !_messageProcessor.Value.Processor.IsProcessing)
             {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 _messageProcessor.Value.Processor.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 
-            if (_sessionMessageProcessor.IsValueCreated)
+            if (_sessionMessageProcessor.IsValueCreated && !_sessionMessageProcessor.Value.Processor.IsProcessing)
             {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 _sessionMessageProcessor.Value.Processor.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
@@ -321,7 +327,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             }
 
             _stopAsyncSemaphore.Dispose();
-            _cancellationTokenSource.Dispose();
+            _stoppingCancellationTokenSource.Dispose();
             _batchReceiveRegistration.Dispose();
             _concurrencyUpdateManager?.Dispose();
 
@@ -336,7 +342,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
             _concurrencyUpdateManager?.MessageProcessed();
 
-            using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
+            using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _stoppingCancellationTokenSource.Token))
             {
                 var actions = new ServiceBusMessageActions(args);
                 if (!await _messageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token).ConfigureAwait(false))
@@ -349,7 +355,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
 
-                FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
+                FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, _disposingCancellationTokenSource.Token).ConfigureAwait(false);
                 try
                 {
                     await _messageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token)
@@ -369,7 +375,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _concurrencyUpdateManager?.MessageProcessed();
 
             using (CancellationTokenSource linkedCts =
-                CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _cancellationTokenSource.Token))
+                CancellationTokenSource.CreateLinkedTokenSource(args.CancellationToken, _stoppingCancellationTokenSource.Token))
             {
                 var actions = new ServiceBusSessionMessageActions(args);
                 if (!await _sessionMessageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token)
@@ -382,7 +388,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, receiveActions, _client.Value);
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
-                FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, linkedCts.Token).ConfigureAwait(false);
+                FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, _disposingCancellationTokenSource.Token).ConfigureAwait(false);
 
                 if (actions.ShouldReleaseSession)
                 {
@@ -643,7 +649,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             scope.SetMessageData(messagesArray);
 
             scope.Start();
-            FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), cancellationToken).ConfigureAwait(false);
+            FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), _disposingCancellationTokenSource.Token).ConfigureAwait(false);
             if (result.Exception != null)
             {
                 scope.Failed(result.Exception);
