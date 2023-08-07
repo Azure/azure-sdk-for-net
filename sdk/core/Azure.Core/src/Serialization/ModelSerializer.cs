@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
-using System.Text.Json;
-using System.Xml;
+using Azure.Core.Internal;
 
 namespace Azure.Core.Serialization
 {
@@ -37,7 +35,7 @@ namespace Azure.Core.Serialization
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/></returns>
         public static BinaryData Serialize<T>(T model, ModelSerializerFormat format)
             where T : IModelSerializable<T>
-            => Serialize<T>(model, new ModelSerializerOptions(format));
+            => Serialize<T>(model, ModelSerializerOptions.GetOptions(format));
 
         /// <summary>
         /// Converts the value of a model into a <see cref="BinaryData"/>.
@@ -52,7 +50,9 @@ namespace Azure.Core.Serialization
 
             var iModel = model as IModelSerializable<object>;
             if (iModel is null)
+            {
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModelSerializable<object>)}");
+            }
 
             return iModel.Serialize(options);
         }
@@ -65,7 +65,7 @@ namespace Azure.Core.Serialization
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/></returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         public static BinaryData Serialize(object model, ModelSerializerFormat format)
-            => Serialize(model, new ModelSerializerOptions(format));
+            => Serialize(model, ModelSerializerOptions.GetOptions(format));
 
         /// <summary>
         /// Converts the <see cref="BinaryData"/> into a <typeparamref name="T"/>.
@@ -90,7 +90,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal default constructor.</exception>
         public static T Deserialize<T>(BinaryData data, ModelSerializerFormat format)
             where T : IModelSerializable<T>
-            => Deserialize<T>(data, new ModelSerializerOptions(format));
+            => Deserialize<T>(data, ModelSerializerOptions.GetOptions(format));
 
         /// <summary>
         /// Converts the <see cref="BinaryData"/> into a <paramref name="returnType"/>.
@@ -118,7 +118,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal default constructor.</exception>
         public static object Deserialize(BinaryData data, Type returnType, ModelSerializerFormat format)
-            => Deserialize(data, returnType, new ModelSerializerOptions(format));
+            => Deserialize(data, returnType, ModelSerializerOptions.GetOptions(format));
 
         /// <summary>
         /// Converts an <see cref="IModelJsonSerializable{T}"/> into a <see cref="BinaryData"/>.
@@ -129,14 +129,8 @@ namespace Azure.Core.Serialization
         public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
-            using var writer = new SequenceWriter();
-            using var jsonWriter = new Utf8JsonWriter(writer);
-            model.Serialize(jsonWriter, options);
-            jsonWriter.Flush();
-            writer.TryComputeLength(out var length);
-            using var stream = new MemoryStream((int)length);
-            writer.CopyTo(stream, default);
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            using var writer = new ModelWriter(model, options);
+            return writer.ToBinaryData();
         }
 
         /// <summary>
@@ -146,38 +140,15 @@ namespace Azure.Core.Serialization
         /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
         /// <returns>A binary representation of the serialized model.</returns>
         public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerFormat format)
-            => ConvertToBinaryData(model, new ModelSerializerOptions(format));
-
-        /// <summary>
-        /// Converts an <see cref="IModelXmlSerializable{T}"/> into a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="model">The model to convert.</param>
-        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
-        /// <returns>A binary representation of the serialized model.</returns>
-        public static BinaryData ConvertToBinaryData(IModelXmlSerializable<object> model, ModelSerializerOptions? options = default)
-        {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-            using MemoryStream stream = new MemoryStream();
-            using XmlWriter writer = XmlWriter.Create(stream);
-            model.Serialize(writer, options);
-            writer.Flush();
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-        }
-
-        /// <summary>
-        /// Converts an <see cref="IModelXmlSerializable{T}"/> into a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="model">The model to convert.</param>
-        /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
-        /// <returns>A binary representation of the serialized model.</returns>
-        public static BinaryData ConvertToBinaryData(IModelXmlSerializable<object> model, ModelSerializerFormat format)
-            => ConvertToBinaryData(model, new ModelSerializerOptions(format));
+            => ConvertToBinaryData(model, ModelSerializerOptions.GetOptions(format));
 
         private static IModelSerializable<object> GetInstance(Type returnType)
         {
             var model = GetObjectInstance(returnType) as IModelSerializable<object>;
             if (model is null)
+            {
                 throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IModelSerializable<object>)}");
+            }
             return model;
         }
 
@@ -185,7 +156,9 @@ namespace Azure.Core.Serialization
         {
             var model = GetObjectInstance(typeof(T)) as IModelSerializable<T>;
             if (model is null)
+            {
                 throw new InvalidOperationException($"{typeof(T).Name} does not implement {nameof(IModelSerializable<T>)}");
+            }
             return model;
         }
 
@@ -193,10 +166,14 @@ namespace Azure.Core.Serialization
         {
             var typeToActivate = returnType.IsAbstract ? returnType.Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{returnType.Name}") : returnType;
             if (typeToActivate is null)
+            {
                 throw new InvalidOperationException($"Unable to find type Unknown{returnType.Name} in assembly {returnType.Assembly.FullName}.");
+            }
             var obj = Activator.CreateInstance(typeToActivate, true);
             if (obj is null)
+            {
                 throw new InvalidOperationException($"Unable to create instance of {typeToActivate.Name}.");
+            }
             return obj;
         }
     }

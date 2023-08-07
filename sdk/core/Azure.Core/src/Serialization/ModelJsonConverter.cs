@@ -8,14 +8,14 @@ using System.Text.Json.Serialization;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Add
+    /// A generic converter which allows <see cref="JsonSerializer"/> to be able to serialize and deserialize any models that implement <see cref="IModelJsonSerializable{T}"/>.
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
     public class ModelJsonConverter : JsonConverter<IModelJsonSerializable<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
         /// <summary>
-        /// .
+        /// Gets the <see cref="ModelSerializerOptions"/> used to serialize and deserialize models.
         /// </summary>
         public ModelSerializerOptions ModelSerializerOptions { get; }
 
@@ -30,7 +30,7 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="format"> The format to serialize to and deserialize from. </param>
         public ModelJsonConverter(ModelSerializerFormat format)
-            : this(new ModelSerializerOptions(format)) { }
+            : this(ModelSerializerOptions.GetOptions(format)) { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelJsonConverter"/>.
@@ -41,37 +41,22 @@ namespace Azure.Core.Serialization
             ModelSerializerOptions = options;
         }
 
-        /// <summary>
-        /// Check if a certain type can be converted to IModelSerializable
-        /// </summary>
-        /// <param name="typeToConvert"></param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public override bool CanConvert(Type typeToConvert)
         {
             return !Attribute.IsDefined(typeToConvert, typeof(JsonConverterAttribute));
         }
 
-        /// <summary>
-        /// todo
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="typeToConvert"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        /// <exception cref="NotSupportedException"></exception>
+        /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
         public override IModelJsonSerializable<object> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
-            return (IModelJsonSerializable<object>)ModelSerializer.Deserialize(BinaryData.FromString(JsonDocument.ParseValue(ref reader).RootElement.GetRawText()), typeToConvert, ModelSerializerOptions);
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return (IModelJsonSerializable<object>)ModelSerializer.Deserialize(BinaryData.FromString(document.RootElement.GetRawText()), typeToConvert, ModelSerializerOptions);
         }
 
-        /// <summary>
-        /// todo
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="value"></param>
-        /// <param name="options"></param>
+        /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
         public override void Write(Utf8JsonWriter writer, IModelJsonSerializable<object> value, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API

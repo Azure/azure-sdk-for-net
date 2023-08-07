@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Xml;
 using System.Xml.Linq;
 using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Perf.Serializations
 {
-    public class ModelXmlBenchmark : XmlSerializationBenchmark<ModelXml>
+    public class ModelXmlModel : XmlBenchmark<ModelXml>
     {
         protected override string XmlFileName => "ModelXml.xml";
 

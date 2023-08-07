@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Core.Serialization
 {
@@ -10,10 +11,19 @@ namespace Azure.Core.Serialization
     /// </summary>
     public class ModelSerializerOptions
     {
+        private static readonly IReadOnlyDictionary<ModelSerializerFormat, ModelSerializerOptions> _singletonMap = new Dictionary<ModelSerializerFormat, ModelSerializerOptions>()
+        {
+            { ModelSerializerFormat.Json, new ModelSerializerOptions(ModelSerializerFormat.Json, true) },
+            { ModelSerializerFormat.Wire, new ModelSerializerOptions(ModelSerializerFormat.Wire, true) }
+        };
+
         /// <summary>
         /// Default options for serializing models into the format the Azure serivce is expecting.
         /// </summary>
-        public static readonly ModelSerializerOptions DefaultWireOptions = new ModelSerializerOptions(ModelSerializerFormat.Wire, true);
+        public static readonly ModelSerializerOptions DefaultWireOptions = _singletonMap[ModelSerializerFormat.Wire];
+
+        internal static ModelSerializerOptions GetOptions(ModelSerializerFormat format)
+            => _singletonMap.TryGetValue(format, out ModelSerializerOptions? options) ? options! : new ModelSerializerOptions(format);
 
         private bool _isFrozen;
         private Func<Type, ObjectSerializer>? _genericTypeSerializerCreator;
@@ -53,7 +63,9 @@ namespace Azure.Core.Serialization
             set
             {
                 if (_isFrozen)
+                {
                     throw new InvalidOperationException("Cannot modify static options reference.");
+                }
 
                 _genericTypeSerializerCreator = value;
             }

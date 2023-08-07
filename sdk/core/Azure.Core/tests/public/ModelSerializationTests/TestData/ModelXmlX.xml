@@ -2,8 +2,8 @@
   <Key>Color</Key>
   <Value>Red</Value>
   <ReadOnlyProperty>ReadOnly</ReadOnlyProperty>
-  <RenamedChildModelXml>
+  <ChildTag>
     <ChildValue>ChildRed</ChildValue>
     <ChildReadOnlyProperty>ChildReadOnly</ChildReadOnlyProperty>
-  </RenamedChildModelXml>
+  </ChildTag>
 </Tag>

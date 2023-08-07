@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
@@ -13,15 +14,15 @@ using Azure.Core.Serialization;
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
     [XmlRoot("Tag")]
-    public class ModelXml : IXmlSerializable, IModelSerializable<ModelXml>, IModelJsonSerializable<ModelXml>, IUtf8JsonSerializable
+    public class ModelXmlCrossLibrary : IXmlSerializable, IModelSerializable<ModelXmlCrossLibrary>, IModelJsonSerializable<ModelXmlCrossLibrary>, IUtf8JsonSerializable
     {
-        internal ModelXml() { }
+        internal ModelXmlCrossLibrary() { }
 
         /// <summary> Initializes a new instance of ModelXml for testing. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public ModelXml(string key, string value, string readonlyProperty, ChildModelXml childModel)
+        public ModelXmlCrossLibrary(string key, string value, string readonlyProperty, ChildModelXml childModelXml)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
@@ -29,7 +30,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             Key = key;
             Value = value;
             ReadOnlyProperty = readonlyProperty;
-            RenamedChildModelXml = childModel;
+            ChildModelXml = childModelXml;
         }
 
         /// <summary> Gets or sets the key. </summary>
@@ -41,17 +42,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         /// <summary> Gets or sets the value. </summary>
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
-        [XmlElement("RenamedChildModelXml")]
-        public ChildModelXml RenamedChildModelXml { get; set; }
+        [XmlElement("ChildTag")]
+        public ChildModelXml ChildModelXml { get; set; }
 
-        public static implicit operator RequestContent(ModelXml modelXml)
+        public static implicit operator RequestContent(ModelXmlCrossLibrary modelXmlCrossLibrary)
         {
-            return RequestContent.Create((IModelSerializable<ModelXml>)modelXml, ModelSerializerOptions.DefaultWireOptions);
+            return RequestContent.Create((IModelSerializable<ModelXmlCrossLibrary>)modelXmlCrossLibrary, ModelSerializerOptions.DefaultWireOptions);
         }
 
-        public static explicit operator ModelXml(Response response)
+        public static explicit operator ModelXmlCrossLibrary(Response response)
         {
-            return DeserializeModelXml(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
+            return DeserializeModelXmlCrossLibrary(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
 
         public void Serialize(XmlWriter writer, string nameHint) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions, nameHint);
@@ -73,7 +74,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 writer.WriteValue(ReadOnlyProperty);
                 writer.WriteEndElement();
             }
-            writer.WriteObjectValue(RenamedChildModelXml, "RenamedChildModelXml");
+            var childModelXml = ModelSerializer.Serialize(ChildModelXml, options);
+            var bytes = childModelXml.ToArray();
+            int start = bytes.AsSpan(1).IndexOf((byte)'>') + 2;
+            var chars = Encoding.UTF8.GetChars(bytes, start, bytes.Length - start);
+            writer.WriteRaw(chars, 0, chars.Length);
             writer.WriteEndElement();
         }
 
@@ -89,12 +94,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 writer.WritePropertyName("readOnlyProperty"u8);
                 writer.WriteStringValue(ReadOnlyProperty);
             }
-            writer.WritePropertyName("renamedChildModelXml"u8);
-            writer.WriteObjectValue(RenamedChildModelXml);
+            writer.WritePropertyName("childTag"u8);
+            writer.WriteObjectValue(ChildModelXml);
             writer.WriteEndObject();
         }
 
-        public static ModelXml DeserializeModelXml(XElement element, ModelSerializerOptions options = default)
+        public static ModelXmlCrossLibrary DeserializeModelXmlCrossLibrary(XElement element, ModelSerializerOptions options = default)
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
@@ -114,14 +119,16 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             {
                 readonlyProperty = (string)readonlyPropertyElement;
             }
-            if (element.Element("RenamedChildModelXml") is XElement renamedChildModelXmlElement)
+            if (element.Element("ChildTag") is XElement renamedChildModelXmlElement)
             {
-                childModelXml = ChildModelXml.DeserializeChildModelXml(renamedChildModelXmlElement, options);
+                using MemoryStream stream = new MemoryStream();
+                renamedChildModelXmlElement.Save(stream);
+                childModelXml = ModelSerializer.Deserialize<ChildModelXml>(new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position)), options);
             }
-            return new ModelXml(key, value, readonlyProperty, childModelXml);
+            return new ModelXmlCrossLibrary(key, value, readonlyProperty, childModelXml);
         }
 
-        BinaryData IModelSerializable<ModelXml>.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<ModelXmlCrossLibrary>.Serialize(ModelSerializerOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
@@ -140,7 +147,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             }
         }
 
-        internal static ModelXml DeserializeModelXml(JsonElement element, ModelSerializerOptions options = default)
+        internal static ModelXmlCrossLibrary DeserializeModelXmlCrossLibrary(JsonElement element, ModelSerializerOptions options = default)
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
@@ -167,47 +174,47 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     readOnlyProperty = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("renamedChildModelXml"u8))
+                if (property.NameEquals("childTag"u8))
                 {
                     childModelXml = ChildModelXml.DeserializeChildModelXml(property.Value, options);
                     continue;
                 }
             }
-            return new ModelXml(key, value, readOnlyProperty, childModelXml);
+            return new ModelXmlCrossLibrary(key, value, readOnlyProperty, childModelXml);
         }
 
-        ModelXml IModelSerializable<ModelXml>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ModelXmlCrossLibrary IModelSerializable<ModelXmlCrossLibrary>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelSerializerFormat.Json)
             {
                 using var doc = JsonDocument.Parse(data);
-                return DeserializeModelXml(doc.RootElement, options);
+                return DeserializeModelXmlCrossLibrary(doc.RootElement, options);
             }
             else
             {
-                return DeserializeModelXml(XElement.Load(data.ToStream()), options);
+                return DeserializeModelXmlCrossLibrary(XElement.Load(data.ToStream()), options);
             }
         }
 
-        void IModelJsonSerializable<ModelXml>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IModelJsonSerializable<ModelXmlCrossLibrary>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != ModelSerializerFormat.Json)
-                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Json}' format when calling the {nameof(IModelJsonSerializable<ModelXml>)} interface");
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Json}' format when calling the {nameof(IModelJsonSerializable<ModelXmlCrossLibrary>)} interface");
             Serialize(writer, options);
         }
 
-        ModelXml IModelJsonSerializable<ModelXml>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ModelXmlCrossLibrary IModelJsonSerializable<ModelXmlCrossLibrary>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != ModelSerializerFormat.Json)
-                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Json}' format when calling the {nameof(IModelJsonSerializable<ModelXml>)} interface");
+                throw new InvalidOperationException($"Must use '{ModelSerializerFormat.Json}' format when calling the {nameof(IModelJsonSerializable<ModelXmlCrossLibrary>)} interface");
             using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeModelXml(doc.RootElement, options);
+            return DeserializeModelXmlCrossLibrary(doc.RootElement, options);
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);

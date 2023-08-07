@@ -106,16 +106,8 @@ namespace Azure.Core.Tests.Public.ResourceManager.Models
 
         SystemData IModelJsonSerializable<SystemData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            if (!reader.TryDeserialize<SystemDataProperties>(options, SetProperty, out var properties))
-                return null;
-
-            return new SystemData(
-                properties.CreatedBy.Value,
-                Optional.ToNullable(properties.CreatedByType),
-                Optional.ToNullable(properties.CreatedOn),
-                properties.LastModifiedBy.Value,
-                Optional.ToNullable(properties.LastModifiedByType),
-                Optional.ToNullable(properties.LastModifiedOn));
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSystemData(doc.RootElement, options);
         }
 
         private static void SetProperty(ReadOnlySpan<byte> propertyName, ref SystemDataProperties properties, ref Utf8JsonReader reader, ModelSerializerOptions options)
