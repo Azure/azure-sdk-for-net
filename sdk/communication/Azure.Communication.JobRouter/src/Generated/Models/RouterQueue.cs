@@ -19,12 +19,12 @@ namespace Azure.Communication.JobRouter.Models
         /// <param name="distributionPolicyId"> The ID of the distribution policy that will determine how a job is distributed to workers. </param>
         /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. </param>
         /// <param name="exceptionPolicyId"> (Optional) The ID of the exception policy that determines various job escalation rules. </param>
-        internal RouterQueue(string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId)
+        internal RouterQueue(string id, string name, string distributionPolicyId, IDictionary<string, Value> labels, string exceptionPolicyId)
         {
             Id = id;
             Name = name;
             DistributionPolicyId = distributionPolicyId;
-            _labels = labels;
+            Labels = labels;
             ExceptionPolicyId = exceptionPolicyId;
         }
 

@@ -21,18 +21,19 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            if (Optional.IsCollectionDefined(_labelsToUpsert))
+            if (Optional.IsCollectionDefined(LabelsToUpsert))
             {
                 writer.WritePropertyName("labelsToUpsert"u8);
                 writer.WriteStartObject();
-                foreach (var item in _labelsToUpsert)
+                foreach (var item in LabelsToUpsert)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
+                    // TODO:
+                    //if (item.Value == null)
+                    //{
+                    //    writer.WriteNullValue();
+                    //    continue;
+                    //}
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();

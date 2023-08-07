@@ -13,9 +13,9 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of StaticRouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of Rule. </param>
         /// <param name="value"> The static value this rule always returns. </param>
-        internal StaticRouterRule(string kind, object value) : base(kind)
+        internal StaticRouterRule(string kind, Value value) : base(kind)
         {
-            _value = value;
+            Value = value;
             Kind = kind ?? "static-rule";
         }
     }

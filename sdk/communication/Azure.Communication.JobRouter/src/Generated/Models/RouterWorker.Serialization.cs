@@ -38,34 +38,36 @@ namespace Azure.Communication.JobRouter.Models
                 writer.WritePropertyName("totalCapacity"u8);
                 writer.WriteNumberValue(TotalCapacity.Value);
             }
-            if (Optional.IsCollectionDefined(_labels))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
-                foreach (var item in _labels)
+                foreach (var item in Labels)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
+                    // TODO
+                    //if (item.Value == null)
+                    //{
+                    //    writer.WriteNullValue();
+                    //    continue;
+                    //}
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsCollectionDefined(_tags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in _tags)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
+                    // TODO:
+                    //if (item.Value == null)
+                    //{
+                    //    writer.WriteNullValue();
+                    //    continue;
+                    //}
                     writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -99,8 +101,8 @@ namespace Azure.Communication.JobRouter.Models
             Optional<RouterWorkerState> state = default;
             Optional<IDictionary<string, object>> queueAssignments = default;
             Optional<int> totalCapacity = default;
-            Optional<IDictionary<string, object>> labels = default;
-            Optional<IDictionary<string, object>> tags = default;
+            Optional<IDictionary<string, Value>> labels = default;
+            Optional<IDictionary<string, Value>> tags = default;
             Optional<IDictionary<string, ChannelConfiguration>> channelConfigurations = default;
             Optional<IReadOnlyList<RouterJobOffer>> offers = default;
             Optional<IReadOnlyList<RouterWorkerAssignment>> assignedJobs = default;
@@ -158,17 +160,18 @@ namespace Azure.Communication.JobRouter.Models
                     {
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, Value> dictionary = new Dictionary<string, Value>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
-                        }
+                        // TODO:
+                        //if (property0.Value.ValueKind == JsonValueKind.Null)
+                        //{
+                        //    dictionary.Add(property0.Name, null);
+                        //}
+                        //else
+                        //{
+                        //    dictionary.Add(property0.Name, property0.Value.GetObject());
+                        //}
                     }
                     labels = dictionary;
                     continue;
@@ -179,17 +182,18 @@ namespace Azure.Communication.JobRouter.Models
                     {
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, Value> dictionary = new Dictionary<string, Value>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
-                        }
+                        // TODO:
+                        //if (property0.Value.ValueKind == JsonValueKind.Null)
+                        //{
+                        //    dictionary.Add(property0.Name, null);
+                        //}
+                        //else
+                        //{
+                        //    dictionary.Add(property0.Name, property0.Value.GetObject());
+                        //}
                     }
                     tags = dictionary;
                     continue;

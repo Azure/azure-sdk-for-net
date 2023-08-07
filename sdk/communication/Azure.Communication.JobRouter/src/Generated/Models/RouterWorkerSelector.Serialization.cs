@@ -21,10 +21,10 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToString());
-            if (Optional.IsDefined(_value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(_value);
+                writer.WriteObjectValue(Value);
             }
             if (Optional.IsDefined(_expiresAfterSeconds))
             {
@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
             }
             string key = default;
             LabelOperator labelOperator = default;
-            Optional<object> value = default;
+            Optional<Value> value = default;
             Optional<double> expiresAfterSeconds = default;
             Optional<bool> expedite = default;
             Optional<RouterWorkerSelectorStatus> status = default;
@@ -70,7 +70,8 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    value = property.Value.GetObject();
+                    // TODO:
+                    //value = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("expiresAfterSeconds"u8))

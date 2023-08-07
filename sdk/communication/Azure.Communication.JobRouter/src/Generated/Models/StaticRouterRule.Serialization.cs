@@ -15,10 +15,10 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(_value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(_value);
+                writer.WriteObjectValue(Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
@@ -31,7 +31,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<object> value = default;
+            Optional<Value> value = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,7 +41,8 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    value = property.Value.GetObject();
+                    // TODO:
+                    //value = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
