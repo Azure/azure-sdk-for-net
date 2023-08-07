@@ -7,7 +7,7 @@ The .NET Azure SDK libraries support serialization and deserialization of most c
 - [Using the ModelSerializer](#using-the-modelserializer)
 - [Using models with protocol methods](#using-models-with-protocol-methods)
 - [Using JsonSerializer](#using-jsonserializer)
-- [Envelope bring your own model case](#envelope-bring-your-own-model-case)
+- [Generic Models](#generic-models)
 
 ## Using the ModelSerializer
 The `ModelSerializer` class enables users to serialize and deserialize any Azure models that implement the `IModelSerializable<T>` interface. The following example shows a Dog model being serialized and deserialized.
@@ -24,7 +24,7 @@ BinaryData data = ModelSerializer.Serialize(doggo);
 Dog dog = ModelSerializer.Deserialize<Dog>(data);
 ```
 
-By default, the ModelSerializer gives you the Json representation of the model. Some services accept XML so if you want to send the serialized data to an Azure service that accepts XML, you can use the `ModelSerializerFormat` enum to specify the format. By using the `Wire` format, the serializer automatically picks what the service would use.
+By default, the ModelSerializer gives you the JSON representation of the model. Some services accept XML so if you want to send the serialized data to an Azure service that accepts XML, you can use the `ModelSerializerFormat` enum to specify the format. By using the `Wire` format, the serializer automatically picks what the service would use.
 
 ```C# Snippet:ModelSerializerWithFormat
 Dog doggo = new Dog
@@ -62,7 +62,7 @@ dog = (Dog)response;
 
 ## Using JsonSerializer
 
-If you would like to use the `JsonSerializer`, you can add the `ModelJsonConverter` to your options, which allow `JsonSerializer` to serialize and deserialize any model that implements `IModelJsonSerializable<T>`. The following example shows a Dog model being serialized and deserialized using the ModelJsonConverter.
+If you would like to use the `JsonSerializer`, you can add the `ModelJSONConverter` to your options, which allow `JsonSerializer` to serialize and deserialize any model that implements `IModelJSONSerializable<T>`. The following example shows a Dog model being serialized and deserialized using the ModelJSONConverter.
 
 ```C# Snippet:BaseModelConverter
 Dog dog = new Dog
@@ -72,15 +72,15 @@ Dog dog = new Dog
 };
 
 JsonSerializerOptions options = new JsonSerializerOptions();
-// The ModelJsonConverter is able to serialize and deserialize any model that implements IModelJsonSerializable<T>.
-options.Converters.Add(new ModelJsonConverter());
+// The ModelJSONConverter is able to serialize and deserialize any model that implements IModelJSONSerializable<T>.
+options.Converters.Add(new ModelJSONConverter());
 
 string json = JsonSerializer.Serialize(dog, options);
 
 dog = JsonSerializer.Deserialize<Dog>(json, options);
 ```
 
-## Envelope bring your own model case
+## Generic Models
 
 The following examples show a use case where a user brings a model unknown to the Serializer. The serialization used for each model can also be set in the `ModelSerializableOptions` options property `GenericTypeSerializerCreator`. 
 
@@ -99,7 +99,7 @@ envelope.ModelA = new Cat();
 envelope.ModelT = new SearchResult { X = "Square", Y = 10 };
 
 ModelSerializerOptions options = new ModelSerializerOptions();
-options.GenericTypeSerializerCreator = type => type.Equals(typeof(SearchResult)) ? new NewtonsoftJsonObjectSerializer() : null;
+options.GenericTypeSerializerCreator = type => type.Equals(typeof(SearchResult)) ? new NewtonsoftJSONObjectSerializer() : null;
 
 BinaryData data = ModelSerializer.Serialize(envelope, options);
 
