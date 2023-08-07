@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
         private const string AddParticipantsdWithErrorsApiResponsePayload = "{\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}";
 
-        private const string CreateChatThreadSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}}}}";
+        private const string CreateChatThreadSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}},\"metadata\": {\"MetaKey1\":\"MetaValue1\",\"MetaKey2\": \"MetaValue2\"}}}";
 
         private const string GetThreadApiResponsePayload = "{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Test Thread\",\"createdOn\":\"2021-02-26T00:46:08Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\",\"communicationUser\":{\"id\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}}}";
 
@@ -229,6 +229,51 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             //assert
             Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
             Assert.AreEqual("Topic for testing success", createChatThreadResult.ChatThread.Topic);
+            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
+        }
+
+        [Test]
+        public async Task CreateChatThreadWithMetadataAsyncShouldSucceed()
+        {
+            //act
+            var chatClient = CreateMockChatClient(201, CreateChatThreadSuccessApiResponsePayload);
+            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
+
+            var options = new CreateChatThreadOptions("Topic for testing success");
+            options.Metadata.Add("MetaKey1", "MetaValue1");
+            options.Metadata.Add("MetaKey2", "MetaValue2");
+            options.Participants.Add(chatParticipant);
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(options);
+
+            //assert
+            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
+            Assert.AreEqual("Topic for testing success", createChatThreadResult.ChatThread.Topic);
+            Assert.IsNotNull(createChatThreadResult.ChatThread.Metadata);
+            Assert.AreEqual("MetaValue1", createChatThreadResult.ChatThread.Metadata["MetaKey1"]);
+            Assert.AreEqual("MetaValue2", createChatThreadResult.ChatThread.Metadata["MetaKey2"]);
+
+            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
+        }
+
+        [Test]
+        public void CreateChatThreadWithMetadataShouldSucceed()
+        {
+            //act
+            var chatClient = CreateMockChatClient(201, CreateChatThreadSuccessApiResponsePayload);
+            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
+
+            var options = new CreateChatThreadOptions("Topic for testing success");
+            options.Metadata.Add("MetaKey1", "MetaValue1");
+            options.Metadata.Add("MetaKey2", "MetaValue2");
+            options.Participants.Add(chatParticipant);
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(options);
+
+            //assert
+            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(createChatThreadResult.ChatThread.CreatedBy).CommunicationUser.Id);
+            Assert.AreEqual("Topic for testing success", createChatThreadResult.ChatThread.Topic);
+            Assert.IsNotNull(createChatThreadResult.ChatThread.Metadata);
+            Assert.AreEqual("MetaValue1", createChatThreadResult.ChatThread.Metadata["MetaKey1"]);
+            Assert.AreEqual("MetaValue2", createChatThreadResult.ChatThread.Metadata["MetaKey2"]);
             Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", createChatThreadResult.ChatThread.Id);
         }
 
@@ -1013,6 +1058,30 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
             //assert
 
+            int idCounter = 0;
+            foreach (ChatThreadItem chatThread in chatThreads)
+            {
+                ++idCounter;
+                if (idCounter == 5 && chatThread?.Id == null)
+                {
+                    continue;
+                }
+                Assert.AreEqual($"{idCounter}", chatThread.Id);
+                Assert.AreEqual($"Test Thread {idCounter}", chatThread.Topic);
+            }
+            Assert.AreEqual(5, idCounter);
+        }
+
+        [Test]
+        public void GetThreadsWithMetadataSucceed()
+        {
+            //arrange
+            ChatClient chatClient = CreateMockChatClient(200, GetThreadsApiResponsePayload);
+
+            //act
+            var chatThreads = chatClient.GetChatThreads();
+
+            //assert
             int idCounter = 0;
             foreach (ChatThreadItem chatThread in chatThreads)
             {

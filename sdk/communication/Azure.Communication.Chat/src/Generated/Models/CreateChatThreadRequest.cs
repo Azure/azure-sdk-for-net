@@ -22,6 +22,7 @@ namespace Azure.Communication.Chat
 
             Topic = topic;
             Participants = new ChangeTrackingList<ChatParticipantInternal>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateChatThreadRequest"/>. </summary>
@@ -37,5 +38,7 @@ namespace Azure.Communication.Chat
         public string Topic { get; }
         /// <summary> Participants to be added to the chat thread. </summary>
         public IList<ChatParticipantInternal> Participants { get; }
+        /// <summary> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </summary>
+        public IDictionary<string, string> Metadata { get; }
     }
 }

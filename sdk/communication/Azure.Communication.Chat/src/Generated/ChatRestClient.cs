@@ -39,6 +39,41 @@ namespace Azure.Communication.Chat
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
+        internal HttpMessage CreateCreateChatThreadRequest(string topic, IEnumerable<ChatParticipantInternal> participants, IDictionary<string, string> metadata)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("repeatability-request-id", Guid.NewGuid());
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            CreateChatThreadRequest createChatThreadRequest = new CreateChatThreadRequest(topic);
+            if (participants != null)
+            {
+                foreach (var value in participants)
+                {
+                    createChatThreadRequest.Participants.Add(value);
+                }
+            }
+            if (metadata != null)
+            {
+                foreach (var value in metadata)
+                {
+                    createChatThreadRequest.Metadata.Add(value);
+                }
+            }
+            var model = createChatThreadRequest;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(model);
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateListChatThreadsRequest(int? maxPageSize, DateTimeOffset? startTime)
         {
             var message = _pipeline.CreateMessage();
