@@ -58,7 +58,7 @@ namespace Azure
         /// </summary>
         /// <param name="configurationFile"></param>
         /// <exception cref="InvalidCloudMachineConfigurationException"></exception>
-        public CloudMachine(string configurationFile = "cloudconfig.json")
+        public CloudMachine(string configurationFile = "cloudmachine.json")
         {
             try
             {
