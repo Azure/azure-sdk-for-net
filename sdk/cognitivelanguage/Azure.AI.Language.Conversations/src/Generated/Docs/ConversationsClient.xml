@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="AnalyzeConversationAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call AnalyzeConversationAsync with required request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConversationsClient(endpoint, credential);
+
+var data = new {
+    kind = "",
+};
+
+Response response = await client.AnalyzeConversationAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="AnalyzeConversation(RequestContent,RequestContext)">
+<example>
+This sample shows how to call AnalyzeConversation with required request content and parse the result.
+<code><![CDATA[
+var credential = new AzureKeyCredential("<key>");
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new ConversationsClient(endpoint, credential);
+
+var data = new {
+    kind = "",
+};
+
+Response response = client.AnalyzeConversation(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

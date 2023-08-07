@@ -1,5 +1,5 @@
 repo: Azure/azure-rest-api-specs
-commit: 787a5bf853a7be902041e9793fb50791d167a483
-directory: specification/cognitiveservices/Language.Conversations
 additionalDirectories: []
+commit: 6f9f95d5d802bb126c0660bcf9eac1769e62c0d8
+directory: specification/cognitiveservices/Language.Conversations
 
