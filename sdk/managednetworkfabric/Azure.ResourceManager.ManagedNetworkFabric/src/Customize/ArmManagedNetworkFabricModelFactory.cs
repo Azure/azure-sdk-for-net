@@ -7,11 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Net;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -19,7 +15,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public static partial class ArmManagedNetworkFabricModelFactory
     {
         /// <summary>
-        /// This constructor is added for the backward compatibility
+        /// This constructor is added for the backward compatibility.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
@@ -38,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"></param>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, NetworkFabricConfigurationType? configurationType = null, Uri aclsUri = null, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, DateTimeOffset? lastSyncedOn = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, NetworkFabricConfigurationType? configurationType = null, Uri aclsUri = null, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, DateTimeOffset? lastSyncedOn = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             tags ??= new Dictionary<string, string>();
             matchConfigurations ??= new List<AccessControlListMatchConfiguration>();
@@ -65,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"></param>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<RoutePolicyStatementProperties> statements = null, ResourceIdentifier networkFabricId = null, AddressFamilyType? addressFamilyType = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<RoutePolicyStatementProperties> statements = null, ResourceIdentifier networkFabricId = null, AddressFamilyType? addressFamilyType = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
         {
             tags ??= new Dictionary<string, string>();
             statements ??= new List<RoutePolicyStatementProperties>();

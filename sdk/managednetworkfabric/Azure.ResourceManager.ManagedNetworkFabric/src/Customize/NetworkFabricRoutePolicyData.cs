@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricRoutePolicyData : TrackedResourceData
     {
         /// <summary>
-        /// This constructor is added for the backward compatibility
+        /// This constructor is added for the backward compatibility.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
