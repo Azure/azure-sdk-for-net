@@ -10,14 +10,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/edge/ci.mgmt.yml
-    - sdk/edge/Azure.ResourceManager.EdgeUpdates/
+    - sdk/private.edge/ci.mgmt.yml
+    - sdk/private.edge/Azure.ResourceManager.PrivateEdgeConnectivityStatuses/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: edge
+    ServiceDirectory: private.edge
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.EdgeUpdates
-      safeName: AzureResourceManagerEdgeUpdates
+    - name: Azure.ResourceManager.PrivateEdgeConnectivityStatuses
+      safeName: AzureResourceManagerPrivateEdgeConnectivityStatuses
