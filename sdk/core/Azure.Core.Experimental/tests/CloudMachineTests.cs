@@ -30,7 +30,7 @@ namespace Azure
             try
             {
                 var cm = CloudMachine.Create(Guid.NewGuid().ToString(), "westus2");
-                cm.Save("cloudconfig.json");
+                cm.Save("cloudmachine.json");
                 var deserialized = new CloudMachine();
                 Assert.AreEqual(cm.Id, deserialized.Id);
                 Assert.AreEqual(cm.DisplayName, deserialized.DisplayName);
