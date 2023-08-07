@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             NetworkFabricRoutePolicyData data = new NetworkFabricRoutePolicyData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
             {
                 Annotation = "annotation",
+                DefaultAction = CommunityActionType.Permit,
                 Statements =
                 {
                     new RoutePolicyStatementProperties(
@@ -80,6 +81,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
+
+            //List by subscription
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
+            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+
+            await foreach (NetworkFabricRoutePolicyResource item in subscriptionResource.GetNetworkFabricRoutePoliciesAsync())
+            {
+                NetworkFabricRoutePolicyData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");

@@ -130,9 +130,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
         public string ExternalNetworkName => GetRecordedVariable("EXTERNAL_NETWORK_NAME");
 
         /// <summary>
-        ///   The name of the External Network to be used for playback tests. Recorded.
+        ///   The name of the Internet Gateway to be used for playback tests. Recorded.
         /// </summary>
         public string InternetGatewayName => GetRecordedVariable("INTERNET_GATEWAY_NAME");
+
+        /// <summary>
+        ///   The name of the Internet Gateway Rule to be used for playback tests. Recorded.
+        /// </summary>
+        public string InternetGatewayRuleName => GetRecordedVariable("INTERNET_GATEWAY_RULE_NAME");
 
         // Support using the Default Credential created by Azure CLI so
         // that we don't have to support creating a service principal, etc. to run these tests.

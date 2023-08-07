@@ -18,9 +18,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [Test]
         [RecordedTest]
         [AsyncOnly]
-        public async Task InternetGateways_List()
+        public async Task InternetGateways_Operations()
         {
-            TestContext.Out.WriteLine($"Entered into the InternetGateway tests....");
+            TestContext.Out.WriteLine($"Entered into the Internet Gateway tests....");
+
+            ResourceIdentifier networkFabricInternetGatewayResourceId = NetworkFabricInternetGatewayResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.InternetGatewayName);
+            NetworkFabricInternetGatewayResource networkFabricInternetGateway = Client.GetNetworkFabricInternetGatewayResource(networkFabricInternetGatewayResourceId);
+
+            // invoke the get operation
+            NetworkFabricInternetGatewayResource result = await networkFabricInternetGateway.GetAsync();
+            NetworkFabricInternetGatewayData resourceData = result.Data;
+            Assert.IsNotNull(resourceData);
+            Assert.AreEqual(resourceData.Name, TestEnvironment.InternetGatewayName);
+            TestContext.Out.WriteLine($"Get Operation Succeeded on id: {resourceData.Id}");
+
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
             ResourceGroupResource resourceGroupResource = Client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -30,10 +41,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // invoke the operation and iterate over the result
             await foreach (NetworkFabricInternetGatewayResource item in collection.GetAllAsync())
             {
-                NetworkFabricInternetGatewayData resourceData = item.Data;
+                NetworkFabricInternetGatewayData listResourceData = item.Data;
+                Console.Out.WriteLine($"Succeeded on id: {listResourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            TestContext.Out.WriteLine($"List by Subscription Succeeded.");
         }
     }
 }

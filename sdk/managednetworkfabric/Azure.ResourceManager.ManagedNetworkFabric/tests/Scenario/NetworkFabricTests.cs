@@ -163,6 +163,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
+            //List by subscription
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
+            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+
+            await foreach (NetworkFabricResource item in subscriptionResource.GetNetworkFabricsAsync())
+            {
+                NetworkFabricData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
+
             // provision
             TestContext.Out.WriteLine($"POST - Provision started.....");
             ArmOperation<DeviceUpdateCommonPostActionResult> triggerProvision = await networkFabric.ProvisionAsync(WaitUntil.Completed);

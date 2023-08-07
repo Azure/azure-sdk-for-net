@@ -83,6 +83,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 listByResourceGroup.Add(item);
             }
 
+            //List by subscription
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
+            TestContext.Out.WriteLine($"GET - List by Subscription started.....");
+
+            await foreach (NetworkFabricControllerResource item in subscriptionResource.GetNetworkFabricControllersAsync())
+            {
+                NetworkFabricControllerData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
+
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
             ArmOperation deleteResponse = await networkFabricController.DeleteAsync(WaitUntil.Completed);
