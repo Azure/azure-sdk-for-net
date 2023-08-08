@@ -28,7 +28,7 @@ namespace Azure.Core.Json
 
             // patchPath tracks the global path we're on in writing out the PATCH JSON.
             // We only iterate forward through the PATCH JSON.
-            Span<char> patchPath = stackalloc char[maxPathLength];
+            Span<char> patchPath = maxPathLength <= MaxStackLimit ? stackalloc char[maxPathLength] : new char[maxPathLength];
             int patchPathLength = 0;
             CopyTo(patchPath, ref patchPathLength, elementRootPath);
 
@@ -38,7 +38,7 @@ namespace Azure.Core.Json
 
             // currentPath tracks the path of the current change we're writing in
             // a given iteration of the loop over changes.
-            Span<char> currentPath = stackalloc char[maxPathLength];
+            Span<char> currentPath = maxPathLength <= MaxStackLimit ? stackalloc char[maxPathLength] : new char[maxPathLength];
             int currentPathLength = 0;
             CopyTo(currentPath, ref currentPathLength, elementRootPath);
 

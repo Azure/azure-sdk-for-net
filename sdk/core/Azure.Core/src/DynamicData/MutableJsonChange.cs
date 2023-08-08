@@ -78,7 +78,8 @@ namespace Azure.Core.Json
             }
 
             // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
-            Span<char> pathWithDelimiter = stackalloc char[ancestorPath.Length + 1];
+            int length = ancestorPath.Length + 1;
+            Span<char> pathWithDelimiter = length <= MutableJsonElement.MaxStackLimit ? stackalloc char[length] : new char[length];
             ancestorPath.CopyTo(pathWithDelimiter);
             pathWithDelimiter[ancestorPath.Length] = MutableJsonDocument.ChangeTracker.Delimiter;
 

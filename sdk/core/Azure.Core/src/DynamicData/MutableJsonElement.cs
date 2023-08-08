@@ -17,6 +17,8 @@ namespace Azure.Core.Json
     [JsonConverter(typeof(MutableJsonElementConverter))]
     internal readonly partial struct MutableJsonElement
     {
+        internal const int MaxStackLimit = 1024;
+
         private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
         private readonly string _path;
@@ -92,9 +94,9 @@ namespace Azure.Core.Json
 
             EnsureObject();
 
-            int space = name.Length;
-            space += _path.Length > 0 ? _path.Length + 1 : 0;
-            Span<char> path = stackalloc char[space];
+            int length = name.Length;
+            length += _path.Length > 0 ? _path.Length + 1 : 0;
+            Span<char> path = length <= MaxStackLimit ? stackalloc char[length] : new char[length];
             _path.AsSpan().CopyTo(path);
             int pathLength = _path.Length;
 

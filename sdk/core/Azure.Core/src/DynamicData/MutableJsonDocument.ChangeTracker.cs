@@ -155,7 +155,7 @@ namespace Azure.Core.Json
 
                 MutableJsonChange? min = null;
 
-                for (int i = _changes!.Count - 1; i >= 0; i--)
+                for (int i = _changes.Count - 1; i >= 0; i--)
                 {
                     MutableJsonChange c = _changes[i];
 
@@ -188,7 +188,7 @@ namespace Azure.Core.Json
                 // This implementation is based on the assumption that iterating through
                 // list elements is fast.
                 // Iterating backwards means we get the latest change for a given path.
-                for (int i = _changes!.Count - 1; i >= 0; i--)
+                for (int i = _changes.Count - 1; i >= 0; i--)
                 {
                     MutableJsonChange c = _changes[i];
 
