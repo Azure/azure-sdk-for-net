@@ -161,14 +161,14 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddSource("MyCompany.MyProduct.MyLibrary"));
+builder.Services.ConfigureOpenTelemetryTracerProvider(builder => builder.AddSource("MyCompany.MyProduct.MyLibrary"));
 ```
 
 #### Adding Custom Meter to Metrics
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.ConfigureOpenTelemetryMeterProvider((sp, builder) => builder.AddMeter("MyCompany.MyProduct.MyLibrary"));
+builder.Services.ConfigureOpenTelemetryMeterProvider(builder => builder.AddMeter("MyCompany.MyProduct.MyLibrary"));
 ```
 
 #### Adding Additional Instrumentation
@@ -177,7 +177,7 @@ If you need to instrument a library or framework that isn't included in the Azur
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.AddGrpcClientInstrumentation());
+builder.Services.ConfigureOpenTelemetryTracerProvider(builder => builder.AddGrpcClientInstrumentation());
 ```
 
 #### Enable Azure SDK Instrumentation
@@ -204,7 +204,7 @@ Azure Monitor Distro uses the Azure Monitor exporter to send data to Application
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.ConfigureOpenTelemetryMeterProvider((sp, builder) => builder.AddConsoleExporter());
+builder.Services.ConfigureOpenTelemetryMeterProvider(builder => builder.AddConsoleExporter());
 ```
 
 #### Adding Custom Resource
@@ -213,7 +213,7 @@ To modify the resource, use the following code.
 
 ```C#
 builder.Services.AddOpenTelemetry().UseAzureMonitor();
-builder.Services.ConfigureOpenTelemetryTracerProvider((sp, builder) => builder.ConfigureResource(resourceBuilder => resourceBuilder.AddService("service-name")));
+builder.Services.ConfigureOpenTelemetryTracerProvider(builder => builder.ConfigureResource(resourceBuilder => resourceBuilder.AddService("service-name")));
 ```
 
 It is also possible to configure the `Resource` by using following
