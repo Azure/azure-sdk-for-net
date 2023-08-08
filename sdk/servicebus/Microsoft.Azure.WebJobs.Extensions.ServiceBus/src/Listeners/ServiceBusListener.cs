@@ -302,17 +302,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 
-            // Only close the processor if it is not processing. If it is still processing, then calling CloseAsync would wait
-            // for the processing to complete, which is not what we want to do here since this is the final step of shutdown.
-            // The connection will still be closed when the client is disposed.
-            if (_messageProcessor.IsValueCreated && !_messageProcessor.Value.Processor.IsProcessing)
+            if (_messageProcessor.IsValueCreated)
             {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 _messageProcessor.Value.Processor.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
             }
 
-            if (_sessionMessageProcessor.IsValueCreated && !_sessionMessageProcessor.Value.Processor.IsProcessing)
+            if (_sessionMessageProcessor.IsValueCreated)
             {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 _sessionMessageProcessor.Value.Processor.CloseAsync(CancellationToken.None).GetAwaiter().GetResult();
