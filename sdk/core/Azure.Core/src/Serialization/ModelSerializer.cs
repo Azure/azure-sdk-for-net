@@ -162,7 +162,7 @@ namespace Azure.Core.Serialization
             return model;
         }
 
-        private static IModelSerializable<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>() where T : IModelSerializable<T>
+        private static IModelSerializable<T> GetInstance<T>() where T : IModelSerializable<T>
         {
             var model = GetObjectInstance(typeof(T)) as IModelSerializable<T>;
             if (model is null)
