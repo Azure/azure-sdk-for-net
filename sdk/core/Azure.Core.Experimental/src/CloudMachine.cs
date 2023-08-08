@@ -60,10 +60,7 @@ namespace Azure
         /// <exception cref="InvalidCloudMachineConfigurationException"></exception>
         public CloudMachine(string? configurationFile = default)
         {
-            if (configurationFile == null)
-            {
-                configurationFile = Path.Combine(".azure", "cloudmachine.json");
-            }
+            configurationFile ??= Path.Combine(".azure", "cloudmachine.json");
 
             try
             {
@@ -150,9 +147,9 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void Save(string filepath)
         {
-            string directory = Path.GetDirectoryName(filepath);
+            string? directory = Path.GetDirectoryName(filepath);
             if (directory != null && !Directory.Exists(directory)) Directory.CreateDirectory(directory);
-            using var stream = File.OpenWrite(filepath);
+            using FileStream stream = File.OpenWrite(filepath);
             Save(stream);
         }
 
