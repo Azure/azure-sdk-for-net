@@ -248,18 +248,18 @@ Name = "testcontainerAppsJob0",
                 Configuration = new ContainerAppJobConfiguration(ContainerAppJobTriggerType.Event, 10)
                 {
                     ReplicaRetryLimit = 10,
-                    EventTriggerConfig = new JobConfigurationEventTriggerConfig()
+                    EventTriggerConfig = new EventTriggerConfiguration()
                     {
                         ReplicaCompletionCount = 1,
                         Parallelism = 4,
-                        Scale = new JobScale()
+                        Scale = new ContainerAppJobScale()
                         {
-                            PollingInterval = 40,
+                            PollingIntervalInSeconds = 40,
                             MinExecutions = 1,
                             MaxExecutions = 5,
                             Rules =
 {
-new JobScaleRule()
+new ContainerAppJobScaleRule()
 {
 Name = "servicebuscalingrule",
 JobScaleRuleType = "azure-servicebus",

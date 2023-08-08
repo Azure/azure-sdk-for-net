@@ -10,17 +10,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Configuration to bind a ContainerApp to a dev ContainerApp Service. </summary>
-    public partial class ServiceBind
+    public partial class ContainerAppServiceBind
     {
-        /// <summary> Initializes a new instance of ServiceBind. </summary>
-        public ServiceBind()
+        /// <summary> Initializes a new instance of ContainerAppServiceBind. </summary>
+        public ContainerAppServiceBind()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBind. </summary>
+        /// <summary> Initializes a new instance of ContainerAppServiceBind. </summary>
         /// <param name="serviceId"> Resource id of the target service. </param>
         /// <param name="name"> Name of the service bind. </param>
-        internal ServiceBind(ResourceIdentifier serviceId, string name)
+        internal ContainerAppServiceBind(ResourceIdentifier serviceId, string name)
         {
             ServiceId = serviceId;
             Name = name;

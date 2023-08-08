@@ -291,7 +291,7 @@ Metadata =
                     },
                     ServiceBinds =
 {
-new ServiceBind()
+new ContainerAppServiceBind()
 {
 ServiceId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourceGroups/rg/providers/Microsoft.App/containerApps/redisService"),
 Name = "redisService",

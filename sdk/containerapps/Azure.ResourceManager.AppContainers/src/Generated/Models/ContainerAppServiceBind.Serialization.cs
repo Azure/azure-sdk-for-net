@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ServiceBind : IUtf8JsonSerializable
+    public partial class ContainerAppServiceBind : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceBind DeserializeServiceBind(JsonElement element)
+        internal static ContainerAppServiceBind DeserializeContainerAppServiceBind(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ServiceBind(serviceId.Value, name.Value);
+            return new ContainerAppServiceBind(serviceId.Value, name.Value);
         }
     }
 }
