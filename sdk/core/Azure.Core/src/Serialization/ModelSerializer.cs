@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
+using Azure.Core.Internal;
 
 namespace Azure.Core.Serialization
 {
@@ -132,15 +132,8 @@ namespace Azure.Core.Serialization
         public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
-            using var writer = new SequenceWriter();
-            using var jsonWriter = new Utf8JsonWriter(writer);
-            model.Serialize(jsonWriter, options);
-            jsonWriter.Flush();
-            bool gotLength = writer.TryComputeLength(out long length);
-            Debug.Assert(gotLength);
-            using var stream = new MemoryStream((int)length);
-            writer.CopyTo(stream, default);
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            using var writer = new ModelWriter(model, options);
+            return writer.ToBinaryData();
         }
 
         /// <summary>
