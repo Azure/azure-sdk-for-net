@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.Core.Tests.Public.ResourceManager.Compute;
+using Azure.Core.Tests.ResourceManager.Compute;
 
 namespace Azure.Core.Perf.Serializations
 {

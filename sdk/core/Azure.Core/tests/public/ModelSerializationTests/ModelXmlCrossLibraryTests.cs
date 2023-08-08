@@ -1,21 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Text;
-using NUnit.Framework;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
-using Azure.Core.Serialization;
-using System;
 using System.Text.Json;
 using System.Xml;
-using System.Reflection;
+using Azure.Core.Serialization;
+using Azure.Core.Tests.Common;
+using Azure.Core.Tests.Public.ModelSerializationTests.Models;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class ModelXmlCrossLibraryTests : ModelTests<ModelXmlCrossLibrary>
     {
-        protected override string WirePayload => File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ModelXmlX.xml")).TrimEnd();
+        protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelXmlX.xml")).TrimEnd();
 
         protected override string JsonPayload => "{\"key\":\"Color\",\"value\":\"Red\",\"readOnlyProperty\":\"ReadOnly\",\"childTag\":{\"childValue\":\"ChildRed\",\"childReadOnlyProperty\":\"ChildReadOnly\"}}";
 

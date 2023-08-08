@@ -6,7 +6,6 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using Azure.Core.Internal;
 using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using BenchmarkDotNet.Attributes;
@@ -99,9 +98,10 @@ namespace Azure.Core.Perf.Serializations
 
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
-        public BinaryData Serialize_ConvertToBinary()
+        public BinaryData Serialize_ModelWriter()
         {
-            return ModelSerializer.ConvertToBinaryData(_model, _options);
+            using var writer = new ModelWriter(_model, _options);
+            return writer.ToBinaryData();
         }
 
         [Benchmark]

@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Serialization;
-using NUnit.Framework;
-using System.Text.Json;
-using System.IO;
-using System.Xml;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
@@ -123,6 +120,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             return DeserializeJsonModelForCombinedInterface(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<JsonModelForCombinedInterface>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
+        BinaryData IModelSerializable<JsonModelForCombinedInterface>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var writer = new ModelWriter(this, options);
+            return writer.ToBinaryData();
+        }
     }
 }

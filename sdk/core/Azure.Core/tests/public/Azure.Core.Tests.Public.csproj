@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\common\Azure.Core.Tests.Common.csproj" />
   </ItemGroup>
   
   <!-- Shared source from Azure.Core -->
@@ -24,23 +25,6 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ModelSerializerHelper.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared/Core" />
-  </ItemGroup>
-
-  <!-- Test classes to share in public space-->
-  <ItemGroup>
-    <Compile Include="..\TestClients\LowLevelClient\PetStoreClient.cs" LinkBase="Shared/Tests" />
-    <Compile Include="..\TestClients\LowLevelClient\PetStoreClientOptions.cs" LinkBase="Shared/Tests" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="ModelSerializationTests\TestData\ModelXml.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ModelSerializationTests\TestData\ModelXmlX.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="ModelSerializationTests\TestData\ResourceProviderData.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

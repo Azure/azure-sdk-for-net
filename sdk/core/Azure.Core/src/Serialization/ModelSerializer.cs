@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using Azure.Core.Internal;
 
 namespace Azure.Core.Serialization
 {
@@ -122,28 +121,6 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal default constructor.</exception>
         public static object Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerFormat format)
             => Deserialize(data, returnType, ModelSerializerOptions.GetOptions(format));
-
-        /// <summary>
-        /// Converts an <see cref="IModelJsonSerializable{T}"/> into a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="model">The model to convert.</param>
-        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
-        /// <returns>A binary representation of the serialized model.</returns>
-        public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerOptions? options = default)
-        {
-            options ??= ModelSerializerOptions.DefaultWireOptions;
-            using var writer = new ModelWriter(model, options);
-            return writer.ToBinaryData();
-        }
-
-        /// <summary>
-        /// Converts an <see cref="IModelJsonSerializable{T}"/> into a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="model">The model to convert.</param>
-        /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
-        /// <returns>A binary representation of the serialized model.</returns>
-        public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerFormat format)
-            => ConvertToBinaryData(model, ModelSerializerOptions.GetOptions(format));
 
         private static IModelSerializable<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {
