@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -12,7 +13,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 {
     internal class DefaultPlatform : IPlatform
     {
-        private readonly IDictionary _environmentVariables = Environment.GetEnvironmentVariables();
+        private readonly IDictionary _environmentVariables;
+
+        public DefaultPlatform()
+        {
+            try
+            {
+                _environmentVariables = Environment.GetEnvironmentVariables();
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
+                _environmentVariables = new Dictionary<string, object>();
+            }
+        }
 
         public string? GetEnvironmentVariable(string name) => _environmentVariables[name]?.ToString();
 

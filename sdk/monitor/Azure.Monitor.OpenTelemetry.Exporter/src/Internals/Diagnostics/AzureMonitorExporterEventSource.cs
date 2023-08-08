@@ -419,5 +419,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(41, Message = "An exception {1} occurred while adding the log attribute associated with the key {0}", Level = EventLevel.Warning)]
         public void FailedToAddLogAttribute(string key, string exceptionMessage) => WriteEvent(41, key, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToReadEnvironmentVariables(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToReadEnvironmentVariables(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(41, Message = "Failed to read environment variables due to an exception. This may prevent the Exporter from initializing. {0}", Level = EventLevel.Warning)]
+        public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(40, errorMessage);
     }
 }
