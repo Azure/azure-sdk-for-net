@@ -78,26 +78,10 @@ namespace Azure.Core.Json
                 return descendantPath.Length > 0;
             }
 
-            // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
-            char[]? tempArray = null;
-            int length = ancestorPath.Length + 1;
-            Span<char> pathWithDelimiter = length <= MutableJsonElement.MaxStackLimit ?
-                stackalloc char[length] :
-                tempArray = ArrayPool<char>.Shared.Rent(length);
-
-            try
-            {
-                ancestorPath.CopyTo(pathWithDelimiter);
-                pathWithDelimiter[ancestorPath.Length] = MutableJsonDocument.ChangeTracker.Delimiter;
-                return descendantPath.StartsWith(pathWithDelimiter, StringComparison.Ordinal);
-            }
-            finally
-            {
-                if (tempArray != null)
-                {
-                    ArrayPool<char>.Shared.Return(tempArray);
-                }
-            }
+            return descendantPath.Length > ancestorPath.Length &&
+                descendantPath.StartsWith(ancestorPath) &&
+                // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
+                descendantPath[ancestorPath.Length] == MutableJsonDocument.ChangeTracker.Delimiter;
         }
 
         internal bool IsDirectDescendant(string path)
