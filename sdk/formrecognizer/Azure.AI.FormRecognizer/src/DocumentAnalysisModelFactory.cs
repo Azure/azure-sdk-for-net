@@ -197,9 +197,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="serviceVersion"> Service version used to create this document classifier. </param>
         /// <param name="documentTypes"> List of document types to classify against. </param>
         /// <returns> A new <see cref="DocumentAnalysis.DocumentClassifierDetails"/> instance for mocking. </returns>
-        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string serviceVersion = null, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes = null)
+        public static DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = null, string serviceVersion = null, IReadOnlyDictionary<string, DocumentClassifierDocumentType> documentTypes = null)
         {
-            documentTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
+            documentTypes ??= new Dictionary<string, DocumentClassifierDocumentType>();
 
             return new DocumentClassifierDetails(classifierId, description, createdOn, expiresOn, serviceVersion, documentTypes);
         }

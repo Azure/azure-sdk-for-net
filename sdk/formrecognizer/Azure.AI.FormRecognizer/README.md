@@ -720,10 +720,10 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureK
 var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
 var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
 
-var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
+var documentTypes = new Dictionary<string, DocumentClassifierDocumentType>()
 {
-    { "IRS-1040-A", new ClassifierDocumentTypeDetails(sourceA) },
-    { "IRS-1040-B", new ClassifierDocumentTypeDetails(sourceB) }
+    { "IRS-1040-A", new DocumentClassifierDocumentType(sourceA) },
+    { "IRS-1040-B", new DocumentClassifierDocumentType(sourceB) }
 };
 
 BuildDocumentClassifierOperation operation = await client.BuildDocumentClassifierAsync(WaitUntil.Completed, documentTypes);
@@ -733,7 +733,7 @@ Console.WriteLine($"  Classifier Id: {classifier.ClassifierId}");
 Console.WriteLine($"  Created on: {classifier.CreatedOn}");
 
 Console.WriteLine("  Document types the classifier can recognize:");
-foreach (KeyValuePair<string, ClassifierDocumentTypeDetails> documentType in classifier.DocumentTypes)
+foreach (KeyValuePair<string, DocumentClassifierDocumentType> documentType in classifier.DocumentTypes)
 {
     Console.WriteLine($"    {documentType.Key}");
 }

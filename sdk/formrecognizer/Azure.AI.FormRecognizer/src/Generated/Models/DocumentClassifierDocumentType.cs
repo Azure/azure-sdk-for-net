@@ -8,7 +8,7 @@
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Classifier document type info. </summary>
-    public partial class ClassifierDocumentTypeDetails
+    public partial class DocumentClassifierDocumentType
     {
     }
 }

@@ -41,10 +41,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
             var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
 
-            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
+            var documentTypes = new Dictionary<string, DocumentClassifierDocumentType>()
             {
-                { "IRS-1040-A", new ClassifierDocumentTypeDetails(sourceA) },
-                { "IRS-1040-B", new ClassifierDocumentTypeDetails(sourceB) }
+                { "IRS-1040-A", new DocumentClassifierDocumentType(sourceA) },
+                { "IRS-1040-B", new DocumentClassifierDocumentType(sourceB) }
             };
 
             BuildDocumentClassifierOperation operation = null;
@@ -77,10 +77,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
             var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
 
-            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
+            var documentTypes = new Dictionary<string, DocumentClassifierDocumentType>()
             {
-                { "IRS-1040-A", new ClassifierDocumentTypeDetails(sourceA) },
-                { "IRS-1040-B", new ClassifierDocumentTypeDetails(sourceB) }
+                { "IRS-1040-A", new DocumentClassifierDocumentType(sourceA) },
+                { "IRS-1040-B", new DocumentClassifierDocumentType(sourceB) }
             };
 
             BuildDocumentClassifierOperation operation = null;
@@ -122,10 +122,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var sourceA = new BlobFileListContentSource(trainingFilesUri, "IRS-1040-A.jsonl");
             var sourceB = new BlobFileListContentSource(trainingFilesUri, "IRS-1040-B.jsonl");
 
-            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
+            var documentTypes = new Dictionary<string, DocumentClassifierDocumentType>()
             {
-                { "IRS-1040-A", new ClassifierDocumentTypeDetails(sourceA) },
-                { "IRS-1040-B", new ClassifierDocumentTypeDetails(sourceB) }
+                { "IRS-1040-A", new DocumentClassifierDocumentType(sourceA) },
+                { "IRS-1040-B", new DocumentClassifierDocumentType(sourceB) }
             };
 
             BuildDocumentClassifierOperation operation = null;
@@ -275,21 +275,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
         #endregion Delete
 
-        private void AssertDocumentTypeDictionariesAreEquivalent(IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes1, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes2)
+        private void AssertDocumentTypeDictionariesAreEquivalent(IReadOnlyDictionary<string, DocumentClassifierDocumentType> docTypes1, IReadOnlyDictionary<string, DocumentClassifierDocumentType> docTypes2)
         {
             Assert.AreEqual(docTypes1.Count, docTypes2.Count);
 
             foreach (string key in docTypes1.Keys)
             {
-                ClassifierDocumentTypeDetails docType1 = docTypes1[key];
-                ClassifierDocumentTypeDetails docType2 = docTypes2[key];
+                DocumentClassifierDocumentType docType1 = docTypes1[key];
+                DocumentClassifierDocumentType docType2 = docTypes2[key];
 
-                Assert.AreEqual(docType1.TrainingDataContentSource.Kind, docType2.TrainingDataContentSource.Kind);
+                Assert.AreEqual(docType1.TrainingDataSource.Kind, docType2.TrainingDataSource.Kind);
 
-                if (docType1.TrainingDataContentSource.Kind == ContentSourceKind.Blob)
+                if (docType1.TrainingDataSource.Kind == DocumentContentSourceKind.Blob)
                 {
-                    var source1 = docType1.TrainingDataContentSource as BlobContentSource;
-                    var source2 = docType2.TrainingDataContentSource as BlobContentSource;
+                    var source1 = docType1.TrainingDataSource as BlobContentSource;
+                    var source2 = docType2.TrainingDataSource as BlobContentSource;
 
                     // The URI returned by the service does not include query parameters, so we're
                     // making sure they're not included in our comparison.
@@ -299,10 +299,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                     Assert.AreEqual(uri1, uri2);
                     Assert.AreEqual(source1.Prefix, source2.Prefix);
                 }
-                else if (docType1.TrainingDataContentSource.Kind == ContentSourceKind.BlobFileList)
+                else if (docType1.TrainingDataSource.Kind == DocumentContentSourceKind.BlobFileList)
                 {
-                    var source1 = docType1.TrainingDataContentSource as BlobFileListContentSource;
-                    var source2 = docType2.TrainingDataContentSource as BlobFileListContentSource;
+                    var source1 = docType1.TrainingDataSource as BlobFileListContentSource;
+                    var source2 = docType2.TrainingDataSource as BlobFileListContentSource;
 
                     // The URI returned by the service does not include query parameters, so we're
                     // making sure they're not included in our comparison.

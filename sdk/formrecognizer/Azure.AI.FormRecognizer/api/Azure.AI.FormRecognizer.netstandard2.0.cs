@@ -308,13 +308,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentStyle> Styles { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentTable> Tables { get { throw null; } }
     }
-    public partial class BlobContentSource : Azure.AI.FormRecognizer.DocumentAnalysis.ContentSource
+    public partial class BlobContentSource : Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSource
     {
         public BlobContentSource(System.Uri containerUri) { }
         public System.Uri ContainerUri { get { throw null; } }
         public string Prefix { get { throw null; } set { } }
     }
-    public partial class BlobFileListContentSource : Azure.AI.FormRecognizer.DocumentAnalysis.ContentSource
+    public partial class BlobFileListContentSource : Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSource
     {
         public BlobFileListContentSource(System.Uri containerUri, string fileList) { }
         public System.Uri ContainerUri { get { throw null; } }
@@ -370,11 +370,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
-    public partial class ClassifierDocumentTypeDetails
-    {
-        public ClassifierDocumentTypeDetails(Azure.AI.FormRecognizer.DocumentAnalysis.ContentSource trainingDataContentSource) { }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.ContentSource TrainingDataContentSource { get { throw null; } }
-    }
     public partial class ClassifyDocumentOperation : Azure.Operation<Azure.AI.FormRecognizer.DocumentAnalysis.AnalyzeResult>
     {
         protected ClassifyDocumentOperation() { }
@@ -403,29 +398,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public override System.Threading.Tasks.ValueTask<Azure.Response> UpdateStatusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelDetails>> WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Response<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelDetails>> WaitForCompletionAsync(System.TimeSpan pollingInterval, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public abstract partial class ContentSource
-    {
-        internal ContentSource() { }
-        public Azure.AI.FormRecognizer.DocumentAnalysis.ContentSourceKind Kind { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ContentSourceKind : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.ContentSourceKind>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ContentSourceKind(string value) { throw null; }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.ContentSourceKind Blob { get { throw null; } }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.ContentSourceKind BlobFileList { get { throw null; } }
-        public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.ContentSourceKind other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.FormRecognizer.DocumentAnalysis.ContentSourceKind left, Azure.AI.FormRecognizer.DocumentAnalysis.ContentSourceKind right) { throw null; }
-        public static implicit operator Azure.AI.FormRecognizer.DocumentAnalysis.ContentSourceKind (string value) { throw null; }
-        public static bool operator !=(Azure.AI.FormRecognizer.DocumentAnalysis.ContentSourceKind left, Azure.AI.FormRecognizer.DocumentAnalysis.ContentSourceKind right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class CopyDocumentModelToOperation : Azure.Operation<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentModelDetails>
     {
@@ -534,7 +506,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public static Azure.AI.FormRecognizer.DocumentAnalysis.CurrencyValue CurrencyValue(double amount = 0, string symbol = null, string code = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcode DocumentBarcode(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind kind = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBarcodeKind), string value = null, System.Collections.Generic.IReadOnlyList<System.Drawing.PointF> boundingPolygon = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan span = default(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan), float confidence = 0f) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierBuildOperationDetails DocumentClassifierBuildOperationDetails(string operationId = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationStatus status = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentOperationStatus.NotStarted, int? percentCompleted = default(int?), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), System.Uri resourceLocation = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, Azure.ResponseError error = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierDetails result = null, string serviceVersion = null) { throw null; }
-        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string serviceVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.ClassifierDocumentTypeDetails> documentTypes = null) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierDetails DocumentClassifierDetails(string classifierId = null, string description = null, System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string serviceVersion = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierDocumentType> documentTypes = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentField DocumentField(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType fieldType, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldValue value, string content, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.BoundingRegion> boundingRegions, System.Collections.Generic.IReadOnlyList<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentSpan> spans, float? confidence) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema DocumentFieldSchema(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType type = Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldType.Unknown, string description = null, string example = null, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema items = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldSchema> properties = null) { throw null; }
         public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentFieldValue DocumentFieldValueWithAddressFieldType(Azure.AI.FormRecognizer.DocumentAnalysis.AddressValue value) { throw null; }
@@ -667,9 +639,37 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public string ClassifierId { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string Description { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.ClassifierDocumentTypeDetails> DocumentTypes { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierDocumentType> DocumentTypes { get { throw null; } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string ServiceVersion { get { throw null; } }
+    }
+    public partial class DocumentClassifierDocumentType
+    {
+        public DocumentClassifierDocumentType(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSource trainingDataSource) { }
+        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSource TrainingDataSource { get { throw null; } }
+    }
+    public abstract partial class DocumentContentSource
+    {
+        internal DocumentContentSource() { }
+        public Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSourceKind Kind { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DocumentContentSourceKind : System.IEquatable<Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSourceKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DocumentContentSourceKind(string value) { throw null; }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSourceKind Blob { get { throw null; } }
+        public static Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSourceKind BlobFileList { get { throw null; } }
+        public bool Equals(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSourceKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSourceKind left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSourceKind right) { throw null; }
+        public static implicit operator Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSourceKind (string value) { throw null; }
+        public static bool operator !=(Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSourceKind left, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSourceKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DocumentField
     {
@@ -827,11 +827,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public DocumentModelAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions options) { }
         public DocumentModelAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public DocumentModelAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentAnalysisClientOptions options) { }
-        public virtual Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentClassifierOperation BuildDocumentClassifier(Azure.WaitUntil waitUntil, System.Collections.Generic.IDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.ClassifierDocumentTypeDetails> documentTypes, string classifierId = null, string description = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentClassifierOperation> BuildDocumentClassifierAsync(Azure.WaitUntil waitUntil, System.Collections.Generic.IDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.ClassifierDocumentTypeDetails> documentTypes, string classifierId = null, string description = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOperation BuildDocumentModel(Azure.WaitUntil waitUntil, Azure.AI.FormRecognizer.DocumentAnalysis.ContentSource trainingDataContentSource, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode buildMode, string modelId = null, Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentClassifierOperation BuildDocumentClassifier(Azure.WaitUntil waitUntil, System.Collections.Generic.IDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierDocumentType> documentTypes, string classifierId = null, string description = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentClassifierOperation> BuildDocumentClassifierAsync(Azure.WaitUntil waitUntil, System.Collections.Generic.IDictionary<string, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentClassifierDocumentType> documentTypes, string classifierId = null, string description = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOperation BuildDocumentModel(Azure.WaitUntil waitUntil, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSource trainingDataSource, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode buildMode, string modelId = null, Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOperation BuildDocumentModel(Azure.WaitUntil waitUntil, System.Uri blobContainerUri, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode buildMode, string modelId = null, string prefix = null, Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOperation> BuildDocumentModelAsync(Azure.WaitUntil waitUntil, Azure.AI.FormRecognizer.DocumentAnalysis.ContentSource trainingDataContentSource, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode buildMode, string modelId = null, Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOperation> BuildDocumentModelAsync(Azure.WaitUntil waitUntil, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentContentSource trainingDataSource, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode buildMode, string modelId = null, Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOperation> BuildDocumentModelAsync(Azure.WaitUntil waitUntil, System.Uri blobContainerUri, Azure.AI.FormRecognizer.DocumentAnalysis.DocumentBuildMode buildMode, string modelId = null, string prefix = null, Azure.AI.FormRecognizer.DocumentAnalysis.BuildDocumentModelOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AI.FormRecognizer.DocumentAnalysis.ComposeDocumentModelOperation ComposeDocumentModel(Azure.WaitUntil waitUntil, System.Collections.Generic.IEnumerable<string> componentModelIds, string modelId = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.FormRecognizer.DocumentAnalysis.ComposeDocumentModelOperation> ComposeDocumentModelAsync(Azure.WaitUntil waitUntil, System.Collections.Generic.IEnumerable<string> componentModelIds, string modelId = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

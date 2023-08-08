@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 {
     /// <summary>
-    /// The suite of tests for the <see cref="ClassifierDocumentTypeDetails"/> and its supported
+    /// The suite of tests for the <see cref="DocumentClassifierDocumentType"/> and its supported
     /// training data sources.
     /// </summary>
     internal class TrainingDataSourcesTests
@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         public void ClassifierDocumentTypeDetailsConstructorValidatesArguments()
         {
-            Assert.Throws<ArgumentNullException>(() => new ClassifierDocumentTypeDetails(trainingDataContentSource: null));
+            Assert.Throws<ArgumentNullException>(() => new DocumentClassifierDocumentType(trainingDataSource: null));
         }
 
         [Test]

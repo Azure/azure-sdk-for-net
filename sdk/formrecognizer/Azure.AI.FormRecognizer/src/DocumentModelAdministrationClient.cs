@@ -119,8 +119,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
-        /// <param name="trainingDataContentSource">
-        /// An externally accessible location that has your training files. See <see cref="ContentSource"/> for an exhaustive list of source options.
+        /// <param name="trainingDataSource">
+        /// An externally accessible location that has your training files. See <see cref="DocumentContentSource"/> for an exhaustive list of source options.
         /// For more information on setting up a training data set, see <see href="https://aka.ms/azsdk/formrecognizer/buildcustommodel">this article</see>.
         /// </param>
         /// <param name="buildMode">
@@ -152,9 +152,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildDocumentModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual async Task<BuildDocumentModelOperation> BuildDocumentModelAsync(WaitUntil waitUntil, ContentSource trainingDataContentSource, DocumentBuildMode buildMode, string modelId = default, BuildDocumentModelOptions options = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildDocumentModelOperation> BuildDocumentModelAsync(WaitUntil waitUntil, DocumentContentSource trainingDataSource, DocumentBuildMode buildMode, string modelId = default, BuildDocumentModelOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trainingDataContentSource, nameof(trainingDataContentSource));
+            Argument.AssertNotNull(trainingDataSource, nameof(trainingDataSource));
             options ??= new BuildDocumentModelOptions();
 
             modelId ??= Guid.NewGuid().ToString();
@@ -163,7 +163,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 Description = options.Description
             };
 
-            switch (trainingDataContentSource)
+            switch (trainingDataSource)
             {
                 case BlobContentSource blobSource:
                     request.AzureBlobSource = blobSource;
@@ -172,7 +172,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     request.AzureBlobFileListSource = blobFileListSource;
                     break;
                 default:
-                    throw new ArgumentException("Unsupported training data content source.", nameof(trainingDataContentSource));
+                    throw new ArgumentException("Unsupported training data source.", nameof(trainingDataSource));
             }
 
             foreach (var tag in options.Tags)
@@ -209,8 +209,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
-        /// <param name="trainingDataContentSource">
-        /// An externally accessible location that has your training files. See <see cref="ContentSource"/> for an exhaustive list of source options.
+        /// <param name="trainingDataSource">
+        /// An externally accessible location that has your training files. See <see cref="DocumentContentSource"/> for an exhaustive list of source options.
         /// For more information on setting up a training data set, see <see href="https://aka.ms/azsdk/formrecognizer/buildcustommodel">this article</see>.
         /// </param>
         /// <param name="buildMode">
@@ -242,9 +242,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// A <see cref="BuildDocumentModelOperation"/> to wait on this long-running operation. Its Value upon successful
         /// completion will contain meta-data about the created custom model.
         /// </returns>
-        public virtual BuildDocumentModelOperation BuildDocumentModel(WaitUntil waitUntil, ContentSource trainingDataContentSource, DocumentBuildMode buildMode, string modelId = default, BuildDocumentModelOptions options = default, CancellationToken cancellationToken = default)
+        public virtual BuildDocumentModelOperation BuildDocumentModel(WaitUntil waitUntil, DocumentContentSource trainingDataSource, DocumentBuildMode buildMode, string modelId = default, BuildDocumentModelOptions options = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(trainingDataContentSource, nameof(trainingDataContentSource));
+            Argument.AssertNotNull(trainingDataSource, nameof(trainingDataSource));
             options ??= new BuildDocumentModelOptions();
 
             modelId ??= Guid.NewGuid().ToString();
@@ -253,7 +253,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 Description = options.Description
             };
 
-            switch (trainingDataContentSource)
+            switch (trainingDataSource)
             {
                 case BlobContentSource blobSource:
                     request.AzureBlobSource = blobSource;
@@ -262,7 +262,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     request.AzureBlobFileListSource = blobFileListSource;
                     break;
                 default:
-                    throw new ArgumentException("Invalid training data source kind.", nameof(trainingDataContentSource));
+                    throw new ArgumentException("Unsupported training data source.", nameof(trainingDataSource));
             }
 
             foreach (var tag in options.Tags)
@@ -889,7 +889,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <remarks>
         /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
-        public virtual async Task<BuildDocumentClassifierOperation> BuildDocumentClassifierAsync(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildDocumentClassifierOperation> BuildDocumentClassifierAsync(WaitUntil waitUntil, IDictionary<string, DocumentClassifierDocumentType> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documentTypes, nameof(documentTypes));
 
@@ -942,7 +942,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <remarks>
         /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
-        public virtual BuildDocumentClassifierOperation BuildDocumentClassifier(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
+        public virtual BuildDocumentClassifierOperation BuildDocumentClassifier(WaitUntil waitUntil, IDictionary<string, DocumentClassifierDocumentType> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documentTypes, nameof(documentTypes));
 

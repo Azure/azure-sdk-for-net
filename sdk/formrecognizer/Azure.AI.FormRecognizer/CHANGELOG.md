@@ -1,11 +1,11 @@
 # Release History
 
-## 4.1.0 (2023-08-08)
+## 4.1.0 (2023-08-09)
 
 ### Features Added
 - In struct `DocumentAnalysisFeature`, added properties `Barcodes`, `KeyValuePairs`, and `Languages` as add-on capabilities.
-- Added class `ContentSource` as a base class to `AzureBlobContentSource` (currently named `BlobContentSource`) and `AzureBlobFileListSource` (currently named `BlobFileListContentSource`).
-- In `DocumentModelAdministrationClient`, added a new overload to `BuildDocumentModel` that takes a `ContentSource` object. It can be used to build a document model from alternative content sources.
+- Added class `DocumentContentSource` as a base class to `AzureBlobContentSource` (currently named `BlobContentSource`) and `AzureBlobFileListSource` (currently named `BlobFileListContentSource`).
+- In `DocumentModelAdministrationClient`, added a new overload to `BuildDocumentModel` that takes a `DocumentContentSource` object. It can be used to build a document model from alternative content sources.
 - Added property `ServiceVersion` to classes `AnalyzeResult`, `DocumentModelDetails`, `DocumentModelSummary`, `OperationDetails`, and `OperationSummary`.
 
 ### Breaking Changes
@@ -17,10 +17,11 @@
 - Removed struct `DocumentPageKind` and property `DocumentPage.Kind`.
 - Removed property `DocumentKeyValuePair.CommonName`.
 - In `DocumentBarcodeKind`, renamed members `QRCode`, `PDF417`, `EAN8`, `EAN13`, `ITF`, and `MicroQRCode` to `QrCode`, `Pdf417`, `Ean8`, `Ean13`, `Itf`, and `MicroQrCode`, respectively.
+- Renamed class `ClassifierDocumentTypeDetails` to `DocumentClassifierDocumentType`.
 - Renamed class `AzureBlobContentSource` to `BlobContentSource`.
 - Renamed class `AzureBlobFileListSource` to `BlobFileListContentSource`.
-- In class `ClassifierDocumentTypeDetails`, properties `AzureBlobFileListSource` and `AzureBlobSource` have been replaced by a single polymorphic property `TrainingDataContentSource`.
-- In class `ClassifierDocumentTypeDetails`, all constructors have been replaced by a single constructor that takes a polymorphic parameter `trainingDataContentSource`.
+- In class `ClassifierDocumentTypeDetails`, properties `AzureBlobFileListSource` and `AzureBlobSource` have been replaced by a single polymorphic property `TrainingDataSource`.
+- In class `ClassifierDocumentTypeDetails`, all constructors have been replaced by a single constructor that takes a polymorphic parameter `trainingDataSource`.
 - In class `ResourceDetails`, renamed property `CustomNeuralDocumentModelBuilds` to `NeuralDocumentModelQuota`.
 - In class `DocumentClassifierDetails`, renamed property `ApiVersion` to `ServiceVersion`.
 - Renamed struct `FontStyle` to `DocumentFontStyle`.

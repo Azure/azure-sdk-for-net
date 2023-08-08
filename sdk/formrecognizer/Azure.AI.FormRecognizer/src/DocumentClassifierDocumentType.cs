@@ -6,19 +6,20 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class ClassifierDocumentTypeDetails
+    [CodeGenModel("ClassifierDocumentTypeDetails")]
+    public partial class DocumentClassifierDocumentType
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ClassifierDocumentTypeDetails"/> class.
+        /// Initializes a new instance of the <see cref="DocumentClassifierDocumentType"/> class.
         /// </summary>
-        /// <param name="trainingDataContentSource">The location containing the training data. See <see cref="ContentSource"/> for more details.</param>
-        public ClassifierDocumentTypeDetails(ContentSource trainingDataContentSource)
+        /// <param name="trainingDataSource">The location containing the training data. See <see cref="DocumentContentSource"/> for more details.</param>
+        public DocumentClassifierDocumentType(DocumentContentSource trainingDataSource)
         {
-            Argument.AssertNotNull(trainingDataContentSource, nameof(trainingDataContentSource));
+            Argument.AssertNotNull(trainingDataSource, nameof(trainingDataSource));
 
-            TrainingDataContentSource = trainingDataContentSource;
+            TrainingDataSource = trainingDataSource;
 
-            switch (trainingDataContentSource)
+            switch (trainingDataSource)
             {
                 case BlobContentSource blobSource:
                     AzureBlobSource = blobSource;
@@ -27,28 +28,28 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     AzureBlobFileListSource = blobFileListSource;
                     break;
                 default:
-                    throw new ArgumentException("Unsupported training data content source.", nameof(trainingDataContentSource));
+                    throw new ArgumentException("Unsupported training data source.", nameof(trainingDataSource));
             }
         }
 
         /// <summary> Initializes a new instance of ClassifierDocumentTypeDetails. </summary>
         /// <param name="azureBlobSource"> Azure Blob Storage location containing the training data for a classifier document type.  Either azureBlobSource or azureBlobFileListSource must be specified. </param>
         /// <param name="azureBlobFileListSource"> Azure Blob Storage file list specifying the training data for a classifier document type.  Either azureBlobSource or azureBlobFileListSource must be specified. </param>
-        internal ClassifierDocumentTypeDetails(BlobContentSource azureBlobSource, BlobFileListContentSource azureBlobFileListSource)
+        internal DocumentClassifierDocumentType(BlobContentSource azureBlobSource, BlobFileListContentSource azureBlobFileListSource)
         {
             AzureBlobSource = azureBlobSource;
             AzureBlobFileListSource = azureBlobFileListSource;
-            TrainingDataContentSource = (ContentSource) azureBlobSource ?? azureBlobFileListSource;
+            TrainingDataSource = (DocumentContentSource) azureBlobSource ?? azureBlobFileListSource;
         }
 
-        private ClassifierDocumentTypeDetails()
+        private DocumentClassifierDocumentType()
         {
         }
 
         /// <summary>
         /// The location containing the training data.
         /// </summary>
-        public ContentSource TrainingDataContentSource { get; }
+        public DocumentContentSource TrainingDataSource { get; }
 
         /// <summary>
         /// The Azure Blob Storage location containing the training data.

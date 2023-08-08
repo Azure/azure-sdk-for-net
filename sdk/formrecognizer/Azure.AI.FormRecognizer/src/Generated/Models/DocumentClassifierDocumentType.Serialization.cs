@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class ClassifierDocumentTypeDetails : IUtf8JsonSerializable
+    public partial class DocumentClassifierDocumentType : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteEndObject();
         }
 
-        internal static ClassifierDocumentTypeDetails DeserializeClassifierDocumentTypeDetails(JsonElement element)
+        internal static DocumentClassifierDocumentType DeserializeDocumentClassifierDocumentType(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new ClassifierDocumentTypeDetails(azureBlobSource.Value, azureBlobFileListSource.Value);
+            return new DocumentClassifierDocumentType(azureBlobSource.Value, azureBlobFileListSource.Value);
         }
     }
 }
