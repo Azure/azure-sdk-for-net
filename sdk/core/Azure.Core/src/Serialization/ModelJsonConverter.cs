@@ -53,7 +53,7 @@ namespace Azure.Core.Serialization
 
         /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-        public override IModelJsonSerializable<object> Read(ref Utf8JsonReader reader, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type typeToConvert, JsonSerializerOptions options)
+        public override IModelJsonSerializable<object> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
 #pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
