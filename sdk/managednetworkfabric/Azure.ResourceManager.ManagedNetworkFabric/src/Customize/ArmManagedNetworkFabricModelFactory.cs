@@ -34,13 +34,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"></param>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, NetworkFabricConfigurationType? configurationType = null, Uri aclsUri = null, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations = null, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations = null, DateTimeOffset? lastSyncedOn = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkFabricAccessControlListData NetworkFabricAccessControlListData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri aclsUri, IEnumerable<AccessControlListMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
-            tags ??= new Dictionary<string, string>();
-            matchConfigurations ??= new List<AccessControlListMatchConfiguration>();
-            dynamicMatchConfigurations ??= new List<CommonDynamicMatchConfiguration>();
-
-            return new NetworkFabricAccessControlListData(id, name, resourceType, systemData, tags, location, annotation, configurationType, aclsUri, matchConfigurations?.ToList(), dynamicMatchConfigurations?.ToList(), lastSyncedOn, configurationState, provisioningState, administrativeState);
+            return NetworkFabricAccessControlListData(id, name, resourceType, systemData, tags, location, annotation, configurationType, aclsUri, null, matchConfigurations?.ToList(), dynamicMatchConfigurations?.ToList(), lastSyncedOn, configurationState, provisioningState, administrativeState);
         }
 
         /// <summary>
@@ -61,12 +57,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"></param>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, Azure.ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string annotation = null, IEnumerable<RoutePolicyStatementProperties> statements = null, ResourceIdentifier networkFabricId = null, AddressFamilyType? addressFamilyType = null, NetworkFabricConfigurationState? configurationState = null, NetworkFabricProvisioningState? provisioningState = null, NetworkFabricAdministrativeState? administrativeState = null)
+        public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
-            tags ??= new Dictionary<string, string>();
-            statements ??= new List<RoutePolicyStatementProperties>();
-
-            return new NetworkFabricRoutePolicyData(id, name, resourceType, systemData, tags, location, annotation, statements?.ToList(), networkFabricId, addressFamilyType, configurationState, provisioningState, administrativeState);
+            return NetworkFabricRoutePolicyData(id, name, resourceType, systemData, tags, location, annotation, null, statements?.ToList(), networkFabricId, addressFamilyType, configurationState, provisioningState, administrativeState);
         }
     }
 }
