@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.NetApp.Samples
 
             // invoke the operation
             GetGroupIdListForLdapUserContent content = new GetGroupIdListForLdapUserContent("user1");
-            ArmOperation<GetGroupIdListForLdapUserResponse> lro = await netAppVolume.GetGetGroupIdListForLdapUserAsync(WaitUntil.Completed, content);
-            GetGroupIdListForLdapUserResponse result = lro.Value;
+            ArmOperation<GetGroupIdListForLdapUserResult> lro = await netAppVolume.GetGetGroupIdListForLdapUserAsync(WaitUntil.Completed, content);
+            GetGroupIdListForLdapUserResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
