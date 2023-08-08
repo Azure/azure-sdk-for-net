@@ -106,17 +106,16 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Consumes the readable stream to upload
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="overwrite">
-        /// If set to true, will overwrite the blob if exists.
-        /// </param>
+        /// <param name="stream"></param>
         /// <param name="streamLength">
         /// The length of the stream.
         /// </param>
-        /// <param name="completeLength">
-        /// The expected complete length of the blob.
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if exists.
         /// </param>
-        /// <param name="stream"></param>
+        /// <param name="completeLength">
+        /// The expected complete length of the resource item.
+        /// </param>
         /// <param name="options"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -124,18 +123,18 @@ namespace Azure.Storage.DataMovement
             Stream stream,
             long streamLength,
             bool overwrite,
-            long position = 0,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
+            long position = options?.Position != default ? options.Position.Value : 0;
             if (position == 0)
             {
                 await CreateAsync(overwrite).ConfigureAwait(false);
             }
-            if (completeLength > 0)
+            if (streamLength > 0)
             {
                 // Appends incoming stream to the local file resource
                 using (FileStream fileStream = new FileStream(
@@ -197,7 +196,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             HttpRange range,
             bool overwrite,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
