@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class QuotaDetails
+    public partial class ResourceQuotaDetails
     {
-        internal static QuotaDetails DeserializeQuotaDetails(JsonElement element)
+        internal static ResourceQuotaDetails DeserializeResourceQuotaDetails(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -40,7 +40,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new QuotaDetails(used, quota, quotaResetDateTime);
+            return new ResourceQuotaDetails(used, quota, quotaResetDateTime);
         }
     }
 }
