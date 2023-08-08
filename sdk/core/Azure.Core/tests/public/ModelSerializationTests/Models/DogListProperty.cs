@@ -3,12 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Serialization;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
@@ -178,6 +176,12 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeDogListProperty(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<DogListProperty>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
+        BinaryData IModelSerializable<DogListProperty>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var writer = new ModelWriter(this, options);
+            return writer.ToBinaryData();
+        }
     }
 }

@@ -3,11 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Serialization;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
@@ -138,7 +135,13 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             return DeserializeAnimal(doc.RootElement, options);
         }
 
-        BinaryData IModelSerializable<Animal>.Serialize(ModelSerializerOptions options) => ModelSerializer.ConvertToBinaryData(this, options);
+        BinaryData IModelSerializable<Animal>.Serialize(ModelSerializerOptions options)
+        {
+            ModelSerializerHelper.ValidateFormat(this, options.Format);
+
+            using var writer = new ModelWriter(this, options);
+            return writer.ToBinaryData();
+        }
 
         #endregion
     }

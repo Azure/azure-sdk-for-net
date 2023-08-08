@@ -169,7 +169,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelSerializer.ConvertToBinaryData(this, options);
+            using var writer = new ModelWriter(this, options);
+            return writer.ToBinaryData();
         }
         #endregion
     }

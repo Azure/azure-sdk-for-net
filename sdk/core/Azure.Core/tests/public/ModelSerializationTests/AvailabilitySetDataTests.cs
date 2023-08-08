@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Serialization;
-using Azure.Core.Tests.Public.ResourceManager.Compute;
+using Azure.Core.Tests.ResourceManager.Compute;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests

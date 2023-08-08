@@ -3,9 +3,9 @@
 
 using System;
 using System.IO;
-using System.Reflection;
 using Azure.Core.Serialization;
-using Azure.Core.Tests.Public.ResourceManager.Resources;
+using Azure.Core.Tests.Common;
+using Azure.Core.Tests.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
@@ -14,7 +14,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         protected override string JsonPayload => WirePayload;
 
-        protected override string WirePayload => File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "ModelSerializationTests", "TestData", "ResourceProviderData.json")).TrimEnd();
+        protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ResourceProviderData-Collapsed.json")).TrimEnd();
 
         protected override Func<ResourceProviderData, RequestContent> ToRequestContent => model => model;
 

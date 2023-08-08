@@ -1150,8 +1150,6 @@ namespace Azure.Core.Serialization
     }
     public static partial class ModelSerializer
     {
-        public static System.BinaryData ConvertToBinaryData(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
-        public static System.BinaryData ConvertToBinaryData(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
         public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerFormat format) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
@@ -1186,6 +1184,12 @@ namespace Azure.Core.Serialization
         public ModelSerializerOptions(Azure.Core.Serialization.ModelSerializerFormat format) { }
         public Azure.Core.Serialization.ModelSerializerFormat Format { get { throw null; } }
         public System.Func<System.Type, Azure.Core.Serialization.ObjectSerializer>? GenericTypeSerializerCreator { get { throw null; } set { } }
+    }
+    public sealed partial class ModelWriter : System.IDisposable
+    {
+        public ModelWriter(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions options) { }
+        public void Dispose() { }
+        public System.BinaryData ToBinaryData() { throw null; }
     }
     public abstract partial class ObjectSerializer
     {
