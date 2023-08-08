@@ -26,11 +26,6 @@ namespace Azure.Storage.DataMovement.Tests
             /// Instance of the provider the user is given to invoke rehydration on.
             /// </summary>
             ProviderInstance,
-
-            /// <summary>
-            /// The public, package-wide static API for rehydrating.
-            /// </summary>
-            PublicStaticApi
         }
         public static IEnumerable<RehydrateApi> GetRehydrateApis() => Enum.GetValues(typeof(RehydrateApi)).Cast<RehydrateApi>();
 
@@ -142,14 +137,6 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        /// <summary>
-        /// Inlines the tryget to allow for switch expressions in tests.
-        /// </summary>
-        private StorageResource LocalStorageResourcesInlineTryGet(DataTransferProperties info, bool getSource)
-        {
-            throw new NotImplementedException("Reimplementing resource construction and rehydration.");
-        }
-
         [Test]
         [Combinatorial]
         public async Task RehydrateLocalFile(
@@ -187,8 +174,6 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 RehydrateApi.ResourceStaticApi => LocalFileStorageResource.RehydrateResource(transferProperties, isSource),
                 RehydrateApi.ProviderInstance => throw new NotImplementedException("Reimplementing resource construction and rehydration."),
-                RehydrateApi.PublicStaticApi => (LocalFileStorageResource)LocalStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
@@ -242,8 +227,6 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 RehydrateApi.ResourceStaticApi => LocalDirectoryStorageResourceContainer.RehydrateResource(transferProperties, isSource),
                 RehydrateApi.ProviderInstance => throw new NotImplementedException("Reimplementing resource construction and rehydration."),
-                RehydrateApi.PublicStaticApi => (LocalDirectoryStorageResourceContainer)LocalStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 

@@ -66,6 +66,24 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         /// <summary>
+        /// For use in testing. Internal wrapper for protected member
+        /// <see cref="StorageResourceProvider.FromSourceAsync(DataTransferProperties, CancellationToken)"/>.
+        /// </summary>
+        internal async Task<StorageResource> FromSourceInternalHookAsync(
+            DataTransferProperties props,
+            CancellationToken cancellationToken = default)
+            => await FromSourceAsync(props, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// For use in testing. Internal wrapper for protected member
+        /// <see cref="StorageResourceProvider.FromDestinationAsync(DataTransferProperties, CancellationToken)"/>.
+        /// </summary>
+        internal async Task<StorageResource> FromDestinationInternalHookAsync(
+            DataTransferProperties props,
+            CancellationToken cancellationToken = default)
+            => await FromDestinationAsync(props, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
         /// Creates a storage resource pointing towards the given container URI.
         /// </summary>
         /// <param name="containerUri">
