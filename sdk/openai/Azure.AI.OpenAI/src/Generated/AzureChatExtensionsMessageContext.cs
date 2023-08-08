@@ -27,7 +27,8 @@ namespace Azure.AI.OpenAI
         /// <param name="messages">
         ///   The contextual message payload associated with the Azure chat extensions used for a chat completions request.
         ///   These messages describe the data source retrievals, plugin invocations, and other intermediate steps taken in the
-        ///   course of generating a chat completions response that was augmented by capabilities from Azure chat extensions.
+        ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
+        ///   extensions.
         /// </param>
         internal AzureChatExtensionsMessageContext(IList<ChatMessage> messages)
         {
@@ -37,7 +38,8 @@ namespace Azure.AI.OpenAI
         /// <summary>
         ///   The contextual message payload associated with the Azure chat extensions used for a chat completions request.
         ///   These messages describe the data source retrievals, plugin invocations, and other intermediate steps taken in the
-        ///   course of generating a chat completions response that was augmented by capabilities from Azure chat extensions.
+        ///   course of generating a chat completions response that was augmented by capabilities from Azure OpenAI chat
+        ///   extensions.
         /// </summary>
         public IList<ChatMessage> Messages { get; }
     }

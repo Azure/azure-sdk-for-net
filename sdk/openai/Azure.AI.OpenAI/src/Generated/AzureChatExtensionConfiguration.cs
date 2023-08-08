@@ -11,8 +11,8 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     /// <summary>
-    ///   A representation of configuration data for a single Azure OpenAI chat extension as used by a corresponding chat
-    ///   completions request that should use Azure OpenAI chat extensions to augment its behavior.
+    ///   A representation of configuration data for a single Azure OpenAI chat extension. This will be used by a chat
+    ///   completions request that should use Azure OpenAI chat extensions to augment the response behavior.
     ///   The use of this configuration is compatible only with Azure OpenAI.
     /// </summary>
     public partial class AzureChatExtensionConfiguration
