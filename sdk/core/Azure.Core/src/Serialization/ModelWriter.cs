@@ -16,19 +16,11 @@ namespace Azure.Core.Serialization
     /// </summary>
     public sealed partial class ModelWriter : IDisposable
     {
+        private static readonly object _disposed = new object();
         private readonly IModelJsonSerializable<object> _model;
         private readonly ModelSerializerOptions _options;
 
-        private readonly object _writeLock = new object();
-        private readonly object _readLock = new object();
-
-        private volatile SequenceBuilder? _sequenceBuilder;
-        private volatile bool _isDisposed;
-
-        private volatile int _readCount;
-
-        private ManualResetEvent? _readersFinished;
-        private ManualResetEvent ReadersFinished => _readersFinished ??= new ManualResetEvent(true);
+        private object? _sequenceBuilder;
 
         /// <summary>
         /// Initializes a new instance of <see cref="ModelWriter"/>.
@@ -43,67 +35,86 @@ namespace Azure.Core.Serialization
 
         private SequenceBuilder GetSequenceBuilder()
         {
-            if (_sequenceBuilder is null)
-            {
-                lock (_writeLock)
-                {
-                    if (_isDisposed)
-                    {
-                        throw new ObjectDisposedException(nameof(ModelWriter));
-                    }
+            var comparand = _sequenceBuilder;
 
-                    if (_sequenceBuilder is null)
-                    {
-                        SequenceBuilder sequenceBuilder = new SequenceBuilder();
-                        using var jsonWriter = new Utf8JsonWriter(sequenceBuilder);
-                        _model.Serialize(jsonWriter, _options);
-                        jsonWriter.Flush();
-                        _sequenceBuilder = sequenceBuilder;
-                    }
-                }
+            var cached = comparand is not null && comparand != _disposed
+                ? Interlocked.CompareExchange(ref _sequenceBuilder, null, comparand)
+                : comparand;
+
+            if (cached is SequenceBuilder sequenceBuilder && cached == comparand)
+            {
+                return sequenceBuilder;
             }
-            return _sequenceBuilder;
+
+            if (cached == _disposed)
+            {
+                throw new ObjectDisposedException(nameof(ModelWriter));
+            }
+
+            sequenceBuilder = new SequenceBuilder();
+            using var jsonWriter = new Utf8JsonWriter(sequenceBuilder);
+            _model.Serialize(jsonWriter, _options);
+            jsonWriter.Flush();
+
+            return sequenceBuilder;
+        }
+
+        private void Return(SequenceBuilder sequenceBuilder)
+        {
+            if (Interlocked.CompareExchange(ref _sequenceBuilder, sequenceBuilder, null) != null)
+            {
+                // Other instance of SequenceBuilder is cached or ModelWriter is disposed
+                // Dispose our instance of sequenceBuilder
+                sequenceBuilder.Dispose();
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            var cached = Interlocked.Exchange(ref _sequenceBuilder, _disposed);
+            if (cached is SequenceBuilder sequenceBuilder)
+            {
+                sequenceBuilder.Dispose();
+            }
         }
 
         internal void CopyTo(Stream stream, CancellationToken cancellation)
         {
             SequenceBuilder builder = GetSequenceBuilder();
-            IncrementRead();
             try
             {
                 builder.CopyTo(stream, cancellation);
             }
             finally
             {
-                DecrementRead();
+                Return(builder);
             }
         }
 
         internal bool TryComputeLength(out long length)
         {
             SequenceBuilder builder = GetSequenceBuilder();
-            IncrementRead();
             try
             {
                 return builder.TryComputeLength(out length);
             }
             finally
             {
-                DecrementRead();
+                Return(builder);
             }
         }
 
         internal async Task CopyToAsync(Stream stream, CancellationToken cancellation)
         {
             SequenceBuilder builder = GetSequenceBuilder();
-            IncrementRead();
             try
             {
                 await builder.CopyToAsync(stream, cancellation).ConfigureAwait(false);
             }
             finally
             {
-                DecrementRead();
+                Return(builder);
             }
         }
 
@@ -114,7 +125,6 @@ namespace Azure.Core.Serialization
         public BinaryData ToBinaryData()
         {
             SequenceBuilder builder = GetSequenceBuilder();
-            IncrementRead();
             try
             {
                 bool gotLength = builder.TryComputeLength(out long length);
@@ -125,66 +135,7 @@ namespace Azure.Core.Serialization
             }
             finally
             {
-                DecrementRead();
-            }
-        }
-
-        /// <inheritdoc/>
-        public void Dispose()
-        {
-            if (!_isDisposed)
-            {
-                lock (_writeLock)
-                {
-                    if (!_isDisposed)
-                    {
-                        _isDisposed = true;
-
-                        if (_readersFinished is null || _readersFinished.WaitOne())
-                        {
-                            //only dispose if no readers ever happened or if all readers are done
-                            _sequenceBuilder?.Dispose();
-                        }
-
-                        _sequenceBuilder = null;
-                        _readersFinished?.Dispose();
-                        _readersFinished = null;
-                    }
-                }
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void IncrementRead()
-        {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException(nameof(ModelWriter));
-            }
-
-            lock (_readLock)
-            {
-                Interlocked.Increment(ref _readCount);
-                ReadersFinished.Reset();
-            }
-
-            if (_isDisposed)
-            {
-                DecrementRead();
-                throw new ObjectDisposedException(nameof(ModelWriter));
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void DecrementRead()
-        {
-            lock (_readLock)
-            {
-                if (Interlocked.Decrement(ref _readCount) == 0)
-                {
-                    // notify we reached zero readers in case dispose is waiting
-                    ReadersFinished.Set();
-                }
+                Return(builder);
             }
         }
     }

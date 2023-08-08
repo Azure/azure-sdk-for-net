@@ -116,12 +116,12 @@ namespace Azure.Core.Tests.ModelSerialization
         {
             writer.Dispose();
             object sequenceBuilder = sequenceField.GetValue(writer);
-            Assert.IsNull(sequenceBuilder);
+            Assert.AreEqual(typeof(object), sequenceBuilder?.GetType());
 
             await result;
 
             sequenceBuilder = sequenceField.GetValue(writer);
-            Assert.IsNull(sequenceBuilder);
+            Assert.AreEqual(typeof(object), sequenceBuilder?.GetType());
         }
 
         [Test]
@@ -235,7 +235,7 @@ namespace Azure.Core.Tests.ModelSerialization
 
             // sequenceBuilder should be null because the writer was disposed
             sequenceBuilder = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(writer);
-            Assert.IsNull(sequenceBuilder);
+            Assert.AreEqual(typeof(object), sequenceBuilder?.GetType());
         }
 
         [Test]
@@ -247,7 +247,7 @@ namespace Azure.Core.Tests.ModelSerialization
 
             // sequenceBuilder should be null because the writer was disposed
             object sequenceBuilder = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(writer);
-            Assert.IsNull(sequenceBuilder);
+            Assert.AreEqual(typeof(object), sequenceBuilder?.GetType());
         }
 
         [TestCase("J")]
