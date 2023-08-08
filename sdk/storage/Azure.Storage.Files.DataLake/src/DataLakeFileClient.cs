@@ -236,7 +236,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential)
-            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, storageSharedKeyCredential:null)
+            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
