@@ -179,7 +179,7 @@ namespace Azure.DigitalTwins.Core
     {
         public ImportJob(System.Uri inputBlobUri, System.Uri outputBlobUri) { }
         public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
-        public Azure.ResponseError Error { get { throw null; } set { } }
+        public Azure.ResponseError Error { get { throw null; } }
         public System.DateTimeOffset? FinishedDateTime { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Uri InputBlobUri { get { throw null; } set { } }
