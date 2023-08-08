@@ -11,6 +11,9 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a <see cref="HttpPipelinePolicy"/> that doesn't do any asynchronous or synchronously blocking operations.
     /// </summary>
+#if NET6_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
+#endif
     public abstract class HttpPipelineSynchronousPolicy : HttpPipelinePolicy
     {
         private static Type[] _onReceivedResponseParameters = new[] { typeof(HttpMessage) };

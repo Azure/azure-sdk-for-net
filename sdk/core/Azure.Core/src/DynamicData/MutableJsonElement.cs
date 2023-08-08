@@ -15,9 +15,12 @@ namespace Azure.Core.Json
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [JsonConverter(typeof(MutableJsonElementConverter))]
+#if NET6_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("test")]
+#endif
     internal readonly partial struct MutableJsonElement
     {
-        internal const string SerializationRequiresUnreferencedCode = "Calls JsonSerializer.SerializeToUtf8Bytes which is incompatible with trimming.";
+        internal const string SerializationRequiresUnreferencedCode = "This method utilizes reflection-based JSON serialization which is not compatible with trimming.";
         private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
         private readonly string _path;
@@ -1201,6 +1204,9 @@ namespace Azure.Core.Json
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal string DebuggerDisplay => $"ValueKind = {ValueKind} : \"{ToString()}\"";
 
+#if NET6_0_OR_GREATER
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
+#endif
         private class MutableJsonElementConverter : JsonConverter<MutableJsonElement>
         {
             public override MutableJsonElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

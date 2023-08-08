@@ -14,6 +14,9 @@ namespace Azure.Core.Json
     /// A mutable representation of a JSON value.
     /// </summary>
     [JsonConverter(typeof(MutableJsonDocumentConverter))]
+#if NET6_0_OR_GREATER
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
+#endif
     internal sealed partial class MutableJsonDocument : IDisposable
     {
         private readonly ReadOnlyMemory<byte> _original;

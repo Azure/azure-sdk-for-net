@@ -10,7 +10,7 @@ namespace Azure.Core.Json
     {
         private JsonElement? _serializedValue;
         private readonly JsonSerializerOptions _serializerOptions;
-        internal const string SerializationRequiresUnreferencedCode = "Calls JsonSerializer.SerializeToUtf8Bytes which is incompatible with trimming.";
+        internal const string SerializationRequiresUnreferencedCode = "This method utilizes reflection-based JSON serialization which is not compatible with trimming.";
 
         public MutableJsonChange(string path,
             int index,
