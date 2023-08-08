@@ -86,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             _disposingCancellationTokenSource.Cancel();
 
 #pragma warning disable AZC0102
-            _eventProcessorHost.DisposeAsync().GetAwaiter().GetResult();
+            _eventProcessorHost.StopProcessingAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102
 
             // No need to dispose the _disposingCancellationTokenSource since we don't create it as a linked token and

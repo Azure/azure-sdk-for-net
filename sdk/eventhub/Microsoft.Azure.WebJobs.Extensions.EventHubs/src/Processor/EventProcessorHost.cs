@@ -21,8 +21,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         private BlobCheckpointStoreInternal _checkpointStore;
 
         private ConcurrentDictionary<string, CheckpointInfo> _lastReadCheckpoint = new();
-        private EventHubConnection _connection;
-        private Func<EventHubConnection> ConnectionFactory { get; }
 
         /// <summary>
         /// Mocking constructor
@@ -38,7 +36,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             int eventBatchMaximumCount,
             Action<ExceptionReceivedEventArgs> exceptionHandler) : base(eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options)
         {
-            ConnectionFactory = () => new EventHubConnection(connectionString, eventHubName, options.ConnectionOptions);
             _exceptionHandler = exceptionHandler;
         }
 
@@ -50,7 +47,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             int eventBatchMaximumCount,
             Action<ExceptionReceivedEventArgs> exceptionHandler) : base(eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
         {
-            ConnectionFactory = () => new EventHubConnection(fullyQualifiedNamespace, eventHubName, credential, options.ConnectionOptions);
             _exceptionHandler = exceptionHandler;
         }
 
@@ -139,20 +135,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         {
             _lastReadCheckpoint.TryRemove(partition.PartitionId, out _);
             return partition.EventProcessor.CloseAsync(partition, reason);
-        }
-
-        protected override EventHubConnection CreateConnection()
-        {
-            _connection = ConnectionFactory();
-            return _connection;
-        }
-
-        public virtual async Task DisposeAsync()
-        {
-            if (_connection != null)
-            {
-                await _connection.DisposeAsync().ConfigureAwait(false);
-            }
         }
 
         public async Task StartProcessingAsync(
