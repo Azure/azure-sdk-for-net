@@ -59,7 +59,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _logger = logger;
                 _firstFunctionInvocation = true;
                 _maxWaitTime = options.MaxWaitTime;
-                _minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default'
+                _minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default
                 _disposingToken = disposingToken;
 
                 // Events are only cached when building a batch of minimum size.
