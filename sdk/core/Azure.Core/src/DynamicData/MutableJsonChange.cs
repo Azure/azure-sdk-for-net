@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -78,12 +79,25 @@ namespace Azure.Core.Json
             }
 
             // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
+            char[]? tempArray = null;
             int length = ancestorPath.Length + 1;
-            Span<char> pathWithDelimiter = length <= MutableJsonElement.MaxStackLimit ? stackalloc char[length] : new char[length];
-            ancestorPath.CopyTo(pathWithDelimiter);
-            pathWithDelimiter[ancestorPath.Length] = MutableJsonDocument.ChangeTracker.Delimiter;
+            Span<char> pathWithDelimiter = length <= MutableJsonElement.MaxStackLimit ?
+                stackalloc char[length] :
+                tempArray = ArrayPool<char>.Shared.Rent(length);
 
-            return descendantPath.StartsWith(pathWithDelimiter, StringComparison.Ordinal);
+            try
+            {
+                ancestorPath.CopyTo(pathWithDelimiter);
+                pathWithDelimiter[ancestorPath.Length] = MutableJsonDocument.ChangeTracker.Delimiter;
+                return descendantPath.StartsWith(pathWithDelimiter, StringComparison.Ordinal);
+            }
+            finally
+            {
+                if (tempArray != null)
+                {
+                    ArrayPool<char>.Shared.Return(tempArray);
+                }
+            }
         }
 
         internal bool IsDirectDescendant(string path)
