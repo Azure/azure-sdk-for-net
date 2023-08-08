@@ -1147,11 +1147,8 @@ namespace Azure.Core.Serialization
     }
     public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IModelJsonSerializable<object>>
     {
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
         public ModelJsonConverter() { }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
         public ModelJsonConverter(Azure.Core.Serialization.ModelSerializerFormat format) { }
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
         public ModelJsonConverter(Azure.Core.Serialization.ModelSerializerOptions options) { }
         public Azure.Core.Serialization.ModelSerializerOptions ModelSerializerOptions { get { throw null; } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }

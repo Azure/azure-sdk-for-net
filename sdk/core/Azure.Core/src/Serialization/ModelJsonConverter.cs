@@ -12,6 +12,9 @@ namespace Azure.Core.Serialization
     /// A generic converter which allows <see cref="JsonSerializer"/> to be able to serialize and deserialize any models that implement <see cref="IModelJsonSerializable{T}"/>.
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
+#if !NET5_0 // net5.0 doesn't have Class as a target
+    [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
+#endif
     public class ModelJsonConverter : JsonConverter<IModelJsonSerializable<object>>
 #pragma warning restore AZC0014 // Avoid using banned types in public API
     {
@@ -23,7 +26,6 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// Initializes a new instance of <see cref="ModelJsonConverter"/> with a default format of <see cref="ModelSerializerFormat.Json"/>.
         /// </summary>
-        [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
         public ModelJsonConverter()
             : this(ModelSerializerFormat.Json) { }
 
@@ -31,7 +33,6 @@ namespace Azure.Core.Serialization
         /// Initializes a new instance of <see cref="ModelJsonConverter"/>.
         /// </summary>
         /// <param name="format"> The format to serialize to and deserialize from. </param>
-        [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
         public ModelJsonConverter(ModelSerializerFormat format)
             : this(ModelSerializerOptions.GetOptions(format)) { }
 
@@ -39,7 +40,6 @@ namespace Azure.Core.Serialization
         /// Initializes a new instance of <see cref="ModelJsonConverter"/>.
         /// </summary>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
-        [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
         public ModelJsonConverter(ModelSerializerOptions options)
         {
             ModelSerializerOptions = options;

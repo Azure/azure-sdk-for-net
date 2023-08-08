@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
 
 namespace Azure.Core.Serialization
 {
@@ -76,7 +73,7 @@ namespace Azure.Core.Serialization
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal default constructor.</exception>
-        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
+        public static T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
@@ -90,7 +87,7 @@ namespace Azure.Core.Serialization
         /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
         /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal default constructor.</exception>
-        public static T Deserialize<T>(BinaryData data, ModelSerializerFormat format)
+        public static T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelSerializerFormat format)
             where T : IModelSerializable<T>
             => Deserialize<T>(data, ModelSerializerOptions.GetOptions(format));
 
@@ -132,7 +129,7 @@ namespace Azure.Core.Serialization
             return model;
         }
 
-        private static IModelSerializable<T> GetInstance<T>() where T : IModelSerializable<T>
+        private static IModelSerializable<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>() where T : IModelSerializable<T>
         {
             var model = GetObjectInstance(typeof(T)) as IModelSerializable<T>;
             if (model is null)
