@@ -1,12 +1,15 @@
-# Azure Cognitive Services Form Recognizer client library for .NET
+# Azure Form Recognizer client library for .NET
 
-Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
+> Note: on July 2023, the Azure Cognitive Services Form Recognizer service was renamed to Azure AI Document Intelligence. Any mentions to Form Recognizer or Document Intelligence in documentation refer to the same Azure service.
+
+Azure AI Document Intelligence is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
 
 - Layout - Extract text, selection marks, table structures, styles, and paragraphs, along with their bounding region coordinates from documents.
 - General document - Analyze key-value pairs in addition to general layout from documents.
 - Read - Read information about textual elements, such as page words and lines in addition to text language information.
 - Prebuilt - Analyze data from certain types of common documents using prebuilt models. Supported documents include receipts, invoices, business cards, identity documents, US W2 tax forms, and more.
-- Custom - Build custom models to analyze text, field values, selection marks, table structures, styles, and paragraphs from documents. Custom models are built with your own data, so they're tailored to your documents.
+- Custom analysis - Build custom document models to analyze text, field values, selection marks, table structures, styles, and paragraphs from documents. Custom models are built with your own data, so they're tailored to your documents.
+- Custom classification - Build custom classifier models that combine layout and language features to accurately detect and identify documents you process within your application.
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
@@ -19,22 +22,22 @@ Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 dotnet add package Azure.AI.FormRecognizer
 ```
 
-> Note: This version of the client library defaults to the `2022-08-31` version of the service.
+> Note: This version of the client library defaults to the `2023-07-31` version of the service.
 
 This table shows the relationship between SDK versions and supported API versions of the service:
 
 |SDK version|Supported API version of service
 |-|-
-|4.1.0-beta.1 | 2.0, 2.1, 2022-08-31, 2023-02-28-preview
+|4.1.0 | 2.0, 2.1, 2022-08-31, 2023-08-08
 |4.0.0 | 2.0, 2.1, 2022-08-31
 |3.1.X | 2.0, 2.1
 |3.0.X | 2.0
 
-> Note: Starting with version `4.0.0`, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the [Migration Guide][migration_guide] for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version. Additionally, see the [Changelog][formreco_changelog] for more detailed information. The table below describes the relationship of each client and its supported API version(s):
+> Note: Starting with version `4.0.0`, a new set of clients were introduced to leverage the newest features of the Document Intelligence service. Please see the [Migration Guide][migration_guide] for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version. Additionally, see the [Changelog][formreco_changelog] for more detailed information. The table below describes the relationship of each client and its supported API version(s):
 
 |API version|Supported clients
 |-|-
-|2023-02-28-preview|DocumentAnalysisClient and DocumentModelAdministrationClient
+|2023-07-31|DocumentAnalysisClient and DocumentModelAdministrationClient
 |2022-08-31|DocumentAnalysisClient and DocumentModelAdministrationClient
 |2.1|FormRecognizerClient and FormTrainingClient
 |2.0|FormRecognizerClient and FormTrainingClient
@@ -44,7 +47,7 @@ This table shows the relationship between SDK versions and supported API version
 * A [Cognitive Services or Form Recognizer resource][cognitive_resource] to use this package.
 
 #### Create a Cognitive Services or Form Recognizer resource
-Form Recognizer supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Form Recognizer access only, create a Form Recognizer resource. Please note that you will need a single-service resource if you intend to use [Azure Active Directory authentication](#create-formrecognizerclient-with-azure-active-directory-credential).
+Document Intelligence supports both [multi-service and single-service access][cognitive_resource_portal]. Create a Cognitive Services resource if you plan to access multiple cognitive services under a single endpoint/key. For Document Intelligence access only, create a Form Recognizer resource. Please note that you will need a single-service resource if you intend to use [Azure Active Directory authentication](#create-formrecognizerclient-with-azure-active-directory-credential).
 
 You can create either resource using:
 
@@ -72,7 +75,7 @@ az cognitiveservices account create \
 For more information about creating the resource or how to get the location and sku information see [here][cognitive_resource_cli].
 
 ### Authenticate the client
-In order to interact with the Form Recognizer service, you'll need to create an instance of the [`DocumentAnalysisClient`][doc_analysis_client_class] class.
+In order to interact with the Document Intelligence service, you'll need to create an instance of the [`DocumentAnalysisClient`][doc_analysis_client_class] class.
 An **endpoint** and **credential** are necessary to instantiate the client object.
 
 #### Get the endpoint
@@ -125,7 +128,7 @@ To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below
 dotnet add package Azure.Identity
 ```
 
-You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to Form Recognizer by assigning the `"Cognitive Services User"` role to your service principal.
+You will also need to [register a new AAD application][register_aad_app] and [grant access][aad_grant_access] to Document Intelligence by assigning the `"Cognitive Services User"` role to your service principal.
 
 Set the values of the client ID, tenant ID, and client secret of the AAD application as environment variables: AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET.
 
@@ -155,7 +158,7 @@ More information about analyzing documents, including supported features, locale
 
 See examples for [Build a Custom Model](#build-a-custom-model) and [Manage Models](#manage-models).
 
-Please note that models can also be built using a graphical user interface such as the [Form Recognizer Labeling Tool][labeling_tool].
+Please note that models can also be built using a graphical user interface such as the [Document Intelligence Studio][fr_studio].
 
 ### Long-Running Operations
 
@@ -191,7 +194,7 @@ The following section provides several code snippets illustrating common pattern
 ### Sync examples
 * [Manage Models Synchronously](#manage-models-synchronously)
 
-> Note that these samples use SDK version `4.0.0`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
+> Note that these samples use SDK version `4.1.0`. For version 3.1.1 or lower, see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
 
 ### Extract Layout
 Extract text, selection marks, table structures, styles, and paragraphs, along with their bounding region coordinates from documents.
@@ -426,7 +429,7 @@ foreach (DocumentStyle style in result.Styles)
 For more information and samples see [here][analyze_prebuilt_read].
 
 ### Use Prebuilt Models
-Analyze data from certain types of common documents using prebuilt models provided by the Form Recognizer service.
+Analyze data from certain types of common documents using prebuilt models provided by the Document Intelligence service.
 
 For example, to analyze fields from an invoice, use the prebuilt Invoice model provided by passing the `prebuilt-invoice` model ID into the `AnalyzeDocumentAsync` method:
 
@@ -611,12 +614,12 @@ Manage the models stored in your account.
 ```C# Snippet:FormRecognizerSampleManageModelsAsync
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of custom models in the FormRecognizer account, and the maximum number of custom models that can be stored.
+// Check number of custom models in the Form Recognizer resource, and the maximum number of custom models that can be stored.
 ResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} custom models.");
 Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
-// List the first ten or fewer models currently stored in the account.
+// List the first ten or fewer models currently stored in the resource.
 AsyncPageable<DocumentModelSummary> models = client.GetDocumentModelsAsync();
 
 int count = 0;
@@ -631,12 +634,12 @@ await foreach (DocumentModelSummary modelSummary in models)
         break;
 }
 
-// Create a new model to store in the account
+// Create a new model to store in the resource.
 Uri blobContainerUri = new Uri("<blobContainerUri>");
 BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
-// Get the model that was just created
+// Get the model that was just created.
 DocumentModelDetails newCreatedModel = await client.GetDocumentModelAsync(model.ModelId);
 
 Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
@@ -646,7 +649,7 @@ if (string.IsNullOrEmpty(newCreatedModel.Description))
     Console.WriteLine($"  Model description: {newCreatedModel.Description}");
 Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
 
-// Delete the model from the account.
+// Delete the model from the resource.
 await client.DeleteDocumentModelAsync(newCreatedModel.ModelId);
 ```
 
@@ -658,12 +661,12 @@ Manage the models stored in your account with a synchronous API.
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
-// Check number of custom models in the FormRecognizer account, and the maximum number of custom models that can be stored.
+// Check number of custom models in the Form Recognizer resource, and the maximum number of custom models that can be stored.
 ResourceDetails resourceDetails = client.GetResourceDetails();
 Console.WriteLine($"Resource has {resourceDetails.CustomDocumentModelCount} custom models.");
 Console.WriteLine($"It can have at most {resourceDetails.CustomDocumentModelLimit} custom models.");
 
-// List the first ten or fewer models currently stored in the account.
+// List the first ten or fewer models currently stored in the resource.
 Pageable<DocumentModelSummary> models = client.GetDocumentModels();
 
 foreach (DocumentModelSummary modelSummary in models.Take(10))
@@ -675,13 +678,13 @@ foreach (DocumentModelSummary modelSummary in models.Take(10))
     Console.WriteLine($"  Created on: {modelSummary.CreatedOn}");
 }
 
-// Create a new model to store in the account
+// Create a new model to store in the resource.
 
 Uri blobContainerUri = new Uri("<blobContainerUri>");
 BuildDocumentModelOperation operation = client.BuildDocumentModel(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
 
-// Get the model that was just created
+// Get the model that was just created.
 DocumentModelDetails newCreatedModel = client.GetDocumentModel(model.ModelId);
 
 Console.WriteLine($"Custom Model with Id {newCreatedModel.ModelId} has the following information:");
@@ -691,14 +694,14 @@ if (string.IsNullOrEmpty(newCreatedModel.Description))
     Console.WriteLine($"  Model description: {newCreatedModel.Description}");
 Console.WriteLine($"  Created on: {newCreatedModel.CreatedOn}");
 
-// Delete the created model from the account.
+// Delete the created model from the resource.
 client.DeleteDocumentModel(newCreatedModel.ModelId);
 ```
 
 ## Troubleshooting
 
 ### General
-When you interact with the Cognitive Services Form Recognizer client library using the .NET SDK, errors returned by the service will result in a `RequestFailedException` with the same HTTP status code returned by the [REST API][formreco_rest_api] request.
+When you interact with the Form Recognizer client library using the .NET SDK, errors returned by the service will result in a `RequestFailedException` with the same HTTP status code returned by the [REST API][formreco_rest_api] request.
 
 For example, if you submit a receipt image with an invalid `Uri`, a `400` error is returned, indicating "Bad Request".
 
@@ -734,7 +737,7 @@ Headers:
     Content-Type: application/json; charset=utf-8
 ```
 
-Error codes and messages raised by the Form Recognizer service can be found in the [service documentation][formreco_errors].
+Error codes and messages raised by the Document Intelligence service can be found in the [service documentation][formreco_errors].
 
 For more details about common issues, see our [troubleshooting guide][troubleshooting].
 
@@ -751,7 +754,7 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 
 ## Next steps
 
-Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository. Samples are provided for each main functional area:
+Samples showing how to use the Form Recognizer library are available in this GitHub repository. Samples are provided for each main functional area:
 
 - [Extract the layout of a document][extract_layout]
 - [Analyze with the prebuilt general document model][analyze_prebuilt_document]
@@ -765,7 +768,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]
 - [Mock a client for testing using the Moq library][mock_client]
 
-> Note that these samples use SDK version `4.0.0`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
+> Note that these samples use SDK version `4.1.0`. For version 3.1.1 or lower, see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
 
 ## Contributing
 
@@ -807,7 +810,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [azure_portal_get_endpoint]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account?tabs=multiservice%2Cwindows#get-the-keys-for-your-resource
 
 
-[labeling_tool]: https://aka.ms/azsdk/formrecognizer/labelingtool
+[fr_studio]: https://aka.ms/azsdk/formrecognizer/formrecognizerstudio
 [dotnet_lro_guidelines]: https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-longrunning
 
 [troubleshooting]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/TROUBLESHOOTING.md

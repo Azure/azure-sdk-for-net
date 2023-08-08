@@ -1,6 +1,6 @@
 # Release History
 
-## 4.1.0-beta.2 (Unreleased)
+## 4.1.0 (2023-08-08)
 
 ### Features Added
 - In struct `DocumentAnalysisFeature`, added properties `Barcodes`, `KeyValuePairs`, and `Languages` as add-on capabilities.
@@ -29,8 +29,6 @@
 
 ### Bugs Fixed
 - Fixed a bug where calling the `GetResourceDetails` API while targeting service version `2022-08-31` would throw an `ArgumentNullException`.
-
-### Other Changes
 
 ## 4.1.0-beta.1 (2023-04-13)
 
