@@ -272,7 +272,13 @@ namespace Azure.Storage.Files.DataLake
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
-            : base(directoryUri, authentication, options, storageSharedKeyCredential)
+            : base(
+                  directoryUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: storageSharedKeyCredential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -301,7 +307,13 @@ namespace Azure.Storage.Files.DataLake
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
             AzureSasCredential sasCredential)
-            : base(directoryUri, authentication, options, sasCredential)
+            : base(
+                  directoryUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: sasCredential,
+                  tokenCredential: null)
         {
         }
 

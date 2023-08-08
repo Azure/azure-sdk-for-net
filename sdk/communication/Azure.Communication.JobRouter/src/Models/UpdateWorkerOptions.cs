@@ -40,17 +40,17 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, LabelValue?> Labels { get; } = new Dictionary<string, LabelValue?>();
 
         /// <summary>
         /// A set of non-identifying attributes attached to this worker.
         /// </summary>
-        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, LabelValue?> Tags { get; } = new Dictionary<string, LabelValue?>();
 
         /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
         public IDictionary<string, ChannelConfiguration?> ChannelConfigurations { get; } = new Dictionary<string, ChannelConfiguration?>();
 
         /// <summary> The queue(s) that this worker can receive work from. </summary>
-        public IDictionary<string, RouterQueueAssignment?> QueueIds { get; } = new Dictionary<string, RouterQueueAssignment?>();
+        public IDictionary<string, RouterQueueAssignment?> QueueAssignments { get; } = new Dictionary<string, RouterQueueAssignment?>();
     }
 }

@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Storage.DataMovement.Models;
-using Azure.Storage.DataMovement.Models.JobPlan;
+using Azure.Storage.DataMovement.JobPlan;
 using Moq;
 using NUnit.Framework;
+using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -65,11 +65,11 @@ namespace Azure.Storage.DataMovement.Tests
         {
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
-            mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointerOptions(checkpointerPath));
+            mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointStoreOptions(checkpointerPath));
             mock.Setup(p => p.SourcePath).Returns(sourcePath);
             mock.Setup(p => p.DestinationPath).Returns(destinationPath);
-            mock.Setup(p => p.SourceScheme).Returns(sourceResourceId);
-            mock.Setup(p => p.DestinationScheme).Returns(destinationResourceId);
+            mock.Setup(p => p.SourceTypeId).Returns(sourceResourceId);
+            mock.Setup(p => p.DestinationTypeId).Returns(destinationResourceId);
             mock.Setup(p => p.IsContainer).Returns(isContainer);
             return mock;
         }
@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             for (int currentPart = 0; currentPart < partCount; currentPart++)
             {
-                JobPartPlanHeader header = CreateDefaultJobPartHeader(
+                JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: currentPart,
                     sourcePath: sourcePaths[currentPart],
@@ -154,7 +154,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 return null;
             }
-            return getSource ? sourceProvider.MakeResource() : destinationProvider.MakeResource();
+            return getSource ? sourceProvider.CreateResource() : destinationProvider.CreateResource();
         }
 
         [Test]
@@ -194,7 +194,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 RehydrateApi.ResourceStaticApi => LocalFileStorageResource.RehydrateResource(transferProperties, isSource),
                 RehydrateApi.ProviderInstance => (LocalFileStorageResource)new LocalStorageResourceProvider(
-                    transferProperties, isSource, isFolder: false).MakeResource(),
+                    transferProperties, isSource, isFolder: false).CreateResource(),
                 RehydrateApi.PublicStaticApi => (LocalFileStorageResource)LocalStorageResourcesInlineTryGet(
                     transferProperties, isSource),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
@@ -250,7 +250,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 RehydrateApi.ResourceStaticApi => LocalDirectoryStorageResourceContainer.RehydrateResource(transferProperties, isSource),
                 RehydrateApi.ProviderInstance => (LocalDirectoryStorageResourceContainer)new LocalStorageResourceProvider(
-                    transferProperties, isSource, isFolder: true).MakeResource(),
+                    transferProperties, isSource, isFolder: true).CreateResource(),
                 RehydrateApi.PublicStaticApi => (LocalDirectoryStorageResourceContainer)LocalStorageResourcesInlineTryGet(
                     transferProperties, isSource),
                 _ => throw new ArgumentException("Unrecognized test parameter"),

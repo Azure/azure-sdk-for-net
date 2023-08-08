@@ -362,7 +362,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='CreateOrUpdateScanRulesetAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateScanRulesetAsync(string scanRulesetName, RequestContent content, RequestContext context)
+        public virtual async Task<Response> CreateOrUpdateScanRulesetAsync(string scanRulesetName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 
@@ -398,7 +398,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='CreateOrUpdateScanRuleset(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdateScanRuleset(string scanRulesetName, RequestContent content, RequestContext context)
+        public virtual Response CreateOrUpdateScanRuleset(string scanRulesetName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(scanRulesetName, nameof(scanRulesetName));
 

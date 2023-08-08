@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of KubernetesClusterList. </summary>
         internal KubernetesClusterList()
         {
-            Value = new ChangeTrackingList<KubernetesClusterData>();
+            Value = new ChangeTrackingList<NetworkCloudKubernetesClusterData>();
         }
 
         /// <summary> Initializes a new instance of KubernetesClusterList. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of additional details related to Kubernetes clusters. </param>
-        internal KubernetesClusterList(string nextLink, IReadOnlyList<KubernetesClusterData> value)
+        internal KubernetesClusterList(string nextLink, IReadOnlyList<NetworkCloudKubernetesClusterData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of additional details related to Kubernetes clusters. </summary>
-        public IReadOnlyList<KubernetesClusterData> Value { get; }
+        public IReadOnlyList<NetworkCloudKubernetesClusterData> Value { get; }
     }
 }

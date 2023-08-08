@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The path of the Dynamics AX OData entity. </summary>
-    public partial class DynamicsAXResourceDataset : DataFactoryDatasetDefinition
+    public partial class DynamicsAXResourceDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of DynamicsAXResourceDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

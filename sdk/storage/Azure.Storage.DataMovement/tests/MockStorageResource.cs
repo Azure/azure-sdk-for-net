@@ -5,19 +5,17 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 using Azure.Storage.Tests.Shared;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal class MockStorageResource : StorageResourceSingle
+    internal class MockStorageResource : StorageResourceItem
     {
         private readonly Stream _readStream;
 
         protected internal override string ResourceId => "Mock";
 
-        protected internal override TransferType TransferType => TransferType.Sequential;
+        protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
         private readonly long _maxChunkSize;
         protected internal override long MaxChunkSize => _maxChunkSize;
@@ -57,12 +55,12 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.CompletedTask;
         }
 
-        protected internal override Task CopyBlockFromUriAsync(StorageResourceSingle sourceResource, HttpRange range, bool overwrite, long completeLength = 0, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
+        protected internal override Task CopyBlockFromUriAsync(StorageResourceItem sourceResource, HttpRange range, bool overwrite, long completeLength = 0, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        protected internal override Task CopyFromUriAsync(StorageResourceSingle sourceResource, bool overwrite, long completeLength, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
+        protected internal override Task CopyFromUriAsync(StorageResourceItem sourceResource, bool overwrite, long completeLength, StorageResourceCopyFromUriOptions options = null, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -78,8 +76,7 @@ namespace Azure.Storage.DataMovement.Tests
                 lastModified: default,
                 createdOn: default,
                 contentLength: Length ?? 0,
-                lastAccessed: default,
-                resourceType: StorageResourceType.LocalFile));
+                lastAccessed: default));
         }
 
         protected internal override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
@@ -87,13 +84,13 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.FromResult<HttpAuthorization>(default);
         }
 
-        protected internal override Task<ReadStreamStorageResourceResult> ReadStreamAsync(long position = 0, long? length = null, CancellationToken cancellationToken = default)
+        protected internal override Task<StorageResourceReadStreamResult> ReadStreamAsync(long position = 0, long? length = null, CancellationToken cancellationToken = default)
         {
             _readStream.Position = 0;
-            return Task.FromResult(new ReadStreamStorageResourceResult(_readStream));
+            return Task.FromResult(new StorageResourceReadStreamResult(_readStream));
         }
 
-        protected internal override async Task WriteFromStreamAsync(Stream stream, long streamLength, bool overwrite, long position = 0, long completeLength = 0, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
+        protected internal override async Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
         {
             await stream.CopyToAsync(Stream.Null);
         }

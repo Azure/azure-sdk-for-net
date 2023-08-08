@@ -3,10 +3,13 @@
 ## 1.10.0-beta.2 (Unreleased)
 
 ### Features Added
+- Add `BrowserCustomizedOptions` to `InteractiveBrowserCredential` to enable web view customization for interactive authentication.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- ManagedIdentityCredential will no longer attempt to parse invalid json payloads on responses from the managed identity endpoint.
 
 ### Other Changes
 

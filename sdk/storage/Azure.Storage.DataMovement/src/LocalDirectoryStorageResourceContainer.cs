@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -49,7 +48,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="childPath"></param>
         /// <returns></returns>
-        protected internal override StorageResourceSingle GetChildStorageResource(string childPath)
+        protected internal override StorageResourceItem GetStorageResourceReference(string childPath)
         {
             string concatPath = System.IO.Path.Combine(Path, childPath);
             return new LocalFileStorageResource(concatPath);

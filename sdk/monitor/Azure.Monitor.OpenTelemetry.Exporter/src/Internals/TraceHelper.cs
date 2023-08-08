@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const int Version = 2;
         private const int MaxlinksAllowed = 100;
 
-        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey)
+        internal static List<TelemetryItem> OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate)
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 try
                 {
                     var activityTagsProcessor = EnumerateActivityTags(activity);
-                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey);
+                    telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
 
                     // Check for Exceptions events
                     if (activity.Events.Any())
@@ -45,26 +45,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     switch (activity.GetTelemetryType())
                     {
                         case TelemetryType.Request:
-                            if (activity.Kind == ActivityKind.Server && activityTagsProcessor.activityType.HasFlag(OperationType.Http))
+                            var requestData = new RequestData(Version, activity, ref activityTagsProcessor);
+                            requestData.Name = telemetryItem.Tags.TryGetValue(ContextTagKeys.AiOperationName.ToString(), out var operationName) ? operationName.Truncate(SchemaConstants.RequestData_Name_MaxLength) : activity.DisplayName.Truncate(SchemaConstants.RequestData_Name_MaxLength);
+                            telemetryItem.Data = new MonitorBase
                             {
-                                var (requestUrl, operationName) = GetHttpOperationNameAndUrl(activity.DisplayName, activityTagsProcessor.activityType, ref activityTagsProcessor.MappedTags);
-                                telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()] = operationName;
-                                telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()] = TraceHelper.GetLocationIp(ref activityTagsProcessor.MappedTags);
-
-                                telemetryItem.Data = new MonitorBase
-                                {
-                                    BaseType = "RequestData",
-                                    BaseData = new RequestData(Version, operationName, requestUrl, activity, ref activityTagsProcessor)
-                                };
-                            }
-                            else
-                            {
-                                telemetryItem.Data = new MonitorBase
-                                {
-                                    BaseType = "RequestData",
-                                    BaseData = new RequestData(Version, activity, ref activityTagsProcessor)
-                                };
-                            }
+                                BaseType = "RequestData",
+                                BaseData = requestData,
+                            };
                             break;
                         case TelemetryType.Dependency:
                             telemetryItem.Data = new MonitorBase
@@ -151,17 +138,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activityTagsProcessor;
         }
 
-        internal static string? GetLocationIp(ref AzMonList MappedTags)
-        {
-            var httpClientIp = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpClientIP)?.ToString();
-            if (!string.IsNullOrWhiteSpace(httpClientIp))
-            {
-                return httpClientIp;
-            }
-
-            return AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeNetPeerIp)?.ToString();
-        }
-
         internal static string GetOperationName(Activity activity, ref AzMonList MappedTags)
         {
             var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpMethod)?.ToString();
@@ -186,7 +162,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        internal static string GetNewSchemaOperationName(Activity activity, string? url, ref AzMonList MappedTags)
+        internal static string GetOperationNameV2(Activity activity, ref AzMonList MappedTags)
         {
             var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
             if (!string.IsNullOrWhiteSpace(httpMethod))
@@ -194,56 +170,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 var httpRoute = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRoute)?.ToString();
 
                 // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
-                // To work around that we will use path from httpUrl.
-                if (httpRoute?.Contains("{controller}") == false)
+                // To work around that we will use path from url.path.
+                if (!string.IsNullOrWhiteSpace(httpRoute) && !httpRoute!.Contains("{controller}"))
                 {
                     return $"{httpMethod} {httpRoute}";
                 }
 
-                url ??= MappedTags.GetNewSchemaRequestUrl();
-                if (url != null)
+                var httpPath = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeUrlPath)?.ToString();
+                if (!string.IsNullOrWhiteSpace(httpPath))
                 {
-                    return $"{httpMethod} {url}";
+                    return $"{httpMethod} {httpPath}";
                 }
             }
 
             return activity.DisplayName;
-        }
-
-        internal static (string? RequestUrl, string? OperationName) GetHttpOperationNameAndUrl(string activityDisplayName, OperationType operationType, ref AzMonList httpMappedTags)
-        {
-            string? httpMethod;
-            string? httpUrl;
-
-            if (operationType.HasFlag(OperationType.V2))
-            {
-                httpUrl = httpMappedTags.GetNewSchemaRequestUrl();
-                httpMethod = AzMonList.GetTagValue(ref httpMappedTags, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
-            }
-            else
-            {
-                httpUrl = AzMonList.GetTagValue(ref httpMappedTags, SemanticConventions.AttributeHttpUrl)?.ToString();
-                httpMethod = AzMonList.GetTagValue(ref httpMappedTags, SemanticConventions.AttributeHttpMethod)?.ToString();
-            }
-
-            if (!string.IsNullOrWhiteSpace(httpMethod))
-            {
-                var httpRoute = AzMonList.GetTagValue(ref httpMappedTags, SemanticConventions.AttributeHttpRoute)?.ToString();
-
-                // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
-                // To work around that we will use path from httpUrl.
-                if (httpRoute?.Contains("{controller}") == false)
-                {
-                    return (RequestUrl: httpUrl, OperationName: $"{httpMethod} {httpRoute}");
-                }
-
-                if (!string.IsNullOrWhiteSpace(httpUrl) && Uri.TryCreate(httpUrl!.ToString(), UriKind.RelativeOrAbsolute, out var uri) && uri.IsAbsoluteUri)
-                {
-                    return (RequestUrl: httpUrl, OperationName: $"{httpMethod} {uri.AbsolutePath}");
-                }
-            }
-
-            return (RequestUrl: httpUrl, OperationName: activityDisplayName);
         }
 
         private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
@@ -463,6 +403,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 .Append('\"');
             linksJson
                 .Append("},");
+        }
+
+        internal static string GetAzureSDKDependencyType(ActivityKind kind, string azureNamespace)
+        {
+            // TODO: see if the values can be cached to avoid allocation.
+            if (kind == ActivityKind.Internal)
+            {
+                return $"InProc | {azureNamespace}";
+            }
+            else if (kind == ActivityKind.Producer)
+            {
+                return $"Queue Message | {azureNamespace}";
+            }
+            else
+            {
+                // The Azure SDK sets az.namespace with its resource provider information.
+                // When ActivityKind is not internal and az.namespace is present, set the value of Type to az.namespace.
+                return azureNamespace;
+            }
         }
     }
 }

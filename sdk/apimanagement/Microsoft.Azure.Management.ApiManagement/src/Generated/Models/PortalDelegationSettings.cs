@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Delegation settings for a developer portal.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PortalDelegationSettings : Resource
+    public partial class PortalDelegationSettings : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the PortalDelegationSettings class.

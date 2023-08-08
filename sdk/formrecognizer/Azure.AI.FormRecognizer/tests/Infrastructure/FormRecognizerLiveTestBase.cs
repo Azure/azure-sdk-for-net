@@ -119,8 +119,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
                 ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
                 ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
-                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrl,
-                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrl,
                 _ => TestEnvironment.BlobContainerSasUrl,
             };
             var trainingFilesUri = new Uri(trainingFiles);
@@ -132,9 +130,7 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             Singleforms,
             MultipageFiles,
-            SelectionMarks,
-            TableVariableRows,
-            TableFixedRows
+            SelectionMarks
         }
 
         protected void ValidatePrebuiltForm(RecognizedForm recognizedForm, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)

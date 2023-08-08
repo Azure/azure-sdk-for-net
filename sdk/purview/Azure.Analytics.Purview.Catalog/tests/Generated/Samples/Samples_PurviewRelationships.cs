@@ -90,6 +90,30 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     displayText = "<displayText>",
                     entityStatus = "ACTIVE",
                     relationshipType = "<relationshipType>",
+                    relationshipAttributes = new
+                    {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
                     relationshipGuid = "<relationshipGuid>",
                     relationshipStatus = "ACTIVE",
                     guid = "<guid>",
@@ -210,6 +234,30 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     displayText = "<displayText>",
                     entityStatus = "ACTIVE",
                     relationshipType = "<relationshipType>",
+                    relationshipAttributes = new
+                    {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
                     relationshipGuid = "<relationshipGuid>",
                     relationshipStatus = "ACTIVE",
                     guid = "<guid>",
@@ -330,6 +378,30 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     displayText = "<displayText>",
                     entityStatus = "ACTIVE",
                     relationshipType = "<relationshipType>",
+                    relationshipAttributes = new
+                    {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
                     relationshipGuid = "<relationshipGuid>",
                     relationshipStatus = "ACTIVE",
                     guid = "<guid>",
@@ -450,6 +522,30 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     displayText = "<displayText>",
                     entityStatus = "ACTIVE",
                     relationshipType = "<relationshipType>",
+                    relationshipAttributes = new
+                    {
+                        entityGuid = "<entityGuid>",
+                        entityStatus = "ACTIVE",
+                        removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
+                        source = "<source>",
+                        sourceDetails = new
+                        {
+                            key = new { },
+                        },
+                        attributes = new
+                        {
+                            key = new { },
+                        },
+                        typeName = "<typeName>",
+                        lastModifiedTS = "<lastModifiedTS>",
+                    },
                     relationshipGuid = "<relationshipGuid>",
                     relationshipStatus = "ACTIVE",
                     guid = "<guid>",

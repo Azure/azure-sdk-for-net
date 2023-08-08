@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.3 (2023-08-08)
+
+### Features Added
+
+- Upgrade to 2023-04-01-preview api version
+- Add `runningState` and `runningStateDetails` for `ContainerAppReplica`
+- Add `TerminationGracePeriodSeconds` and `ServicBinds`for `ContainerAppTemplate`
+- Add `MountOptions` for `ContainerAppVolume`
+- Add `SubPath` for `ContainerAppVolumeMount`
+- Add Mtls Enabled for ContainerAppManagedEnvironment
+- Add `Kind` for  ContainerAppCredentials
+- Add `GitHubPersonalAccessToken` for `ContainerAppGitHubActionConfiguration`
+- Add `EventTriggerConfig` for JobConfiguration
+- Rename `ContainerAppJobTriggerType` value from `Scheduled` to `Schedule`
 
 ## 1.1.0-beta.2 (2023-05-29)
 

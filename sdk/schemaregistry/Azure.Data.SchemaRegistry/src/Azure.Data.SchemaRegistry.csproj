@@ -14,9 +14,15 @@
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Temporary, until we move SchemaValidator and LruCache into core.-->
+    <ProjectReference Include="..\..\..\core\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
+  </ItemGroup>
+
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

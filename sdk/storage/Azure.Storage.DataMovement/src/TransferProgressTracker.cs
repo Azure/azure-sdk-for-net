@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading;
-using Azure.Storage.DataMovement.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -13,7 +12,7 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal class TransferProgressTracker
     {
-        private readonly IProgress<StorageTransferProgress> _progressHandler;
+        private readonly IProgress<DataTransferProgress> _progressHandler;
         private readonly ProgressHandlerOptions _options;
 
         private long _completedCount = 0;
@@ -24,7 +23,7 @@ namespace Azure.Storage.DataMovement
         private long _bytesTransferred = 0;
         private object _bytesTransferredLock = new();
 
-        public TransferProgressTracker(IProgress<StorageTransferProgress> progressHandler, ProgressHandlerOptions options)
+        public TransferProgressTracker(IProgress<DataTransferProgress> progressHandler, ProgressHandlerOptions options)
         {
             _progressHandler = progressHandler;
             _options = options ?? new ProgressHandlerOptions();
@@ -95,9 +94,9 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        private StorageTransferProgress GetTransferProgress()
+        private DataTransferProgress GetTransferProgress()
         {
-            return new StorageTransferProgress()
+            return new DataTransferProgress()
             {
                 CompletedCount = _completedCount,
                 SkippedCount = _skippedCount,

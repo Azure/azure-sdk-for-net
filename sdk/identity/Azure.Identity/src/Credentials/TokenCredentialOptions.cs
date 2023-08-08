@@ -39,6 +39,11 @@ namespace Azure.Identity
         /// </summary>
         public bool IsSupportLoggingEnabled { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether this credential is part of a chained credential.
+        /// </summary>
+        internal bool IsChainedCredential { get; set; }
+
         internal virtual T Clone<T>()
             where T : TokenCredentialOptions, new()
         {

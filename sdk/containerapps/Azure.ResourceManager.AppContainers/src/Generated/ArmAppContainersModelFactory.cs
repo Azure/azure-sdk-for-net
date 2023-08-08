@@ -326,56 +326,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppAuthToken(id, name, resourceType, systemData, tags, location, token, expireOn);
         }
 
-        /// <summary> Initializes a new instance of ContainerAppJobData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </param>
-        /// <param name="provisioningState"> Provisioning state of the Container Apps Job. </param>
-        /// <param name="environmentId"> Resource ID of environment. </param>
-        /// <param name="workloadProfileName"> Workload profile name to pin for container apps job execution. </param>
-        /// <param name="configuration"> Container Apps Job configuration properties. </param>
-        /// <param name="template"> Container Apps job definition. </param>
-        /// <param name="outboundIPAddresses"> Outbound IP Addresses of a container apps job. </param>
-        /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
-        /// <returns> A new <see cref="AppContainers.ContainerAppJobData"/> instance for mocking. </returns>
-        public static ContainerAppJobData ContainerAppJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ContainerAppJobProvisioningState? provisioningState = null, string environmentId = null, string workloadProfileName = null, ContainerAppJobConfiguration configuration = null, ContainerAppJobTemplate template = null, IEnumerable<string> outboundIPAddresses = null, string eventStreamEndpoint = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            outboundIPAddresses ??= new List<string>();
-
-            return new ContainerAppJobData(id, name, resourceType, systemData, tags, location, identity, provisioningState, environmentId, workloadProfileName, configuration, template, outboundIPAddresses?.ToList(), eventStreamEndpoint);
-        }
-
-        /// <summary> Initializes a new instance of ContainerAppJobExecutions. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
-        /// <returns> A new <see cref="Models.ContainerAppJobExecutions"/> instance for mocking. </returns>
-        public static ContainerAppJobExecutions ContainerAppJobExecutions(IEnumerable<ContainerAppJobExecution> value = null, string nextLink = null)
-        {
-            value ??= new List<ContainerAppJobExecution>();
-
-            return new ContainerAppJobExecutions(value?.ToList(), nextLink);
-        }
-
-        /// <summary> Initializes a new instance of ContainerAppJobExecution. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> Current running State of the job. </param>
-        /// <param name="startOn"> Job execution start time. </param>
-        /// <param name="endOn"> Job execution start time. </param>
-        /// <param name="template"> Job's execution container. </param>
-        /// <returns> A new <see cref="Models.ContainerAppJobExecution"/> instance for mocking. </returns>
-        public static ContainerAppJobExecution ContainerAppJobExecution(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, JobExecutionRunningState? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, ContainerAppJobExecutionTemplate template = null)
-        {
-            return new ContainerAppJobExecution(id, name, resourceType, systemData, status, startOn, endOn, template);
-        }
-
         /// <summary> Initializes a new instance of ContainerAppRevisionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -398,10 +348,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="provisioningError"> Optional Field - Platform Error Message. </param>
         /// <param name="healthState"> Current health State of the revision. </param>
         /// <param name="provisioningState"> Current provisioning State of the revision. </param>
+        /// <param name="runningState"> Current running state of the revision. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppRevisionData"/> instance for mocking. </returns>
-        public static ContainerAppRevisionData ContainerAppRevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastActiveOn = null, string fqdn = null, ContainerAppTemplate template = null, bool? isActive = null, int? replicas = null, int? trafficWeight = null, string provisioningError = null, ContainerAppRevisionHealthState? healthState = null, ContainerAppRevisionProvisioningState? provisioningState = null)
+        public static ContainerAppRevisionData ContainerAppRevisionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastActiveOn = null, string fqdn = null, ContainerAppTemplate template = null, bool? isActive = null, int? replicas = null, int? trafficWeight = null, string provisioningError = null, ContainerAppRevisionHealthState? healthState = null, ContainerAppRevisionProvisioningState? provisioningState = null, RevisionRunningState? runningState = null)
         {
-            return new ContainerAppRevisionData(id, name, resourceType, systemData, createdOn, lastActiveOn, fqdn, template, isActive, replicas, trafficWeight, provisioningError, healthState, provisioningState);
+            return new ContainerAppRevisionData(id, name, resourceType, systemData, createdOn, lastActiveOn, fqdn, template, isActive, replicas, trafficWeight, provisioningError, healthState, provisioningState, runningState);
         }
 
         /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
@@ -410,13 +361,17 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="createdOn"> Timestamp describing when the pod was created by controller. </param>
+        /// <param name="runningState"> Current running state of the replica. </param>
+        /// <param name="runningStateDetails"> The details of replica current running state. </param>
         /// <param name="containers"> The containers collection under a replica. </param>
+        /// <param name="initContainers"> The init containers collection under a replica. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppReplicaData"/> instance for mocking. </returns>
-        public static ContainerAppReplicaData ContainerAppReplicaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, IEnumerable<ContainerAppReplicaContainer> containers = null)
+        public static ContainerAppReplicaData ContainerAppReplicaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, ContainerAppReplicaRunningState? runningState = null, string runningStateDetails = null, IEnumerable<ContainerAppReplicaContainer> containers = null, IEnumerable<ContainerAppReplicaContainer> initContainers = null)
         {
             containers ??= new List<ContainerAppReplicaContainer>();
+            initContainers ??= new List<ContainerAppReplicaContainer>();
 
-            return new ContainerAppReplicaData(id, name, resourceType, systemData, createdOn, containers?.ToList());
+            return new ContainerAppReplicaData(id, name, resourceType, systemData, createdOn, runningState, runningStateDetails, containers?.ToList(), initContainers?.ToList());
         }
 
         /// <summary> Initializes a new instance of ContainerAppReplicaContainer. </summary>
@@ -425,12 +380,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="isReady"> The container ready status. </param>
         /// <param name="isStarted"> The container start status. </param>
         /// <param name="restartCount"> The container restart count. </param>
+        /// <param name="runningState"> Current running state of the container. </param>
+        /// <param name="runningStateDetails"> The details of container current running state. </param>
         /// <param name="logStreamEndpoint"> Log Stream endpoint. </param>
         /// <param name="execEndpoint"> Container exec endpoint. </param>
         /// <returns> A new <see cref="Models.ContainerAppReplicaContainer"/> instance for mocking. </returns>
-        public static ContainerAppReplicaContainer ContainerAppReplicaContainer(string name = null, string containerId = null, bool? isReady = null, bool? isStarted = null, int? restartCount = null, string logStreamEndpoint = null, string execEndpoint = null)
+        public static ContainerAppReplicaContainer ContainerAppReplicaContainer(string name = null, string containerId = null, bool? isReady = null, bool? isStarted = null, int? restartCount = null, ContainerAppContainerRunningState? runningState = null, string runningStateDetails = null, string logStreamEndpoint = null, string execEndpoint = null)
         {
-            return new ContainerAppReplicaContainer(name, containerId, isReady, isStarted, restartCount, logStreamEndpoint, execEndpoint);
+            return new ContainerAppReplicaContainer(name, containerId, isReady, isStarted, restartCount, runningState, runningStateDetails, logStreamEndpoint, execEndpoint);
         }
 
         /// <summary> Initializes a new instance of ContainerAppDiagnosticData. </summary>
@@ -501,13 +458,73 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="kedaVersion"> The configuration of Keda component. </param>
         /// <param name="daprVersion"> The configuration of Dapr component. </param>
         /// <param name="infrastructureResourceGroup"> Name of the platform-managed resource group created for the Managed Environment to host infrastructure resources. If a subnet ID is provided, this resource group will be created in the same subscription as the subnet. </param>
+        /// <param name="isMtlsEnabled"> Peer authentication settings for the Managed Environment. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppManagedEnvironmentData"/> instance for mocking. </returns>
-        public static ContainerAppManagedEnvironmentData ContainerAppManagedEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, ContainerAppEnvironmentProvisioningState? provisioningState = null, string daprAIInstrumentationKey = null, string daprAIConnectionString = null, ContainerAppVnetConfiguration vnetConfiguration = null, string deploymentErrors = null, string defaultDomain = null, IPAddress staticIP = null, ContainerAppLogsConfiguration appLogsConfiguration = null, bool? isZoneRedundant = null, ContainerAppCustomDomainConfiguration customDomainConfiguration = null, string eventStreamEndpoint = null, IEnumerable<ContainerAppWorkloadProfile> workloadProfiles = null, string kedaVersion = null, string daprVersion = null, string infrastructureResourceGroup = null)
+        public static ContainerAppManagedEnvironmentData ContainerAppManagedEnvironmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, ContainerAppEnvironmentProvisioningState? provisioningState = null, string daprAIInstrumentationKey = null, string daprAIConnectionString = null, ContainerAppVnetConfiguration vnetConfiguration = null, string deploymentErrors = null, string defaultDomain = null, IPAddress staticIP = null, ContainerAppLogsConfiguration appLogsConfiguration = null, bool? isZoneRedundant = null, ContainerAppCustomDomainConfiguration customDomainConfiguration = null, string eventStreamEndpoint = null, IEnumerable<ContainerAppWorkloadProfile> workloadProfiles = null, string kedaVersion = null, string daprVersion = null, string infrastructureResourceGroup = null, bool? isMtlsEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
             workloadProfiles ??= new List<ContainerAppWorkloadProfile>();
 
-            return new ContainerAppManagedEnvironmentData(id, name, resourceType, systemData, tags, location, kind, provisioningState, daprAIInstrumentationKey, daprAIConnectionString, vnetConfiguration, deploymentErrors, defaultDomain, staticIP, appLogsConfiguration, isZoneRedundant, customDomainConfiguration, eventStreamEndpoint, workloadProfiles?.ToList(), kedaVersion != null ? new KedaConfiguration(kedaVersion) : null, daprVersion != null ? new DaprConfiguration(daprVersion) : null, infrastructureResourceGroup);
+            return new ContainerAppManagedEnvironmentData(id, name, resourceType, systemData, tags, location, kind, provisioningState, daprAIInstrumentationKey, daprAIConnectionString, vnetConfiguration, deploymentErrors, defaultDomain, staticIP, appLogsConfiguration, isZoneRedundant, customDomainConfiguration, eventStreamEndpoint, workloadProfiles?.ToList(), kedaVersion != null ? new KedaConfiguration(kedaVersion) : null, daprVersion != null ? new DaprConfiguration(daprVersion) : null, infrastructureResourceGroup, isMtlsEnabled != null ? new ManagedEnvironmentPropertiesPeerAuthentication(new Mtls(isMtlsEnabled)) : null);
+        }
+
+        /// <summary> Initializes a new instance of ContainerAppJobData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="identity"> Managed identities needed by a container app job to interact with other Azure services to not maintain any secrets or credentials in code. </param>
+        /// <param name="provisioningState"> Provisioning state of the Container Apps Job. </param>
+        /// <param name="environmentId"> Resource ID of environment. </param>
+        /// <param name="workloadProfileName"> Workload profile name to pin for container apps job execution. </param>
+        /// <param name="configuration"> Container Apps Job configuration properties. </param>
+        /// <param name="template"> Container Apps job definition. </param>
+        /// <param name="outboundIPAddresses"> Outbound IP Addresses of a container apps job. </param>
+        /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
+        /// <returns> A new <see cref="AppContainers.ContainerAppJobData"/> instance for mocking. </returns>
+        public static ContainerAppJobData ContainerAppJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ContainerAppJobProvisioningState? provisioningState = null, string environmentId = null, string workloadProfileName = null, ContainerAppJobConfiguration configuration = null, ContainerAppJobTemplate template = null, IEnumerable<string> outboundIPAddresses = null, string eventStreamEndpoint = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            outboundIPAddresses ??= new List<string>();
+
+            return new ContainerAppJobData(id, name, resourceType, systemData, tags, location, identity, provisioningState, environmentId, workloadProfileName, configuration, template, outboundIPAddresses?.ToList(), eventStreamEndpoint);
+        }
+
+        /// <summary> Initializes a new instance of ContainerAppJobExecutionBase. </summary>
+        /// <param name="name"> Job execution name. </param>
+        /// <param name="id"> Job execution Id. </param>
+        /// <returns> A new <see cref="Models.ContainerAppJobExecutionBase"/> instance for mocking. </returns>
+        public static ContainerAppJobExecutionBase ContainerAppJobExecutionBase(string name = null, string id = null)
+        {
+            return new ContainerAppJobExecutionBase(name, id);
+        }
+
+        /// <summary> Initializes a new instance of ContainerAppJobExecutions. </summary>
+        /// <param name="value"> Collection of resources. </param>
+        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <returns> A new <see cref="Models.ContainerAppJobExecutions"/> instance for mocking. </returns>
+        public static ContainerAppJobExecutions ContainerAppJobExecutions(IEnumerable<ContainerAppJobExecutionData> value = null, string nextLink = null)
+        {
+            value ??= new List<ContainerAppJobExecutionData>();
+
+            return new ContainerAppJobExecutions(value?.ToList(), nextLink);
+        }
+
+        /// <summary> Initializes a new instance of ContainerAppJobExecutionData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="status"> Current running State of the job. </param>
+        /// <param name="startOn"> Job execution start time. </param>
+        /// <param name="endOn"> Job execution end time. </param>
+        /// <param name="template"> Job's execution container. </param>
+        /// <returns> A new <see cref="AppContainers.ContainerAppJobExecutionData"/> instance for mocking. </returns>
+        public static ContainerAppJobExecutionData ContainerAppJobExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, JobExecutionRunningState? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, ContainerAppJobExecutionTemplate template = null)
+        {
+            return new ContainerAppJobExecutionData(id, name, resourceType, systemData, status, startOn, endOn, template);
         }
 
         /// <summary> Initializes a new instance of ContainerAppManagedCertificateData. </summary>

@@ -5,12 +5,11 @@
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
-        "Accept-Language": "en-US",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230620.1 (.NET 7.0.7; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "06f175d3d7b92b64c2a71d4496d4b0e7",
+        "User-Agent": "azsdk-net-Communication.PhoneNumbers/1.2.0-alpha.20230726.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "53965f135952e2428b943c3df47ad23a",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 21 Jun 2023 01:17:28 GMT",
+        "x-ms-date": "Wed, 26 Jul 2023 17:04:37 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -20,12 +19,12 @@
         "Cache-Control": "max-age=21600, private, stale-while-revalidate=86400",
         "Content-Length": "256",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 21 Jun 2023 01:17:27 GMT",
-        "MS-CV": "tZIqles720iFR5GFOdBEWQ.0",
+        "Date": "Wed, 26 Jul 2023 17:04:33 GMT",
+        "MS-CV": "MpGF9LUKEk\u002BbGRUK\u002BHR/TA.0",
         "Strict-Transport-Security": "max-age=2592000",
-        "X-Azure-Ref": "0p0\u002BSZAAAAAAKwm0BdGB2T4Tl2GTo1rWCV1NURURHRTAxMDkAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
+        "X-Azure-Ref": "0IlLBZAAAAAAQaTgyDKPHQpnboh1gZn8QU04xRURHRTIxMjEAOWZjN2I1MTktYThjYy00Zjg5LTkzNWUtYzkxNDhhZTA5ZTgx",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "438ms"
+        "X-Processing-Time": "377ms"
       },
       "ResponseBody": {
         "phoneNumberOfferings": [
@@ -49,6 +48,6 @@
   ],
   "Variables": {
     "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg==",
-    "RandomSeed": "1937839158"
+    "RandomSeed": "1166821592"
   }
 }

@@ -42,6 +42,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("customContext"u8);
                 writer.WriteObjectValue(CustomContext);
             }
+            if (Optional.IsDefined(CallbackUri))
+            {
+                writer.WritePropertyName("callbackUri"u8);
+                writer.WriteStringValue(CallbackUri);
+            }
             writer.WriteEndObject();
         }
     }

@@ -11,13 +11,9 @@ namespace Azure.AI.OpenAI
     public partial class ChatMessage
     {
         /// <summary> Initializes a new instance of ChatMessage. </summary>
-        /// <param name="role"> The role associated with this message payload. </param>
-        /// <param name="content"> The text associated with this message payload. </param>
-        public ChatMessage(ChatRole role, string content)
+        public ChatMessage()
         {
             // Note: this constructor is custom purely to facilitate it having public visibility.
-            Role = role;
-            Content = content;
         }
     }
 }

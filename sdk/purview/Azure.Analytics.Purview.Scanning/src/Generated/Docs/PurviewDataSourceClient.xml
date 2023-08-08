@@ -3,7 +3,7 @@
   <members>
     <member name="CreateOrUpdateAsync(RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrUpdateAsync with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateAsync with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -13,13 +13,13 @@ var data = new {
     kind = "AzureSubscription",
 };
 
-Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateAsync with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -35,7 +35,7 @@ var data = new {
     kind = "AzureSubscription",
 };
 
-Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data), new RequestContext());
+Response response = await client.CreateOrUpdateAsync(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
@@ -74,7 +74,7 @@ Console.WriteLine(result.GetProperty("name").ToString());
     </member>
     <member name="CreateOrUpdate(RequestContent,RequestContext)">
 <example>
-This sample shows how to call CreateOrUpdate with required parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdate with required request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -84,13 +84,13 @@ var data = new {
     kind = "AzureSubscription",
 };
 
-Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdate with all request content, and how to parse the result.
 <code><![CDATA[
 var credential = new DefaultAzureCredential();
 var endpoint = new Uri("<https://my-service.azure.com>");
@@ -106,7 +106,7 @@ var data = new {
     kind = "AzureSubscription",
 };
 
-Response response = client.CreateOrUpdate(RequestContent.Create(data), new RequestContext());
+Response response = client.CreateOrUpdate(RequestContent.Create(data));
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("kind").ToString());

@@ -26,6 +26,13 @@ namespace Azure.AI.OpenAI
         /// the behavior of the assistant, followed by alternating messages between the User and
         /// Assistant roles.
         /// </param>
+        /// <param name="functions"> A list of functions the model may generate JSON inputs for. </param>
+        /// <param name="functionCall">
+        /// Controls how the model responds to function calls. "none" means the model does not call a function,
+        /// and responds to the end-user. "auto" means the model can pick between an end-user or calling a function.
+        ///  Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
+        ///  "none" is the default when no functions are present. "auto" is the default if functions are present.
+        /// </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
         /// <param name="temperature">
         /// The sampling temperature to use that controls the apparent creativity of generated completions.
@@ -78,9 +85,11 @@ namespace Azure.AI.OpenAI
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
         /// </param>
-        internal ChatCompletionsOptions(IList<ChatMessage> messages, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName)
+        internal ChatCompletionsOptions(IList<ChatMessage> messages, IList<FunctionDefinition> functions, FunctionDefinition functionCall, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choiceCount, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, bool? internalShouldStreamResponse, string internalNonAzureModelName)
         {
             Messages = messages;
+            Functions = functions;
+            FunctionCall = functionCall;
             MaxTokens = maxTokens;
             Temperature = temperature;
             NucleusSamplingFactor = nucleusSamplingFactor;

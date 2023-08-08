@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pushedVersion"> The version that the integration runtime is going to update to. </param>
         /// <param name="latestVersion"> The latest version on download center. </param>
         /// <param name="autoUpdateEta"> The estimated time when the self-hosted integration runtime will be updated. </param>
-        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, Guid? taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, TimeSpan? updateDelayOffset, TimeSpan? localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<Uri> serviceUris, IntegrationRuntimeAutoUpdate? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateEta) : base(runtimeType, dataFactoryName, state, additionalProperties)
+        internal SelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType runtimeType, string dataFactoryName, IntegrationRuntimeState? state, IReadOnlyDictionary<string, BinaryData> additionalProperties, DateTimeOffset? createdOn, Guid? taskQueueId, IntegrationRuntimeInternalChannelEncryptionMode? internalChannelEncryption, string version, IReadOnlyList<SelfHostedIntegrationRuntimeNode> nodes, DateTimeOffset? scheduledUpdateOn, TimeSpan? updateDelayOffset, TimeSpan? localTimeZoneOffset, IReadOnlyDictionary<string, string> capabilities, IReadOnlyList<Uri> serviceUris, IntegrationRuntimeAutoUpdateState? autoUpdate, string versionStatus, IReadOnlyList<LinkedIntegrationRuntime> links, string pushedVersion, string latestVersion, DateTimeOffset? autoUpdateEta) : base(runtimeType, dataFactoryName, state, additionalProperties)
         {
             CreatedOn = createdOn;
             TaskQueueId = taskQueueId;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The URLs for the services used in integration runtime backend service. </summary>
         public IReadOnlyList<Uri> ServiceUris { get; }
         /// <summary> Whether Self-hosted integration runtime auto update has been turned on. </summary>
-        public IntegrationRuntimeAutoUpdate? AutoUpdate { get; }
+        public IntegrationRuntimeAutoUpdateState? AutoUpdate { get; }
         /// <summary> Status of the integration runtime version. </summary>
         public string VersionStatus { get; }
         /// <summary> The list of linked integration runtimes that are created to share with this integration runtime. </summary>

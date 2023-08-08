@@ -15,7 +15,10 @@ namespace Microsoft.Azure.WebJobs.Host
     /// </summary>
     public class BlobsOptions : IOptionsFormatter
     {
+        private const int DefaultMaxDequeueCount = 5;
+
         private int _maxDegreeOfParallelism;
+        private int _maxDequeueCount = DefaultMaxDequeueCount;
 
         /// <summary>
         /// Constructs a new instance.
@@ -40,6 +43,30 @@ namespace Microsoft.Azure.WebJobs.Host
                 }
 
                 _maxDegreeOfParallelism = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the number of times to try processing a message before moving it to the poison queue (where
+        /// possible).
+        /// </summary>
+        /// <remarks>
+        /// Some queues do not have corresponding poison queues, and this property does not apply to them. Specifically,
+        /// there are no corresponding poison queues for any queue whose name already ends in "-poison" or any queue
+        /// whose name is already too long to add a "-poison" suffix.
+        /// </remarks>
+        public int MaxDequeueCount
+        {
+            get { return _maxDequeueCount; }
+
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentException("MaxDequeueCount must not be less than 1.", nameof(value));
+                }
+
+                _maxDequeueCount = value;
             }
         }
 

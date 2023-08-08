@@ -19,7 +19,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(ScheduleAt))
             {
                 writer.WritePropertyName("scheduleAt"u8);
-                writer.WriteStringValue(ScheduleAt.Value, "O");
+                writer.WriteStringValue(ScheduleAt, "O");
             }
             writer.WriteEndObject();
         }
@@ -43,7 +43,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ScheduleAndSuspendMode(Optional.ToNullable(scheduleAt));
+            return new ScheduleAndSuspendMode(scheduleAt);
         }
     }
 }

@@ -143,13 +143,20 @@ namespace Azure.Core.Pipeline
             if (currentActivity != null)
             {
                 var currentActivityId = currentActivity.Id ?? string.Empty;
-
+#if NETCOREAPP2_1
                 if (currentActivity.IsW3CFormat())
+#else
+                if (currentActivity.IdFormat == ActivityIdFormat.W3C)
+#endif
                 {
                     if (!message.Request.Headers.Contains(TraceParentHeaderName))
                     {
                         message.Request.Headers.Add(TraceParentHeaderName, currentActivityId);
+#if NETCOREAPP2_1
                         if (currentActivity.GetTraceState() is string traceStateString)
+#else
+                        if (currentActivity.TraceStateString is string traceStateString)
+#endif
                         {
                             message.Request.Headers.Add(TraceStateHeaderName, traceStateString);
                         }
@@ -177,8 +184,16 @@ namespace Azure.Core.Pipeline
 
         private bool ShouldCreateActivity =>
             _isDistributedTracingEnabled &&
+#if NETCOREAPP2_1
             (s_diagnosticSource.IsEnabled() || ActivityExtensions.ActivitySourceHasListeners(s_activitySource));
+#else
+            (s_diagnosticSource.IsEnabled() || s_activitySource.HasListeners());
+#endif
 
+#if NETCOREAPP2_1
         private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && ActivityExtensions.ActivitySourceHasListeners(s_activitySource);
+#else
+        private bool IsActivitySourceEnabled => _isDistributedTracingEnabled && s_activitySource.HasListeners();
+#endif
     }
 }

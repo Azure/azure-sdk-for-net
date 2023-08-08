@@ -20,7 +20,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class DocumentAnalysisClientLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -441,54 +440,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.IsTrue(fields.Values.Any(field =>
                 field.FieldType == DocumentFieldType.Unknown && field.ExpectedFieldType == DocumentFieldType.String));
-        }
-
-        [RecordedTest]
-        public async Task AnalyzeDocumentWithCustomModelWithTableDynamicRows()
-        {
-            var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
-            AnalyzeDocumentOperation operation;
-
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.TableVariableRows);
-
-            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableDynamicRows);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
-            }
-
-            AnalyzeResult result = operation.Value;
-
-            ValidateAnalyzeResult(
-                result,
-                customModel.ModelId,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
-        }
-
-        [RecordedTest]
-        public async Task AnalyzeDocumentWithCustomModelWithTableFixedRows()
-        {
-            var client = CreateDocumentAnalysisClient();
-            var modelId = Recording.GenerateId();
-            AnalyzeDocumentOperation operation;
-
-            await using var customModel = await BuildDisposableDocumentModelAsync(modelId, ContainerType.TableFixedRows);
-
-            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.FormTableFixedRows);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, customModel.ModelId, stream);
-            }
-
-            AnalyzeResult result = operation.Value;
-
-            ValidateAnalyzeResult(
-                result,
-                customModel.ModelId,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
         }
 
         [RecordedTest]

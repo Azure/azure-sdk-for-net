@@ -43,6 +43,7 @@ namespace Azure.Messaging.ServiceBus
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         private readonly ServiceBusSessionProcessor _sessionProcessor;
+        internal Exception SessionLockLostException { get; private set; }
 
         public SessionReceiverManager(
             ServiceBusSessionProcessor sessionProcessor,
@@ -117,6 +118,7 @@ namespace Azure.Messaging.ServiceBus
         {
             await CreateReceiver(processorCancellationToken).ConfigureAwait(false);
             _sessionCancellationSource = new CancellationTokenSource();
+            SessionLockLostException = null;
             _sessionLockCancellationTokenSource = new CancellationTokenSource();
             _sessionLockCancellationTokenSource.CancelAfterLockExpired(_receiver);
 
@@ -394,6 +396,7 @@ namespace Azure.Messaging.ServiceBus
                     var serviceBusException = ex as ServiceBusException;
                     if (serviceBusException?.Reason == ServiceBusFailureReason.SessionLockLost)
                     {
+                        SessionLockLostException = ex;
                         _sessionLockCancellationTokenSource.Cancel();
                     }
 
@@ -416,8 +419,12 @@ namespace Azure.Messaging.ServiceBus
                 Processor.Identifier,
                 cancellationToken);
 
-        protected override async Task OnMessageHandler(EventArgs args) =>
-            await _sessionProcessor.OnProcessSessionMessageAsync((ProcessSessionMessageEventArgs) args).ConfigureAwait(false);
+        protected override async Task OnMessageHandler(EventArgs args)
+        {
+            var sessionArgs = (ProcessSessionMessageEventArgs)args;
+            using var registration = sessionArgs.RegisterSessionLockLostHandler();
+            await _sessionProcessor.OnProcessSessionMessageAsync(sessionArgs).ConfigureAwait(false);
+        }
 
         protected override async Task RaiseExceptionReceived(ProcessErrorEventArgs eventArgs)
         {

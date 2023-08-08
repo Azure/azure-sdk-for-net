@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Data Lake Store dataset. </summary>
-    public partial class AzureDataLakeStoreDataset : DataFactoryDatasetDefinition
+    public partial class AzureDataLakeStoreDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of AzureDataLakeStoreDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 
-internal class AksResourceProcessor
+internal sealed class AksResourceProcessor
 {
     private static readonly Dictionary<string, Action<AksResourceProcessor, string>> s_propertySetters = new(7)
     {

@@ -67,7 +67,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId: "worker-1", totalCapacity: 1)
                 {
-                    QueueIds = { [queue.Value.Id] = new RouterQueueAssignment() },
+                    QueueAssignments = { [queue.Value.Id] = new RouterQueueAssignment() },
                     Labels = { ["Some-Skill"] = new LabelValue(11) },
                     ChannelConfigurations = { ["my-channel"] = new ChannelConfiguration(1) },
                     AvailableForOffers = true,
