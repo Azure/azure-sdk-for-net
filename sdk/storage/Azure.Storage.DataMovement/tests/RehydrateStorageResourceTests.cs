@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.JobPlan;
 using Moq;
@@ -170,14 +171,17 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath } );
 
-            LocalFileStorageResource storageResource = api switch
+            StorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => LocalFileStorageResource.RehydrateResource(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => throw new NotImplementedException("Reimplementing resource construction and rehydration."),
+                RehydrateApi.ProviderInstance => isSource
+                    ? await new LocalFilesStorageResourceProvider().FromSourceAsync(transferProperties, CancellationToken.None)
+                    : await new LocalFilesStorageResourceProvider().FromDestinationAsync(transferProperties, CancellationToken.None),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
             Assert.AreEqual(originalPath, storageResource.Path);
+            Assert.IsInstanceOf(typeof(LocalFileStorageResource), storageResource);
         }
 
         [Test]
@@ -223,14 +227,17 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPaths,
                 jobPartCount);
 
-            LocalDirectoryStorageResourceContainer storageResource = api switch
+            StorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => LocalDirectoryStorageResourceContainer.RehydrateResource(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => throw new NotImplementedException("Reimplementing resource construction and rehydration."),
+                RehydrateApi.ProviderInstance => isSource
+                    ? await new LocalFilesStorageResourceProvider().FromSourceAsync(transferProperties, CancellationToken.None)
+                    : await new LocalFilesStorageResourceProvider().FromDestinationAsync(transferProperties, CancellationToken.None),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
             Assert.AreEqual(originalPath, storageResource.Path);
+            Assert.IsInstanceOf(typeof(LocalDirectoryStorageResourceContainer), storageResource);
         }
     }
 }
