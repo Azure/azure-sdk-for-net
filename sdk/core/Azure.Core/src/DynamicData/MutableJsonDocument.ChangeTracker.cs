@@ -225,6 +225,45 @@ namespace Azure.Core.Json
                 return false;
             }
 
+            internal static SegmentEnumerator Split(ReadOnlySpan<char> path) => new(path);
+
+            internal ref struct SegmentEnumerator
+            {
+                private readonly ReadOnlySpan<char> _path;
+
+                private int _start = 0;
+                private int _segmentLength;
+                private ReadOnlySpan<char> _current;
+
+                public SegmentEnumerator(ReadOnlySpan<char> path)
+                {
+                    _path = path;
+                }
+
+                public readonly SegmentEnumerator GetEnumerator() => this;
+
+                public bool MoveNext()
+                {
+                    if (_start > _path.Length)
+                    {
+                        return false;
+                    }
+
+                    _segmentLength = _path.Slice(_start).IndexOf(Delimiter);
+                    if (_segmentLength == -1)
+                    {
+                        _segmentLength = _path.Length - _start;
+                    }
+
+                    _current = _path.Slice(_start, _segmentLength);
+                    _start += _segmentLength + 1;
+
+                    return true;
+                }
+
+                public readonly ReadOnlySpan<char> Current => _current;
+            }
+
             internal static string PushIndex(string path, int index)
             {
                 return PushProperty(path, $"{index}");

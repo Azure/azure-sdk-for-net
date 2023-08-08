@@ -175,7 +175,7 @@ namespace Azure.Core.Json
 
         private void CloseFinalObjects(Utf8JsonWriter writer, ReadOnlySpan<char> patchPath)
         {
-            foreach (ReadOnlySpan<char> segment in GetSegments(patchPath))
+            foreach (ReadOnlySpan<char> segment in MutableJsonDocument.ChangeTracker.Split(patchPath))
             {
                 if (segment.Length > 0)
                 {
@@ -256,30 +256,13 @@ namespace Azure.Core.Json
         {
             MutableJsonElement current = _root.RootElement;
 
-            if (path.Length == 0)
+            foreach (ReadOnlySpan<char> segment in MutableJsonDocument.ChangeTracker.Split(path))
             {
-                return current;
-            }
-
-            int length = path.Length;
-            int start = 0;
-            int end;
-            do
-            {
-                end = path.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
-                if (end == -1)
+                if (segment.Length > 0)
                 {
-                    end = length - start;
+                    current = current.GetProperty(segment);
                 }
-
-                if (end != 0)
-                {
-                    current = current.GetProperty(path.Slice(start, end));
-                }
-
-                start += end + 1;
             }
-            while (start < length);
 
             return current;
         }
@@ -288,70 +271,15 @@ namespace Azure.Core.Json
         {
             JsonElement current = _root.RootElement._element;
 
-            if (path.Length == 0)
+            foreach (ReadOnlySpan<char> segment in MutableJsonDocument.ChangeTracker.Split(path))
             {
-                return current;
-            }
-
-            int length = path.Length;
-            int start = 0;
-            int end;
-            do
-            {
-                end = path.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
-                if (end == -1)
+                if (segment.Length > 0)
                 {
-                    end = length - start;
+                    current = current.GetProperty(segment);
                 }
-
-                if (end != 0)
-                {
-                    current = current.GetProperty(path.Slice(start, end));
-                }
-
-                start += end + 1;
             }
-            while (start < length);
 
             return current;
-        }
-
-        private SegmentEnumerator GetSegments(ReadOnlySpan<char> path) => new(path);
-
-        private ref struct SegmentEnumerator
-        {
-            private readonly ReadOnlySpan<char> _path;
-            private int _start = 0;
-            private int _segmentLength;
-            private ReadOnlySpan<char> _current;
-
-            public SegmentEnumerator(ReadOnlySpan<char> path)
-            {
-                _path = path;
-            }
-
-            public readonly SegmentEnumerator GetEnumerator() => this;
-
-            public bool MoveNext()
-            {
-                if (_start > _path.Length)
-                {
-                    return false;
-                }
-
-                _segmentLength = _path.Slice(_start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
-                if (_segmentLength == -1)
-                {
-                    _segmentLength = _path.Length - _start;
-                }
-
-                _current = _path.Slice(_start, _segmentLength);
-                _start += _segmentLength + 1;
-
-                return true;
-            }
-
-            public readonly ReadOnlySpan<char> Current => _current;
         }
     }
 }
