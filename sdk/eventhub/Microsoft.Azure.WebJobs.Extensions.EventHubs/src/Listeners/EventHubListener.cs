@@ -84,9 +84,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         void IDisposable.Dispose()
         {
             _disposingCancellationTokenSource.Cancel();
+
 #pragma warning disable AZC0102
             _eventProcessorHost.DisposeAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102
+
+            // No need to dispose the _disposingCancellationTokenSource since we don't create it as a linked token and
+            // it won't use a timer, so the Dispose method is essentially a no-op. The downside to disposing it is that
+            // any customers who are trying to use it to cancel their own operations will get an ObjectDisposedException.
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)

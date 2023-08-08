@@ -149,7 +149,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         public async Task DisposeAsync()
         {
-            await _connection.DisposeAsync().ConfigureAwait(false);
+            if (_connection != null)
+            {
+                await _connection.DisposeAsync().ConfigureAwait(false);
+            }
         }
 
         public async Task StartProcessingAsync(
