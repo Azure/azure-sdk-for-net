@@ -16,7 +16,7 @@ namespace Azure.Core.Serialization
         /// Instantiates a new instance of the <see cref="DefaultSubClassAttribute"/> class.
         /// </summary>
         /// <param name="type">The type of the default subclass.</param>
-        public DefaultSubClassAttribute([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type type)
+        public DefaultSubClassAttribute([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type type)
         {
             DefaultSubClass = type;
         }
@@ -24,7 +24,7 @@ namespace Azure.Core.Serialization
         /// <summary>
         /// Gets the type of the default subclass.
         /// </summary>
-        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)]
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)]
         public Type DefaultSubClass { get; }
     }
 }

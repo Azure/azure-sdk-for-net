@@ -104,7 +104,7 @@ namespace Azure.Core.Serialization
         /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal default constructor.</exception>
-        public static object Deserialize(BinaryData data, Type returnType, ModelSerializerOptions? options = default)
+        public static object Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
@@ -120,7 +120,7 @@ namespace Azure.Core.Serialization
         /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal default constructor.</exception>
-        public static object Deserialize(BinaryData data, Type returnType, ModelSerializerFormat format)
+        public static object Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerFormat format)
             => Deserialize(data, returnType, ModelSerializerOptions.GetOptions(format));
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.Core.Serialization
         public static BinaryData ConvertToBinaryData(IModelJsonSerializable<object> model, ModelSerializerFormat format)
             => ConvertToBinaryData(model, ModelSerializerOptions.GetOptions(format));
 
-        private static IModelSerializable<object> GetInstance(Type returnType)
+        private static IModelSerializable<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {
             var model = GetObjectInstance(returnType) as IModelSerializable<object>;
             if (model is null)
@@ -162,7 +162,7 @@ namespace Azure.Core.Serialization
             return model;
         }
 
-        private static IModelSerializable<T> GetInstance<T>() where T : IModelSerializable<T>
+        private static IModelSerializable<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>() where T : IModelSerializable<T>
         {
             var model = GetObjectInstance(typeof(T)) as IModelSerializable<T>;
             if (model is null)
@@ -172,7 +172,7 @@ namespace Azure.Core.Serialization
             return model;
         }
 
-        private static object GetObjectInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type returnType)
+        private static object GetObjectInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {
             Type typeToActivate = returnType;
             if (returnType.IsAbstract)

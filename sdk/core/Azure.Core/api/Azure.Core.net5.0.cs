@@ -1079,8 +1079,8 @@ namespace Azure.Core.Serialization
     [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
     public sealed partial class DefaultSubClassAttribute : System.Attribute
     {
-        public DefaultSubClassAttribute([System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)] System.Type type) { }
-        [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)]
+        public DefaultSubClassAttribute([System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.NonPublicConstructors | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)] System.Type type) { }
+        [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.NonPublicConstructors | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)]
         public System.Type DefaultSubClass { get { throw null; } }
     }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
@@ -1152,15 +1152,15 @@ namespace Azure.Core.Serialization
         public ModelJsonConverter(Azure.Core.Serialization.ModelSerializerOptions options) { }
         public Azure.Core.Serialization.ModelSerializerOptions ModelSerializerOptions { get { throw null; } }
         public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override Azure.Core.Serialization.IModelJsonSerializable<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
+        public override Azure.Core.Serialization.IModelJsonSerializable<object> Read(ref System.Text.Json.Utf8JsonReader reader, [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.NonPublicConstructors | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)] System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IModelJsonSerializable<object> value, System.Text.Json.JsonSerializerOptions options) { }
     }
     public static partial class ModelSerializer
     {
         public static System.BinaryData ConvertToBinaryData(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
         public static System.BinaryData ConvertToBinaryData(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
-        public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
-        public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
+        public static object Deserialize(System.BinaryData data, [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.NonPublicConstructors | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)] System.Type returnType, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
+        public static object Deserialize(System.BinaryData data, [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.NonPublicConstructors | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)] System.Type returnType, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerFormat format) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
         public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
         public static System.BinaryData Serialize(object model, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
