@@ -107,7 +107,7 @@ namespace Azure.Core.Json
                 _path.AsSpan().CopyTo(path);
                 int pathLength = _path.Length;
 
-                MutableJsonDocument.ChangeTracker.PushProperty(path, ref pathLength, name, name.Length);
+                MutableJsonDocument.ChangeTracker.PushProperty(path, ref pathLength, name);
 
                 if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
                 {

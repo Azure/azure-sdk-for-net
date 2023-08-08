@@ -284,21 +284,21 @@ namespace Azure.Core.Json
                 return string.Concat(path, Delimiter, value);
             }
 
-            internal static void PushProperty(Span<char> path, ref int pathLength, ReadOnlySpan<char> value, int valueLength)
+            internal static void PushProperty(Span<char> path, ref int pathLength, ReadOnlySpan<char> value)
             {
                 // Validate that path is large enough to write value into
-                Debug.Assert(path.Length - pathLength >= valueLength);
+                Debug.Assert(path.Length - pathLength >= value.Length);
 
                 if (pathLength == 0)
                 {
-                    value.Slice(0, valueLength).CopyTo(path);
-                    pathLength = valueLength;
+                    value.Slice(0, value.Length).CopyTo(path);
+                    pathLength = value.Length;
                     return;
                 }
 
                 path[pathLength] = Delimiter;
-                value.Slice(0, valueLength).CopyTo(path.Slice(pathLength + 1));
-                pathLength += valueLength + 1;
+                value.Slice(0, value.Length).CopyTo(path.Slice(pathLength + 1));
+                pathLength += value.Length + 1;
             }
 
             internal static string PopProperty(string path)
