@@ -140,7 +140,7 @@ namespace Azure.Core.Json
             }
         }
 
-        private string GetString(ReadOnlySpan<char> value, int start, int end)
+        private static string GetString(ReadOnlySpan<char> value, int start, int end)
         {
 #if NET5_0_OR_GREATER
             return new string(value.Slice(start, end));

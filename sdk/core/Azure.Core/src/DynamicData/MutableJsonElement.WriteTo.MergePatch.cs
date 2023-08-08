@@ -175,25 +175,13 @@ namespace Azure.Core.Json
 
         private void CloseFinalObjects(Utf8JsonWriter writer, ReadOnlySpan<char> patchPath)
         {
-            int length = patchPath.Length;
-            int start = 0;
-            int end;
-            do
+            foreach (ReadOnlySpan<char> segment in GetSegments(patchPath))
             {
-                end = patchPath.Slice(start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
-                if (end == -1)
-                {
-                    end = length - start;
-                }
-
-                if (end != 0)
+                if (segment.Length > 0)
                 {
                     writer.WriteEndObject();
                 }
-
-                start += end + 1;
             }
-            while (start < length);
         }
 
         private void WritePatchValue(Utf8JsonWriter writer, MutableJsonChange change, ReadOnlySpan<char> patchPath, MutableJsonElement patchElement)
@@ -326,6 +314,44 @@ namespace Azure.Core.Json
             while (start < length);
 
             return current;
+        }
+
+        private SegmentEnumerator GetSegments(ReadOnlySpan<char> path) => new(path);
+
+        private ref struct SegmentEnumerator
+        {
+            private readonly ReadOnlySpan<char> _path;
+            private int _start = 0;
+            private int _segmentLength;
+            private ReadOnlySpan<char> _current;
+
+            public SegmentEnumerator(ReadOnlySpan<char> path)
+            {
+                _path = path;
+            }
+
+            public readonly SegmentEnumerator GetEnumerator() => this;
+
+            public bool MoveNext()
+            {
+                if (_start > _path.Length)
+                {
+                    return false;
+                }
+
+                _segmentLength = _path.Slice(_start).IndexOf(MutableJsonDocument.ChangeTracker.Delimiter);
+                if (_segmentLength == -1)
+                {
+                    _segmentLength = _path.Length - _start;
+                }
+
+                _current = _path.Slice(_start, _segmentLength);
+                _start += _segmentLength + 1;
+
+                return true;
+            }
+
+            public readonly ReadOnlySpan<char> Current => _current;
         }
     }
 }
