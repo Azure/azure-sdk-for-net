@@ -12,7 +12,7 @@ namespace Azure.Core.Serialization
     /// A generic converter which allows <see cref="JsonSerializer"/> to be able to serialize and deserialize any models that implement <see cref="IModelJsonSerializable{T}"/>.
     /// </summary>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
-#if !NET5_0 // net5.0 doesn't have Class as a target
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
     [RequiresUnreferencedCode("The constructors of the type being deserialized are dynamically accessed and may be trimmed.")]
 #endif
     public class ModelJsonConverter : JsonConverter<IModelJsonSerializable<object>>
