@@ -84,7 +84,7 @@ namespace Azure.Storage.DataMovement
         {
             if (_options != default)
             {
-                if (_options?.TrackBytesTransferred)
+                if ((bool)(_options?.TrackBytesTransferred))
                 {
                     lock (_bytesTransferredLock)
                     {
