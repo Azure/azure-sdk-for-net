@@ -28,7 +28,6 @@ namespace Azure.Storage.DataMovement
         public Azure.Storage.DataMovement.StorageResourceCreationPreference CreationPreference { get { throw null; } set { } }
         public long? InitialTransferSize { get { throw null; } set { } }
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
-        public System.IProgress<Azure.Storage.DataMovement.DataTransferProgress> ProgressHandler { get { throw null; } set { } }
         public Azure.Storage.DataMovement.ProgressHandlerOptions ProgressHandlerOptions { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.TransferItemCompletedEventArgs> ItemTransferCompleted { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.TransferItemFailedEventArgs> ItemTransferFailed { add { } remove { } }
@@ -122,7 +121,8 @@ namespace Azure.Storage.DataMovement
     }
     public partial class ProgressHandlerOptions
     {
-        public ProgressHandlerOptions() { }
+        public ProgressHandlerOptions(System.IProgress<Azure.Storage.DataMovement.DataTransferProgress> progressHandler, bool trackBytesTransferred = false) { }
+        public System.IProgress<Azure.Storage.DataMovement.DataTransferProgress> ProgressHandler { get { throw null; } set { } }
         public bool TrackBytesTransferred { get { throw null; } set { } }
     }
     public abstract partial class StorageResource
