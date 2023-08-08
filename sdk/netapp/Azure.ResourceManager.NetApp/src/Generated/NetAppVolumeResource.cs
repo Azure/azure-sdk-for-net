@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> Returns group Id list for a specific LDAP user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<GetGroupIdListForLdapUserResponse>> GetGetGroupIdListForLdapUserAsync(WaitUntil waitUntil, GetGroupIdListForLdapUserContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GetGroupIdListForLdapUserResult>> GetGetGroupIdListForLdapUserAsync(WaitUntil waitUntil, GetGroupIdListForLdapUserContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = await _netAppVolumeVolumesRestClient.ListGetGroupIdListForLdapUserAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<GetGroupIdListForLdapUserResponse>(new GetGroupIdListForLdapUserResponseOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateListGetGroupIdListForLdapUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation<GetGroupIdListForLdapUserResult>(new GetGroupIdListForLdapUserResultOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateListGetGroupIdListForLdapUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="content"> Returns group Id list for a specific LDAP user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<GetGroupIdListForLdapUserResponse> GetGetGroupIdListForLdapUser(WaitUntil waitUntil, GetGroupIdListForLdapUserContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GetGroupIdListForLdapUserResult> GetGetGroupIdListForLdapUser(WaitUntil waitUntil, GetGroupIdListForLdapUserContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.NetApp
             try
             {
                 var response = _netAppVolumeVolumesRestClient.ListGetGroupIdListForLdapUser(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new NetAppArmOperation<GetGroupIdListForLdapUserResponse>(new GetGroupIdListForLdapUserResponseOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateListGetGroupIdListForLdapUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new NetAppArmOperation<GetGroupIdListForLdapUserResult>(new GetGroupIdListForLdapUserResultOperationSource(), _netAppVolumeVolumesClientDiagnostics, Pipeline, _netAppVolumeVolumesRestClient.CreateListGetGroupIdListForLdapUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

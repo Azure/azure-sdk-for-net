@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<EnableNetAppSubvolume> enableSubvolumes = default;
             Optional<string> provisionedAvailabilityZone = default;
             Optional<bool> isLargeVolume = default;
-            Optional<string> originatingResourceId = default;
+            Optional<ResourceIdentifier> originatingResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.NetApp.Models
                                 originatingResourceId = null;
                                 continue;
                             }
-                            originatingResourceId = property0.Value.GetString();
+                            originatingResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

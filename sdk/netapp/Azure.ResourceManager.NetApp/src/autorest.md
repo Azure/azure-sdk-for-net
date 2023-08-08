@@ -127,7 +127,9 @@ rename-mapping:
   Volume.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
   Volume.properties.ldapEnabled: IsLdapEnabled
   Volume.properties.encrypted: IsEncrypted
-  Volume.properties.dataStoreResourceId: -|arm-id  
+  Volume.properties.dataStoreResourceId: -|arm-id
+  Volume.properties.originatingResourceId: -|arm-id
+  VolumePatch.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
   VolumeGroupVolumeProperties.properties.proximityPlacementGroup: ProximityPlacementGroupId|arm-id
   VolumeGroupVolumeProperties.properties.coolAccess: IsCoolAccessEnabled
   VolumeGroupVolumeProperties.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
@@ -136,6 +138,7 @@ rename-mapping:
   VolumeGroupVolumeProperties.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
   VolumeGroupVolumeProperties.properties.ldapEnabled: IsLdapEnabled
   VolumeGroupVolumeProperties.properties.encrypted: IsEncrypted
+  VolumeGroupVolumeProperties.properties.originatingResourceId: -|arm-id
   VolumeGroupVolumeProperties.id: -|arm-id
   VolumeGroupVolumeProperties.type: ResourceType|resource-type
   VolumeGroupVolumeProperties: NetAppVolumeGroupVolume
@@ -221,6 +224,7 @@ rename-mapping:
   BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent
   VolumeRelocationProperties: NetAppVolumeRelocationProperties
   FileAccessLogs: NetAppFileAccessLog
+  GetGroupIdListForLdapUserResponse: GetGroupIdListForLdapUserResult
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 

@@ -8,7 +8,7 @@
 - Added `ActualThroughputMibps` to `NetAppVolumeData` to show actual throughput in MiB/s for auto qosType volumes calculated based on size and serviceLevel
 - Added `OriginatingResourceId` to `NetAppVolumeData`, the Id of the snapshot or backup that the volume is restored from.
 - Added `Identity` to `NetAppAccountPatch` the identity of the resource
-- Added `SnapshotDirectoryVisible` to `NetAppVolumePatch`, if enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots
+- Added `IsSnapshotDirectoryVisible` to `NetAppVolumePatch`, if enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots
 - Added `AcrossT2Value` to `NetAppVolumeStorageToNetworkProximity`, standard AcrossT2 storage to network connectivity.
 - Added `AcrossT2Value`, `T1AndAcrossT2Value`, `T2AndAcrossT2Value`, `T1AndT2AndAcrossT2Value` to `RegionStorageToNetworkProximity` enum
 

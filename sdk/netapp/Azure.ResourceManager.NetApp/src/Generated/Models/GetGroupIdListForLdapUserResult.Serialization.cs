@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class GetGroupIdListForLdapUserResponse
+    public partial class GetGroupIdListForLdapUserResult
     {
-        internal static GetGroupIdListForLdapUserResponse DeserializeGetGroupIdListForLdapUserResponse(JsonElement element)
+        internal static GetGroupIdListForLdapUserResult DeserializeGetGroupIdListForLdapUserResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new GetGroupIdListForLdapUserResponse(Optional.ToList(groupIdsForLdapUser));
+            return new GetGroupIdListForLdapUserResult(Optional.ToList(groupIdsForLdapUser));
         }
     }
 }

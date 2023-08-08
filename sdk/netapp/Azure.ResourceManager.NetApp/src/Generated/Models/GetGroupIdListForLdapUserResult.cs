@@ -11,17 +11,17 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Group Id list for Ldap user. </summary>
-    public partial class GetGroupIdListForLdapUserResponse
+    public partial class GetGroupIdListForLdapUserResult
     {
-        /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResponse. </summary>
-        internal GetGroupIdListForLdapUserResponse()
+        /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResult. </summary>
+        internal GetGroupIdListForLdapUserResult()
         {
             GroupIdsForLdapUser = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResponse. </summary>
+        /// <summary> Initializes a new instance of GetGroupIdListForLdapUserResult. </summary>
         /// <param name="groupIdsForLdapUser"> Group Id list. </param>
-        internal GetGroupIdListForLdapUserResponse(IReadOnlyList<string> groupIdsForLdapUser)
+        internal GetGroupIdListForLdapUserResult(IReadOnlyList<string> groupIdsForLdapUser)
         {
             GroupIdsForLdapUser = groupIdsForLdapUser;
         }

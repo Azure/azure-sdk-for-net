@@ -140,6 +140,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             var keyValue = new KeyValuePair<string, string>("Tag2", "value2");
             parameters.Tags.InitializeFrom(DefaultTags);
             parameters.Tags.Add(keyValue);
+            parameters.IsSnapshotDirectoryVisible = false;
             volumeResource1 = (await volumeResource1.UpdateAsync(WaitUntil.Completed, parameters)).Value;
             volumeResource1.Data.Tags.Should().Contain(keyValue);
 
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             volumeResource3.Data.Tags.Should().Contain(keyValue);
             KeyValuePair<string, string> keyValuePair = new("key1", DefaultTags["key1"]);
             volumeResource3.Data.Tags.Should().Contain(keyValuePair);
-
+            Assert.IsFalse(volumeResource3.Data.IsSnapshotDirectoryVisible);
             //usageThreshold should not change
             Assert.AreEqual(volumeResource3.Data.UsageThreshold, volumeResource3.Data.UsageThreshold);
         }
