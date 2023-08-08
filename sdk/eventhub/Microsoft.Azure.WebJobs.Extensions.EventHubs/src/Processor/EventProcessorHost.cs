@@ -147,7 +147,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
             return _connection;
         }
 
-        public async Task DisposeAsync()
+        public virtual async Task DisposeAsync()
         {
             if (_connection != null)
             {

@@ -643,7 +643,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         [Test]
-        public void Dispose_StopsTheProcessor()
+        public void Dispose_ClosesTheConnection()
         {
             var functionId = "FunctionId";
             var eventHubName = "EventHubName";
@@ -670,10 +670,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 Mock.Of<LoggerFactory>());
 
             (listener as IListener).Dispose();
-            host.Verify(h => h.StopProcessingAsync(CancellationToken.None), Times.Once);
+            host.Verify(h => h.StopProcessingAsync(CancellationToken.None), Times.Never);
+            host.Verify(h => h.DisposeAsync(), Times.Once);
 
-            (listener as IListener).Cancel();
-            host.Verify(h => h.StopProcessingAsync(CancellationToken.None), Times.Exactly(2));
+            Assert.Throws<ObjectDisposedException>(() => (listener as IListener).Cancel());
         }
 
         [Test]
