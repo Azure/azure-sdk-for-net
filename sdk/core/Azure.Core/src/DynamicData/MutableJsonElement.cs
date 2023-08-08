@@ -15,9 +15,6 @@ namespace Azure.Core.Json
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
     [JsonConverter(typeof(MutableJsonElementConverter))]
-#if NET6_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("test")]
-#endif
     internal readonly partial struct MutableJsonElement
     {
         internal const string SerializationRequiresUnreferencedCode = "This method utilizes reflection-based JSON serialization which is not compatible with trimming.";
