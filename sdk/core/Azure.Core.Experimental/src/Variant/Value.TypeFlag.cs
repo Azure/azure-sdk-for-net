@@ -4,7 +4,8 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Azure {
+namespace Azure
+{
     public readonly partial struct Value
     {
         private abstract class TypeFlag

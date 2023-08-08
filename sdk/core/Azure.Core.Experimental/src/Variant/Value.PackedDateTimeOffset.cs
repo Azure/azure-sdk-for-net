@@ -4,7 +4,8 @@
 using System;
 using System.Diagnostics;
 
-namespace Azure {
+namespace Azure
+{
     public readonly partial struct Value
     {
         private readonly struct PackedDateTimeOffset
@@ -26,9 +27,9 @@ namespace Azure {
             // Hours go from -14 to 14. We add 14 to get our number to store.
             private const int HourOffset = 14;
 
-            private const ulong TickMask    = 0b00000001_11111111_11111111_11111111__11111111_11111111_11111111_11111111;
-            private const ulong MinuteMask  = 0b00000110_00000000_00000000_00000000__00000000_00000000_00000000_00000000;
-            private const ulong HourMask    = 0b11111000_00000000_00000000_00000000__00000000_00000000_00000000_00000000;
+            private const ulong TickMask = 0b00000001_11111111_11111111_11111111__11111111_11111111_11111111_11111111;
+            private const ulong MinuteMask = 0b00000110_00000000_00000000_00000000__00000000_00000000_00000000_00000000;
+            private const ulong HourMask = 0b11111000_00000000_00000000_00000000__00000000_00000000_00000000_00000000;
 
             private const int MinuteShift = 57;
             private const int HourShift = 59;

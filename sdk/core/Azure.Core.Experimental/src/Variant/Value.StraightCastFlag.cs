@@ -3,7 +3,8 @@
 
 using System.Runtime.CompilerServices;
 
-namespace Azure {
+namespace Azure
+{
     public readonly partial struct Value
     {
         private sealed class StraightCastFlag<T> : TypeFlag<T>

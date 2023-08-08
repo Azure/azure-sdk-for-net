@@ -3,7 +3,8 @@
 
 using System;
 
-namespace Azure {
+namespace Azure
+{
     public readonly partial struct Value
     {
         private sealed class DateTimeOffsetFlag : TypeFlag<DateTimeOffset>
