@@ -150,7 +150,7 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void Save(string filepath)
         {
-            var directory = Path.GetDirectoryName(filepath);
+            string directory = Path.GetDirectoryName(filepath);
             if (directory != null && !Directory.Exists(directory)) Directory.CreateDirectory(directory);
             using var stream = File.OpenWrite(filepath);
             Save(stream);
