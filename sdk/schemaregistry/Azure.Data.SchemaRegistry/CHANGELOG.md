@@ -5,7 +5,6 @@
 ### Features Added
 
 - Added `SchemaRegistrySerializer` which serializes using JSON by default.
-- Added `SchemaRegistrySerializerOptions`.
 
 ## 1.4.0-beta.1 (2023-01-12)
 
