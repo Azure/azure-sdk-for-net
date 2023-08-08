@@ -16,16 +16,16 @@ namespace Azure.Core.Json
 
         internal void WriteTo(Utf8JsonWriter writer, string format)
         {
-            _root.ValidateFormat(format);
-
             switch (format)
             {
+                case "J":
+                    WriteTo(writer);
+                    break;
                 case "P":
                     WritePatch(writer);
                     break;
-                case "J":
                 default:
-                    WriteTo(writer);
+                    _root.AssertInvalidFormat(format);
                     break;
             }
         }
