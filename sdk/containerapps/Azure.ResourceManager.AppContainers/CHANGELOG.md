@@ -1,6 +1,16 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.3 (2023-08-08)
 
 ### Features Added
 
@@ -14,12 +24,6 @@
 - Add `GitHubPersonalAccessToken` for `ContainerAppGitHubActionConfiguration`
 - Add `EventTriggerConfig` for JobConfiguration
 - Rename `ContainerAppJobTriggerType` value from `Scheduled` to `Schedule`
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0-beta.2 (2023-05-29)
 
