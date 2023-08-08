@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -171,7 +172,7 @@ namespace Azure.Core.Serialization
             return model;
         }
 
-        private static object GetObjectInstance(Type returnType)
+        private static object GetObjectInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] Type returnType)
         {
             Type typeToActivate = returnType;
             if (returnType.IsAbstract)
