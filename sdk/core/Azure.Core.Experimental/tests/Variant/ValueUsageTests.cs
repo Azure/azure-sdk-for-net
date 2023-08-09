@@ -138,10 +138,26 @@ namespace Azure.Core.Experimental.Tests
         //   - Dictionary of Value?
         //   - Cast value to Model type?  Cycles if Model has a Value?
 
+        [Test]
+        public void CanUseValueInPropertyBag()
+        {
+            PropertyBag bag = new();
+            bag["foo"] = 5;
+            bag["bar"] = 6;
+
+            int x = bag["foo"] == 5 ? bag["bar"] : 0;
+
+            Assert.AreEqual(6, x);
+        }
+
         #region Helpers
         internal class ValueModel
         {
             public Value Value { get; set; }
+        }
+
+        internal class PropertyBag : Dictionary<string, Value>
+        {
         }
         #endregion
     }
