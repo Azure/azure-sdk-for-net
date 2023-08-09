@@ -11,7 +11,6 @@ namespace Azure.Core.Json
     {
         private JsonElement? _serializedValue;
         private readonly JsonSerializerOptions _serializerOptions;
-        internal const string SerializationRequiresUnreferencedCode = "This method utilizes reflection-based JSON serialization which is not compatible with trimming.";
 
         public MutableJsonChange(string path,
             int index,
@@ -48,20 +47,8 @@ namespace Azure.Core.Json
 
         public MutableJsonChangeKind ChangeKind { get; }
 
-        public JsonValueKind ValueKind
-        {
-#if NET6_0_OR_GREATER
-           [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
-            get
-            {
-                return GetSerializedValue().ValueKind;
-            }
-        }
+        public JsonValueKind ValueKind => GetSerializedValue().ValueKind;
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
         internal JsonElement GetSerializedValue()
         {
             if (_serializedValue != null)
@@ -110,6 +97,7 @@ namespace Azure.Core.Json
 
             return ancestorPathLength == (descendantPathLength - 1);
         }
+
         internal bool IsLessThan(ReadOnlySpan<char> otherPath)
         {
             return Path.AsSpan().SequenceCompareTo(otherPath) < 0;
@@ -120,9 +108,6 @@ namespace Azure.Core.Json
             return Path.AsSpan().SequenceCompareTo(otherPath) > 0;
         }
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
         internal string AsString()
         {
             return GetSerializedValue().ToString() ?? "null";
