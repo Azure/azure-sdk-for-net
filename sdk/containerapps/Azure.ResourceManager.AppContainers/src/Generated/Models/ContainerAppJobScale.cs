@@ -11,34 +11,34 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Scaling configurations for event driven jobs. </summary>
-    public partial class JobScale
+    public partial class ContainerAppJobScale
     {
-        /// <summary> Initializes a new instance of JobScale. </summary>
-        public JobScale()
+        /// <summary> Initializes a new instance of ContainerAppJobScale. </summary>
+        public ContainerAppJobScale()
         {
-            Rules = new ChangeTrackingList<JobScaleRule>();
+            Rules = new ChangeTrackingList<ContainerAppJobScaleRule>();
         }
 
-        /// <summary> Initializes a new instance of JobScale. </summary>
-        /// <param name="pollingInterval"> Interval to check each event source in seconds. Defaults to 30s. </param>
+        /// <summary> Initializes a new instance of ContainerAppJobScale. </summary>
+        /// <param name="pollingIntervalInSeconds"> Interval to check each event source in seconds. Defaults to 30s. </param>
         /// <param name="minExecutions"> Minimum number of job executions that are created for a trigger, default 0. </param>
         /// <param name="maxExecutions"> Maximum number of job executions that are created for a trigger, default 100. </param>
         /// <param name="rules"> Scaling rules. </param>
-        internal JobScale(int? pollingInterval, int? minExecutions, int? maxExecutions, IList<JobScaleRule> rules)
+        internal ContainerAppJobScale(int? pollingIntervalInSeconds, int? minExecutions, int? maxExecutions, IList<ContainerAppJobScaleRule> rules)
         {
-            PollingInterval = pollingInterval;
+            PollingIntervalInSeconds = pollingIntervalInSeconds;
             MinExecutions = minExecutions;
             MaxExecutions = maxExecutions;
             Rules = rules;
         }
 
         /// <summary> Interval to check each event source in seconds. Defaults to 30s. </summary>
-        public int? PollingInterval { get; set; }
+        public int? PollingIntervalInSeconds { get; set; }
         /// <summary> Minimum number of job executions that are created for a trigger, default 0. </summary>
         public int? MinExecutions { get; set; }
         /// <summary> Maximum number of job executions that are created for a trigger, default 100. </summary>
         public int? MaxExecutions { get; set; }
         /// <summary> Scaling rules. </summary>
-        public IList<JobScaleRule> Rules { get; }
+        public IList<ContainerAppJobScaleRule> Rules { get; }
     }
 }

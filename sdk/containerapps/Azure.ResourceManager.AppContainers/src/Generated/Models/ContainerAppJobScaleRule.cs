@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Scaling rule. </summary>
-    public partial class JobScaleRule
+    public partial class ContainerAppJobScaleRule
     {
-        /// <summary> Initializes a new instance of JobScaleRule. </summary>
-        public JobScaleRule()
+        /// <summary> Initializes a new instance of ContainerAppJobScaleRule. </summary>
+        public ContainerAppJobScaleRule()
         {
             Auth = new ChangeTrackingList<ContainerAppScaleRuleAuth>();
         }
 
-        /// <summary> Initializes a new instance of JobScaleRule. </summary>
+        /// <summary> Initializes a new instance of ContainerAppJobScaleRule. </summary>
         /// <param name="name"> Scale Rule Name. </param>
         /// <param name="jobScaleRuleType">
         /// Type of the scale rule
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="metadata"> Metadata properties to describe the scale rule. </param>
         /// <param name="auth"> Authentication secrets for the scale rule. </param>
-        internal JobScaleRule(string name, string jobScaleRuleType, BinaryData metadata, IList<ContainerAppScaleRuleAuth> auth)
+        internal ContainerAppJobScaleRule(string name, string jobScaleRuleType, BinaryData metadata, IList<ContainerAppScaleRuleAuth> auth)
         {
             Name = name;
             JobScaleRuleType = jobScaleRuleType;
