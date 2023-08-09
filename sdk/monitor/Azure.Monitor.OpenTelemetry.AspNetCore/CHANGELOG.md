@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0-beta.6 (2023-08-09)
 
 ### Features Added
 
@@ -8,10 +8,6 @@
   ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
 * Added resource detection for `Azure App Service` and `Azure Virtual Machine` environment. .
   ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 

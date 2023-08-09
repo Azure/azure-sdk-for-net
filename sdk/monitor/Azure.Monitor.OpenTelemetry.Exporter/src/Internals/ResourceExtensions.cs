@@ -77,6 +77,7 @@ internal static class ResourceExtensions
         }
 
         // TODO: Check if service.name as unknown_service should be sent.
+        // (2023-07) we need to drop the "unknown_service."
         if (serviceName != null && serviceNamespace != null)
         {
             azureMonitorResource.RoleName = string.Concat(serviceNamespace, "/", serviceName);

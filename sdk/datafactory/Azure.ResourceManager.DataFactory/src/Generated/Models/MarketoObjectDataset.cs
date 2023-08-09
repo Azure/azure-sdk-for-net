@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Marketo server dataset. </summary>
-    public partial class MarketoObjectDataset : DataFactoryDatasetDefinition
+    public partial class MarketoObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of MarketoObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

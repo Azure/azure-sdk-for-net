@@ -31,10 +31,10 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("k"u8);
                 writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
-            if (Optional.IsDefined(Fields))
+            if (Optional.IsDefined(FieldsRaw))
             {
                 writer.WritePropertyName("fields"u8);
-                writer.WriteStringValue(Fields);
+                writer.WriteStringValue(FieldsRaw);
             }
             writer.WriteEndObject();
         }

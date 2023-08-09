@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Teradata database dataset. </summary>
-    public partial class TeradataTableDataset : DataFactoryDatasetDefinition
+    public partial class TeradataTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of TeradataTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

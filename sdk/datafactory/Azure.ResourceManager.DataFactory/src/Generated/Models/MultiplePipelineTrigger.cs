@@ -14,9 +14,9 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary>
     /// Base class for all triggers that support one to many model for trigger to pipeline.
     /// Please note <see cref="MultiplePipelineTrigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DataFactoryBlobEventsTrigger"/>, <see cref="DataFactoryBlobTrigger"/>, <see cref="CustomEventsTrigger"/> and <see cref="ScheduleTrigger"/>.
+    /// The available derived classes include <see cref="DataFactoryBlobEventsTrigger"/>, <see cref="DataFactoryBlobTrigger"/>, <see cref="CustomEventsTrigger"/> and <see cref="DataFactoryScheduleTrigger"/>.
     /// </summary>
-    public partial class MultiplePipelineTrigger : DataFactoryTriggerDefinition
+    public partial class MultiplePipelineTrigger : DataFactoryTriggerProperties
     {
         /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
         public MultiplePipelineTrigger()

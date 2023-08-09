@@ -44,6 +44,7 @@ namespace Microsoft.Azure.WebJobs.Host
     {
         public BlobsOptions() { }
         public int MaxDegreeOfParallelism { get { throw null; } set { } }
+        public int MaxDequeueCount { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         string Microsoft.Azure.WebJobs.Hosting.IOptionsFormatter.Format() { throw null; }
     }

@@ -3,8 +3,29 @@
 ## 4.1.0-beta.2 (Unreleased)
 
 ### Features Added
+- In struct `DocumentAnalysisFeature`, added properties `Barcodes`, `KeyValuePairs`, and `Languages` as add-on capabilities.
+- Added class `ContentSource` as a base class to `AzureBlobContentSource` (currently named `BlobContentSource`) and `AzureBlobFileListSource` (currently named `BlobFileListContentSource`).
+- In `DocumentModelAdministrationClient`, added a new overload to `BuildDocumentModel` that takes a `ContentSource` object. It can be used to build a document model from alternative content sources.
+- Added property `ServiceVersion` to classes `AnalyzeResult`, `DocumentModelDetails`, `DocumentModelSummary`, `OperationDetails`, and `OperationSummary`.
 
 ### Breaking Changes
+- `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target service API version `2023-07-31` by default. Version `2023-02-28-preview` is not supported anymore.
+- In struct `DocumentAnalysisFeature`, properties `OcrFormula` and `OcrFont` were renamed to `Formulas` and `FontStyling`, respectively.
+- Removed query fields support. The properties `AnalyzeDocumentOptions.QueryFields` and `DocumentAnalysisFeature.QueryFieldsPremium` were removed.
+- Removed image extraction support. The class `DocumentImage` and the property `DocumentPage.Images` were removed.
+- Removed annotation extraction support. The types `DocumentAnnotation`, `DocumentAnnotationKind`, and the property `DocumentPage.Annotations` were removed.
+- Removed struct `DocumentPageKind` and property `DocumentPage.Kind`.
+- Removed property `DocumentKeyValuePair.CommonName`.
+- In `DocumentBarcodeKind`, renamed members `QRCode`, `PDF417`, `EAN8`, `EAN13`, `ITF`, and `MicroQRCode` to `QrCode`, `Pdf417`, `Ean8`, `Ean13`, `Itf`, and `MicroQrCode`, respectively.
+- Renamed class `AzureBlobContentSource` to `BlobContentSource`.
+- Renamed class `AzureBlobFileListSource` to `BlobFileListContentSource`.
+- In class `ClassifierDocumentTypeDetails`, properties `AzureBlobFileListSource` and `AzureBlobSource` have been replaced by a single polymorphic property `TrainingDataContentSource`.
+- In class `ClassifierDocumentTypeDetails`, all constructors have been replaced by a single constructor that takes a polymorphic parameter `trainingDataContentSource`.
+- In class `ResourceDetails`, renamed property `CustomNeuralDocumentModelBuilds` to `NeuralDocumentModelQuota`.
+- In class `DocumentClassifierDetails`, renamed property `ApiVersion` to `ServiceVersion`.
+- Renamed struct `FontStyle` to `DocumentFontStyle`.
+- Renamed struct `FontWeight` to `DocumentFontWeight`.
+- Renamed class `QuotaDetails` to `ResourceQuotaDetails`.
 
 ### Bugs Fixed
 - Fixed a bug where calling the `GetResourceDetails` API while targeting service version `2022-08-31` would throw an `ArgumentNullException`.
