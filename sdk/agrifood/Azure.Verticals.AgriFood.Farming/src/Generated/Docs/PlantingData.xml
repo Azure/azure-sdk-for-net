@@ -126,6 +126,18 @@ var data = new {
     plantingProductDetails = new[] {
         new {
             productName = "<productName>",
+            area = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalMaterial = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgMaterial = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
         }
     },
     area = new {
@@ -218,6 +230,18 @@ var data = new {
     plantingProductDetails = new[] {
         new {
             productName = "<productName>",
+            area = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            totalMaterial = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
+            avgMaterial = new {
+                unit = "<unit>",
+                value = 123.45d,
+            },
         }
     },
     area = new {

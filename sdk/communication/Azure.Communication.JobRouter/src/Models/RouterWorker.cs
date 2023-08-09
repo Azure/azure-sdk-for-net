@@ -11,6 +11,17 @@ namespace Azure.Communication.JobRouter.Models
     [CodeGenModel("RouterWorker")]
     public partial class RouterWorker
     {
+        /// <summary> Initializes a new instance of RouterWorker. </summary>
+        internal RouterWorker()
+        {
+            _queueAssignments = new ChangeTrackingDictionary<string, object>();
+            _labels = new ChangeTrackingDictionary<string, object>();
+            _tags = new ChangeTrackingDictionary<string, object>();
+            _channelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
+            Offers = new ChangeTrackingList<RouterJobOffer>();
+            AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
+        }
+
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>

@@ -20,7 +20,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// These tests have a dependency on live Azure services and may incur costs for the associated
     /// Azure subscription.
     /// </remarks>
-    [IgnoreServiceError(400, "InvalidRequest", Message = "Content is not accessible: Invalid data URL", Reason = "https://github.com/Azure/azure-sdk-for-net/issues/28923")]
     public class DocumentAnalysisClientLiveTests : DocumentAnalysisLiveTestBase
     {
         /// <summary>
@@ -569,7 +568,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             Assert.True(style.IsHandwritten);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 Assert.AreEqual(52, result.Paragraphs.Count);
             }
@@ -1044,7 +1043,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             DocumentTable table = result.Tables.Single();
 
-            Assert.AreEqual(3, table.RowCount);
+            Assert.AreEqual(2, table.RowCount);
             Assert.AreEqual(5, table.ColumnCount);
 
             var cells = table.Cells.ToList();
@@ -1064,10 +1063,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 Assert.GreaterOrEqual(cell.ColumnIndex, 0, $"Cell with content {cell.Content} should have column index greater than or equal to zero.");
                 Assert.Less(cell.ColumnIndex, table.ColumnCount, $"Cell with content {cell.Content} should have column index less than {table.ColumnCount}.");
 
-                // Row = 1 has a row span of 2.
-                var expectedRowSpan = cell.RowIndex == 1 ? 2 : 1;
-
-                Assert.AreEqual(expectedRowSpan, cell.RowSpan, $"Cell with content {cell.Content} should have a row span of {expectedRowSpan}.");
+                Assert.AreEqual(1, cell.RowSpan, $"Cell with content {cell.Content} should have a row span of 1.");
                 Assert.LessOrEqual(cell.RowIndex, 2, $"Cell with content {cell.Content} should have a row index less than or equal to two.");
                 Assert.AreEqual(expectedContent[cell.RowIndex, cell.ColumnIndex], cell.Content);
             }
@@ -1187,6 +1183,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task AnalyzeDocumentCanReadPageAndLanguage(bool useStream)
         {
             var client = CreateDocumentAnalysisClient();
+            var options = new AnalyzeDocumentOptions()
+            {
+                Features = { DocumentAnalysisFeature.Languages }
+            };
             AnalyzeDocumentOperation operation;
 
             if (useStream)
@@ -1194,13 +1194,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoicePdf);
                 using (Recording.DisableRequestBodyRecording())
                 {
-                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-read", stream);
+                    operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-read", stream, options);
                 }
             }
             else
             {
                 var uri = DocumentAnalysisTestEnvironment.CreateUri(TestFile.InvoicePdf);
-                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", uri);
+                operation = await client.AnalyzeDocumentFromUriAsync(WaitUntil.Completed, "prebuilt-read", uri, options);
             }
 
             Assert.IsTrue(operation.HasValue);
@@ -1477,7 +1477,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.AreEqual("carefully.", words[5].Content);
             Assert.AreEqual("Enjoy.", words[6].Content);
 
-            line = result.Pages[0].Lines[46];
+            line = result.Pages[0].Lines[52];
             words = line.GetWords();
 
             Assert.AreEqual("Jupiter Book Supply will refund you 50% per book if returned within 60 days of reading and", line.Content);
@@ -1679,18 +1679,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                         ValidateBoundingRegion(region, expectedFirstPageNumber, expectedLastPageNumber);
                     }
                 }
-
-                if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
-                {
-                    if (kvp.CommonName != null)
-                    {
-                        Assert.IsNotEmpty(kvp.CommonName);
-                    }
-                }
-                else
-                {
-                    Assert.Null(kvp.CommonName);
-                }
             }
 
             // Check Document Pages.
@@ -1890,7 +1878,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.That(value.Amount, Is.EqualTo(expectedAmount).Within(0.0001), message);
             Assert.AreEqual(expectedSymbol, value.Symbol, message);
 
-            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview)
+            if (_serviceVersion >= DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31)
             {
                 Assert.AreEqual(expectedCode, value.Code, message);
             }

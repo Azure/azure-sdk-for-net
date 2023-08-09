@@ -54,7 +54,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureMLLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object mlEndpoint, SecretBase apiKey, object updateResourceEndpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </param>
+        internal AzureMLLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object mlEndpoint, SecretBase apiKey, object updateResourceEndpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object encryptedCredential, object authentication) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             MlEndpoint = mlEndpoint;
             ApiKey = apiKey;
@@ -63,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             EncryptedCredential = encryptedCredential;
+            Authentication = authentication;
             Type = type ?? "AzureML";
         }
 
@@ -88,5 +90,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Tenant { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </summary>
+        public object Authentication { get; set; }
     }
 }

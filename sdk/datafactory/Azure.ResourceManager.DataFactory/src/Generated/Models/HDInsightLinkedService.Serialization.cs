@@ -87,11 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             if (Optional.IsDefined(IsEspEnabled))
             {
@@ -132,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactorySecretBaseDefinition> password = default;
             Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
             Optional<DataFactoryLinkedServiceReference> hcatalogLinkedServiceName = default;
-            Optional<BinaryData> encryptedCredential = default;
+            Optional<string> encryptedCredential = default;
             Optional<DataFactoryElement<bool>> isEspEnabled = default;
             Optional<DataFactoryElement<string>> fileSystem = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -245,11 +241,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("isEspEnabled"u8))

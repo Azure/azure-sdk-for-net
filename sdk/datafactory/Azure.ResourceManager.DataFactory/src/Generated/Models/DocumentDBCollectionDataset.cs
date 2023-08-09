@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Microsoft Azure Document Database Collection dataset. </summary>
-    public partial class DocumentDBCollectionDataset : DataFactoryDatasetDefinition
+    public partial class DocumentDBCollectionDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of DocumentDBCollectionDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

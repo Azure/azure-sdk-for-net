@@ -1,6 +1,6 @@
 # Release History
 
-## 11.5.0-beta.4 (Unreleased)
+## 11.5.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 11.5.0-beta.4 (2023-08-07)
+
+### Features Added
+- Added the ability to perform multiple vectors query searches.
+- Added support for vector queries over multiple fields.
 
 ## 11.5.0-beta.3 (2023-07-11)
 

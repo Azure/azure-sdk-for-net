@@ -97,11 +97,11 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 {
     BlobContainerOptions = new BlobStorageResourceContainerOptions
     {
-        DirectoryPrefix = blobDirectoryPrefix
+        BlobDirectoryPrefix = blobDirectoryPrefix
     },
-    TransferOptions = new TransferOptions()
+    TransferOptions = new DataTransferOptions()
     {
-        CreateMode = StorageResourceCreateMode.Overwrite,
+        CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
     }
 };
 
@@ -130,11 +130,11 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 {
     BlobContainerOptions = new BlobStorageResourceContainerOptions
     {
-        DirectoryPrefix = blobDirectoryPrefix
+        BlobDirectoryPrefix = blobDirectoryPrefix
     },
-    TransferOptions = new TransferOptions()
+    TransferOptions = new DataTransferOptions()
     {
-        CreateMode = StorageResourceCreateMode.Overwrite,
+        CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
     }
 };
 
@@ -159,7 +159,7 @@ Blob `StorageResource` objects can be constructed with optional "options" argume
 ```C# Snippet:ResourceConstruction_Blobs_WithOptions_VirtualDirectory
 BlobStorageResourceContainerOptions virtualDirectoryOptions = new()
 {
-    DirectoryPrefix = "blob/directory/prefix"
+    BlobDirectoryPrefix = "blob/directory/prefix"
 };
 
 StorageResource virtualDirectoryResource = new BlobStorageResourceContainer(
@@ -190,9 +190,9 @@ if (BlobStorageResources.TryGetResourceProviders(
     out BlobStorageResourceProvider blobSrcProvider,
     out BlobStorageResourceProvider blobDstProvider))
 {
-    sourceResource ??= await blobSrcProvider?.MakeResourceAsync(
+    sourceResource ??= await blobSrcProvider?.CreateResourceAsync(
         GenerateMySasCredential(info.SourcePath));
-    destinationResource ??= await blobSrcProvider?.MakeResourceAsync(
+    destinationResource ??= await blobSrcProvider?.CreateResourceAsync(
         GenerateMySasCredential(info.DestinationPath));
 }
 ```
@@ -221,7 +221,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
         {
             // Block blobs are the default if not specified
             BlobType = BlobType.Block,
-            DirectoryPrefix = optionalDestinationPrefix,
+            BlobDirectoryPrefix = optionalDestinationPrefix,
         }),
     transferOptions: options);
 await dataTransfer.WaitForCompletionAsync();
@@ -248,7 +248,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
         blobContainerClient,
         new BlobStorageResourceContainerOptions()
         {
-            DirectoryPrefix = optionalSourcePrefix
+            BlobDirectoryPrefix = optionalSourcePrefix
         }),
     destinationResource: new LocalDirectoryStorageResourceContainer(downloadPath));
 await dataTransfer.WaitForCompletionAsync();
@@ -275,7 +275,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
         sourceContainer,
         new BlobStorageResourceContainerOptions()
         {
-            DirectoryPrefix = sourceDirectoryName
+            BlobDirectoryPrefix = sourceDirectoryName
         }),
     destinationResource: new BlobStorageResourceContainer(
         destinationContainer,
@@ -284,7 +284,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
             // all source blobs will be copied as a single type of destination blob
             // defaults to block blobs if unspecified
             BlobType = BlobType.Block,
-            DirectoryPrefix = downloadPath
+            BlobDirectoryPrefix = downloadPath
         }));
 ```
 
