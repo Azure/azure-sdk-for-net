@@ -689,6 +689,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task TestSingle_StopWithoutDrain()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId1");
+            var host = BuildHost<TestSingleDispose>();
+
+            bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+            Assert.True(result);
+            await host.StopAsync();
+        }
+
+        [Test]
         public async Task TestBatch_Dispose()
         {
             await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId1");
@@ -697,7 +708,17 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             bool result = _waitHandle1.WaitOne(SBTimeoutMills);
             Assert.True(result);
             host.Dispose();
-            _waitHandle2.Set();
+        }
+
+        [Test]
+        public async Task TestBatch_StopWithoutDrain()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}", "sessionId1");
+            var host = BuildHost<TestBatchDispose>();
+
+            bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+            Assert.True(result);
+            await host.StopAsync();
         }
 
         private async Task TestMultiple<T>(bool isXml = false)
@@ -1195,14 +1216,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         public class TestBatchDispose
         {
-            public static void RunAsync(
+            public static async Task RunAsync(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)]
                 ServiceBusReceivedMessage[] message,
                 CancellationToken cancellationToken)
             {
                 _waitHandle1.Set();
-                bool result = _waitHandle2.WaitOne(SBTimeoutMills);
-                Assert.IsTrue(result);
+                // wait a small amount of time for the host to call dispose
+                await Task.Delay(2000, CancellationToken.None);
                 Assert.IsTrue(cancellationToken.IsCancellationRequested);
             }
         }

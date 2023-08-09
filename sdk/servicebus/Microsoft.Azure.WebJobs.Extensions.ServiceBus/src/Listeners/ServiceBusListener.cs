@@ -16,6 +16,7 @@ using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Config;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private readonly bool _isSessionsEnabled;
         private readonly bool _autoCompleteMessages;
         private readonly CancellationTokenSource _stoppingCancellationTokenSource;
-        private readonly CancellationTokenSource _disposingCancellationTokenSource;
+        private readonly CancellationTokenSource _functionExecutionCancellationTokenSource;
         private readonly ServiceBusOptions _serviceBusOptions;
         private readonly bool _singleDispatch;
         private readonly ILogger<ServiceBusListener> _logger;
@@ -66,6 +67,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
         private Task _batchLoop;
         private Lazy<string> _details;
         private Lazy<MessagingClientDiagnostics> _clientDiagnostics;
+        private readonly IDrainModeManager _drainModeManager;
 
         public ServiceBusListener(
             string functionId,
@@ -80,16 +82,18 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             ILoggerFactory loggerFactory,
             bool singleDispatch,
             ServiceBusClientFactory clientFactory,
-            ConcurrencyManager concurrencyManager)
+            ConcurrencyManager concurrencyManager,
+            IDrainModeManager drainModeManager)
         {
             _entityPath = entityPath;
             _isSessionsEnabled = isSessionsEnabled;
             _autoCompleteMessages = autoCompleteMessages;
             _triggerExecutor = triggerExecutor;
             _stoppingCancellationTokenSource = new CancellationTokenSource();
-            _disposingCancellationTokenSource = new CancellationTokenSource();
+            _functionExecutionCancellationTokenSource = new CancellationTokenSource();
             _logger = loggerFactory.CreateLogger<ServiceBusListener>();
             _functionId = functionId;
+            _drainModeManager = drainModeManager;
 
             _client = new Lazy<ServiceBusClient>(
                 () => clientFactory.CreateClientFromSetting(connection));
@@ -213,6 +217,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
+            if (!_drainModeManager.IsDrainModeEnabled)
+            {
+                _functionExecutionCancellationTokenSource.Cancel();
+            }
+
             ThrowIfDisposed();
 
             _logger.LogDebug($"Attempting to stop ServiceBus listener ({_details.Value})");
@@ -293,7 +302,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             // Otherwise, callers would receive ObjectDisposedException when calling token.Register.
             // For now, rely on finalization to clean up _cancellationTokenSource's wait handle (if allocated).
             _stoppingCancellationTokenSource.Cancel();
-            _disposingCancellationTokenSource.Cancel();
+            _functionExecutionCancellationTokenSource.Cancel();
 
             if (_batchReceiver.IsValueCreated)
             {
@@ -356,7 +365,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
 
-                FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, _disposingCancellationTokenSource.Token).ConfigureAwait(false);
+                FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, _functionExecutionCancellationTokenSource.Token).ConfigureAwait(false);
                 try
                 {
                     await _messageProcessor.Value.CompleteProcessingMessageAsync(actions, args.Message, result, linkedCts.Token)
@@ -389,7 +398,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 ServiceBusTriggerInput input = ServiceBusTriggerInput.CreateSingle(args.Message, actions, receiveActions, _client.Value);
 
                 TriggeredFunctionData data = input.GetTriggerFunctionData();
-                FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, _disposingCancellationTokenSource.Token).ConfigureAwait(false);
+                FunctionResult result = await _triggerExecutor.TryExecuteAsync(data, _functionExecutionCancellationTokenSource.Token).ConfigureAwait(false);
 
                 if (actions.ShouldReleaseSession)
                 {
@@ -650,7 +659,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             scope.SetMessageData(messagesArray);
 
             scope.Start();
-            FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), _disposingCancellationTokenSource.Token).ConfigureAwait(false);
+            FunctionResult result = await _triggerExecutor.TryExecuteAsync(input.GetTriggerFunctionData(), _functionExecutionCancellationTokenSource.Token).ConfigureAwait(false);
             if (result.Exception != null)
             {
                 scope.Failed(result.Exception);
