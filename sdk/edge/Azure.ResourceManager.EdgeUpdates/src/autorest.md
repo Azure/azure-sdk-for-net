@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: Edge
 namespace: Azure.ResourceManager.Edge
-require: C:\Users\groopa\swagger\specification\edge\resource-manager\Microsoft.Edge\updates\readme.md
+require: https://raw.githubusercontent.com/roopavidhya/azure-rest-api-specs-pr/45dce3521d347333f5f41e21d5763f192abc4c79/specification/edge/resource-manager/Microsoft.Edge/updates/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
