@@ -30,11 +30,21 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static implicit operator RequestContent(ModelX modelX)
         {
+            if (modelX == null)
+            {
+                return null;
+            }
+
             return RequestContent.Create(modelX, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelX(Response response)
         {
+            if (response == null)
+            {
+                return null;
+            }
+
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeModelX(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }

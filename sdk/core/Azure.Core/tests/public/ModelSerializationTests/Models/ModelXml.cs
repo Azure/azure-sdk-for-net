@@ -46,11 +46,21 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static implicit operator RequestContent(ModelXml modelXml)
         {
+            if (modelXml == null)
+            {
+                return null;
+            }
+
             return RequestContent.Create((IModelSerializable<ModelXml>)modelXml, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelXml(Response response)
         {
+            if (response == null)
+            {
+                return null;
+            }
+
             return DeserializeModelXml(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
 

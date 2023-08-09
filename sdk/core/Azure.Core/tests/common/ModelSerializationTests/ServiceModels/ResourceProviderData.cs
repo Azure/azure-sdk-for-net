@@ -20,11 +20,21 @@ namespace Azure.Core.Tests.ResourceManager.Resources
     {
         public static implicit operator RequestContent(ResourceProviderData resourceProviderData)
         {
+            if (resourceProviderData == null)
+            {
+                return null;
+            }
+
             return RequestContent.Create(resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator ResourceProviderData(Response response)
         {
+            if (response == null)
+            {
+                return null;
+            }
+
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeResourceProviderData(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }

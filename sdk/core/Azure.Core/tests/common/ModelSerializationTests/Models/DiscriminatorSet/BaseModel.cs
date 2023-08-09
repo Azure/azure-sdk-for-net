@@ -14,11 +14,21 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static implicit operator RequestContent(BaseModel baseModel)
         {
+            if (baseModel == null)
+            {
+                return null;
+            }
+
             return RequestContent.Create(baseModel, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator BaseModel(Response response)
         {
+            if (response == null)
+            {
+                return null;
+            }
+
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeBaseModel(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }

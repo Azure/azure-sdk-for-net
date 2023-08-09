@@ -47,11 +47,21 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static implicit operator RequestContent(ModelXmlCrossLibrary modelXmlCrossLibrary)
         {
+            if (modelXmlCrossLibrary == null)
+            {
+                return null;
+            }
+
             return RequestContent.Create((IModelSerializable<ModelXmlCrossLibrary>)modelXmlCrossLibrary, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelXmlCrossLibrary(Response response)
         {
+            if (response == null)
+            {
+                return null;
+            }
+
             return DeserializeModelXmlCrossLibrary(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
 

@@ -213,5 +213,17 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 }
             }
         }
+
+        [Test]
+        public void CastNull()
+        {
+            T model = null;
+            RequestContent content = ToRequestContent(model);
+            Assert.IsNull(content);
+
+            Response response = null;
+            T model2 = FromResponse(response);
+            Assert.IsNull(model2);
+        }
     }
 }
