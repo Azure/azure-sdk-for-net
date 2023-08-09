@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.BillingBenefits.Mocking;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,22 +20,22 @@ namespace Azure.ResourceManager.BillingBenefits
     /// <summary> A class to add extension methods to Azure.ResourceManager.BillingBenefits. </summary>
     public static partial class BillingBenefitsExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static BillingBenefitsArmClientMockingExtension GetBillingBenefitsArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
+            return client.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new BillingBenefitsArmClientMockingExtension(client);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static BillingBenefitsTenantMockingExtension GetBillingBenefitsTenantMockingExtension(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, scope);
+                return new BillingBenefitsTenantMockingExtension(client, resource.Id);
             });
         }
-        #region BillingBenefitsSavingsPlanOrderAliasResource
+
         /// <summary>
         /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BillingBenefitsSavingsPlanOrderAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -44,16 +45,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> object. </returns>
         public static BillingBenefitsSavingsPlanOrderAliasResource GetBillingBenefitsSavingsPlanOrderAliasResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BillingBenefitsSavingsPlanOrderAliasResource.ValidateResourceId(id);
-                return new BillingBenefitsSavingsPlanOrderAliasResource(client, id);
-            }
-            );
+            return GetBillingBenefitsArmClientMockingExtension(client).GetBillingBenefitsSavingsPlanOrderAliasResource(id);
         }
-        #endregion
 
-        #region BillingBenefitsSavingsPlanOrderResource
         /// <summary>
         /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanOrderResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BillingBenefitsSavingsPlanOrderResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -63,16 +57,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanOrderResource" /> object. </returns>
         public static BillingBenefitsSavingsPlanOrderResource GetBillingBenefitsSavingsPlanOrderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BillingBenefitsSavingsPlanOrderResource.ValidateResourceId(id);
-                return new BillingBenefitsSavingsPlanOrderResource(client, id);
-            }
-            );
+            return GetBillingBenefitsArmClientMockingExtension(client).GetBillingBenefitsSavingsPlanOrderResource(id);
         }
-        #endregion
 
-        #region BillingBenefitsSavingsPlanResource
         /// <summary>
         /// Gets an object representing a <see cref="BillingBenefitsSavingsPlanResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BillingBenefitsSavingsPlanResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsSavingsPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -82,16 +69,9 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> Returns a <see cref="BillingBenefitsSavingsPlanResource" /> object. </returns>
         public static BillingBenefitsSavingsPlanResource GetBillingBenefitsSavingsPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BillingBenefitsSavingsPlanResource.ValidateResourceId(id);
-                return new BillingBenefitsSavingsPlanResource(client, id);
-            }
-            );
+            return GetBillingBenefitsArmClientMockingExtension(client).GetBillingBenefitsSavingsPlanResource(id);
         }
-        #endregion
 
-        #region BillingBenefitsReservationOrderAliasResource
         /// <summary>
         /// Gets an object representing a <see cref="BillingBenefitsReservationOrderAliasResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BillingBenefitsReservationOrderAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingBenefitsReservationOrderAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -101,21 +81,15 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> Returns a <see cref="BillingBenefitsReservationOrderAliasResource" /> object. </returns>
         public static BillingBenefitsReservationOrderAliasResource GetBillingBenefitsReservationOrderAliasResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                BillingBenefitsReservationOrderAliasResource.ValidateResourceId(id);
-                return new BillingBenefitsReservationOrderAliasResource(client, id);
-            }
-            );
+            return GetBillingBenefitsArmClientMockingExtension(client).GetBillingBenefitsReservationOrderAliasResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderAliasResources in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderAliasResources and their operations over a BillingBenefitsSavingsPlanOrderAliasResource. </returns>
         public static BillingBenefitsSavingsPlanOrderAliasCollection GetBillingBenefitsSavingsPlanOrderAliases(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlanOrderAliases();
+            return GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsSavingsPlanOrderAliases();
         }
 
         /// <summary>
@@ -139,7 +113,7 @@ namespace Azure.ResourceManager.BillingBenefits
         [ForwardsClientCalls]
         public static async Task<Response<BillingBenefitsSavingsPlanOrderAliasResource>> GetBillingBenefitsSavingsPlanOrderAliasAsync(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBillingBenefitsSavingsPlanOrderAliases().GetAsync(savingsPlanOrderAliasName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsSavingsPlanOrderAliasAsync(savingsPlanOrderAliasName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -163,7 +137,7 @@ namespace Azure.ResourceManager.BillingBenefits
         [ForwardsClientCalls]
         public static Response<BillingBenefitsSavingsPlanOrderAliasResource> GetBillingBenefitsSavingsPlanOrderAlias(this TenantResource tenantResource, string savingsPlanOrderAliasName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBillingBenefitsSavingsPlanOrderAliases().Get(savingsPlanOrderAliasName, cancellationToken);
+            return GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsSavingsPlanOrderAlias(savingsPlanOrderAliasName, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingBenefitsSavingsPlanOrderResources in the TenantResource. </summary>
@@ -171,7 +145,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> An object representing collection of BillingBenefitsSavingsPlanOrderResources and their operations over a BillingBenefitsSavingsPlanOrderResource. </returns>
         public static BillingBenefitsSavingsPlanOrderCollection GetBillingBenefitsSavingsPlanOrders(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlanOrders();
+            return GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsSavingsPlanOrders();
         }
 
         /// <summary>
@@ -196,7 +170,7 @@ namespace Azure.ResourceManager.BillingBenefits
         [ForwardsClientCalls]
         public static async Task<Response<BillingBenefitsSavingsPlanOrderResource>> GetBillingBenefitsSavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBillingBenefitsSavingsPlanOrders().GetAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsSavingsPlanOrderAsync(savingsPlanOrderId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -221,7 +195,7 @@ namespace Azure.ResourceManager.BillingBenefits
         [ForwardsClientCalls]
         public static Response<BillingBenefitsSavingsPlanOrderResource> GetBillingBenefitsSavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBillingBenefitsSavingsPlanOrders().Get(savingsPlanOrderId, expand, cancellationToken);
+            return GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsSavingsPlanOrder(savingsPlanOrderId, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of BillingBenefitsReservationOrderAliasResources in the TenantResource. </summary>
@@ -229,7 +203,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> An object representing collection of BillingBenefitsReservationOrderAliasResources and their operations over a BillingBenefitsReservationOrderAliasResource. </returns>
         public static BillingBenefitsReservationOrderAliasCollection GetBillingBenefitsReservationOrderAliases(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsReservationOrderAliases();
+            return GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsReservationOrderAliases();
         }
 
         /// <summary>
@@ -253,7 +227,7 @@ namespace Azure.ResourceManager.BillingBenefits
         [ForwardsClientCalls]
         public static async Task<Response<BillingBenefitsReservationOrderAliasResource>> GetBillingBenefitsReservationOrderAliasAsync(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetBillingBenefitsReservationOrderAliases().GetAsync(reservationOrderAliasName, cancellationToken).ConfigureAwait(false);
+            return await GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsReservationOrderAliasAsync(reservationOrderAliasName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -277,7 +251,7 @@ namespace Azure.ResourceManager.BillingBenefits
         [ForwardsClientCalls]
         public static Response<BillingBenefitsReservationOrderAliasResource> GetBillingBenefitsReservationOrderAlias(this TenantResource tenantResource, string reservationOrderAliasName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetBillingBenefitsReservationOrderAliases().Get(reservationOrderAliasName, cancellationToken);
+            return GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsReservationOrderAlias(reservationOrderAliasName, cancellationToken);
         }
 
         /// <summary>
@@ -299,9 +273,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlansAsync(this TenantResource tenantResource, TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
-
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlansAsync(options, cancellationToken);
+            return GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsSavingsPlansAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -323,9 +295,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlans(this TenantResource tenantResource, TenantResourceGetBillingBenefitsSavingsPlansOptions options, CancellationToken cancellationToken = default)
         {
-            options ??= new TenantResourceGetBillingBenefitsSavingsPlansOptions();
-
-            return GetTenantResourceExtensionClient(tenantResource).GetBillingBenefitsSavingsPlans(options, cancellationToken);
+            return GetBillingBenefitsTenantMockingExtension(tenantResource).GetBillingBenefitsSavingsPlans(options, cancellationToken);
         }
 
         /// <summary>
@@ -348,9 +318,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> An async collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SavingsPlanValidateResult> ValidatePurchaseAsync(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).ValidatePurchaseAsync(content, cancellationToken);
+            return GetBillingBenefitsTenantMockingExtension(tenantResource).ValidatePurchaseAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -373,9 +341,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> A collection of <see cref="SavingsPlanValidateResult" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SavingsPlanValidateResult> ValidatePurchase(this TenantResource tenantResource, SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).ValidatePurchase(content, cancellationToken);
+            return GetBillingBenefitsTenantMockingExtension(tenantResource).ValidatePurchase(content, cancellationToken);
         }
     }
 }
