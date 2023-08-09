@@ -255,6 +255,15 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies
 - /subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default/predefinedPolicies/{predefinedPolicyName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName} # this is get something out of from VirtualMachineScaleSetVM, itself is not a resource
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipconfigurations/{ipConfigurationName}/publicipaddresses/{publicIPAddressName}
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
+
+partial-resources:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}: VirtualMachineScaleSet
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}: VirtualMachineScaleSetVm
+  # /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}: CloudService
+  # /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}: CloudServiceRoleInstance
 
 override-operation-name:
   ApplicationGateways_ListAvailableWafRuleSets: GetAppGatewayAvailableWafRuleSets
@@ -269,6 +278,14 @@ override-operation-name:
   VirtualHubs_GetOutboundRoutes: GetVirtualHubOutboundRoutes
   VirtualHubs_GetInboundRoutes: GetVirtualHubInboundRoutes
   generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
+  NetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces: VirtualMachineScaleSetVMs_ListNetworkInterfaces
+  NetworkInterfaces_ListVirtualMachineScaleSetNetworkInterfaces: VirtualMachineScaleSets_ListNetworkInterfaces
+  NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface: VirtualMachineScaleSets_GetNetworkInterface
+  NetworkInterfaces_ListVirtualMachineScaleSetIpConfigurations: VirtualMachineScaleSets_ListIpConfigurations
+  NetworkInterfaces_GetVirtualMachineScaleSetIpConfiguration: VirtualMachineScaleSets_GetIpConfiguration
+  PublicIPAddresses_ListVirtualMachineScaleSetPublicIPAddresses: VirtualMachineScaleSets_ListPublicIPAddresses
+  PublicIPAddresses_ListVirtualMachineScaleSetVMPublicIPAddresses: VirtualMachineScaleSetVMs_ListPublicIPAddresses
+  PublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress: VirtualMachineScaleSets_GetPublicIPAddress
 
 directive:
   - remove-operation: 'PutBastionShareableLink'
