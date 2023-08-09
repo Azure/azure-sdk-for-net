@@ -337,7 +337,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             _batchReceiveRegistration.Dispose();
             _concurrencyUpdateManager?.Dispose();
 
-            // No need to dispose the _disposingCancellationTokenSource since we don't create it as a linked token and
+            // No need to dispose the _functionExecutionCancellationTokenSource since we don't create it as a linked token and
             // it won't use a timer, so the Dispose method is essentially a no-op. The downside to disposing it is that
             // any customers who are trying to use it to cancel their own operations would get an ObjectDisposedException.
 
