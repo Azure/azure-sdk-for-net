@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -18,6 +19,7 @@ namespace Azure.Core.Json
     internal readonly partial struct MutableJsonElement
     {
         internal const string SerializationRequiresUnreferencedCode = "This method utilizes reflection-based JSON serialization which is not compatible with trimming.";
+        internal const int MaxStackLimit = 1024;
         private readonly MutableJsonDocument _root;
         private readonly JsonElement _element;
         private readonly string _path;
@@ -57,9 +59,17 @@ namespace Azure.Core.Json
         /// </summary>
         public MutableJsonElement GetProperty(string name)
         {
+            return GetProperty(name.AsSpan());
+        }
+
+        /// <summary>
+        /// Gets the MutableJsonElement for the value of the property with the specified name.
+        /// </summary>
+        public MutableJsonElement GetProperty(ReadOnlySpan<char> name)
+        {
             if (!TryGetProperty(name, out MutableJsonElement value))
             {
-                throw new InvalidOperationException($"'{_path}' does not contain property called '{name}'");
+                throw new InvalidOperationException($"'{_path}' does not contain property called '{GetString(name, 0, name.Length)}'");
             }
 
             return value;
@@ -73,32 +83,73 @@ namespace Azure.Core.Json
         /// <returns></returns>
         public bool TryGetProperty(string name, out MutableJsonElement value)
         {
+            return TryGetProperty(name.AsSpan(), out value);
+        }
+
+        /// <summary>
+        /// Looks for a property named propertyName in the current object, returning a value that indicates whether or not such a property exists. When the property exists, its value is assigned to the value argument.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value">The value to assign to the element.</param>
+        /// <returns></returns>
+        public bool TryGetProperty(ReadOnlySpan<char> name, out MutableJsonElement value)
+        {
             EnsureValid();
 
             EnsureObject();
 
-            string path = MutableJsonDocument.ChangeTracker.PushProperty(_path, name);
-            if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
+            char[]? tempArray = null;
+            int length = name.Length;
+            length += _path.Length > 0 ? _path.Length + 1 : 0;
+            Span<char> path = length <= MaxStackLimit ?
+                stackalloc char[length] :
+                tempArray = ArrayPool<char>.Shared.Rent(length);
+
+            try
             {
-                if (change.ChangeKind == MutableJsonChangeKind.PropertyRemoval)
+                _path.AsSpan().CopyTo(path);
+                int pathLength = _path.Length;
+
+                MutableJsonDocument.ChangeTracker.PushProperty(path, ref pathLength, name);
+
+                if (Changes.TryGetChange(path, _highWaterMark, out MutableJsonChange change))
+                {
+                    if (change.ChangeKind == MutableJsonChangeKind.PropertyRemoval)
+                    {
+                        value = default;
+                        return false;
+                    }
+
+                    value = new MutableJsonElement(_root, change.GetSerializedValue(), GetString(path, 0, pathLength), change.Index);
+                    return true;
+                }
+
+                bool hasProperty = _element.TryGetProperty(name, out JsonElement element);
+                if (!hasProperty)
                 {
                     value = default;
                     return false;
                 }
 
-                value = new MutableJsonElement(_root, change.GetSerializedValue(), path, change.Index);
+                value = new MutableJsonElement(_root, element, GetString(path, 0, pathLength), _highWaterMark);
                 return true;
             }
-
-            bool hasProperty = _element.TryGetProperty(name, out JsonElement element);
-            if (!hasProperty)
+            finally
             {
-                value = default;
-                return false;
+                if (tempArray != null)
+                {
+                    ArrayPool<char>.Shared.Return(tempArray);
+                }
             }
+        }
 
-            value = new MutableJsonElement(_root, element, path, _highWaterMark);
-            return true;
+        private static string GetString(ReadOnlySpan<char> value, int start, int end)
+        {
+#if NET5_0_OR_GREATER
+            return new string(value.Slice(start, end));
+#else
+            return new string(value.Slice(start, end).ToArray());
+#endif
         }
 
         public int GetArrayLength()
@@ -1096,9 +1147,6 @@ namespace Azure.Core.Json
             }
 
             // If it's not a special type, we'll serialize it on assignment.
-            // for debugging
-            string sval = JsonSerializer.Serialize(value, _root.SerializerOptions);
-            // end
             byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _root.SerializerOptions);
             return JsonDocument.Parse(bytes).RootElement;
         }

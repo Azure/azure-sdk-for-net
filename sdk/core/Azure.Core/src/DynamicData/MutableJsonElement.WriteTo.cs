@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -16,6 +15,22 @@ namespace Azure.Core.Json
         internal void WriteTo(Utf8JsonWriter writer)
         {
             WriteElement(_path, _highWaterMark, _element, writer);
+        }
+
+        internal void WriteTo(Utf8JsonWriter writer, string format)
+        {
+            switch (format)
+            {
+                case "J":
+                    WriteTo(writer);
+                    break;
+                case "P":
+                    WritePatch(writer);
+                    break;
+                default:
+                    _root.AssertInvalidFormat(format);
+                    break;
+            }
         }
 
 #if NET6_0_OR_GREATER
