@@ -48,7 +48,7 @@ namespace Microsoft.Azure.WebJobs.Host
 
         /// <summary>
         /// Gets or sets the number of times to try processing a given blob before adding a message to a
-        /// storage queue named, webjobs-blobtrigger-poison.
+        /// storage queue named `webjobs-blobtrigger-poison`.
         ///
         /// If not specified, will default to 5.
         ///
