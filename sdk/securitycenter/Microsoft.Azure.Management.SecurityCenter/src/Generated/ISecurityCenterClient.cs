@@ -14,10 +14,6 @@ namespace Microsoft.Azure.Management.Security
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// API spec for Microsoft.Security (Azure Security Center) resource
@@ -384,31 +380,6 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IServerVulnerabilityAssessmentsSettingsOperations.
         /// </summary>
         IServerVulnerabilityAssessmentsSettingsOperations ServerVulnerabilityAssessmentsSettings { get; }
-
-        /// <summary>
-        /// Updates data sensitivity settings for sensitive data discovery
-        /// </summary>
-        /// <param name='sensitivitySettings'>
-        /// The data sensitivity settings to update
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<GetSensitivitySettingsResponse>> UpdateSensitivitySettingsWithHttpMessagesAsync(UpdateSensitivitySettingsRequest sensitivitySettings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Gets data sensitivity settings for sensitive data discovery
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<GetSensitivitySettingsResponse>> GetSensitivitySettingsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

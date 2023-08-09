@@ -41,7 +41,6 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "DeviceSecurityGroups", "2019-08-01"),
                 new Tuple<string, string, string>("Security", "DiscoveredSecuritySolutions", "2020-01-01"),
                 new Tuple<string, string, string>("Security", "ExternalSecuritySolutions", "2020-01-01"),
-                new Tuple<string, string, string>("Security", "GetSensitivitySettings", "2023-02-15-preview"),
                 new Tuple<string, string, string>("Security", "GovernanceAssignments", "2022-01-01-preview"),
                 new Tuple<string, string, string>("Security", "GovernanceRules", "2022-01-01-preview"),
                 new Tuple<string, string, string>("Security", "HealthReports", "2023-05-01-preview"),
@@ -80,7 +79,6 @@ namespace Microsoft.Azure.Management.Security
                 new Tuple<string, string, string>("Security", "SubAssessments", "2019-01-01-preview"),
                 new Tuple<string, string, string>("Security", "Tasks", "2015-06-01-preview"),
                 new Tuple<string, string, string>("Security", "Topology", "2020-01-01"),
-                new Tuple<string, string, string>("Security", "UpdateSensitivitySettings", "2023-02-15-preview"),
                 new Tuple<string, string, string>("Security", "WorkspaceSettings", "2017-08-01-preview"),
                 new Tuple<string, string, string>("Security", "securitySolutionsReferenceData", "2020-01-01"),
               }.AsEnumerable();

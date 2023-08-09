@@ -22,6 +22,68 @@ namespace Microsoft.Azure.Management.Security
     public static partial class SensitivitySettingsOperationsExtensions
     {
             /// <summary>
+            /// Create or update data sensitivity settings for sensitive data discovery
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sensitivitySettings'>
+            /// The data sensitivity settings to update
+            /// </param>
+            public static GetSensitivitySettingsResponse CreateOrUpdate(this ISensitivitySettingsOperations operations, UpdateSensitivitySettingsRequest sensitivitySettings)
+            {
+                return operations.CreateOrUpdateAsync(sensitivitySettings).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or update data sensitivity settings for sensitive data discovery
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sensitivitySettings'>
+            /// The data sensitivity settings to update
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GetSensitivitySettingsResponse> CreateOrUpdateAsync(this ISensitivitySettingsOperations operations, UpdateSensitivitySettingsRequest sensitivitySettings, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(sensitivitySettings, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets data sensitivity settings for sensitive data discovery
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static GetSensitivitySettingsResponse Get(this ISensitivitySettingsOperations operations)
+            {
+                return operations.GetAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets data sensitivity settings for sensitive data discovery
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GetSensitivitySettingsResponse> GetAsync(this ISensitivitySettingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list with a single sensitivity settings resource
             /// </summary>
             /// <param name='operations'>
