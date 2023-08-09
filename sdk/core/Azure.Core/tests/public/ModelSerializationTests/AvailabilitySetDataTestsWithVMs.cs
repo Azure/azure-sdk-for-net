@@ -48,6 +48,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(5, model.PlatformUpdateDomainCount);
             Assert.AreEqual(3, model.PlatformFaultDomainCount);
             Assert.AreEqual("Classic", model.Sku.Name);
+            Assert.AreEqual(2, model.VirtualMachines.Count);
+            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS1", model.VirtualMachines[0].Id);
+            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS2", model.VirtualMachines[1].Id);
         }
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, ModelSerializerFormat format)
@@ -61,6 +64,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 Assert.AreEqual(model.ResourceType, model2.ResourceType);
             CollectionAssert.AreEquivalent(model.Tags, model2.Tags);
             Assert.AreEqual(model.Sku.Name, model2.Sku.Name);
+            Assert.AreEqual(model.VirtualMachines, model2.VirtualMachines);
         }
     }
 }

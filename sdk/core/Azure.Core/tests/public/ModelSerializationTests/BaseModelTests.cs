@@ -19,7 +19,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         protected override string JsonPayload => WirePayload;
 
-        protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
+        protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"fields\":[\"testField\"],\"keyValuePairs\":{\"color\":\"red\"},\"extra\":\"stuff\"}";
 
         protected override Func<BaseModel, RequestContent> ToRequestContent => model => model;
 
@@ -29,6 +29,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             Assert.AreEqual(model.Name, model2.Name);
             Assert.AreEqual(model.Kind, model2.Kind);
+            Assert.AreEqual(model.Fields, model2.Fields);
+            Assert.AreEqual(model.KeyValuePairs, model2.KeyValuePairs);
+
             if (format == ModelSerializerFormat.Json)
             {
                 var rawData = GetRawData(model);
@@ -43,6 +46,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         protected override string GetExpectedResult(ModelSerializerFormat format)
         {
             string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
+            expected += ",\"fields\":[\"testField\"]";
+            expected += ",\"keyValuePairs\":{\"color\":\"red\"}";
             if (format == ModelSerializerFormat.Json)
                 expected += ",\"xProperty\":100";
             if (format == ModelSerializerFormat.Json)
@@ -55,6 +60,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             Assert.AreEqual("X", model.Kind);
             Assert.AreEqual("xmodel", model.Name);
+            Assert.AreEqual(1, model.Fields.Count);
+            Assert.AreEqual("testField", model.Fields[0]);
+            Assert.AreEqual(1, model.KeyValuePairs.Count);
+            Assert.AreEqual("red", model.KeyValuePairs["color"]);
+
             var rawData = GetRawData(model);
             Assert.IsNotNull(rawData);
             if (format == ModelSerializerFormat.Json)

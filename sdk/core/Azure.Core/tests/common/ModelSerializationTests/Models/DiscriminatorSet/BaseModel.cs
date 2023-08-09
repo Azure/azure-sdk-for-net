@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using Azure.Core.Serialization;
-using Azure.Core.Tests.ResourceManager.Resources.Models;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
