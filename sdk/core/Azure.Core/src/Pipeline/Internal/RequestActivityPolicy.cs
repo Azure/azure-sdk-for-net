@@ -59,11 +59,12 @@ namespace Azure.Core.Pipeline
 
 #if NET6_0_OR_GREATER
         [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(HttpMessage))]
+        [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(Exception))]
 #else
 #endif
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
-            using var scope = CreatDiagnosticScope(message);
+            using var scope = CreateDiagnosticScope(message);
 
             bool isActivitySourceEnabled = IsActivitySourceEnabled;
 
@@ -106,7 +107,7 @@ namespace Azure.Core.Pipeline
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                ScopeFailed(scope, e);
                 throw;
             }
 
@@ -128,7 +129,7 @@ namespace Azure.Core.Pipeline
             if (message.Response.IsError)
             {
                 scope.AddAttribute("otel.status_code", "ERROR");
-                scope.Failed();
+                ScopeFailed(scope);
             }
             else
             {
@@ -140,7 +141,19 @@ namespace Azure.Core.Pipeline
 #if NET6_0_OR_GREATER
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency.")]
 #endif
-        private DiagnosticScope CreatDiagnosticScope(HttpMessage message)
+        private void ScopeFailed(DiagnosticScope scope, Exception? ex = default)
+        {
+            if (ex == null)
+            {
+                scope.Failed();
+            }
+            scope.Failed(ex);
+        }
+
+#if NET6_0_OR_GREATER
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency.")]
+#endif
+        private DiagnosticScope CreateDiagnosticScope(HttpMessage message)
         {
 #if NETCOREAPP2_1
             return new DiagnosticScope("Azure.Core.Http.Request", s_diagnosticSource, message, s_activitySource, DiagnosticScope.ActivityKind.Client, false);
