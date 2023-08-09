@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.MobileNetwork.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MobileNetwork
@@ -18,54 +19,38 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary> A class to add extension methods to Azure.ResourceManager.MobileNetwork. </summary>
     public static partial class MobileNetworkExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MobileNetworkArmClientMockingExtension GetMobileNetworkArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new MobileNetworkArmClientMockingExtension(client);
+            });
+        }
+
+        private static MobileNetworkResourceGroupMockingExtension GetMobileNetworkResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new MobileNetworkResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MobileNetworkSubscriptionMockingExtension GetMobileNetworkSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new MobileNetworkSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static MobileNetworkTenantMockingExtension GetMobileNetworkTenantMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, resource.Id);
+                return new MobileNetworkTenantMockingExtension(client, resource.Id);
             });
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region AttachedDataNetworkResource
         /// <summary>
         /// Gets an object representing an <see cref="AttachedDataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AttachedDataNetworkResource.CreateResourceIdentifier" /> to create an <see cref="AttachedDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -75,16 +60,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="AttachedDataNetworkResource" /> object. </returns>
         public static AttachedDataNetworkResource GetAttachedDataNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AttachedDataNetworkResource.ValidateResourceId(id);
-                return new AttachedDataNetworkResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetAttachedDataNetworkResource(id);
         }
-        #endregion
 
-        #region DataNetworkResource
         /// <summary>
         /// Gets an object representing a <see cref="DataNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="DataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -94,16 +72,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="DataNetworkResource" /> object. </returns>
         public static DataNetworkResource GetDataNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataNetworkResource.ValidateResourceId(id);
-                return new DataNetworkResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetDataNetworkResource(id);
         }
-        #endregion
 
-        #region MobileNetworkResource
         /// <summary>
         /// Gets an object representing a <see cref="MobileNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MobileNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -113,16 +84,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkResource" /> object. </returns>
         public static MobileNetworkResource GetMobileNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MobileNetworkResource.ValidateResourceId(id);
-                return new MobileNetworkResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkResource(id);
         }
-        #endregion
 
-        #region PacketCoreControlPlaneResource
         /// <summary>
         /// Gets an object representing a <see cref="PacketCoreControlPlaneResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PacketCoreControlPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreControlPlaneResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -132,16 +96,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="PacketCoreControlPlaneResource" /> object. </returns>
         public static PacketCoreControlPlaneResource GetPacketCoreControlPlaneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PacketCoreControlPlaneResource.ValidateResourceId(id);
-                return new PacketCoreControlPlaneResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetPacketCoreControlPlaneResource(id);
         }
-        #endregion
 
-        #region PacketCoreControlPlaneVersionResource
         /// <summary>
         /// Gets an object representing a <see cref="PacketCoreControlPlaneVersionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -151,16 +108,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="PacketCoreControlPlaneVersionResource" /> object. </returns>
         public static PacketCoreControlPlaneVersionResource GetPacketCoreControlPlaneVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PacketCoreControlPlaneVersionResource.ValidateResourceId(id);
-                return new PacketCoreControlPlaneVersionResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetPacketCoreControlPlaneVersionResource(id);
         }
-        #endregion
 
-        #region PacketCoreDataPlaneResource
         /// <summary>
         /// Gets an object representing a <see cref="PacketCoreDataPlaneResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PacketCoreDataPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreDataPlaneResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -170,16 +120,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="PacketCoreDataPlaneResource" /> object. </returns>
         public static PacketCoreDataPlaneResource GetPacketCoreDataPlaneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                PacketCoreDataPlaneResource.ValidateResourceId(id);
-                return new PacketCoreDataPlaneResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetPacketCoreDataPlaneResource(id);
         }
-        #endregion
 
-        #region ServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -189,16 +132,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="ServiceResource" /> object. </returns>
         public static ServiceResource GetServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceResource.ValidateResourceId(id);
-                return new ServiceResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetServiceResource(id);
         }
-        #endregion
 
-        #region SimResource
         /// <summary>
         /// Gets an object representing a <see cref="SimResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SimResource.CreateResourceIdentifier" /> to create a <see cref="SimResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -208,16 +144,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="SimResource" /> object. </returns>
         public static SimResource GetSimResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SimResource.ValidateResourceId(id);
-                return new SimResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetSimResource(id);
         }
-        #endregion
 
-        #region SimGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="SimGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SimGroupResource.CreateResourceIdentifier" /> to create a <see cref="SimGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -227,16 +156,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="SimGroupResource" /> object. </returns>
         public static SimGroupResource GetSimGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SimGroupResource.ValidateResourceId(id);
-                return new SimGroupResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetSimGroupResource(id);
         }
-        #endregion
 
-        #region SimPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="SimPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SimPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SimPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -246,16 +168,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="SimPolicyResource" /> object. </returns>
         public static SimPolicyResource GetSimPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SimPolicyResource.ValidateResourceId(id);
-                return new SimPolicyResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetSimPolicyResource(id);
         }
-        #endregion
 
-        #region SiteResource
         /// <summary>
         /// Gets an object representing a <see cref="SiteResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SiteResource.CreateResourceIdentifier" /> to create a <see cref="SiteResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -265,16 +180,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="SiteResource" /> object. </returns>
         public static SiteResource GetSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SiteResource.ValidateResourceId(id);
-                return new SiteResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetSiteResource(id);
         }
-        #endregion
 
-        #region SliceResource
         /// <summary>
         /// Gets an object representing a <see cref="SliceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SliceResource.CreateResourceIdentifier" /> to create a <see cref="SliceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -284,21 +192,15 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="SliceResource" /> object. </returns>
         public static SliceResource GetSliceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SliceResource.ValidateResourceId(id);
-                return new SliceResource(client, id);
-            }
-            );
+            return GetMobileNetworkArmClientMockingExtension(client).GetSliceResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of MobileNetworkResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MobileNetworkResources and their operations over a MobileNetworkResource. </returns>
         public static MobileNetworkCollection GetMobileNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMobileNetworks();
+            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetworks();
         }
 
         /// <summary>
@@ -322,7 +224,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<MobileNetworkResource>> GetMobileNetworkAsync(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMobileNetworks().GetAsync(mobileNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetworkAsync(mobileNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -346,7 +248,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<MobileNetworkResource> GetMobileNetwork(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMobileNetworks().Get(mobileNetworkName, cancellationToken);
+            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetwork(mobileNetworkName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PacketCoreControlPlaneResources in the ResourceGroupResource. </summary>
@@ -354,7 +256,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of PacketCoreControlPlaneResources and their operations over a PacketCoreControlPlaneResource. </returns>
         public static PacketCoreControlPlaneCollection GetPacketCoreControlPlanes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetPacketCoreControlPlanes();
+            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetPacketCoreControlPlanes();
         }
 
         /// <summary>
@@ -378,7 +280,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<PacketCoreControlPlaneResource>> GetPacketCoreControlPlaneAsync(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPacketCoreControlPlanes().GetAsync(packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
+            return await GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetPacketCoreControlPlaneAsync(packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -402,7 +304,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<PacketCoreControlPlaneResource> GetPacketCoreControlPlane(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPacketCoreControlPlanes().Get(packetCoreControlPlaneName, cancellationToken);
+            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetPacketCoreControlPlane(packetCoreControlPlaneName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SimGroupResources in the ResourceGroupResource. </summary>
@@ -410,7 +312,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of SimGroupResources and their operations over a SimGroupResource. </returns>
         public static SimGroupCollection GetSimGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSimGroups();
+            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetSimGroups();
         }
 
         /// <summary>
@@ -434,7 +336,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<SimGroupResource>> GetSimGroupAsync(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSimGroups().GetAsync(simGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetSimGroupAsync(simGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -458,7 +360,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<SimGroupResource> GetSimGroup(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSimGroups().Get(simGroupName, cancellationToken);
+            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetSimGroup(simGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -479,7 +381,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MobileNetworkResource> GetMobileNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMobileNetworksAsync(cancellationToken);
+            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetMobileNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -500,7 +402,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MobileNetworkResource> GetMobileNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMobileNetworks(cancellationToken);
+            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetMobileNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -521,7 +423,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPacketCoreControlPlanesAsync(cancellationToken);
+            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetPacketCoreControlPlanesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -542,7 +444,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetPacketCoreControlPlanes(cancellationToken);
+            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetPacketCoreControlPlanes(cancellationToken);
         }
 
         /// <summary>
@@ -563,7 +465,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SimGroupResource> GetSimGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSimGroupsAsync(cancellationToken);
+            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetSimGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -584,7 +486,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="SimGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SimGroupResource> GetSimGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSimGroups(cancellationToken);
+            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetSimGroups(cancellationToken);
         }
 
         /// <summary> Gets a collection of PacketCoreControlPlaneVersionResources in the TenantResource. </summary>
@@ -592,7 +494,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of PacketCoreControlPlaneVersionResources and their operations over a PacketCoreControlPlaneVersionResource. </returns>
         public static PacketCoreControlPlaneVersionCollection GetPacketCoreControlPlaneVersions(this TenantResource tenantResource)
         {
-            return GetTenantResourceExtensionClient(tenantResource).GetPacketCoreControlPlaneVersions();
+            return GetMobileNetworkTenantMockingExtension(tenantResource).GetPacketCoreControlPlaneVersions();
         }
 
         /// <summary>
@@ -616,7 +518,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<PacketCoreControlPlaneVersionResource>> GetPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {
-            return await tenantResource.GetPacketCoreControlPlaneVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+            return await GetMobileNetworkTenantMockingExtension(tenantResource).GetPacketCoreControlPlaneVersionAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -640,7 +542,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<PacketCoreControlPlaneVersionResource> GetPacketCoreControlPlaneVersion(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {
-            return tenantResource.GetPacketCoreControlPlaneVersions().Get(versionName, cancellationToken);
+            return GetMobileNetworkTenantMockingExtension(tenantResource).GetPacketCoreControlPlaneVersion(versionName, cancellationToken);
         }
     }
 }
