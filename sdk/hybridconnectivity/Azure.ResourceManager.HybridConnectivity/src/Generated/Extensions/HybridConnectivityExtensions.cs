@@ -11,55 +11,29 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridConnectivity.Mocking;
 
 namespace Azure.ResourceManager.HybridConnectivity
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridConnectivity. </summary>
     public static partial class HybridConnectivityExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static HybridConnectivityArmClientMockingExtension GetHybridConnectivityArmClientMockingExtension(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
+            return client.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, resource.Id);
+                return new HybridConnectivityArmClientMockingExtension(client);
             });
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
-        }
-        #region EndpointResource
-        /// <summary>
-        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
-        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                EndpointResource.ValidateResourceId(id);
-                return new EndpointResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        /// <summary> Gets a collection of EndpointResources in the ArmResource. </summary>
+        /// <summary> Gets a collection of EndpointResources in the ArmClient. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
         public static EndpointResourceCollection GetEndpointResources(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetArmResourceExtensionClient(client, scope).GetEndpointResources();
+            return GetHybridConnectivityArmClientMockingExtension(client).GetEndpointResources(scope);
         }
-
         /// <summary>
         /// Gets the endpoint to the resource.
         /// <list type="bullet">
@@ -81,9 +55,8 @@ namespace Azure.ResourceManager.HybridConnectivity
         [ForwardsClientCalls]
         public static async Task<Response<EndpointResource>> GetEndpointResourceAsync(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
-            return await client.GetEndpointResources(scope).GetAsync(endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetHybridConnectivityArmClientMockingExtension(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
         }
-
         /// <summary>
         /// Gets the endpoint to the resource.
         /// <list type="bullet">
@@ -105,7 +78,19 @@ namespace Azure.ResourceManager.HybridConnectivity
         [ForwardsClientCalls]
         public static Response<EndpointResource> GetEndpointResource(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
-            return client.GetEndpointResources(scope).Get(endpointName, cancellationToken);
+            return GetHybridConnectivityArmClientMockingExtension(client).GetEndpointResource(scope, endpointName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
+        public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetHybridConnectivityArmClientMockingExtension(client).GetEndpointResource(id);
         }
     }
 }
