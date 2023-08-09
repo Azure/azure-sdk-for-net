@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IList<ContainerAppContainer>> containers = default;
             Optional<ContainerAppScale> scale = default;
             Optional<IList<ContainerAppVolume>> volumes = default;
-            Optional<IList<ServiceBind>> serviceBinds = default;
+            Optional<IList<ContainerAppServiceBind>> serviceBinds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("revisionSuffix"u8))
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<ServiceBind> array = new List<ServiceBind>();
+                    List<ContainerAppServiceBind> array = new List<ContainerAppServiceBind>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBind.DeserializeServiceBind(item));
+                        array.Add(ContainerAppServiceBind.DeserializeContainerAppServiceBind(item));
                     }
                     serviceBinds = array;
                     continue;

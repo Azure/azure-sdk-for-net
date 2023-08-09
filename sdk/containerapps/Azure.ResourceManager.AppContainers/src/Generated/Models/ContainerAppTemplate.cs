@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             InitContainers = new ChangeTrackingList<ContainerAppInitContainer>();
             Containers = new ChangeTrackingList<ContainerAppContainer>();
             Volumes = new ChangeTrackingList<ContainerAppVolume>();
-            ServiceBinds = new ChangeTrackingList<ServiceBind>();
+            ServiceBinds = new ChangeTrackingList<ContainerAppServiceBind>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppTemplate. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="scale"> Scaling properties for the Container App. </param>
         /// <param name="volumes"> List of volume definitions for the Container App. </param>
         /// <param name="serviceBinds"> List of container app services bound to the app. </param>
-        internal ContainerAppTemplate(string revisionSuffix, long? terminationGracePeriodSeconds, IList<ContainerAppInitContainer> initContainers, IList<ContainerAppContainer> containers, ContainerAppScale scale, IList<ContainerAppVolume> volumes, IList<ServiceBind> serviceBinds)
+        internal ContainerAppTemplate(string revisionSuffix, long? terminationGracePeriodSeconds, IList<ContainerAppInitContainer> initContainers, IList<ContainerAppContainer> containers, ContainerAppScale scale, IList<ContainerAppVolume> volumes, IList<ContainerAppServiceBind> serviceBinds)
         {
             RevisionSuffix = revisionSuffix;
             TerminationGracePeriodSeconds = terminationGracePeriodSeconds;
@@ -58,6 +58,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> List of volume definitions for the Container App. </summary>
         public IList<ContainerAppVolume> Volumes { get; }
         /// <summary> List of container app services bound to the app. </summary>
-        public IList<ServiceBind> ServiceBinds { get; }
+        public IList<ContainerAppServiceBind> ServiceBinds { get; }
     }
 }

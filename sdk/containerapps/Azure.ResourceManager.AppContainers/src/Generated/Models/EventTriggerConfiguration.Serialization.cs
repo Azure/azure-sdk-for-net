@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobConfigurationEventTriggerConfig : IUtf8JsonSerializable
+    public partial class EventTriggerConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        internal static JobConfigurationEventTriggerConfig DeserializeJobConfigurationEventTriggerConfig(JsonElement element)
+        internal static EventTriggerConfiguration DeserializeEventTriggerConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             Optional<int> replicaCompletionCount = default;
             Optional<int> parallelism = default;
-            Optional<JobScale> scale = default;
+            Optional<ContainerAppJobScale> scale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replicaCompletionCount"u8))
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = JobScale.DeserializeJobScale(property.Value);
+                    scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value);
                     continue;
                 }
             }
-            return new JobConfigurationEventTriggerConfig(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value);
+            return new EventTriggerConfiguration(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value);
         }
     }
 }

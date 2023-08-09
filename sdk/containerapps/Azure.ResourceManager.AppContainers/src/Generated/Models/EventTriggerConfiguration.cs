@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Trigger configuration of an event driven job. </summary>
-    public partial class JobConfigurationEventTriggerConfig
+    public partial class EventTriggerConfiguration
     {
-        /// <summary> Initializes a new instance of JobConfigurationEventTriggerConfig. </summary>
-        public JobConfigurationEventTriggerConfig()
+        /// <summary> Initializes a new instance of EventTriggerConfiguration. </summary>
+        public EventTriggerConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of JobConfigurationEventTriggerConfig. </summary>
+        /// <summary> Initializes a new instance of EventTriggerConfiguration. </summary>
         /// <param name="replicaCompletionCount"> Minimum number of successful replica completions before overall job completion. </param>
         /// <param name="parallelism"> Number of parallel replicas of a job that can run at a given time. </param>
         /// <param name="scale"> Scaling configurations for event driven jobs. </param>
-        internal JobConfigurationEventTriggerConfig(int? replicaCompletionCount, int? parallelism, JobScale scale)
+        internal EventTriggerConfiguration(int? replicaCompletionCount, int? parallelism, ContainerAppJobScale scale)
         {
             ReplicaCompletionCount = replicaCompletionCount;
             Parallelism = parallelism;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Number of parallel replicas of a job that can run at a given time. </summary>
         public int? Parallelism { get; set; }
         /// <summary> Scaling configurations for event driven jobs. </summary>
-        public JobScale Scale { get; set; }
+        public ContainerAppJobScale Scale { get; set; }
     }
 }

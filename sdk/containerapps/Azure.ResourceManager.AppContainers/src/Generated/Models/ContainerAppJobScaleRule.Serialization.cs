@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobScaleRule : IUtf8JsonSerializable
+    public partial class ContainerAppJobScaleRule : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        internal static JobScaleRule DeserializeJobScaleRule(JsonElement element)
+        internal static ContainerAppJobScaleRule DeserializeContainerAppJobScaleRule(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new JobScaleRule(name.Value, type.Value, metadata.Value, Optional.ToList(auth));
+            return new ContainerAppJobScaleRule(name.Value, type.Value, metadata.Value, Optional.ToList(auth));
         }
     }
 }

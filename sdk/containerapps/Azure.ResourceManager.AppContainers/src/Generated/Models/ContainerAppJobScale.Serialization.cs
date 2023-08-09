@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class JobScale : IUtf8JsonSerializable
+    public partial class ContainerAppJobScale : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PollingInterval))
+            if (Optional.IsDefined(PollingIntervalInSeconds))
             {
                 writer.WritePropertyName("pollingInterval"u8);
-                writer.WriteNumberValue(PollingInterval.Value);
+                writer.WriteNumberValue(PollingIntervalInSeconds.Value);
             }
             if (Optional.IsDefined(MinExecutions))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        internal static JobScale DeserializeJobScale(JsonElement element)
+        internal static ContainerAppJobScale DeserializeContainerAppJobScale(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> pollingInterval = default;
             Optional<int> minExecutions = default;
             Optional<int> maxExecutions = default;
-            Optional<IList<JobScaleRule>> rules = default;
+            Optional<IList<ContainerAppJobScaleRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pollingInterval"u8))
@@ -89,16 +89,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<JobScaleRule> array = new List<JobScaleRule>();
+                    List<ContainerAppJobScaleRule> array = new List<ContainerAppJobScaleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobScaleRule.DeserializeJobScaleRule(item));
+                        array.Add(ContainerAppJobScaleRule.DeserializeContainerAppJobScaleRule(item));
                     }
                     rules = array;
                     continue;
                 }
             }
-            return new JobScale(Optional.ToNullable(pollingInterval), Optional.ToNullable(minExecutions), Optional.ToNullable(maxExecutions), Optional.ToList(rules));
+            return new ContainerAppJobScale(Optional.ToNullable(pollingInterval), Optional.ToNullable(minExecutions), Optional.ToNullable(maxExecutions), Optional.ToList(rules));
         }
     }
 }

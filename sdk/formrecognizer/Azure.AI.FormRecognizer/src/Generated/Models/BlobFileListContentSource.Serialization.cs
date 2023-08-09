@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    public partial class AzureBlobFileListSource : IUtf8JsonSerializable
+    public partial class BlobFileListContentSource : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteEndObject();
         }
 
-        internal static AzureBlobFileListSource DeserializeAzureBlobFileListSource(JsonElement element)
+        internal static BlobFileListContentSource DeserializeBlobFileListContentSource(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -44,7 +44,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new AzureBlobFileListSource(containerUrl, fileList);
+            return new BlobFileListContentSource(containerUrl, fileList);
         }
     }
 }
