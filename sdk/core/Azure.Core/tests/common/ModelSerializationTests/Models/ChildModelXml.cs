@@ -10,7 +10,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
+namespace Azure.Core.Tests.ModelSerializationTests.Models
 {
     [XmlRoot("ChildTag")]
     public class ChildModelXml : IXmlSerializable, IModelSerializable<ChildModelXml>, IModelJsonSerializable<ChildModelXml>, IUtf8JsonSerializable

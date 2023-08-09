@@ -10,6 +10,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Azure.Core.Serialization;
+using Azure.Core.Tests.ModelSerializationTests.Models;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
@@ -105,7 +106,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 writer.WriteStringValue(ReadOnlyProperty);
             }
             writer.WritePropertyName("childTag"u8);
-            writer.WriteObjectValue(ChildModelXml);
+            ((IModelJsonSerializable<ChildModelXml>)ChildModelXml).Serialize(writer, options);
             writer.WriteEndObject();
         }
 
@@ -187,7 +188,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 }
                 if (property.NameEquals("childTag"u8))
                 {
-                    childModelXml = ChildModelXml.DeserializeChildModelXml(property.Value, options);
+                    childModelXml = ModelSerializer.Deserialize<ChildModelXml>(BinaryData.FromString(property.Value.GetRawText()), options);// ChildModelXml.DeserializeChildModelXml(property.Value, options);
                     continue;
                 }
             }

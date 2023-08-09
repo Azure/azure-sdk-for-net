@@ -3,7 +3,7 @@
 
 using System;
 using Azure.Core.Serialization;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
+using Azure.Core.Tests.ModelSerializationTests.Models;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.ModelSerialization

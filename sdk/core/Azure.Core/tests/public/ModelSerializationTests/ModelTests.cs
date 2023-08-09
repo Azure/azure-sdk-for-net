@@ -215,6 +215,26 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         }
 
         [Test]
+        public void ThrowsIfWireIsNotJson()
+        {
+            if (ModelInstance is IModelJsonSerializable<T> jsonModel && IsXmlWireFormat)
+            {
+                Assert.Throws<InvalidOperationException>(() => jsonModel.Serialize(new Utf8JsonWriter(new MemoryStream()), new ModelSerializerOptions(ModelSerializerFormat.Wire)));
+                Utf8JsonReader reader = new Utf8JsonReader(new byte[] { });
+                bool exceptionCaught = false;
+                try
+                {
+                    jsonModel.Deserialize(ref reader, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+                }
+                catch (InvalidOperationException)
+                {
+                    exceptionCaught = true;
+                }
+                Assert.IsTrue(exceptionCaught, "Expected InvalidOperationException to be thrown when deserializing wire format as json");
+            }
+        }
+
+        [Test]
         public void CastNull()
         {
             T model = null;

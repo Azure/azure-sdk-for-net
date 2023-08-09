@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
+namespace Azure.Core.Tests.ModelSerializationTests.Models
 {
     internal class UnknownBaseModel : BaseModel, IUtf8JsonSerializable, IModelJsonSerializable<BaseModel>
     {

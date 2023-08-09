@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Common;
+using Azure.Core.Tests.ModelSerializationTests.Models;
 using Azure.Core.Tests.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -23,6 +24,22 @@ namespace Azure.Core.Tests.ModelSerialization
         private const int _modelSize = 156000;
         private static readonly string _json = File.ReadAllText(TestData.GetLocation("ResourceProviderData.json"));
         private static readonly ResourceProviderData _resourceProviderData = ModelSerializer.Deserialize<ResourceProviderData>(BinaryData.FromString(_json));
+
+        [Test]
+        public void ThrowsIfUnsupportedFormat()
+        {
+            ModelXml model = ModelSerializer.Deserialize<ModelXml>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelXml.xml"))));
+            ModelWriter writer = new ModelWriter(model, new ModelSerializerOptions("x"));
+            Assert.Throws<NotSupportedException>(() => writer.ToBinaryData());
+        }
+
+        [Test]
+        public void ThrowsIfMismatch()
+        {
+            ModelXml model = ModelSerializer.Deserialize<ModelXml>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelXml.xml"))));
+            ModelWriter writer = new ModelWriter(model, ModelSerializerOptions.DefaultWireOptions);
+            Assert.Throws<InvalidOperationException>(() => writer.ToBinaryData());
+        }
 
         [Test]
         public async Task HappyPath()
