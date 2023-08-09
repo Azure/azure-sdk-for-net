@@ -29,6 +29,11 @@ namespace Azure
                     _object = TypeFlags.Boolean;
                     _union.Boolean = b;
                     break;
+                case null:
+                    this = default;
+                    _object = null;
+                    _union = default;
+                    break;
                 default:
                     _object = value;
                     _union = default;
@@ -205,6 +210,7 @@ namespace Azure
 
         // TODO: Can we remove these?  The reason to consider this is to be able
         // to assign null without ambiguity.
+
         ///// <summary>
         ///// TBD.
         ///// </summary>
@@ -222,6 +228,7 @@ namespace Azure
         //        _object = null;
         //    }
         //}
+
         /// <summary>
         /// TBD.
         /// </summary>

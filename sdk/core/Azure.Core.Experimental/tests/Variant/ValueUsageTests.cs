@@ -35,6 +35,19 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
+        public void CanSetValuePropertyToString()
+        {
+            ValueModel model = new ValueModel();
+
+            model.Value = "hi";
+
+            Assert.IsTrue("hi" == model.Value);
+            Assert.IsTrue(model.Value == "hi");
+
+            Assert.AreEqual("hi", (string)model.Value);
+        }
+
+        [Test]
         public void CanSetNullablePrimitives()
         {
             ValueModel model = new ValueModel();
@@ -81,19 +94,6 @@ namespace Azure.Core.Experimental.Tests
 
             // TODO: This fails currently, but it would be nice to get consistency with DynamicData
             Assert.IsNull(model.Value);
-        }
-
-        [Test]
-        public void CanSetValuePropertyToString()
-        {
-            ValueModel model = new ValueModel();
-
-            model.Value = "hi";
-
-            Assert.IsTrue("hi" == model.Value);
-            Assert.IsTrue(model.Value == "hi");
-
-            Assert.AreEqual("hi", (string)model.Value);
         }
 
         [Test]
