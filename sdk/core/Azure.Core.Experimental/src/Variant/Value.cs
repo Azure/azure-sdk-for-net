@@ -219,7 +219,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator bool(in Value value) => value.As<bool>();
+        public static implicit operator bool(in Value value) => value.As<bool>();
         /// <summary>
         /// TBD.
         /// </summary>
@@ -229,7 +229,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator bool?(in Value value) => value.As<bool?>();
+        public static implicit operator bool?(in Value value) => value.As<bool?>();
         #endregion
 
         #region Char
@@ -373,7 +373,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator int(in Value value) => value.As<int>();
+        public static implicit operator int(in Value value) => value.As<int>();
 
         /// <summary>
         /// TBD.
@@ -385,7 +385,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator int?(in Value value) => value.As<int?>();
+        public static implicit operator int?(in Value value) => value.As<int?>();
         #endregion
 
         #region Int64
@@ -428,7 +428,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator long(in Value value) => value.As<long>();
+        public static implicit operator long(in Value value) => value.As<long>();
 
         /// <summary>
         /// TBD.
@@ -440,7 +440,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         /// <param name="value"></param>
-        public static explicit operator long?(in Value value) => value.As<long?>();
+        public static implicit operator long?(in Value value) => value.As<long?>();
         #endregion
 
         #region UInt16
@@ -949,6 +949,20 @@ namespace Azure
         /// </summary>
         /// <param name="value"></param>
         public static explicit operator decimal?(in Value value) => value.As<decimal?>();
+        #endregion
+
+        #region String
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="value"></param>
+        public static implicit operator Value(string? value) => new(value);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="value"></param>
+        public static implicit operator string?(in Value value) => value.As<string?>();
         #endregion
 
         #region T
