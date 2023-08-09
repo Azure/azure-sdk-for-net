@@ -16,13 +16,11 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             Kind = "Unknown";
         }
 
-        internal UnknownBaseModel(string kind, string name, IList<string> fields, Dictionary<string, int> keyValuePairs, Dictionary<string, BinaryData> rawData)
+        internal UnknownBaseModel(string kind, string name, Dictionary<string, BinaryData> rawData)
             : base(rawData)
         {
             Kind = kind;
             Name = name;
-            Fields = fields;
-            KeyValuePairs = keyValuePairs;
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
@@ -44,6 +42,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+
             if (options.Format == ModelSerializerFormat.Json)
             {
                 SerializeRawData(writer);

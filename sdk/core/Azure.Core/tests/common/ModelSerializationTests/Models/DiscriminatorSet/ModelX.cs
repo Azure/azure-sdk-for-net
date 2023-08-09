@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
@@ -16,15 +17,20 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             Kind = "X";
         }
 
-        internal ModelX(string kind, string name, int xProperty, Dictionary<string, BinaryData> rawData)
+        internal ModelX(string kind, string name, int xProperty, List<string> fields, Dictionary<string, int> keyValuePairs, Dictionary<string, BinaryData> rawData)
             : base(rawData)
         {
             Kind = kind;
             Name = name;
             XProperty = xProperty;
+            Fields = fields;
+            KeyValuePairs = keyValuePairs;
         }
 
         public int XProperty { get; private set; }
+        public IList<string> Fields { get; internal set; }
+        public string NullProperty = null;
+        public Dictionary<string, int> KeyValuePairs = new Dictionary<string, int>();
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<ModelX>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
@@ -56,6 +62,31 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+
+            writer.WritePropertyName("fields"u8);
+            writer.WriteStartArray();
+            foreach (string field in Fields)
+            {
+                writer.WriteStringValue(field);
+            }
+            writer.WriteEndArray();
+
+            writer.WritePropertyName("nullProperty"u8);
+            writer.WriteStringValue(NullProperty);
+
+            writer.WritePropertyName("keyValuePairs"u8);
+            writer.WriteStartArray();
+            foreach (KeyValuePair<string, int> keyValuePair in KeyValuePairs)
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("key"u8);
+                writer.WriteStringValue(keyValuePair.Key);
+                writer.WritePropertyName("value"u8);
+                writer.WriteNumberValue(keyValuePair.Value);
+                writer.WriteEndObject();
+            }
+            writer.WriteEndArray();
+
             if (options.Format == ModelSerializerFormat.Json)
             {
                 writer.WritePropertyName("xProperty"u8);
@@ -79,7 +110,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             string kind = default;
             Optional<string> name = default;
             int xProperty = default;
+            List<string> fields = default;
+            Dictionary<string, int> keyValuePairs = new Dictionary<string, int>();
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -92,6 +126,24 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("fields"u8))
+                {
+                    fields = property.Value.EnumerateArray().Select(element => element.GetString()).ToList();
+                    continue;
+                }
+                if (property.NameEquals("nullProperty"u8))
+                {
+                    continue;
+                }
+                if (property.NameEquals("keyValuePairs"u8))
+                {
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
+                    }
+                    keyValuePairs = dictionary;
+                }
                 if (property.NameEquals("xProperty"u8))
                 {
                     xProperty = property.Value.GetInt32();
@@ -103,7 +155,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ModelX(kind, name, xProperty, rawData);
+            return new ModelX(kind, name, xProperty, fields, keyValuePairs, rawData);
         }
 
         ModelX IModelSerializable<ModelX>.Deserialize(BinaryData data, ModelSerializerOptions options)
