@@ -9,7 +9,7 @@ namespace Azure.Core.Serialization
     /// Allows an object to control its own serialization and deserialization.
     /// The format of the serialization is determined by the implementer.
     /// </summary>
-    /// <typeparam name="T">The type to deserialize the value into.</typeparam>
+    /// <typeparam name="T">The type the serialized value can be deserialized to.</typeparam>
     public interface IModelSerializable<out T>
     {
         /// <summary>
