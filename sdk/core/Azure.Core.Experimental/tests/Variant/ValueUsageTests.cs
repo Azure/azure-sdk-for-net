@@ -155,10 +155,6 @@ namespace Azure.Core.Experimental.Tests
         {
             public Value Value { get; set; }
         }
-
-        internal class PropertyBag : Dictionary<string, Value>
-        {
-        }
         #endregion
     }
 }
