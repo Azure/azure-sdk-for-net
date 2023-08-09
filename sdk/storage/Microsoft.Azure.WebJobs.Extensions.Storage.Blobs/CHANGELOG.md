@@ -1,15 +1,9 @@
 # Release History
 
-## 5.2.0-beta.1 (Unreleased)
+## 5.2.0-beta.1 (2023-08-10)
 
 ### Features Added
 - Added support for `BlobsOptions.MaxDequeueCount`
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 5.1.3 (2023-06-26)
 - Loosen parameter binding data parsing and validation to allow binding BlobContainerClient without blob name. (#37124)
