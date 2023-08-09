@@ -527,7 +527,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 DataTransferOptions transferOptions = new DataTransferOptions();
                 transferOptions.TransferStatusChanged += (TransferStatusEventArgs args) =>
                 {
-                    if (args.StorageTransferStatus == DataTransferStatus.Completed)
+                    if (args.StorageTransferStatus == DataTransferStatus.TransferState.Completed)
                     {
                         using (StreamWriter logStream = File.AppendText(logFile))
                         {
@@ -713,7 +713,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion
 
                 Assert.IsTrue(await destinationAppendBlobClient.ExistsAsync());
-                Assert.AreEqual(dataTransfer.TransferStatus, DataTransferStatus.Completed);
+                Assert.AreEqual(dataTransfer.TransferStatus, DataTransferStatus.TransferState.Completed);
             }
             finally
             {

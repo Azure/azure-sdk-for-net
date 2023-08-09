@@ -257,7 +257,7 @@ namespace Azure.Storage.DataMovement
         /// If specified, the returned list of transfers will have only have the transfers
         /// of which match the status specified.
         ///
-        /// If not specified or specified to <see cref="DataTransferStatus.None"/>,
+        /// If not specified or specified to <see cref="DataTransferStatus.TransferState.None"/>,
         /// all transfers will be returned regardless of status.
         /// </param>
         /// <returns></returns>
@@ -300,7 +300,7 @@ namespace Azure.Storage.DataMovement
                     _cancellationToken).ConfigureAwait(false);
 
                 // Transfers marked as fully completed are not resumable
-                if (jobStatus == DataTransferStatus.Completed)
+                if (jobStatus.State == DataTransferStatus.TransferState.Completed)
                 {
                     continue;
                 }

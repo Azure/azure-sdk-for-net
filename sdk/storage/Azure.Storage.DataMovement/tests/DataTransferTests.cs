@@ -30,12 +30,12 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [TestCase(DataTransferStatus.None)]
+        [TestCase(DataTransferStatus.TransferState.None)]
         [TestCase(DataTransferStatus.Queued)]
         [TestCase(DataTransferStatus.InProgress)]
-        [TestCase(DataTransferStatus.PauseInProgress)]
+        [TestCase(DataTransferStatus.TransferState.Pausing)]
         [TestCase(DataTransferStatus.CancellationInProgress)]
-        [TestCase(DataTransferStatus.Paused)]
+        [TestCase(DataTransferStatus.TransferState.Paused)]
         public void HasCompleted_False(DataTransferStatus status)
         {
             // Arrange
@@ -55,9 +55,9 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        [TestCase(DataTransferStatus.Completed)]
-        [TestCase(DataTransferStatus.CompletedWithSkippedTransfers)]
-        [TestCase(DataTransferStatus.CompletedWithFailedTransfers)]
+        [TestCase(DataTransferStatus.TransferState.Completed)]
+        [TestCase(DataTransferStatus.TransferState.CompletedWithSkippedTransfers)]
+        [TestCase(DataTransferStatus.TransferState.CompletedWithFailedTransfers)]
         public void HasCompleted_True(DataTransferStatus status)
         {
             // Arrange
@@ -86,7 +86,7 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
                 transferManager: transferManager,
-                status: DataTransferStatus.Completed);
+                status: DataTransferStatus.TransferState.Completed);
 
             // Act
             transfer.WaitForCompletion();
@@ -125,7 +125,7 @@ namespace Azure.Storage.DataMovement.Tests
             DataTransfer transfer = new DataTransfer(
                 id: transferId,
                 transferManager: transferManager,
-                status: DataTransferStatus.Completed);
+                status: DataTransferStatus.TransferState.Completed);
 
             // Act
             await transfer.WaitForCompletionAsync();
@@ -167,25 +167,25 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             Task pauseTask = transfer.PauseAsync();
 
-            Assert.AreEqual(DataTransferStatus.PauseInProgress, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Pausing, transfer.TransferStatus);
 
             // Assert
-            if (!transfer._state.TrySetTransferStatus(DataTransferStatus.Paused))
+            if (!transfer._state.TrySetTransferStatus(DataTransferStatus.TransferState.Paused))
             {
                 Assert.Fail("Unable to set the transfer status internally to the DataTransfer.");
             }
 
             await pauseTask;
 
-            Assert.AreEqual(DataTransferStatus.Paused, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Paused, transfer.TransferStatus);
             Assert.IsFalse(transfer.HasCompleted);
         }
 
         [Test]
-        [TestCase(DataTransferStatus.Paused)]
-        [TestCase(DataTransferStatus.Completed)]
-        [TestCase(DataTransferStatus.CompletedWithSkippedTransfers)]
-        [TestCase(DataTransferStatus.CompletedWithFailedTransfers)]
+        [TestCase(DataTransferStatus.TransferState.Paused)]
+        [TestCase(DataTransferStatus.TransferState.Completed)]
+        [TestCase(DataTransferStatus.TransferState.CompletedWithSkippedTransfers)]
+        [TestCase(DataTransferStatus.TransferState.CompletedWithFailedTransfers)]
         public async Task TryPauseAsync_AlreadyPaused(DataTransferStatus status)
         {
             // Arrange
@@ -221,7 +221,7 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 Assert.AreEqual(exception.Message, "The operation was canceled.");
             }
-            Assert.AreEqual(DataTransferStatus.PauseInProgress, transfer.TransferStatus);
+            Assert.AreEqual(DataTransferStatus.TransferState.Pausing, transfer.TransferStatus);
             Assert.IsFalse(transfer.HasCompleted);
         }
     }

@@ -108,7 +108,7 @@ namespace Azure.Storage.DataMovement
                 bool isFinalPartFound = false;
                 foreach (JobPartInternal part in _jobParts)
                 {
-                    if (part.JobPartStatus != DataTransferStatus.Completed)
+                    if (part.JobPartStatus != DataTransferStatus.TransferState.Completed)
                     {
                         part.JobPartStatus = DataTransferStatus.Queued;
                         yield return part;

@@ -85,9 +85,9 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         [TestCase(DataTransferStatus.Queued)]
         [TestCase(DataTransferStatus.InProgress)]
-        [TestCase(DataTransferStatus.Paused)]
-        [TestCase(DataTransferStatus.Completed)]
-        [TestCase(DataTransferStatus.CompletedWithFailedTransfers)]
+        [TestCase(DataTransferStatus.TransferState.Paused)]
+        [TestCase(DataTransferStatus.TransferState.Completed)]
+        [TestCase(DataTransferStatus.TransferState.CompletedWithFailedTransfers)]
         public async Task GetTransfers_Filtered(DataTransferStatus status)
         {
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -100,13 +100,13 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewDataTransfer(DataTransferStatus.Queued),
                 GetNewDataTransfer(DataTransferStatus.InProgress),
                 GetNewDataTransfer(DataTransferStatus.InProgress),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.Completed),
-                GetNewDataTransfer(DataTransferStatus.Completed),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Paused),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Paused),
+                GetNewDataTransfer(DataTransferStatus.TransferState.CompletedWithFailedTransfers),
+                GetNewDataTransfer(DataTransferStatus.TransferState.CompletedWithFailedTransfers),
+                GetNewDataTransfer(DataTransferStatus.TransferState.CompletedWithFailedTransfers),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Completed),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Completed),
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
@@ -133,14 +133,14 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewDataTransfer(DataTransferStatus.Queued),
                 GetNewDataTransfer(DataTransferStatus.InProgress),
                 GetNewDataTransfer(DataTransferStatus.InProgress),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.Completed),
-                GetNewDataTransfer(DataTransferStatus.Completed),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithSkippedTransfers)
+                GetNewDataTransfer(DataTransferStatus.TransferState.Paused),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Paused),
+                GetNewDataTransfer(DataTransferStatus.TransferState.CompletedWithFailedTransfers),
+                GetNewDataTransfer(DataTransferStatus.TransferState.CompletedWithFailedTransfers),
+                GetNewDataTransfer(DataTransferStatus.TransferState.CompletedWithFailedTransfers),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Completed),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Completed),
+                GetNewDataTransfer(DataTransferStatus.TransferState.CompletedWithSkippedTransfers)
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
@@ -148,9 +148,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             DataTransferStatus[] statuses = new DataTransferStatus[] {
-                DataTransferStatus.Completed,
-                DataTransferStatus.CompletedWithFailedTransfers,
-                DataTransferStatus.CompletedWithSkippedTransfers };
+                DataTransferStatus.TransferState.Completed,
+                DataTransferStatus.TransferState.CompletedWithFailedTransfers,
+                DataTransferStatus.TransferState.CompletedWithSkippedTransfers };
             IList<DataTransfer> result = await manager.GetTransfersAsync(statuses).ToListAsync();
 
             // Assert
@@ -170,13 +170,13 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewDataTransfer(DataTransferStatus.Queued),
                 GetNewDataTransfer(DataTransferStatus.InProgress),
                 GetNewDataTransfer(DataTransferStatus.InProgress),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.Paused),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.CompletedWithFailedTransfers),
-                GetNewDataTransfer(DataTransferStatus.Completed),
-                GetNewDataTransfer(DataTransferStatus.Completed),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Paused),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Paused),
+                GetNewDataTransfer(DataTransferStatus.TransferState.CompletedWithFailedTransfers),
+                GetNewDataTransfer(DataTransferStatus.TransferState.CompletedWithFailedTransfers),
+                GetNewDataTransfer(DataTransferStatus.TransferState.CompletedWithFailedTransfers),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Completed),
+                GetNewDataTransfer(DataTransferStatus.TransferState.Completed),
             };
             TransferManagerFactory factory =
                 new TransferManagerFactory(GetDefaultManagerOptions(testDirectory.DirectoryPath));
@@ -274,7 +274,7 @@ namespace Azure.Storage.DataMovement.Tests
                 test.DirectoryPath,
                 transferId1,
                 3 /* jobPartCount */,
-                DataTransferStatus.Completed);
+                DataTransferStatus.TransferState.Completed);
 
             string transferId2 = Guid.NewGuid().ToString();
             factory.CreateStubJobPartPlanFilesAsync(

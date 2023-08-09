@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Azure.Storage.DataMovement
@@ -8,59 +9,103 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the status of the Transfer Job.
     /// </summary>
-    public enum DataTransferStatus
+    public class DataTransferStatus
     {
         /// <summary>
-        /// Default value.
-        /// Equivalent to <see cref="DataTransferStatus.None"/>.
+        /// Defines the types of the state a transfer can have.
         /// </summary>
-        None = 0,
+        public enum TransferState
+        {
+            /// <summary>
+            /// Default value.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// The transfer has been queued up but has not yet started.
+            /// </summary>
+            Queued,
+
+            /// <summary>
+            /// The transfer has started, but has not yet completed.
+            /// </summary>
+            InProgress,
+
+            /// <summary>
+            /// The transfer has started and is in the process of being paused.
+            ///
+            /// Transfer can be stopped if  <see cref="TransferManager.PauseTransferIfRunningAsync(string, System.Threading.CancellationToken)"/>
+            /// or <see cref="DataTransfer.PauseAsync(CancellationToken)"/> is called.
+            /// </summary>
+            Pausing, // (Used to be PauseInProgress)
+
+            /// <summary>
+            /// The transfer has started and is in the process of being stopped.
+            ///
+            /// Transfer can be stopped if <see cref="DataTransferErrorMode.StopOnAnyFailure"/> is
+            /// enabled in the <see cref="TransferManagerOptions.ErrorHandling"/>.
+            /// </summary>
+            Stopping, // (Used to be CancellationInProgress)
+
+            /// <summary>
+            /// The transfer has been paused. When transfer is paused
+            /// (e.g. see <see cref="TransferManager.PauseTransferIfRunningAsync(string, System.Threading.CancellationToken)"/>)
+            /// during the transfer, this will be the value.
+            /// </summary>
+            Paused,
+
+            /// <summary>
+            /// The transfer has come to a completed state. If the transfer has started and
+            /// has fully stopped will also come to this state.
+            /// </summary>
+            Completed
+        }
 
         /// <summary>
-        /// The Job has been queued up but has not yet begun any transfers.
-        /// Equivalent to <see cref="DataTransferStatus.Queued"/>.
-        /// </summary>
-        Queued = 1,
-
-        /// <summary>
-        /// The Job has started, but has not yet completed.
-        /// Equivalent to <see cref="DataTransferStatus.InProgress"/>.
-        /// </summary>
-        InProgress = 2,
-
-        /// <summary>
-        /// The Job has been paused. When transfer is paused (e.g. see <see cref="TransferManager.PauseTransferIfRunningAsync(string, System.Threading.CancellationToken)"/>) during the transfer,
-        /// this will be the value.
+        /// Represents if transfer has any failure items.
         ///
-        /// This status is a resumable state, only
-        /// transfers that failed will be retried when <see cref="TransferManager.StartTransferAsync(StorageResource, StorageResource, DataTransferOptions, CancellationToken)"/>
-        /// with the respective transfer ID to resume.
+        /// If set to `true`, the transfer has at least one failure item.
+        /// If set to `false`, the transfer currently has no failures.
         /// </summary>
-        Paused = 3,
+        public bool HasFailureItems { get; internal set; }
 
         /// <summary>
-        /// The Job has completed successfully with no failures or skips.
+        /// Represents if transfer has any skipped items.
+        ///
+        /// If set to `true`, the transfer has at least one item it has skipped.
+        /// If set to `false`, the transfer currently has no items that has been skipped.
+        ///
+        /// It's possible to never have any items skipped if
+        /// <see cref="StorageResourceCreationPreference.SkipIfExists"/> is not enabled in the <see cref="DataTransferOptions.CreationPreference"/>.
         /// </summary>
-        Completed = 4,
+        public bool HasSkippedItems { get; internal set; }
 
         /// <summary>
-        /// The Job has been completed with at least one skipped transfer.
+        /// Defines the state of the transfer.
         /// </summary>
-        CompletedWithSkippedTransfers = 5,
+        public TransferState State { get; internal set; }
 
         /// <summary>
-        /// The Job has been completed with at least one failed transfer.
+        /// Constructor to set the initial state to <see cref="TransferState.Queued"/> with no failures or skipped items.
         /// </summary>
-        CompletedWithFailedTransfers = 6,
+        protected internal DataTransferStatus()
+        {
+            State = TransferState.Queued;
+            HasFailureItems = false;
+            HasSkippedItems = false;
+        }
 
         /// <summary>
-        /// A pause was called on the transfer job and is in progress.
+        /// Constructor to have a custom state, failure state, and skipped state.
         /// </summary>
-        PauseInProgress = 7,
+        protected internal DataTransferStatus(TransferState state, bool hasFailureItems, bool hasSkippedItems)
+        {
+            State = state;
+            HasFailureItems = hasFailureItems;
+            HasSkippedItems = hasSkippedItems;
+        }
 
-        /// <summary>
-        /// A pause was called on the transfer job and is in progress.
-        /// </summary>
-        CancellationInProgress = 8,
-    };
+        internal bool IsCompletedWithFailedItems => State.Equals(TransferState.Completed) && HasFailureItems;
+        internal bool IsCompletedWithSkippedItems => State.Equals(TransferState.Completed) && HasSkippedItems;
+    }
 }
