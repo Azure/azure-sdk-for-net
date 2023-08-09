@@ -11,10 +11,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     public enum MobileNetworkCoreNetworkType
     {
         /// <summary> 5G core. </summary>
-        FiveGC = "5GC",
+        FiveGC,
         /// <summary> EPC / 4G core. </summary>
-        Epc = "EPC",
+        Epc,
         /// <summary> Combined EPC / 4G and 5G core. </summary>
-        Epc5GC = "EPC + 5GC"
+        Epc5GC
     }
 }
