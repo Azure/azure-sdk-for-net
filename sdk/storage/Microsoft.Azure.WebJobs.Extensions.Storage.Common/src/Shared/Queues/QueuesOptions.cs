@@ -140,15 +140,14 @@ namespace Microsoft.Azure.WebJobs.Host
         }
 
         /// <summary>
-        /// Gets or sets the number of times to try processing a given blob before adding a message to a
-        /// storage queue named, webjobs-blobtrigger-poison.
-        ///
-        /// If not specified, will default to 5.
-        ///
-        /// See <see href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger#poison-blobs">
-        /// Poison Blobs
-        /// </see>.
+        /// Gets or sets the number of times to try processing a message before moving it to the poison queue (where
+        /// possible).
         /// </summary>
+        /// <remarks>
+        /// Some queues do not have corresponding poison queues, and this property does not apply to them. Specifically,
+        /// there are no corresponding poison queues for any queue whose name already ends in "-poison" or any queue
+        /// whose name is already too long to add a "-poison" suffix.
+        /// </remarks>
         public int MaxDequeueCount
         {
             get { return _maxDequeueCount; }
