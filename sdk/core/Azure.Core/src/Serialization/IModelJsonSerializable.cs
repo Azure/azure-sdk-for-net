@@ -6,7 +6,7 @@ using System.Text.Json;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Indicates that the implementer can be serialized and deserialized as JSON.
+    /// Allows an object to control its own JSON serialization and deserialization.
     /// </summary>
     /// <typeparam name="T">The type to deserialize the JSON value into.</typeparam>
     public interface IModelJsonSerializable<out T> : IModelSerializable<T>
