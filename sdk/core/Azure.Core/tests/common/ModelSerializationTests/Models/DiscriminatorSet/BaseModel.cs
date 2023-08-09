@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core.Serialization;
+using Azure.Core.Tests.ResourceManager.Resources.Models;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 {
@@ -30,6 +32,9 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public string Kind { get; internal set; }
         public string Name { get; set; }
+        public IList<string> Fields { get; internal set; }
+        public string NullProperty = null;
+        public Dictionary<string, int> KeyValuePairs = new Dictionary<string, int> { { "key1", 1 }, { "key2", 2 } };
 
         protected internal void SerializeRawData(Utf8JsonWriter writer)
         {
@@ -64,6 +69,31 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+
+            writer.WritePropertyName("fields"u8);
+            writer.WriteStartArray();
+            foreach (string field in Fields)
+            {
+                writer.WriteStringValue(field);
+            }
+            writer.WriteEndArray();
+
+            writer.WritePropertyName("nullProperty"u8);
+            writer.WriteStringValue(NullProperty);
+
+            writer.WritePropertyName("keyValuePairs"u8);
+            writer.WriteStartArray();
+            foreach (KeyValuePair<string, int> keyValuePair in KeyValuePairs)
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("key"u8);
+                writer.WriteStringValue(keyValuePair.Key);
+                writer.WritePropertyName("value"u8);
+                writer.WriteNumberValue(keyValuePair.Value);
+                writer.WriteEndObject();
+            }
+            writer.WriteEndArray();
+
             if (options.Format == ModelSerializerFormat.Json)
             {
                 SerializeRawData(writer);
@@ -96,6 +126,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             //Deserialize unknown subtype
             string kind = default;
             Optional<string> name = default;
+            List<string> fields = default;
+            Dictionary<string, int> keyValuePairs = new Dictionary<string, int>();
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
@@ -109,13 +141,31 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("fields"u8))
+                {
+                    fields = property.Value.EnumerateArray().Select(element => element.GetString()).ToList();
+                    continue;
+                }
+                if (property.NameEquals("nullProperty"u8))
+                {
+                    continue;
+                }
+                if (property.NameEquals("keyValuePairs"u8))
+                {
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
+                    }
+                    keyValuePairs = dictionary;
+                }
                 if (options.Format == ModelSerializerFormat.Json)
                 {
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new UnknownBaseModel(kind, name, rawData);
+            return new UnknownBaseModel(kind, name, fields, keyValuePairs, rawData);
         }
 
         BaseModel IModelSerializable<BaseModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
