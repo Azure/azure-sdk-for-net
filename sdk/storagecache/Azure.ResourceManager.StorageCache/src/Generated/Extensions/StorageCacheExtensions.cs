@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.StorageCache.Mocking;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.StorageCache
     /// <summary> A class to add extension methods to Azure.ResourceManager.StorageCache. </summary>
     public static partial class StorageCacheExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static StorageCacheArmClientMockingExtension GetStorageCacheArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new StorageCacheArmClientMockingExtension(client);
+            });
+        }
+
+        private static StorageCacheResourceGroupMockingExtension GetStorageCacheResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new StorageCacheResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static StorageCacheSubscriptionMockingExtension GetStorageCacheSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new StorageCacheSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region AmlFileSystemResource
         /// <summary>
         /// Gets an object representing an <see cref="AmlFileSystemResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="AmlFileSystemResource.CreateResourceIdentifier" /> to create an <see cref="AmlFileSystemResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> Returns a <see cref="AmlFileSystemResource" /> object. </returns>
         public static AmlFileSystemResource GetAmlFileSystemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                AmlFileSystemResource.ValidateResourceId(id);
-                return new AmlFileSystemResource(client, id);
-            }
-            );
+            return GetStorageCacheArmClientMockingExtension(client).GetAmlFileSystemResource(id);
         }
-        #endregion
 
-        #region StorageCacheResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageCacheResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageCacheResource.CreateResourceIdentifier" /> to create a <see cref="StorageCacheResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> Returns a <see cref="StorageCacheResource" /> object. </returns>
         public static StorageCacheResource GetStorageCacheResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageCacheResource.ValidateResourceId(id);
-                return new StorageCacheResource(client, id);
-            }
-            );
+            return GetStorageCacheArmClientMockingExtension(client).GetStorageCacheResource(id);
         }
-        #endregion
 
-        #region StorageTargetResource
         /// <summary>
         /// Gets an object representing a <see cref="StorageTargetResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="StorageTargetResource.CreateResourceIdentifier" /> to create a <see cref="StorageTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,21 +77,15 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> Returns a <see cref="StorageTargetResource" /> object. </returns>
         public static StorageTargetResource GetStorageTargetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageTargetResource.ValidateResourceId(id);
-                return new StorageTargetResource(client, id);
-            }
-            );
+            return GetStorageCacheArmClientMockingExtension(client).GetStorageTargetResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of AmlFileSystemResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AmlFileSystemResources and their operations over a AmlFileSystemResource. </returns>
         public static AmlFileSystemCollection GetAmlFileSystems(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAmlFileSystems();
+            return GetStorageCacheResourceGroupMockingExtension(resourceGroupResource).GetAmlFileSystems();
         }
 
         /// <summary>
@@ -136,7 +109,7 @@ namespace Azure.ResourceManager.StorageCache
         [ForwardsClientCalls]
         public static async Task<Response<AmlFileSystemResource>> GetAmlFileSystemAsync(this ResourceGroupResource resourceGroupResource, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetAmlFileSystems().GetAsync(amlFileSystemName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageCacheResourceGroupMockingExtension(resourceGroupResource).GetAmlFileSystemAsync(amlFileSystemName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -160,7 +133,7 @@ namespace Azure.ResourceManager.StorageCache
         [ForwardsClientCalls]
         public static Response<AmlFileSystemResource> GetAmlFileSystem(this ResourceGroupResource resourceGroupResource, string amlFileSystemName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetAmlFileSystems().Get(amlFileSystemName, cancellationToken);
+            return GetStorageCacheResourceGroupMockingExtension(resourceGroupResource).GetAmlFileSystem(amlFileSystemName, cancellationToken);
         }
 
         /// <summary> Gets a collection of StorageCacheResources in the ResourceGroupResource. </summary>
@@ -168,7 +141,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> An object representing collection of StorageCacheResources and their operations over a StorageCacheResource. </returns>
         public static StorageCacheCollection GetStorageCaches(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageCaches();
+            return GetStorageCacheResourceGroupMockingExtension(resourceGroupResource).GetStorageCaches();
         }
 
         /// <summary>
@@ -192,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache
         [ForwardsClientCalls]
         public static async Task<Response<StorageCacheResource>> GetStorageCacheAsync(this ResourceGroupResource resourceGroupResource, string cacheName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetStorageCaches().GetAsync(cacheName, cancellationToken).ConfigureAwait(false);
+            return await GetStorageCacheResourceGroupMockingExtension(resourceGroupResource).GetStorageCacheAsync(cacheName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -216,7 +189,7 @@ namespace Azure.ResourceManager.StorageCache
         [ForwardsClientCalls]
         public static Response<StorageCacheResource> GetStorageCache(this ResourceGroupResource resourceGroupResource, string cacheName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetStorageCaches().Get(cacheName, cancellationToken);
+            return GetStorageCacheResourceGroupMockingExtension(resourceGroupResource).GetStorageCache(cacheName, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +210,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> An async collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AmlFileSystemResource> GetAmlFileSystemsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAmlFileSystemsAsync(cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetAmlFileSystemsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +231,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> A collection of <see cref="AmlFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AmlFileSystemResource> GetAmlFileSystems(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAmlFileSystems(cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetAmlFileSystems(cancellationToken);
         }
 
         /// <summary>
@@ -279,7 +252,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response> CheckAmlFSSubnetsAsync(this SubscriptionResource subscriptionResource, AmlFileSystemSubnetContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAmlFSSubnetsAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetStorageCacheSubscriptionMockingExtension(subscriptionResource).CheckAmlFSSubnetsAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -300,7 +273,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response CheckAmlFSSubnets(this SubscriptionResource subscriptionResource, AmlFileSystemSubnetContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckAmlFSSubnets(content, cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).CheckAmlFSSubnets(content, cancellationToken);
         }
 
         /// <summary>
@@ -321,7 +294,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<RequiredAmlFileSystemSubnetsSize>> GetRequiredAmlFSSubnetsSizeAsync(this SubscriptionResource subscriptionResource, RequiredAmlFileSystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetRequiredAmlFSSubnetsSizeAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetRequiredAmlFSSubnetsSizeAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -342,7 +315,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<RequiredAmlFileSystemSubnetsSize> GetRequiredAmlFSSubnetsSize(this SubscriptionResource subscriptionResource, RequiredAmlFileSystemSubnetsSizeContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRequiredAmlFSSubnetsSize(content, cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetRequiredAmlFSSubnetsSize(content, cancellationToken);
         }
 
         /// <summary>
@@ -363,7 +336,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> An async collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageCacheSku> GetStorageCacheSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCacheSkusAsync(cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetStorageCacheSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -384,7 +357,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> A collection of <see cref="StorageCacheSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageCacheSku> GetStorageCacheSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCacheSkus(cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetStorageCacheSkus(cancellationToken);
         }
 
         /// <summary>
@@ -405,7 +378,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> An async collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageCacheUsageModel> GetUsageModelsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsageModelsAsync(cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetUsageModelsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -426,7 +399,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> A collection of <see cref="StorageCacheUsageModel" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageCacheUsageModel> GetUsageModels(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsageModels(cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetUsageModels(cancellationToken);
         }
 
         /// <summary>
@@ -448,7 +421,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> An async collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageCacheUsage> GetStorageCacheUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCacheUsagesAsync(location, cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetStorageCacheUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -470,7 +443,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> A collection of <see cref="StorageCacheUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageCacheUsage> GetStorageCacheUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCacheUsages(location, cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetStorageCacheUsages(location, cancellationToken);
         }
 
         /// <summary>
@@ -491,7 +464,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> An async collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageCacheResource> GetStorageCachesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCachesAsync(cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetStorageCachesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -512,7 +485,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <returns> A collection of <see cref="StorageCacheResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageCacheResource> GetStorageCaches(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageCaches(cancellationToken);
+            return GetStorageCacheSubscriptionMockingExtension(subscriptionResource).GetStorageCaches(cancellationToken);
         }
     }
 }

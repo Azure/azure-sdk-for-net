@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Synapse.Mocking;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.Synapse
     /// <summary> A class to add extension methods to Azure.ResourceManager.Synapse. </summary>
     public static partial class SynapseExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static SynapseArmClientMockingExtension GetSynapseArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new SynapseArmClientMockingExtension(client);
+            });
+        }
+
+        private static SynapseResourceGroupMockingExtension GetSynapseResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new SynapseResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static SynapseSubscriptionMockingExtension GetSynapseSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new SynapseSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region SynapseAadOnlyAuthenticationResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseAadOnlyAuthenticationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseAadOnlyAuthenticationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseAadOnlyAuthenticationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseAadOnlyAuthenticationResource" /> object. </returns>
         public static SynapseAadOnlyAuthenticationResource GetSynapseAadOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseAadOnlyAuthenticationResource.ValidateResourceId(id);
-                return new SynapseAadOnlyAuthenticationResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseAadOnlyAuthenticationResource(id);
         }
-        #endregion
 
-        #region SynapseIPFirewallRuleInfoResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseIPFirewallRuleInfoResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseIPFirewallRuleInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIPFirewallRuleInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseIPFirewallRuleInfoResource" /> object. </returns>
         public static SynapseIPFirewallRuleInfoResource GetSynapseIPFirewallRuleInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseIPFirewallRuleInfoResource.ValidateResourceId(id);
-                return new SynapseIPFirewallRuleInfoResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseIPFirewallRuleInfoResource(id);
         }
-        #endregion
 
-        #region SynapseKeyResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseKeyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseKeyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseKeyResource" /> object. </returns>
         public static SynapseKeyResource GetSynapseKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseKeyResource.ValidateResourceId(id);
-                return new SynapseKeyResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseKeyResource(id);
         }
-        #endregion
 
-        #region SynapsePrivateEndpointConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapsePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapsePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,16 +89,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionResource" /> object. </returns>
         public static SynapsePrivateEndpointConnectionResource GetSynapsePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapsePrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new SynapsePrivateEndpointConnectionResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapsePrivateEndpointConnectionResource(id);
         }
-        #endregion
 
-        #region SynapseWorkspacePrivateLinkResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseWorkspacePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseWorkspacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspacePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,16 +101,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspacePrivateLinkResource" /> object. </returns>
         public static SynapseWorkspacePrivateLinkResource GetSynapseWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseWorkspacePrivateLinkResource.ValidateResourceId(id);
-                return new SynapseWorkspacePrivateLinkResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkspacePrivateLinkResource(id);
         }
-        #endregion
 
-        #region SynapsePrivateLinkResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapsePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapsePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -155,16 +113,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateLinkResource" /> object. </returns>
         public static SynapsePrivateLinkResource GetSynapsePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapsePrivateLinkResource.ValidateResourceId(id);
-                return new SynapsePrivateLinkResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapsePrivateLinkResource(id);
         }
-        #endregion
 
-        #region SynapsePrivateLinkHubResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapsePrivateLinkHubResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapsePrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateLinkHubResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -174,16 +125,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateLinkHubResource" /> object. </returns>
         public static SynapsePrivateLinkHubResource GetSynapsePrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapsePrivateLinkHubResource.ValidateResourceId(id);
-                return new SynapsePrivateLinkHubResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapsePrivateLinkHubResource(id);
         }
-        #endregion
 
-        #region SynapsePrivateEndpointConnectionForPrivateLinkHubResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -193,16 +137,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> object. </returns>
         public static SynapsePrivateEndpointConnectionForPrivateLinkHubResource GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapsePrivateEndpointConnectionForPrivateLinkHubResource.ValidateResourceId(id);
-                return new SynapsePrivateEndpointConnectionForPrivateLinkHubResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(id);
         }
-        #endregion
 
-        #region SynapseSqlPoolResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -212,16 +149,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolResource" /> object. </returns>
         public static SynapseSqlPoolResource GetSynapseSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSqlPoolResource.ValidateResourceId(id);
-                return new SynapseSqlPoolResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolResource(id);
         }
-        #endregion
 
-        #region SynapseMetadataSyncConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseMetadataSyncConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseMetadataSyncConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMetadataSyncConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -231,16 +161,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMetadataSyncConfigurationResource" /> object. </returns>
         public static SynapseMetadataSyncConfigurationResource GetSynapseMetadataSyncConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseMetadataSyncConfigurationResource.ValidateResourceId(id);
-                return new SynapseMetadataSyncConfigurationResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseMetadataSyncConfigurationResource(id);
         }
-        #endregion
 
-        #region SynapseGeoBackupPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseGeoBackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseGeoBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseGeoBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -250,16 +173,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseGeoBackupPolicyResource" /> object. </returns>
         public static SynapseGeoBackupPolicyResource GetSynapseGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseGeoBackupPolicyResource.ValidateResourceId(id);
-                return new SynapseGeoBackupPolicyResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseGeoBackupPolicyResource(id);
         }
-        #endregion
 
-        #region SynapseDataWarehouseUserActivityResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseDataWarehouseUserActivityResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseDataWarehouseUserActivityResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataWarehouseUserActivityResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -269,16 +185,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataWarehouseUserActivityResource" /> object. </returns>
         public static SynapseDataWarehouseUserActivityResource GetSynapseDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseDataWarehouseUserActivityResource.ValidateResourceId(id);
-                return new SynapseDataWarehouseUserActivityResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseDataWarehouseUserActivityResource(id);
         }
-        #endregion
 
-        #region SynapseRestorePointResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseRestorePointResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseRestorePointResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -288,16 +197,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseRestorePointResource" /> object. </returns>
         public static SynapseRestorePointResource GetSynapseRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseRestorePointResource.ValidateResourceId(id);
-                return new SynapseRestorePointResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseRestorePointResource(id);
         }
-        #endregion
 
-        #region SynapseReplicationLinkResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapseReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -307,16 +209,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseReplicationLinkResource" /> object. </returns>
         public static SynapseReplicationLinkResource GetSynapseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseReplicationLinkResource.ValidateResourceId(id);
-                return new SynapseReplicationLinkResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseReplicationLinkResource(id);
         }
-        #endregion
 
-        #region SynapseMaintenanceWindowResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseMaintenanceWindowResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseMaintenanceWindowResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMaintenanceWindowResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -326,16 +221,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMaintenanceWindowResource" /> object. </returns>
         public static SynapseMaintenanceWindowResource GetSynapseMaintenanceWindowResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseMaintenanceWindowResource.ValidateResourceId(id);
-                return new SynapseMaintenanceWindowResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseMaintenanceWindowResource(id);
         }
-        #endregion
 
-        #region SynapseMaintenanceWindowOptionResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseMaintenanceWindowOptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseMaintenanceWindowOptionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMaintenanceWindowOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -345,16 +233,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMaintenanceWindowOptionResource" /> object. </returns>
         public static SynapseMaintenanceWindowOptionResource GetSynapseMaintenanceWindowOptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseMaintenanceWindowOptionResource.ValidateResourceId(id);
-                return new SynapseMaintenanceWindowOptionResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseMaintenanceWindowOptionResource(id);
         }
-        #endregion
 
-        #region SynapseTransparentDataEncryptionResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseTransparentDataEncryptionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseTransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -364,16 +245,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseTransparentDataEncryptionResource" /> object. </returns>
         public static SynapseTransparentDataEncryptionResource GetSynapseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseTransparentDataEncryptionResource.ValidateResourceId(id);
-                return new SynapseTransparentDataEncryptionResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseTransparentDataEncryptionResource(id);
         }
-        #endregion
 
-        #region SynapseSqlPoolBlobAuditingPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -383,16 +257,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> object. </returns>
         public static SynapseSqlPoolBlobAuditingPolicyResource GetSynapseSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSqlPoolBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new SynapseSqlPoolBlobAuditingPolicyResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolBlobAuditingPolicyResource(id);
         }
-        #endregion
 
-        #region SynapseSensitivityLabelResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -402,16 +269,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSensitivityLabelResource" /> object. </returns>
         public static SynapseSensitivityLabelResource GetSynapseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSensitivityLabelResource.ValidateResourceId(id);
-                return new SynapseSensitivityLabelResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSensitivityLabelResource(id);
         }
-        #endregion
 
-        #region SynapseSqlPoolSchemaResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSqlPoolSchemaResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSqlPoolSchemaResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -421,16 +281,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolSchemaResource" /> object. </returns>
         public static SynapseSqlPoolSchemaResource GetSynapseSqlPoolSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSqlPoolSchemaResource.ValidateResourceId(id);
-                return new SynapseSqlPoolSchemaResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolSchemaResource(id);
         }
-        #endregion
 
-        #region SynapseSqlPoolTableResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSqlPoolTableResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSqlPoolTableResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolTableResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -440,16 +293,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolTableResource" /> object. </returns>
         public static SynapseSqlPoolTableResource GetSynapseSqlPoolTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSqlPoolTableResource.ValidateResourceId(id);
-                return new SynapseSqlPoolTableResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolTableResource(id);
         }
-        #endregion
 
-        #region SynapseSqlPoolConnectionPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSqlPoolConnectionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSqlPoolConnectionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolConnectionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -459,16 +305,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolConnectionPolicyResource" /> object. </returns>
         public static SynapseSqlPoolConnectionPolicyResource GetSynapseSqlPoolConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSqlPoolConnectionPolicyResource.ValidateResourceId(id);
-                return new SynapseSqlPoolConnectionPolicyResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolConnectionPolicyResource(id);
         }
-        #endregion
 
-        #region SynapseSqlPoolVulnerabilityAssessmentResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSqlPoolVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -478,16 +317,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> object. </returns>
         public static SynapseSqlPoolVulnerabilityAssessmentResource GetSynapseSqlPoolVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSqlPoolVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new SynapseSqlPoolVulnerabilityAssessmentResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolVulnerabilityAssessmentResource(id);
         }
-        #endregion
 
-        #region SynapseVulnerabilityAssessmentScanRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseVulnerabilityAssessmentScanRecordResource.CreateResourceIdentifier" /> to create a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -497,16 +329,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> object. </returns>
         public static SynapseVulnerabilityAssessmentScanRecordResource GetSynapseVulnerabilityAssessmentScanRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseVulnerabilityAssessmentScanRecordResource.ValidateResourceId(id);
-                return new SynapseVulnerabilityAssessmentScanRecordResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseVulnerabilityAssessmentScanRecordResource(id);
         }
-        #endregion
 
-        #region SynapseSqlPoolSecurityAlertPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSqlPoolSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -516,16 +341,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> object. </returns>
         public static SynapseSqlPoolSecurityAlertPolicyResource GetSynapseSqlPoolSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSqlPoolSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new SynapseSqlPoolSecurityAlertPolicyResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolSecurityAlertPolicyResource(id);
         }
-        #endregion
 
-        #region SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -535,16 +353,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
         public static SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
-                return new SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(id);
         }
-        #endregion
 
-        #region SynapseExtendedSqlPoolBlobAuditingPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -554,16 +365,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> object. </returns>
         public static SynapseExtendedSqlPoolBlobAuditingPolicyResource GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseExtendedSqlPoolBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new SynapseExtendedSqlPoolBlobAuditingPolicyResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(id);
         }
-        #endregion
 
-        #region SynapseDataMaskingPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseDataMaskingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseDataMaskingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataMaskingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -573,16 +377,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataMaskingPolicyResource" /> object. </returns>
         public static SynapseDataMaskingPolicyResource GetSynapseDataMaskingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseDataMaskingPolicyResource.ValidateResourceId(id);
-                return new SynapseDataMaskingPolicyResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseDataMaskingPolicyResource(id);
         }
-        #endregion
 
-        #region SynapseDataMaskingRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseDataMaskingRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseDataMaskingRuleResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataMaskingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -592,16 +389,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataMaskingRuleResource" /> object. </returns>
         public static SynapseDataMaskingRuleResource GetSynapseDataMaskingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseDataMaskingRuleResource.ValidateResourceId(id);
-                return new SynapseDataMaskingRuleResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseDataMaskingRuleResource(id);
         }
-        #endregion
 
-        #region SynapseSqlPoolColumnResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSqlPoolColumnResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSqlPoolColumnResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolColumnResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -611,16 +401,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolColumnResource" /> object. </returns>
         public static SynapseSqlPoolColumnResource GetSynapseSqlPoolColumnResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSqlPoolColumnResource.ValidateResourceId(id);
-                return new SynapseSqlPoolColumnResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolColumnResource(id);
         }
-        #endregion
 
-        #region SynapseWorkloadGroupResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseWorkloadGroupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseWorkloadGroupResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkloadGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -630,16 +413,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkloadGroupResource" /> object. </returns>
         public static SynapseWorkloadGroupResource GetSynapseWorkloadGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseWorkloadGroupResource.ValidateResourceId(id);
-                return new SynapseWorkloadGroupResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkloadGroupResource(id);
         }
-        #endregion
 
-        #region SynapseWorkloadClassifierResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseWorkloadClassifierResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseWorkloadClassifierResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkloadClassifierResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -649,16 +425,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkloadClassifierResource" /> object. </returns>
         public static SynapseWorkloadClassifierResource GetSynapseWorkloadClassifierResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseWorkloadClassifierResource.ValidateResourceId(id);
-                return new SynapseWorkloadClassifierResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkloadClassifierResource(id);
         }
-        #endregion
 
-        #region SynapseServerBlobAuditingPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -668,16 +437,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseServerBlobAuditingPolicyResource" /> object. </returns>
         public static SynapseServerBlobAuditingPolicyResource GetSynapseServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseServerBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new SynapseServerBlobAuditingPolicyResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseServerBlobAuditingPolicyResource(id);
         }
-        #endregion
 
-        #region SynapseExtendedServerBlobAuditingPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseExtendedServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -687,16 +449,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> object. </returns>
         public static SynapseExtendedServerBlobAuditingPolicyResource GetSynapseExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseExtendedServerBlobAuditingPolicyResource.ValidateResourceId(id);
-                return new SynapseExtendedServerBlobAuditingPolicyResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseExtendedServerBlobAuditingPolicyResource(id);
         }
-        #endregion
 
-        #region SynapseServerSecurityAlertPolicyResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -706,16 +461,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseServerSecurityAlertPolicyResource" /> object. </returns>
         public static SynapseServerSecurityAlertPolicyResource GetSynapseServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseServerSecurityAlertPolicyResource.ValidateResourceId(id);
-                return new SynapseServerSecurityAlertPolicyResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseServerSecurityAlertPolicyResource(id);
         }
-        #endregion
 
-        #region SynapseServerVulnerabilityAssessmentResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseServerVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseServerVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -725,16 +473,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseServerVulnerabilityAssessmentResource" /> object. </returns>
         public static SynapseServerVulnerabilityAssessmentResource GetSynapseServerVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseServerVulnerabilityAssessmentResource.ValidateResourceId(id);
-                return new SynapseServerVulnerabilityAssessmentResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseServerVulnerabilityAssessmentResource(id);
         }
-        #endregion
 
-        #region SynapseEncryptionProtectorResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseEncryptionProtectorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseEncryptionProtectorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseEncryptionProtectorResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -744,16 +485,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseEncryptionProtectorResource" /> object. </returns>
         public static SynapseEncryptionProtectorResource GetSynapseEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseEncryptionProtectorResource.ValidateResourceId(id);
-                return new SynapseEncryptionProtectorResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseEncryptionProtectorResource(id);
         }
-        #endregion
 
-        #region SynapseRecoverableSqlPoolResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseRecoverableSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseRecoverableSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRecoverableSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -763,16 +497,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseRecoverableSqlPoolResource" /> object. </returns>
         public static SynapseRecoverableSqlPoolResource GetSynapseRecoverableSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseRecoverableSqlPoolResource.ValidateResourceId(id);
-                return new SynapseRecoverableSqlPoolResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseRecoverableSqlPoolResource(id);
         }
-        #endregion
 
-        #region SynapseDedicatedSqlMinimalTlsSettingResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseDedicatedSqlMinimalTlsSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -782,16 +509,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> object. </returns>
         public static SynapseDedicatedSqlMinimalTlsSettingResource GetSynapseDedicatedSqlMinimalTlsSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseDedicatedSqlMinimalTlsSettingResource.ValidateResourceId(id);
-                return new SynapseDedicatedSqlMinimalTlsSettingResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseDedicatedSqlMinimalTlsSettingResource(id);
         }
-        #endregion
 
-        #region SynapseWorkspaceResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -801,16 +521,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspaceResource" /> object. </returns>
         public static SynapseWorkspaceResource GetSynapseWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseWorkspaceResource.ValidateResourceId(id);
-                return new SynapseWorkspaceResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkspaceResource(id);
         }
-        #endregion
 
-        #region SynapseWorkspaceAdministratorResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseWorkspaceAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseWorkspaceAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -820,16 +533,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource" /> object. </returns>
         public static SynapseWorkspaceAdministratorResource GetSynapseWorkspaceAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseWorkspaceAdministratorResource.ValidateResourceId(id);
-                return new SynapseWorkspaceAdministratorResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkspaceAdministratorResource(id);
         }
-        #endregion
 
-        #region SynapseWorkspaceSqlAdministratorResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseWorkspaceSqlAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseWorkspaceSqlAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceSqlAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -839,16 +545,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource" /> object. </returns>
         public static SynapseWorkspaceSqlAdministratorResource GetSynapseWorkspaceSqlAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseWorkspaceSqlAdministratorResource.ValidateResourceId(id);
-                return new SynapseWorkspaceSqlAdministratorResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkspaceSqlAdministratorResource(id);
         }
-        #endregion
 
-        #region SynapseManagedIdentitySqlControlSettingResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseManagedIdentitySqlControlSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -858,16 +557,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> object. </returns>
         public static SynapseManagedIdentitySqlControlSettingResource GetSynapseManagedIdentitySqlControlSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseManagedIdentitySqlControlSettingResource.ValidateResourceId(id);
-                return new SynapseManagedIdentitySqlControlSettingResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseManagedIdentitySqlControlSettingResource(id);
         }
-        #endregion
 
-        #region SynapseRestorableDroppedSqlPoolResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseRestorableDroppedSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseRestorableDroppedSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRestorableDroppedSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -877,16 +569,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseRestorableDroppedSqlPoolResource" /> object. </returns>
         public static SynapseRestorableDroppedSqlPoolResource GetSynapseRestorableDroppedSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseRestorableDroppedSqlPoolResource.ValidateResourceId(id);
-                return new SynapseRestorableDroppedSqlPoolResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseRestorableDroppedSqlPoolResource(id);
         }
-        #endregion
 
-        #region SynapseBigDataPoolInfoResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseBigDataPoolInfoResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseBigDataPoolInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseBigDataPoolInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -896,16 +581,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseBigDataPoolInfoResource" /> object. </returns>
         public static SynapseBigDataPoolInfoResource GetSynapseBigDataPoolInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseBigDataPoolInfoResource.ValidateResourceId(id);
-                return new SynapseBigDataPoolInfoResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseBigDataPoolInfoResource(id);
         }
-        #endregion
 
-        #region SynapseLibraryResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseLibraryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseLibraryResource.CreateResourceIdentifier" /> to create a <see cref="SynapseLibraryResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -915,16 +593,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseLibraryResource" /> object. </returns>
         public static SynapseLibraryResource GetSynapseLibraryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseLibraryResource.ValidateResourceId(id);
-                return new SynapseLibraryResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseLibraryResource(id);
         }
-        #endregion
 
-        #region SynapseIntegrationRuntimeResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseIntegrationRuntimeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseIntegrationRuntimeResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIntegrationRuntimeResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -934,16 +605,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseIntegrationRuntimeResource" /> object. </returns>
         public static SynapseIntegrationRuntimeResource GetSynapseIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseIntegrationRuntimeResource.ValidateResourceId(id);
-                return new SynapseIntegrationRuntimeResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseIntegrationRuntimeResource(id);
         }
-        #endregion
 
-        #region SynapseSparkConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseSparkConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseSparkConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSparkConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -953,16 +617,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSparkConfigurationResource" /> object. </returns>
         public static SynapseSparkConfigurationResource GetSynapseSparkConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseSparkConfigurationResource.ValidateResourceId(id);
-                return new SynapseSparkConfigurationResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseSparkConfigurationResource(id);
         }
-        #endregion
 
-        #region SynapseKustoPoolResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseKustoPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseKustoPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseKustoPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -972,16 +629,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseKustoPoolResource" /> object. </returns>
         public static SynapseKustoPoolResource GetSynapseKustoPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseKustoPoolResource.ValidateResourceId(id);
-                return new SynapseKustoPoolResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseKustoPoolResource(id);
         }
-        #endregion
 
-        #region SynapseAttachedDatabaseConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseAttachedDatabaseConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseAttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseAttachedDatabaseConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -991,16 +641,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseAttachedDatabaseConfigurationResource" /> object. </returns>
         public static SynapseAttachedDatabaseConfigurationResource GetSynapseAttachedDatabaseConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseAttachedDatabaseConfigurationResource.ValidateResourceId(id);
-                return new SynapseAttachedDatabaseConfigurationResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseAttachedDatabaseConfigurationResource(id);
         }
-        #endregion
 
-        #region SynapseDatabaseResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1010,16 +653,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDatabaseResource" /> object. </returns>
         public static SynapseDatabaseResource GetSynapseDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseDatabaseResource.ValidateResourceId(id);
-                return new SynapseDatabaseResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseDatabaseResource(id);
         }
-        #endregion
 
-        #region SynapseDataConnectionResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseDataConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseDataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1029,16 +665,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataConnectionResource" /> object. </returns>
         public static SynapseDataConnectionResource GetSynapseDataConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseDataConnectionResource.ValidateResourceId(id);
-                return new SynapseDataConnectionResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseDataConnectionResource(id);
         }
-        #endregion
 
-        #region SynapseClusterPrincipalAssignmentResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseClusterPrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseClusterPrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1048,16 +677,9 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseClusterPrincipalAssignmentResource" /> object. </returns>
         public static SynapseClusterPrincipalAssignmentResource GetSynapseClusterPrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseClusterPrincipalAssignmentResource.ValidateResourceId(id);
-                return new SynapseClusterPrincipalAssignmentResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseClusterPrincipalAssignmentResource(id);
         }
-        #endregion
 
-        #region SynapseDatabasePrincipalAssignmentResource
         /// <summary>
         /// Gets an object representing a <see cref="SynapseDatabasePrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SynapseDatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDatabasePrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -1067,21 +689,15 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDatabasePrincipalAssignmentResource" /> object. </returns>
         public static SynapseDatabasePrincipalAssignmentResource GetSynapseDatabasePrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SynapseDatabasePrincipalAssignmentResource.ValidateResourceId(id);
-                return new SynapseDatabasePrincipalAssignmentResource(client, id);
-            }
-            );
+            return GetSynapseArmClientMockingExtension(client).GetSynapseDatabasePrincipalAssignmentResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of SynapsePrivateLinkHubResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SynapsePrivateLinkHubResources and their operations over a SynapsePrivateLinkHubResource. </returns>
         public static SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSynapsePrivateLinkHubs();
+            return GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapsePrivateLinkHubs();
         }
 
         /// <summary>
@@ -1105,7 +721,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static async Task<Response<SynapsePrivateLinkHubResource>> GetSynapsePrivateLinkHubAsync(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSynapsePrivateLinkHubs().GetAsync(privateLinkHubName, cancellationToken).ConfigureAwait(false);
+            return await GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapsePrivateLinkHubAsync(privateLinkHubName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1129,7 +745,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static Response<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHub(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSynapsePrivateLinkHubs().Get(privateLinkHubName, cancellationToken);
+            return GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapsePrivateLinkHub(privateLinkHubName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SynapseWorkspaceResources in the ResourceGroupResource. </summary>
@@ -1137,7 +753,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseWorkspaceResources and their operations over a SynapseWorkspaceResource. </returns>
         public static SynapseWorkspaceCollection GetSynapseWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSynapseWorkspaces();
+            return GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapseWorkspaces();
         }
 
         /// <summary>
@@ -1161,7 +777,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static async Task<Response<SynapseWorkspaceResource>> GetSynapseWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSynapseWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapseWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1185,7 +801,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static Response<SynapseWorkspaceResource> GetSynapseWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSynapseWorkspaces().Get(workspaceName, cancellationToken);
+            return GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapseWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -1206,7 +822,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSynapsePrivateLinkHubsAsync(cancellationToken);
+            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSynapsePrivateLinkHubsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1227,7 +843,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSynapsePrivateLinkHubs(cancellationToken);
+            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSynapsePrivateLinkHubs(cancellationToken);
         }
 
         /// <summary>
@@ -1248,7 +864,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SynapseWorkspaceResource> GetSynapseWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSynapseWorkspacesAsync(cancellationToken);
+            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSynapseWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1269,7 +885,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SynapseWorkspaceResource> GetSynapseWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSynapseWorkspaces(cancellationToken);
+            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSynapseWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -1290,7 +906,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
+            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1311,7 +927,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoPoolSkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusKustoPools(cancellationToken);
+            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSkusKustoPools(cancellationToken);
         }
 
         /// <summary>
@@ -1334,9 +950,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetSynapseSubscriptionMockingExtension(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1359,9 +973,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
+            return GetSynapseSubscriptionMockingExtension(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
         }
     }
 }

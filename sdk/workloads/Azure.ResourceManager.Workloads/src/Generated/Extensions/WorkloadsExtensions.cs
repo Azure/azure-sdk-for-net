@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Workloads.Mocking;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.Workloads
     /// <summary> A class to add extension methods to Azure.ResourceManager.Workloads. </summary>
     public static partial class WorkloadsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static WorkloadsArmClientMockingExtension GetWorkloadsArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new WorkloadsArmClientMockingExtension(client);
+            });
+        }
+
+        private static WorkloadsResourceGroupMockingExtension GetWorkloadsResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new WorkloadsResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static WorkloadsSubscriptionMockingExtension GetWorkloadsSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new WorkloadsSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region SapVirtualInstanceResource
         /// <summary>
         /// Gets an object representing a <see cref="SapVirtualInstanceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SapVirtualInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapVirtualInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapVirtualInstanceResource" /> object. </returns>
         public static SapVirtualInstanceResource GetSapVirtualInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SapVirtualInstanceResource.ValidateResourceId(id);
-                return new SapVirtualInstanceResource(client, id);
-            }
-            );
+            return GetWorkloadsArmClientMockingExtension(client).GetSapVirtualInstanceResource(id);
         }
-        #endregion
 
-        #region SapCentralServerInstanceResource
         /// <summary>
         /// Gets an object representing a <see cref="SapCentralServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SapCentralServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapCentralServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,16 +65,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapCentralServerInstanceResource" /> object. </returns>
         public static SapCentralServerInstanceResource GetSapCentralServerInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SapCentralServerInstanceResource.ValidateResourceId(id);
-                return new SapCentralServerInstanceResource(client, id);
-            }
-            );
+            return GetWorkloadsArmClientMockingExtension(client).GetSapCentralServerInstanceResource(id);
         }
-        #endregion
 
-        #region SapDatabaseInstanceResource
         /// <summary>
         /// Gets an object representing a <see cref="SapDatabaseInstanceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SapDatabaseInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapDatabaseInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -98,16 +77,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapDatabaseInstanceResource" /> object. </returns>
         public static SapDatabaseInstanceResource GetSapDatabaseInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SapDatabaseInstanceResource.ValidateResourceId(id);
-                return new SapDatabaseInstanceResource(client, id);
-            }
-            );
+            return GetWorkloadsArmClientMockingExtension(client).GetSapDatabaseInstanceResource(id);
         }
-        #endregion
 
-        #region SapApplicationServerInstanceResource
         /// <summary>
         /// Gets an object representing a <see cref="SapApplicationServerInstanceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SapApplicationServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapApplicationServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -117,16 +89,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapApplicationServerInstanceResource" /> object. </returns>
         public static SapApplicationServerInstanceResource GetSapApplicationServerInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SapApplicationServerInstanceResource.ValidateResourceId(id);
-                return new SapApplicationServerInstanceResource(client, id);
-            }
-            );
+            return GetWorkloadsArmClientMockingExtension(client).GetSapApplicationServerInstanceResource(id);
         }
-        #endregion
 
-        #region SapMonitorResource
         /// <summary>
         /// Gets an object representing a <see cref="SapMonitorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SapMonitorResource.CreateResourceIdentifier" /> to create a <see cref="SapMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,16 +101,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapMonitorResource" /> object. </returns>
         public static SapMonitorResource GetSapMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SapMonitorResource.ValidateResourceId(id);
-                return new SapMonitorResource(client, id);
-            }
-            );
+            return GetWorkloadsArmClientMockingExtension(client).GetSapMonitorResource(id);
         }
-        #endregion
 
-        #region SapProviderInstanceResource
         /// <summary>
         /// Gets an object representing a <see cref="SapProviderInstanceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SapProviderInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapProviderInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -155,16 +113,9 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapProviderInstanceResource" /> object. </returns>
         public static SapProviderInstanceResource GetSapProviderInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SapProviderInstanceResource.ValidateResourceId(id);
-                return new SapProviderInstanceResource(client, id);
-            }
-            );
+            return GetWorkloadsArmClientMockingExtension(client).GetSapProviderInstanceResource(id);
         }
-        #endregion
 
-        #region SapLandscapeMonitorResource
         /// <summary>
         /// Gets an object representing a <see cref="SapLandscapeMonitorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SapLandscapeMonitorResource.CreateResourceIdentifier" /> to create a <see cref="SapLandscapeMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -174,21 +125,15 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapLandscapeMonitorResource" /> object. </returns>
         public static SapLandscapeMonitorResource GetSapLandscapeMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SapLandscapeMonitorResource.ValidateResourceId(id);
-                return new SapLandscapeMonitorResource(client, id);
-            }
-            );
+            return GetWorkloadsArmClientMockingExtension(client).GetSapLandscapeMonitorResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of SapVirtualInstanceResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
         public static SapVirtualInstanceCollection GetSapVirtualInstances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSapVirtualInstances();
+            return GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapVirtualInstances();
         }
 
         /// <summary>
@@ -212,7 +157,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static async Task<Response<SapVirtualInstanceResource>> GetSapVirtualInstanceAsync(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSapVirtualInstances().GetAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapVirtualInstanceAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -236,7 +181,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static Response<SapVirtualInstanceResource> GetSapVirtualInstance(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSapVirtualInstances().Get(sapVirtualInstanceName, cancellationToken);
+            return GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapVirtualInstance(sapVirtualInstanceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SapMonitorResources in the ResourceGroupResource. </summary>
@@ -244,7 +189,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An object representing collection of SapMonitorResources and their operations over a SapMonitorResource. </returns>
         public static SapMonitorCollection GetSapMonitors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSapMonitors();
+            return GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapMonitors();
         }
 
         /// <summary>
@@ -268,7 +213,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static async Task<Response<SapMonitorResource>> GetSapMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSapMonitors().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapMonitorAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -292,7 +237,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static Response<SapMonitorResource> GetSapMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSapMonitors().Get(monitorName, cancellationToken);
+            return GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapMonitor(monitorName, cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +259,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -336,7 +281,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapSizingRecommendationResult> SapSizingRecommendations(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
+            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -358,7 +303,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -380,7 +325,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapSupportedResourceSkusResult> SapSupportedSku(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
+            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -402,7 +347,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -424,7 +369,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapDiskConfigurationsResult> SapDiskConfigurations(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
+            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -446,7 +391,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -468,7 +413,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
+            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -489,7 +434,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
+            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -510,7 +455,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSapVirtualInstances(cancellationToken);
+            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).GetSapVirtualInstances(cancellationToken);
         }
 
         /// <summary>
@@ -531,7 +476,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSapMonitorsAsync(cancellationToken);
+            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).GetSapMonitorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -552,7 +497,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SapMonitorResource> GetSapMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSapMonitors(cancellationToken);
+            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).GetSapMonitors(cancellationToken);
         }
     }
 }

@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.VoiceServices.Mocking;
 using Azure.ResourceManager.VoiceServices.Models;
 
 namespace Azure.ResourceManager.VoiceServices
@@ -19,38 +20,30 @@ namespace Azure.ResourceManager.VoiceServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.VoiceServices. </summary>
     public static partial class VoiceServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static VoiceServicesArmClientMockingExtension GetVoiceServicesArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new VoiceServicesArmClientMockingExtension(client);
+            });
+        }
+
+        private static VoiceServicesResourceGroupMockingExtension GetVoiceServicesResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new VoiceServicesResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static VoiceServicesSubscriptionMockingExtension GetVoiceServicesSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new VoiceServicesSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region VoiceServicesCommunicationsGatewayResource
         /// <summary>
         /// Gets an object representing a <see cref="VoiceServicesCommunicationsGatewayResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VoiceServicesCommunicationsGatewayResource.CreateResourceIdentifier" /> to create a <see cref="VoiceServicesCommunicationsGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -60,16 +53,9 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> Returns a <see cref="VoiceServicesCommunicationsGatewayResource" /> object. </returns>
         public static VoiceServicesCommunicationsGatewayResource GetVoiceServicesCommunicationsGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VoiceServicesCommunicationsGatewayResource.ValidateResourceId(id);
-                return new VoiceServicesCommunicationsGatewayResource(client, id);
-            }
-            );
+            return GetVoiceServicesArmClientMockingExtension(client).GetVoiceServicesCommunicationsGatewayResource(id);
         }
-        #endregion
 
-        #region VoiceServicesTestLineResource
         /// <summary>
         /// Gets an object representing a <see cref="VoiceServicesTestLineResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="VoiceServicesTestLineResource.CreateResourceIdentifier" /> to create a <see cref="VoiceServicesTestLineResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -79,21 +65,15 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> Returns a <see cref="VoiceServicesTestLineResource" /> object. </returns>
         public static VoiceServicesTestLineResource GetVoiceServicesTestLineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                VoiceServicesTestLineResource.ValidateResourceId(id);
-                return new VoiceServicesTestLineResource(client, id);
-            }
-            );
+            return GetVoiceServicesArmClientMockingExtension(client).GetVoiceServicesTestLineResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of VoiceServicesCommunicationsGatewayResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VoiceServicesCommunicationsGatewayResources and their operations over a VoiceServicesCommunicationsGatewayResource. </returns>
         public static VoiceServicesCommunicationsGatewayCollection GetVoiceServicesCommunicationsGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetVoiceServicesCommunicationsGateways();
+            return GetVoiceServicesResourceGroupMockingExtension(resourceGroupResource).GetVoiceServicesCommunicationsGateways();
         }
 
         /// <summary>
@@ -117,7 +97,7 @@ namespace Azure.ResourceManager.VoiceServices
         [ForwardsClientCalls]
         public static async Task<Response<VoiceServicesCommunicationsGatewayResource>> GetVoiceServicesCommunicationsGatewayAsync(this ResourceGroupResource resourceGroupResource, string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetVoiceServicesCommunicationsGateways().GetAsync(communicationsGatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetVoiceServicesResourceGroupMockingExtension(resourceGroupResource).GetVoiceServicesCommunicationsGatewayAsync(communicationsGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -141,7 +121,7 @@ namespace Azure.ResourceManager.VoiceServices
         [ForwardsClientCalls]
         public static Response<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateway(this ResourceGroupResource resourceGroupResource, string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetVoiceServicesCommunicationsGateways().Get(communicationsGatewayName, cancellationToken);
+            return GetVoiceServicesResourceGroupMockingExtension(resourceGroupResource).GetVoiceServicesCommunicationsGateway(communicationsGatewayName, cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +142,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> An async collection of <see cref="VoiceServicesCommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVoiceServicesCommunicationsGatewaysAsync(cancellationToken);
+            return GetVoiceServicesSubscriptionMockingExtension(subscriptionResource).GetVoiceServicesCommunicationsGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +163,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> A collection of <see cref="VoiceServicesCommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetVoiceServicesCommunicationsGateways(cancellationToken);
+            return GetVoiceServicesSubscriptionMockingExtension(subscriptionResource).GetVoiceServicesCommunicationsGateways(cancellationToken);
         }
 
         /// <summary>
@@ -206,9 +186,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<VoiceServicesCheckNameAvailabilityResult>> CheckVoiceServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckVoiceServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetVoiceServicesSubscriptionMockingExtension(subscriptionResource).CheckVoiceServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -231,9 +209,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<VoiceServicesCheckNameAvailabilityResult> CheckVoiceServicesNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckVoiceServicesNameAvailability(location, content, cancellationToken);
+            return GetVoiceServicesSubscriptionMockingExtension(subscriptionResource).CheckVoiceServicesNameAvailability(location, content, cancellationToken);
         }
     }
 }
