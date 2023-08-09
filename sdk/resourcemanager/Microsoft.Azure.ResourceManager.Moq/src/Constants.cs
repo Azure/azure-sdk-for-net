@@ -12,5 +12,6 @@ namespace Azure.ResourceManager.Moq
         internal const string MockingExtensionNameSuffix = "MockingExtension";
         internal const string MockingNamespaceSuffix = "Mocking";
         internal const string AzureSDKNamespacePrefix = "Azure.ResourceManager.";
+        internal const string ResourceSuffix = "Resource";
     }
 }

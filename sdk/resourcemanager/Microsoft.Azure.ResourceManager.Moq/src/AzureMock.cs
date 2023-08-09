@@ -31,6 +31,30 @@ namespace Azure.ResourceManager.Moq
 
                 return this.RedirectMock(expression, mockingExtensionType);
             }
+            else
+            {
+                return base.Setup(expression);
+            }
+        }
+
+        /// <summary>
+        /// The fixed version of Setup{R} for Azure Management SDKs
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public new ISetup<T> Setup(Expression<Action<T>> expression)
+        {
+            var extensionMethodInfo = ExpressionUtilities.GetExtensionMethod(expression);
+            if (extensionMethodInfo != null && IsSupportedTypes(extensionMethodInfo))
+            {
+                var extensionClientType = MockingExtensions.FindExtensionType(typeof(T), extensionMethodInfo);
+
+                return this.RedirectMock(expression, extensionClientType);
+            }
+            else
+            {
+                return base.Setup(expression);
+            }
         }
 
         private static bool IsSupportedTypes(MethodInfo extensionMethodInfo)
