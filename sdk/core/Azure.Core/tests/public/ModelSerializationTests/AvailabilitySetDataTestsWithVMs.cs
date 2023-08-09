@@ -13,7 +13,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
     internal class AvailabilitySetDataTestsWithVMs : ModelTests<AvailabilitySetData>
     {
-        protected override string WirePayload => File.ReadAllText(TestData.GetLocation("AvailibilitySetDataWithVMs.json")).TrimEnd();
+        protected override string WirePayload => File.ReadAllText(TestData.GetLocation("AvailabilitySetDataWithVMs.json")).TrimEnd();
 
         protected override string JsonPayload => WirePayload;
 
