@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Core.Json;
+using System.IO;
+using System.Text.Json;
+using Azure.Core.Tests.PatchModels;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public
@@ -10,15 +12,71 @@ namespace Azure.Core.Tests.Public
     public class PatchModelTests
     {
         [Test]
-        public void CanAccessMutableJsonDocument()
+        public void CanPatchIntProperty()
         {
-            MutableJsonDocument mdoc = MutableJsonDocument.Parse("""
+            SimplePatchModel model = new SimplePatchModel();
+            model.Count = 2;
+
+            ValidatePatch("""{"count":2}""", model);
+        }
+
+        [Test]
+        public void CanPatchStringProperty()
+        {
+            SimplePatchModel model = new SimplePatchModel();
+            model.Name = "abc";
+
+            ValidatePatch("""{"name":"abc"}""", model);
+        }
+
+        [Test]
+        public void CanRoundTripSimpleModel()
+        {
+            BinaryData json = BinaryData.FromString("""
                 {
-                    "a": 1
+                    "name": "abc",
+                    "count": 1
                 }
                 """);
 
-            Assert.AreEqual(1, mdoc.RootElement.GetProperty("a").GetInt32());
+            SimplePatchModel model = (SimplePatchModel)SimplePatchModel.Deserialize(json);
+
+            Assert.AreEqual(1, model.Count);
+            Assert.AreEqual("abc", model.Name);
+
+            model.Name = "xyz";
+            model.Count = 2;
+
+            ValidatePatch("""{"count":2, "name":"xyz"}""", model);
         }
+
+        #region Helpers
+        private static void ValidatePatch(string expected, SimplePatchModel model)
+        {
+            using Stream stream = new MemoryStream();
+            using Utf8JsonWriter writer = new(stream);
+            model.Serialize(writer, "P");
+            writer.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        private static void AreEqualJson(string expected, string actual)
+        {
+            JsonDocument doc = JsonDocument.Parse(expected);
+
+            using MemoryStream stream = new();
+            using Utf8JsonWriter writer = new(stream);
+            doc.WriteTo(writer);
+            writer.Flush();
+            stream.Position = 0;
+            BinaryData buffer = BinaryData.FromStream(stream);
+
+            Assert.AreEqual(buffer.ToString(), actual);
+        }
+        #endregion
     }
 }
