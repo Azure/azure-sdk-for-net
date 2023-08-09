@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.GraphServices.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GraphServices
@@ -18,38 +19,30 @@ namespace Azure.ResourceManager.GraphServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.GraphServices. </summary>
     public static partial class GraphServicesExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static GraphServicesArmClientMockingExtension GetGraphServicesArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new GraphServicesArmClientMockingExtension(client);
+            });
+        }
+
+        private static GraphServicesResourceGroupMockingExtension GetGraphServicesResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new GraphServicesResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static GraphServicesSubscriptionMockingExtension GetGraphServicesSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new GraphServicesSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region GraphServicesAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="GraphServicesAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GraphServicesAccountResource.CreateResourceIdentifier" /> to create a <see cref="GraphServicesAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -59,21 +52,15 @@ namespace Azure.ResourceManager.GraphServices
         /// <returns> Returns a <see cref="GraphServicesAccountResource" /> object. </returns>
         public static GraphServicesAccountResource GetGraphServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GraphServicesAccountResource.ValidateResourceId(id);
-                return new GraphServicesAccountResource(client, id);
-            }
-            );
+            return GetGraphServicesArmClientMockingExtension(client).GetGraphServicesAccountResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of GraphServicesAccountResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of GraphServicesAccountResources and their operations over a GraphServicesAccountResource. </returns>
         public static GraphServicesAccountResourceCollection GetGraphServicesAccountResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetGraphServicesAccountResources();
+            return GetGraphServicesResourceGroupMockingExtension(resourceGroupResource).GetGraphServicesAccountResources();
         }
 
         /// <summary>
@@ -97,7 +84,7 @@ namespace Azure.ResourceManager.GraphServices
         [ForwardsClientCalls]
         public static async Task<Response<GraphServicesAccountResource>> GetGraphServicesAccountResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetGraphServicesAccountResources().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetGraphServicesResourceGroupMockingExtension(resourceGroupResource).GetGraphServicesAccountResourceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,7 +108,7 @@ namespace Azure.ResourceManager.GraphServices
         [ForwardsClientCalls]
         public static Response<GraphServicesAccountResource> GetGraphServicesAccountResource(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetGraphServicesAccountResources().Get(resourceName, cancellationToken);
+            return GetGraphServicesResourceGroupMockingExtension(resourceGroupResource).GetGraphServicesAccountResource(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +129,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <returns> An async collection of <see cref="GraphServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGraphServicesAccountResourcesAsync(cancellationToken);
+            return GetGraphServicesSubscriptionMockingExtension(subscriptionResource).GetGraphServicesAccountResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +150,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <returns> A collection of <see cref="GraphServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GraphServicesAccountResource> GetGraphServicesAccountResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetGraphServicesAccountResources(cancellationToken);
+            return GetGraphServicesSubscriptionMockingExtension(subscriptionResource).GetGraphServicesAccountResources(cancellationToken);
         }
     }
 }

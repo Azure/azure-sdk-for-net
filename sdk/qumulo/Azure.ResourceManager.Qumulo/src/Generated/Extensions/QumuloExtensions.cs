@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Qumulo.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Qumulo
@@ -18,38 +19,30 @@ namespace Azure.ResourceManager.Qumulo
     /// <summary> A class to add extension methods to Azure.ResourceManager.Qumulo. </summary>
     public static partial class QumuloExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static QumuloArmClientMockingExtension GetQumuloArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new QumuloArmClientMockingExtension(client);
+            });
+        }
+
+        private static QumuloResourceGroupMockingExtension GetQumuloResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new QumuloResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static QumuloSubscriptionMockingExtension GetQumuloSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new QumuloSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region QumuloFileSystemResource
         /// <summary>
         /// Gets an object representing a <see cref="QumuloFileSystemResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="QumuloFileSystemResource.CreateResourceIdentifier" /> to create a <see cref="QumuloFileSystemResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -59,21 +52,15 @@ namespace Azure.ResourceManager.Qumulo
         /// <returns> Returns a <see cref="QumuloFileSystemResource" /> object. </returns>
         public static QumuloFileSystemResource GetQumuloFileSystemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                QumuloFileSystemResource.ValidateResourceId(id);
-                return new QumuloFileSystemResource(client, id);
-            }
-            );
+            return GetQumuloArmClientMockingExtension(client).GetQumuloFileSystemResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of QumuloFileSystemResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of QumuloFileSystemResources and their operations over a QumuloFileSystemResource. </returns>
         public static QumuloFileSystemResourceCollection GetQumuloFileSystemResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetQumuloFileSystemResources();
+            return GetQumuloResourceGroupMockingExtension(resourceGroupResource).GetQumuloFileSystemResources();
         }
 
         /// <summary>
@@ -97,7 +84,7 @@ namespace Azure.ResourceManager.Qumulo
         [ForwardsClientCalls]
         public static async Task<Response<QumuloFileSystemResource>> GetQumuloFileSystemResourceAsync(this ResourceGroupResource resourceGroupResource, string fileSystemName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetQumuloFileSystemResources().GetAsync(fileSystemName, cancellationToken).ConfigureAwait(false);
+            return await GetQumuloResourceGroupMockingExtension(resourceGroupResource).GetQumuloFileSystemResourceAsync(fileSystemName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,7 +108,7 @@ namespace Azure.ResourceManager.Qumulo
         [ForwardsClientCalls]
         public static Response<QumuloFileSystemResource> GetQumuloFileSystemResource(this ResourceGroupResource resourceGroupResource, string fileSystemName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetQumuloFileSystemResources().Get(fileSystemName, cancellationToken);
+            return GetQumuloResourceGroupMockingExtension(resourceGroupResource).GetQumuloFileSystemResource(fileSystemName, cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +129,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <returns> An async collection of <see cref="QumuloFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<QumuloFileSystemResource> GetQumuloFileSystemResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQumuloFileSystemResourcesAsync(cancellationToken);
+            return GetQumuloSubscriptionMockingExtension(subscriptionResource).GetQumuloFileSystemResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +150,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <returns> A collection of <see cref="QumuloFileSystemResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<QumuloFileSystemResource> GetQumuloFileSystemResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetQumuloFileSystemResources(cancellationToken);
+            return GetQumuloSubscriptionMockingExtension(subscriptionResource).GetQumuloFileSystemResources(cancellationToken);
         }
     }
 }

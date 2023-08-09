@@ -285,6 +285,35 @@ namespace Azure.ResourceManager.DeploymentManager
         public Azure.ResourceManager.DeploymentManager.Models.StepProperties Properties { get { throw null; } set { } }
     }
 }
+namespace Azure.ResourceManager.DeploymentManager.Mocking
+{
+    public partial class DeploymentManagerArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DeploymentManagerArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.DeploymentManager.ArtifactSourceResource GetArtifactSourceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.RolloutResource GetRolloutResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.ServiceResource GetServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.ServiceTopologyResource GetServiceTopologyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.ServiceUnitResource GetServiceUnitResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.StepResource GetStepResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class DeploymentManagerResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected DeploymentManagerResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.DeploymentManager.ArtifactSourceResource> GetArtifactSource(string artifactSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeploymentManager.ArtifactSourceResource>> GetArtifactSourceAsync(string artifactSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.ArtifactSourceCollection GetArtifactSources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeploymentManager.RolloutResource> GetRollout(string rolloutName, int? retryAttempt = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeploymentManager.RolloutResource>> GetRolloutAsync(string rolloutName, int? retryAttempt = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.RolloutCollection GetRollouts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeploymentManager.ServiceTopologyResource> GetServiceTopologyResource(string serviceTopologyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeploymentManager.ServiceTopologyResource>> GetServiceTopologyResourceAsync(string serviceTopologyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.ServiceTopologyResourceCollection GetServiceTopologyResources() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DeploymentManager.StepResource> GetStepResource(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeploymentManager.StepResource>> GetStepResourceAsync(string stepName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DeploymentManager.StepResourceCollection GetStepResources() { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DeploymentManager.Models
 {
     public partial class ApiKeyAuthentication : Azure.ResourceManager.DeploymentManager.Models.RestRequestAuthentication

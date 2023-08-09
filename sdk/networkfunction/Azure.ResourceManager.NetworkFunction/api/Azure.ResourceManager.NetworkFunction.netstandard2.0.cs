@@ -100,6 +100,28 @@ namespace Azure.ResourceManager.NetworkFunction
         public static Azure.ResourceManager.NetworkFunction.CollectorPolicyResource GetCollectorPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
 }
+namespace Azure.ResourceManager.NetworkFunction.Mocking
+{
+    public partial class NetworkFunctionArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkFunctionArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource GetAzureTrafficCollectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkFunction.CollectorPolicyResource GetCollectorPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class NetworkFunctionResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkFunctionResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> GetAzureTrafficCollector(string azureTrafficCollectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource>> GetAzureTrafficCollectorAsync(string azureTrafficCollectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorCollection GetAzureTrafficCollectors() { throw null; }
+    }
+    public partial class NetworkFunctionSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected NetworkFunctionSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> GetAzureTrafficCollectors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
     public static partial class ArmNetworkFunctionModelFactory

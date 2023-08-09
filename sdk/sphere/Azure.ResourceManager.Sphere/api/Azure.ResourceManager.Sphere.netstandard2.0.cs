@@ -326,6 +326,33 @@ namespace Azure.ResourceManager.Sphere
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sphere.SphereProductResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sphere.Models.SphereProductPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Sphere.Mocking
+{
+    public partial class SphereArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SphereArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.Sphere.SphereCatalogResource GetSphereCatalogResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereCertificateResource GetSphereCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereDeploymentResource GetSphereDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereDeviceGroupResource GetSphereDeviceGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereDeviceResource GetSphereDeviceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereImageResource GetSphereImageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereProductResource GetSphereProductResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class SphereResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SphereResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.Sphere.SphereCatalogResource> GetSphereCatalog(string catalogName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.SphereCatalogResource>> GetSphereCatalogAsync(string catalogName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereCatalogCollection GetSphereCatalogs() { throw null; }
+    }
+    public partial class SphereSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected SphereSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sphere.SphereCatalogResource> GetSphereCatalogs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sphere.SphereCatalogResource> GetSphereCatalogsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Sphere.Models
 {
     public static partial class ArmSphereModelFactory

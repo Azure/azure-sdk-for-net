@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{69D366FC-0520-49EE-8222-69CBAA6EE34F}") = "Azure.ResourceManager.Authorization", "src\Azure.ResourceManager.Authorization.csproj", "{C6DE6182-C96E-47A2-9EFF-580413BC03DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Authorization", "src\Azure.ResourceManager.Authorization.csproj", "{C6DE6182-C96E-47A2-9EFF-580413BC03DA}"
 EndProject
-Project("{69D366FC-0520-49EE-8222-69CBAA6EE34F}") = "Azure.ResourceManager.Authorization.Tests", "tests\Azure.ResourceManager.Authorization.Tests.csproj", "{FAC8AF17-FF76-4D99-B0D9-A7B7D73977A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Authorization.Tests", "tests\Azure.ResourceManager.Authorization.Tests.csproj", "{FAC8AF17-FF76-4D99-B0D9-A7B7D73977A3}"
 EndProject
-Project("{69D366FC-0520-49EE-8222-69CBAA6EE34F}") = "Azure.ResourceManager.Authorization.Samples", "samples\Azure.ResourceManager.Authorization.Samples.csproj", "{712FF3EC-BBBD-41AE-A669-F09F913A1348}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Authorization.Samples", "samples\Azure.ResourceManager.Authorization.Samples.csproj", "{712FF3EC-BBBD-41AE-A669-F09F913A1348}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {69102F5E-2B0C-4B4E-B182-4F9228CC3EEF}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{FAC8AF17-FF76-4D99-B0D9-A7B7D73977A3}.Release|x64.Build.0 = Release|Any CPU
 		{FAC8AF17-FF76-4D99-B0D9-A7B7D73977A3}.Release|x86.ActiveCfg = Release|Any CPU
 		{FAC8AF17-FF76-4D99-B0D9-A7B7D73977A3}.Release|x86.Build.0 = Release|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Debug|x64.Build.0 = Debug|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Debug|x86.Build.0 = Debug|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Release|Any CPU.Build.0 = Release|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Release|x64.ActiveCfg = Release|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Release|x64.Build.0 = Release|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Release|x86.ActiveCfg = Release|Any CPU
+		{712FF3EC-BBBD-41AE-A669-F09F913A1348}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69102F5E-2B0C-4B4E-B182-4F9228CC3EEF}
 	EndGlobalSection
 EndGlobal

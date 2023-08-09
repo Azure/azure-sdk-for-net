@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Elastic.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Elastic
@@ -18,38 +19,30 @@ namespace Azure.ResourceManager.Elastic
     /// <summary> A class to add extension methods to Azure.ResourceManager.Elastic. </summary>
     public static partial class ElasticExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static ElasticArmClientMockingExtension GetElasticArmClientMockingExtension(ArmClient client)
+        {
+            return client.GetCachedClient(client =>
+            {
+                return new ElasticArmClientMockingExtension(client);
+            });
+        }
+
+        private static ElasticResourceGroupMockingExtension GetElasticResourceGroupMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+                return new ElasticResourceGroupMockingExtension(client, resource.Id);
             });
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
-        }
-
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static ElasticSubscriptionMockingExtension GetElasticSubscriptionMockingExtension(ArmResource resource)
         {
             return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
+                return new ElasticSubscriptionMockingExtension(client, resource.Id);
             });
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region ElasticMonitorResource
         /// <summary>
         /// Gets an object representing an <see cref="ElasticMonitorResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ElasticMonitorResource.CreateResourceIdentifier" /> to create an <see cref="ElasticMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -59,16 +52,9 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> Returns a <see cref="ElasticMonitorResource" /> object. </returns>
         public static ElasticMonitorResource GetElasticMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ElasticMonitorResource.ValidateResourceId(id);
-                return new ElasticMonitorResource(client, id);
-            }
-            );
+            return GetElasticArmClientMockingExtension(client).GetElasticMonitorResource(id);
         }
-        #endregion
 
-        #region MonitoringTagRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="MonitoringTagRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -78,21 +64,15 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> Returns a <see cref="MonitoringTagRuleResource" /> object. </returns>
         public static MonitoringTagRuleResource GetMonitoringTagRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MonitoringTagRuleResource.ValidateResourceId(id);
-                return new MonitoringTagRuleResource(client, id);
-            }
-            );
+            return GetElasticArmClientMockingExtension(client).GetMonitoringTagRuleResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of ElasticMonitorResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ElasticMonitorResources and their operations over a ElasticMonitorResource. </returns>
         public static ElasticMonitorResourceCollection GetElasticMonitorResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetElasticMonitorResources();
+            return GetElasticResourceGroupMockingExtension(resourceGroupResource).GetElasticMonitorResources();
         }
 
         /// <summary>
@@ -116,7 +96,7 @@ namespace Azure.ResourceManager.Elastic
         [ForwardsClientCalls]
         public static async Task<Response<ElasticMonitorResource>> GetElasticMonitorResourceAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetElasticMonitorResources().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
+            return await GetElasticResourceGroupMockingExtension(resourceGroupResource).GetElasticMonitorResourceAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -140,7 +120,7 @@ namespace Azure.ResourceManager.Elastic
         [ForwardsClientCalls]
         public static Response<ElasticMonitorResource> GetElasticMonitorResource(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetElasticMonitorResources().Get(monitorName, cancellationToken);
+            return GetElasticResourceGroupMockingExtension(resourceGroupResource).GetElasticMonitorResource(monitorName, cancellationToken);
         }
 
         /// <summary>
@@ -161,7 +141,7 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> An async collection of <see cref="ElasticMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ElasticMonitorResource> GetElasticMonitorResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetElasticMonitorResourcesAsync(cancellationToken);
+            return GetElasticSubscriptionMockingExtension(subscriptionResource).GetElasticMonitorResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -182,7 +162,7 @@ namespace Azure.ResourceManager.Elastic
         /// <returns> A collection of <see cref="ElasticMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ElasticMonitorResource> GetElasticMonitorResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetElasticMonitorResources(cancellationToken);
+            return GetElasticSubscriptionMockingExtension(subscriptionResource).GetElasticMonitorResources(cancellationToken);
         }
     }
 }

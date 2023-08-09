@@ -293,6 +293,39 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceFabric.Models.ServiceFabricServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ServiceFabric.Mocking
+{
+    public partial class ServiceFabricArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ServiceFabricArmClientMockingExtension() { }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource GetServiceFabricApplicationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource GetServiceFabricApplicationTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource GetServiceFabricApplicationTypeVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource GetServiceFabricClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource GetServiceFabricServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class ServiceFabricResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ServiceFabricResourceGroupMockingExtension() { }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource> GetServiceFabricCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource>> GetServiceFabricClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricClusterCollection GetServiceFabricClusters() { throw null; }
+    }
+    public partial class ServiceFabricSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    {
+        protected ServiceFabricSubscriptionMockingExtension() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersions(Azure.Core.AzureLocation location, string clusterVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersions(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersionsAsync(Azure.Core.AzureLocation location, string clusterVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersionsAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment environment, string clusterVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment environment, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment environment, string clusterVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceFabric.Models.ClusterVersionsEnvironment environment, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource> GetServiceFabricClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource> GetServiceFabricClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     public partial class ApplicationDeltaHealthPolicy
