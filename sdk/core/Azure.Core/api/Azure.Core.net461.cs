@@ -1201,6 +1201,12 @@ namespace Azure.Core.Serialization
         public abstract System.Threading.Tasks.ValueTask SerializeAsync(System.IO.Stream stream, object? value, System.Type inputType, System.Threading.CancellationToken cancellationToken);
         public virtual System.Threading.Tasks.ValueTask<System.BinaryData> SerializeAsync(object? value, System.Type? inputType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
+    public sealed partial class UnknownSubclassAttribute : System.Attribute
+    {
+        public UnknownSubclassAttribute(System.Type unknownSubclass) { }
+        public System.Type UnknownSubclass { get { throw null; } }
+    }
 }
 namespace Azure.Messaging
 {
