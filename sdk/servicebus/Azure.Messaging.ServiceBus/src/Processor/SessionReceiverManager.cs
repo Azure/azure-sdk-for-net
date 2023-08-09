@@ -444,13 +444,16 @@ namespace Azure.Messaging.ServiceBus
             if (_sessionCancellationSource is { IsCancellationRequested: false })
             {
                 _sessionCancellationSource.Cancel();
-                _sessionCancellationSource.Dispose();
             }
 
             if (_sessionLockRenewalTask != null)
             {
                 await _sessionLockRenewalTask.ConfigureAwait(false);
             }
+
+            _sessionCancellationSource?.Dispose();
+            _sessionLockRenewalCancellationSource?.Dispose();
+            _sessionLockCancellationTokenSource?.Dispose();
         }
 
         internal void RefreshSessionLockToken()

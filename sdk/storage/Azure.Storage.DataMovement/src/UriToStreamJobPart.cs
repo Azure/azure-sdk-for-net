@@ -404,10 +404,12 @@ namespace Azure.Storage.DataMovement
                 await _destinationResource.CopyFromStreamAsync(
                     stream: source,
                     overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
-                    position: offset,
                     streamLength: sourceLength,
                     completeLength: expectedLength,
-                    options: default,
+                    options: new StorageResourceWriteToOffsetOptions()
+                    {
+                        Position = offset,
+                    },
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
                 return true;
             }

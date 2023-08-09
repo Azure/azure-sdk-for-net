@@ -148,8 +148,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 await storageResource.CopyFromStreamAsync(
                     stream: stream,
                     streamLength: length,
-                    completeLength: length,
-                    overwrite: false);
+                    overwrite: false,
+                    completeLength: length);
             }
 
             BlobDownloadStreamingResult result = await blobClient.DownloadStreamingAsync();
@@ -176,7 +176,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
-                    position: position);
+                    completeLength: length,
+                    options: new StorageResourceWriteToOffsetOptions() { Position = position });
             }
             await storageResource.CompleteTransferAsync(false);
 
@@ -198,7 +199,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource storageResource = new BlockBlobStorageResource(blobClient);
 
             // Act without creating the blob
-            int position = 0;
             int length = Constants.KB;
             var data = GetRandomBuffer(length);
             using (var stream = new MemoryStream(data))
@@ -207,7 +207,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
-                    position: position);
+                    completeLength: 0);
             }
             using (var stream = new MemoryStream(data))
             {
@@ -217,7 +217,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
-                    position: position),
+                    completeLength: 0),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains("Cannot Stage Block to the specific offset"));
@@ -369,7 +369,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
-            var data = GetRandomBuffer(4 * Constants.KB);
+            var length = 4 * Constants.KB;
+            var data = GetRandomBuffer(length);
             var blockLength = Constants.KB;
             using (var stream = new MemoryStream(data))
             {
@@ -384,7 +385,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await destinationResource.CopyBlockFromUriAsync(
                 sourceResource: sourceResource,
                 overwrite: false,
-                range: new HttpRange(0, blockLength));
+                range: new HttpRange(0, blockLength),
+                completeLength: length);
 
             // Commit the block
             await destinationResource.CompleteTransferAsync(false);
@@ -406,7 +408,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
-            var data = GetRandomBuffer(4 * Constants.KB);
+            var length = 4 * Constants.KB;
+            var data = GetRandomBuffer(length);
             var blockLength = Constants.KB;
             using (var stream = new MemoryStream(data))
             {
@@ -429,6 +432,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -449,7 +453,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = testContainer.Container.GetBlockBlobClient(GetNewBlobName());
 
-            var data = GetRandomBuffer(4 * Constants.KB);
+            var length = 4 * Constants.KB;
+            var data = GetRandomBuffer(length);
             var blockLength = Constants.KB;
             using (var stream = new MemoryStream(data))
             {
@@ -476,6 +481,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -499,7 +505,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobClient sourceClient = test.Container.GetBlockBlobClient(GetNewBlobName());
             BlockBlobClient destinationClient = test.Container.GetBlockBlobClient(GetNewBlobName());
 
-            var data = GetRandomBuffer(4 * Constants.KB);
+            var length = 4 * Constants.KB;
+            var data = GetRandomBuffer(length);
             var blockLength = Constants.KB;
             using (var stream = new MemoryStream(data))
             {
@@ -521,6 +528,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -546,7 +554,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), overwrite: false),
+                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), overwrite: false, completeLength: Constants.KB),
                 e =>
                 {
                     Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource");
@@ -612,7 +620,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
-                    position: 0);
+                    completeLength: 0);
             }
 
             // Act
@@ -648,7 +656,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: overwrite,
-                    position: 0);
+                    completeLength: 0);
             }
 
             // Act

@@ -115,7 +115,7 @@ namespace Azure.Storage.DataMovement.Tests
             int failedCount = 0,
             TransferManagerOptions transferManagerOptions = default,
             DataTransferOptions transferOptions = default,
-            ProgressHandlerOptions progressHandlerOptions = default,
+            bool trackBytes = true,
             StorageResourceCreationPreference createMode = StorageResourceCreationPreference.OverwriteIfExists,
             int waitTime = 30)
         {
@@ -128,11 +128,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TestProgressHandler progressHandler = new TestProgressHandler();
             transferOptions ??= new DataTransferOptions();
-            transferOptions.ProgressHandler = progressHandler;
-            transferOptions.ProgressHandlerOptions = progressHandlerOptions ?? new ProgressHandlerOptions()
-            {
-                TrackBytesTransferred = true
-            };
+            transferOptions.ProgressHandlerOptions = new ProgressHandlerOptions(progressHandler, trackBytes);
             transferOptions.CreationPreference = createMode;
 
             DataTransfer transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
@@ -327,11 +323,7 @@ namespace Azure.Storage.DataMovement.Tests
             TestProgressHandler progressHandler = new TestProgressHandler();
             DataTransferOptions transferOptions = new DataTransferOptions()
             {
-                ProgressHandler = progressHandler,
-                ProgressHandlerOptions = new ProgressHandlerOptions()
-                {
-                    TrackBytesTransferred = true
-                }
+                ProgressHandlerOptions = new ProgressHandlerOptions(progressHandler, true)
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 

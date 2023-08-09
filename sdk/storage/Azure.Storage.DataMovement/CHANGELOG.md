@@ -58,7 +58,12 @@
 - [BREAKING CHANGE] Changed `StorageTransferProgress` constructor from `public` to `protected internal`. 
 - [BREAKING CHANGE] Renamed `StorageTransferProgress` to `DataTransferProgress`.
 - [BREAKING CHANGE] Renamed `StorageTransferEventArgs` to `DataTransferEventArgs`.
+- [BREAKING CHANGE] Removed `position` parameter from `StorageResourceSingle.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
+- [BREAKING CHANGE] Made parameter `completeLength` from `StorageResourceSingle.CopyBlockFromUriAsync` mandatory.
+- [BREAKING CHANGE] Moved `DataTransferOptions.ProgressHandler` to `DataTransferOptions.ProgressHandlerOptions`.
+- [BREAKING CHANGE] Removed default constructor for `ProgressHandlerOptions`. Use `ProgressHandlerOptions(IProgress<DataTransferProgress>, bool)` instead.
 - [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` and `StorageResource.Uri` (including it's derived classes). Use `StorageResource.TryGetUri` instead.
+
 
 ### Bugs Fixed
 

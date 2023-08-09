@@ -25,6 +25,8 @@
 - [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.DirectoryPrefix` to `BlobDirectoryPrefix`
 - [BREAKING CHANGE] Renamed `BlobStorageResourceContainerOptions.ResourceOptions` to `BlobOptions`
 - [BREAKING CHANGE] Moved `BlobContainerClientTransferOptions` to the `Azure.Storage.DataMovement.Blobs` namespace
+- [BREAKING CHANGE] Removed `position` parameter from `*BlobStorageResource.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
+- [BREAKING CHANGE] Made parameter `completeLength` from `*BlobStorageResource.CopyBlockFromUriAsync` mandatory.
 - [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` and `StorageResource.Uri` (including it's derived classes). Use `StorageResource.TryGetUri` instead.
 
 ### Bugs Fixed

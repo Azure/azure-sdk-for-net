@@ -149,7 +149,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             using (var stream = new MemoryStream(data))
             {
                 // Act
-                await storageResource.CopyFromStreamAsync(stream, length, false);
+                await storageResource.CopyFromStreamAsync(
+                    stream: stream,
+                    streamLength: length,
+                    overwrite: false,
+                    completeLength: length);
             }
 
             BlobDownloadStreamingResult result = await blobClient.DownloadStreamingAsync();
@@ -182,7 +186,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
-                    position: readPosition - 1);
+                    completeLength: length,
+                    options: new StorageResourceWriteToOffsetOptions() { Position = readPosition - 1 });
             }
 
             BlobDownloadStreamingResult result = await blobClient.DownloadStreamingAsync(
@@ -215,7 +220,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 // Act
                 await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                storageResource.CopyFromStreamAsync(stream, streamLength: length, false, position: position),
+                storageResource.CopyFromStreamAsync(
+                    stream: stream,
+                    streamLength: length,
+                    overwrite: false,
+                    completeLength: length,
+                    options: new StorageResourceWriteToOffsetOptions(){ Position = position }),
                 e =>
                 {
                     Assert.AreEqual(e.ErrorCode, "BlobAlreadyExists");
@@ -383,7 +393,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await destinationResource.CopyBlockFromUriAsync(
                 sourceResource: sourceResource,
                 overwrite: false,
-                range: new HttpRange(0, blockLength));
+                range: new HttpRange(0, blockLength),
+                completeLength: length);
 
             // Commit the block
             await destinationResource.CompleteTransferAsync(false);
@@ -431,6 +442,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -479,6 +491,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -526,6 +539,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceResource: sourceResource,
                 overwrite: false,
                 range: new HttpRange(0, blockLength),
+                completeLength: length,
                 options: options);
             await destinationResource.CompleteTransferAsync(false);
 
@@ -552,7 +566,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), false),
+                destinationResource.CopyBlockFromUriAsync(sourceResource, new HttpRange(0, Constants.KB), false, Constants.KB),
                 e =>
                 {
                     Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource");
@@ -619,7 +633,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     stream: stream,
                     streamLength: length,
                     overwrite: false,
-                    position: 0);
+                    completeLength: length);
             }
 
             // Act
