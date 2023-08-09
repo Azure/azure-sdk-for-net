@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Azure.Core.Experimental.Tests
@@ -13,7 +14,6 @@ namespace Azure.Core.Experimental.Tests
             ValueModel model = new ValueModel();
             model.Value = 1;
 
-            // TODO: we will want to do the equals without a cast
             Assert.IsTrue(1 == model.Value);
 
             // Requiring the cast for AreEqual is consistent with what we do in DynamicData
@@ -26,7 +26,6 @@ namespace Azure.Core.Experimental.Tests
             ValueModel model = new ValueModel();
             model.Value = 1L;
 
-            // TODO: we will want to do the equals without a cast
             Assert.IsTrue(1L == model.Value);
 
             // Requiring the cast for AreEqual is consistent with what we do in DynamicData
@@ -77,12 +76,33 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(1L, (long)model.Value);
         }
 
+        [Test]
+        public void CanSetValuesInDictionaryToNull()
+        {
+            Dictionary<string, Value> d = new Dictionary<string, Value>();
+
+            // TODO: address API
+            d["a"] = new((object)null);
+
+            Assert.IsNull((int?)d["a"]);
+
+            Assert.IsTrue(null == (object)d["a"]);
+
+            // TODO: should this work?
+            Assert.IsTrue(null == (string)d["a"]);
+
+            // TODO: This fails.  Should it work?
+            Assert.IsNull((string)d["a"]);
+
+            // TODO: if we accept null for Value, should we have an analyzer
+            // to prevent nullable Value?, e.g. List<Value?>
+        }
+
         // TODO: Questions
         //   - Can Value hold an array?
         //   - List of Value?
         //   - Dictionary of Value?
         //   - Cast value to Model type?  Cycles if Model has a Value?
-        //   -
 
         #region Helpers
         internal class ValueModel
