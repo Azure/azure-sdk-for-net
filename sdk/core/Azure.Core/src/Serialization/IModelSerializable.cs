@@ -6,7 +6,7 @@ using System;
 namespace Azure.Core.Serialization
 {
     /// <summary>
-    /// Indicates that the impleenter can be serialized and deserialized.
+    /// Allows an object to control its own serialization and deserialization.
     /// The format of the serialization is determined by the implementer.
     /// </summary>
     /// <typeparam name="T">The type to deserialize the value into.</typeparam>
