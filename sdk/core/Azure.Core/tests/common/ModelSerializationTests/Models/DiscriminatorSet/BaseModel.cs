@@ -33,7 +33,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
         public string Name { get; set; }
         public IList<string> Fields { get; internal set; }
         public string NullProperty = null;
-        public Dictionary<string, int> KeyValuePairs = new Dictionary<string, int> { { "key1", 1 }, { "key2", 2 } };
+        public Dictionary<string, int> KeyValuePairs = new Dictionary<string, int>();
 
         protected internal void SerializeRawData(Utf8JsonWriter writer)
         {
