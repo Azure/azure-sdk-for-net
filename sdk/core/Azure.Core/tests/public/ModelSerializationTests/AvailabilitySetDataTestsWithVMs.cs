@@ -32,6 +32,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             expectedSerializedString += "},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3}";
             //if (!ignoreAdditionalProperties)
             //    expectedSerializedString += ",\"extraRoot\":\"extraRoot\"";
+            expectedSerializedString += ",\"virtualMachines\":[{\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS1\"},{\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS2\"}]";
             expectedSerializedString += "}";
             return expectedSerializedString; ;
         }
