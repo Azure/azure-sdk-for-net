@@ -169,6 +169,11 @@
     <PackageReference Update="Microsoft.Extensions.Options" Version="2.1.0" />
   </ItemGroup>
 
+  <!-- Packages intended for the Moq Extension library only-->
+  <ItemGroup Condition="$(MSBuildProjectName) == 'Microsoft.Azure.ResourceManager.Moq'">
+    <PackageReference Update="Moq" Version="4.18.2" />
+  </ItemGroup>
+
   <!--
     Build time packages
     All should have PrivateAssets="All" set so they don't become package dependencies

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyTitle>Moq support for Azure Resource Manager client library for .NET</AssemblyTitle>
+    <RootNamespace>Azure.ResourceManager.Moq</RootNamespace>
+    <Version>1.1.0-beta.1</Version>
+    <Description>This library contains handy classes and utilities to mock the extension methods in Azure Resource Manager clients.</Description>
+    <PackageTags>Microsoft Azure SDK Moq Mock</PackageTags>
+    <Nullable>enable</Nullable>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.ResourceManager" />
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+
+</Project>

@@ -222,6 +222,11 @@
     <Compile Include="$(AzureCoreSharedSources)ApiVersionString.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
+  <!-- Moq Extension library Specific Overrides-->
+  <!-- <ItemGroup Condition="$(MSBuildProjectName) == 'Microsoft.Azure.ResourceManager.Moq'">
+    <PackageReference Include="Moq"/>
+  </ItemGroup> -->
+
   <!-- DataFactory Project Specific Overrides-->
   <ItemGroup Condition="$(MSBuildProjectName) == 'Azure.ResourceManager.DataFactory'">
     <PackageReference Include="Azure.Core.Expressions.DataFactory"/>
