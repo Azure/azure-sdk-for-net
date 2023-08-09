@@ -10,14 +10,17 @@ namespace Azure.Core
     internal static class ModelSerializerHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void ValidateFormat(IModelSerializable<object> model, ModelSerializerFormat format)
+        public static void ValidateFormat<T>(IModelSerializable<T> model, ModelSerializerFormat format)
         {
-            bool implementsJson = model is IModelJsonSerializable<object>;
+            bool implementsJson = model is IModelJsonSerializable<T>;
             bool isValid = (format == ModelSerializerFormat.Json && implementsJson) || format == ModelSerializerFormat.Wire;
             if (!isValid)
             {
                 throw new NotSupportedException($"The model {model.GetType().Name} does not support '{format}' format.");
             }
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ValidateFormat(IModelSerializable<object> model, ModelSerializerFormat format) => ValidateFormat<object>(model, format);
     }
 }

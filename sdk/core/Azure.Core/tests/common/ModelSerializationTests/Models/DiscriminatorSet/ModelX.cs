@@ -40,10 +40,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
 
         public static explicit operator ModelX(Response response)
         {
-            if (response == null)
-            {
-                return null;
-            }
+            Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeModelX(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);

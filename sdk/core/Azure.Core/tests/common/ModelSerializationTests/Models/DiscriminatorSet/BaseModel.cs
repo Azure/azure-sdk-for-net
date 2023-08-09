@@ -25,10 +25,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
 
         public static explicit operator BaseModel(Response response)
         {
-            if (response == null)
-            {
-                return null;
-            }
+            Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeBaseModel(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);

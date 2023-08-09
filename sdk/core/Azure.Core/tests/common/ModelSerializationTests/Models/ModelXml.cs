@@ -56,10 +56,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
 
         public static explicit operator ModelXml(Response response)
         {
-            if (response == null)
-            {
-                return null;
-            }
+            Argument.AssertNotNull(response, nameof(response));
 
             return DeserializeModelXml(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }

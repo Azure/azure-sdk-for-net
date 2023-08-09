@@ -30,10 +30,7 @@ namespace Azure.Core.Tests.ResourceManager.Resources
 
         public static explicit operator ResourceProviderData(Response response)
         {
-            if (response == null)
-            {
-                return null;
-            }
+            Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeResourceProviderData(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);

@@ -47,10 +47,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public static explicit operator Envelope<T>(Response response)
         {
-            if (response == null)
-            {
-                return null;
-            }
+            Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeEnvelope(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
