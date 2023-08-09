@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.DataMovement.Blobs;
@@ -13,7 +12,6 @@ using Azure.Storage.DataMovement.JobPlan;
 using Azure.Storage.Test;
 using Moq;
 using NUnit.Framework;
-using static System.Reflection.Metadata.BlobBuilder;
 using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
@@ -28,9 +26,19 @@ namespace Azure.Storage.DataMovement.Tests
             ResourceStaticApi,
 
             /// <summary>
-            /// Instance of the <see cref="StorageResourceProvider"/> the user is given to invoke rehydration on.
+            /// Instance of the provider the user is given to invoke rehydration on.
             /// </summary>
-            ProviderInstance,
+            ProviderInstanceOLD,
+
+            /// <summary>
+            /// The public, package-wide static API for rehydrating.
+            /// </summary>
+            PublicStaticApiOLD,
+
+            /// <summary>
+            /// New provider system for creating resources.
+            /// </summary>
+            Provider
         }
         public static IEnumerable<RehydrateApi> GetRehydrateApis() => Enum.GetValues(typeof(RehydrateApi)).Cast<RehydrateApi>();
 
@@ -149,6 +157,21 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
+        /// <summary>
+        /// Inlines the tryget to allow for switch expressions in tests.
+        /// </summary>
+        private async Task<StorageResource> AzureBlobStorageResourcesInlineTryGet(DataTransferProperties info, bool getSource)
+        {
+            if (!BlobStorageResources.TryGetResourceProviders(
+                info,
+                out BlobStorageResourceProvider sourceProvider,
+                out BlobStorageResourceProvider destinationProvider))
+            {
+                return null;
+            }
+            return getSource ? await sourceProvider.CreateResourceAsync() : await destinationProvider.CreateResourceAsync();
+        }
+
         [Test]
         [Combinatorial]
         public async Task RehydrateBlockBlob(
@@ -182,14 +205,16 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath });
 
-            BlobsStorageResourceProvider blobs = new();
-
             StorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => await BlockBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => isSource
-                    ? await blobs.FromSourceInternalHookAsync(transferProperties, CancellationToken.None)
-                    : await blobs.FromDestinationInternalHookAsync(transferProperties, CancellationToken.None),
+                RehydrateApi.ProviderInstanceOLD => await new BlobStorageResourceProvider(
+                    transferProperties, isSource, BlobStorageResources.ResourceType.BlockBlob).CreateResourceAsync(),
+                RehydrateApi.PublicStaticApiOLD => await AzureBlobStorageResourcesInlineTryGet(
+                    transferProperties, isSource),
+                RehydrateApi.Provider => isSource
+                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
@@ -242,13 +267,15 @@ namespace Azure.Storage.DataMovement.Tests
                 new List<string>() { destinationPath },
                 header: header);
 
-            BlobsStorageResourceProvider blobs = new();
-
             BlockBlobStorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => await BlockBlobStorageResource.RehydrateResourceAsync(transferProperties, false),
-                RehydrateApi.ProviderInstance => await blobs.FromDestinationInternalHookAsync(
-                    transferProperties, CancellationToken.None) as BlockBlobStorageResource,
+                RehydrateApi.ProviderInstanceOLD => (BlockBlobStorageResource)await new BlobStorageResourceProvider(
+                    transferProperties, false, BlobStorageResources.ResourceType.BlockBlob).CreateResourceAsync(),
+                RehydrateApi.PublicStaticApiOLD => (BlockBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
+                    transferProperties, false),
+                RehydrateApi.Provider => (BlockBlobStorageResource)await new BlobsStorageResourceProvider()
+                    .FromDestinationInternalHookAsync(transferProperties),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
@@ -291,14 +318,16 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath });
 
-            BlobsStorageResourceProvider blobs = new();
-
             StorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => await PageBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => isSource
-                    ? await blobs.FromSourceInternalHookAsync(transferProperties, CancellationToken.None)
-                    : await blobs.FromDestinationInternalHookAsync(transferProperties, CancellationToken.None),
+                RehydrateApi.ProviderInstanceOLD => await new BlobStorageResourceProvider(
+                    transferProperties, isSource, BlobStorageResources.ResourceType.PageBlob).CreateResourceAsync(),
+                RehydrateApi.PublicStaticApiOLD => await AzureBlobStorageResourcesInlineTryGet(
+                    transferProperties, isSource),
+                RehydrateApi.Provider => isSource
+                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
@@ -351,11 +380,15 @@ namespace Azure.Storage.DataMovement.Tests
                 new List<string>() { destinationPath },
                 header: header);
 
-            BlobsStorageResourceProvider blobs = new();
             PageBlobStorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => await PageBlobStorageResource.RehydrateResourceAsync(transferProperties, false),
-                RehydrateApi.ProviderInstance => await blobs.FromDestinationInternalHookAsync(transferProperties, CancellationToken.None) as PageBlobStorageResource,
+                RehydrateApi.ProviderInstanceOLD => (PageBlobStorageResource)await new BlobStorageResourceProvider(
+                    transferProperties, false, BlobStorageResources.ResourceType.PageBlob).CreateResourceAsync(),
+                RehydrateApi.PublicStaticApiOLD => (PageBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
+                    transferProperties, false),
+                RehydrateApi.Provider => (PageBlobStorageResource)await new BlobsStorageResourceProvider()
+                    .FromDestinationInternalHookAsync(transferProperties),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
@@ -398,13 +431,16 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationType,
                 new List<string>() { destinationPath });
 
-            BlobsStorageResourceProvider blobs = new();
             StorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => await AppendBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => isSource
-                    ? await blobs.FromSourceInternalHookAsync(transferProperties)
-                    : await blobs.FromDestinationInternalHookAsync(transferProperties),
+                RehydrateApi.ProviderInstanceOLD => await new BlobStorageResourceProvider(
+                    transferProperties, isSource, BlobStorageResources.ResourceType.AppendBlob).CreateResourceAsync(),
+                RehydrateApi.PublicStaticApiOLD => await AzureBlobStorageResourcesInlineTryGet(
+                    transferProperties, isSource),
+                RehydrateApi.Provider => isSource
+                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
@@ -456,11 +492,15 @@ namespace Azure.Storage.DataMovement.Tests
                 new List<string>() { destinationPath },
                 header: header);
 
-            BlobsStorageResourceProvider blobs = new();
             AppendBlobStorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => await AppendBlobStorageResource.RehydrateResourceAsync(transferProperties, false),
-                RehydrateApi.ProviderInstance => await blobs.FromDestinationInternalHookAsync(transferProperties) as AppendBlobStorageResource,
+                RehydrateApi.ProviderInstanceOLD => (AppendBlobStorageResource)await new BlobStorageResourceProvider(
+                    transferProperties, false, BlobStorageResources.ResourceType.AppendBlob).CreateResourceAsync(),
+                RehydrateApi.PublicStaticApiOLD => (AppendBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
+                    transferProperties, false),
+                RehydrateApi.Provider => (AppendBlobStorageResource)await new BlobsStorageResourceProvider()
+                .FromDestinationInternalHookAsync(transferProperties),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
@@ -513,13 +553,16 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPaths,
                 jobPartCount);
 
-            BlobsStorageResourceProvider blobs = new();
             StorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => await BlobStorageResourceContainer.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => isSource
-                    ? await blobs.FromSourceInternalHookAsync(transferProperties, CancellationToken.None)
-                    : await blobs.FromDestinationInternalHookAsync(transferProperties, CancellationToken.None),
+                RehydrateApi.ProviderInstanceOLD => (BlobStorageResourceContainer)await new BlobStorageResourceProvider(
+                    transferProperties, isSource, BlobStorageResources.ResourceType.BlobContainer).CreateResourceAsync(),
+                RehydrateApi.PublicStaticApiOLD => (BlobStorageResourceContainer)await AzureBlobStorageResourcesInlineTryGet(
+                    transferProperties, isSource),
+                RehydrateApi.Provider => isSource
+                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties),
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
