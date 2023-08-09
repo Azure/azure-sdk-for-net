@@ -72,7 +72,6 @@ trigger:
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edge/Azure.ResourceManager.EdgeConnectivityStatuses
     - sdk/edge/Azure.ResourceManager.EdgeUpdates
-    - sdk/edge/Azure.ResourceManager.PrivateEdgeConnectivityStatuses
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
@@ -251,7 +250,6 @@ pr:
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edge/Azure.ResourceManager.EdgeConnectivityStatuses
     - sdk/edge/Azure.ResourceManager.EdgeUpdates
-    - sdk/edge/Azure.ResourceManager.PrivateEdgeConnectivityStatuses
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
     - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
