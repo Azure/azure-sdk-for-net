@@ -2,10 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Public.ModelSerializationTests.Models;
 using NUnit.Framework;
@@ -29,6 +25,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             Assert.AreEqual(model.Fields, model2.Fields);
             Assert.AreEqual(model.KeyValuePairs, model2.KeyValuePairs);
+            Assert.AreEqual(model.NullProperty, model2.NullProperty);
 
             if (format == ModelSerializerFormat.Json)
             {
@@ -46,6 +43,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
             expected += ",\"fields\":[\"testField\"]";
+            expected += ",\"nullProperty\":null";
             expected += ",\"keyValuePairs\":{\"color\":\"red\"}";
             if (format == ModelSerializerFormat.Json)
                 expected += ",\"xProperty\":100";
@@ -64,6 +62,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("testField", model.Fields[0]);
             Assert.AreEqual(1, model.KeyValuePairs.Count);
             Assert.AreEqual("red", model.KeyValuePairs["color"]);
+            Assert.IsNull(model.NullProperty);
 
             var rawData = GetRawData(model);
             Assert.IsNotNull(rawData);
