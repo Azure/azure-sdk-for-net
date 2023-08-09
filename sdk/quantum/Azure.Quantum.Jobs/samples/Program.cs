@@ -28,7 +28,7 @@ namespace Azure.Quantum.Jobs.Samples
             var location = "your_location";
             var storageContainerName = "your_container_name";
 
-            TokenCredential credential = new DefaultAzureCredential(true);
+            var credential = new DefaultAzureCredential(true);
 
             var quantumJobClient =
                 new QuantumJobClient(

@@ -117,7 +117,7 @@ namespace Azure.Quantum.Jobs.Tests
                 var blobUploadOptions = new BlobUploadOptions { HttpHeaders = blobHeaders };
                 using (FileStream qirFileStream = File.OpenRead(qirFilePath))
                 {
-                    blobClient.Upload(qirFileStream, options: blobUploadOptions);
+                    await blobClient.UploadAsync(qirFileStream, options: blobUploadOptions);
                 }
             }
 
