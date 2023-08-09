@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetBillableAsync(CancellationToken)">
+<example>
+This sample shows how to call GetBillableAsync.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = await client.GetBillableAsync();
+]]></code>
+</example>
+    </member>
+    <member name="GetBillable(CancellationToken)">
+<example>
+This sample shows how to call GetBillable.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = client.GetBillable();
+]]></code>
+</example>
+    </member>
+    <member name="GetBillableAsync(RequestContext)">
+<example>
+This sample shows how to call GetBillableAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.GetBillableAsync(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("date").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("assetBreakdown")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("assetBreakdown")[0].GetProperty("count").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetBillable(RequestContext)">
+<example>
+This sample shows how to call GetBillable with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.GetBillable(new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("date").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("assetBreakdown")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("assetBreakdown")[0].GetProperty("count").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetSnapshotAsync(ReportAssetSnapshotRequest,CancellationToken)">
+<example>
+This sample shows how to call GetSnapshotAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var reportAssetSnapshotRequest = new ReportAssetSnapshotRequest()
+{
+    Metric = "<Metric>",
+    LabelName = "<LabelName>",
+    Size = 1234,
+    Page = 1234,
+};
+var result = await client.GetSnapshotAsync(reportAssetSnapshotRequest);
+]]></code>
+</example>
+    </member>
+    <member name="GetSnapshot(ReportAssetSnapshotRequest,CancellationToken)">
+<example>
+This sample shows how to call GetSnapshot with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var reportAssetSnapshotRequest = new ReportAssetSnapshotRequest()
+{
+    Metric = "<Metric>",
+    LabelName = "<LabelName>",
+    Size = 1234,
+    Page = 1234,
+};
+var result = client.GetSnapshot(reportAssetSnapshotRequest);
+]]></code>
+</example>
+    </member>
+    <member name="GetSnapshotAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetSnapshotAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {};
+
+Response response = await client.GetSnapshotAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSnapshotAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    metric = "<metric>",
+    labelName = "<labelName>",
+    size = 1234,
+    page = 1234,
+};
+
+Response response = await client.GetSnapshotAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("metric").ToString());
+Console.WriteLine(result.GetProperty("labelName").ToString());
+Console.WriteLine(result.GetProperty("updatedAt").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("mark").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("uuid").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("updatedDate").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("externalId").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("labels")[0].ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("wildcard").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("discoGroupName").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("reason").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetSnapshot(RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetSnapshot and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {};
+
+Response response = client.GetSnapshot(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSnapshot with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    metric = "<metric>",
+    labelName = "<labelName>",
+    size = 1234,
+    page = 1234,
+};
+
+Response response = client.GetSnapshot(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("metric").ToString());
+Console.WriteLine(result.GetProperty("labelName").ToString());
+Console.WriteLine(result.GetProperty("updatedAt").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("mark").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("uuid").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("updatedDate").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("externalId").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("labels")[0].ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("wildcard").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("discoGroupName").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("auditTrail")[0].GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("assets").GetProperty("value")[0].GetProperty("reason").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetSummaryAsync(ReportAssetSummaryRequest,CancellationToken)">
+<example>
+This sample shows how to call GetSummaryAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var reportAssetSummaryRequest = new ReportAssetSummaryRequest()
+{
+    MetricCategories = 
+{
+        "<null>"
+    },
+    Metrics = 
+{
+        "<null>"
+    },
+    Filters = 
+{
+        "<null>"
+    },
+    GroupBy = "<GroupBy>",
+    SegmentBy = "<SegmentBy>",
+    LabelName = "<LabelName>",
+};
+var result = await client.GetSummaryAsync(reportAssetSummaryRequest);
+]]></code>
+</example>
+    </member>
+    <member name="GetSummary(ReportAssetSummaryRequest,CancellationToken)">
+<example>
+This sample shows how to call GetSummary with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var reportAssetSummaryRequest = new ReportAssetSummaryRequest()
+{
+    MetricCategories = 
+{
+        "<null>"
+    },
+    Metrics = 
+{
+        "<null>"
+    },
+    Filters = 
+{
+        "<null>"
+    },
+    GroupBy = "<GroupBy>",
+    SegmentBy = "<SegmentBy>",
+    LabelName = "<LabelName>",
+};
+var result = client.GetSummary(reportAssetSummaryRequest);
+]]></code>
+</example>
+    </member>
+    <member name="GetSummaryAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetSummaryAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {};
+
+Response response = await client.GetSummaryAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSummaryAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    metricCategories = new[] {
+        "<String>"
+    },
+    metrics = new[] {
+        "<String>"
+    },
+    filters = new[] {
+        "<String>"
+    },
+    groupBy = "<groupBy>",
+    segmentBy = "<segmentBy>",
+    labelName = "<labelName>",
+};
+
+Response response = await client.GetSummaryAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("updatedAt").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("metricCategory").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("metric").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("filter").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("labelName").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("count").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("link").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetSummary(RequestContent,RequestContext)">
+<example>
+This sample shows how to call GetSummary and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {};
+
+Response response = client.GetSummary(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetSummary with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetReportsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    metricCategories = new[] {
+        "<String>"
+    },
+    metrics = new[] {
+        "<String>"
+    },
+    filters = new[] {
+        "<String>"
+    },
+    groupBy = "<groupBy>",
+    segmentBy = "<segmentBy>",
+    labelName = "<labelName>",
+};
+
+Response response = client.GetSummary(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("updatedAt").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("metricCategory").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("metric").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("filter").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("labelName").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("count").ToString());
+Console.WriteLine(result.GetProperty("assetSummaries")[0].GetProperty("link").ToString());
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

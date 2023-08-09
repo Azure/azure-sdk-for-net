@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetTasksAsync(string,string,int?,int?,CancellationToken)">
+<example>
+This sample shows how to call GetTasksAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = await client.GetTasksAsync("<filter>", "<orderby>", 1234, 1234);
+]]></code>
+</example>
+    </member>
+    <member name="GetTasks(string,string,int?,int?,CancellationToken)">
+<example>
+This sample shows how to call GetTasks with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = client.GetTasks("<filter>", "<orderby>", 1234, 1234);
+]]></code>
+</example>
+    </member>
+    <member name="GetTasksAsync(string,string,int?,int?,RequestContext)">
+<example>
+This sample shows how to call GetTasksAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.GetTasksAsync("<filter>", "<orderby>", 1234, 1234, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("metadata").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetTasks(string,string,int?,int?,RequestContext)">
+<example>
+This sample shows how to call GetTasks with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.GetTasks("<filter>", "<orderby>", 1234, 1234, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("metadata").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetTaskAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetTaskAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = await client.GetTaskAsync("<taskId>");
+]]></code>
+</example>
+    </member>
+    <member name="GetTask(string,CancellationToken)">
+<example>
+This sample shows how to call GetTask with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = client.GetTask("<taskId>");
+]]></code>
+</example>
+    </member>
+    <member name="GetTaskAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetTaskAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.GetTaskAsync("<taskId>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetTask(string,RequestContext)">
+<example>
+This sample shows how to call GetTask with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.GetTask("<taskId>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="CancelAsync(string,CancellationToken)">
+<example>
+This sample shows how to call CancelAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = await client.CancelAsync("<taskId>");
+]]></code>
+</example>
+    </member>
+    <member name="Cancel(string,CancellationToken)">
+<example>
+This sample shows how to call Cancel with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = client.Cancel("<taskId>");
+]]></code>
+</example>
+    </member>
+    <member name="CancelAsync(string,RequestContext)">
+<example>
+This sample shows how to call CancelAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.CancelAsync("<taskId>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="Cancel(string,RequestContext)">
+<example>
+This sample shows how to call Cancel with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetTasksClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.Cancel("<taskId>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("startedAt").ToString());
+Console.WriteLine(result.GetProperty("completedAt").ToString());
+Console.WriteLine(result.GetProperty("lastPolledAt").ToString());
+Console.WriteLine(result.GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("phase").ToString());
+Console.WriteLine(result.GetProperty("reason").ToString());
+Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

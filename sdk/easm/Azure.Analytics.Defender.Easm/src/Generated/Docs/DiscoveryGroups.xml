@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetDiscoGroupsAsync(string,int?,int?,CancellationToken)">
+<example>
+This sample shows how to call GetDiscoGroupsAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = await client.GetDiscoGroupsAsync("<filter>", 1234, 1234);
+]]></code>
+</example>
+    </member>
+    <member name="GetDiscoGroups(string,int?,int?,CancellationToken)">
+<example>
+This sample shows how to call GetDiscoGroups with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = client.GetDiscoGroups("<filter>", 1234, 1234);
+]]></code>
+</example>
+    </member>
+    <member name="GetDiscoGroupsAsync(string,int?,int?,RequestContext)">
+<example>
+This sample shows how to call GetDiscoGroupsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.GetDiscoGroupsAsync("<filter>", 1234, 1234, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("templateId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetDiscoGroups(string,int?,int?,RequestContext)">
+<example>
+This sample shows how to call GetDiscoGroups with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.GetDiscoGroups("<filter>", 1234, 1234, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("templateId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="ValidateAsync(DiscoGroupData,CancellationToken)">
+<example>
+This sample shows how to call ValidateAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var discoGroupData = new DiscoGroupData()
+{
+    Name = "<Name>",
+    Description = "<Description>",
+    Tier = "<Tier>",
+    FrequencyMilliseconds = 1234,
+    Seeds = 
+{
+        new DiscoSource()
+{
+            Kind = DiscoSourceKind.As,
+            Name = "<Name>",
+        }
+    },
+    Names = 
+{
+        "<null>"
+    },
+    Excludes = 
+{
+        new DiscoSource()
+{
+            Kind = DiscoSourceKind.As,
+            Name = "<Name>",
+        }
+    },
+    TemplateId = "<TemplateId>",
+};
+var result = await client.ValidateAsync(discoGroupData);
+]]></code>
+</example>
+    </member>
+    <member name="Validate(DiscoGroupData,CancellationToken)">
+<example>
+This sample shows how to call Validate with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var discoGroupData = new DiscoGroupData()
+{
+    Name = "<Name>",
+    Description = "<Description>",
+    Tier = "<Tier>",
+    FrequencyMilliseconds = 1234,
+    Seeds = 
+{
+        new DiscoSource()
+{
+            Kind = DiscoSourceKind.As,
+            Name = "<Name>",
+        }
+    },
+    Names = 
+{
+        "<null>"
+    },
+    Excludes = 
+{
+        new DiscoSource()
+{
+            Kind = DiscoSourceKind.As,
+            Name = "<Name>",
+        }
+    },
+    TemplateId = "<TemplateId>",
+};
+var result = client.Validate(discoGroupData);
+]]></code>
+</example>
+    </member>
+    <member name="ValidateAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call ValidateAsync and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {};
+
+Response response = await client.ValidateAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call ValidateAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    name = "<name>",
+    description = "<description>",
+    tier = "<tier>",
+    frequencyMilliseconds = 1234L,
+    seeds = new[] {
+        new {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    names = new[] {
+        "<String>"
+    },
+    excludes = new[] {
+        new {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    templateId = "<templateId>",
+};
+
+Response response = await client.ValidateAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="Validate(RequestContent,RequestContext)">
+<example>
+This sample shows how to call Validate and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {};
+
+Response response = client.Validate(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Validate with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    name = "<name>",
+    description = "<description>",
+    tier = "<tier>",
+    frequencyMilliseconds = 1234L,
+    seeds = new[] {
+        new {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    names = new[] {
+        "<String>"
+    },
+    excludes = new[] {
+        new {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    templateId = "<templateId>",
+};
+
+Response response = client.Validate(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetDiscoGroupAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetDiscoGroupAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = await client.GetDiscoGroupAsync("<groupName>");
+]]></code>
+</example>
+    </member>
+    <member name="GetDiscoGroup(string,CancellationToken)">
+<example>
+This sample shows how to call GetDiscoGroup with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = client.GetDiscoGroup("<groupName>");
+]]></code>
+</example>
+    </member>
+    <member name="GetDiscoGroupAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetDiscoGroupAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.GetDiscoGroupAsync("<groupName>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("templateId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetDiscoGroup(string,RequestContext)">
+<example>
+This sample shows how to call GetDiscoGroup with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.GetDiscoGroup("<groupName>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("templateId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="PutAsync(string,DiscoGroupData,CancellationToken)">
+<example>
+This sample shows how to call PutAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var discoGroupData = new DiscoGroupData()
+{
+    Name = "<Name>",
+    Description = "<Description>",
+    Tier = "<Tier>",
+    FrequencyMilliseconds = 1234,
+    Seeds = 
+{
+        new DiscoSource()
+{
+            Kind = DiscoSourceKind.As,
+            Name = "<Name>",
+        }
+    },
+    Names = 
+{
+        "<null>"
+    },
+    Excludes = 
+{
+        new DiscoSource()
+{
+            Kind = DiscoSourceKind.As,
+            Name = "<Name>",
+        }
+    },
+    TemplateId = "<TemplateId>",
+};
+var result = await client.PutAsync("<groupName>", discoGroupData);
+]]></code>
+</example>
+    </member>
+    <member name="Put(string,DiscoGroupData,CancellationToken)">
+<example>
+This sample shows how to call Put with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var discoGroupData = new DiscoGroupData()
+{
+    Name = "<Name>",
+    Description = "<Description>",
+    Tier = "<Tier>",
+    FrequencyMilliseconds = 1234,
+    Seeds = 
+{
+        new DiscoSource()
+{
+            Kind = DiscoSourceKind.As,
+            Name = "<Name>",
+        }
+    },
+    Names = 
+{
+        "<null>"
+    },
+    Excludes = 
+{
+        new DiscoSource()
+{
+            Kind = DiscoSourceKind.As,
+            Name = "<Name>",
+        }
+    },
+    TemplateId = "<TemplateId>",
+};
+var result = client.Put("<groupName>", discoGroupData);
+]]></code>
+</example>
+    </member>
+    <member name="PutAsync(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call PutAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {};
+
+Response response = await client.PutAsync("<groupName>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call PutAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    name = "<name>",
+    description = "<description>",
+    tier = "<tier>",
+    frequencyMilliseconds = 1234L,
+    seeds = new[] {
+        new {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    names = new[] {
+        "<String>"
+    },
+    excludes = new[] {
+        new {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    templateId = "<templateId>",
+};
+
+Response response = await client.PutAsync("<groupName>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("templateId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="Put(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call Put with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {};
+
+Response response = client.Put("<groupName>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call Put with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    name = "<name>",
+    description = "<description>",
+    tier = "<tier>",
+    frequencyMilliseconds = 1234L,
+    seeds = new[] {
+        new {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    names = new[] {
+        "<String>"
+    },
+    excludes = new[] {
+        new {
+            kind = "as",
+            name = "<name>",
+        }
+    },
+    templateId = "<templateId>",
+};
+
+Response response = client.Put("<groupName>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("templateId").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="RunAsync(string,RequestContext)">
+<example>
+This sample shows how to call RunAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.RunAsync("<groupName>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="Run(string,RequestContext)">
+<example>
+This sample shows how to call Run with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.Run("<groupName>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="GetRunsAsync(string,string,int?,int?,CancellationToken)">
+<example>
+This sample shows how to call GetRunsAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = await client.GetRunsAsync("<groupName>", "<filter>", 1234, 1234);
+]]></code>
+</example>
+    </member>
+    <member name="GetRuns(string,string,int?,int?,CancellationToken)">
+<example>
+This sample shows how to call GetRuns with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = client.GetRuns("<groupName>", "<filter>", 1234, 1234);
+]]></code>
+</example>
+    </member>
+    <member name="GetRunsAsync(string,string,int?,int?,RequestContext)">
+<example>
+This sample shows how to call GetRunsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.GetRunsAsync("<groupName>", "<filter>", 1234, 1234, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("names")[0].ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetRuns(string,string,int?,int?,RequestContext)">
+<example>
+This sample shows how to call GetRuns with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDiscoveryGroupsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.GetRuns("<groupName>", "<filter>", 1234, 1234, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("names")[0].ToString());
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetDataConnectionsAsync(int?,int?,CancellationToken)">
+<example>
+This sample shows how to call GetDataConnectionsAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = await client.GetDataConnectionsAsync(1234, 1234);
+]]></code>
+</example>
+    </member>
+    <member name="GetDataConnections(int?,int?,CancellationToken)">
+<example>
+This sample shows how to call GetDataConnections with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = client.GetDataConnections(1234, 1234);
+]]></code>
+</example>
+    </member>
+    <member name="GetDataConnectionsAsync(int?,int?,RequestContext)">
+<example>
+This sample shows how to call GetDataConnectionsAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.GetDataConnectionsAsync(1234, 1234, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("frequencyOffset").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("updatedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("userUpdatedAt").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("active").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("inactiveMessage").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetDataConnections(int?,int?,RequestContext)">
+<example>
+This sample shows how to call GetDataConnections with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.GetDataConnections(1234, 1234, new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("totalElements").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("frequencyOffset").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("updatedDate").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("userUpdatedAt").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("active").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("inactiveMessage").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="ValidateAsync(DataConnectionData,CancellationToken)">
+<example>
+This sample shows how to call ValidateAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties())
+{
+    Name = "<Name>",
+    Content = DataConnectionContent.Assets,
+    Frequency = DataConnectionFrequency.Daily,
+    FrequencyOffset = 1234,
+};
+var result = await client.ValidateAsync(dataConnectionData);
+]]></code>
+</example>
+    </member>
+    <member name="Validate(DataConnectionData,CancellationToken)">
+<example>
+This sample shows how to call Validate with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties())
+{
+    Name = "<Name>",
+    Content = DataConnectionContent.Assets,
+    Frequency = DataConnectionFrequency.Daily,
+    FrequencyOffset = 1234,
+};
+var result = client.Validate(dataConnectionData);
+]]></code>
+</example>
+    </member>
+    <member name="ValidateAsync(RequestContent,RequestContext)">
+<example>
+This sample shows how to call ValidateAsync with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    kind = "",
+};
+
+Response response = await client.ValidateAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call ValidateAsync with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    kind = "",
+    name = "<name>",
+    content = "assets",
+    frequency = "daily",
+    frequencyOffset = 1234,
+};
+
+Response response = await client.ValidateAsync(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="Validate(RequestContent,RequestContext)">
+<example>
+This sample shows how to call Validate with required request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    kind = "",
+};
+
+Response response = client.Validate(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Validate with all request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    kind = "",
+    name = "<name>",
+    content = "assets",
+    frequency = "daily",
+    frequencyOffset = 1234,
+};
+
+Response response = client.Validate(RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetDataConnectionAsync(string,CancellationToken)">
+<example>
+This sample shows how to call GetDataConnectionAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = await client.GetDataConnectionAsync("<dataConnectionName>");
+]]></code>
+</example>
+    </member>
+    <member name="GetDataConnection(string,CancellationToken)">
+<example>
+This sample shows how to call GetDataConnection with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var result = client.GetDataConnection("<dataConnectionName>");
+]]></code>
+</example>
+    </member>
+    <member name="GetDataConnectionAsync(string,RequestContext)">
+<example>
+This sample shows how to call GetDataConnectionAsync with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.GetDataConnectionAsync("<dataConnectionName>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("frequencyOffset").ToString());
+Console.WriteLine(result.GetProperty("updatedDate").ToString());
+Console.WriteLine(result.GetProperty("userUpdatedAt").ToString());
+Console.WriteLine(result.GetProperty("active").ToString());
+Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="GetDataConnection(string,RequestContext)">
+<example>
+This sample shows how to call GetDataConnection with required parameters and parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.GetDataConnection("<dataConnectionName>", new RequestContext());
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("frequencyOffset").ToString());
+Console.WriteLine(result.GetProperty("updatedDate").ToString());
+Console.WriteLine(result.GetProperty("userUpdatedAt").ToString());
+Console.WriteLine(result.GetProperty("active").ToString());
+Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="PutAsync(string,DataConnectionData,CancellationToken)">
+<example>
+This sample shows how to call PutAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties())
+{
+    Name = "<Name>",
+    Content = DataConnectionContent.Assets,
+    Frequency = DataConnectionFrequency.Daily,
+    FrequencyOffset = 1234,
+};
+var result = await client.PutAsync("<dataConnectionName>", dataConnectionData);
+]]></code>
+</example>
+    </member>
+    <member name="Put(string,DataConnectionData,CancellationToken)">
+<example>
+This sample shows how to call Put with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties())
+{
+    Name = "<Name>",
+    Content = DataConnectionContent.Assets,
+    Frequency = DataConnectionFrequency.Daily,
+    FrequencyOffset = 1234,
+};
+var result = client.Put("<dataConnectionName>", dataConnectionData);
+]]></code>
+</example>
+    </member>
+    <member name="PutAsync(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call PutAsync with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    kind = "",
+};
+
+Response response = await client.PutAsync("<dataConnectionName>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call PutAsync with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    kind = "",
+    name = "<name>",
+    content = "assets",
+    frequency = "daily",
+    frequencyOffset = 1234,
+};
+
+Response response = await client.PutAsync("<dataConnectionName>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("frequencyOffset").ToString());
+Console.WriteLine(result.GetProperty("updatedDate").ToString());
+Console.WriteLine(result.GetProperty("userUpdatedAt").ToString());
+Console.WriteLine(result.GetProperty("active").ToString());
+Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="Put(string,RequestContent,RequestContext)">
+<example>
+This sample shows how to call Put with required parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    kind = "",
+};
+
+Response response = client.Put("<dataConnectionName>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+]]></code>
+This sample shows how to call Put with all parameters and request content, and how to parse the result.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+var data = new {
+    kind = "",
+    name = "<name>",
+    content = "assets",
+    frequency = "daily",
+    frequencyOffset = 1234,
+};
+
+Response response = client.Put("<dataConnectionName>", RequestContent.Create(data));
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("content").ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("frequency").ToString());
+Console.WriteLine(result.GetProperty("frequencyOffset").ToString());
+Console.WriteLine(result.GetProperty("updatedDate").ToString());
+Console.WriteLine(result.GetProperty("userUpdatedAt").ToString());
+Console.WriteLine(result.GetProperty("active").ToString());
+Console.WriteLine(result.GetProperty("inactiveMessage").ToString());
+]]></code>
+</example>
+    </member>
+    <member name="DeleteAsync(string,RequestContext)">
+<example>
+This sample shows how to call DeleteAsync with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = await client.DeleteAsync("<dataConnectionName>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+    <member name="Delete(string,RequestContext)">
+<example>
+This sample shows how to call Delete with required parameters.
+<code><![CDATA[
+var credential = new DefaultAzureCredential();
+var endpoint = new Uri("<https://my-service.azure.com>");
+var client = new EasmDefenderClient(endpoint, credential).GetDataConnectionsClient("<subscriptionId>", "<resourceGroupName>", "<workspaceName>", "2023-03-01-preview");
+
+Response response = client.Delete("<dataConnectionName>");
+Console.WriteLine(response.Status);
+]]></code>
+</example>
+    </member>
+  </members>
+</doc>
