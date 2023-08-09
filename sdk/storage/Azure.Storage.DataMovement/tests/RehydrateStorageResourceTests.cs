@@ -8,13 +8,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.JobPlan;
+using Azure.Storage.Tests;
 using Moq;
 using NUnit.Framework;
 using static Azure.Storage.DataMovement.Tests.TransferUtility;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class RehydrateStorageResourceTests : DataMovementTestBase
+    public class RehydrateStorageResourceTests
     {
         public enum RehydrateApi
         {
@@ -40,8 +41,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
         public static IEnumerable<RehydrateApi> GetRehydrateApis() => Enum.GetValues(typeof(RehydrateApi)).Cast<RehydrateApi>();
 
-        public RehydrateStorageResourceTests(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public RehydrateStorageResourceTests()
         { }
 
         private enum StorageResourceType
@@ -171,9 +171,10 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            Random random = new();
             string transferId = GetNewTransferId();
-            string sourcePath = GetNewString(20);
-            string destinationPath = GetNewString(15);
+            string sourcePath = random.NextString(20);
+            string destinationPath = random.NextString(15);
             string originalPath = isSource ? sourcePath : destinationPath;
 
             StorageResourceType sourceType = !isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
@@ -221,15 +222,16 @@ namespace Azure.Storage.DataMovement.Tests
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            Random random = new();
             string transferId = GetNewTransferId();
-            string sourceParentPath = GetNewString(20);
+            string sourceParentPath = random.NextString(20);
             List<string> sourcePaths = new List<string>();
-            string destinationParentPath = GetNewString(15);
+            string destinationParentPath = random.NextString(15);
             List<string> destinationPaths = new List<string>();
             int jobPartCount = 10;
             for (int i = 0; i< jobPartCount; i++)
             {
-                string childPath = GetNewString(5);
+                string childPath = random.NextString(5);
                 sourcePaths.Add(Path.Combine(sourceParentPath, childPath));
                 destinationPaths.Add(Path.Combine(destinationParentPath, childPath));
             }
