@@ -1,6 +1,6 @@
 # Release History
 
-## 4.1.0 (2023-08-09)
+## 4.1.0 (2023-08-10)
 
 ### Features Added
 - In struct `DocumentAnalysisFeature`, added properties `Barcodes`, `KeyValuePairs`, and `Languages` as add-on capabilities.
