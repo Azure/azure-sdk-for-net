@@ -19,6 +19,12 @@ namespace Azure.ResourceManager.StorageSync
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -49,6 +55,7 @@ namespace Azure.ResourceManager.StorageSync
             {
                 return null;
             }
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -59,11 +66,22 @@ namespace Azure.ResourceManager.StorageSync
             Optional<int> storageSyncServiceStatus = default;
             Optional<Guid> storageSyncServiceUid = default;
             Optional<string> provisioningState = default;
+            Optional<bool> useIdentity = default;
             Optional<string> lastWorkflowId = default;
             Optional<string> lastOperationName = default;
             Optional<IReadOnlyList<StorageSyncPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -148,6 +166,15 @@ namespace Azure.ResourceManager.StorageSync
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("UseIdentity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useIdentity = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("lastWorkflowId"u8))
                         {
                             lastWorkflowId = property0.Value.GetString();
@@ -176,7 +203,7 @@ namespace Azure.ResourceManager.StorageSync
                     continue;
                 }
             }
-            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections));
+            return new StorageSyncServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(incomingTrafficPolicy), Optional.ToNullable(storageSyncServiceStatus), Optional.ToNullable(storageSyncServiceUid), provisioningState.Value, Optional.ToNullable(useIdentity), lastWorkflowId.Value, lastOperationName.Value, Optional.ToList(privateEndpointConnections));
         }
     }
 }
