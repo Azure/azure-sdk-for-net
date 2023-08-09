@@ -22,8 +22,18 @@ namespace Azure
         /// <param name="value"></param>
         public Value(object? value)
         {
-            _object = value;
-            _union = default;
+            switch (value)
+            {
+                case bool b:
+                    this = default;
+                    _object = TypeFlags.Boolean;
+                    _union.Boolean = b;
+                    break;
+                default:
+                    _object = value;
+                    _union = default;
+                    break;
+            }
         }
 
         /// <summary>
@@ -193,23 +203,25 @@ namespace Azure
             _union.Boolean = value;
         }
 
-        /// <summary>
-        /// TBD.
-        /// </summary>
-        /// <param name="value"></param>
-        public Value(bool? value)
-        {
-            this = default;
-            if (value.HasValue)
-            {
-                _object = TypeFlags.Boolean;
-                _union.Boolean = value.Value;
-            }
-            else
-            {
-                _object = null;
-            }
-        }
+        // TODO: Can we remove these?  The reason to consider this is to be able
+        // to assign null without ambiguity.
+        ///// <summary>
+        ///// TBD.
+        ///// </summary>
+        ///// <param name="value"></param>
+        //public Value(bool? value)
+        //{
+        //    this = default;
+        //    if (value.HasValue)
+        //    {
+        //        _object = TypeFlags.Boolean;
+        //        _union.Boolean = value.Value;
+        //    }
+        //    else
+        //    {
+        //        _object = null;
+        //    }
+        //}
         /// <summary>
         /// TBD.
         /// </summary>

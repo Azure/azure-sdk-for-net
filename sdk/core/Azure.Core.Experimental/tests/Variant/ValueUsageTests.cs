@@ -15,6 +15,7 @@ namespace Azure.Core.Experimental.Tests
             model.Value = 1;
 
             Assert.IsTrue(1 == model.Value);
+            Assert.IsTrue(model.Value == 1);
 
             // Requiring the cast for AreEqual is consistent with what we do in DynamicData
             Assert.AreEqual(1, (int)model.Value);
@@ -27,9 +28,32 @@ namespace Azure.Core.Experimental.Tests
             model.Value = 1L;
 
             Assert.IsTrue(1L == model.Value);
+            Assert.IsTrue(model.Value == 1L);
 
             // Requiring the cast for AreEqual is consistent with what we do in DynamicData
             Assert.AreEqual(1L, (long)model.Value);
+        }
+
+        [Test]
+        public void CanSetNullablePrimitives()
+        {
+            ValueModel model = new ValueModel();
+
+            bool? b = true;
+
+            // TODO: This tests whether we can assign a nullable boolean even without
+            // a constructor that takes it explicitly.  What is lost by removing that constructor?
+
+            // Ah, the answer is that it is boxed without the constructor, because it
+            // uses the object constructor instead.
+            model.Value = b;
+
+            //model.Value = true;
+
+            //Assert.IsNull((bool?)model.Value);
+
+            Assert.IsTrue(model.Value == b);
+            Assert.IsTrue(b == model.Value);
         }
 
         [Test]
@@ -40,10 +64,20 @@ namespace Azure.Core.Experimental.Tests
             // TODO: we will want a simpler API for this
             model.Value = new((object)null);
 
+            // TODO: this results in an ambiguous call site, but I think
+            // we can maybe address it by removing constructors that take
+            // nullable primitives.  See CanSetNullablePrimitives() experiment.
+            //
+            // model.Value = new(null);
+
+            // TODO: what would it take to achieve
+            // model.Value = null?
+
             Assert.IsNull((int?)model.Value);
 
             // TODO: This fails.  Also, I think we will want to do the equals without a cast
             Assert.IsTrue(null == (object)model.Value);
+            Assert.IsTrue((object)model.Value == null);
 
             // TODO: This fails currently, but it would be nice to get consistency with DynamicData
             Assert.IsNull(model.Value);
