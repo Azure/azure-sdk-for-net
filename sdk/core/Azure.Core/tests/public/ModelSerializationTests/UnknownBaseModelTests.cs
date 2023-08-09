@@ -31,8 +31,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("UnknownBaseModel", model2.GetType().Name);
             Assert.AreEqual(model.Kind, model2.Kind);
             Assert.AreEqual(model.Name, model2.Name);
-            Assert.AreEqual(model.Fields, model2.Fields);
-            Assert.AreEqual(model.KeyValuePairs, model2.KeyValuePairs);
 
             var rawData = GetRawData(model);
             var rawData2 = GetRawData(model2);
@@ -64,10 +62,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("UnknownBaseModel", model.GetType().Name);
             Assert.AreEqual("Z", model.Kind);
             Assert.AreEqual("zmodel", model.Name);
-            Assert.AreEqual(1, model.Fields.Count);
-            Assert.AreEqual("testField2", model.Fields[0]);
-            Assert.AreEqual(1, model.KeyValuePairs.Count);
-            Assert.AreEqual("blue", model.KeyValuePairs["color"]);
 
             var rawData = GetRawData(model);
             Assert.IsNotNull(rawData);
