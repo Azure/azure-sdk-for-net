@@ -96,11 +96,30 @@ namespace Azure.Core.Perf.Serializations
             return ModelSerializer.Serialize(_model, _options);
         }
 
+        [Params(4096, 8192, 16384, 32768)]
+        public int SegmentSize { get; set; }
+
+        [Benchmark(Baseline = true)]
+        [BenchmarkCategory("ModelSerializer")]
+        public BinaryData Serialize_ModelWriter_Current()
+        {
+            using var writer = new ModelWriter(_model, _options, SegmentSize);
+            return writer.ToBinaryData();
+        }
+
         [Benchmark]
         [BenchmarkCategory("ModelSerializer")]
-        public BinaryData Serialize_ModelWriter()
+        public BinaryData Serialize_ModelWriter_Interlocked()
         {
-            using var writer = new ModelWriter(_model, _options);
+            using var writer = new ModelWriterInterlocked(_model, _options, SegmentSize);
+            return writer.ToBinaryData();
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("ModelSerializer")]
+        public BinaryData Serialize_ModelWriter_Locks()
+        {
+            using var writer = new ModelWriterLocks(_model, _options, SegmentSize);
             return writer.ToBinaryData();
         }
 
