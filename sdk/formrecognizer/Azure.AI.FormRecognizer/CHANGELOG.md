@@ -4,7 +4,7 @@
 
 ### Features Added
 - In struct `DocumentAnalysisFeature`, added properties `Barcodes`, `KeyValuePairs`, and `Languages` as add-on capabilities.
-- Added class `DocumentContentSource` as a base class to `AzureBlobContentSource` (currently named `BlobContentSource`) and `AzureBlobFileListSource` (currently named `BlobFileListContentSource`).
+- Added class `DocumentContentSource` as a base class to `AzureBlobContentSource` (renamed to `BlobContentSource` in this SDK version) and `AzureBlobFileListSource` (renamed to `BlobFileListContentSource` in this SDK version).
 - In `DocumentModelAdministrationClient`, added a new overload to `BuildDocumentModel` that takes a `DocumentContentSource` object. It can be used to build a document model from alternative content sources.
 - Added property `ServiceVersion` to classes `AnalyzeResult`, `DocumentModelDetails`, `DocumentModelSummary`, `OperationDetails`, and `OperationSummary`.
 
