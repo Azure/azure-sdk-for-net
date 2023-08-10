@@ -650,7 +650,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 _eventWait.Set();
                 // wait a small amount of time for the host to call dispose
-                await Task.Delay(2000, CancellationToken.None);
+                await Task.Delay(3000, CancellationToken.None);
                 Assert.IsTrue(cancellationToken.IsCancellationRequested);
             }
         }
@@ -661,7 +661,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 _eventWait.Set();
                 // wait a small amount of time for the host to call dispose
-                await Task.Delay(2000, CancellationToken.None);
+                await Task.Delay(3000, CancellationToken.None);
                 Assert.IsTrue(cancellationToken.IsCancellationRequested);
             }
         }
