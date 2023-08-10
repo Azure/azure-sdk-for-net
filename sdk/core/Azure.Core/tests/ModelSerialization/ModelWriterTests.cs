@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.ModelSerialization
         {
             ModelXml model = ModelSerializer.Deserialize<ModelXml>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelXml.xml"))));
             ModelWriter writer = new ModelWriter(model, new ModelSerializerOptions("x"));
-            Assert.Throws<NotSupportedException>(() => writer.ToBinaryData());
+            Assert.Throws<FormatException>(() => writer.ToBinaryData());
         }
 
         [Test]

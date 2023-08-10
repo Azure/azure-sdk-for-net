@@ -122,8 +122,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             }
             else if (ModelInstance is not IModelJsonSerializable<T> && format == ModelSerializerFormat.Json)
             {
-                Assert.Throws<NotSupportedException>(() => { T model = (T)strategy.Deserialize(serviceResponse, ModelInstance, options); });
-                Assert.Throws<NotSupportedException>(() => { var data = strategy.Serialize(ModelInstance, options); });
+                Assert.Throws<FormatException>(() => { T model = (T)strategy.Deserialize(serviceResponse, ModelInstance, options); });
+                Assert.Throws<FormatException>(() => { var data = strategy.Serialize(ModelInstance, options); });
                 result = true;
             }
             return result;
@@ -144,22 +144,22 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void ThrowsIfUnknownFormat()
         {
             ModelSerializerOptions options = new ModelSerializerOptions("x");
-            Assert.Throws<NotSupportedException>(() => ModelSerializer.Serialize(ModelInstance, options));
-            Assert.Throws<NotSupportedException>(() => ModelSerializer.Deserialize<T>(new BinaryData("x"), options));
+            Assert.Throws<FormatException>(() => ModelSerializer.Serialize(ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelSerializer.Deserialize<T>(new BinaryData("x"), options));
 
-            Assert.Throws<NotSupportedException>(() => ModelSerializer.Serialize((IModelSerializable<object>)ModelInstance, options));
-            Assert.Throws<NotSupportedException>(() => ModelSerializer.Deserialize(new BinaryData("x"), typeof(T), options));
+            Assert.Throws<FormatException>(() => ModelSerializer.Serialize((IModelSerializable<object>)ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelSerializer.Deserialize(new BinaryData("x"), typeof(T), options));
             if (ModelInstance is IModelJsonSerializable<T> jsonModel)
             {
-                Assert.Throws<NotSupportedException>(() => jsonModel.Serialize(new Utf8JsonWriter(new MemoryStream()), options));
-                Assert.Throws<NotSupportedException>(() => ((IModelJsonSerializable<object>)jsonModel).Serialize(new Utf8JsonWriter(new MemoryStream()), options));
+                Assert.Throws<FormatException>(() => jsonModel.Serialize(new Utf8JsonWriter(new MemoryStream()), options));
+                Assert.Throws<FormatException>(() => ((IModelJsonSerializable<object>)jsonModel).Serialize(new Utf8JsonWriter(new MemoryStream()), options));
                 bool gotException = false;
                 try
                 {
                     Utf8JsonReader reader = default;
                     jsonModel.Deserialize(ref reader, options);
                 }
-                catch (NotSupportedException)
+                catch (FormatException)
                 {
                     gotException = true;
                 }
@@ -174,7 +174,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     Utf8JsonReader reader = default;
                     ((IModelJsonSerializable<object>)jsonModel).Deserialize(ref reader, options);
                 }
-                catch (NotSupportedException)
+                catch (FormatException)
                 {
                     gotException = true;
                 }
