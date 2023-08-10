@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class ModelXmlCrossLibraryTests : ModelTests<ModelXmlCrossLibrary>
+    internal class ModelXmlCrossLibraryTests : ModelJsonTests<ModelXmlCrossLibrary>
     {
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelXmlX.xml")).TrimEnd();
 

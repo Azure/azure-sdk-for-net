@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class EnvelopeTests : ModelTests<Envelope<EnvelopeTests.ModelC>>
+    internal class EnvelopeTests : ModelJsonTests<Envelope<EnvelopeTests.ModelC>>
     {
         protected override string JsonPayload => WirePayload;
 

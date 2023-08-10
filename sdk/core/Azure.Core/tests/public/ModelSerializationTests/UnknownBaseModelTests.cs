@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class UnknownBaseModelTests : ModelTests<BaseModel>
+    internal class UnknownBaseModelTests : ModelJsonTests<BaseModel>
     {
         protected override BaseModel GetModelInstance()
         {

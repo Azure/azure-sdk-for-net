@@ -34,10 +34,7 @@ namespace Azure.Core.Tests.ResourceManager.Compute
 
         public static explicit operator AvailabilitySetData(Response response)
         {
-            if (response is null)
-            {
-                return null;
-            }
+            Argument.AssertNotNull(response, nameof(response));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);

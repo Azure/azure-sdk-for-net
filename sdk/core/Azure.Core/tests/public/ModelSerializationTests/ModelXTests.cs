@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class ModelXTests : ModelTests<ModelX>
+    internal class ModelXTests : ModelJsonTests<ModelX>
     {
         protected override string JsonPayload => WirePayload;
 
