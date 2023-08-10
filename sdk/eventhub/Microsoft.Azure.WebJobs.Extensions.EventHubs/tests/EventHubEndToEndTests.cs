@@ -58,7 +58,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
 
             var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
@@ -78,7 +77,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
                 CollectionAssert.Contains(logs, $"Input(data)");
@@ -98,7 +96,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
 
             AssertSingleDispatchLogs(host);
@@ -149,7 +146,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
         }
 
@@ -163,7 +159,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
 
             AssertSingleDispatchLogs(host);
@@ -179,7 +174,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
         }
 
@@ -193,7 +187,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
         }
 
@@ -207,7 +200,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
         }
 
@@ -326,7 +318,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
         }
 
@@ -341,7 +332,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
 
             AssertMultipleDispatchLogs(host);
@@ -358,7 +348,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
 
             AssertMultipleDispatchLogs(host);
@@ -394,7 +383,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
 
             AssertMultipleDispatchLogsMinBatch(host);
@@ -482,7 +470,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _eventWait.WaitOne(Timeout);
 
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
         }
 
@@ -508,7 +495,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
         }
 
@@ -557,7 +543,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 try { await sendTask; } catch { /* Ignore, we're not testing sends */ }
 
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
         }
 
@@ -604,7 +589,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
-                await jobHost.StopAsync();
             }
         }
 
