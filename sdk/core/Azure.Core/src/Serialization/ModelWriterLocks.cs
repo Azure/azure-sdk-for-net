@@ -146,9 +146,10 @@ namespace Azure.Core.Serialization
             {
                 bool gotLength = builder.TryComputeLength(out long length);
                 Debug.Assert(gotLength);
-                using var stream = new MemoryStream((int)length);
-                builder.CopyTo(stream, default);
-                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                var data = new byte[length];
+                var span = new Span<byte>(data);
+                builder.CopyToSpan(span);
+                return new BinaryData(data);
             }
             finally
             {

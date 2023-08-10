@@ -161,6 +161,17 @@ namespace Azure.Core.Serialization
                     await stream.WriteAsync(buffer.Array, 0, buffer.Written).ConfigureAwait(false);
                 }
             }
+
+            public void CopyToSpan(in Span<byte> bytes)
+            {
+                var span = bytes;
+                for (int i = 0; i < _count; i++)
+                {
+                    Buffer buffer = _buffers[i];
+                    buffer.Array.AsSpan(0, buffer.Written).CopyTo(span);
+                    span = span.Slice(buffer.Written);
+                }
+            }
         }
     }
 }

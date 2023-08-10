@@ -29,7 +29,7 @@ namespace Azure.Core.Serialization
         /// <param name="model">The model to serialize.</param>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <param name="segmentSize"></param>
-        public ModelWriterInterlocked(IModelJsonSerializable<object> model, ModelSerializerOptions options, int segmentSize)
+        public ModelWriterInterlocked(IModelJsonSerializable<object> model, ModelSerializerOptions options, int segmentSize = 16384)
         {
             _model = model;
             _options = options;
@@ -132,9 +132,10 @@ namespace Azure.Core.Serialization
             {
                 bool gotLength = builder.TryComputeLength(out long length);
                 Debug.Assert(gotLength);
-                using var stream = new MemoryStream((int)length);
-                builder.CopyTo(stream, default);
-                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                var data = new byte[length];
+                var span = new Span<byte>(data);
+                builder.CopyToSpan(span);
+                return new BinaryData(data);
             }
             finally
             {

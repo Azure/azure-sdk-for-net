@@ -18,7 +18,7 @@ namespace Azure.Core.Tests.ModelSerialization
     /// Happy path tests are in the public test project in the ModelTests class using the JsonInterfaceStrategy.
     /// This class is used for testing the internal properties of ModelWriter.
     /// </summary>
-    public class ModelWriterTests
+    public class ModelWriterInterlockedTests
     {
         private const int _modelSize = 156000;
         private static readonly string _json = File.ReadAllText(TestData.GetLocation("ResourceProviderData.json"));
@@ -27,7 +27,7 @@ namespace Azure.Core.Tests.ModelSerialization
         [Test]
         public async Task HappyPath()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
             Assert.IsTrue(writer.TryComputeLength(out var length));
             Assert.AreEqual(_modelSize, length);
 
@@ -42,10 +42,19 @@ namespace Azure.Core.Tests.ModelSerialization
             CollectionAssert.AreEqual(stream1.ToArray(), stream2.ToArray());
         }
 
+        //[Test]
+        public async Task DisposeWhileConvertToBinaryData_5000Times()
+        {
+            for (var i = 0; i < 5000; i++)
+            {
+                await DisposeWhileConvertToBinaryData();
+            }
+        }
+
         [Test]
         public async Task DisposeWhileConvertToBinaryData()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
             FieldInfo sequenceField = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
             object sequenceBuilder = sequenceField.GetValue(writer);
             Assert.IsNull(sequenceBuilder);
@@ -77,10 +86,19 @@ namespace Azure.Core.Tests.ModelSerialization
             await DisposeAfterStart(writer, sequenceField, result);
         }
 
+        //[Test]
+        public async Task DisposeWhileCopyAsync_5000Times()
+        {
+            for (var i = 0; i < 5000; i++)
+            {
+                await DisposeWhileCopyAsync();
+            }
+        }
+
         [Test]
         public async Task DisposeWhileCopyAsync()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
             FieldInfo sequenceField = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
             object sequenceBuilder = sequenceField.GetValue(writer);
             Assert.IsNull(sequenceBuilder);
@@ -112,22 +130,31 @@ namespace Azure.Core.Tests.ModelSerialization
             await DisposeAfterStart(writer, sequenceField, result);
         }
 
-        private static async Task DisposeAfterStart(ModelWriter writer, FieldInfo sequenceField, Task result)
+        private static async Task DisposeAfterStart(ModelWriterInterlocked writer, FieldInfo sequenceField, Task result)
         {
             writer.Dispose();
             object sequenceBuilder = sequenceField.GetValue(writer);
-            Assert.IsNull(sequenceBuilder);
+            Assert.AreEqual(typeof(object), sequenceBuilder?.GetType());
 
             await result;
 
             sequenceBuilder = sequenceField.GetValue(writer);
-            Assert.IsNull(sequenceBuilder);
+            Assert.AreEqual(typeof(object), sequenceBuilder?.GetType());
+        }
+
+        //[Test]
+        public async Task DisposeWhileCopy_5000Times()
+        {
+            for (var i = 0; i < 5000; i++)
+            {
+                await DisposeWhileCopy();
+            }
         }
 
         [Test]
         public async Task DisposeWhileCopy()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
             FieldInfo sequenceField = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
             object sequenceBuilder = sequenceField.GetValue(writer);
             Assert.IsNull(sequenceBuilder);
@@ -159,10 +186,19 @@ namespace Azure.Core.Tests.ModelSerialization
             await DisposeAfterStart(writer, sequenceField, result);
         }
 
+        //[Test]
+        public async Task DisposeWhileGettingLength_5000Times()
+        {
+            for (var i = 0; i < 5000; i++)
+            {
+                await DisposeWhileGettingLength();
+            }
+        }
+
         [Test]
         public async Task DisposeWhileGettingLength()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
             FieldInfo sequenceField = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
             object sequenceBuilder = sequenceField.GetValue(writer);
             Assert.IsNull(sequenceBuilder);
@@ -194,24 +230,10 @@ namespace Azure.Core.Tests.ModelSerialization
             await DisposeAfterStart(writer, sequenceField, result);
         }
 
-        private static void Validate(ModelWriter writer, FieldInfo sequenceField, bool exceptionThrown, long length)
-        {
-            // sequenceBuilder should be null because the writer was disposed
-            object sequenceBuilder = sequenceField.GetValue(writer);
-            Assert.IsNull(sequenceBuilder);
-
-            // The dispose should wait for the serialization to finish
-            // because of thread timing the dispose might happen before the readCount is incremented
-            // In this case the length of the stream will be 0 otherwise the length will be the size of the model
-            // Both cases are expected and valid the idea being that the dispose should wait for the serialization to finish if it starts second
-            // and if it starts first then the original thread should get an ObjectDisposedException
-            Assert.AreEqual(exceptionThrown ? 0 : _modelSize, length);
-        }
-
         [Test]
         public void UseAfterDispose()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
             writer.Dispose();
 
             Assert.Throws<ObjectDisposedException>(() => writer.TryComputeLength(out var length));
@@ -221,10 +243,19 @@ namespace Azure.Core.Tests.ModelSerialization
             Assert.DoesNotThrow(() => writer.Dispose());
         }
 
+        //[Test]
+        public void DisposeWithLoad_5000Times()
+        {
+            for (var i = 0; i < 5000; i++)
+            {
+                DisposeWithLoad();
+            }
+        }
+
         [Test]
         public void DisposeWithLoad()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
             writer.TryComputeLength(out var length);
             Assert.AreEqual(_modelSize, length);
 
@@ -235,19 +266,28 @@ namespace Azure.Core.Tests.ModelSerialization
 
             // sequenceBuilder should be null because the writer was disposed
             sequenceBuilder = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(writer);
-            Assert.IsNull(sequenceBuilder);
+            Assert.AreEqual(typeof(object), sequenceBuilder?.GetType());
+        }
+
+        //[Test]
+        public void DisposeWithoutLoad_5000Times()
+        {
+            for (var i = 0; i < 5000; i++)
+            {
+                DisposeWithoutLoad();
+            }
         }
 
         [Test]
         public void DisposeWithoutLoad()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
 
             writer.Dispose();
 
             // sequenceBuilder should be null because the writer was disposed
             object sequenceBuilder = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(writer);
-            Assert.IsNull(sequenceBuilder);
+            Assert.AreEqual(typeof(object), sequenceBuilder?.GetType());
         }
 
         [TestCase("J")]
@@ -258,17 +298,26 @@ namespace Azure.Core.Tests.ModelSerialization
             ModelSerializerOptions options = new ModelSerializerOptions(format);
             MemoryStream stream = new MemoryStream();
 
-            using ModelWriter writer = new ModelWriter(model, options);
+            using var writer = new ModelWriterInterlocked(model, options);
             Assert.Throws<NotImplementedException>(() => writer.TryComputeLength(out var length));
             Assert.Throws<NotImplementedException>(() => writer.CopyTo(stream, default));
             Assert.ThrowsAsync<NotImplementedException>(async () => await writer.CopyToAsync(stream, default));
             Assert.Throws<NotImplementedException>(() => writer.ToBinaryData());
         }
 
-        [Test]
-        public void ParallelComputLength()
+        //[Test]
+        public void ParallelComputeLength_5000Times()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            for (var i = 0; i < 5000; i++)
+            {
+                ParallelComputeLength();
+            }
+        }
+
+        [Test]
+        public void ParallelComputeLength()
+        {
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
 
             Parallel.For(0, 1000000, i =>
             {
@@ -277,10 +326,19 @@ namespace Azure.Core.Tests.ModelSerialization
             });
         }
 
+        //[Test]
+        public void ParallelCopy_5000Times()
+        {
+            for (var i = 0; i < 5000; i++)
+            {
+                ParallelCopy();
+            }
+        }
+
         [Test]
         public void ParallelCopy()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
 
             Parallel.For(0, 10000, i =>
             {
@@ -290,10 +348,19 @@ namespace Azure.Core.Tests.ModelSerialization
             });
         }
 
+        //[Test]
+        public void ParallelCopyAsync_5000Times()
+        {
+            for (var i = 0; i < 5000; i++)
+            {
+                ParallelCopyAsync();
+            }
+        }
+
         [Test]
         public void ParallelCopyAsync()
         {
-            ModelWriter writer = new ModelWriter(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
+            var writer = new ModelWriterInterlocked(_resourceProviderData, ModelSerializerOptions.DefaultWireOptions);
 
             Parallel.For(0, 10000, async i =>
             {
@@ -308,8 +375,8 @@ namespace Azure.Core.Tests.ModelSerialization
         {
             var input1 = new ArrayModel(50_000_000, 1);
             var input2 = new ArrayModel(50_000_000, 2);
-            var writer1 = new ModelWriter(input1, ModelSerializerOptions.DefaultWireOptions, 512);
-            var writer2 = new ModelWriter(input2, ModelSerializerOptions.DefaultWireOptions, 512);
+            var writer1 = new ModelWriterInterlocked(input1, ModelSerializerOptions.DefaultWireOptions, 512);
+            var writer2 = new ModelWriterInterlocked(input2, ModelSerializerOptions.DefaultWireOptions, 512);
 
             var task1 = Task.Run(writer1.ToBinaryData);
             var task2 = Task.Run(writer2.ToBinaryData);
