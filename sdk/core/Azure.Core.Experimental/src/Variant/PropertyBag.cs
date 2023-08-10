@@ -54,9 +54,10 @@ namespace Azure
                 MethodCallExpression getPropertyCall = Expression.Call(this_, GetPropertyMethod, getPropertyArgs);
 
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(getPropertyCall, restrictions);
 
                 // TODO: Idea - return a ValueMetaObject that handles all the conversions Value can handle?
-                return new DynamicMetaObject(getPropertyCall, restrictions);
+                //return new ValueMetaObject(getPropertyCall, restrictions);
             }
 
             public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
@@ -70,5 +71,17 @@ namespace Azure
                 return new DynamicMetaObject(setCall, restrictions);
             }
         }
+
+        //private class ValueMetaObject : DynamicMetaObject
+        //{
+        //    public ValueMetaObject(Expression expression, BindingRestrictions restrictions) : base(expression, restrictions)
+        //    {
+        //    }
+
+        //    public override DynamicMetaObject BindConvert(ConvertBinder binder)
+        //    {
+        //        return base.BindConvert(binder);
+        //    }
+        //}
     }
 }
