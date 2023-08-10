@@ -17,7 +17,7 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>A binary representation of the serialized model.</returns>
-        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
+        /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
         BinaryData Serialize(ModelSerializerOptions options);
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Azure.Core.Serialization
         /// <param name="data">The <see cref="BinaryData"/> to parse.</param>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>A <typeparamref name="T"/> representation of the data.</returns>
-        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
+        /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
         T Deserialize(BinaryData data, ModelSerializerOptions options);
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Core
             bool isValid = (format == ModelSerializerFormat.Json && implementsJson) || format == ModelSerializerFormat.Wire;
             if (!isValid)
             {
-                throw new NotSupportedException($"The model {model.GetType().Name} does not support '{format}' format.");
+                throw new FormatException($"The model {model.GetType().Name} does not support '{format}' format.");
             }
         }
 
