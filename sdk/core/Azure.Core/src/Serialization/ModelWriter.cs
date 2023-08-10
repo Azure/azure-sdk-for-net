@@ -120,6 +120,10 @@ namespace Azure.Core.Serialization
             try
             {
                 bool gotLength = builder.TryComputeLength(out long length);
+                if (length > int.MaxValue)
+                {
+                    throw new InvalidOperationException($"Length of serialized model is too long.  Value was {length} max is {int.MaxValue}");
+                }
                 Debug.Assert(gotLength);
                 using var stream = new MemoryStream((int)length);
                 builder.CopyTo(stream, default);
