@@ -19,7 +19,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         protected override string JsonPayload => WirePayload;
 
-        protected override string WirePayload => "{\"kind\":\"Z\",\"name\":\"zmodel\",\"zProperty\":1.5,\"fields\":[\"testField2\"],\"keyValuePairs\":{\"color\":\"blue\"},\"extra\":\"stuff\"}";
+        protected override string WirePayload => "{\"kind\":\"Z\",\"name\":\"zmodel\",\"zProperty\":1.5,\"extra\":\"stuff\"}";
 
         protected override Func<BaseModel, RequestContent> ToRequestContent => model => model;
 
@@ -31,12 +31,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("UnknownBaseModel", model2.GetType().Name);
             Assert.AreEqual(model.Kind, model2.Kind);
             Assert.AreEqual(model.Name, model2.Name);
-
             var rawData = GetRawData(model);
             var rawData2 = GetRawData(model2);
             Assert.IsNotNull(rawData);
             Assert.IsNotNull(rawData2);
-
             if (format == ModelSerializerFormat.Json)
             {
                 Assert.AreEqual(rawData.Count, rawData2.Count);

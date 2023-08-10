@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using Azure.Core.Serialization;
+using Azure.Core.Tests.Common;
 using Azure.Core.Tests.ModelSerializationTests.Models;
 using NUnit.Framework;
 
@@ -12,7 +14,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         protected override string JsonPayload => WirePayload;
 
-        protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"fields\":[\"testField\"],\"nullProperty\":null,\"keyValuePairs\":{\"color\":\"red\"},\"extra\":\"stuff\"}";
+        protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelX.json")).TrimEnd();
 
         protected override Func<ModelX, RequestContent> ToRequestContent => model => model;
 

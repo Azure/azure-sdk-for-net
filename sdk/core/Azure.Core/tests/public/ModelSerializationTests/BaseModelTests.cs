@@ -19,7 +19,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         protected override string JsonPayload => WirePayload;
 
-        protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"fields\":[\"testField\"],\"keyValuePairs\":{\"color\":\"red\"},\"extra\":\"stuff\"}";
+        protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
 
         protected override Func<BaseModel, RequestContent> ToRequestContent => model => model;
 
@@ -44,9 +44,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         protected override string GetExpectedResult(ModelSerializerFormat format)
         {
             string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
-            expected += ",\"fields\":[\"testField\"]";
-            expected += ",\"nullProperty\":null";
-            expected += ",\"keyValuePairs\":{\"color\":\"red\"}";
             if (format == ModelSerializerFormat.Json)
                 expected += ",\"xProperty\":100";
             if (format == ModelSerializerFormat.Json)
