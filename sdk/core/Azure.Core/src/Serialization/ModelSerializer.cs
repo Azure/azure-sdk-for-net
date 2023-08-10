@@ -17,7 +17,7 @@ namespace Azure.Core.Serialization
         /// <typeparam name="T">The type of the value to serialize.</typeparam>
         /// <param name="model">The model to convert.</param>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
-        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/></returns>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/>.</returns>
         /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
         public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
@@ -32,7 +32,7 @@ namespace Azure.Core.Serialization
         /// <typeparam name="T">The type of the value to serialize.</typeparam>
         /// <param name="model">The model to convert.</param>
         /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
-        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/></returns>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/>.</returns>
         /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
         public static BinaryData Serialize<T>(T model, ModelSerializerFormat format)
             where T : IModelSerializable<T>
@@ -43,7 +43,7 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="model">The model to convert.</param>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
-        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/></returns>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
         public static BinaryData Serialize(object model, ModelSerializerOptions? options = default)
@@ -64,7 +64,7 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="model">The model to convert.</param>
         /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
-        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/></returns>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
         public static BinaryData Serialize(object model, ModelSerializerFormat format)
@@ -127,6 +127,18 @@ namespace Azure.Core.Serialization
         public static object Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerFormat format)
             => Deserialize(data, returnType, ModelSerializerOptions.GetOptions(format));
 
+        /// <summary>
+        /// Converts the value of a model into a <see cref="BinaryData"/>.
+        /// </summary>
+        /// <param name="model">The model to convert.</param>
+        /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/>.</returns>
+        public static BinaryData SerializeCore(IModelJsonSerializable<object> model, ModelSerializerOptions options)
+        {
+            using ModelWriter writer = new ModelWriter(model, options);
+            return writer.ToBinaryData();
+        }
+
         private static IModelSerializable<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {
             var model = GetObjectInstance(returnType) as IModelSerializable<object>;
@@ -152,12 +164,12 @@ namespace Azure.Core.Serialization
             Type typeToActivate = returnType;
             if (returnType.IsAbstract)
             {
-                UnknownSubclassAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(UnknownSubclassAttribute)) as UnknownSubclassAttribute;
+                AbstractHierarchyDeserializerAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(AbstractHierarchyDeserializerAttribute)) as AbstractHierarchyDeserializerAttribute;
                 if (attribute is null)
                 {
-                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(UnknownSubclassAttribute)} to be used with {nameof(ModelSerializer)}");
+                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(AbstractHierarchyDeserializerAttribute)} to be used with {nameof(ModelSerializer)}");
                 }
-                typeToActivate = attribute.UnknownSubclass;
+                typeToActivate = attribute.TypeToActivate;
             }
 
             var obj = Activator.CreateInstance(typeToActivate, true);

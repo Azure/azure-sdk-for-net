@@ -59,8 +59,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
         {
             ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
-            using ModelWriter writer = new ModelWriter(this, options);
-            return writer.ToBinaryData();
+            return ModelSerializer.SerializeCore(this, options);
         }
 
         public static implicit operator RequestContent(ModelAsStruct model)
@@ -128,8 +127,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
         {
             ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
-            using ModelWriter writer = new ModelWriter(this, options);
-            return writer.ToBinaryData();
+            return ModelSerializer.SerializeCore(this, options);
         }
 
         object IModelSerializable<object>.Deserialize(BinaryData data, ModelSerializerOptions options)

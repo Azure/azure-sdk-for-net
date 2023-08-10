@@ -8,7 +8,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.ModelSerializationTests.Models
 {
-    [UnknownSubclass(typeof(UnknownBaseModel))]
+    [AbstractHierarchyDeserializer(typeof(UnknownBaseModel))]
     public abstract class BaseModel : IUtf8JsonSerializable, IModelJsonSerializable<BaseModel>
     {
         private Dictionary<string, BinaryData> _rawData;
@@ -145,8 +145,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            using var writer = new ModelWriter(this, options);
-            return writer.ToBinaryData();
+            return ModelSerializer.SerializeCore(this, options);
         }
     }
 }

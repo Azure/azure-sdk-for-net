@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Serialization
 {
-    public sealed partial class ModelWriter : IDisposable
+    internal sealed partial class ModelWriter : IDisposable
     {
         private sealed class SequenceBuilder : IBufferWriter<byte>, IDisposable
         {
@@ -27,7 +27,7 @@ namespace Azure.Core.Serialization
             /// Initializes a new instance of <see cref="SequenceBuilder"/>.
             /// </summary>
             /// <param name="segmentSize">The size of each buffer segment.</param>
-            public SequenceBuilder(int segmentSize = 4096)
+            public SequenceBuilder(int segmentSize = 16384)
             {
                 _segmentSize = segmentSize;
                 _buffers = Array.Empty<Buffer>();

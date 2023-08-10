@@ -112,8 +112,7 @@ namespace Azure.Core.Tests.ResourceManager.Resources.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            using var writer = new ModelWriter(this, options);
-            return writer.ToBinaryData();
+            return ModelSerializer.SerializeCore(this, options);
         }
     }
 }

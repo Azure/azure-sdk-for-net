@@ -21,8 +21,12 @@ namespace Azure.Core.Serialization
         public static readonly ModelSerializerFormat Json = new ModelSerializerFormat(JsonValue);
 
         /// <summary>
-        /// Format used to communicate with Azure services.  This format will not serialize read-only properties or additional properties.
-        /// The format will vary between XML and JSON depdending on the service.
+        /// Format used to serialize this model when sending as a request to an Azure service.
+        /// It will not serialize read-only properties or additional properties.
+        /// The content-type will vary between JSON, XML, etc., depending on the service.
+        ///
+        /// Most use cases should prefer a more complete format like <see cref="ModelSerializerFormat.Json"/> that includes
+        /// read-only and additional properties.
         /// </summary>
         public static readonly ModelSerializerFormat Wire = new ModelSerializerFormat(WireValue);
 
