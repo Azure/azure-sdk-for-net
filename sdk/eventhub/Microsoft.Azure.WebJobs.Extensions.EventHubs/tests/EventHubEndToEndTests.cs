@@ -96,6 +96,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertSingleDispatchLogs(host);
@@ -159,6 +161,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertSingleDispatchLogs(host);
@@ -332,6 +336,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertMultipleDispatchLogs(host);
@@ -348,9 +354,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertMultipleDispatchLogs(host);
+        }
+
+        private static async Task StopWithDrainAsync(IHost host)
+        {
+            // Enable drain mode so checkpointing occurs when stopping
+            var drainModeManager = host.Services.GetService<IDrainModeManager>();
+            await drainModeManager.EnableDrainModeAsync(CancellationToken.None);
+            await host.StopAsync();
         }
 
         [Test]
@@ -383,6 +399,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertMultipleDispatchLogsMinBatch(host);
