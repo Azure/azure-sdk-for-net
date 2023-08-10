@@ -131,7 +131,10 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             {
                 using MemoryStream stream = new MemoryStream();
                 renamedChildModelXmlElement.Save(stream);
-                childModelXml = ModelSerializer.Deserialize<ChildModelXml>(new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position)), options);
+                BinaryData data = stream.Position > int.MaxValue
+                    ? BinaryData.FromStream(stream)
+                    : new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                childModelXml = ModelSerializer.Deserialize<ChildModelXml>(data, options);
             }
             return new ModelXmlCrossLibrary(key, value, readonlyProperty, childModelXml);
         }
@@ -151,7 +154,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
                 using XmlWriter writer = XmlWriter.Create(stream);
                 Serialize(writer, options, null);
                 writer.Flush();
-                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                if (stream.Position > int.MaxValue)
+                {
+                    return BinaryData.FromStream(stream);
+                }
+                else
+                {
+                    return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+                }
             }
         }
 

@@ -109,7 +109,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             model.Serialize(writer, options);
             writer.Flush();
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -161,7 +168,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
             model.Serialize(writer, options);
             writer.Flush();
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -208,7 +222,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             content.TryComputeLength(out var length);
             using var stream = new MemoryStream((int)length);
             content.WriteTo(stream, default);
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)

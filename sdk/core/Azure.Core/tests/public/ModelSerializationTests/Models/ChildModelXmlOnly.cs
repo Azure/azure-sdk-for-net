@@ -84,7 +84,14 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
             using XmlWriter writer = XmlWriter.Create(stream);
             Serialize(writer, options, null);
             writer.Flush();
-            return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
         }
     }
 }

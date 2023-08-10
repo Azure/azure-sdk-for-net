@@ -21,7 +21,7 @@ namespace Azure.Core.Serialization
 
             private volatile Buffer[] _buffers; // this is an array so items can be accessed by ref
             private volatile int _count;
-            private int _segmentSize;
+            private readonly int _segmentSize;
 
             /// <summary>
             /// Initializes a new instance of <see cref="SequenceBuilder"/>.
@@ -29,6 +29,9 @@ namespace Azure.Core.Serialization
             /// <param name="segmentSize">The size of each buffer segment.</param>
             public SequenceBuilder(int segmentSize = 16384)
             {
+                // we perf tested a very large and a small model and found that the performance
+                // for 4k, 8k, 16k, 32k, was neglible for the small model but had a 30% alloc improvment
+                // from 4k to 16k on the very large model.
                 _segmentSize = segmentSize;
                 _buffers = Array.Empty<Buffer>();
             }
