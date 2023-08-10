@@ -12,7 +12,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
     {
         protected override string JsonPayload => WirePayload;
 
-        protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
+        protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"fields\":[\"testField\"],\"nullProperty\":null,\"keyValuePairs\":{\"color\":\"red\"},\"extra\":\"stuff\"}";
 
         protected override Func<ModelX, RequestContent> ToRequestContent => model => model;
 

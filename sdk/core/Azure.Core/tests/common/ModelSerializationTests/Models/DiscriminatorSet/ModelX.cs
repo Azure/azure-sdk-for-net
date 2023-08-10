@@ -82,17 +82,18 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             writer.WriteStringValue(NullProperty);
 
             writer.WritePropertyName("keyValuePairs"u8);
-            writer.WriteStartArray();
-            foreach (KeyValuePair<string, string> keyValuePair in KeyValuePairs)
+            writer.WriteStartObject();
+            foreach (var item in KeyValuePairs)
             {
-                writer.WriteStartObject();
-                writer.WritePropertyName("key"u8);
-                writer.WriteStringValue(keyValuePair.Key);
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(keyValuePair.Value);
-                writer.WriteEndObject();
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue(item.Value);
             }
-            writer.WriteEndArray();
+            writer.WriteEndObject();
 
             if (options.Format == ModelSerializerFormat.Json)
             {
@@ -150,6 +151,7 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     keyValuePairs = dictionary;
+                    continue;
                 }
                 if (property.NameEquals("xProperty"u8))
                 {
