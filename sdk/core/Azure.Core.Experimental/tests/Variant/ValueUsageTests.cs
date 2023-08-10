@@ -165,17 +165,18 @@ namespace Azure.Core.Experimental.Tests
             d.foo = 5;
             d.bar = 6;
 
-            // Note, this works:
+            // Note: these both work now, with Value implementing IDynamicMetaObject provider.
             Value x = d.foo;
             int b = x;
 
-            // But this doesn't.
             int y = d.foo;
             int z = d.bar;
 
-            //int y = d.foo == 5 ? d.bar : 0;
-
-            //Assert.AreEqual(6, y);
+            // TODO: this still fails because the DLR can't apply `==` to int and Value.
+            //   Microsoft.CSharp.RuntimeBinder.RuntimeBinderException : Operator '==' cannot be applied to operands of type 'Azure.Value' and 'int'
+            //   Idea: can we add an `==` operator?  We will hit ambiguous overloads if we enable nullability, but maybe we can box nullable primitives in this context.
+            int w = d.foo == 5 ? d.bar : 0;
+            Assert.AreEqual(6, w);
         }
 
         #region Helpers
