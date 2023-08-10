@@ -28,8 +28,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         /// </summary>
         internal class PartitionProcessor : IEventProcessor, IDisposable
         {
-            private readonly CancellationTokenSource _cts = new();
-
             private readonly ITriggeredFunctionExecutor _executor;
             private readonly bool _singleDispatch;
             private readonly ILogger _logger;
@@ -72,8 +70,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
             {
-                // signal cancellation for any in progress executions and clear the cached events
-                _cts.Cancel();
+                // clear the cached events
                 CachedEventsManager?.ClearEventCache();
 
                 _logger.LogDebug(GetOperationDetails(context, $"CloseAsync, {reason}"));
@@ -104,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             /// <returns></returns>
             public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages, CancellationToken partitionProcessingCancellationToken)
             {
-                using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, partitionProcessingCancellationToken);
+                using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_functionExecutionToken, partitionProcessingCancellationToken);
                 _mostRecentPartitionContext = context;
                 var events = messages.ToArray();
                 EventData eventToCheckpoint = null;
@@ -151,10 +148,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         try
                         {
                             // Try to acquire the semaphore. This protects the cached events.
-                            if (!_cachedEventsGuard.Wait(0, linkedCts.Token))
+                            if (!_cachedEventsGuard.Wait(0, _functionExecutionToken))
                             {
                                 // This will throw if the cancellation token is canceled.
-                                await _cachedEventsGuard.WaitAsync(linkedCts.Token).ConfigureAwait(false);
+                                await _cachedEventsGuard.WaitAsync(_functionExecutionToken).ConfigureAwait(false);
                             }
                             acquiredSemaphore = true;
 
@@ -188,7 +185,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             if (_cachedEventsBackgroundTaskCts == null && CachedEventsManager.HasCachedEvents)
                             {
                                 // If there are events waiting to be processed, and no background task running, start a monitoring cycle.
-                                _cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
+                                _cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(linkedCts.Token);
                                 _cachedEventsBackgroundTask = MonitorCachedEvents(context.ProcessorHost.GetLastReadCheckpoint(context.PartitionId)?.LastModified, _cachedEventsBackgroundTaskCts);
                             }
                         }
@@ -410,7 +407,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 {
                     if (disposing)
                     {
-                        _cts.Dispose();
                         _cachedEventsBackgroundTaskCts?.Dispose();
                         _cachedEventsGuard?.Dispose();
                     }

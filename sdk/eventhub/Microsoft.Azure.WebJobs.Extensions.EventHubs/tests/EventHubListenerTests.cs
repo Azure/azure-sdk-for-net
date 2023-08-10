@@ -409,19 +409,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             }
 
             int execution = 0;
-            var cts = new CancellationTokenSource();
 
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
             {
-                if (execution == 0)
-                {
-                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.OwnershipLost).GetAwaiter().GetResult();
-                }
                 var result = results[execution++];
                 return result;
             });
 
-            await eventProcessor.ProcessEventsAsync(partitionContext, events, cts.Token);
+            // Pass a cancellation token that is already signaled to simulate ownership loss
+            await eventProcessor.ProcessEventsAsync(partitionContext, events, new CancellationToken(true));
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
@@ -457,15 +453,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
             {
-                if (execution == 0)
-                {
-                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown).GetAwaiter().GetResult();
-                }
                 var result = results[execution++];
                 return result;
             });
 
-            await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+            // Pass a cancellation token that is already signaled to simulate shutdown
+            await eventProcessor.ProcessEventsAsync(partitionContext, events, new CancellationToken(true));
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
@@ -501,15 +494,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
             {
-                if (execution == 0)
-                {
-                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown).GetAwaiter().GetResult();
-                }
                 var result = results[execution++];
                 return result;
             });
 
-            await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+            // Pass a cancellation token that is already signaled to simulate shutdown
+            await eventProcessor.ProcessEventsAsync(partitionContext, events, new CancellationToken(true));
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
