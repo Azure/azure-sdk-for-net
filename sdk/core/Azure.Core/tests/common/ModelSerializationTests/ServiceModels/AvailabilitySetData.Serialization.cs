@@ -74,6 +74,12 @@ namespace Azure.Core.Tests.ResourceManager.Compute
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
+            if (Optional.IsDefined(ProximityPlacementGroup))
+            {
+                writer.WritePropertyName("proximityPlacementGroup"u8);
+                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
+            }
+            writer.WriteEndObject();
             if (Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
@@ -84,12 +90,6 @@ namespace Azure.Core.Tests.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ProximityPlacementGroup))
-            {
-                writer.WritePropertyName("proximityPlacementGroup"u8);
-                JsonSerializer.Serialize(writer, ProximityPlacementGroup);
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -167,6 +167,20 @@ namespace Azure.Core.Tests.ResourceManager.Compute
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("virtualMachines"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                    }
+                    virtualMachines = array;
+                    continue;
+                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -192,20 +206,6 @@ namespace Azure.Core.Tests.ResourceManager.Compute
                                 continue;
                             }
                             platformFaultDomainCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualMachines"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<WritableSubResource> array = new List<WritableSubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
-                            }
-                            virtualMachines = array;
                             continue;
                         }
                         if (property0.NameEquals("proximityPlacementGroup"u8))
