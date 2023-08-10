@@ -82,7 +82,7 @@ var workspaceName = "your_quantum_workspace_name";
 var location = "your_location";
 var storageContainerName = "your_container_name";
 
-TokenCredential credential = new DefaultAzureCredential(true);
+var credential = new DefaultAzureCredential(true);
 
 var quantumJobClient =
     new QuantumJobClient(
