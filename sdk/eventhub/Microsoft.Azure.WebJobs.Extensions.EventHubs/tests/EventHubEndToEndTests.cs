@@ -117,6 +117,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
+        public async Task EventHub_SingleDispatch_StopWithoutDrain()
+        {
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+            var (_, host) = BuildHost<EventHubTestSingleDispatchJobs_Dispose>(ConfigureTestEventHub);
+
+            bool result = _eventWait.WaitOne(Timeout);
+            Assert.True(result);
+            await host.StopAsync();
+        }
+
+        [Test]
         public async Task EventHub_SingleDispatch_ConsumerGroup()
         {
             var (jobHost, host) = BuildHost<EventHubTestSingleDispatchWithConsumerGroupJobs>(builder =>
@@ -399,6 +411,18 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.True(result);
             host.Dispose();
        }
+
+        [Test]
+        public async Task EventHub_MultipleDispatch_StopWithoutDrain()
+        {
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+            var (_, host) = BuildHost<EventHubTestMultipleDispatchJobs_Dispose>();
+
+            bool result = _eventWait.WaitOne(Timeout);
+            Assert.True(result);
+            await host.StopAsync();
+        }
 
         private static void AssertMultipleDispatchLogsMinBatch(IHost host)
         {

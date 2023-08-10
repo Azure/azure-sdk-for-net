@@ -14,6 +14,7 @@ using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Tests;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
@@ -630,7 +631,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                                     consumerClientMock.Object,
                                     Mock.Of<BlobCheckpointStoreInternal>(),
                                     new EventHubOptions(),
-                                    Mock.Of<LoggerFactory>());
+                                    Mock.Of<LoggerFactory>(),
+                                    Mock.Of<IDrainModeManager>());
 
             IScaleMonitor scaleMonitor = listener.GetMonitor();
 
@@ -667,7 +669,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 consumerClientMock.Object,
                 Mock.Of<BlobCheckpointStoreInternal>(),
                 new EventHubOptions(),
-                Mock.Of<LoggerFactory>());
+                Mock.Of<LoggerFactory>(),
+                Mock.Of<IDrainModeManager>());
 
             (listener as IListener).Dispose();
             host.Verify(h => h.StopProcessingAsync(CancellationToken.None), Times.Once);
