@@ -63,5 +63,9 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableIPForwarding { get; set; }
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
         public ComputeDeleteOption? DeleteOption { get; set; }
+        /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
+        public NetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
+        /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
+        public NetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
     }
 }
