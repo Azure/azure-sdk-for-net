@@ -1,6 +1,6 @@
 # Release History
 
-## 5.2.0-beta.1 (2023-08-10)
+## 5.2.0 (2023-08-10)
 
 ### Features Added
 - Added support for `BlobsOptions.MaxDequeueCount`
