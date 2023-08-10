@@ -10,7 +10,7 @@ namespace Azure.Core.Tests.ModelSerialization
 {
     public class ModelSerializationContentTests
     {
-        private const string json = "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"fields\":[\"testField\"],\"nullProperty\":null,\"keyValuePairs\":{\"color\":\"red\"},\"extra\":\"stuff\"}";
+        private const string json = "{\"kind\":\"X\",\"name\":\"Name\",\"xProperty\":100}";
         private ModelX _modelX;
 
         [OneTimeSetUp]
