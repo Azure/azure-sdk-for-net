@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// <summary>
     /// The BlockBlobStorageResource class.
     /// </summary>
-    public class BlockBlobStorageResource : StorageResourceSingle
+    public class BlockBlobStorageResource : StorageResourceItem
     {
         internal BlockBlobClient BlobClient { get; set; }
         internal BlockBlobStorageResourceOptions _options;
@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Defines the recommended Transfer Type of the storage resource.
         /// </summary>
-        protected override TransferType TransferType => TransferType.Concurrent;
+        protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
 
         /// <summary>
         /// Store Max Initial Size that a Put Blob can get to.
@@ -119,8 +119,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.</param>
-        /// <returns>The <see cref="ReadStreamStorageResourceResult"/> resulting from the upload operation.</returns>
-        protected override async Task<ReadStreamStorageResourceResult> ReadStreamAsync(
+        /// <returns>The <see cref="StorageResourceReadStreamResult"/> resulting from the upload operation.</returns>
+        protected override async Task<StorageResourceReadStreamResult> ReadStreamAsync(
             long position = 0,
             long? length = default,
             CancellationToken cancellationToken = default)
@@ -136,34 +136,37 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Consumes the readable stream to upload.
         /// </summary>
-        /// <param name="position">The offset at which which the stream will be copied to. Default value is 0.</param>
-        /// <param name="overwrite">
-        /// If set to true, will overwrite the blob if it currently exists.
+        /// <param name="stream">
+        /// The stream containing the data to be consumed and uploaded.
         /// </param>
         /// <param name="streamLength">
         /// The length of the content stream.
         /// </param>
-        /// <param name="completeLength">
-        /// The expected complete length of the blob.
+        /// <param name="overwrite">
+        /// If set to true, will overwrite the blob if it currently exists.
         /// </param>
-        /// <param name="stream">The stream containing the data to be consumed and uploaded.</param>
-        /// <param name="options">Options for the storage resource. See <see cref="StorageResourceWriteToOffsetOptions"/>.</param>
+        /// <param name="completeLength">
+        /// The expected complete length of the resource item.
+        /// </param>
+        /// <param name="options">
+        /// Options for the storage resource. See <see cref="StorageResourceWriteToOffsetOptions"/>.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns></returns>
-        protected override async Task WriteFromStreamAsync(
+        protected override async Task CopyFromStreamAsync(
             Stream stream,
             long streamLength,
             bool overwrite,
-            long position = 0,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceWriteToOffsetOptions options = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
+            long position = options?.Position != default ? options.Position.Value : 0;
             if ((streamLength == completeLength) && position == 0)
             {
                 // Default to Upload
@@ -189,7 +192,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResourceSingle"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceItem"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
@@ -204,7 +207,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </param>
         /// <returns></returns>
         protected override async Task CopyFromUriAsync(
-            StorageResourceSingle sourceResource,
+            StorageResourceItem sourceResource,
             bool overwrite,
             long completeLength,
             StorageResourceCopyFromUriOptions options = default,
@@ -223,7 +226,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Uploads/copy the blob from a URL. Supports ranged operations.
         /// </summary>
-        /// <param name="sourceResource">An instance of <see cref="StorageResourceSingle"/>
+        /// <param name="sourceResource">An instance of <see cref="StorageResourceItem"/>
         /// that contains the data to be uploaded.</param>
         /// <param name="range">The range of the blob to upload/copy.</param>
         /// <param name="overwrite">
@@ -239,10 +242,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </param>
         /// <returns></returns>
         protected override async Task CopyBlockFromUriAsync(
-            StorageResourceSingle sourceResource,
+            StorageResourceItem sourceResource,
             HttpRange range,
             bool overwrite,
-            long completeLength = 0,
+            long completeLength,
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {

@@ -27,10 +27,11 @@ namespace Azure
         [Test]
         public void DefaultCtor()
         {
+            var path = Path.Combine(".azure", "cloudmachine.json");
             try
             {
                 var cm = CloudMachine.Create(Guid.NewGuid().ToString(), "westus2");
-                cm.Save("cloudconfig.json");
+                cm.Save(path);
                 var deserialized = new CloudMachine();
                 Assert.AreEqual(cm.Id, deserialized.Id);
                 Assert.AreEqual(cm.DisplayName, deserialized.DisplayName);
@@ -39,7 +40,7 @@ namespace Azure
             }
             finally
             {
-                File.Delete("cloudconfig.json");
+                File.Delete(path);
             }
         }
     }

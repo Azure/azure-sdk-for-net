@@ -241,6 +241,24 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         templateName = new[] {
                 new {}
             },
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        antonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         updateTime = 123.45f,
@@ -277,6 +295,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         entityGuid = "<entityGuid>",
                         entityStatus = "ACTIVE",
                         removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                            new {
+                                endTime = "<endTime>",
+                                startTime = "<startTime>",
+                                timeZone = "<timeZone>",
+                            }
+                        },
                         source = "<source>",
                         sourceDetails = new {
                             key = new {},
@@ -305,10 +330,177 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     status = "DRAFT",
                 }
             },
+                        classifies = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         examples = new[] {
                 "<String>"
             },
+                        isA = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredToTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacedBy = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacementTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        seeAlso = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        synonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translatedTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translationTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         usage = "<usage>",
+                        validValues = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        validValuesFor = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         longDescription = "<longDescription>",
                         name = "<name>",
                         qualifiedName = "<qualifiedName>",
@@ -345,6 +537,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
             source = "<source>",
             sourceDetails = new {
                 key = new {},
@@ -505,6 +704,24 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         templateName = new[] {
                 new {}
             },
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        antonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         updateTime = 123.45f,
@@ -541,6 +758,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         entityGuid = "<entityGuid>",
                         entityStatus = "ACTIVE",
                         removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                            new {
+                                endTime = "<endTime>",
+                                startTime = "<startTime>",
+                                timeZone = "<timeZone>",
+                            }
+                        },
                         source = "<source>",
                         sourceDetails = new {
                             key = new {},
@@ -569,10 +793,177 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     status = "DRAFT",
                 }
             },
+                        classifies = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         examples = new[] {
                 "<String>"
             },
+                        isA = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredToTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacedBy = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacementTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        seeAlso = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        synonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translatedTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translationTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         usage = "<usage>",
+                        validValues = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        validValuesFor = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         longDescription = "<longDescription>",
                         name = "<name>",
                         qualifiedName = "<qualifiedName>",
@@ -609,6 +1000,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
             source = "<source>",
             sourceDetails = new {
                 key = new {},
@@ -2211,6 +2609,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
             source = "<source>",
             sourceDetails = new {
                 key = new {},
@@ -2661,6 +3066,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
             source = "<source>",
             sourceDetails = new {
                 key = new {},
@@ -3473,6 +3885,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
             source = "<source>",
             sourceDetails = new {
                 key = new {},
@@ -3923,6 +4342,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
             source = "<source>",
             sourceDetails = new {
                 key = new {},
@@ -4801,6 +5227,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 entityGuid = "<entityGuid>",
                 entityStatus = "ACTIVE",
                 removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
                 source = "<source>",
                 sourceDetails = new {
                     key = new {},
@@ -5250,6 +5683,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                 entityGuid = "<entityGuid>",
                 entityStatus = "ACTIVE",
                 removePropagationsOnEntityDelete = true,
+                validityPeriods = new[] {
+                    new {
+                        endTime = "<endTime>",
+                        startTime = "<startTime>",
+                        timeZone = "<timeZone>",
+                    }
+                },
                 source = "<source>",
                 sourceDetails = new {
                     key = new {},
@@ -6181,6 +6621,24 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         templateName = new[] {
                 new {}
             },
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        antonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         updateTime = 123.45f,
@@ -6217,6 +6675,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         entityGuid = "<entityGuid>",
                         entityStatus = "ACTIVE",
                         removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                            new {
+                                endTime = "<endTime>",
+                                startTime = "<startTime>",
+                                timeZone = "<timeZone>",
+                            }
+                        },
                         source = "<source>",
                         sourceDetails = new {
                             key = new {},
@@ -6245,10 +6710,177 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     status = "DRAFT",
                 }
             },
+                        classifies = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         examples = new[] {
                 "<String>"
             },
+                        isA = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredToTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacedBy = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacementTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        seeAlso = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        synonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translatedTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translationTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         usage = "<usage>",
+                        validValues = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        validValuesFor = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         longDescription = "<longDescription>",
                         name = "<name>",
                         qualifiedName = "<qualifiedName>",
@@ -6285,6 +6917,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
             source = "<source>",
             sourceDetails = new {
                 key = new {},
@@ -6445,6 +7084,24 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         templateName = new[] {
                 new {}
             },
+                        anchor = new
+                        {
+                            displayText = "<displayText>",
+                            glossaryGuid = "<glossaryGuid>",
+                            relationGuid = "<relationGuid>",
+                        },
+                        antonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         createTime = 123.45f,
                         createdBy = "<createdBy>",
                         updateTime = 123.45f,
@@ -6481,6 +7138,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                         entityGuid = "<entityGuid>",
                         entityStatus = "ACTIVE",
                         removePropagationsOnEntityDelete = true,
+                        validityPeriods = new[] {
+                            new {
+                                endTime = "<endTime>",
+                                startTime = "<startTime>",
+                                timeZone = "<timeZone>",
+                            }
+                        },
                         source = "<source>",
                         sourceDetails = new {
                             key = new {},
@@ -6509,10 +7173,177 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     status = "DRAFT",
                 }
             },
+                        classifies = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         examples = new[] {
                 "<String>"
             },
+                        isA = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        preferredToTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacedBy = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        replacementTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        seeAlso = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        synonyms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translatedTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        translationTerms = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
                         usage = "<usage>",
+                        validValues = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        validValuesFor = new[] {
+                new {
+                    description = "<description>",
+                    displayText = "<displayText>",
+                    expression = "<expression>",
+                    relationGuid = "<relationGuid>",
+                    source = "<source>",
+                    status = "DRAFT",
+                    steward = "<steward>",
+                    termGuid = "<termGuid>",
+                }
+            },
+                        classifications = new[] {
+                new {
+                    entityGuid = "<entityGuid>",
+                    entityStatus = "ACTIVE",
+                    removePropagationsOnEntityDelete = true,
+                    validityPeriods = new[] {
+                        new {
+                            endTime = "<endTime>",
+                            startTime = "<startTime>",
+                            timeZone = "<timeZone>",
+                        }
+                    },
+                    source = "<source>",
+                    sourceDetails = new {
+                        key = new {},
+                    },
+                    attributes = new {
+                        key = new {},
+                    },
+                    typeName = "<typeName>",
+                    lastModifiedTS = "<lastModifiedTS>",
+                }
+            },
                         longDescription = "<longDescription>",
                         name = "<name>",
                         qualifiedName = "<qualifiedName>",
@@ -6549,6 +7380,13 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             entityGuid = "<entityGuid>",
             entityStatus = "ACTIVE",
             removePropagationsOnEntityDelete = true,
+            validityPeriods = new[] {
+                new {
+                    endTime = "<endTime>",
+                    startTime = "<startTime>",
+                    timeZone = "<timeZone>",
+                }
+            },
             source = "<source>",
             sourceDetails = new {
                 key = new {},

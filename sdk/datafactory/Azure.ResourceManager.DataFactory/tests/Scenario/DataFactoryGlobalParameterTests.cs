@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryGlobalParameterResource> CreateOrUpdateGlobalParameter(DataFactoryResource dataFactory)
         {
-            var parameters = new Dictionary<string, DataFactoryGlobalParameterSpecification>();
-            parameters.Add("test", new DataFactoryGlobalParameterSpecification(DataFactoryGlobalParameterType.Int, new BinaryData("5")));
+            var parameters = new Dictionary<string, DataFactoryGlobalParameterProperties>();
+            parameters.Add("test", new DataFactoryGlobalParameterProperties(DataFactoryGlobalParameterType.Int, new BinaryData("5")));
             DataFactoryGlobalParameterData data = new DataFactoryGlobalParameterData(parameters);
             var globalParameters = await dataFactory.GetDataFactoryGlobalParameters().CreateOrUpdateAsync(WaitUntil.Completed, _globalParameterName, data);
             return globalParameters.Value;

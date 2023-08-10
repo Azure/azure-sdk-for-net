@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Xero Service dataset. </summary>
-    public partial class XeroObjectDataset : DataFactoryDatasetDefinition
+    public partial class XeroObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of XeroObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

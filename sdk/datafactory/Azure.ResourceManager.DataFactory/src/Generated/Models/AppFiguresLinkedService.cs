@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Linked service for AppFigures. </summary>
-    public partial class AppFiguresLinkedService : DataFactoryLinkedServiceDefinition
+    public partial class AppFiguresLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of AppFiguresLinkedService. </summary>
         /// <param name="userName"> The username of the Appfigures source. Type: string (or Expression with resultType string). </param>
