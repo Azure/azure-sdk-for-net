@@ -148,10 +148,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         try
                         {
                             // Try to acquire the semaphore. This protects the cached events.
-                            if (!_cachedEventsGuard.Wait(0, _functionExecutionToken))
+                            if (!_cachedEventsGuard.Wait(0, linkedCts.Token))
                             {
                                 // This will throw if the cancellation token is canceled.
-                                await _cachedEventsGuard.WaitAsync(_functionExecutionToken).ConfigureAwait(false);
+                                await _cachedEventsGuard.WaitAsync(linkedCts.Token).ConfigureAwait(false);
                             }
                             acquiredSemaphore = true;
 
