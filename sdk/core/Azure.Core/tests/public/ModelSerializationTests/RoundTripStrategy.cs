@@ -125,8 +125,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            using var writer = new ModelWriter(model, options);
-            return writer.ToBinaryData();
+            return ModelSerializer.SerializeCore(model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -142,8 +141,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            using var writer = new ModelWriter((IModelJsonSerializable<object>)model, options);
-            return writer.ToBinaryData();
+            return ModelSerializer.SerializeCore((IModelJsonSerializable<object>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)
@@ -180,8 +178,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public override BinaryData Serialize(T model, ModelSerializerOptions options)
         {
-            using var writer = new ModelWriter((IModelJsonSerializable<object>)model, options);
-            return writer.ToBinaryData();
+            return ModelSerializer.SerializeCore((IModelJsonSerializable<object>)model, options);
         }
 
         public override object Deserialize(string payload, object model, ModelSerializerOptions options)

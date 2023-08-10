@@ -142,8 +142,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
             if (options.Format == ModelSerializerFormat.Json)
             {
-                using var writer = new ModelWriter(this, options);
-                return writer.ToBinaryData();
+                return ModelSerializer.SerializeCore(this, options);
             }
             else
             {

@@ -14,7 +14,7 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// Provides an efficient way to serialize <see cref="IModelJsonSerializable{T}"/> into a <see cref="BinaryData"/> using multiple pooled buffers.
     /// </summary>
-    public sealed partial class ModelWriter : IDisposable
+    internal sealed partial class ModelWriter : IDisposable
     {
         private readonly IModelJsonSerializable<object> _model;
         private readonly ModelSerializerOptions _options;
