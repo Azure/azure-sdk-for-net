@@ -42,7 +42,6 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-
             if (options.Format == ModelSerializerFormat.Json)
             {
                 SerializeRawData(writer);

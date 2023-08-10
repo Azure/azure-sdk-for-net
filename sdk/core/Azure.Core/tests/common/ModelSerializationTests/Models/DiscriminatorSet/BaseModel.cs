@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
@@ -73,7 +72,6 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-
             if (options.Format == ModelSerializerFormat.Json)
             {
                 SerializeRawData(writer);
@@ -107,7 +105,6 @@ namespace Azure.Core.Tests.ModelSerializationTests.Models
             string kind = default;
             Optional<string> name = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
-
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
