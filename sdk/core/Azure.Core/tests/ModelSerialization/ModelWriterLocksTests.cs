@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
@@ -290,32 +291,88 @@ namespace Azure.Core.Tests.ModelSerialization
         }
 
         [Test]
-        public async Task ReuseOfSharedArrays()
+        public async Task ArrayPoolStarvation()
         {
             var input1 = new ArrayModel(50_000_000, 1);
             var input2 = new ArrayModel(50_000_000, 2);
-            var writer1 = new ModelWriterLocks(input1, ModelSerializerOptions.DefaultWireOptions, 512);
-            var writer2 = new ModelWriterLocks(input2, ModelSerializerOptions.DefaultWireOptions, 512);
+            using var writer1 = new ModelWriterLocks(input1, ModelSerializerOptions.DefaultWireOptions, 512);
+            using var writer2 = new ModelWriterLocks(input2, ModelSerializerOptions.DefaultWireOptions, 512);
 
             var task1 = Task.Run(writer1.ToBinaryData);
             var task2 = Task.Run(writer2.ToBinaryData);
 
             await Task.WhenAll(task1, task2);
 
-            var output1 = ArrayModel.Deserialize(task1.Result);
-            var output2 = ArrayModel.Deserialize(task2.Result);
+            AssertArrayModel(ArrayModel.Deserialize(task1.Result), input1.Value, input1.Length);
+            AssertArrayModel(ArrayModel.Deserialize(task2.Result), input2.Value, input2.Length);
+        }
 
-            Assert.AreEqual(output1.Value, input1.Value);
-            Assert.AreEqual(output2.Value, input2.Value);
-            Assert.AreEqual(output1.Length, input1.Length);
-            Assert.AreEqual(output2.Length, input2.Length);
+        [Test]
+        public async Task ReuseOfSharedArrays()
+        {
+            var task1 = Task.Run(() => Enumerable.Repeat(0, 25000).Select(_ =>
+            {
+                using var writer = new ModelWriterLocks(new ArrayModel(5000, 1), ModelSerializerOptions.DefaultWireOptions, 512);
+                return writer.ToBinaryData();
+            }).ToArray());
+
+            var task2 = Task.Run(() => Enumerable.Repeat(0, 25000).Select(_ =>
+            {
+                using var writer = new ModelWriterLocks(new ArrayModel(5000, 2), ModelSerializerOptions.DefaultWireOptions, 512);
+                return writer.ToBinaryData();
+            }).ToArray());
+
+            await Task.WhenAll(task1, task2);
+
+            foreach (var data in task1.Result)
+            {
+                AssertArrayModel(ArrayModel.Deserialize(data), 1, 5000);
+            }
+
+            foreach (var data in task2.Result)
+            {
+                AssertArrayModel(ArrayModel.Deserialize(data), 2, 5000);
+            }
+        }
+
+        private void AssertArrayModel(ArrayModel model, int value, int length)
+        {
+            if (model.Value != value)
+            {
+                Assert.Fail($"Unexpected {nameof(ArrayModel)}.{nameof(ArrayModel.Value)}. Expected: {value}, actual: {model.Value}.");
+            }
+
+            if (model.Length != length)
+            {
+                Assert.Fail($"Unexpected {nameof(ArrayModel)}.{nameof(ArrayModel.Length)}. Expected: {length}, actual: {model.Length}.");
+            }
+        }
+
+        private static void AssertReadNextToken(ref Utf8JsonReader reader)
+        {
+            if (!reader.Read())
+            {
+                Assert.Fail("Unexpected end of object");
+            }
+        }
+
+        private static void AssertNextToken(ref Utf8JsonReader reader, JsonTokenType expected)
+        {
+            if (!reader.Read())
+            {
+                Assert.Fail("Unexpected end of object");
+            }
+
+            if (reader.TokenType != expected)
+            {
+                Assert.Fail($"Wrong JSON token type: expected `{expected}`, actual `{reader.TokenType}`");
+            }
         }
 
         private class ArrayModel : IModelJsonSerializable<ArrayModel>
         {
             public int Length { get; }
             public int Value { get; }
-
             public ArrayModel(int length, int value)
             {
                 Assert.Positive(value);
@@ -358,31 +415,28 @@ namespace Azure.Core.Tests.ModelSerialization
 
             private static ArrayModel Deserialize(ref Utf8JsonReader reader)
             {
-                Assert.True(reader.Read());
-                Assert.AreEqual(JsonTokenType.StartObject, reader.TokenType);
+                AssertNextToken(ref reader, JsonTokenType.StartObject);
+                AssertNextToken(ref reader, JsonTokenType.PropertyName);
+                AssertNextToken(ref reader, JsonTokenType.StartArray);
+                AssertReadNextToken(ref reader);
 
-                Assert.True(reader.Read());
-                Assert.AreEqual(JsonTokenType.PropertyName, reader.TokenType);
-
-                Assert.True(reader.Read());
-                Assert.AreEqual(JsonTokenType.StartArray, reader.TokenType);
-
-                Assert.True(reader.Read());
                 var value = reader.GetInt32();
                 var length = 1;
 
                 while (reader.TokenType != JsonTokenType.EndArray)
                 {
-                    Assert.True(reader.Read());
+                    AssertReadNextToken(ref reader);
                     if (reader.TokenType == JsonTokenType.Number)
                     {
-                        Assert.AreEqual(value, reader.GetInt32());
+                        if (value != reader.GetInt32())
+                        {
+                            Assert.Fail($"Unexpected item in array. Expected value: {value}, actual value: {reader.GetInt32()}.");
+                        }
                         length++;
                     }
                 }
 
-                Assert.True(reader.Read());
-                Assert.AreEqual(JsonTokenType.EndObject, reader.TokenType);
+                AssertNextToken(ref reader, JsonTokenType.EndObject);
                 return new ArrayModel(length, value);
             }
         }
