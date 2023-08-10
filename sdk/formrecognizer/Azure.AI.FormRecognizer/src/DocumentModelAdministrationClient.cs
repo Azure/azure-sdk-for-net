@@ -889,7 +889,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <remarks>
         /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
-        public virtual async Task<BuildDocumentClassifierOperation> BuildDocumentClassifierAsync(WaitUntil waitUntil, IDictionary<string, DocumentClassifierDocumentType> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
+        public virtual async Task<BuildDocumentClassifierOperation> BuildDocumentClassifierAsync(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documentTypes, nameof(documentTypes));
 
@@ -942,7 +942,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <remarks>
         /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
-        public virtual BuildDocumentClassifierOperation BuildDocumentClassifier(WaitUntil waitUntil, IDictionary<string, DocumentClassifierDocumentType> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
+        public virtual BuildDocumentClassifierOperation BuildDocumentClassifier(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(documentTypes, nameof(documentTypes));
 

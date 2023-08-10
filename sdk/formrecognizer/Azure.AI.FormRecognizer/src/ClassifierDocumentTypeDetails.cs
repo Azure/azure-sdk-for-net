@@ -6,14 +6,13 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("ClassifierDocumentTypeDetails")]
-    public partial class DocumentClassifierDocumentType
+    public partial class ClassifierDocumentTypeDetails
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DocumentClassifierDocumentType"/> class.
+        /// Initializes a new instance of the <see cref="ClassifierDocumentTypeDetails"/> class.
         /// </summary>
         /// <param name="trainingDataSource">The location containing the training data. See <see cref="DocumentContentSource"/> for more details.</param>
-        public DocumentClassifierDocumentType(DocumentContentSource trainingDataSource)
+        public ClassifierDocumentTypeDetails(DocumentContentSource trainingDataSource)
         {
             Argument.AssertNotNull(trainingDataSource, nameof(trainingDataSource));
 
@@ -35,14 +34,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Initializes a new instance of ClassifierDocumentTypeDetails. </summary>
         /// <param name="azureBlobSource"> Azure Blob Storage location containing the training data for a classifier document type.  Either azureBlobSource or azureBlobFileListSource must be specified. </param>
         /// <param name="azureBlobFileListSource"> Azure Blob Storage file list specifying the training data for a classifier document type.  Either azureBlobSource or azureBlobFileListSource must be specified. </param>
-        internal DocumentClassifierDocumentType(BlobContentSource azureBlobSource, BlobFileListContentSource azureBlobFileListSource)
+        internal ClassifierDocumentTypeDetails(BlobContentSource azureBlobSource, BlobFileListContentSource azureBlobFileListSource)
         {
             AzureBlobSource = azureBlobSource;
             AzureBlobFileListSource = azureBlobFileListSource;
             TrainingDataSource = (DocumentContentSource) azureBlobSource ?? azureBlobFileListSource;
         }
 
-        private DocumentClassifierDocumentType()
+        private ClassifierDocumentTypeDetails()
         {
         }
 

@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public void BuildDocumentClassifierValidatesArguments()
         {
             var client = CreateInstrumentedClient();
-            var emptyDocumentTypes = new Dictionary<string, DocumentClassifierDocumentType>();
+            var emptyDocumentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>();
 
             Assert.ThrowsAsync<ArgumentNullException>(async () => await client.BuildDocumentClassifierAsync(WaitUntil.Started, documentTypes: null));
             Assert.ThrowsAsync<ArgumentException>(async () => await client.BuildDocumentClassifierAsync(WaitUntil.Started, emptyDocumentTypes));
@@ -42,9 +42,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             var client = CreateInstrumentedClient();
             var source = new BlobContentSource(new Uri("http://notreal.azure.com/"));
-            var documentTypes = new Dictionary<string, DocumentClassifierDocumentType>()
+            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
-                { string.Empty, new DocumentClassifierDocumentType(source) }
+                { string.Empty, new ClassifierDocumentTypeDetails(source) }
             };
             using var cancellationSource = new CancellationTokenSource();
 

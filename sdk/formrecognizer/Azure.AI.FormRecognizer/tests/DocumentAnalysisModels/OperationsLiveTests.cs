@@ -74,10 +74,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var sourceA = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-A/train" };
             var sourceB = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-B/train" };
 
-            var documentTypes = new Dictionary<string, DocumentClassifierDocumentType>()
+            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
-                { "IRS-1040-A", new DocumentClassifierDocumentType(sourceA) },
-                { "IRS-1040-B", new DocumentClassifierDocumentType(sourceB) }
+                { "IRS-1040-A", new ClassifierDocumentTypeDetails(sourceA) },
+                { "IRS-1040-B", new ClassifierDocumentTypeDetails(sourceB) }
             };
 
             BuildDocumentClassifierOperation operation = null;

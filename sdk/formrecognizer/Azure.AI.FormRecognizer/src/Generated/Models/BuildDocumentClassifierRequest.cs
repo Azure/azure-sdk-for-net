@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="docTypes"> List of document types to classify against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="docTypes"/> is null. </exception>
-        public BuildDocumentClassifierRequest(string classifierId, IDictionary<string, DocumentClassifierDocumentType> docTypes)
+        public BuildDocumentClassifierRequest(string classifierId, IDictionary<string, ClassifierDocumentTypeDetails> docTypes)
         {
             Argument.AssertNotNull(classifierId, nameof(classifierId));
             Argument.AssertNotNull(docTypes, nameof(docTypes));
@@ -32,6 +32,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary> Document classifier description. </summary>
         public string Description { get; set; }
         /// <summary> List of document types to classify against. </summary>
-        public IDictionary<string, DocumentClassifierDocumentType> DocTypes { get; }
+        public IDictionary<string, ClassifierDocumentTypeDetails> DocTypes { get; }
     }
 }

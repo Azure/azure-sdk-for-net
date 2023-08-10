@@ -47,7 +47,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <param name="classifierId">The identifier of the classifier.</param>
         /// <param name="description">An optional classifier description.</param>
         /// <returns>A <see cref="DisposableDocumentClassifier"/> instance from which the built classifier can be obtained.</returns>
-        public static async Task<DisposableDocumentClassifier> BuildAsync(DocumentModelAdministrationClient client, IDictionary<string, DocumentClassifierDocumentType> documentTypes, string classifierId, string description = null)
+        public static async Task<DisposableDocumentClassifier> BuildAsync(DocumentModelAdministrationClient client, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId, string description = null)
         {
             BuildDocumentClassifierOperation operation = await client.BuildDocumentClassifierAsync(WaitUntil.Completed, documentTypes, classifierId, description);
 

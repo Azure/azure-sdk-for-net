@@ -396,9 +396,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
             var client = CreateDocumentModelAdministrationClient(options);
 
-            var documentTypes = new Dictionary<string, DocumentClassifierDocumentType>()
+            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
-                { "documentType", new DocumentClassifierDocumentType(null, null) }
+                { "documentType", new ClassifierDocumentTypeDetails(null, null) }
             };
             var operation = await client.BuildDocumentClassifierAsync(WaitUntil.Started, documentTypes);
             var sameOperation = new BuildDocumentClassifierOperation(operation.Id, client);

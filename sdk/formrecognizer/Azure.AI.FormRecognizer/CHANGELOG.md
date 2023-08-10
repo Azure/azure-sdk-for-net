@@ -17,7 +17,6 @@
 - Removed struct `DocumentPageKind` and property `DocumentPage.Kind`.
 - Removed property `DocumentKeyValuePair.CommonName`.
 - In `DocumentBarcodeKind`, renamed members `QRCode`, `PDF417`, `EAN8`, `EAN13`, `ITF`, and `MicroQRCode` to `QrCode`, `Pdf417`, `Ean8`, `Ean13`, `Itf`, and `MicroQrCode`, respectively.
-- Renamed class `ClassifierDocumentTypeDetails` to `DocumentClassifierDocumentType`.
 - Renamed class `AzureBlobContentSource` to `BlobContentSource`.
 - Renamed class `AzureBlobFileListSource` to `BlobFileListContentSource`.
 - In class `ClassifierDocumentTypeDetails`, properties `AzureBlobFileListSource` and `AzureBlobSource` have been replaced by a single polymorphic property `TrainingDataSource`.

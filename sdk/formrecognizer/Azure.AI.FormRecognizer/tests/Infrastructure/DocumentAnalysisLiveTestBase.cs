@@ -151,13 +151,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var sourceD = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-D/train" };
             var sourceE = new BlobContentSource(trainingFilesUri) { Prefix = "IRS-1040-E/train" };
 
-            var documentTypes = new Dictionary<string, DocumentClassifierDocumentType>()
+            var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
-                { "IRS-1040-A", new DocumentClassifierDocumentType(sourceA) },
-                { "IRS-1040-B", new DocumentClassifierDocumentType(sourceB) },
-                { "IRS-1040-C", new DocumentClassifierDocumentType(sourceC) },
-                { "IRS-1040-D", new DocumentClassifierDocumentType(sourceD) },
-                { "IRS-1040-E", new DocumentClassifierDocumentType(sourceE) }
+                { "IRS-1040-A", new ClassifierDocumentTypeDetails(sourceA) },
+                { "IRS-1040-B", new ClassifierDocumentTypeDetails(sourceB) },
+                { "IRS-1040-C", new ClassifierDocumentTypeDetails(sourceC) },
+                { "IRS-1040-D", new ClassifierDocumentTypeDetails(sourceD) },
+                { "IRS-1040-E", new ClassifierDocumentTypeDetails(sourceE) }
             };
 
             return await DisposableDocumentClassifier.BuildAsync(client, documentTypes, classifierId, description);

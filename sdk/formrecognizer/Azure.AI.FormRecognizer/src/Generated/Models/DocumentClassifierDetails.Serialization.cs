@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             DateTimeOffset createdDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             string apiVersion = default;
-            IReadOnlyDictionary<string, DocumentClassifierDocumentType> docTypes = default;
+            IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("classifierId"u8))
@@ -59,10 +59,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 }
                 if (property.NameEquals("docTypes"u8))
                 {
-                    Dictionary<string, DocumentClassifierDocumentType> dictionary = new Dictionary<string, DocumentClassifierDocumentType>();
+                    Dictionary<string, ClassifierDocumentTypeDetails> dictionary = new Dictionary<string, ClassifierDocumentTypeDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DocumentClassifierDocumentType.DeserializeDocumentClassifierDocumentType(property0.Value));
+                        dictionary.Add(property0.Name, ClassifierDocumentTypeDetails.DeserializeClassifierDocumentTypeDetails(property0.Value));
                     }
                     docTypes = dictionary;
                     continue;
