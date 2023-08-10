@@ -20,7 +20,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
 
     [RecordedTest]
     [TestCase(OpenAIClientServiceTarget.Azure)]
-    public async Task StubbedTestForDevelopment(OpenAIClientServiceTarget serviceTarget)
+    public async Task BasicSearchExtensionWorks(OpenAIClientServiceTarget serviceTarget)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
@@ -31,8 +31,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
         {
             Messages =
             {
-                new ChatMessage(ChatRole.System, "You are a helpful assistant."),
-                new ChatMessage(ChatRole.User, "What's the best kind of pizza?"),
+                new ChatMessage(ChatRole.User, "What does PR complete mean?"),
             },
             MaxTokens = 512,
             AzureExtensionsOptions = new()
@@ -41,10 +40,12 @@ public class AzureChatExtensionsTests : OpenAITestBase
                 {
                     new AzureChatExtensionConfiguration()
                     {
-                        Type = "TestAzureChatExtensionType",
+                        Type = "AzureCognitiveSearch",
                         Parameters = BinaryData.FromObjectAsJson(new
                         {
-                            SomeProperty = "SomeValue",
+                            Endpoint = "https://openaisdktestsearch.search.windows.net",
+                            IndexName = "openai-test-index-carbon-wiki",
+                            Key = GetCognitiveSearchApiKey(),
                         },
                         new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
                     },
@@ -54,9 +55,19 @@ public class AzureChatExtensionsTests : OpenAITestBase
 
         Response<ChatCompletions> response = await client.GetChatCompletionsAsync(deploymentOrModelName, requestOptions);
         Assert.That(response, Is.Not.Null);
+        Assert.That(response.Value, Is.Not.Null);
+        Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
 
-        AzureChatExtensionsMessageContext context = response.Value.Choices[0].Message.AzureExtensionsContext;
+        ChatChoice firstChoice = response.Value.Choices[0];
+        Assert.That(firstChoice, Is.Not.Null);
+        Assert.That(firstChoice.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+        Assert.That(firstChoice.Message.Role, Is.EqualTo(ChatRole.Assistant));
+
+        AzureChatExtensionsMessageContext context = firstChoice.Message.AzureExtensionsContext;
         Assert.That(context, Is.Not.Null);
         Assert.That(context.Messages, Is.Not.Null.Or.Empty);
+        Assert.That(context.Messages.First().Role, Is.EqualTo(new ChatRole("tool")));
+        Assert.That(context.Messages.First().Content, Is.Not.Null.Or.Empty);
+        Assert.That(context.Messages.First().Content.Contains("citations"));
     }
 }
