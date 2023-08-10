@@ -45,7 +45,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             string expected = "{\"kind\":\"X\",\"name\":\"xmodel\"";
             expected += ",\"fields\":[\"testField\"]";
-            expected += ",\"nullProperty\":null";
             expected += ",\"keyValuePairs\":{\"color\":\"red\"}";
             if (format == ModelSerializerFormat.Json)
                 expected += ",\"xProperty\":100";
