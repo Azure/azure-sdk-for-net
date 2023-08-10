@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<int> replicaRetryLimit = default;
             Optional<JobConfigurationManualTriggerConfig> manualTriggerConfig = default;
             Optional<JobConfigurationScheduleTriggerConfig> scheduleTriggerConfig = default;
-            Optional<JobConfigurationEventTriggerConfig> eventTriggerConfig = default;
+            Optional<EventTriggerConfiguration> eventTriggerConfig = default;
             Optional<IList<ContainerAppRegistryCredentials>> registries = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    eventTriggerConfig = JobConfigurationEventTriggerConfig.DeserializeJobConfigurationEventTriggerConfig(property.Value);
+                    eventTriggerConfig = EventTriggerConfiguration.DeserializeEventTriggerConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("registries"u8))

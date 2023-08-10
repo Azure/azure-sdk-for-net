@@ -488,7 +488,7 @@ namespace Azure.Core.Tests
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             using Stream stream = new MemoryStream();
-            mdoc.WriteTo(stream, 'J');
+            mdoc.WriteTo(stream, "J");
             stream.Flush();
             stream.Position = 0;
 
@@ -498,13 +498,31 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CannotWriteToStreamWithPatchFormat()
+        public void CanWriteToStreamWithPatchFormat()
+        {
+            string json = """{"foo":1}""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("foo").Set(2);
+
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, "P");
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            Assert.AreEqual("""{"foo":2}""", actual);
+        }
+
+        [Test]
+        public void CannotWriteToStreamWithUnknownFormat()
         {
             string json = """{ "foo" : 1 }""";
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
 
             Stream stream = new MemoryStream();
-            Assert.Throws<FormatException>(() => mdoc.WriteTo(stream, 'P'));
+            Assert.Throws<FormatException>(() => mdoc.WriteTo(stream, "U"));
         }
 
         [TestCaseSource(nameof(TestCases))]
@@ -652,6 +670,863 @@ namespace Azure.Core.Tests
             MutableJsonDocumentTests.ValidateWriteTo($"{{\"foo\":\"{fooString}\",\"bar\":\"{barString}\"}}", mdoc);
         }
 
+        #region JSON Merge Patch
+
+        [Test]
+        public void CanWritePatchChangeRoot()
+        {
+            string json = """{"foo": 1}""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("foo").Set(2);
+
+            ValidatePatch("""{"foo": 2}""", mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchChangeRootOnePropertyChangesAnotherDoesnt()
+        {
+            string json = """{"foo": 1, "bar": "a"}""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("foo").Set(2);
+
+            ValidatePatch("""{"foo": 2}""", mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchChangeRootChangeMultipleProperties()
+        {
+            string json = """{"foo": 1, "bar": "a"}""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("foo").Set(2);
+            mdoc.RootElement.GetProperty("bar").Set("b");
+
+            // TODO: does order matter?  This fails:
+            //AreEqualJson("""{"foo": 2, "bar": "b"}""", actual);
+
+            ValidatePatch("""{"bar": "b", "foo": 2}""", mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchChangeRootMultipleChangesSameProperty()
+        {
+            string json = """{"foo": 1, "bar": "a"}""";
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("foo").Set(2);
+            mdoc.RootElement.GetProperty("foo").Set(3);
+
+            ValidatePatch("""{"foo": 3}""", mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchForChangeToNonRootElement()
+        {
+            string json = """
+                {
+                    "parent": {
+                        "child": true
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("parent").GetProperty("child").Set(false);
+
+            ValidatePatch("""{"parent": {"child": false}}""", mdoc);
+        }
+
+        [Test]
+        public void CanWritePatch_ThreeLevels()
+        {
+            string json = """
+                {
+                    "a": {
+                        "b": {
+                            "c": 1
+                        }
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetProperty("c").Set(2);
+
+            ValidatePatch("""{"a": {"b": {"c": 2}}}""", mdoc);
+        }
+
+        [Test]
+        public void CanWritePatch_ThreeLevelPeers()
+        {
+            string json = """
+                {
+                    "a": {
+                        "b": {
+                            "c": 1
+                        }
+                    },
+                    "d": {
+                        "e": {
+                            "f": 1
+                        }
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetProperty("c").Set(2);
+            mdoc.RootElement.GetProperty("d").GetProperty("e").GetProperty("f").Set(3);
+
+            ValidatePatch("""{"a": {"b": {"c": 2}}, "d": {"e": {"f": 3}}}""", mdoc);
+        }
+
+        [Test]
+        public void CanWritePatch_ThreeLevelsNested()
+        {
+            string json = """
+                {
+                    "a": {
+                        "b": {
+                            "c": 1
+                        },
+                        "bb": {
+                            "cc": 1
+                        }
+                    },
+                    "d": {
+                        "e": {
+                            "f": 1
+                        }
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetProperty("c").Set(2);
+            mdoc.RootElement.GetProperty("a").GetProperty("bb").GetProperty("cc").Set(3);
+            mdoc.RootElement.GetProperty("d").GetProperty("e").GetProperty("f").Set(4);
+
+            ValidatePatch("""{"a": {"b": {"c": 2}, "bb": {"cc": 3}}, "d": {"e": {"f": 4}}}""", mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchInterleaveChildObjectChanges()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(3);
+            mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("3");
+            mdoc.RootElement.GetProperty("a").GetProperty("ab").Set(4);
+            mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("4");
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(5);
+
+            ValidatePatch("""
+                {
+                    "a": {
+                        "aa": 5,
+                        "ab": 4
+                    },
+                    "b": {
+                        "ba": "4"
+                    }
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchInterleaveParentAndChildChanges()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(3);
+            mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("3");
+            mdoc.RootElement.GetProperty("b").Set(new { ba = "3", bb = "4" });
+            mdoc.RootElement.GetProperty("a").GetProperty("ab").Set(4);
+            mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("5");
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(5);
+
+            ValidatePatch("""
+                {
+                    "a": {
+                        "aa": 5,
+                        "ab": 4
+                    },
+                    "b": {
+                        "ba": "5",
+                        "bb": "4"
+                    }
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchToArrayElement()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """[0, 1, 2]""";
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetIndexElement(0).Set(3);
+
+            ValidatePatch("""[3, 1, 2]""", mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchToArrayObjectProperty()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": [0, 1]
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetIndexElement(0).Set(2);
+
+            ValidatePatch("""
+            {
+                "a": [2, 1]
+            }
+            """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchForNestedArray()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": {
+                    "b": [0, 1]
+                }
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetIndexElement(1).Set(2);
+
+            ValidatePatch("""
+            {
+                "a": {
+                    "b": [0, 2]
+                }
+            }
+            """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchForNestedArrayMultipleChanges()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": {
+                    "b": [0, 1]
+                }
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetIndexElement(0).Set(2);
+            mdoc.RootElement.GetProperty("a").GetProperty("b").GetIndexElement(1).Set(3);
+
+            ValidatePatch("""
+            {
+                "a": {
+                    "b": [2, 3]
+                }
+            }
+            """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchForArrayOfObjects()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a":
+                [
+                    { "b": 1 },
+                    { "c": 2 },
+                    { "d": 3 }
+                ]
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetIndexElement(0).GetProperty("b").Set(4);
+            mdoc.RootElement.GetProperty("a").GetIndexElement(2).GetProperty("d").Set(5);
+
+            ValidatePatch("""
+            {
+                "a":
+                [
+                    { "b": 4 },
+                    { "c": 2 },
+                    { "d": 5 }
+                ]
+            }
+            """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchForArraysAtDifferentLevels()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": {
+                    "aa": [0, 1]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, false]
+                    }
+                },
+                "c": [null, null, {"cc": "hi"}]
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(2);
+            mdoc.RootElement.GetProperty("b").GetProperty("bb").GetProperty("bbb").GetIndexElement(1).Set(true);
+            mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(new { cd = "cd" });
+
+            ValidatePatch("""
+            {
+                "a": {
+                    "aa": [2, 1]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, true]
+                    }
+                },
+                "c": [null, {"cd": "cd"}, {"cc": "hi"}]
+            }
+            """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchInterleaveArrayChanges()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": {
+                    "aa": [0, 1]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, false]
+                    }
+                },
+                "c": [null, null, {"cc": "hi"}]
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(2);
+            mdoc.RootElement.GetProperty("b").GetProperty("bb").GetProperty("bbb").GetIndexElement(1).Set(true);
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(3);
+            mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(new { cd = "cd" });
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(1).Set(4);
+
+            ValidatePatch("""
+            {
+                "a": {
+                    "aa": [3, 4]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, true]
+                    }
+                },
+                "c": [null, {"cd": "cd"}, {"cc": "hi"}]
+            }
+            """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchInterleaveParentAndChildArrayChanges()
+        {
+            // For an array, if any element has changed, the entire array is replaced.
+
+            string json = """
+            {
+                "a": {
+                    "aa": [0, 1]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, false]
+                    }
+                },
+                "c": [null, null, {"cc": "hi"}]
+            }
+            """;
+
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(0).Set(2);
+            mdoc.RootElement.GetProperty("b").GetProperty("bb").GetProperty("bbb").GetIndexElement(1).Set(true);
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(new int[] { 2, 3 });
+            mdoc.RootElement.GetProperty("c").GetIndexElement(1).Set(new { cd = "cd" });
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").GetIndexElement(1).Set(4);
+
+            ValidatePatch("""
+            {
+                "a": {
+                    "aa": [2, 4]
+                },
+                "b": {
+                    "bb":
+                    {
+                        "bbb": [true, true]
+                    }
+                },
+                "c": [null, {"cd": "cd"}, {"cc": "hi"}]
+            }
+            """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchReplaceObject()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").Set(new { aa = 3, ab = 4 });
+
+            ValidatePatch("""
+                {
+                    "a": {
+                        "aa": 3,
+                        "ab": 4
+                    }
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchReplaceObject_Deletions()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").Set(new { ac = 3 });
+
+            ValidatePatch("""
+                {
+                    "a": {
+                        "aa": null,
+                        "ab": null,
+                        "ac": 3
+                    }
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchAddProperty()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.SetProperty("c", 3);
+
+            ValidatePatch("""
+                {
+                    "c": 3
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchAddNestedProperty()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("b").SetProperty("bc", "3");
+
+            ValidatePatch("""
+                {
+                    "b": {
+                        "bc": "3"
+                    }
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchAddObject()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.SetProperty("c", new { ca = true, cb = false });
+
+            ValidatePatch("""
+                {
+                    "c": {
+                        "ca": true,
+                        "cb": false
+                    }
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchDeleteProperty_SetNull()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("aa").Set(null);
+
+            ValidatePatch("""
+                {
+                    "a": {
+                        "aa": null
+                    }
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchDeleteProperty()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").RemoveProperty("aa");
+
+            ValidatePatch("""
+                {
+                    "a": {
+                        "aa": null
+                    }
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchDeleteObject()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.RemoveProperty("b");
+
+            ValidatePatch("""
+                {
+                    "b": null
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchDeleteObject_SetNull()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": 2
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("b").Set(null);
+
+            ValidatePatch("""
+                {
+                    "b": null
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchForNonRootElement()
+        {
+            string json = """
+                {
+                    "a": {
+                        "aa": 1,
+                        "ab": {
+                            "abc": 2
+                        }
+                    },
+                    "b": {
+                        "ba": "1",
+                        "bb": "2"
+                    }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").GetProperty("ab").GetProperty("abc").Set(3);
+            mdoc.RootElement.GetProperty("b").GetProperty("ba").Set("3");
+
+            // Validate the root writes the full patch
+            ValidatePatch("""
+                {
+                    "a": {
+                        "ab": {
+                            "abc": 3
+                        }
+                    },
+                    "b": {
+                        "ba": "3"
+                    }
+                }
+                """, mdoc);
+
+            // Validate element "a" writes just the patch for that subtree
+            ValidatePatch("""
+                {
+                    "ab": {
+                        "abc": 3
+                    }
+                }
+                """, mdoc.RootElement.GetProperty("a"));
+
+            // Validate element "b" writes just the patch for that subtree
+            ValidatePatch("""
+                {
+                    "ba": "3"
+                }
+                """, mdoc.RootElement.GetProperty("b"));
+        }
+
+        [Test]
+        public void CanWritePatchRfc7396FirstExample()
+        {
+            string json = """
+                {
+                  "a": "b",
+                  "c": {
+                    "d": "e",
+                    "f": "g"
+                  }
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("a").Set("z");
+            mdoc.RootElement.GetProperty("c").RemoveProperty("f");
+
+            ValidatePatch("""
+                {
+                  "a":"z",
+                  "c": {
+                    "f": null
+                  }
+                }
+                """, mdoc);
+        }
+
+        [Test]
+        public void CanWritePatchRfc7396SecondExample()
+        {
+            string json = """
+                {
+                  "title": "Goodbye!",
+                  "author" : {
+                    "givenName" : "John",
+                    "familyName" : "Doe"
+                  },
+                  "tags":[ "example", "sample" ],
+                  "content": "This will be unchanged"
+                }
+                """;
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(json);
+
+            mdoc.RootElement.GetProperty("title").Set("Hello!");
+            mdoc.RootElement.SetProperty("phoneNumber", "+01-123-456-7890");
+            mdoc.RootElement.GetProperty("author").RemoveProperty("familyName");
+            mdoc.RootElement.SetProperty("tags", new string[] { "example" });
+
+            ValidatePatch("""
+                {
+                  "author": {
+                    "familyName": null
+                  },
+                  "phoneNumber": "+01-123-456-7890",
+                  "tags": [ "example" ],
+                  "title": "Hello!"
+                }
+                """, mdoc);
+        }
+
+        #endregion
+
+        #region Helpers
+        private static void ValidatePatch(string expected, MutableJsonDocument mdoc)
+        {
+            using Stream stream = new MemoryStream();
+            mdoc.WriteTo(stream, "P");
+            stream.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        private static void ValidatePatch(string expected, MutableJsonElement mje)
+        {
+            using Stream stream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            mje.WriteTo(writer, "P");
+            writer.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
+        private static void AreEqualJson(string expected, string actual)
+        {
+            JsonDocument doc = JsonDocument.Parse(expected);
+            BinaryData buffer = MutableJsonDocumentTests.GetWriteToBuffer(doc);
+            Assert.AreEqual(buffer.ToString(), actual);
+        }
+
         public static IEnumerable<dynamic> TestCases()
         {
             yield return """
@@ -770,7 +1645,6 @@ namespace Azure.Core.Tests
                 """;
         }
 
-        #region Helpers
         private class TestClass
         {
             public string StringProperty { get; set; }

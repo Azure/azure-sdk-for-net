@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="scheduleTriggerConfig"> Cron formatted repeating trigger schedule ("* * * * *") for cronjobs. Properties completions and parallelism would be set to 1 by default. </param>
         /// <param name="eventTriggerConfig"> Trigger configuration of an event driven job. </param>
         /// <param name="registries"> Collection of private container registry credentials used by a Container apps job. </param>
-        internal ContainerAppJobConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppJobTriggerType triggerType, int replicaTimeout, int? replicaRetryLimit, JobConfigurationManualTriggerConfig manualTriggerConfig, JobConfigurationScheduleTriggerConfig scheduleTriggerConfig, JobConfigurationEventTriggerConfig eventTriggerConfig, IList<ContainerAppRegistryCredentials> registries)
+        internal ContainerAppJobConfiguration(IList<ContainerAppWritableSecret> secrets, ContainerAppJobTriggerType triggerType, int replicaTimeout, int? replicaRetryLimit, JobConfigurationManualTriggerConfig manualTriggerConfig, JobConfigurationScheduleTriggerConfig scheduleTriggerConfig, EventTriggerConfiguration eventTriggerConfig, IList<ContainerAppRegistryCredentials> registries)
         {
             Secrets = secrets;
             TriggerType = triggerType;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Cron formatted repeating trigger schedule ("* * * * *") for cronjobs. Properties completions and parallelism would be set to 1 by default. </summary>
         public JobConfigurationScheduleTriggerConfig ScheduleTriggerConfig { get; set; }
         /// <summary> Trigger configuration of an event driven job. </summary>
-        public JobConfigurationEventTriggerConfig EventTriggerConfig { get; set; }
+        public EventTriggerConfiguration EventTriggerConfig { get; set; }
         /// <summary> Collection of private container registry credentials used by a Container apps job. </summary>
         public IList<ContainerAppRegistryCredentials> Registries { get; }
     }
