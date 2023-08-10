@@ -43,6 +43,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private CancellationTokenSource _cachedEventsBackgroundTaskCts;
             private SemaphoreSlim _cachedEventsGuard;
             private readonly CancellationToken _functionExecutionToken;
+            private readonly CancellationTokenSource _ownershipLostTokenSource;
 
             /// <summary>
             /// When we have a minimum batch size greater than 1, this class manages caching events.
@@ -59,6 +60,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _maxWaitTime = options.MaxWaitTime;
                 _minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default
                 _functionExecutionToken = functionExecutionToken;
+                _ownershipLostTokenSource = new CancellationTokenSource();
 
                 // Events are only cached when building a batch of minimum size.
                 if (_minimumBatchesEnabled)
@@ -70,6 +72,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
             {
+                if (reason == ProcessingStoppedReason.OwnershipLost)
+                {
+                    _ownershipLostTokenSource.Cancel();
+                }
+
                 // clear the cached events
                 CachedEventsManager?.ClearEventCache();
 
@@ -97,11 +104,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             /// </summary>
             /// <param name="context">The partition information for this partition.</param>
             /// <param name="messages">The events to process.</param>
-            /// <param name="partitionProcessingCancellationToken">The cancellation token to respect if processing for the partition is canceled.</param>
             /// <returns></returns>
-            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages, CancellationToken partitionProcessingCancellationToken)
+            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages)
             {
-                using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_functionExecutionToken, partitionProcessingCancellationToken);
+                using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_functionExecutionToken, _ownershipLostTokenSource.Token);
                 _mostRecentPartitionContext = context;
                 var events = messages.ToArray();
                 EventData eventToCheckpoint = null;
@@ -186,7 +192,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             {
                                 // If there are events waiting to be processed, and no background task running, start a monitoring cycle.
                                 // Don't reference linkedCts in the class level background task, as it will be disposed when the method goes out of scope.
-                                _cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_functionExecutionToken, partitionProcessingCancellationToken);
+                                _cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_functionExecutionToken, _ownershipLostTokenSource.Token);
                                 _cachedEventsBackgroundTask = MonitorCachedEvents(context.ProcessorHost.GetLastReadCheckpoint(context.PartitionId)?.LastModified, _cachedEventsBackgroundTaskCts);
                             }
                         }

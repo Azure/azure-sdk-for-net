@@ -113,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 return Task.CompletedTask;
             }
 
-            return partition.EventProcessor.ProcessEventsAsync(partition, events, cancellationToken);
+            return partition.EventProcessor.ProcessEventsAsync(partition, events);
         }
 
         protected override async Task OnInitializingPartitionAsync(EventProcessorHostPartition partition, CancellationToken cancellationToken)

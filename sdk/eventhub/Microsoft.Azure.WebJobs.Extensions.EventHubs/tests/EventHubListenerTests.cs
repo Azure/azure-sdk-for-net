@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             for (int i = 0; i < 100; i++)
             {
                 List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
-                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+                await eventProcessor.ProcessEventsAsync(partitionContext, events);
             }
 
             try
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             for (int i = 0; i < 100; i++)
             {
                 List<EventData> events = new List<EventData>() { new EventData(new byte[0]), new EventData(new byte[0]), new EventData(new byte[0]) };
-                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+                await eventProcessor.ProcessEventsAsync(partitionContext, events);
             }
 
             try
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             for (int i = 0; i < 60; i++)
             {
                 List<EventData> events = new List<EventData>() { new EventData("event1"), new EventData("event2"), new EventData("event3"), new EventData("event4"), new EventData("event5") };
-                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+                await eventProcessor.ProcessEventsAsync(partitionContext, events);
             }
 
             try
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             for (int i = 0; i < 60; i++)
             {
                 List<EventData> events = new List<EventData>() { new EventData("event1"), new EventData("event2"), new EventData("event3"), new EventData("event4"), new EventData("event5") };
-                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+                await eventProcessor.ProcessEventsAsync(partitionContext, events);
             }
 
             try
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             for (int i = 0; i < 60; i++)
             {
                 List<EventData> events = new List<EventData>() { new EventData("event1"), new EventData("event2"), new EventData("event3"), new EventData("event4"), new EventData("event5") };
-                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+                await eventProcessor.ProcessEventsAsync(partitionContext, events);
             }
 
             try
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             for (int i = 0; i < 60; i++)
             {
                 List<EventData> events = new List<EventData>() { new EventData("event1"), new EventData("event2"), new EventData("event3"), new EventData("event4"), new EventData("event5") };
-                await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+                await eventProcessor.ProcessEventsAsync(partitionContext, events);
             }
 
             await completionSource.Task.TimeoutAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
@@ -373,7 +373,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, true, default);
 
-            await eventProcessor.ProcessEventsAsync(partitionContext, events, CancellationToken.None);
+            await eventProcessor.ProcessEventsAsync(partitionContext, events);
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
@@ -412,12 +412,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
             {
+                if (execution == 0)
+                {
+                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.OwnershipLost).GetAwaiter().GetResult();
+                }
                 var result = results[execution++];
                 return result;
             });
 
-            // Pass a cancellation token that is already signaled to simulate ownership loss
-            await eventProcessor.ProcessEventsAsync(partitionContext, events, new CancellationToken(true));
+            await eventProcessor.ProcessEventsAsync(partitionContext, events);
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
@@ -425,7 +428,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         }
 
         /// <summary>
-        /// If function execution succeeds when the function host is shutting down, we should NOT checkpoint.
+        /// If function execution succeeds when the function host is shutting down, we should checkpoint.
         /// </summary>
         [Test]
         public async Task ProcessEvents_Succeeds_ShuttingDown_DoesNotCheckpoint()
@@ -453,23 +456,26 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
             {
+                if (execution == 0)
+                {
+                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown).GetAwaiter().GetResult();
+                }
                 var result = results[execution++];
                 return result;
             });
 
-            // Pass a cancellation token that is already signaled to simulate shutdown
-            await eventProcessor.ProcessEventsAsync(partitionContext, events, new CancellationToken(true));
+            await eventProcessor.ProcessEventsAsync(partitionContext, events);
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
-                Times.Never);
+                Times.Once);
         }
 
         /// <summary>
-        /// If function execution fails when the function host is shutting down, we should NOT checkpoint.
+        /// If function execution fails when the function host is shutting down, we should checkpoint.
         /// </summary>
         [Test]
-        public async Task ProcessEvents_Fails_ShuttingDown_DoesNotCheckpoint()
+        public async Task ProcessEvents_Fails_ShuttingDown_DoesCheckpoint()
         {
             var partitionContext = EventHubTests.GetPartitionContext();
             var options = new EventHubOptions();
@@ -494,16 +500,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
             executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(() =>
             {
+                if (execution == 0)
+                {
+                    eventProcessor.CloseAsync(partitionContext, ProcessingStoppedReason.Shutdown).GetAwaiter().GetResult();
+                }
                 var result = results[execution++];
                 return result;
             });
 
-            // Pass a cancellation token that is already signaled to simulate shutdown
-            await eventProcessor.ProcessEventsAsync(partitionContext, events, new CancellationToken(true));
+            await eventProcessor.ProcessEventsAsync(partitionContext, events);
 
             processor.Verify(
                 p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()),
-                Times.Never);
+                Times.Once);
         }
 
         [Test]
@@ -696,7 +705,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             {
                 await Task.Delay(500);
             });
-            await eventProcessor.ProcessEventsAsync(partitionContext, events, source.Token);
+            await eventProcessor.ProcessEventsAsync(partitionContext, events);
         }
     }
 }
