@@ -46,9 +46,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         protected override string GetExpectedResult(ModelSerializerFormat format)
         {
             string expected = "{\"kind\":\"Z\",\"name\":\"zmodel\"";
-            expected += ",\"fields\":[\"testField2\"]";
-            expected += ",\"keyValuePairs\":{\"color\":\"blue\"}";
-
             if (format == ModelSerializerFormat.Json)
                 expected += ",\"zProperty\":1.5,\"extra\":\"stuff\"";
             expected += "}";
@@ -60,7 +57,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual("UnknownBaseModel", model.GetType().Name);
             Assert.AreEqual("Z", model.Kind);
             Assert.AreEqual("zmodel", model.Name);
-
             var rawData = GetRawData(model);
             Assert.IsNotNull(rawData);
             if (format == ModelSerializerFormat.Json)

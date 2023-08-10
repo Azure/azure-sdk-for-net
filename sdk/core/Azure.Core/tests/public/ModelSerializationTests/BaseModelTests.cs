@@ -29,7 +29,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             Assert.AreEqual(model.Name, model2.Name);
             Assert.AreEqual(model.Kind, model2.Kind);
-
             if (format == ModelSerializerFormat.Json)
             {
                 var rawData = GetRawData(model);
@@ -56,7 +55,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         {
             Assert.AreEqual("X", model.Kind);
             Assert.AreEqual("xmodel", model.Name);
-
             var rawData = GetRawData(model);
             Assert.IsNotNull(rawData);
             if (format == ModelSerializerFormat.Json)
