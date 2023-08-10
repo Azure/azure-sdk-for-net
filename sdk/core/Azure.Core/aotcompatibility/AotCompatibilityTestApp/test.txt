@@ -1,0 +1,8 @@
+MSBuild version 17.6.8+c70978d4d for .NET
+  Determining projects to restore...
+  Restored C:\Users\mredding\source\repos\azure-sdk-for-net\sdk\core\Azure.Core\tests\AotCompatibility.TestApp\AotCompatibilityTestApp.csproj (in 306 ms).
+  1 of 2 projects are up-to-date for restore.
+C:\Users\mredding\.nuget\packages\microsoft.codeanalysis.netanalyzers\7.0.1\build\Microsoft.CodeAnalysis.NetAnalyzers.targets(593,5): warning : The .NET SDK has newer analyzers with version '7.0.3' than what version '7.0.1' of 'Microsoft.CodeAnalysis.NetAnalyzers' package provides. Update or remove this package reference. [C:\Users\mredding\source\repos\azure-sdk-for-net\sdk\core\Azure.Core\src\Azure.Core.csproj::TargetFramework=net6.0]
+  InheritDocTask replaced 0 of 0 inheritdoc tags and removed 0 private member docs in C:\Users\mredding\source\repos\azure-sdk-for-net\artifacts\obj\Azure.Core\Debug\net6.0\Azure.Core.xml
+  Azure.Core -> C:\Users\mredding\source\repos\azure-sdk-for-net\artifacts\bin\Azure.Core\Debug\net6.0\Azure.Core.dll
+CSC : error CS5001: Program does not contain a static 'Main' method suitable for an entry point [C:\Users\mredding\source\repos\azure-sdk-for-net\sdk\core\Azure.Core\tests\AotCompatibility.TestApp\AotCompatibilityTestApp.csproj]
