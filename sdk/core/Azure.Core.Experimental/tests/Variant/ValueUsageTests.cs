@@ -150,6 +150,24 @@ namespace Azure.Core.Experimental.Tests
             Assert.AreEqual(6, x);
         }
 
+        [Test]
+        public void CanUseValueInPropertyBagDynamic()
+        {
+            dynamic d = new PropertyBag();
+            d.foo = 5;
+            d.bar = 6;
+
+            Value x = d.foo;
+            int a = x;
+
+            //int a = d.foo;
+            //int b = d.bar;
+
+            //int y = d.foo == 5 ? d.bar : 0;
+
+            //Assert.AreEqual(6, y);
+        }
+
         #region Helpers
         internal class ValueModel
         {

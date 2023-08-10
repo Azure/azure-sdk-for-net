@@ -1,16 +1,74 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Dynamic;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Azure
 {
     /// <summary>
     /// Used to hold instances of Value as a dictionary and a dynamic.
     /// </summary>
-    public class PropertyBag : Dictionary<string, Value>
+    public class PropertyBag : Dictionary<string, Value>, IDynamicMetaObjectProvider
     {
+        private static readonly MethodInfo GetPropertyMethod = typeof(PropertyBag).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private static readonly MethodInfo SetPropertyMethod = typeof(PropertyBag).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
+
+        private Value GetProperty(string name)
+        {
+            // TODO: do it without boxing
+            return this[name];
+        }
+        private object? SetProperty(string name, object value)
+        {
+            // TODO: do it without boxing
+            this[name] = new(value);
+
+            // Binding machinery expects the call site signature to return an object
+            return null;
+        }
+
+        DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
+
+        private class MetaObject : DynamicMetaObject
+        {
+            private PropertyBag _value;
+
+            internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
+            {
+                _value = (PropertyBag)value;
+            }
+
+            public override IEnumerable<string> GetDynamicMemberNames()
+            {
+                return _value.Keys;
+            }
+
+            public override DynamicMetaObject BindGetMember(GetMemberBinder binder)
+            {
+                UnaryExpression this_ = Expression.Convert(Expression, LimitType);
+
+                Expression[] getPropertyArgs = new Expression[] { Expression.Constant(binder.Name) };
+                MethodCallExpression getPropertyCall = Expression.Call(this_, GetPropertyMethod, getPropertyArgs);
+
+                UnaryExpression asValue = Expression.Convert(getPropertyCall, typeof(Value));
+
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(asValue, restrictions);
+            }
+
+            public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
+            {
+                UnaryExpression this_ = Expression.Convert(Expression, LimitType);
+
+                Expression[] setArgs = new Expression[] { Expression.Constant(binder.Name), Expression.Convert(value.Expression, typeof(object)) };
+                MethodCallExpression setCall = Expression.Call(this_, SetPropertyMethod, setArgs);
+
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+                return new DynamicMetaObject(setCall, restrictions);
+            }
+        }
     }
 }
