@@ -35,7 +35,7 @@ To authenticate in Visual Studio, select the **Tools** > **Options** menu to lau
 
 Developers using Visual Studio Code can use the [Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) to authenticate via the editor. Applications using the `DefaultAzureCredential` or the `VisualStudioCodeCredential` can then use this account to authenticate calls in their application when running locally.
 
-It's a [known issue](https://github.com/Azure/azure-sdk-for-net/issues/27263) that `VisualStudioCodeCredential` doesn't work with [Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) versions newer than **0.9.11**. A long-term fix to this problem is in progress. In the meantime, consider [authenticating via the Azure CLI](#authenticating-via-the-azure-cli).
+It's a [known issue](https://github.com/Azure/azure-sdk-for-net/issues/30525) that `VisualStudioCodeCredential` doesn't work with [Azure Account extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account) versions newer than **0.9.11**. A long-term fix to this problem is in progress. In the meantime, consider [authenticating via the Azure CLI](#authenticating-via-the-azure-cli).
 
 #### Authenticate via the Azure CLI
 
