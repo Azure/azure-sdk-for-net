@@ -164,12 +164,12 @@ namespace Azure.Core.Serialization
             Type typeToActivate = returnType;
             if (returnType.IsAbstract)
             {
-                UnknownSubclassAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(UnknownSubclassAttribute)) as UnknownSubclassAttribute;
+                AbstractHierarchyDeserializerAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(AbstractHierarchyDeserializerAttribute)) as AbstractHierarchyDeserializerAttribute;
                 if (attribute is null)
                 {
-                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(UnknownSubclassAttribute)} to be used with {nameof(ModelSerializer)}");
+                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(AbstractHierarchyDeserializerAttribute)} to be used with {nameof(ModelSerializer)}");
                 }
-                typeToActivate = attribute.UnknownSubclass;
+                typeToActivate = attribute.TypeToActivate;
             }
 
             var obj = Activator.CreateInstance(typeToActivate, true);
