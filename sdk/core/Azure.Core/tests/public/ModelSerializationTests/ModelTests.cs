@@ -6,11 +6,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Azure.Core.Serialization;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    public abstract class ModelTests<T> where T : class, IModelSerializable<T>
+    public abstract class ModelTests<T> where T : IModelSerializable<T>
     {
         private T _modelInstance;
         private T ModelInstance => _modelInstance ??= GetModelInstance();
@@ -19,7 +20,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         protected virtual T GetModelInstance()
         {
-            return Activator.CreateInstance(typeof(T), true) as T;
+            return (T)Activator.CreateInstance(typeof(T), true);
         }
 
         protected abstract string GetExpectedResult(ModelSerializerFormat format);
@@ -61,46 +62,6 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
         public void RoundTripWithModelInterfaceNonGeneric(string format)
             => RoundTripTest(format, new ModelInterfaceNonGenericStrategy<T>());
 
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithJsonInterface(string format)
-        {
-            if (ModelInstance is IModelJsonSerializable<T>)
-                RoundTripTest(format, new JsonInterfaceStrategy<T>());
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithJsonInterfaceNonGeneric(string format)
-        {
-            if (ModelInstance is IModelJsonSerializable<T>)
-                RoundTripTest(format, new JsonInterfaceNonGenericStrategy<T>());
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithJsonInterfaceUtf8Reader(string format)
-        {
-            if (ModelInstance is IModelJsonSerializable<T>)
-                RoundTripTest(format, new JsonInterfaceUtf8ReaderStrategy<T>());
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithJsonInterfaceUtf8ReaderNonGeneric(string format)
-        {
-            if (ModelInstance is IModelJsonSerializable<T>)
-                RoundTripTest(format, new JsonInterfaceUtf8ReaderNonGenericStrategy<T>());
-        }
-
-        [TestCase("J")]
-        [TestCase("W")]
-        public void RoundTripWithModelJsonConverter(string format)
-        {
-            if (ModelInstance is IModelJsonSerializable<T>)
-                RoundTripTest(format, new ModelJsonConverterStrategy<T>());
-        }
-
         [Test]
         public void RoundTripWithCast()
         {
@@ -118,50 +79,60 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
             var expectedSerializedString = GetExpectedResult(format);
 
+            if (AssertFailures(strategy, format, serviceResponse, options))
+                return;
+
+            T model = (T)strategy.Deserialize(serviceResponse, ModelInstance, options);
+
+            VerifyModel(model, format);
+            var data = strategy.Serialize(model, options);
+            string roundTrip = data.ToString();
+
+            Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
+
+            T model2 = (T)strategy.Deserialize(roundTrip, ModelInstance, options);
+            CompareModels(model, model2, format);
+        }
+
+        private bool AssertFailures(RoundTripStrategy<T> strategy, ModelSerializerFormat format, string serviceResponse, ModelSerializerOptions options)
+        {
+            bool result = false;
             if (IsXmlWireFormat && (strategy.IsExplicitJsonDeserialize || strategy.IsExplicitJsonSerialize) && format == ModelSerializerFormat.Wire)
             {
                 if (strategy.IsExplicitJsonDeserialize)
                 {
-                    if (strategy is ModelJsonConverterStrategy<T>)
+                    if (strategy.GetType().Name.StartsWith("ModelJsonConverterStrategy"))
                     {
                         //we never get to the interface implementation because JsonSerializer errors before that
-                        Assert.Throws<JsonException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+                        Assert.Throws<JsonException>(() => { T model = (T)strategy.Deserialize(serviceResponse, ModelInstance, options); });
+                        result = true;
                     }
                     else
                     {
-                        Assert.Throws<InvalidOperationException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+                        Assert.Throws<InvalidOperationException>(() => { T model = (T)strategy.Deserialize(serviceResponse, ModelInstance, options); });
+                        result = true;
                     }
                 }
 
                 if (strategy.IsExplicitJsonSerialize)
                 {
                     Assert.Throws<InvalidOperationException>(() => { var data = strategy.Serialize(ModelInstance, options); });
+                    result = true;
                 }
             }
             else if (ModelInstance is not IModelJsonSerializable<T> && format == ModelSerializerFormat.Json)
             {
-                Assert.Throws<NotSupportedException>(() => { T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T; });
+                Assert.Throws<NotSupportedException>(() => { T model = (T)strategy.Deserialize(serviceResponse, ModelInstance, options); });
                 Assert.Throws<NotSupportedException>(() => { var data = strategy.Serialize(ModelInstance, options); });
+                result = true;
             }
-            else
-            {
-                T model = strategy.Deserialize(serviceResponse, ModelInstance, options) as T;
-
-                VerifyModel(model, format);
-                var data = strategy.Serialize(model, options);
-                string roundTrip = data.ToString();
-
-                Assert.That(roundTrip, Is.EqualTo(expectedSerializedString));
-
-                T model2 = strategy.Deserialize(roundTrip, ModelInstance, options) as T;
-                CompareModels(model, model2, format);
-            }
+            return result;
         }
 
         internal static Dictionary<string, BinaryData> GetRawData(object model)
         {
             Type modelType = model.GetType();
-            while (modelType.BaseType != typeof(object))
+            while (modelType.BaseType != typeof(object) && modelType.BaseType != typeof(ValueType))
             {
                 modelType = modelType.BaseType;
             }
@@ -212,6 +183,46 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                     Assert.IsTrue(gotException);
                 }
             }
+        }
+
+        [Test]
+        public void ThrowsIfWireIsNotJson()
+        {
+            if (ModelInstance is IModelJsonSerializable<T> jsonModel && IsXmlWireFormat)
+            {
+                Assert.Throws<InvalidOperationException>(() => jsonModel.Serialize(new Utf8JsonWriter(new MemoryStream()), new ModelSerializerOptions(ModelSerializerFormat.Wire)));
+                Utf8JsonReader reader = new Utf8JsonReader(new byte[] { });
+                bool exceptionCaught = false;
+                try
+                {
+                    jsonModel.Deserialize(ref reader, new ModelSerializerOptions(ModelSerializerFormat.Wire));
+                }
+                catch (InvalidOperationException)
+                {
+                    exceptionCaught = true;
+                }
+                Assert.IsTrue(exceptionCaught, "Expected InvalidOperationException to be thrown when deserializing wire format as json");
+            }
+        }
+
+        [Test]
+        public void CastNull()
+        {
+            if (typeof(T).IsClass)
+            {
+                object model = null;
+                RequestContent content = ToRequestContent((T)model);
+                Assert.IsNull(content);
+            }
+            else
+            {
+                T model = default;
+                RequestContent content = ToRequestContent(model);
+                Assert.IsNotNull(content);
+            }
+
+            Response response = null;
+            Assert.Throws<ArgumentNullException>(() => FromResponse(response));
         }
     }
 }

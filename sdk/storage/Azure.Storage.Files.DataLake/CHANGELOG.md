@@ -1,6 +1,16 @@
 # Release History
 
-## 12.16.0-beta.1 (Unreleased)
+## 12.16.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.16.0-beta.1 (2023-08-08)
 - Added support for service version 2023-05-03 and 2023-08-03.
 - Added support for paginated directory delete when using AAD authentication.  Note that this feature only applies to HNS storage accounts.
 

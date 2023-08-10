@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class ModelXmlCrossLibraryTests : ModelTests<ModelXmlCrossLibrary>
+    internal class ModelXmlCrossLibraryTests : ModelJsonTests<ModelXmlCrossLibrary>
     {
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelXmlX.xml")).TrimEnd();
 
@@ -55,9 +55,8 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
                 if (format.Equals(ModelSerializerFormat.Json))
                     expectedSerializedString += ",\"readOnlyProperty\":\"ReadOnly\"";
                 expectedSerializedString += ",\"childTag\":{\"childValue\":\"ChildRed\"";
-                //TODO this is broken until we update the IXmlSerializable interface to include ModelSerializerOptions
-                //if (format.Equals(ModelSerializerFormat.Json))
-                //    expectedSerializedString += ",\"childReadOnlyProperty\":\"ChildReadOnly\"";
+                if (format.Equals(ModelSerializerFormat.Json))
+                    expectedSerializedString += ",\"childReadOnlyProperty\":\"ChildReadOnly\"";
                 expectedSerializedString += "}}";
                 return expectedSerializedString;
             }

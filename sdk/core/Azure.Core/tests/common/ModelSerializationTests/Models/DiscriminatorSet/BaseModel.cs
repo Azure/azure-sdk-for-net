@@ -7,19 +7,27 @@ using System.Linq;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
+namespace Azure.Core.Tests.ModelSerializationTests.Models
 {
+    [UnknownSubclass(typeof(UnknownBaseModel))]
     public abstract class BaseModel : IUtf8JsonSerializable, IModelJsonSerializable<BaseModel>
     {
         private Dictionary<string, BinaryData> _rawData;
 
         public static implicit operator RequestContent(BaseModel baseModel)
         {
+            if (baseModel == null)
+            {
+                return null;
+            }
+
             return RequestContent.Create(baseModel, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator BaseModel(Response response)
         {
+            Argument.AssertNotNull(response, nameof(response));
+
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeBaseModel(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }

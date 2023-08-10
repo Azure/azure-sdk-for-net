@@ -43,11 +43,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static implicit operator RequestContent(XmlModelForCombinedInterface xmlModelForCombinedInterface)
         {
+            if (xmlModelForCombinedInterface == null)
+            {
+                return null;
+            }
+
             return RequestContent.Create((IModelSerializable<XmlModelForCombinedInterface>)xmlModelForCombinedInterface, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator XmlModelForCombinedInterface(Response response)
         {
+            Argument.AssertNotNull(response, nameof(response));
+
             return DeserializeXmlModelForCombinedInterface(XElement.Load(response.ContentStream), ModelSerializerOptions.DefaultWireOptions);
         }
 

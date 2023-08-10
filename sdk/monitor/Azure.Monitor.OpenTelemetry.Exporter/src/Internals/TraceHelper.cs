@@ -404,5 +404,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             linksJson
                 .Append("},");
         }
+
+        internal static string GetAzureSDKDependencyType(ActivityKind kind, string azureNamespace)
+        {
+            // TODO: see if the values can be cached to avoid allocation.
+            if (kind == ActivityKind.Internal)
+            {
+                return $"InProc | {azureNamespace}";
+            }
+            else if (kind == ActivityKind.Producer)
+            {
+                return $"Queue Message | {azureNamespace}";
+            }
+            else
+            {
+                // The Azure SDK sets az.namespace with its resource provider information.
+                // When ActivityKind is not internal and az.namespace is present, set the value of Type to az.namespace.
+                return azureNamespace;
+            }
+        }
     }
 }

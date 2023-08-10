@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(ConnectionTimeoutInMs))
+            {
+                writer.WritePropertyName("connectionTimeoutInMs"u8);
+                writer.WriteNumberValue(ConnectionTimeoutInMs.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -72,6 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> searchBaseDistinguishedName = default;
             Optional<string> searchFilterTemplate = default;
             Optional<IList<CassandraCertificate>> serverCertificates = default;
+            Optional<int> connectionTimeoutInMs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serverHostname"u8))
@@ -122,8 +128,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     serverCertificates = array;
                     continue;
                 }
+                if (property.NameEquals("connectionTimeoutInMs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connectionTimeoutInMs = property.Value.GetInt32();
+                    continue;
+                }
             }
-            return new AuthenticationMethodLdapProperties(serverHostname.Value, Optional.ToNullable(serverPort), serviceUserDistinguishedName.Value, serviceUserPassword.Value, searchBaseDistinguishedName.Value, searchFilterTemplate.Value, Optional.ToList(serverCertificates));
+            return new AuthenticationMethodLdapProperties(serverHostname.Value, Optional.ToNullable(serverPort), serviceUserDistinguishedName.Value, serviceUserPassword.Value, searchBaseDistinguishedName.Value, searchFilterTemplate.Value, Optional.ToList(serverCertificates), Optional.ToNullable(connectionTimeoutInMs));
         }
     }
 }

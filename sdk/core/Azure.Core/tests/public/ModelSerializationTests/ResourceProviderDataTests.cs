@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class ResourceProviderDataTests : ModelTests<ResourceProviderData>
+    internal class ResourceProviderDataTests : ModelJsonTests<ResourceProviderData>
     {
         protected override string JsonPayload => WirePayload;
 

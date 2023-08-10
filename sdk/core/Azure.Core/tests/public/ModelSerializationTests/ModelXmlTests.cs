@@ -8,12 +8,12 @@ using System.Text.Json;
 using System.Xml;
 using Azure.Core.Serialization;
 using Azure.Core.Tests.Common;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
+using Azure.Core.Tests.ModelSerializationTests.Models;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class ModelXmlTests : ModelTests<ModelXml>
+    internal class ModelXmlTests : ModelJsonTests<ModelXml>
     {
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelXml.xml")).TrimEnd();
 

@@ -37,11 +37,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         public static implicit operator RequestContent(Envelope<T> envelope)
         {
+            if (envelope == null)
+            {
+                return null;
+            }
+
             return RequestContent.Create(envelope, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator Envelope<T>(Response response)
         {
+            Argument.AssertNotNull(response, nameof(response));
+
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeEnvelope(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }

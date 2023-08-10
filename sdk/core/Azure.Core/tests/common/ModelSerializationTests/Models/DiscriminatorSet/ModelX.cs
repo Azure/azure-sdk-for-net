@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using Azure.Core.Serialization;
 
-namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
+namespace Azure.Core.Tests.ModelSerializationTests.Models
 {
     public class ModelX : BaseModel, IUtf8JsonSerializable, IModelJsonSerializable<ModelX>
     {
@@ -36,11 +36,18 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests.Models
 
         public static implicit operator RequestContent(ModelX modelX)
         {
+            if (modelX == null)
+            {
+                return null;
+            }
+
             return RequestContent.Create(modelX, ModelSerializerOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelX(Response response)
         {
+            Argument.AssertNotNull(response, nameof(response));
+
             using JsonDocument jsonDocument = JsonDocument.Parse(response.ContentStream);
             return DeserializeModelX(jsonDocument.RootElement, ModelSerializerOptions.DefaultWireOptions);
         }

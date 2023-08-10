@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Core.Serialization
 {
@@ -18,6 +18,7 @@ namespace Azure.Core.Serialization
         /// <param name="model">The model to convert.</param>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/></returns>
+        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
         public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
@@ -32,6 +33,7 @@ namespace Azure.Core.Serialization
         /// <param name="model">The model to convert.</param>
         /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/></returns>
+        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
         public static BinaryData Serialize<T>(T model, ModelSerializerFormat format)
             where T : IModelSerializable<T>
             => Serialize<T>(model, ModelSerializerOptions.GetOptions(format));
@@ -43,6 +45,7 @@ namespace Azure.Core.Serialization
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/></returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
+        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
         public static BinaryData Serialize(object model, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
@@ -63,6 +66,7 @@ namespace Azure.Core.Serialization
         /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/></returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
+        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
         public static BinaryData Serialize(object model, ModelSerializerFormat format)
             => Serialize(model, ModelSerializerOptions.GetOptions(format));
 
@@ -72,8 +76,9 @@ namespace Azure.Core.Serialization
         /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
-        /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal default constructor.</exception>
-        public static T Deserialize<T>(BinaryData data, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
+        /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal parameterless constructor.</exception>
+        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
+        public static T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
@@ -86,8 +91,9 @@ namespace Azure.Core.Serialization
         /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
         /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
         /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
-        /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal default constructor.</exception>
-        public static T Deserialize<T>(BinaryData data, ModelSerializerFormat format)
+        /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal parameterless constructor.</exception>
+        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
+        public static T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelSerializerFormat format)
             where T : IModelSerializable<T>
             => Deserialize<T>(data, ModelSerializerOptions.GetOptions(format));
 
@@ -99,8 +105,9 @@ namespace Azure.Core.Serialization
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
-        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal default constructor.</exception>
-        public static object Deserialize(BinaryData data, Type returnType, ModelSerializerOptions? options = default)
+        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal parameterless constructor.</exception>
+        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
+        public static object Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerOptions? options = default)
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
@@ -115,11 +122,12 @@ namespace Azure.Core.Serialization
         /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
         /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
-        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal default constructor.</exception>
-        public static object Deserialize(BinaryData data, Type returnType, ModelSerializerFormat format)
+        /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal parameterless constructor.</exception>
+        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
+        public static object Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerFormat format)
             => Deserialize(data, returnType, ModelSerializerOptions.GetOptions(format));
 
-        private static IModelSerializable<object> GetInstance(Type returnType)
+        private static IModelSerializable<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {
             var model = GetObjectInstance(returnType) as IModelSerializable<object>;
             if (model is null)
@@ -129,7 +137,7 @@ namespace Azure.Core.Serialization
             return model;
         }
 
-        private static IModelSerializable<T> GetInstance<T>() where T : IModelSerializable<T>
+        private static IModelSerializable<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>() where T : IModelSerializable<T>
         {
             var model = GetObjectInstance(typeof(T)) as IModelSerializable<T>;
             if (model is null)
@@ -139,13 +147,19 @@ namespace Azure.Core.Serialization
             return model;
         }
 
-        private static object GetObjectInstance(Type returnType)
+        private static object GetObjectInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {
-            var typeToActivate = returnType.IsAbstract ? returnType.Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{returnType.Name}") : returnType;
-            if (typeToActivate is null)
+            Type typeToActivate = returnType;
+            if (returnType.IsAbstract)
             {
-                throw new InvalidOperationException($"Unable to find type Unknown{returnType.Name} in assembly {returnType.Assembly.FullName}.");
+                UnknownSubclassAttribute? attribute = Attribute.GetCustomAttribute(returnType, typeof(UnknownSubclassAttribute)) as UnknownSubclassAttribute;
+                if (attribute is null)
+                {
+                    throw new InvalidOperationException($"{returnType.Name} must have {nameof(UnknownSubclassAttribute)} to be used with {nameof(ModelSerializer)}");
+                }
+                typeToActivate = attribute.UnknownSubclass;
             }
+
             var obj = Activator.CreateInstance(typeToActivate, true);
             if (obj is null)
             {

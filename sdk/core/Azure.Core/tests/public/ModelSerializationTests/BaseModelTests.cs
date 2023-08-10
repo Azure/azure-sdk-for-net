@@ -4,12 +4,12 @@
 using System;
 using System.Linq;
 using Azure.Core.Serialization;
-using Azure.Core.Tests.Public.ModelSerializationTests.Models;
+using Azure.Core.Tests.ModelSerializationTests.Models;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelSerializationTests
 {
-    internal class BaseModelTests : ModelTests<BaseModel>
+    internal class BaseModelTests : ModelJsonTests<BaseModel>
     {
         protected override BaseModel GetModelInstance()
         {

@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Sql.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> The storage limit for the database elastic pool in bytes. </summary>
         public long? MaxSizeBytes { get; set; }
+        /// <summary> Minimal capacity that serverless pool will not shrink below, if not paused. </summary>
+        public double? MinCapacity { get; set; }
         /// <summary> The per database settings for the elastic pool. </summary>
         public ElasticPoolPerDatabaseSettings PerDatabaseSettings { get; set; }
         /// <summary> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </summary>
@@ -35,5 +37,9 @@ namespace Azure.ResourceManager.Sql.Models
         public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </summary>
         public int? HighAvailabilityReplicaCount { get; set; }
+        /// <summary> Type of enclave requested on the elastic pool. </summary>
+        public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
+        /// <summary> Specifies the availability zone the pool's primary replica is pinned to. </summary>
+        public SqlAvailabilityZoneType? AvailabilityZone { get; set; }
     }
 }

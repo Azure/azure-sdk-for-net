@@ -15,8 +15,8 @@ namespace Azure.Storage.DataMovement.JobPlan
         AccessDenied = 3,
 
         /// <summary>
-        /// If the storage resource already exists and <see cref="StorageResourceCreateMode.Overwrite"/>
-        /// or <see cref="StorageResourceCreateMode.Skip"/> was not enabled, then it's a failure caused
+        /// If the storage resource already exists and <see cref="StorageResourceCreationPreference.OverwriteIfExists"/>
+        /// or <see cref="StorageResourceCreationPreference.SkipIfExists"/> was not enabled, then it's a failure caused
         /// by the file already existing.
         /// </summary>
         CannotOvewrite = 2,

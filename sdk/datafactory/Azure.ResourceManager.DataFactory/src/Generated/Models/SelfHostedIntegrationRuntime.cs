@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Self-hosted integration runtime. </summary>
-    public partial class SelfHostedIntegrationRuntime : DataFactoryIntegrationRuntimeDefinition
+    public partial class SelfHostedIntegrationRuntime : DataFactoryIntegrationRuntimeProperties
     {
         /// <summary> Initializes a new instance of SelfHostedIntegrationRuntime. </summary>
         public SelfHostedIntegrationRuntime()

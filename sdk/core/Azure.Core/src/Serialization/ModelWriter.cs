@@ -35,6 +35,8 @@ namespace Azure.Core.Serialization
         /// </summary>
         /// <param name="model">The model to serialize.</param>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
+        /// <exception cref="NotSupportedException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
+        /// <exception cref="InvalidOperationException">If <see cref="ModelSerializerFormat.Wire"/> format is passed in and the model does not use JSON for its wire format.</exception>
         public ModelWriter(IModelJsonSerializable<object> model, ModelSerializerOptions options)
         {
             _model = model;

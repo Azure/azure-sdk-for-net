@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryIntegrationRuntimeResource> CreateDefaultIntegrationRuntime(string integrationRuntimeName)
         {
-            DataFactoryIntegrationRuntimeDefinition properties = new DataFactoryIntegrationRuntimeDefinition()
+            DataFactoryIntegrationRuntimeProperties properties = new DataFactoryIntegrationRuntimeProperties()
             {
                 IntegrationRuntimeType = "SelfHosted"
             };

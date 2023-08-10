@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
-        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode)
+        /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
+        internal CosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, MaterializedViewDefinition materializedViewDefinition)
         {
             ContainerName = containerName;
             IndexingPolicy = indexingPolicy;
@@ -47,6 +48,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             AnalyticalStorageTtl = analyticalStorageTtl;
             RestoreParameters = restoreParameters;
             CreateMode = createMode;
+            MaterializedViewDefinition = materializedViewDefinition;
         }
 
         /// <summary> Name of the Cosmos DB SQL container. </summary>
@@ -80,5 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public ResourceRestoreParameters RestoreParameters { get; set; }
         /// <summary> Enum to indicate the mode of resource creation. </summary>
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
+        /// <summary> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </summary>
+        public MaterializedViewDefinition MaterializedViewDefinition { get; set; }
     }
 }
