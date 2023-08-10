@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 
@@ -82,6 +83,9 @@ namespace Azure.Core.Experimental.Tests
             // nullable primitives.  See CanSetNullablePrimitives() experiment.
             //
             // model.Value = new(null);
+            //
+            // No, the answer is that we can't do it this way because then
+            // Nullable primitives use the object constructor and are boxed.
 
             // TODO: what would it take to achieve
             // model.Value = null?
@@ -153,15 +157,21 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanUseValueInPropertyBagDynamic()
         {
+            //dynamic dj = BinaryData.FromString("""{"foo": "a"}""").ToDynamicFromJson();
+            //dj.foo = 5;
+            //int a = dj.foo;
+
             dynamic d = new PropertyBag();
             d.foo = 5;
             d.bar = 6;
 
+            // Note, this works:
             Value x = d.foo;
-            int a = x;
+            int b = x;
 
-            //int a = d.foo;
-            //int b = d.bar;
+            // But this doesn't.
+            int y = d.foo;
+            int z = d.bar;
 
             //int y = d.foo == 5 ? d.bar : 0;
 

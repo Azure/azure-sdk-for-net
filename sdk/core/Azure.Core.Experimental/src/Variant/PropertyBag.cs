@@ -16,7 +16,7 @@ namespace Azure
         private static readonly MethodInfo GetPropertyMethod = typeof(PropertyBag).GetMethod(nameof(GetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
         private static readonly MethodInfo SetPropertyMethod = typeof(PropertyBag).GetMethod(nameof(SetProperty), BindingFlags.NonPublic | BindingFlags.Instance)!;
 
-        private Value GetProperty(string name)
+        private object GetProperty(string name)
         {
             // TODO: do it without boxing
             return this[name];
@@ -30,13 +30,13 @@ namespace Azure
             return null;
         }
 
-        DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new MetaObject(parameter, this);
+        DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new PropertyBagMetaObject(parameter, this);
 
-        private class MetaObject : DynamicMetaObject
+        private class PropertyBagMetaObject : DynamicMetaObject
         {
             private PropertyBag _value;
 
-            internal MetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
+            internal PropertyBagMetaObject(Expression parameter, IDynamicMetaObjectProvider value) : base(parameter, BindingRestrictions.Empty, value)
             {
                 _value = (PropertyBag)value;
             }
@@ -53,10 +53,10 @@ namespace Azure
                 Expression[] getPropertyArgs = new Expression[] { Expression.Constant(binder.Name) };
                 MethodCallExpression getPropertyCall = Expression.Call(this_, GetPropertyMethod, getPropertyArgs);
 
-                UnaryExpression asValue = Expression.Convert(getPropertyCall, typeof(Value));
-
                 BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
-                return new DynamicMetaObject(asValue, restrictions);
+
+                // TODO: Idea - return a ValueMetaObject that handles all the conversions Value can handle?
+                return new DynamicMetaObject(getPropertyCall, restrictions);
             }
 
             public override DynamicMetaObject BindSetMember(SetMemberBinder binder, DynamicMetaObject value)
