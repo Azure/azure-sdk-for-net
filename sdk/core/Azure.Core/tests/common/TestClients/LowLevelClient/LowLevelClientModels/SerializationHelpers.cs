@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Core.Experimental.Tests.Models
 {
-    internal class SerializationHelpers
+    public class SerializationHelpers
     {
         public delegate void SerializerFunc<in T>(ref Utf8JsonWriter writer, T t);
 

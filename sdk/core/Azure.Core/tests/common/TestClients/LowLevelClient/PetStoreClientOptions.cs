@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Core.Experimental.Tests
 {
