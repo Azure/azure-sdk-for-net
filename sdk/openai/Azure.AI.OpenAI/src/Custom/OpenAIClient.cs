@@ -448,6 +448,10 @@ namespace Azure.AI.OpenAI
             chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             chatCompletionsOptions.InternalShouldStreamResponse = true;
 
+            string operationPath = chatCompletionsOptions.AzureExtensionsOptions != null
+                ? "extensions/chat/completions"
+                : "chat/completions";
+
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
@@ -456,7 +460,7 @@ namespace Azure.AI.OpenAI
                 // Response value object takes IDisposable ownership of message
                 HttpMessage message = CreatePostRequestMessage(
                     deploymentOrModelName,
-                    "chat/completions",
+                    operationPath,
                     content,
                     context);
                 message.BufferResponse = false;
@@ -485,6 +489,10 @@ namespace Azure.AI.OpenAI
             chatCompletionsOptions.InternalNonAzureModelName = _isConfiguredForAzureOpenAI ? null : deploymentOrModelName;
             chatCompletionsOptions.InternalShouldStreamResponse = true;
 
+            string operationPath = chatCompletionsOptions.AzureExtensionsOptions != null
+                ? "extensions/chat/completions"
+                : "chat/completions";
+
             RequestContent content = chatCompletionsOptions.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
 
@@ -493,7 +501,7 @@ namespace Azure.AI.OpenAI
                 // Response value object takes IDisposable ownership of message
                 HttpMessage message = CreatePostRequestMessage(
                     deploymentOrModelName,
-                    "chat/completions",
+                    operationPath,
                     content,
                     context);
                 message.BufferResponse = false;

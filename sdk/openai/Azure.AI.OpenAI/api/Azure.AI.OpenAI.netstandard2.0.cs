@@ -92,6 +92,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.ChatRole Assistant { get { throw null; } }
         public static Azure.AI.OpenAI.ChatRole Function { get { throw null; } }
         public static Azure.AI.OpenAI.ChatRole System { get { throw null; } }
+        public static Azure.AI.OpenAI.ChatRole Tool { get { throw null; } }
         public static Azure.AI.OpenAI.ChatRole User { get { throw null; } }
         public bool Equals(Azure.AI.OpenAI.ChatRole other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
