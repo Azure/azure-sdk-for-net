@@ -15,6 +15,57 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class BlobsStorageResourceProvider : StorageResourceProvider
     {
+        /// <summary>
+        /// Delegate for fetching a shared key credential for a given URI.
+        /// </summary>
+        /// <param name="uri">
+        /// URI of resource to fetch credential for.
+        /// </param>
+        /// <param name="readOnly">
+        /// Whether the permission can be read-only.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for the operation.
+        /// </param>
+        public delegate Task<StorageSharedKeyCredential> GetStorageSharedKeyCredentialAsync(
+            string uri,
+            bool readOnly,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delegate for fetching a token credential for a given URI.
+        /// </summary>
+        /// <param name="uri">
+        /// URI of resource to fetch credential for.
+        /// </param>
+        /// <param name="readOnly">
+        /// Whether the permission can be read-only.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for the operation.
+        /// </param>
+        public delegate Task<TokenCredential> GetTokenCredentialAsync(
+            string uri,
+            bool readOnly,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delegate for fetching a SAS credential for a given URI.
+        /// </summary>
+        /// <param name="uri">
+        /// URI of resource to fetch credential for.
+        /// </param>
+        /// <param name="readOnly">
+        /// Whether the permission can be read-only.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for the operation.
+        /// </param>
+        public delegate Task<AzureSasCredential> GetAzureSasCredentialAsync(
+            string uri,
+            bool readOnly,
+            CancellationToken cancellationToken);
+
         private enum ResourceType
         {
             Unknown = 0,
@@ -36,9 +87,9 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override string TypeId => "blob";
 
         private readonly CredentialType _credentialType;
-        private readonly StorageSharedKeyCredential _sharedKeyCredential;
-        private readonly TokenCredential _tokenCredential;
-        private readonly AzureSasCredential _azureSasCredential;
+        private readonly GetStorageSharedKeyCredentialAsync _getStorageSharedKeyCredentialAsync;
+        private readonly GetTokenCredentialAsync _getTokenCredentialAsync;
+        private readonly GetAzureSasCredentialAsync _getAzureSasCredentialAsync;
 
         /// <summary>
         /// Default constrctor.
@@ -67,7 +118,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(StorageSharedKeyCredential credential)
         {
             _credentialType = CredentialType.SharedKey;
-            _sharedKeyCredential = credential;
+            _getStorageSharedKeyCredentialAsync = (_, _, _) => Task.FromResult(credential);
         }
 
         /// <summary>
@@ -89,7 +140,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(TokenCredential credential)
         {
             _credentialType = CredentialType.Token;
-            _tokenCredential = credential;
+            _getTokenCredentialAsync = (_, _, _) => Task.FromResult(credential);
         }
 
         /// <summary>
@@ -103,6 +154,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The credential will only be used when the provider needs to construct a client in the first place. It will
         /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
         /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// Additionally, if the given target blob resource already has a SAS token in the URI, that token will be
+        /// preferred over this credential.
         /// </para>
         /// </summary>
         /// <param name="credential">
@@ -111,7 +164,78 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(AzureSasCredential credential)
         {
             _credentialType = CredentialType.Sas;
-            _azureSasCredential = credential;
+            _getAzureSasCredentialAsync = (_, _, _) => Task.FromResult(credential);
+        }
+
+        /// <summary>
+        /// <para>
+        /// Constructs this provider to use the given delegate for acquiring a credential when making a new Blob
+        /// Storage <see cref="StorageResource"/>.
+        /// </para>
+        /// <para>
+        /// This instance will use the given <see cref="GetStorageSharedKeyCredentialAsync"/> to fetch a credential
+        /// when constructing the underlying Azure.Storage.Blobs client, e.g.
+        /// <see cref="BlockBlobClient(Uri, StorageSharedKeyCredential, BlobClientOptions)"/>.
+        /// The delegate will only be used when the provider needs to construct a client in the first place. It will
+        /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
+        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="getStorageSharedKeyCredentialAsync">
+        /// Delegate for acquiring a credential.
+        /// </param>
+        public BlobsStorageResourceProvider(GetStorageSharedKeyCredentialAsync getStorageSharedKeyCredentialAsync)
+        {
+            _credentialType = CredentialType.SharedKey;
+            _getStorageSharedKeyCredentialAsync = getStorageSharedKeyCredentialAsync;
+        }
+
+        /// <summary>
+        /// <para>
+        /// Constructs this provider to use the given delegate for acquiring a credential when making a new Blob
+        /// Storage <see cref="StorageResource"/>.
+        /// </para>
+        /// <para>
+        /// This instance will use the given <see cref="GetTokenCredentialAsync"/> to fetch a credential
+        /// when constructing the underlying Azure.Storage.Blobs client, e.g.
+        /// <see cref="BlockBlobClient(Uri, TokenCredential, BlobClientOptions)"/>.
+        /// The delegate will only be used when the provider needs to construct a client in the first place. It will
+        /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
+        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="getTokenCredentialAsync">
+        /// Delegate for acquiring a credential.
+        /// </param>
+        public BlobsStorageResourceProvider(GetTokenCredentialAsync getTokenCredentialAsync)
+        {
+            _credentialType = CredentialType.SharedKey;
+            _getTokenCredentialAsync = getTokenCredentialAsync;
+        }
+
+        /// <summary>
+        /// <para>
+        /// Constructs this provider to use the given delegate for acquiring a credential when making a new Blob
+        /// Storage <see cref="StorageResource"/>.
+        /// </para>
+        /// <para>
+        /// This instance will use the given <see cref="GetAzureSasCredentialAsync"/> to fetch a credential
+        /// when constructing the underlying Azure.Storage.Blobs client, e.g.
+        /// <see cref="BlockBlobClient(Uri, AzureSasCredential, BlobClientOptions)"/>.
+        /// The delegate will only be used when the provider needs to construct a client in the first place. It will
+        /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
+        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// Additionally, if the given target blob resource already has a SAS token in the URI, that token will be
+        /// preferred over this delegate.
+        /// </para>
+        /// </summary>
+        /// <param name="getAzureSasCredentialAsync">
+        /// Delegate for acquiring a credential.
+        /// </param>
+        public BlobsStorageResourceProvider(GetAzureSasCredentialAsync getAzureSasCredentialAsync)
+        {
+            _credentialType = CredentialType.SharedKey;
+            _getAzureSasCredentialAsync = getAzureSasCredentialAsync;
         }
 
         #region Abstract Class Implementation
