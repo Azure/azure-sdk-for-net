@@ -6,7 +6,8 @@
 
 - When binding to a `CancellationToken`, the token will no longer be signaled when in Drain Mode.
   To detect if the function app is in Drain Mode, use dependency injection to inject the
-  `IDrainModeManager`, and check the `IsDrainModeEnabled` property.
+  `IDrainModeManager`, and check the `IsDrainModeEnabled` property. Additionally, checkpointing 
+  will now occur when the function app is in Drain Mode.
 
 ## 5.4.0 (2023-06-06)
 
