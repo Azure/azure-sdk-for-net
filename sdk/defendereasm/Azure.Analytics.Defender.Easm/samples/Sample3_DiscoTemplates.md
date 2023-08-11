@@ -8,7 +8,7 @@ To create an EasmClient, you need your subscription ID, region, and some sort of
 
 ```C# Snippet:Sample3_DiscoTemplates_Create_Client
 string endpoint = "https://<region>.easm.defender.microsoft.com";
-EASMClient client = new EASMClient(new System.Uri(endpoint),
+EasmClient client = new EasmClient(new System.Uri(endpoint),
                 "<Your_Subscription_Id>",
                 "<Your_Resource_Group_Name>",
                 "<Your_Workspace_Name>",
@@ -21,8 +21,8 @@ The `DiscoveryTemplatesList` method can be used to find a discovery template usi
 
 ```C# Snippet:Sample3_DiscoTemplates_Get_Templates
 string partialName = "<partial_name>";
-Response<DiscoTemplatePageResponse> response = client.DiscoveryTemplatesList(partialName);
-foreach (DiscoTemplateResponse template in response.Value.Value)
+Response<DiscoTemplatePageResult> response = client.GetDiscoTemplates(partialName);
+foreach (DiscoTemplate template in response.Value.Value)
 {
     Console.WriteLine($"{template.Id}: {template.DisplayName}");
 }
@@ -35,8 +35,8 @@ To get more detail about a disco template, we can use the `DiscoveryTemplatesGet
 ```C# Snippet:Sample3_DiscoTemplates_Get_Template_Seeds
 string templateId = Console.ReadLine();
 
-Response<DiscoTemplateResponse> discoTemplateResponse = client.DiscoveryTemplatesGet(templateId);
-DiscoTemplateResponse discoTemplate = discoTemplateResponse.Value;
+Response<DiscoTemplate> discoTemplateResponse = client.GetDiscoTemplate(templateId);
+DiscoTemplate discoTemplate = discoTemplateResponse.Value;
 
 Console.WriteLine($"Chosen template id: {discoTemplate.Id}");
 Console.WriteLine("The following names will be used:");
@@ -52,10 +52,10 @@ The discovery template can be used to create a discovery group with using the cl
 
 ```C# Snippet:Sample3_DiscoTemplates_Run_Disco_Group
 string groupName = "Discovery Group from Template";
-DiscoGroupRequest discoGroupRequest = new DiscoGroupRequest();
+DiscoGroupData discoGroupRequest = new DiscoGroupData();
 discoGroupRequest.TemplateId = templateId;
 
-client.DiscoveryGroupsPut(groupName, discoGroupRequest);
+client.PutDiscoGroup(groupName, discoGroupRequest);
 
-client.DiscoveryGroupsRun(groupName);
+client.RunDiscoGroup(groupName);
 ```

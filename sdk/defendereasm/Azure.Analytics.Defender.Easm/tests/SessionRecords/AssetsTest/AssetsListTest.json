@@ -6,9 +6,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-9dbcfee2353b540ab995e076ec3e72c4-edc349fef95fa5fd-00",
-        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
-        "x-ms-client-request-id": "e2e10ee736d420775d380bb9bdaf6c94",
+        "traceparent": "00-9714f84395193566ff0c8b4794c60f7a-0aca409ef07a7b64-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 7.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "916d313278867f0340dc5259a7de92f2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -17,10 +17,11 @@
         "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
         "Connection": "keep-alive",
         "Content-Type": "application/json",
-        "Date": "Fri, 11 Aug 2023 17:25:02 GMT",
+        "Date": "Fri, 11 Aug 2023 19:56:57 GMT",
         "Expires": "0",
         "Pragma": "no-cache",
         "Server": "digitalfootprint-web",
+        "Set-Cookie": "df=NjA4Mjc4Y2QtNzE5Ni00MzI4LThjNjctMDM0ZDc4NzFmYTg0; Path=/; Secure; HttpOnly; SameSite=Lax",
         "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "Vary": [
@@ -31,8 +32,8 @@
         ],
         "X-Content-Type-Options": "nosniff",
         "X-Frame-Options": "DENY",
-        "x-ms-correlation-request-id": "a0f33755-9cc4-4ab8-804a-124e313fc2f3",
-        "x-ms-request-id": "e6460cfb-17e9-42d4-943f-74c3535a7bc1",
+        "x-ms-correlation-request-id": "b585b80d-8d34-485a-9283-c56d51ed0f63",
+        "x-ms-request-id": "e6331a7f-cb9e-4072-a8d5-95aa90db3d92",
         "x-ms-ui-version": "sdk",
         "X-XSS-Protection": "1; mode=block"
       },
@@ -137,7 +138,7 @@
                 {
                   "alexaRank": 5746,
                   "firstSeen": "2023-08-11T01:11:13\u002B0000",
-                  "lastSeen": "2023-08-11T16:11:20\u002B0000",
+                  "lastSeen": "2023-08-11T19:11:38\u002B0000",
                   "recent": true
                 },
                 {
@@ -201,8 +202,8 @@
                     {
                       "source": "pdns.NS",
                       "firstSeen": "2021-07-19T19:40:35\u002B0000",
-                      "lastSeen": "2023-08-10T21:39:14\u002B0000",
-                      "count": 127946
+                      "lastSeen": "2023-08-11T00:40:15\u002B0000",
+                      "count": 127949
                     }
                   ],
                   "recent": true
@@ -221,8 +222,8 @@
                     {
                       "source": "pdns.NS",
                       "firstSeen": "2021-07-19T19:40:35\u002B0000",
-                      "lastSeen": "2023-08-10T21:39:14\u002B0000",
-                      "count": 127950
+                      "lastSeen": "2023-08-11T00:40:15\u002B0000",
+                      "count": 127953
                     }
                   ],
                   "recent": true
@@ -241,8 +242,8 @@
                     {
                       "source": "pdns.NS",
                       "firstSeen": "2023-06-27T21:14:04\u002B0000",
-                      "lastSeen": "2023-08-10T21:38:09\u002B0000",
-                      "count": 1059
+                      "lastSeen": "2023-08-11T00:29:58\u002B0000",
+                      "count": 1062
                     }
                   ],
                   "recent": true
@@ -261,8 +262,8 @@
                     {
                       "source": "pdns.NS",
                       "firstSeen": "2023-05-20T15:20:10\u002B0000",
-                      "lastSeen": "2023-08-10T21:39:14\u002B0000",
-                      "count": 1970
+                      "lastSeen": "2023-08-11T00:40:15\u002B0000",
+                      "count": 1973
                     }
                   ],
                   "recent": true
@@ -286,13 +287,13 @@
                 {
                   "value": "ku-edu.mail.protection.outlook.com",
                   "firstSeen": "2023-03-22T22:07:53\u002B0000",
-                  "lastSeen": "2023-08-10T20:28:55\u002B0000",
+                  "lastSeen": "2023-08-11T00:39:15\u002B0000",
                   "sources": [
                     {
                       "source": "pdns.MX",
                       "firstSeen": "2023-03-22T22:07:53\u002B0000",
-                      "lastSeen": "2023-08-10T20:28:55\u002B0000",
-                      "count": 126706
+                      "lastSeen": "2023-08-11T00:39:15\u002B0000",
+                      "count": 126709
                     }
                   ],
                   "recent": true
@@ -581,7 +582,7 @@
                   "nameServer": "ns1.ku.edu",
                   "email": "itcsc@ku.edu",
                   "firstSeen": "2017-11-01T19:32:20\u002B0000",
-                  "lastSeen": "2023-08-10T21:38:14\u002B0000",
+                  "lastSeen": "2023-08-11T00:32:44\u002B0000",
                   "serialNumber": 703589015,
                   "recent": true
                 }
@@ -592,8 +593,8 @@
                 {
                   "source": "alexa",
                   "firstSeen": "2018-10-08T17:00:28\u002B0000",
-                  "lastSeen": "2023-08-11T16:11:20\u002B0000",
-                  "count": 262537
+                  "lastSeen": "2023-08-11T19:11:38\u002B0000",
+                  "count": 262540
                 },
                 {
                   "source": "whois",
@@ -604,8 +605,8 @@
                 {
                   "source": "pdns",
                   "firstSeen": "2023-03-22T12:37:35\u002B0000",
-                  "lastSeen": "2023-08-10T21:39:14\u002B0000",
-                  "count": 1059880
+                  "lastSeen": "2023-08-11T00:40:15\u002B0000",
+                  "count": 1059904
                 },
                 {
                   "source": "minicrawl",
@@ -615,8 +616,8 @@
                 }
               ],
               "firstSeen": "2023-03-17T22:53:30\u002B0000",
-              "lastSeen": "2023-08-11T16:11:20\u002B0000",
-              "count": 1326153,
+              "lastSeen": "2023-08-11T19:11:38\u002B0000",
+              "count": 1326180,
               "parkedDomain": [
                 {
                   "value": false,
@@ -824,7 +825,7 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT": "Sanitized",
-    "RandomSeed": "1440032630",
+    "RandomSeed": "8594451",
     "RESOURCEGROUPNAME": "Sanitized",
     "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
     "WORKSPACENAME": "Sanitized"

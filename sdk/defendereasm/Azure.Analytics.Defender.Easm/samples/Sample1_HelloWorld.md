@@ -8,7 +8,7 @@ To create an EasmClient, you need your subscription ID, region, and some sort of
 
 ```C# Snippet:Sample1_Create_Client
 string endpoint = "https://<region>.easm.defender.microsoft.com";
-EASMClient client = new EASMClient(new System.Uri(endpoint),
+EasmClient client = new EasmClient(new System.Uri(endpoint),
                 "<Your_Subscription_Id>",
                 "<Your_Resource_Group_Name>",
                 "<Your_Workspace_Name>",
@@ -22,8 +22,8 @@ You can call the client's `AssetsList` method to view your assets.
 <!-- please refer to <https://github.com/Azure/azure-sdk-for-net/main/sdk/template/Azure.Template/samples/Sample1_HelloWorld.md> to write sample readme file. -->
 
 ```C# Snippet:Sample1_View_Assets
-Response<AssetPageResponse> response = client.AssetsList();
-foreach (AssetResponse asset in response.Value.Value)
+Response<AssetPageResult> response = client.GetAssetResources();
+foreach (AssetResource asset in response.Value.Value)
 {
     Console.WriteLine($"{asset.Kind}: {asset.Name}");
 }

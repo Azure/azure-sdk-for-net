@@ -8,7 +8,7 @@ To create an EasmClient, you need your subscription ID, region, and some sort of
 
 ```C# Snippet:Sample5_ExternalIds_Create_Client
 string endpoint = "https://<region>.easm.defender.microsoft.com";
-EASMClient client = new EASMClient(new System.Uri(endpoint),
+EasmClient client = new EasmClient(new System.Uri(endpoint),
                 "<Your_Subscription_Id>",
                 "<Your_Resource_Group_Name>",
                 "<Your_Workspace_Name>",
@@ -43,10 +43,10 @@ List<String> externalIds = new List<String>();
 mapping.ForEach(asset =>
     {
         externalIds.Add(asset["external_id"]);
-        AssetUpdateRequest assetUpdateRequest = new AssetUpdateRequest();
+        AssetUpdateData assetUpdateRequest = new AssetUpdateData();
         assetUpdateRequest.ExternalId = asset["external_id"];
         string filter = $"kind = {asset["kind"]} AND name = {asset["name"]}";
-        Response<TaskResponse> taskResponse = client.AssetsUpdate(filter, assetUpdateRequest);
+        Response<TaskResource> taskResponse = client.UpdateAssets(filter, assetUpdateRequest);
         updateIds.Add(taskResponse.Value.Id);
     });
 ```
@@ -58,7 +58,7 @@ Using the client, we can view the progress of each update using the `TasksGet` m
 ```C# Snippet:Sample5_ExternalIds_View_Update_Progress
 updateIds.ForEach(id =>
 {
-    Response<TaskResponse> taskResponse = client.TasksGet(id);
+    Response<TaskResource> taskResponse = client.GetTask(id);
     Console.WriteLine($"{taskResponse.Value.Id}: {taskResponse.Value.State}");
 });
 ```
@@ -68,8 +68,8 @@ The updates can be viewed using the `AssetsList` method by creating a filter tha
 ```C# Snippet:Sample5_ExternalIds_View_Updates
 string assetFilter = $"External ID in (\"{string.Join("\", \"", externalIds)}\")";
 
-Response<AssetPageResponse> assetPageResponse = client.AssetsList(assetFilter);
-foreach (AssetResponse assetResponse in assetPageResponse.Value.Value)
+Response<AssetPageResult> assetPageResponse = client.GetAssetResources(assetFilter);
+foreach (AssetResource assetResponse in assetPageResponse.Value.Value)
 {
     Console.WriteLine($"{assetResponse.ExternalId}, {assetResponse.Name}");
 }
