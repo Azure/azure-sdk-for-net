@@ -7,13 +7,13 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     [CodeGenModel("AzureBlobContentSource")]
-    public partial class BlobContentSource : ContentSource
+    public partial class BlobContentSource : DocumentContentSource
     {
         /// <summary> Initializes a new instance of BlobContentSource. </summary>
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerUri"/> is null. </exception>
         public BlobContentSource(Uri containerUri)
-            : base(ContentSourceKind.Blob)
+            : base(DocumentContentSourceKind.Blob)
         {
             Argument.AssertNotNull(containerUri, nameof(containerUri));
 
@@ -24,7 +24,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="containerUri"> Azure Blob Storage container URL. </param>
         /// <param name="prefix"> Blob name prefix. </param>
         internal BlobContentSource(Uri containerUri, string prefix)
-            : base(ContentSourceKind.Blob)
+            : base(DocumentContentSourceKind.Blob)
         {
             ContainerUri = containerUri;
             Prefix = prefix;

@@ -96,9 +96,35 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertSingleDispatchLogs(host);
+        }
+
+        [Test]
+        public async Task EventHub_SingleDispatch_Dispose()
+        {
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+            var (_, host) = BuildHost<EventHubTestSingleDispatchJobs_Dispose>(ConfigureTestEventHub);
+
+            bool result = _eventWait.WaitOne(Timeout);
+            Assert.True(result);
+            host.Dispose();
+        }
+
+        [Test]
+        public async Task EventHub_SingleDispatch_StopWithoutDrain()
+        {
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+            var (_, host) = BuildHost<EventHubTestSingleDispatchJobs_Dispose>(ConfigureTestEventHub);
+
+            bool result = _eventWait.WaitOne(Timeout);
+            Assert.True(result);
+            await host.StopAsync();
         }
 
         [Test]
@@ -135,6 +161,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertSingleDispatchLogs(host);
@@ -308,6 +336,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertMultipleDispatchLogs(host);
@@ -324,6 +354,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertMultipleDispatchLogs(host);
@@ -359,57 +391,35 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 bool result = _eventWait.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertMultipleDispatchLogsMinBatch(host);
         }
 
-        private static void AssertMultipleDispatchLogsMinBatch(IHost host)
+        [Test]
+        public async Task EventHub_MultipleDispatch_Dispose()
         {
-            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
-                .GetAllLogMessages();
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+            var (_, host) = BuildHost<EventHubTestMultipleDispatchJobs_Dispose>();
 
-            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("Trigger Details:")
-                && x.FormattedMessage.Contains("Offset:")).Any());
+            bool result = _eventWait.WaitOne(Timeout);
+            Assert.True(result);
+            host.Dispose();
+       }
 
-            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("OpenAsync")).Any());
-
-            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("CheckpointAsync")
-                && x.FormattedMessage.Contains("lease")
-                && x.FormattedMessage.Contains("offset")
-                && x.FormattedMessage.Contains("sequenceNumber")).Any());
-
-            // Events are being sent in the EventHubTestMultipleDispatchMinBatchSizeJobs
-            // class directly for this test
-
-            AssertAzureSdkLogs(logMessages);
-        }
-
-        private static void AssertMultipleDispatchLogs(IHost host)
+        [Test]
+        public async Task EventHub_MultipleDispatch_StopWithoutDrain()
         {
-            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
-                .GetAllLogMessages();
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+            var (_, host) = BuildHost<EventHubTestMultipleDispatchJobs_Dispose>();
 
-            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("Trigger Details:")
-                && x.FormattedMessage.Contains("Offset:")).Any());
-
-            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("OpenAsync")).Any());
-
-            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("CheckpointAsync")
-                && x.FormattedMessage.Contains("lease")
-                && x.FormattedMessage.Contains("offset")
-                && x.FormattedMessage.Contains("sequenceNumber")).Any());
-
-            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
-                && x.FormattedMessage.Contains("Sending events to EventHub")).Any());
-
-            AssertAzureSdkLogs(logMessages);
+            bool result = _eventWait.WaitOne(Timeout);
+            Assert.True(result);
+            await host.StopAsync();
         }
 
         [Test]
@@ -544,6 +554,62 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
+        private static void AssertMultipleDispatchLogsMinBatch(IHost host)
+        {
+            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
+                .GetAllLogMessages();
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("Trigger Details:")
+                && x.FormattedMessage.Contains("Offset:")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("OpenAsync")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("CheckpointAsync")
+                && x.FormattedMessage.Contains("lease")
+                && x.FormattedMessage.Contains("offset")
+                && x.FormattedMessage.Contains("sequenceNumber")).Any());
+
+            // Events are being sent in the EventHubTestMultipleDispatchMinBatchSizeJobs
+            // class directly for this test
+
+            AssertAzureSdkLogs(logMessages);
+        }
+
+        private static void AssertMultipleDispatchLogs(IHost host)
+        {
+            IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider()
+                .GetAllLogMessages();
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("Trigger Details:")
+                && x.FormattedMessage.Contains("Offset:")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("OpenAsync")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("CheckpointAsync")
+                && x.FormattedMessage.Contains("lease")
+                && x.FormattedMessage.Contains("offset")
+                && x.FormattedMessage.Contains("sequenceNumber")).Any());
+
+            Assert.True(logMessages.Where(x => !string.IsNullOrEmpty(x.FormattedMessage)
+                && x.FormattedMessage.Contains("Sending events to EventHub")).Any());
+
+            AssertAzureSdkLogs(logMessages);
+        }
+
+        private static async Task StopWithDrainAsync(IHost host)
+        {
+            // Enable drain mode so checkpointing occurs when stopping
+            var drainModeManager = host.Services.GetService<IDrainModeManager>();
+            await drainModeManager.EnableDrainModeAsync(CancellationToken.None);
+            await host.StopAsync();
+        }
+
         private static void AssertAzureSdkLogs(IEnumerable<LogMessage> logMessages)
         {
             Assert.True(logMessages.Any(x => x.Category.StartsWith("Azure.")));
@@ -575,6 +641,28 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.True(triggerPartitionContext.IsCheckpointingAfterInvocation);
 
                 _eventWait.Set();
+            }
+        }
+
+        public class EventHubTestSingleDispatchJobs_Dispose
+        {
+            public static async Task SendEvent_TestHub([EventHubTrigger(TestHubName, Connection = TestHubName)] string evt, CancellationToken cancellationToken)
+            {
+                _eventWait.Set();
+                // wait a small amount of time for the host to call dispose
+                await Task.Delay(3000, CancellationToken.None);
+                Assert.IsTrue(cancellationToken.IsCancellationRequested);
+            }
+        }
+
+        public class EventHubTestMultipleDispatchJobs_Dispose
+        {
+            public static async Task SendEvent_TestHub([EventHubTrigger(TestHubName, Connection = TestHubName)] string[] evt, CancellationToken cancellationToken)
+            {
+                _eventWait.Set();
+                // wait a small amount of time for the host to call dispose
+                await Task.Delay(3000, CancellationToken.None);
+                Assert.IsTrue(cancellationToken.IsCancellationRequested);
             }
         }
 

@@ -174,8 +174,8 @@
     All should have PrivateAssets="All" set so they don't become package dependencies
   -->
   <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230804.1" PrivateAssets="All" />
-    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230810.1" PrivateAssets="All" />
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230811.1" PrivateAssets="All" />
+    <PackageReference Update="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20230131.1" PrivateAssets="All" />
     <PackageReference Update="coverlet.collector" Version="3.2.0" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" PrivateAssets="All" />
     <PackageReference Update="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="3.3.2" PrivateAssets="All" />
@@ -213,6 +213,7 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.13.1" />
     <PackageReference Update="Azure.Storage.Files.DataLake" Version="12.8.0" />
     <PackageReference Update="BenchmarkDotNet" Version="0.13.4" />
+    <PackageReference Update="BenchmarkDotNet.Diagnostics.Windows" Version="0.13.4" />
     <PackageReference Update="Castle.Core" Version="5.1.0" />
     <PackageReference Update="CommandLineParser" Version="2.8.0" />
     <PackageReference Update="FluentAssertions" Version="5.10.3" />
