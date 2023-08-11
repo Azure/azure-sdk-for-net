@@ -14,20 +14,26 @@ namespace Azure.Core.Tests.PatchModels
 #pragma warning disable AZC0020 // Avoid using banned types in libraries
         private readonly MutableJsonElement _element;
 
-        /// <summary> Public constructor. </summary>
+        /// <summary>
+        /// Public constructor.
+        /// </summary>
         public SimplePatchModel()
         {
             _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
         }
 
-        /// <summary> Serialization constructor. </summary>
+        /// <summary>
+        /// Serialization constructor.
+        /// </summary>
         /// <param name="element"></param>
         internal SimplePatchModel(MutableJsonElement element)
         {
             _element = element;
         }
 
-        /// <summary> Optional string property corresponding to JSON """{"name": "abc"}""". </summary>
+        /// <summary>
+        /// Optional string property corresponding to JSON """{"name": "abc"}""".
+        /// </summary>
         public string Name
         {
             get
@@ -41,7 +47,9 @@ namespace Azure.Core.Tests.PatchModels
             set => _element.SetProperty("name", value);
         }
 
-        /// <summary> Optional int property corresponding to JSON """{"count": 1}""". </summary>
+        /// <summary>
+        /// Optional int property corresponding to JSON """{"count": 1}""".
+        /// </summary>
         public int? Count
         {
             get
@@ -55,7 +63,9 @@ namespace Azure.Core.Tests.PatchModels
             set => _element.SetProperty("count", value);
         }
 
-        /// <summary> Optional DateTimeOffset property corresponding to JSON """{"updatedOn": "2020-06-25T17:44:37.6830000Z"}""". </summary>
+        /// <summary>
+        /// Optional DateTimeOffset property corresponding to JSON """{"updatedOn": "2020-06-25T17:44:37.6830000Z"}""".
+        /// </summary>
         public DateTimeOffset? UpdatedOn
         {
             get

@@ -6,7 +6,7 @@ using Azure.Core.Json;
 namespace Azure.Core.Tests.PatchModels
 {
     /// <summary>
-    /// This model illustrates optional read/write "primitive" properties.
+    /// This model illustrates a patch model with properties that are nested models.
     /// </summary>
     public partial class ParentPatchModel
     {
@@ -77,6 +77,14 @@ namespace Azure.Core.Tests.PatchModels
 
                 return _child;
             }
+
+            // Note: a child patch model isn't settable on the parent.
+            // This is because its _element property needs to have the
+            // same root MutableJsonDocument as the parent.
+            //
+            // It's unclear how we would plug it in after the fact if we wanted
+            // to make an instance of the child model something that could be
+            // used in multiple places.
         }
 #pragma warning restore AZC0020 // Avoid using banned types in libraries
     }

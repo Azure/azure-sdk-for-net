@@ -13,10 +13,12 @@ namespace Azure.Core.Tests.PatchModels
 #pragma warning disable AZC0020 // Avoid using banned types in libraries
         private readonly MutableJsonElement _element;
 
-        // A child patch model doesn't have a public constructor.
+        // Note: A child patch model doesn't have a public constructor.
         //
-        // TODO: we will need to revisit this later when we find child models
-        // that are used in a standalone way as well.
+        // TODO: we may need to revisit this later when we find child models
+        // that are used in a standalone way as well.  Although it may be
+        // sufficient to make a nested model not settable on the parent to
+        // achieve the desired linking behavior.
 
         /// <summary> Serialization constructor. </summary>
         /// <param name="element"></param>
