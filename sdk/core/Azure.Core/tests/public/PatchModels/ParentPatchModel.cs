@@ -14,20 +14,31 @@ namespace Azure.Core.Tests.PatchModels
 #pragma warning disable AZC0020 // Avoid using banned types in libraries
         private readonly MutableJsonElement _element;
 
-        /// <summary> Public constructor. </summary>
+        /// <summary>
+        /// Public constructor.
+        /// </summary>
         public ParentPatchModel()
         {
             _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
         }
 
-        /// <summary> Serialization constructor. </summary>
+        /// <summary>
+        /// Serialization constructor.
+        /// </summary>
         /// <param name="element"></param>
         internal ParentPatchModel(MutableJsonElement element)
         {
             _element = element;
+
+            if (_element.TryGetProperty("child", out MutableJsonElement childElement))
+            {
+                _child = new ChildPatchModel(childElement);
+            }
         }
 
-        /// <summary> Optional string property corresponding to JSON """{"id": "abc"}""". </summary>
+        /// <summary>
+        /// Optional string property corresponding to JSON """{"id": "abc"}""".
+        /// </summary>
         public string Id
         {
             get
@@ -43,8 +54,7 @@ namespace Azure.Core.Tests.PatchModels
 
         private ChildPatchModel _child;
         /// <summary>
-        /// Optional ChildPatchModel property corresponding to JSON
-        /// """{"child": {"a":"aa", "b": "bb"}""".
+        /// Optional ChildPatchModel property corresponding to JSON """{"child": {"a":"aa", "b": "bb"}}""".
         /// </summary>
         public ChildPatchModel Child
         {
@@ -52,8 +62,18 @@ namespace Azure.Core.Tests.PatchModels
             {
                 if (_child == null)
                 {
-                    _element.SetProperty("passFailCriteria", new { });
-                    _child = new ChildPatchModel(_element.GetProperty("child"));
+                    // This means we came in through the serialization constructor
+                    if (_element.TryGetProperty("child", out MutableJsonElement childElement))
+                    {
+                        _child = new ChildPatchModel(childElement);
+                    }
+                    else
+                    {
+                        // We came in through the public constructor and don't have a child element
+                        // Need to create that.
+                        _element.SetProperty("child", new {});
+                        _child = new ChildPatchModel(_element.GetProperty("child"));
+                    }
                 }
 
                 return _child;

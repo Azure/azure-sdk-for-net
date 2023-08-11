@@ -13,7 +13,9 @@ namespace Azure.Core.Tests.PatchModels
 #pragma warning disable AZC0020 // Avoid using banned types in libraries
         private readonly MutableJsonElement _element;
 
-        /// <summary> Public constructor. </summary>
+        /// <summary>
+        /// Public constructor.
+        /// </summary>
         public ChildPatchModel()
         {
             _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
@@ -26,7 +28,9 @@ namespace Azure.Core.Tests.PatchModels
             _element = element;
         }
 
-        /// <summary> Optional string property corresponding to JSON """{"a": "aaa"}""". </summary>
+        /// <summary>
+        /// Optional string property corresponding to JSON """{"a": "aaa"}""".
+        /// </summary>
         public string A
         {
             get
@@ -40,7 +44,9 @@ namespace Azure.Core.Tests.PatchModels
             set => _element.SetProperty("a", value);
         }
 
-        /// <summary> Optional string property corresponding to JSON """{"b": "bbb"}""". </summary>
+        /// <summary>
+        /// Optional string property corresponding to JSON """{"b": "bbb"}""".
+        /// </summary>
         public string B
         {
             get

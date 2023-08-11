@@ -15,7 +15,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanPatchIntProperty()
         {
-            SimplePatchModel model = new SimplePatchModel();
+            SimplePatchModel model = new();
             model.Count = 2;
 
             ValidatePatch("""{"count":2}""", model);
@@ -24,7 +24,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanPatchStringProperty()
         {
-            SimplePatchModel model = new SimplePatchModel();
+            SimplePatchModel model = new();
             model.Name = "abc";
 
             ValidatePatch("""{"name":"abc"}""", model);
@@ -35,7 +35,7 @@ namespace Azure.Core.Tests.Public
         {
             DateTimeOffset updateTime = DateTimeOffset.Now;
 
-            SimplePatchModel model = new SimplePatchModel();
+            SimplePatchModel model = new();
             model.UpdatedOn = updateTime;
 
             ValidatePatch($"{{\"updatedOn\":\"{updateTime:O}\"}}", model);
@@ -60,6 +60,36 @@ namespace Azure.Core.Tests.Public
             model.Count = 2;
 
             ValidatePatch("""{"count":2, "name":"xyz"}""", model);
+        }
+
+        [Test]
+        public void CanPatchChildModel()
+        {
+            ParentPatchModel model = new();
+
+            model.Child.B = "bb";
+            model.Child.A = "aa";
+
+            ValidatePatch("""{"child": {"a": "aa", "b": "bb"}}""", model);
+        }
+
+        [Test]
+        public void CanPatchChildModelOneProperty()
+        {
+            ParentPatchModel model = new();
+
+            model.Child.A = "aa";
+
+            ValidatePatch("""{"child": {"a": "aa"}}""", model);
+        }
+
+        [Test]
+        public void CanPatchChildModelAssignNew()
+        {
+            ParentPatchModel model = new();
+            model.Child = new() { A = "aa" };
+
+            ValidatePatch("""{"child": {"a": "aa"}}""", model);
         }
 
         #region Helpers
