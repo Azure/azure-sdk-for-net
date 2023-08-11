@@ -3,7 +3,7 @@
 ## 1.10.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added `BrowserCustomizations` property to `InteractiveBrowserCredential` to enable web view customization for interactive authentication.
+- Added `BrowserCustomization` property to `InteractiveBrowserCredential` to enable web view customization for interactive authentication.
 
 ### Breaking Changes
 
