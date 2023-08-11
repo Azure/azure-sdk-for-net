@@ -95,9 +95,9 @@ namespace Azure.Storage.DataMovement
     {
         public LocalFilesStorageResourceProvider() { }
         protected internal override string TypeId { get { throw null; } }
-        protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties props, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         public Azure.Storage.DataMovement.StorageResource FromPath(string path) { throw null; }
-        protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.DataTransferProperties props, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class LocalFileStorageResource : Azure.Storage.DataMovement.StorageResourceItem
     {
@@ -187,8 +187,8 @@ namespace Azure.Storage.DataMovement
     {
         protected StorageResourceProvider() { }
         protected internal abstract string TypeId { get; }
-        protected internal abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties props, System.Threading.CancellationToken cancellationToken);
-        protected internal abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.DataTransferProperties props, System.Threading.CancellationToken cancellationToken);
+        protected internal abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken);
+        protected internal abstract System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken);
     }
     public partial class StorageResourceReadStreamResult
     {
