@@ -3,29 +3,29 @@
 trigger:
   branches:
     include:
-    - main
-    - hotfix/*
-    - release/*
+      - main
+      - hotfix/*
+      - release/*
   paths:
     include:
-    - sdk/easm/
+      - sdk/defendereasm/
 
 pr:
   branches:
     include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
+      - main
+      - feature/*
+      - hotfix/*
+      - release/*
   paths:
     include:
-    - sdk/easm/
+      - sdk/defendereasm/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: easm
+    ServiceDirectory: defendereasm
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Analytics.Defender.Easm
-      safeName: AzureAnalyticsDefenderEasm
+      - name: Azure.Analytics.Defender.Easm
+        safeName: AzureAnalyticsDefenderEasm
