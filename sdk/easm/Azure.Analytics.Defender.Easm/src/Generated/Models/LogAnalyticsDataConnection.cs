@@ -44,6 +44,6 @@ namespace Azure.Analytics.Defender.Easm.Models
         }
 
         /// <summary> properties. </summary>
-        public LogAnalyticsDataConnectionProperties Properties { get; }
+        public LogAnalyticsDataConnectionProperties Properties { get; set; }
     }
 }

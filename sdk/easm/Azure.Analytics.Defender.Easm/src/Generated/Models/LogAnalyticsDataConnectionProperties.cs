@@ -11,22 +11,22 @@ namespace Azure.Analytics.Defender.Easm.Models
     public partial class LogAnalyticsDataConnectionProperties : DataConnectionProperties
     {
         /// <summary> Initializes a new instance of LogAnalyticsDataConnectionProperties. </summary>
-        internal LogAnalyticsDataConnectionProperties()
+        public LogAnalyticsDataConnectionProperties()
         {
         }
 
         /// <summary> Initializes a new instance of LogAnalyticsDataConnectionProperties. </summary>
         /// <param name="apiKey"> log analytics api key. </param>
         /// <param name="workspaceId"> log analytics workspace id. </param>
-        internal LogAnalyticsDataConnectionProperties(string apiKey, string workspaceId)
+        public LogAnalyticsDataConnectionProperties(string apiKey, string workspaceId)
         {
             ApiKey = apiKey;
             WorkspaceId = workspaceId;
         }
 
         /// <summary> log analytics api key. </summary>
-        public string ApiKey { get; }
+        public string ApiKey { get; set; }
         /// <summary> log analytics workspace id. </summary>
-        public string WorkspaceId { get; }
+        public string WorkspaceId { get; set; }
     }
 }

@@ -1,0 +1,79 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/dataConnections/sample-dc?api-version=2023-03-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "158",
+        "Content-Type": "application/json",
+        "traceparent": "00-9502bcefef20c9b063f7ed139b0132f2-b452ee97b7eac0bf-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "1fe12f506217ec2c5f4c58d90edaec0c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "kind": "azureDataExplorer",
+        "properties": {
+          "clusterName": "sample-cluster",
+          "region": "eastus",
+          "databaseName": "sample-db"
+        },
+        "content": "assets",
+        "frequency": "daily"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:25:09 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "144d1f7f-fa7f-4fdc-a5c9-2699564341ea",
+        "x-ms-request-id": "1d8c936b-3a71-421e-9262-46a0d1358396",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "sample-dc",
+        "name": "sample-dc",
+        "displayName": "sample-dc",
+        "kind": "azureDataExplorer",
+        "content": "assets",
+        "properties": {
+          "clusterName": "sample-cluster",
+          "region": "eastus",
+          "databaseName": "sample-db"
+        },
+        "createdDate": "2023-08-03T16:07:21\u002B0000",
+        "frequency": "daily",
+        "frequencyOffset": 0,
+        "updatedDate": "2023-08-11T17:25:09\u002B0000",
+        "userUpdatedAt": "2023-08-11T17:25:09\u002B0000",
+        "active": true,
+        "inactiveMessage": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "609895789",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}
