@@ -13,6 +13,9 @@ namespace Azure.Core.Tests.PatchModels
 #pragma warning disable AZC0020 // Avoid using banned types in libraries
         private readonly MutableJsonElement _element;
 
+        // Make the element available to the parent
+        internal MutableJsonElement Element => _element;
+
         /// <summary>
         /// Public constructor.
         /// </summary>

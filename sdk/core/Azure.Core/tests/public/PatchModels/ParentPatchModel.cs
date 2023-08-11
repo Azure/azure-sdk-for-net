@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using Azure.Core.Json;
 
 namespace Azure.Core.Tests.PatchModels
@@ -71,7 +70,7 @@ namespace Azure.Core.Tests.PatchModels
                     {
                         // We came in through the public constructor and don't have a child element
                         // Need to create that.
-                        _element.SetProperty("child", new {});
+                        _element.SetProperty("child", new { });
                         _child = new ChildPatchModel(_element.GetProperty("child"));
                     }
                 }
@@ -79,9 +78,12 @@ namespace Azure.Core.Tests.PatchModels
                 return _child;
             }
 
-            // TODO: need to test what happens if caller sets this, how the interaction
-            // across MJEs in the MJD works.
-            set { _child = value; }
+            set
+            {
+                // Wire the child's element into the parent's element.
+                _element.SetProperty("child", value.Element);
+                _child = value;
+            }
         }
 #pragma warning restore AZC0020 // Avoid using banned types in libraries
     }
