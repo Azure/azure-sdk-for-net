@@ -14,7 +14,8 @@
       2. SecurityAssessmentMetadata name was changed to SecurityAssessmentMetadataResponse
       3. SecurityAssessment name was changed to SecurityAssessmentResponse
       4. Parameters order was changed for UpdateResourceGroupLevelStateToResolve, UpdateResourceGroupLevelStateToDismiss, UpdateResourceGroupLevelStateToActivate, GetResourceGroupLevel
-      5. Parameters order for was changed SecurityContact</PackageReleaseNotes>
+      5. Parameters order for was changed SecurityContact
+		</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -42,77 +43,77 @@ namespace SecurityCenter.Tests
         #region Tasks
 
         [Fact]
-        public void SecurityTaskRecommendations_List()
+        public async Task SecurityTaskRecommendations_List()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var recommendations = securityCenterClient.Tasks.List();
+                var recommendations = await securityCenterClient.Tasks.ListAsync();
                 ValidateTasks(recommendations);
             }
         }
 
         [Fact]
-        public void SecurityTaskRecommendations_GetResourceGroupLevelTask()
+        public async Task SecurityTaskRecommendations_GetResourceGroupLevelTask()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var recommendation = securityCenterClient.Tasks.GetResourceGroupLevelTask("myService1", "dcfb6365-799e-5ed4-f344-d86a0a4c2992");
+                var recommendation = await securityCenterClient.Tasks.GetResourceGroupLevelTaskAsync("myService1", "f709e910-f52f-2cf8-81af-d5679b7f4d75");
                 ValidateTask(recommendation);
             }
         }
 
         [Fact]
-        public void SecurityTaskRecommendations_GetSubscriptionLevelTask()
+        public async Task SecurityTaskRecommendations_GetSubscriptionLevelTask()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var recommendation = securityCenterClient.Tasks.GetSubscriptionLevelTask("08357a1e-c534-756f-cbb9-7b45e73f3137");
+                var recommendation = await securityCenterClient.Tasks.GetSubscriptionLevelTaskAsync("0456e493-0a77-4dea-b3e5-d0c7daee4ee9");
                 ValidateTask(recommendation);
             }
         }
 
         [Fact]
-        public void SecurityTaskRecommendations_ListByHomeRegion()
+        public async Task SecurityTaskRecommendations_ListByHomeRegion()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var recommendations = securityCenterClient.Tasks.ListByHomeRegion();
+                var recommendations = await securityCenterClient.Tasks.ListByHomeRegionAsync();
                 ValidateTasks(recommendations);
             }
         }
 
         [Fact]
-        public void SecurityTaskRecommendations_ListByResourceGroup()
+        public async Task SecurityTaskRecommendations_ListByResourceGroup()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var recommendations = securityCenterClient.Tasks.ListByResourceGroup("myService1");
+                var recommendations = await securityCenterClient.Tasks.ListByResourceGroupAsync("myService1");
                 ValidateTasks(recommendations);
             }
         }
 
         [Fact]
-        public void SecurityTaskRecommendations_UpdateResourceGroupLevelTask()
+        public async Task SecurityTaskRecommendations_UpdateResourceGroupLevelTask()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.Tasks.UpdateResourceGroupLevelTaskState("myService1", "dcfb6365-799e-5ed4-f344-d86a0a4c2992", "Dismiss");
+                await securityCenterClient.Tasks.UpdateResourceGroupLevelTaskStateAsync("myService1", "f709e910-f52f-2cf8-81af-d5679b7f4d75", TaskUpdateActionType.Dismiss);
             }
         }
 
         [Fact]
-        public void SecurityTaskRecommendations_UpdateSubscriptionLevelTask()
+        public async Task SecurityTaskRecommendations_UpdateSubscriptionLevelTask()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.Tasks.UpdateSubscriptionLevelTaskState("08357a1e-c534-756f-cbb9-7b45e73f3137", "Dismiss");
+                await securityCenterClient.Tasks.UpdateSubscriptionLevelTaskStateAsync("0456e493-0a77-4dea-b3e5-d0c7daee4ee9", TaskUpdateActionType.Dismiss);
             }
         }
 

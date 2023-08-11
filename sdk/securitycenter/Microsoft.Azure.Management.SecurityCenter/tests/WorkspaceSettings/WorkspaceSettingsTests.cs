@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -43,29 +44,29 @@ namespace SecurityCenter.Tests
         private static string SubscriptionId = "487bb485-b5b0-471e-9c0d-10717612f869";
 
         [Fact]
-        public void WorkspaceSettings_List()
+        public async Task WorkspaceSettings_List()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var workspaceSettings = securityCenterClient.WorkspaceSettings.List();
+                var workspaceSettings = await securityCenterClient.WorkspaceSettings.ListAsync();
                 ValidateWorkspaceSettings(workspaceSettings);
             }
         }
 
         [Fact]
-        public void WorkspaceSettings_Get()
+        public async Task WorkspaceSettings_Get()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var workspaceSettings = securityCenterClient.WorkspaceSettings.Get("default");
+                var workspaceSettings = await securityCenterClient.WorkspaceSettings.GetAsync("default");
                 ValidateWorkspaceSettings(workspaceSettings);
             }
         }
 
         [Fact]
-        public void WorkspaceSettings_Create()
+        public async Task WorkspaceSettings_Create()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
@@ -73,13 +74,13 @@ namespace SecurityCenter.Tests
 
                 var workspaceId = $"/subscriptions/{SubscriptionId}/resourceGroups/mainWS/providers/Microsoft.OperationalInsights/workspaces/securityUserWs";
 
-                var workspaceSettings = securityCenterClient.WorkspaceSettings.Create("default", workspaceId, $"/subscriptions/{SubscriptionId}");
+                var workspaceSettings = await securityCenterClient.WorkspaceSettings.CreateAsync("default", workspaceId, $"/subscriptions/{SubscriptionId}");
                 ValidateWorkspaceSettings(workspaceSettings);
             }
         }
 
         [Fact]
-        public void WorkspaceSettings_Update()
+        public async Task WorkspaceSettings_Update()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
@@ -87,7 +88,7 @@ namespace SecurityCenter.Tests
 
                 var workspaceId = $"/subscriptions/{SubscriptionId}/resourceGroups/mainWS/providers/Microsoft.OperationalInsights/workspaces/securityUserWs";
 
-                var workspaceSettings = securityCenterClient.WorkspaceSettings.Update("default", workspaceId, $"/subscriptions/{SubscriptionId}");
+                var workspaceSettings = await securityCenterClient.WorkspaceSettings.UpdateAsync("default", workspaceId, $"/subscriptions/{SubscriptionId}");
                 ValidateWorkspaceSettings(workspaceSettings);
             }
         }

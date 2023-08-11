@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -42,34 +43,34 @@ namespace SecurityCenter.Tests
         #region Auto Provisioning Settings Tests
 
         [Fact]
-        public void AutoProvisioningSettings_List()
+        public async Task AutoProvisioningSettings_List()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var autoProvisioningSettings = securityCenterClient.AutoProvisioningSettings.List();
+                var autoProvisioningSettings = await securityCenterClient.AutoProvisioningSettings.ListAsync();
                 ValidateAutoProvisioningSettings(autoProvisioningSettings);
             }
         }
 
         [Fact]
-        public void AutoProvisioningSettings_Get()
+        public async Task AutoProvisioningSettings_Get()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var autoProvisioningSetting = securityCenterClient.AutoProvisioningSettings.Get("default");
+                var autoProvisioningSetting = await securityCenterClient.AutoProvisioningSettings.GetAsync("default");
                 ValidateAutoProvisioningSetting(autoProvisioningSetting);
             }
         }
 
         [Fact]
-        public void AutoProvisioningSettings_Create()
+        public async Task AutoProvisioningSettings_Create()
         {
             using (var context = MockContext.Start(this.GetType()))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var autoProvisioningSetting = securityCenterClient.AutoProvisioningSettings.Create("default", "On");
+                var autoProvisioningSetting = await securityCenterClient.AutoProvisioningSettings.CreateAsync("default", AutoProvision.On);
                 ValidateAutoProvisioningSetting(autoProvisioningSetting);
             }
         }
