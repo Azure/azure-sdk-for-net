@@ -33,7 +33,7 @@ namespace Azure.Core.Tests.Public
         [Test]
         public void CanPatchDateTimeProperty()
         {
-            DateTimeOffset updateTime = DateTimeOffset.Now;
+            DateTimeOffset updateTime = DateTimeOffset.Parse("2023-10-19T10:19:10.0190001Z");
 
             SimplePatchModel model = new();
             model.UpdatedOn = updateTime;
