@@ -24,13 +24,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="readOnly">
         /// Whether the permission can be read-only.
         /// </param>
-        /// <param name="cancellationToken">
-        /// Cancellation token for the operation.
-        /// </param>
-        public delegate Task<StorageSharedKeyCredential> GetStorageSharedKeyCredentialAsync(
-            string uri,
-            bool readOnly,
-            CancellationToken cancellationToken);
+        public delegate StorageSharedKeyCredential GetStorageSharedKeyCredential(string uri, bool readOnly);
 
         /// <summary>
         /// Delegate for fetching a token credential for a given URI.
@@ -41,13 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="readOnly">
         /// Whether the permission can be read-only.
         /// </param>
-        /// <param name="cancellationToken">
-        /// Cancellation token for the operation.
-        /// </param>
-        public delegate Task<TokenCredential> GetTokenCredentialAsync(
-            string uri,
-            bool readOnly,
-            CancellationToken cancellationToken);
+        public delegate TokenCredential GetTokenCredential(string uri, bool readOnly);
 
         /// <summary>
         /// Delegate for fetching a SAS credential for a given URI.
@@ -58,13 +46,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="readOnly">
         /// Whether the permission can be read-only.
         /// </param>
-        /// <param name="cancellationToken">
-        /// Cancellation token for the operation.
-        /// </param>
-        public delegate Task<AzureSasCredential> GetAzureSasCredentialAsync(
-            string uri,
-            bool readOnly,
-            CancellationToken cancellationToken);
+        public delegate AzureSasCredential GetAzureSasCredential(string uri, bool readOnly);
 
         private enum ResourceType
         {
@@ -87,9 +69,9 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override string TypeId => "blob";
 
         private readonly CredentialType _credentialType;
-        private readonly GetStorageSharedKeyCredentialAsync _getStorageSharedKeyCredentialAsync;
-        private readonly GetTokenCredentialAsync _getTokenCredentialAsync;
-        private readonly GetAzureSasCredentialAsync _getAzureSasCredentialAsync;
+        private readonly GetStorageSharedKeyCredential _getStorageSharedKeyCredential;
+        private readonly GetTokenCredential _getTokenCredential;
+        private readonly GetAzureSasCredential _getAzureSasCredential;
 
         /// <summary>
         /// Default constrctor.
@@ -118,7 +100,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(StorageSharedKeyCredential credential)
         {
             _credentialType = CredentialType.SharedKey;
-            _getStorageSharedKeyCredentialAsync = (_, _, _) => Task.FromResult(credential);
+            _getStorageSharedKeyCredential = (_, _) => credential;
         }
 
         /// <summary>
@@ -140,7 +122,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(TokenCredential credential)
         {
             _credentialType = CredentialType.Token;
-            _getTokenCredentialAsync = (_, _, _) => Task.FromResult(credential);
+            _getTokenCredential = (_, _) => credential;
         }
 
         /// <summary>
@@ -164,7 +146,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(AzureSasCredential credential)
         {
             _credentialType = CredentialType.Sas;
-            _getAzureSasCredentialAsync = (_, _, _) => Task.FromResult(credential);
+            _getAzureSasCredential = (_, _) => credential;
         }
 
         /// <summary>
@@ -173,7 +155,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Storage <see cref="StorageResource"/>.
         /// </para>
         /// <para>
-        /// This instance will use the given <see cref="GetStorageSharedKeyCredentialAsync"/> to fetch a credential
+        /// This instance will use the given <see cref="GetStorageSharedKeyCredential"/> to fetch a credential
         /// when constructing the underlying Azure.Storage.Blobs client, e.g.
         /// <see cref="BlockBlobClient(Uri, StorageSharedKeyCredential, BlobClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
@@ -184,10 +166,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="getStorageSharedKeyCredentialAsync">
         /// Delegate for acquiring a credential.
         /// </param>
-        public BlobsStorageResourceProvider(GetStorageSharedKeyCredentialAsync getStorageSharedKeyCredentialAsync)
+        public BlobsStorageResourceProvider(GetStorageSharedKeyCredential getStorageSharedKeyCredentialAsync)
         {
             _credentialType = CredentialType.SharedKey;
-            _getStorageSharedKeyCredentialAsync = getStorageSharedKeyCredentialAsync;
+            _getStorageSharedKeyCredential = getStorageSharedKeyCredentialAsync;
         }
 
         /// <summary>
@@ -196,7 +178,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Storage <see cref="StorageResource"/>.
         /// </para>
         /// <para>
-        /// This instance will use the given <see cref="GetTokenCredentialAsync"/> to fetch a credential
+        /// This instance will use the given <see cref="GetTokenCredential"/> to fetch a credential
         /// when constructing the underlying Azure.Storage.Blobs client, e.g.
         /// <see cref="BlockBlobClient(Uri, TokenCredential, BlobClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
@@ -207,10 +189,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="getTokenCredentialAsync">
         /// Delegate for acquiring a credential.
         /// </param>
-        public BlobsStorageResourceProvider(GetTokenCredentialAsync getTokenCredentialAsync)
+        public BlobsStorageResourceProvider(GetTokenCredential getTokenCredentialAsync)
         {
             _credentialType = CredentialType.SharedKey;
-            _getTokenCredentialAsync = getTokenCredentialAsync;
+            _getTokenCredential = getTokenCredentialAsync;
         }
 
         /// <summary>
@@ -219,7 +201,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Storage <see cref="StorageResource"/>.
         /// </para>
         /// <para>
-        /// This instance will use the given <see cref="GetAzureSasCredentialAsync"/> to fetch a credential
+        /// This instance will use the given <see cref="GetAzureSasCredential"/> to fetch a credential
         /// when constructing the underlying Azure.Storage.Blobs client, e.g.
         /// <see cref="BlockBlobClient(Uri, AzureSasCredential, BlobClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
@@ -232,10 +214,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="getAzureSasCredentialAsync">
         /// Delegate for acquiring a credential.
         /// </param>
-        public BlobsStorageResourceProvider(GetAzureSasCredentialAsync getAzureSasCredentialAsync)
+        public BlobsStorageResourceProvider(GetAzureSasCredential getAzureSasCredentialAsync)
         {
             _credentialType = CredentialType.SharedKey;
-            _getAzureSasCredentialAsync = getAzureSasCredentialAsync;
+            _getAzureSasCredential = getAzureSasCredentialAsync;
         }
 
         #region Abstract Class Implementation
@@ -253,6 +235,7 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken)
         {
             ResourceType type = GetType(getSource ? properties.SourceTypeId : properties.DestinationTypeId, properties.IsContainer);
+            string uri = getSource ? properties.SourcePath : properties.DestinationPath;
             IBlobResourceRehydrator rehydrator = type switch
             {
                 ResourceType.BlockBlob => new BlockBlobResourceRehydrator(),
@@ -261,7 +244,33 @@ namespace Azure.Storage.DataMovement.Blobs
                 ResourceType.BlobContainer => new BlobContainerResourceRehydrator(),
                 _ => throw BadResourceTypeException(type)
             };
-            return await rehydrator.RehydrateAsync(properties, getSource, cancellationToken).ConfigureAwait(false);
+            return _credentialType switch
+            {
+                CredentialType.None => await rehydrator.RehydrateAsync(
+                    properties,
+                    getSource,
+                    cancellationToken)
+                    .ConfigureAwait(false),
+                CredentialType.SharedKey => await rehydrator.RehydrateAsync(
+                    properties,
+                    getSource,
+                    _getStorageSharedKeyCredential(uri, getSource),
+                    cancellationToken)
+                    .ConfigureAwait(false),
+                CredentialType.Token => await rehydrator.RehydrateAsync(
+                    properties,
+                    getSource,
+                    _getTokenCredential(uri, getSource),
+                    cancellationToken)
+                    .ConfigureAwait(false),
+                CredentialType.Sas => await rehydrator.RehydrateAsync(
+                    properties,
+                    getSource,
+                    _getAzureSasCredential(uri, getSource),
+                    cancellationToken)
+                    .ConfigureAwait(false),
+                _ => throw BadCredentialTypeException(_credentialType),
+            };
         }
 
         /// <summary>
@@ -298,7 +307,15 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </returns>
         public StorageResource FromContainer(string containerUri, BlobStorageResourceContainerOptions options = default)
         {
-            return new BlobStorageResourceContainer(new BlobContainerClient(new Uri(containerUri)), options);
+            BlobContainerClient client = _credentialType switch
+            {
+                CredentialType.None => new BlobContainerClient(new Uri(containerUri)),
+                CredentialType.SharedKey => new BlobContainerClient(new Uri(containerUri), _getStorageSharedKeyCredential(containerUri, false)),
+                CredentialType.Token => new BlobContainerClient(new Uri(containerUri), _getTokenCredential(containerUri, false)),
+                CredentialType.Sas => new BlobContainerClient(new Uri(containerUri), _getAzureSasCredential(containerUri, false)),
+                _ => throw BadCredentialTypeException(_credentialType),
+            };
+            return new BlobStorageResourceContainer(client, options);
         }
 
         /// <summary>
@@ -328,17 +345,49 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             if (options is BlockBlobStorageResourceOptions)
             {
-                return new BlockBlobStorageResource(new BlockBlobClient(new Uri(blobUri)), options as BlockBlobStorageResourceOptions);
+                BlockBlobClient blockClient = _credentialType switch
+                {
+                    CredentialType.None => new BlockBlobClient(new Uri(blobUri)),
+                    CredentialType.SharedKey => new BlockBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(blobUri, false)),
+                    CredentialType.Token => new BlockBlobClient(new Uri(blobUri), _getTokenCredential(blobUri, false)),
+                    CredentialType.Sas => new BlockBlobClient(new Uri(blobUri), _getAzureSasCredential(blobUri, false)),
+                    _ => throw BadCredentialTypeException(_credentialType),
+                };
+                return new BlockBlobStorageResource(blockClient, options as BlockBlobStorageResourceOptions);
             }
             if (options is PageBlobStorageResourceOptions)
             {
-                return new PageBlobStorageResource(new PageBlobClient(new Uri(blobUri)), options as PageBlobStorageResourceOptions);
+                PageBlobClient pageClient = _credentialType switch
+                {
+                    CredentialType.None => new PageBlobClient(new Uri(blobUri)),
+                    CredentialType.SharedKey => new PageBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(blobUri, false)),
+                    CredentialType.Token => new PageBlobClient(new Uri(blobUri), _getTokenCredential(blobUri, false)),
+                    CredentialType.Sas => new PageBlobClient(new Uri(blobUri), _getAzureSasCredential(blobUri, false)),
+                    _ => throw BadCredentialTypeException(_credentialType),
+                };
+                return new PageBlobStorageResource(pageClient, options as PageBlobStorageResourceOptions);
             }
             if (options is AppendBlobStorageResourceOptions)
             {
-                return new AppendBlobStorageResource(new AppendBlobClient(new Uri(blobUri)), options as AppendBlobStorageResourceOptions);
+                AppendBlobClient appendClient = _credentialType switch
+                {
+                    CredentialType.None => new AppendBlobClient(new Uri(blobUri)),
+                    CredentialType.SharedKey => new AppendBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(blobUri, false)),
+                    CredentialType.Token => new AppendBlobClient(new Uri(blobUri), _getTokenCredential(blobUri, false)),
+                    CredentialType.Sas => new AppendBlobClient(new Uri(blobUri), _getAzureSasCredential(blobUri, false)),
+                    _ => throw BadCredentialTypeException(_credentialType),
+                };
+                return new AppendBlobStorageResource(appendClient, options as AppendBlobStorageResourceOptions);
             }
-            return new BlockBlobStorageResource(new BlockBlobClient(new Uri(blobUri)), new BlockBlobStorageResourceOptions(options));
+            BlockBlobClient client = _credentialType switch
+            {
+                CredentialType.None => new BlockBlobClient(new Uri(blobUri)),
+                CredentialType.SharedKey => new BlockBlobClient(new Uri(blobUri), _getStorageSharedKeyCredential(blobUri, false)),
+                CredentialType.Token => new BlockBlobClient(new Uri(blobUri), _getTokenCredential(blobUri, false)),
+                CredentialType.Sas => new BlockBlobClient(new Uri(blobUri), _getAzureSasCredential(blobUri, false)),
+                _ => throw BadCredentialTypeException(_credentialType),
+            };
+            return new BlockBlobStorageResource(client, options as BlockBlobStorageResourceOptions);
         }
         #endregion
 
@@ -457,26 +506,29 @@ namespace Azure.Storage.DataMovement.Blobs
                 => await BlobStorageResourceContainer.RehydrateResourceAsync(properties, isSource, cancellationToken)
                     .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await BlobStorageResourceContainer.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await BlobStorageResourceContainer.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await BlobStorageResourceContainer.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
         }
 
         private class BlockBlobResourceRehydrator : IBlobResourceRehydrator
@@ -488,26 +540,29 @@ namespace Azure.Storage.DataMovement.Blobs
                 => await BlockBlobStorageResource.RehydrateResourceAsync(properties, isSource, cancellationToken)
                     .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await BlockBlobStorageResource.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await BlockBlobStorageResource.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await BlockBlobStorageResource.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
         }
 
         private class PageBlobResourceRehydrator : IBlobResourceRehydrator
@@ -519,26 +574,29 @@ namespace Azure.Storage.DataMovement.Blobs
                 => await PageBlobStorageResource.RehydrateResourceAsync(properties, isSource, cancellationToken)
                     .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await PageBlobStorageResource.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await PageBlobStorageResource.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await PageBlobStorageResource.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
         }
 
         private class AppendBlobResourceRehydrator : IBlobResourceRehydrator
@@ -550,26 +608,29 @@ namespace Azure.Storage.DataMovement.Blobs
                 => await AppendBlobStorageResource.RehydrateResourceAsync(properties, isSource, cancellationToken)
                     .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await AppendBlobStorageResource.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await AppendBlobStorageResource.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
 
-            public Task<StorageResource> RehydrateAsync(
+            public async Task<StorageResource> RehydrateAsync(
                 DataTransferProperties properties,
                 bool isSource,
                 AzureSasCredential credential,
                 CancellationToken cancellationToken)
-                => throw new NotImplementedException("Creds not yet suppored on rehydration.");
+                => await AppendBlobStorageResource.RehydrateResourceAsync(properties, isSource, credential, cancellationToken)
+                    .ConfigureAwait(false);
         }
         #endregion
 
@@ -585,5 +646,9 @@ namespace Azure.Storage.DataMovement.Blobs
         private static ArgumentException BadResourceTypeException(ResourceType resourceType)
             => new ArgumentException(
                 $"No support for resource type {Enum.GetName(typeof(ResourceType), resourceType)}.");
+
+        private static ArgumentException BadCredentialTypeException(CredentialType credentialType)
+            => new ArgumentException(
+                $"No support for credential type {Enum.GetName(typeof(CredentialType), credentialType)}.");
     }
 }
