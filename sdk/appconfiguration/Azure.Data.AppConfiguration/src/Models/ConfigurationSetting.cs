@@ -4,8 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
+using Azure.Core.Json;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -13,10 +15,13 @@ namespace Azure.Data.AppConfiguration
     /// A setting, defined by a unique combination of a key and label.
     /// </summary>
     [JsonConverter(typeof(ConfigurationSettingJsonConverter))]
+
+#pragma warning disable AZC0020 // Avoid using banned types in public APIs
     public class ConfigurationSetting
     {
         private IDictionary<string, string> _tags;
         private string _value;
+        private readonly MutableJsonElement _element;
 
         internal ConfigurationSetting()
         {
@@ -28,8 +33,16 @@ namespace Azure.Data.AppConfiguration
         /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
-        public ConfigurationSetting(string key, string value, string label = null): this(key, value, label, default)
+        public ConfigurationSetting(string key, string value, string label = null) : this(key, value, label, default)
         {
+            _element = new MutableJsonElement();
+        }
+
+        internal ConfigurationSetting Deserialize(ref Utf8JsonReader reader)
+        {
+            JsonDocument doc = JsonDocument.ParseValue(ref reader);
+            MutableJsonElement mdoc = new();
+            return new ConfigurationSetting();
         }
 
         /// <summary>
@@ -136,4 +149,5 @@ namespace Azure.Data.AppConfiguration
         public override string ToString()
             => $"({Key},{Value})";
     }
+#pragma warning restore AZC0020 // Avoid using banned types in public APIs
 }

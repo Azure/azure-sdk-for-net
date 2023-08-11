@@ -10,6 +10,7 @@ namespace Azure.Core.Tests.PatchModels
     /// </summary>
     public partial class ChildPatchModel
     {
+#pragma warning disable AZC0020 // Avoid using banned types in libraries
         private readonly MutableJsonElement _element;
 
         /// <summary> Public constructor. </summary>
@@ -52,5 +53,6 @@ namespace Azure.Core.Tests.PatchModels
             }
             set => _element.SetProperty("b", value);
         }
+#pragma warning restore AZC0020 // Avoid using banned types in libraries
     }
 }
