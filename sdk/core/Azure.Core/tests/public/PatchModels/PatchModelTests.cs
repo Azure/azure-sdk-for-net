@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using Azure.Core.Serialization;
 using Azure.Core.Tests.PatchModels;
 using NUnit.Framework;
 
@@ -39,7 +40,7 @@ namespace Azure.Core.Tests.Public
                 }
                 """);
 
-            SimplePatchModel model = (SimplePatchModel)SimplePatchModel.Deserialize(json);
+            SimplePatchModel model = ModelSerializer.Deserialize<SimplePatchModel>(json);
 
             Assert.AreEqual(1, model.Count);
             Assert.AreEqual("abc", model.Name);
@@ -51,11 +52,11 @@ namespace Azure.Core.Tests.Public
         }
 
         #region Helpers
-        private static void ValidatePatch(string expected, SimplePatchModel model)
+        private static void ValidatePatch<T>(string expected, IModelJsonSerializable<T> model)
         {
             using Stream stream = new MemoryStream();
             using Utf8JsonWriter writer = new(stream);
-            model.Serialize(writer, "P");
+            model.Serialize(writer, new ModelSerializerOptions("P"));
             writer.Flush();
             stream.Position = 0;
 
