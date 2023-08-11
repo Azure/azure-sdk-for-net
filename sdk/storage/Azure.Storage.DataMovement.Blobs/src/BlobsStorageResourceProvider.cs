@@ -36,19 +36,19 @@ namespace Azure.Storage.DataMovement.Blobs
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
-        protected override async Task<StorageResource> FromSourceAsync(DataTransferProperties props, CancellationToken cancellationToken)
-            => await FromTransferPropertiesAsync(props, getSource: true, cancellationToken).ConfigureAwait(false);
+        protected override async Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+            => await FromTransferPropertiesAsync(properties, getSource: true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc/>
-        protected override async Task<StorageResource> FromDestinationAsync(DataTransferProperties props, CancellationToken cancellationToken)
-            => await FromTransferPropertiesAsync(props, getSource: false, cancellationToken).ConfigureAwait(false);
+        protected override async Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+            => await FromTransferPropertiesAsync(properties, getSource: false, cancellationToken).ConfigureAwait(false);
 
         private async Task<StorageResource> FromTransferPropertiesAsync(
-            DataTransferProperties props,
+            DataTransferProperties properties,
             bool getSource,
             CancellationToken cancellationToken)
         {
-            ResourceType type = GetType(getSource ? props.SourceTypeId : props.DestinationTypeId, props.IsContainer);
+            ResourceType type = GetType(getSource ? properties.SourceTypeId : properties.DestinationTypeId, properties.IsContainer);
             IBlobResourceRehydrator rehydrator = type switch
             {
                 ResourceType.BlockBlob => new BlockBlobResourceRehydrator(),
@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 ResourceType.BlobContainer => new BlobContainerResourceRehydrator(),
                 _ => throw BadResourceTypeException(type)
             };
-            return await rehydrator.RehydrateAsync(props, getSource, cancellationToken).ConfigureAwait(false);
+            return await rehydrator.RehydrateAsync(properties, getSource, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

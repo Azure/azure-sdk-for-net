@@ -23,18 +23,18 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        protected internal override Task<StorageResource> FromSourceAsync(DataTransferProperties props, CancellationToken cancellationToken)
-            => Task.FromResult(FromTransferProperties(props, getSource: true));
+        protected internal override Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+            => Task.FromResult(FromTransferProperties(properties, getSource: true));
 
         /// <inheritdoc/>
-        protected internal override Task<StorageResource> FromDestinationAsync(DataTransferProperties props, CancellationToken cancellationToken)
-            => Task.FromResult(FromTransferProperties(props, getSource: false));
+        protected internal override Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+            => Task.FromResult(FromTransferProperties(properties, getSource: false));
 
-        private StorageResource FromTransferProperties(DataTransferProperties props, bool getSource)
+        private StorageResource FromTransferProperties(DataTransferProperties properties, bool getSource)
         {
-            return props.IsContainer
-                ? LocalDirectoryStorageResourceContainer.RehydrateResource(props, getSource)
-                : LocalFileStorageResource.RehydrateResource(props, getSource);
+            return properties.IsContainer
+                ? LocalDirectoryStorageResourceContainer.RehydrateResource(properties, getSource)
+                : LocalFileStorageResource.RehydrateResource(properties, getSource);
         }
 
         /// <summary>
