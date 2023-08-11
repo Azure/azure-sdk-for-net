@@ -7,7 +7,7 @@ namespace Azure.ResourceManager.DefenderEasm.Tests
 {
     public class DefenderEasmManagementTestEnvironment : TestEnvironment
     {
-        public string ResourceGroupName => GetRecordedVariable("RESOURCEGROUPNAME");
-        public string WorkspaceName => GetRecordedVariable("WORKSPACENAME");
+        public string ResourceGroupName = "shad-rg";
+        public string WorkspaceName = "sdktest";
     }
 }
