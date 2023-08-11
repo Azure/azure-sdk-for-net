@@ -4,6 +4,8 @@
 
 ### Features Added
 
+-Added `ModelSerializer` which provides a public API to serialize and deserialize models.
+
 ### Breaking Changes
 
 ### Bugs Fixed
