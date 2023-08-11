@@ -3,9 +3,7 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core.Experimental.Tests.Models
 {
@@ -13,14 +11,14 @@ namespace Azure.Core.Experimental.Tests.Models
     public partial class Pet
     {
         /// <summary> Initializes a new instance of Pet. </summary>
-        internal Pet()
+        public Pet()
         {
         }
 
         /// <summary> Initializes a new instance of Pet. </summary>
         /// <param name="name"></param>
         /// <param name="species"></param>
-        internal Pet(string name, string species)
+        public Pet(string name, string species)
         {
             Name = name;
             Species = species;
