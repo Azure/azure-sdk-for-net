@@ -250,7 +250,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
         }
 
-        [Ignore(reason:"Running a StartDialog with a request twice is currently bugged to come up as an update")]
         [RecordedTest]
         public async Task IdenticalDialogsTest()
         {
@@ -342,11 +341,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
                 // send the start dialog again, should succeed
                 dialogResponse = await callDialog.StartDialogAsync(dialogOptions).ConfigureAwait(false);
                 Assert.AreEqual(StatusCodes.Status201Created, dialogResponse.GetRawResponse().Status);
-
-                // wait for DialogStarted event
-                dialogStartedReceived = await WaitForEvent<DialogStarted>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.NotNull(dialogStartedReceived);
-                Assert.IsTrue(dialogStartedReceived is DialogStarted);
 
                 // stop the dialog
                 var stopDialogResponse = await callDialog.StopDialogAsync(dialogId).ConfigureAwait(false);

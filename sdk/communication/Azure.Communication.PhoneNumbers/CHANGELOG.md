@@ -1,15 +1,19 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
-- Added custom page sizes to PurchasedPhoneNumbers, Countries, Localities, AreaCodes and Offerings. 
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2023-08-08)
+
+### Features Added
+- Added custom page sizes to PurchasedPhoneNumbers, Countries, Localities, AreaCodes and Offerings. 
 
 ## 1.1.0 (2023-03-28)
 

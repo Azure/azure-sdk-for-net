@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The Salesforce Service Cloud object dataset. </summary>
-    public partial class SalesforceServiceCloudObjectDataset : DataFactoryDatasetDefinition
+    public partial class SalesforceServiceCloudObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SalesforceServiceCloudObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

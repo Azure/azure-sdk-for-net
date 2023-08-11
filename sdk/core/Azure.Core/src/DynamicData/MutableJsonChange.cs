@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -62,13 +63,25 @@ namespace Azure.Core.Json
 
         internal bool IsDescendant(string path)
         {
-            if (path.Length > 0)
+            return IsDescendant(path.AsSpan());
+        }
+
+        internal bool IsDescendant(ReadOnlySpan<char> ancestorPath)
+        {
+            return IsDescendant(ancestorPath, Path.AsSpan());
+        }
+
+        internal static bool IsDescendant(ReadOnlySpan<char> ancestorPath, ReadOnlySpan<char> descendantPath)
+        {
+            if (ancestorPath.Length == 0)
             {
-                // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
-                path += MutableJsonDocument.ChangeTracker.Delimiter;
+                return descendantPath.Length > 0;
             }
 
-            return Path.StartsWith(path, StringComparison.Ordinal);
+            return descendantPath.Length > ancestorPath.Length &&
+                descendantPath.StartsWith(ancestorPath) &&
+                // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
+                descendantPath[ancestorPath.Length] == MutableJsonDocument.ChangeTracker.Delimiter;
         }
 
         internal bool IsDirectDescendant(string path)
@@ -83,6 +96,16 @@ namespace Azure.Core.Json
             int descendantPathLength = Path.Split(MutableJsonDocument.ChangeTracker.Delimiter).Length;
 
             return ancestorPathLength == (descendantPathLength - 1);
+        }
+
+        internal bool IsLessThan(ReadOnlySpan<char> otherPath)
+        {
+            return Path.AsSpan().SequenceCompareTo(otherPath) < 0;
+        }
+
+        internal bool IsGreaterThan(ReadOnlySpan<char> otherPath)
+        {
+            return Path.AsSpan().SequenceCompareTo(otherPath) > 0;
         }
 
         internal string AsString()

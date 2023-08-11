@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Square Service dataset. </summary>
-    public partial class SquareObjectDataset : DataFactoryDatasetDefinition
+    public partial class SquareObjectDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of SquareObjectDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
