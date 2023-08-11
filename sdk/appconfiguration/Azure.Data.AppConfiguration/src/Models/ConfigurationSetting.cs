@@ -39,6 +39,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="etag">The ETag value for the configuration setting.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public ConfigurationSetting(string key, string value, string label, ETag etag)
         {
             Key = key;
