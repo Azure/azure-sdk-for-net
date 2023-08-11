@@ -9,27 +9,27 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
-    public partial class SimplePatchModel : IModelJsonSerializable<SimplePatchModel>
+    public partial class ChildPatchModel : IModelJsonSerializable<ChildPatchModel>
     {
-        SimplePatchModel IModelJsonSerializable<SimplePatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ChildPatchModel IModelJsonSerializable<ChildPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             JsonDocument doc = JsonDocument.ParseValue(ref reader);
             MutableJsonDocument mdoc = new(doc, new JsonSerializerOptions());
-            return new SimplePatchModel(mdoc.RootElement);
+            return new ChildPatchModel(mdoc.RootElement);
         }
 
-        SimplePatchModel IModelSerializable<SimplePatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        ChildPatchModel IModelSerializable<ChildPatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(data);
-            return new SimplePatchModel(mdoc.RootElement);
+            return new ChildPatchModel(mdoc.RootElement);
         }
 
-        void IModelJsonSerializable<SimplePatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
+        void IModelJsonSerializable<ChildPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
             _element.WriteTo(writer, options.Format.ToString());
         }
 
-        BinaryData IModelSerializable<SimplePatchModel>.Serialize(ModelSerializerOptions options)
+        BinaryData IModelSerializable<ChildPatchModel>.Serialize(ModelSerializerOptions options)
         {
             using MemoryStream stream = new();
             using Utf8JsonWriter writer = new(stream);

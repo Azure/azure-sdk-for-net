@@ -6,6 +6,9 @@ using Azure.Core.Json;
 
 namespace Azure.Core.Tests.PatchModels
 {
+    /// <summary>
+    /// This model illustrates optional read/write "primitive" properties.
+    /// </summary>
     public partial class SimplePatchModel
     {
         private readonly MutableJsonElement _element;
