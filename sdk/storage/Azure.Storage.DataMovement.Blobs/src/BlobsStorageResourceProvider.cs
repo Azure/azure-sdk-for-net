@@ -24,14 +24,94 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobContainer = 4,
         }
 
+        private enum CredentialType
+        {
+            None = 0,
+            SharedKey = 1,
+            Token = 2,
+            Sas = 4
+        }
+
         /// <inheritdoc/>
         protected override string TypeId => "blob";
+
+        private readonly CredentialType _credentialType;
+        private readonly StorageSharedKeyCredential _sharedKeyCredential;
+        private readonly TokenCredential _tokenCredential;
+        private readonly AzureSasCredential _azureSasCredential;
 
         /// <summary>
         /// Default constrctor.
         /// </summary>
         public BlobsStorageResourceProvider()
         {
+            _credentialType = CredentialType.None;
+        }
+
+        /// <summary>
+        /// <para>
+        /// Constructs this provider to use the given credential when making a new Blob Storage
+        /// <see cref="StorageResource"/>.
+        /// </para>
+        /// <para>
+        /// This instance will use the given <see cref="StorageSharedKeyCredential"/> when constructing the underlying
+        /// Azure.Storage.Blobs client, e.g. <see cref="BlockBlobClient(Uri, StorageSharedKeyCredential, BlobClientOptions)"/>.
+        /// The credential will only be used when the provider needs to construct a client in the first place. It will
+        /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
+        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="credential">
+        /// Shared key credential to use when constructing resources.
+        /// </param>
+        public BlobsStorageResourceProvider(StorageSharedKeyCredential credential)
+        {
+            _credentialType = CredentialType.SharedKey;
+            _sharedKeyCredential = credential;
+        }
+
+        /// <summary>
+        /// <para>
+        /// Constructs this provider to use the given credential when making a new Blob Storage
+        /// <see cref="StorageResource"/>.
+        /// </para>
+        /// <para>
+        /// This instance will use the given <see cref="TokenCredential"/> when constructing the underlying
+        /// Azure.Storage.Blobs client, e.g. <see cref="BlockBlobClient(Uri, TokenCredential, BlobClientOptions)"/>.
+        /// The credential will only be used when the provider needs to construct a client in the first place. It will
+        /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
+        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="credential">
+        /// Token credential to use when constructing resources.
+        /// </param>
+        public BlobsStorageResourceProvider(TokenCredential credential)
+        {
+            _credentialType = CredentialType.Token;
+            _tokenCredential = credential;
+        }
+
+        /// <summary>
+        /// <para>
+        /// Constructs this provider to use the given credential when making a new Blob Storage
+        /// <see cref="StorageResource"/>.
+        /// </para>
+        /// <para>
+        /// This instance will use the given <see cref="AzureSasCredential"/> when constructing the underlying
+        /// Azure.Storage.Blobs client, e.g. <see cref="BlockBlobClient(Uri, AzureSasCredential, BlobClientOptions)"/>.
+        /// The credential will only be used when the provider needs to construct a client in the first place. It will
+        /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
+        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="credential">
+        /// SAS credential to use when constructing resources.
+        /// </param>
+        public BlobsStorageResourceProvider(AzureSasCredential credential)
+        {
+            _credentialType = CredentialType.Sas;
+            _azureSasCredential = credential;
         }
 
         #region Abstract Class Implementation
