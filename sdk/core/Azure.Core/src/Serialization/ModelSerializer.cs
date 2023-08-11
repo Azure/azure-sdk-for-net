@@ -19,8 +19,11 @@ namespace Azure.Core.Serialization
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/>.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
         public static BinaryData Serialize<T>(T model, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
+            Argument.AssertNotNull(model, nameof(model));
+
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
             return model.Serialize(options);
@@ -34,6 +37,7 @@ namespace Azure.Core.Serialization
         /// <param name="format">The <see cref="ModelSerializerFormat"/> to use.</param>
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/>.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
         public static BinaryData Serialize<T>(T model, ModelSerializerFormat format)
             where T : IModelSerializable<T>
             => Serialize<T>(model, ModelSerializerOptions.GetOptions(format));
@@ -46,8 +50,11 @@ namespace Azure.Core.Serialization
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
         public static BinaryData Serialize(object model, ModelSerializerOptions? options = default)
         {
+            Argument.AssertNotNull(model, nameof(model));
+
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
             var iModel = model as IModelSerializable<object>;
@@ -67,6 +74,7 @@ namespace Azure.Core.Serialization
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="format"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="model"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
         public static BinaryData Serialize(object model, ModelSerializerFormat format)
             => Serialize(model, ModelSerializerOptions.GetOptions(format));
 
@@ -78,8 +86,11 @@ namespace Azure.Core.Serialization
         /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal parameterless constructor.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
         public static T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelSerializerOptions? options = default) where T : IModelSerializable<T>
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
             return GetInstance<T>().Deserialize(data, options);
@@ -93,6 +104,7 @@ namespace Azure.Core.Serialization
         /// <returns>A <typeparamref name="T"/> representation of the <see cref="BinaryData"/>.</returns>
         /// <exception cref="InvalidOperationException">Throws if <typeparamref name="T"/> does not have a public or internal parameterless constructor.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
         public static T Deserialize<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelSerializerFormat format)
             where T : IModelSerializable<T>
             => Deserialize<T>(data, ModelSerializerOptions.GetOptions(format));
@@ -107,8 +119,12 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal parameterless constructor.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerOptions.Format"/>.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
         public static object Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerOptions? options = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(returnType, nameof(returnType));
+
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
             return GetInstance(returnType).Deserialize(data, options);
@@ -124,6 +140,7 @@ namespace Azure.Core.Serialization
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IModelSerializable{T}"/>.</exception>
         /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not have a public or internal parameterless constructor.</exception>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelSerializerFormat"/>.</exception>
+        /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
         public static object Deserialize(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelSerializerFormat format)
             => Deserialize(data, returnType, ModelSerializerOptions.GetOptions(format));
 
@@ -133,8 +150,12 @@ namespace Azure.Core.Serialization
         /// <param name="model">The model to convert.</param>
         /// <param name="options">The <see cref="ModelSerializerOptions"/> to use.</param>
         /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelSerializerFormat"/> specified by the <paramref name="options"/>.</returns>
+        /// <exception cref="ArgumentNullException">If <paramref name="model"/> or <paramref name="options"/> are null.</exception>
         public static BinaryData SerializeCore(IModelJsonSerializable<object> model, ModelSerializerOptions options)
         {
+            Argument.AssertNotNull(model, nameof(model));
+            Argument.AssertNotNull(options, nameof(options));
+
             using ModelWriter writer = new ModelWriter(model, options);
             return writer.ToBinaryData();
         }

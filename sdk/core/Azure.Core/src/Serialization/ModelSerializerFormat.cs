@@ -22,7 +22,7 @@ namespace Azure.Core.Serialization
 
         /// <summary>
         /// Format used to serialize this model when sending as a request to an Azure service.
-        /// It will not serialize read-only properties or additional properties.
+        /// It may not serialize read-only properties or additional properties.
         /// The content-type will vary between JSON, XML, etc., depending on the service.
         ///
         /// Most use cases should prefer a more complete format like <see cref="ModelSerializerFormat.Json"/> that includes
