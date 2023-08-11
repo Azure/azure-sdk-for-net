@@ -92,7 +92,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <remarks>
         /// The retry options are only considered for interactions with the Service Bus service. They do not apply to failures in the
-        /// <see cref="ServiceBusProcessor.ProcessMessageAsync" /> handler. Developers are responsible for error handling and retries 
+        /// <see cref="ServiceBusProcessor.ProcessMessageAsync" /> handler. Developers are responsible for error handling and retries
         /// as part of their event handler.
         ///</remarks>
         public ServiceBusRetryOptions RetryOptions
