@@ -1,0 +1,48 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/savedFilters/put_filter?api-version=2023-03-01-preview",
+      "RequestMethod": "DELETE",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2d9604d51abd7675498713a993ad9807-7ec900f02555fa6d-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "e829ec8c5bb234a2ff1fa2e7406d568c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 204,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Date": "Fri, 11 Aug 2023 17:26:43 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Vary": [
+          "Origin",
+          "Access-Control-Request-Method",
+          "Access-Control-Request-Headers"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "389548c3-7d17-4368-bdbd-3aeb9b18f628",
+        "x-ms-request-id": "d55ac999-6569-41b5-8df8-6759da044a73",
+        "x-ms-ui-version": "sdk",
+        "X-RiskIQ-RequestID": "d55ac999-6569-41b5-8df8-6759da044a73",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": null
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "1045919956",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

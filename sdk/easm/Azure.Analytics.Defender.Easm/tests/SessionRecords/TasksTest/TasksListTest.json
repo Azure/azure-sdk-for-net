@@ -1,0 +1,835 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/tasks?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-617b326d7cb1cdba66e74bf2d1c35f63-4739245aa6d20249-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "f7e6b190bf1d29991105bf97e55f6d82",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:26:47 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "4c5d0634-bddf-4763-be30-3c50cbe05831",
+        "x-ms-request-id": "81c7888a-eda6-4ce8-bec6-5c21973eb058",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "totalElements": 41,
+        "value": [
+          {
+            "id": "80709f96-c97c-489e-9b56-8a1fc6bfd4ad",
+            "startedAt": "2023-08-11T17:25:06\u002B0000",
+            "completedAt": "2023-08-11T17:25:07\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "51be80e9-4ae3-4948-ac62-07f292d5545c",
+            "startedAt": "2023-08-11T17:25:03\u002B0000",
+            "completedAt": "2023-08-11T17:25:05\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "e5b0a3cc-71b7-4e2a-b674-7b42516b630f",
+            "startedAt": "2023-08-11T14:30:39\u002B0000",
+            "completedAt": "2023-08-11T14:30:39\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "2a28d3e9-7aa7-4544-8587-97ae9bad53c3",
+            "startedAt": "2023-08-11T14:30:38\u002B0000",
+            "completedAt": "2023-08-11T14:30:38\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "351617c7-880d-4167-845f-098305316153",
+            "startedAt": "2023-08-11T14:25:49\u002B0000",
+            "completedAt": "2023-08-11T14:25:50\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "b5b4146f-dd49-43b9-ab6d-768abb755ff4",
+            "startedAt": "2023-08-11T14:25:47\u002B0000",
+            "completedAt": "2023-08-11T14:25:48\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "57ef74ec-02d0-456e-b78e-e75991601447",
+            "startedAt": "2023-08-11T11:00:24\u002B0000",
+            "completedAt": "2023-08-11T11:00:25\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "ca52de31-42ed-489e-af25-2e9a40e3fd12",
+            "startedAt": "2023-08-11T10:34:56\u002B0000",
+            "completedAt": "2023-08-11T10:34:57\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "0551720e-ff5e-4d22-8de8-6887148014dc",
+            "startedAt": "2023-08-11T03:46:18\u002B0000",
+            "completedAt": "2023-08-11T03:46:22\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "d42747ee-2090-4a67-9385-032bc78b6809",
+            "startedAt": "2023-08-11T02:35:16\u002B0000",
+            "completedAt": "2023-08-11T02:35:18\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "4ed9e1d1-5c7d-4be8-af14-71038945921e",
+            "startedAt": "2023-08-09T03:43:08\u002B0000",
+            "completedAt": "2023-08-09T03:43:14\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "20114bbb-eed3-4a6e-9163-c9e2b2ac0661",
+            "startedAt": "2023-08-09T03:14:22\u002B0000",
+            "completedAt": "2023-08-09T03:14:23\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "9812f4c2-f9db-418e-9c7d-b7efc7ac05b4",
+            "startedAt": "2023-08-09T03:05:26\u002B0000",
+            "completedAt": "2023-08-09T03:05:35\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "6860b3a4-0af0-4e1a-82f0-579ba45477e6",
+            "startedAt": "2023-08-09T02:57:05\u002B0000",
+            "completedAt": "2023-08-09T02:57:06\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "01197f56-f300-47db-a247-107fc10b2a27",
+            "startedAt": "2023-08-09T02:49:36\u002B0000",
+            "completedAt": "2023-08-09T02:49:36\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "46bbe697-0ba6-40e4-9fe7-064d34ec3190",
+            "startedAt": "2023-08-09T02:39:17\u002B0000",
+            "completedAt": "2023-08-09T02:39:18\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "801ef34a-9b52-404c-b154-bf774e1484b2",
+            "startedAt": "2023-08-09T02:29:09\u002B0000",
+            "completedAt": "2023-08-09T02:29:10\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "300c6014-6ed5-42b6-b71b-fb15f4997292",
+            "startedAt": "2023-08-08T20:06:15\u002B0000",
+            "completedAt": "2023-08-08T20:06:17\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "e25f869f-7ff9-49ad-827b-32a463a29ab8",
+            "startedAt": "2023-08-08T19:58:23\u002B0000",
+            "completedAt": "2023-08-08T19:58:24\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "5fba8b16-242e-4e1e-bb60-3bf5142cf7c1",
+            "startedAt": "2023-08-08T19:11:48\u002B0000",
+            "completedAt": "2023-08-08T19:11:48\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "d6779fdd-99c7-475d-86d2-75195401f5b8",
+            "startedAt": "2023-08-08T19:03:54\u002B0000",
+            "completedAt": "2023-08-08T19:03:55\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "62ccdc21-a3d8-434e-8f3d-fc08c7e45796",
+            "startedAt": "2023-08-08T18:56:43\u002B0000",
+            "completedAt": "2023-08-08T18:56:43\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "ece71a7e-4ab7-4511-8a55-e455fc3d8dc1",
+            "startedAt": "2023-08-08T18:52:11\u002B0000",
+            "completedAt": "2023-08-08T18:52:15\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "3255e979-bf2e-4859-bd1c-bc4444c1d416",
+            "startedAt": "2023-08-08T14:36:47\u002B0000",
+            "completedAt": "2023-08-08T14:36:47\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "e6149f60-d5b3-452c-b03c-3c3eda9ca83e",
+            "startedAt": "2023-08-08T14:35:17\u002B0000",
+            "completedAt": "2023-08-08T14:35:19\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "9f2a0037-a59b-4716-ae7f-c7e0a7d323e5",
+            "startedAt": "2023-08-08T02:34:37\u002B0000",
+            "completedAt": "2023-08-08T02:34:44\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "912a7251-aaa6-4f93-a3c9-84a92f913f3b",
+            "startedAt": "2023-08-08T02:23:12\u002B0000",
+            "completedAt": "2023-08-08T02:23:14\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "28d66c68-03c5-4a68-a364-a83393897137",
+            "startedAt": "2023-08-03T19:13:13\u002B0000",
+            "completedAt": "2023-08-03T19:13:13\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "6cf84a54-16c4-4e23-9d9c-88ea8da6c2d5",
+            "startedAt": "2023-08-03T19:12:49\u002B0000",
+            "completedAt": "2023-08-03T19:12:52\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "92d8ca51-804e-4bba-909b-ccb5ef7a8a28",
+            "startedAt": "2023-08-03T19:11:53\u002B0000",
+            "completedAt": "2023-08-03T19:11:54\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "562e7116-9d35-4dd3-9c6a-14b129fb0c36",
+            "startedAt": "2023-08-03T19:10:43\u002B0000",
+            "completedAt": "2023-08-03T19:10:43\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "8a12769f-f98b-440e-9fa1-4caf3ca5dcac",
+            "startedAt": "2023-08-03T19:09:08\u002B0000",
+            "completedAt": "2023-08-03T19:09:08\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "dd911b1e-5b70-4943-9aff-5665bb194995",
+            "startedAt": "2023-08-03T19:07:41\u002B0000",
+            "completedAt": "2023-08-03T19:07:45\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "569be0bd-c71e-4233-a686-33a75fbfff64",
+            "startedAt": "2023-08-03T17:40:55\u002B0000",
+            "completedAt": "2023-08-03T17:40:56\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "kind=\u0022domain\u0022 and name=\u0022kansashealthsystem.com\u0022",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "sdfsdf"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": "t-sshadahmed@microsoft.com"
+            }
+          },
+          {
+            "id": "5062bb9c-357c-4d38-8788-3ec568bc6326",
+            "startedAt": "2023-08-03T16:53:24\u002B0000",
+            "completedAt": "2023-08-03T16:53:25\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "fbbe8298-45cc-4316-8841-c14c0948f0c6",
+            "startedAt": "2023-08-03T16:46:37\u002B0000",
+            "completedAt": "2023-08-03T16:46:37\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "e9ac6db8-a528-4eb1-a89a-c71f5b8d68ba",
+            "startedAt": "2023-08-03T16:44:07\u002B0000",
+            "completedAt": "2023-08-03T16:44:08\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "3095de98-b8b0-4699-8deb-d54ee8b44206",
+            "startedAt": "2023-08-03T16:35:37\u002B0000",
+            "completedAt": "2023-08-03T16:35:38\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = kumed.com and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "9f5a21a0-96ed-4602-9ed7-be14bb678d88",
+            "startedAt": "2023-08-03T16:26:35\u002B0000",
+            "completedAt": "2023-08-03T16:26:35\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "61441d10-20d3-442b-b0b7-383c4d51591d",
+            "startedAt": "2023-08-03T16:23:24\u002B0000",
+            "completedAt": "2023-08-03T16:23:25\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "name = ku.edu and type = domain",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "externalId": "new_external_id"
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": ""
+            }
+          },
+          {
+            "id": "5159a92d-824c-40a5-91d2-a494d73abd92",
+            "startedAt": "2023-08-03T16:20:00\u002B0000",
+            "completedAt": "2023-08-03T16:20:07\u002B0000",
+            "lastPolledAt": null,
+            "state": "complete",
+            "phase": "complete",
+            "reason": null,
+            "metadata": {
+              "filter": "kind=\u0022host\u0022 and name=\u0022*.quickconnect.to\u0022",
+              "kind": "GlobalInventoryUpdateTask",
+              "assetUpdateRequest": {
+                "labels": {
+                  "sdk-generated-label": true
+                }
+              },
+              "estimated": 1,
+              "progress": 100,
+              "username": "t-sshadahmed@microsoft.com"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "1732642333",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

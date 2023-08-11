@@ -1,0 +1,1214 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/discoGroups?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-86339a468e6b06f53d84302d7df17428-01bf3357215d3dd7-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b89d0300a3a5a2affc55458acc130d2b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:25:33 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "33d662fd-2e1c-458e-893a-4c94b5018e01",
+        "x-ms-request-id": "1a296704-36f9-4e48-a8e3-9587cefae666",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "totalElements": 54,
+        "value": [
+          {
+            "id": "University of Kansas",
+            "name": "University of Kansas",
+            "displayName": "University of Kansas",
+            "description": "This Discovery Group has been auto-created by selecting a pre-built attack surface",
+            "tier": "advanced",
+            "frequencyMilliseconds": 604800000,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "kuhistory.com"
+              },
+              {
+                "kind": "domain",
+                "name": "kuband.org"
+              },
+              {
+                "kind": "domain",
+                "name": "kiteaai.org"
+              },
+              {
+                "kind": "domain",
+                "name": "actionsdg.org"
+              },
+              {
+                "kind": "domain",
+                "name": "jschooltech.org"
+              },
+              {
+                "kind": "domain",
+                "name": "kudining.net"
+              },
+              {
+                "kind": "domain",
+                "name": "kufood.com"
+              },
+              {
+                "kind": "domain",
+                "name": "kumc.edu"
+              },
+              {
+                "kind": "as",
+                "name": "2496"
+              },
+              {
+                "kind": "domain",
+                "name": "kudining.org"
+              },
+              {
+                "kind": "as",
+                "name": "11659"
+              },
+              {
+                "kind": "domain",
+                "name": "wethryve.org"
+              },
+              {
+                "kind": "domain",
+                "name": "kclatinohealth.org"
+              },
+              {
+                "kind": "domain",
+                "name": "kuce.org"
+              },
+              {
+                "kind": "domain",
+                "name": "jayhawkmediaworkshop.org"
+              },
+              {
+                "kind": "domain",
+                "name": "jayhawkconsulting.org"
+              },
+              {
+                "kind": "domain",
+                "name": "ksrtap.org"
+              },
+              {
+                "kind": "domain",
+                "name": "kuband.com"
+              },
+              {
+                "kind": "domain",
+                "name": "redtire.org"
+              },
+              {
+                "kind": "domain",
+                "name": "trestlenetwork.org"
+              },
+              {
+                "kind": "domain",
+                "name": "kucrl.org"
+              },
+              {
+                "kind": "domain",
+                "name": "kudining.com"
+              },
+              {
+                "kind": "domain",
+                "name": "kucppr.org"
+              },
+              {
+                "kind": "domain",
+                "name": "jayhawkjournalism.org"
+              },
+              {
+                "kind": "domain",
+                "name": "ksltap.org"
+              },
+              {
+                "kind": "domain",
+                "name": "kansasltap.org"
+              },
+              {
+                "kind": "domain",
+                "name": "ku.edu"
+              },
+              {
+                "kind": "domain",
+                "name": "kansasrtap.org"
+              },
+              {
+                "kind": "domain",
+                "name": "journalismtech.org"
+              }
+            ],
+            "names": [
+              "University of Kansas Medical Center",
+              "University of Kansas School Of Medicine-Wichita Medical Practice Association",
+              "University of Kansas School of Pharmacy",
+              "University of Kansas",
+              "Institute for Advancing Medical Innovation",
+              "University of Kansas School of Law",
+              "University Of Kansas Center For Research, Inc.",
+              "Transportation Research Institute, University of Kansas",
+              "The University of Kansas School of Business"
+            ],
+            "excludes": [],
+            "latestRun": {
+              "submittedDate": null,
+              "startedDate": "2023-08-11T15:26:49\u002B0000",
+              "completedDate": null,
+              "tier": null,
+              "state": "completed",
+              "totalAssetsFoundCount": 0,
+              "assetsAddedToInventoryCount": 0,
+              "seeds": null,
+              "excludes": null,
+              "names": null,
+              "errors": null
+            },
+            "createdDate": "2023-07-28T16:42:06\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "New disco group Name",
+            "name": "New disco group Name",
+            "displayName": "New disco group Name",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-03T16:14:55\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "New disco group name from ts",
+            "name": "New disco group name from ts",
+            "displayName": "New disco group name from ts",
+            "description": "Here is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-09T02:39:24\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "f7290e3f-1aa9-4dd3-88f1-59a6d3afbfb4",
+            "name": "f7290e3f-1aa9-4dd3-88f1-59a6d3afbfb4",
+            "displayName": "f7290e3f-1aa9-4dd3-88f1-59a6d3afbfb4",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:08\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "6c328d2d-3f64-4e62-97e3-dc725f34ea97",
+            "name": "6c328d2d-3f64-4e62-97e3-dc725f34ea97",
+            "displayName": "6c328d2d-3f64-4e62-97e3-dc725f34ea97",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:08\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "9d59ca47-fba8-4e66-8312-7ddbcc96f367",
+            "name": "9d59ca47-fba8-4e66-8312-7ddbcc96f367",
+            "displayName": "9d59ca47-fba8-4e66-8312-7ddbcc96f367",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:09\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "24f17895-de3b-418d-aca8-6fc75f19b69e",
+            "name": "24f17895-de3b-418d-aca8-6fc75f19b69e",
+            "displayName": "24f17895-de3b-418d-aca8-6fc75f19b69e",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:09\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "b2db47e8-edc6-4711-9069-fdb1f8d77bc2",
+            "name": "b2db47e8-edc6-4711-9069-fdb1f8d77bc2",
+            "displayName": "b2db47e8-edc6-4711-9069-fdb1f8d77bc2",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:09\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "d2b82e3f-7389-48dc-a2fa-66591c4999bc",
+            "name": "d2b82e3f-7389-48dc-a2fa-66591c4999bc",
+            "displayName": "d2b82e3f-7389-48dc-a2fa-66591c4999bc",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:09\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "81e87e8d-fd80-4e02-98aa-d157f7312ecf",
+            "name": "81e87e8d-fd80-4e02-98aa-d157f7312ecf",
+            "displayName": "81e87e8d-fd80-4e02-98aa-d157f7312ecf",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:09\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "e46d2538-52d6-453f-bea0-ca9dc488aa78",
+            "name": "e46d2538-52d6-453f-bea0-ca9dc488aa78",
+            "displayName": "e46d2538-52d6-453f-bea0-ca9dc488aa78",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:10\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "926a4220-5de6-42d4-bf22-5d407f3991bb",
+            "name": "926a4220-5de6-42d4-bf22-5d407f3991bb",
+            "displayName": "926a4220-5de6-42d4-bf22-5d407f3991bb",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:10\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "73737e41-f29a-4098-bd14-bf6e6ef96267",
+            "name": "73737e41-f29a-4098-bd14-bf6e6ef96267",
+            "displayName": "73737e41-f29a-4098-bd14-bf6e6ef96267",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:11\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "93d56210-e3cd-43c8-88b6-cf5862935e94",
+            "name": "93d56210-e3cd-43c8-88b6-cf5862935e94",
+            "displayName": "93d56210-e3cd-43c8-88b6-cf5862935e94",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:11\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "82e11179-3824-489f-87d8-bae2cd666abd",
+            "name": "82e11179-3824-489f-87d8-bae2cd666abd",
+            "displayName": "82e11179-3824-489f-87d8-bae2cd666abd",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:11\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "2e1ad026-a9e4-497a-abff-3dbd08cb4d79",
+            "name": "2e1ad026-a9e4-497a-abff-3dbd08cb4d79",
+            "displayName": "2e1ad026-a9e4-497a-abff-3dbd08cb4d79",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:12\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "102921b9-9a29-49ca-a358-4b73a50fc11f",
+            "name": "102921b9-9a29-49ca-a358-4b73a50fc11f",
+            "displayName": "102921b9-9a29-49ca-a358-4b73a50fc11f",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:12\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "40f76b33-2bce-46cb-b80c-b374848187d3",
+            "name": "40f76b33-2bce-46cb-b80c-b374848187d3",
+            "displayName": "40f76b33-2bce-46cb-b80c-b374848187d3",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:12\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "7a82f87f-5a9e-485a-8db6-8b76df7bf21c",
+            "name": "7a82f87f-5a9e-485a-8db6-8b76df7bf21c",
+            "displayName": "7a82f87f-5a9e-485a-8db6-8b76df7bf21c",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:12\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "3b96baf7-fa46-4f76-bed2-e7065a87ac5f",
+            "name": "3b96baf7-fa46-4f76-bed2-e7065a87ac5f",
+            "displayName": "3b96baf7-fa46-4f76-bed2-e7065a87ac5f",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:13\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "32a5f95a-4327-4f9b-9edf-68078c7350d2",
+            "name": "32a5f95a-4327-4f9b-9edf-68078c7350d2",
+            "displayName": "32a5f95a-4327-4f9b-9edf-68078c7350d2",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:13\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "5cb51bdd-35fc-4e0c-b108-fd61d3610c93",
+            "name": "5cb51bdd-35fc-4e0c-b108-fd61d3610c93",
+            "displayName": "5cb51bdd-35fc-4e0c-b108-fd61d3610c93",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:13\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "37536c7e-4afe-4d08-bc22-9deff3095fa1",
+            "name": "37536c7e-4afe-4d08-bc22-9deff3095fa1",
+            "displayName": "37536c7e-4afe-4d08-bc22-9deff3095fa1",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:14\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "e9e81cea-19a1-428d-9cde-97500053d79b",
+            "name": "e9e81cea-19a1-428d-9cde-97500053d79b",
+            "displayName": "e9e81cea-19a1-428d-9cde-97500053d79b",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:14\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "7b1c5438-b3cf-4105-a2b8-07519d8f3529",
+            "name": "7b1c5438-b3cf-4105-a2b8-07519d8f3529",
+            "displayName": "7b1c5438-b3cf-4105-a2b8-07519d8f3529",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:14\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "1f90f61c-313e-4fb4-b4fd-cafc6b09a34b",
+            "name": "1f90f61c-313e-4fb4-b4fd-cafc6b09a34b",
+            "displayName": "1f90f61c-313e-4fb4-b4fd-cafc6b09a34b",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:14\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "7075fc89-3149-419b-baf6-307942a098bb",
+            "name": "7075fc89-3149-419b-baf6-307942a098bb",
+            "displayName": "7075fc89-3149-419b-baf6-307942a098bb",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:15\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "b1114398-99ae-40b8-96b2-52a60288f0cc",
+            "name": "b1114398-99ae-40b8-96b2-52a60288f0cc",
+            "displayName": "b1114398-99ae-40b8-96b2-52a60288f0cc",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:15\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "ef3578b1-1d98-4c48-a9bd-05ea5ef26796",
+            "name": "ef3578b1-1d98-4c48-a9bd-05ea5ef26796",
+            "displayName": "ef3578b1-1d98-4c48-a9bd-05ea5ef26796",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:15\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "977b9e36-1670-402e-8d30-385421743f28",
+            "name": "977b9e36-1670-402e-8d30-385421743f28",
+            "displayName": "977b9e36-1670-402e-8d30-385421743f28",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:16\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "d94f1932-905f-4a09-8525-1e360b720771",
+            "name": "d94f1932-905f-4a09-8525-1e360b720771",
+            "displayName": "d94f1932-905f-4a09-8525-1e360b720771",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:16\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "af64add7-daf3-42bb-9be0-4e9966bd37e8",
+            "name": "af64add7-daf3-42bb-9be0-4e9966bd37e8",
+            "displayName": "af64add7-daf3-42bb-9be0-4e9966bd37e8",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:16\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "cc4492f7-3401-4a27-bfbe-f5b51e0c22e8",
+            "name": "cc4492f7-3401-4a27-bfbe-f5b51e0c22e8",
+            "displayName": "cc4492f7-3401-4a27-bfbe-f5b51e0c22e8",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:16\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "b0290144-177a-4759-a601-9c604a0299a4",
+            "name": "b0290144-177a-4759-a601-9c604a0299a4",
+            "displayName": "b0290144-177a-4759-a601-9c604a0299a4",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:16\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "02918e81-4179-4f96-bcfd-30cb3ebc685c",
+            "name": "02918e81-4179-4f96-bcfd-30cb3ebc685c",
+            "displayName": "02918e81-4179-4f96-bcfd-30cb3ebc685c",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:17\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "93e4333c-377d-4f9f-ba7a-9695cff83c66",
+            "name": "93e4333c-377d-4f9f-ba7a-9695cff83c66",
+            "displayName": "93e4333c-377d-4f9f-ba7a-9695cff83c66",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:17\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "94806edd-1856-43ee-a341-9f9357b8b52b",
+            "name": "94806edd-1856-43ee-a341-9f9357b8b52b",
+            "displayName": "94806edd-1856-43ee-a341-9f9357b8b52b",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:17\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "b145d353-fb9a-4006-b841-930d4d996b8f",
+            "name": "b145d353-fb9a-4006-b841-930d4d996b8f",
+            "displayName": "b145d353-fb9a-4006-b841-930d4d996b8f",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:17\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "ce377bf7-93c5-4f26-ac49-e63b9a3123bc",
+            "name": "ce377bf7-93c5-4f26-ac49-e63b9a3123bc",
+            "displayName": "ce377bf7-93c5-4f26-ac49-e63b9a3123bc",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:18\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "4834a41d-9b0f-40cb-ad0c-53bf085acf31",
+            "name": "4834a41d-9b0f-40cb-ad0c-53bf085acf31",
+            "displayName": "4834a41d-9b0f-40cb-ad0c-53bf085acf31",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:18\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "2b342082-b511-4f37-a00d-209a4fa0e23b",
+            "name": "2b342082-b511-4f37-a00d-209a4fa0e23b",
+            "displayName": "2b342082-b511-4f37-a00d-209a4fa0e23b",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:18\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "1f43a445-337a-4eec-84a7-a9a06320b0bc",
+            "name": "1f43a445-337a-4eec-84a7-a9a06320b0bc",
+            "displayName": "1f43a445-337a-4eec-84a7-a9a06320b0bc",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:18\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "59e0511a-0b8e-44d7-857b-e045788285fb",
+            "name": "59e0511a-0b8e-44d7-857b-e045788285fb",
+            "displayName": "59e0511a-0b8e-44d7-857b-e045788285fb",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:18\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "3ef35fb2-e071-42f9-af9e-cabded416431",
+            "name": "3ef35fb2-e071-42f9-af9e-cabded416431",
+            "displayName": "3ef35fb2-e071-42f9-af9e-cabded416431",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:18\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "c63d0f88-8535-4367-913e-1811b8ba9508",
+            "name": "c63d0f88-8535-4367-913e-1811b8ba9508",
+            "displayName": "c63d0f88-8535-4367-913e-1811b8ba9508",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:18\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "d52d26cc-5d2d-4cde-9140-194b0a2db60d",
+            "name": "d52d26cc-5d2d-4cde-9140-194b0a2db60d",
+            "displayName": "d52d26cc-5d2d-4cde-9140-194b0a2db60d",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:19\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "69c74db4-61e0-49aa-90f5-406c728859de",
+            "name": "69c74db4-61e0-49aa-90f5-406c728859de",
+            "displayName": "69c74db4-61e0-49aa-90f5-406c728859de",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:19\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "a5d7d675-1a9c-4cf2-b4de-e5786b64083d",
+            "name": "a5d7d675-1a9c-4cf2-b4de-e5786b64083d",
+            "displayName": "a5d7d675-1a9c-4cf2-b4de-e5786b64083d",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:19\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "15691719-5724-4e4c-8a53-8985d8d0ec9a",
+            "name": "15691719-5724-4e4c-8a53-8985d8d0ec9a",
+            "displayName": "15691719-5724-4e4c-8a53-8985d8d0ec9a",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:19\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "1232e2a7-ae8f-4f9d-b35f-a5b4b3c4fbca",
+            "name": "1232e2a7-ae8f-4f9d-b35f-a5b4b3c4fbca",
+            "displayName": "1232e2a7-ae8f-4f9d-b35f-a5b4b3c4fbca",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:19\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "819d1f3d-bff0-4cac-b0c6-46c822c0fbf6",
+            "name": "819d1f3d-bff0-4cac-b0c6-46c822c0fbf6",
+            "displayName": "819d1f3d-bff0-4cac-b0c6-46c822c0fbf6",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:19\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "1f755466-8fa0-4372-9909-0f3b05608838",
+            "name": "1f755466-8fa0-4372-9909-0f3b05608838",
+            "displayName": "1f755466-8fa0-4372-9909-0f3b05608838",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:20\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "fd0dfb83-3fb5-4c71-9a1a-74926626e4ee",
+            "name": "fd0dfb83-3fb5-4c71-9a1a-74926626e4ee",
+            "displayName": "fd0dfb83-3fb5-4c71-9a1a-74926626e4ee",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-10T21:12:20\u002B0000",
+            "templateId": null
+          },
+          {
+            "id": "0aff03da-0c65-424a-bf65-03f0ca470265",
+            "name": "0aff03da-0c65-424a-bf65-03f0ca470265",
+            "displayName": "0aff03da-0c65-424a-bf65-03f0ca470265",
+            "description": "This is a description",
+            "tier": "advanced",
+            "frequencyMilliseconds": null,
+            "seeds": [
+              {
+                "kind": "domain",
+                "name": "example.org"
+              }
+            ],
+            "names": [],
+            "excludes": [],
+            "latestRun": null,
+            "createdDate": "2023-08-11T03:47:17\u002B0000",
+            "templateId": null
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "1349090781",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

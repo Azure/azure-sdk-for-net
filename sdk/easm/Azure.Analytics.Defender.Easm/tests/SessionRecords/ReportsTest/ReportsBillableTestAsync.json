@@ -1,0 +1,288 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/reports/assets:getBillable?api-version=2023-03-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "0",
+        "traceparent": "00-1fa0e5e72cb886e6b6e2f5d2b3028147-9d00854595b2e8f9-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a2b9419d3215d740d1698177a6a46cd7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:26:40 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "e5f6dca9-ec94-4238-8f61-5b9c236262a2",
+        "x-ms-request-id": "6c449bd2-0094-4e74-9624-e628d540fecf",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "assetSummaries": [
+          {
+            "date": "2023-07-29",
+            "total": 0,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 0
+              },
+              {
+                "kind": "domain",
+                "count": 0
+              },
+              {
+                "kind": "ipAddress",
+                "count": 0
+              }
+            ]
+          },
+          {
+            "date": "2023-07-30",
+            "total": 0,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 0
+              },
+              {
+                "kind": "domain",
+                "count": 0
+              },
+              {
+                "kind": "ipAddress",
+                "count": 0
+              }
+            ]
+          },
+          {
+            "date": "2023-07-31",
+            "total": 9643,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9245
+              },
+              {
+                "kind": "domain",
+                "count": 33
+              },
+              {
+                "kind": "ipAddress",
+                "count": 365
+              }
+            ]
+          },
+          {
+            "date": "2023-08-01",
+            "total": 9639,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9240
+              },
+              {
+                "kind": "domain",
+                "count": 33
+              },
+              {
+                "kind": "ipAddress",
+                "count": 366
+              }
+            ]
+          },
+          {
+            "date": "2023-08-02",
+            "total": 9672,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9256
+              },
+              {
+                "kind": "domain",
+                "count": 33
+              },
+              {
+                "kind": "ipAddress",
+                "count": 383
+              }
+            ]
+          },
+          {
+            "date": "2023-08-03",
+            "total": 9672,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9256
+              },
+              {
+                "kind": "domain",
+                "count": 33
+              },
+              {
+                "kind": "ipAddress",
+                "count": 383
+              }
+            ]
+          },
+          {
+            "date": "2023-08-04",
+            "total": 9677,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9261
+              },
+              {
+                "kind": "domain",
+                "count": 33
+              },
+              {
+                "kind": "ipAddress",
+                "count": 383
+              }
+            ]
+          },
+          {
+            "date": "2023-08-05",
+            "total": 9731,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9314
+              },
+              {
+                "kind": "domain",
+                "count": 33
+              },
+              {
+                "kind": "ipAddress",
+                "count": 384
+              }
+            ]
+          },
+          {
+            "date": "2023-08-06",
+            "total": 9671,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9387
+              },
+              {
+                "kind": "domain",
+                "count": 32
+              },
+              {
+                "kind": "ipAddress",
+                "count": 252
+              }
+            ]
+          },
+          {
+            "date": "2023-08-07",
+            "total": 9671,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9387
+              },
+              {
+                "kind": "domain",
+                "count": 32
+              },
+              {
+                "kind": "ipAddress",
+                "count": 252
+              }
+            ]
+          },
+          {
+            "date": "2023-08-08",
+            "total": 9679,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9393
+              },
+              {
+                "kind": "domain",
+                "count": 32
+              },
+              {
+                "kind": "ipAddress",
+                "count": 254
+              }
+            ]
+          },
+          {
+            "date": "2023-08-09",
+            "total": 9722,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9438
+              },
+              {
+                "kind": "domain",
+                "count": 32
+              },
+              {
+                "kind": "ipAddress",
+                "count": 252
+              }
+            ]
+          },
+          {
+            "date": "2023-08-10",
+            "total": 9774,
+            "assetBreakdown": [
+              {
+                "kind": "host",
+                "count": 9491
+              },
+              {
+                "kind": "domain",
+                "count": 32
+              },
+              {
+                "kind": "ipAddress",
+                "count": 251
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "759099717",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

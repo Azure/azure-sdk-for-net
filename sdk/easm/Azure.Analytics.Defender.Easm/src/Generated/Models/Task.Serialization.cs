@@ -13,9 +13,9 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm.Models
 {
-    public partial class Task
+    public partial class TaskResource
     {
-        internal static Task DeserializeTask(JsonElement element)
+        internal static TaskResource DeserializeTask(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,12 +108,12 @@ namespace Azure.Analytics.Defender.Easm.Models
                     continue;
                 }
             }
-            return new Task(id, Optional.ToNullable(startedAt), Optional.ToNullable(completedAt), Optional.ToNullable(lastPolledAt), Optional.ToNullable(state), Optional.ToNullable(phase), reason.Value, Optional.ToDictionary(metadata));
+            return new TaskResource(id, Optional.ToNullable(startedAt), Optional.ToNullable(completedAt), Optional.ToNullable(lastPolledAt), Optional.ToNullable(state), Optional.ToNullable(phase), reason.Value, Optional.ToDictionary(metadata));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Task FromResponse(Response response)
+        internal static TaskResource FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeTask(document.RootElement);

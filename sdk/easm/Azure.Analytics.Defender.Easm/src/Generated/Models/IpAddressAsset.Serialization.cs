@@ -28,7 +28,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             Optional<IReadOnlyList<ObservedString>> netRanges = default;
             Optional<IReadOnlyList<ObservedHeader>> headers = default;
             Optional<IReadOnlyList<Attribute>> attributes = default;
-            Optional<IReadOnlyList<Cookie>> cookies = default;
+            Optional<IReadOnlyList<AssociatedCookie>> cookies = default;
             Optional<IReadOnlyList<SslCertAsset>> sslCerts = default;
             Optional<IReadOnlyList<Service>> services = default;
             Optional<IReadOnlyList<IpBlock>> ipBlocks = default;
@@ -143,10 +143,10 @@ namespace Azure.Analytics.Defender.Easm.Models
                     {
                         continue;
                     }
-                    List<Cookie> array = new List<Cookie>();
+                    List<AssociatedCookie> array = new List<AssociatedCookie>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Cookie.DeserializeCookie(item));
+                        array.Add(AssociatedCookie.DeserializeCookie(item));
                     }
                     cookies = array;
                     continue;

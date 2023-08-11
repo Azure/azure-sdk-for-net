@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
@@ -14,8 +15,18 @@ namespace Azure.Analytics.Defender.Easm.Tests
 {
     public class EasmClientTest: RecordedTestBase<EasmClientTestEnvironment>
     {
+        protected Regex UUID_REGEX = new Regex(@"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}");
+        protected EasmClient client { get; private set; }
+
         public EasmClientTest(bool isAsync) : base(isAsync)
         {
+        }
+
+        [SetUp]
+        public void Setup() {
+            client = InstrumentClient(new EasmClient(new System.Uri(TestEnvironment.Endpoint), TestEnvironment.SubscriptionId,
+                        TestEnvironment.ResourceGroupName, TestEnvironment.WorkspaceName,
+                        TestEnvironment.Credential, InstrumentClientOptions(new EasmClientOptions())));
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */

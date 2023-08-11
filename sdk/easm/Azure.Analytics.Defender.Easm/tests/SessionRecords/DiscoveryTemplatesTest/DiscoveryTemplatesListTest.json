@@ -1,0 +1,3722 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/discoTemplates?api-version=2023-03-01-preview\u0026filter=ku",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dd04d4bbd90e08289844e7ecbb96f392-792e16114ef0c2f8-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "039128d4d6c884cfc9378871f32b782b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:25:50 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "a8ad62b2-b709-4a66-b422-7069419feade",
+        "x-ms-request-id": "9aaba7b8-4d1d-4745-ae2b-200064e61533",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "totalElements": 262,
+        "value": [
+          {
+            "id": "43488",
+            "name": "Rigaku Corporation",
+            "displayName": "Rigaku Corporation",
+            "industry": "Electronic Equipment, Instruments and Components",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Rigaku Corporation"
+            ]
+          },
+          {
+            "id": "44419",
+            "name": "Kulmbacher Brauerei Aktien-Gesellschaft",
+            "displayName": "Kulmbacher Brauerei Aktien-Gesellschaft",
+            "industry": "Beverages",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Kulmbach",
+            "seeds": [],
+            "names": [
+              "Kulmbacher Brauerei Aktien-Gesellschaft"
+            ]
+          },
+          {
+            "id": "44457",
+            "name": "Roku, Inc.",
+            "displayName": "Roku, Inc.",
+            "industry": "Entertainment",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "CA",
+            "city": "Los Gatos",
+            "seeds": [],
+            "names": [
+              "Roku, Inc."
+            ]
+          },
+          {
+            "id": "46359",
+            "name": "Katakura Industries Co.,Ltd.",
+            "displayName": "Katakura Industries Co.,Ltd.",
+            "industry": "Industrial Conglomerates",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Katakura Industries Co.,Ltd."
+            ]
+          },
+          {
+            "id": "46914",
+            "name": "Kuopion Energia Oy",
+            "displayName": "Kuopion Energia Oy",
+            "industry": "Electric Utilities",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Kuopio",
+            "seeds": [],
+            "names": [
+              "Kuopion Energia Oy"
+            ]
+          },
+          {
+            "id": "47138",
+            "name": "KfH Kuratorium f\u00FCr Dialyse und Nierentransplantation e.V.",
+            "displayName": "KfH Kuratorium f\u00FCr Dialyse und Nierentransplantation e.V.",
+            "industry": "Healthcare Providers and Services",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Neu-Isenburg",
+            "seeds": [],
+            "names": [
+              "KfH Kuratorium f\u00FCr Dialyse und Nierentransplantation e.V."
+            ]
+          },
+          {
+            "id": "48307",
+            "name": "Toyota Boshoku Corporation",
+            "displayName": "Toyota Boshoku Corporation",
+            "industry": "Auto Components",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Kariya",
+            "seeds": [],
+            "names": [
+              "Toyota Boshoku Corporation"
+            ]
+          },
+          {
+            "id": "49346",
+            "name": "Commercial Bank of Kuwait K.P.S.C.",
+            "displayName": "Commercial Bank of Kuwait K.P.S.C.",
+            "industry": "Banks",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Safat",
+            "seeds": [],
+            "names": [
+              "Commercial Bank of Kuwait K.P.S.C."
+            ]
+          },
+          {
+            "id": "49680",
+            "name": "Miroku Jyoho Service Co., Ltd.",
+            "displayName": "Miroku Jyoho Service Co., Ltd.",
+            "industry": "Software",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Miroku Jyoho Service Co., Ltd."
+            ]
+          },
+          {
+            "id": "49715",
+            "name": "Kuwait Finance House K.S.C.P.",
+            "displayName": "Kuwait Finance House K.S.C.P.",
+            "industry": "Banks",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait City",
+            "seeds": [],
+            "names": [
+              "Kuwait Finance House K.S.C.P."
+            ]
+          },
+          {
+            "id": "51643",
+            "name": "Shikoku Electric Power Company, Incorporated",
+            "displayName": "Shikoku Electric Power Company, Incorporated",
+            "industry": "Electric Utilities",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Takamatsu",
+            "seeds": [],
+            "names": [
+              "Shikoku Electric Power Company, Incorporated"
+            ]
+          },
+          {
+            "id": "52622",
+            "name": "Outokumpu Oyj",
+            "displayName": "Outokumpu Oyj",
+            "industry": "Metals and Mining",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Helsinki",
+            "seeds": [],
+            "names": [
+              "Outokumpu Oyj"
+            ]
+          },
+          {
+            "id": "53642",
+            "name": "Rimkus Consulting Group, Inc.",
+            "displayName": "Rimkus Consulting Group, Inc.",
+            "industry": "Professional Services",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "TX",
+            "city": "Houston",
+            "seeds": [],
+            "names": [
+              "Rimkus Consulting Group, Inc."
+            ]
+          },
+          {
+            "id": "53887",
+            "name": "Mikuni Corporation",
+            "displayName": "Mikuni Corporation",
+            "industry": "Auto Components",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Mikuni Corporation"
+            ]
+          },
+          {
+            "id": "54385",
+            "name": "Skullcandy, Inc.",
+            "displayName": "Skullcandy, Inc.",
+            "industry": "Household Durables",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "UT",
+            "city": "Park City",
+            "seeds": [],
+            "names": [
+              "Skullcandy, Inc."
+            ]
+          },
+          {
+            "id": "54532",
+            "name": "Kulicke and Soffa Industries, Inc.",
+            "displayName": "Kulicke and Soffa Industries, Inc.",
+            "industry": "Semiconductors and Semiconductor Equipment",
+            "region": "Asia / Pacific",
+            "countryCode": "SG",
+            "stateCode": null,
+            "city": "Singapore",
+            "seeds": [],
+            "names": [
+              "Kulicke and Soffa Industries, Inc."
+            ]
+          },
+          {
+            "id": "54548",
+            "name": "Daifuku Co., Ltd.",
+            "displayName": "Daifuku Co., Ltd.",
+            "industry": "Machinery",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Osaka",
+            "seeds": [],
+            "names": [
+              "Daifuku Co., Ltd."
+            ]
+          },
+          {
+            "id": "54550",
+            "name": "Hokuriku Electric Power Company",
+            "displayName": "Hokuriku Electric Power Company",
+            "industry": "Electric Utilities",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Toyama",
+            "seeds": [],
+            "names": [
+              "Hokuriku Electric Power Company"
+            ]
+          },
+          {
+            "id": "54555",
+            "name": "The Hyakugo Bank, Ltd.",
+            "displayName": "The Hyakugo Bank, Ltd.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tsu",
+            "seeds": [],
+            "names": [
+              "The Hyakugo Bank, Ltd."
+            ]
+          },
+          {
+            "id": "56953",
+            "name": "Egypt-Kuwait Securities Trading",
+            "displayName": "Egypt-Kuwait Securities Trading",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "EG",
+            "stateCode": null,
+            "city": "Cairo",
+            "seeds": [],
+            "names": [
+              "Egypt-Kuwait Securities Trading"
+            ]
+          },
+          {
+            "id": "57943",
+            "name": "BankUnited, Inc.",
+            "displayName": "BankUnited, Inc.",
+            "industry": "Banks",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "FL",
+            "city": "Miami Lakes",
+            "seeds": [],
+            "names": [
+              "BankUnited, Inc."
+            ]
+          },
+          {
+            "id": "58190",
+            "name": "SAKURA Internet Inc.",
+            "displayName": "SAKURA Internet Inc.",
+            "industry": "IT Services",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Osaka",
+            "seeds": [],
+            "names": [
+              "SAKURA Internet Inc."
+            ]
+          },
+          {
+            "id": "58469",
+            "name": "Hokuhoku Financial Group, Inc.",
+            "displayName": "Hokuhoku Financial Group, Inc.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Toyama",
+            "seeds": [],
+            "names": [
+              "Hokuhoku Financial Group, Inc."
+            ]
+          },
+          {
+            "id": "58715",
+            "name": "Kudelski SA",
+            "displayName": "Kudelski SA",
+            "industry": "Electronic Equipment, Instruments and Components",
+            "region": "Europe",
+            "countryCode": "CH",
+            "stateCode": null,
+            "city": "Cheseaux-sur-Lausanne",
+            "seeds": [],
+            "names": [
+              "Kudelski SA"
+            ]
+          },
+          {
+            "id": "59369",
+            "name": "Shikun \u0026 Binui Ltd.",
+            "displayName": "Shikun \u0026 Binui Ltd.",
+            "industry": "Construction and Engineering",
+            "region": "Africa / Middle East",
+            "countryCode": "IL",
+            "stateCode": null,
+            "city": "Airport City",
+            "seeds": [],
+            "names": [
+              "Shikun \u0026 Binui Ltd."
+            ]
+          },
+          {
+            "id": "59387",
+            "name": "Rakuten, Inc.",
+            "displayName": "Rakuten, Inc.",
+            "industry": "Internet and Direct Marketing Retail",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Rakuten, Inc."
+            ]
+          },
+          {
+            "id": "61335",
+            "name": "Shochiku Co., Ltd.",
+            "displayName": "Shochiku Co., Ltd.",
+            "industry": "Entertainment",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Shochiku Co., Ltd."
+            ]
+          },
+          {
+            "id": "63276",
+            "name": "Bilbao Bizkaia Kutxa, Aurrezki Kutxa eta Bahitetxea",
+            "displayName": "Bilbao Bizkaia Kutxa, Aurrezki Kutxa eta Bahitetxea",
+            "industry": "Thrifts and Mortgage Finance",
+            "region": "Europe",
+            "countryCode": "ES",
+            "stateCode": null,
+            "city": "Bilbao",
+            "seeds": [],
+            "names": [
+              "Bilbao Bizkaia Kutxa, Aurrezki Kutxa eta Bahitetxea"
+            ]
+          },
+          {
+            "id": "63600",
+            "name": "Fujikura Ltd.",
+            "displayName": "Fujikura Ltd.",
+            "industry": "Electrical Equipment",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Fujikura Ltd."
+            ]
+          },
+          {
+            "id": "63939",
+            "name": "Hakuyosha Company, Ltd.",
+            "displayName": "Hakuyosha Company, Ltd.",
+            "industry": "Diversified Consumer Services",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Hakuyosha Company, Ltd."
+            ]
+          },
+          {
+            "id": "64012",
+            "name": "PT Trimegah Sekuritas Indonesia Tbk",
+            "displayName": "PT Trimegah Sekuritas Indonesia Tbk",
+            "industry": "Capital Markets",
+            "region": "Asia / Pacific",
+            "countryCode": "ID",
+            "stateCode": null,
+            "city": "Jakarta",
+            "seeds": [],
+            "names": [
+              "PT Trimegah Sekuritas Indonesia Tbk"
+            ]
+          },
+          {
+            "id": "64566",
+            "name": "Kurt Manufacturing Company, Inc.",
+            "displayName": "Kurt Manufacturing Company, Inc.",
+            "industry": "Metals and Mining",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "MN",
+            "city": "Minneapolis",
+            "seeds": [],
+            "names": [
+              "Kurt Manufacturing Company, Inc."
+            ]
+          },
+          {
+            "id": "64872",
+            "name": "The Bank of Fukuoka, Ltd.",
+            "displayName": "The Bank of Fukuoka, Ltd.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Fukuoka",
+            "seeds": [],
+            "names": [
+              "The Bank of Fukuoka, Ltd."
+            ]
+          },
+          {
+            "id": "65211",
+            "name": "Ryohin Keikaku Co., Ltd.",
+            "displayName": "Ryohin Keikaku Co., Ltd.",
+            "industry": "Multiline Retail",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Ryohin Keikaku Co., Ltd."
+            ]
+          },
+          {
+            "id": "65929",
+            "name": "The Fukui Bank, Ltd.",
+            "displayName": "The Fukui Bank, Ltd.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Fukui",
+            "seeds": [],
+            "names": [
+              "The Fukui Bank, Ltd."
+            ]
+          },
+          {
+            "id": "66206",
+            "name": "Kubota Corporation",
+            "displayName": "Kubota Corporation",
+            "industry": "Machinery",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Osaka",
+            "seeds": [],
+            "names": [
+              "Kubota Corporation"
+            ]
+          },
+          {
+            "id": "66594",
+            "name": "Tikkurila Oyj",
+            "displayName": "Tikkurila Oyj",
+            "industry": "Chemicals",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Vantaa",
+            "seeds": [],
+            "names": [
+              "Tikkurila Oyj"
+            ]
+          },
+          {
+            "id": "66853",
+            "name": "Kurt J. Lesker Company",
+            "displayName": "Kurt J. Lesker Company",
+            "industry": "Machinery",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "PA",
+            "city": "Jefferson Hills",
+            "seeds": [],
+            "names": [
+              "Kurt J. Lesker Company"
+            ]
+          },
+          {
+            "id": "67148",
+            "name": "Kuwait Petroleum Corporation",
+            "displayName": "Kuwait Petroleum Corporation",
+            "industry": "Oil, Gas and Consumable Fuels",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Safat",
+            "seeds": [],
+            "names": [
+              "Kuwait Petroleum Corporation"
+            ]
+          },
+          {
+            "id": "67333",
+            "name": "Fukuoka Financial Group, Inc.",
+            "displayName": "Fukuoka Financial Group, Inc.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Fukuoka",
+            "seeds": [],
+            "names": [
+              "Fukuoka Financial Group, Inc."
+            ]
+          },
+          {
+            "id": "67759",
+            "name": "Kumho Petrochemical Co., Ltd.",
+            "displayName": "Kumho Petrochemical Co., Ltd.",
+            "industry": "Chemicals",
+            "region": "Asia / Pacific",
+            "countryCode": "KR",
+            "stateCode": null,
+            "city": "Seoul",
+            "seeds": [],
+            "names": [
+              "Kumho Petrochemical Co., Ltd."
+            ]
+          },
+          {
+            "id": "68397",
+            "name": "The Hyakujushi Bank, Ltd.",
+            "displayName": "The Hyakujushi Bank, Ltd.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Takamatsu",
+            "seeds": [],
+            "names": [
+              "The Hyakujushi Bank, Ltd."
+            ]
+          },
+          {
+            "id": "69133",
+            "name": "SHOGAKUKAN Inc.",
+            "displayName": "SHOGAKUKAN Inc.",
+            "industry": "Media",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Chiyoda",
+            "seeds": [],
+            "names": [
+              "SHOGAKUKAN Inc."
+            ]
+          },
+          {
+            "id": "69413",
+            "name": "Okuma Corporation",
+            "displayName": "Okuma Corporation",
+            "industry": "Machinery",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Niwa-gun",
+            "seeds": [],
+            "names": [
+              "Okuma Corporation"
+            ]
+          },
+          {
+            "id": "69420",
+            "name": "Kurita Water Industries Ltd.",
+            "displayName": "Kurita Water Industries Ltd.",
+            "industry": "Machinery",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Kurita Water Industries Ltd."
+            ]
+          },
+          {
+            "id": "69919",
+            "name": "Kurtz Holding GmbH \u0026 Co. Beteiligungs KG",
+            "displayName": "Kurtz Holding GmbH \u0026 Co. Beteiligungs KG",
+            "industry": "Machinery",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Kreuzwertheim",
+            "seeds": [],
+            "names": [
+              "Kurtz Holding GmbH \u0026 Co. Beteiligungs KG"
+            ]
+          },
+          {
+            "id": "70409",
+            "name": "The Juroku Bank, Ltd.",
+            "displayName": "The Juroku Bank, Ltd.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Gifu",
+            "seeds": [],
+            "names": [
+              "The Juroku Bank, Ltd."
+            ]
+          },
+          {
+            "id": "70421",
+            "name": "Fukoku Mutual Life Insurance Company",
+            "displayName": "Fukoku Mutual Life Insurance Company",
+            "industry": "Insurance",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Fukoku Mutual Life Insurance Company"
+            ]
+          },
+          {
+            "id": "71778",
+            "name": "LEONHARD KURZ Stiftung \u0026 Co. KG.",
+            "displayName": "LEONHARD KURZ Stiftung \u0026 Co. KG.",
+            "industry": "Metals and Mining",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "F\u00FCrth",
+            "seeds": [],
+            "names": [
+              "LEONHARD KURZ Stiftung \u0026 Co. KG."
+            ]
+          },
+          {
+            "id": "72663",
+            "name": "Kupishoes LLC",
+            "displayName": "Kupishoes LLC",
+            "industry": "Internet and Direct Marketing Retail",
+            "region": "Europe",
+            "countryCode": "RU",
+            "stateCode": null,
+            "city": "Moscow",
+            "seeds": [],
+            "names": [
+              "Kupishoes LLC"
+            ]
+          },
+          {
+            "id": "72747",
+            "name": "Keskin\u00E4inen Ty\u00F6el\u00E4kevakuutusyhti\u00F6 Elo",
+            "displayName": "Keskin\u00E4inen Ty\u00F6el\u00E4kevakuutusyhti\u00F6 Elo",
+            "industry": "Insurance",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Espoo",
+            "seeds": [],
+            "names": [
+              "Keskin\u00E4inen Ty\u00F6el\u00E4kevakuutusyhti\u00F6 Elo"
+            ]
+          },
+          {
+            "id": "73788",
+            "name": "Hakuhodo DY Holdings Inc",
+            "displayName": "Hakuhodo DY Holdings Inc",
+            "industry": "Media",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Hakuhodo DY Holdings Inc"
+            ]
+          },
+          {
+            "id": "74138",
+            "name": "Kuwait Finance and Investment Company K.S.C. (Public)",
+            "displayName": "Kuwait Finance and Investment Company K.S.C. (Public)",
+            "industry": "Consumer Finance",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait City",
+            "seeds": [],
+            "names": [
+              "Kuwait Finance and Investment Company K.S.C. (Public)"
+            ]
+          },
+          {
+            "id": "74875",
+            "name": "KU Children\u0027s Services",
+            "displayName": "KU Children\u0027s Services",
+            "industry": "Diversified Consumer Services",
+            "region": "Asia / Pacific",
+            "countryCode": "AU",
+            "stateCode": "NSW",
+            "city": "Sydney",
+            "seeds": [],
+            "names": [
+              "KU Children\u0027s Services"
+            ]
+          },
+          {
+            "id": "75051",
+            "name": "Kinokuniya Company Ltd.",
+            "displayName": "Kinokuniya Company Ltd.",
+            "industry": "Specialty Retail",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Meguro",
+            "seeds": [],
+            "names": [
+              "Kinokuniya Company Ltd."
+            ]
+          },
+          {
+            "id": "75689",
+            "name": "Kumho Tire Co., Inc.",
+            "displayName": "Kumho Tire Co., Inc.",
+            "industry": "Auto Components",
+            "region": "Asia / Pacific",
+            "countryCode": "KR",
+            "stateCode": null,
+            "city": "Gwangju",
+            "seeds": [],
+            "names": [
+              "Kumho Tire Co., Inc."
+            ]
+          },
+          {
+            "id": "77389",
+            "name": "The Chugoku Electric Power Co., Inc.",
+            "displayName": "The Chugoku Electric Power Co., Inc.",
+            "industry": "Electric Utilities",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Hiroshima",
+            "seeds": [],
+            "names": [
+              "The Chugoku Electric Power Co., Inc."
+            ]
+          },
+          {
+            "id": "77738",
+            "name": "The Michinoku Bank, Ltd.",
+            "displayName": "The Michinoku Bank, Ltd.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Aomori",
+            "seeds": [],
+            "names": [
+              "The Michinoku Bank, Ltd."
+            ]
+          },
+          {
+            "id": "78108",
+            "name": "Tohoku Electric Power Company, Incorporated",
+            "displayName": "Tohoku Electric Power Company, Incorporated",
+            "industry": "Electric Utilities",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Sendai",
+            "seeds": [],
+            "names": [
+              "Tohoku Electric Power Company, Incorporated"
+            ]
+          },
+          {
+            "id": "78758",
+            "name": "The Shikoku Bank, Ltd.",
+            "displayName": "The Shikoku Bank, Ltd.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Kochi",
+            "seeds": [],
+            "names": [
+              "The Shikoku Bank, Ltd."
+            ]
+          },
+          {
+            "id": "78762",
+            "name": "The Chugoku Bank, Limited",
+            "displayName": "The Chugoku Bank, Limited",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Okayama",
+            "seeds": [],
+            "names": [
+              "The Chugoku Bank, Limited"
+            ]
+          },
+          {
+            "id": "81029",
+            "name": "The Hokkoku Bank, Ltd.",
+            "displayName": "The Hokkoku Bank, Ltd.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Kanazawa",
+            "seeds": [],
+            "names": [
+              "The Hokkoku Bank, Ltd."
+            ]
+          },
+          {
+            "id": "81087",
+            "name": "Klinikum Region Hannover GmbH",
+            "displayName": "Klinikum Region Hannover GmbH",
+            "industry": "Healthcare Providers and Services",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Hanover",
+            "seeds": [],
+            "names": [
+              "Klinikum Region Hannover GmbH"
+            ]
+          },
+          {
+            "id": "81518",
+            "name": "Boku, Inc.",
+            "displayName": "Boku, Inc.",
+            "industry": "IT Services",
+            "region": "Europe",
+            "countryCode": "GB",
+            "stateCode": null,
+            "city": "London",
+            "seeds": [],
+            "names": [
+              "Boku, Inc."
+            ]
+          },
+          {
+            "id": "81637",
+            "name": "Grupo KUO, S.A.B. de C.V.",
+            "displayName": "Grupo KUO, S.A.B. de C.V.",
+            "industry": "Industrial Conglomerates",
+            "region": "Latin America and Caribbean",
+            "countryCode": "MX",
+            "stateCode": "DF",
+            "city": "Mexico City",
+            "seeds": [],
+            "names": [
+              "Grupo KUO, S.A.B. de C.V."
+            ]
+          },
+          {
+            "id": "90971",
+            "name": "Kuehne \u002B Nagel Ltd.",
+            "displayName": "Kuehne \u002B Nagel Ltd.",
+            "industry": "Air Freight and Logistics",
+            "region": "Europe",
+            "countryCode": "GB",
+            "stateCode": null,
+            "city": "Uxbridge",
+            "seeds": [],
+            "names": [
+              "Kuehne \u002B Nagel Ltd."
+            ]
+          },
+          {
+            "id": "104814",
+            "name": "Jordan Kuwait Bank",
+            "displayName": "Jordan Kuwait Bank",
+            "industry": "Banks",
+            "region": "Africa / Middle East",
+            "countryCode": "JO",
+            "stateCode": null,
+            "city": "Amman",
+            "seeds": [],
+            "names": [
+              "Jordan Kuwait Bank"
+            ]
+          },
+          {
+            "id": "105583",
+            "name": "Kuehne \u002B Nagel International AG",
+            "displayName": "Kuehne \u002B Nagel International AG",
+            "industry": "Marine",
+            "region": "Europe",
+            "countryCode": "CH",
+            "stateCode": null,
+            "city": "Schindellegi",
+            "seeds": [],
+            "names": [
+              "Kuehne \u002B Nagel International AG"
+            ]
+          },
+          {
+            "id": "105588",
+            "name": "Kuijpers Cargo Service BV",
+            "displayName": "Kuijpers Cargo Service BV",
+            "industry": "Road and Rail",
+            "region": "Europe",
+            "countryCode": "NL",
+            "stateCode": null,
+            "city": "Ulestraten",
+            "seeds": [],
+            "names": [
+              "Kuijpers Cargo Service BV"
+            ]
+          },
+          {
+            "id": "105589",
+            "name": "KUKA Aktiengesellschaft",
+            "displayName": "KUKA Aktiengesellschaft",
+            "industry": "Machinery",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Augsburg",
+            "seeds": [],
+            "names": [
+              "KUKA Aktiengesellschaft"
+            ]
+          },
+          {
+            "id": "105597",
+            "name": "Kumho Industrial Co., Ltd.",
+            "displayName": "Kumho Industrial Co., Ltd.",
+            "industry": "Construction and Engineering",
+            "region": "Asia / Pacific",
+            "countryCode": "KR",
+            "stateCode": null,
+            "city": "Seoul",
+            "seeds": [],
+            "names": [
+              "Kumho Industrial Co., Ltd."
+            ]
+          },
+          {
+            "id": "105625",
+            "name": "Kuwait and Middle East Financial Investment Company K.S.C.P.",
+            "displayName": "Kuwait and Middle East Financial Investment Company K.S.C.P.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait City",
+            "seeds": [],
+            "names": [
+              "Kuwait and Middle East Financial Investment Company K.S.C.P."
+            ]
+          },
+          {
+            "id": "105629",
+            "name": "Kuwait Oil Company Ltd.",
+            "displayName": "Kuwait Oil Company Ltd.",
+            "industry": "Oil, Gas and Consumable Fuels",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Al Ahmadi",
+            "seeds": [],
+            "names": [
+              "Kuwait Oil Company Ltd."
+            ]
+          },
+          {
+            "id": "106002",
+            "name": "LG\u0026E and KU Energy LLC",
+            "displayName": "LG\u0026E and KU Energy LLC",
+            "industry": "Electric Utilities",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "KY",
+            "city": "Louisville",
+            "seeds": [],
+            "names": [
+              "LG\u0026E and KU Energy LLC"
+            ]
+          },
+          {
+            "id": "107942",
+            "name": "National Bank of Kuwait (International) Plc",
+            "displayName": "National Bank of Kuwait (International) Plc",
+            "industry": "Banks",
+            "region": "Europe",
+            "countryCode": "GB",
+            "stateCode": null,
+            "city": "London",
+            "seeds": [],
+            "names": [
+              "National Bank of Kuwait (International) Plc"
+            ]
+          },
+          {
+            "id": "110935",
+            "name": "Rakuten Life Insurance Co., Ltd.",
+            "displayName": "Rakuten Life Insurance Co., Ltd.",
+            "industry": "Insurance",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Rakuten Life Insurance Co., Ltd."
+            ]
+          },
+          {
+            "id": "114830",
+            "name": "The Hokuetsu Bank,Ltd.",
+            "displayName": "The Hokuetsu Bank,Ltd.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Nagaoka",
+            "seeds": [],
+            "names": [
+              "The Hokuetsu Bank,Ltd."
+            ]
+          },
+          {
+            "id": "115340",
+            "name": "Towarzystwo Ubezpieczen i Reasekuracji WARTA S.A.",
+            "displayName": "Towarzystwo Ubezpieczen i Reasekuracji WARTA S.A.",
+            "industry": "Insurance",
+            "region": "Europe",
+            "countryCode": "PL",
+            "stateCode": null,
+            "city": "Warsaw",
+            "seeds": [],
+            "names": [
+              "Towarzystwo Ubezpieczen i Reasekuracji WARTA S.A."
+            ]
+          },
+          {
+            "id": "143152",
+            "name": "Kuakini Health System",
+            "displayName": "Kuakini Health System",
+            "industry": "Healthcare Providers and Services",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "HI",
+            "city": "Honolulu",
+            "seeds": [],
+            "names": [
+              "Kuakini Health System"
+            ]
+          },
+          {
+            "id": "143155",
+            "name": "Sukut Construction, Inc.",
+            "displayName": "Sukut Construction, Inc.",
+            "industry": "Construction and Engineering",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "CA",
+            "city": "Santa Ana",
+            "seeds": [],
+            "names": [
+              "Sukut Construction, Inc."
+            ]
+          },
+          {
+            "id": "143571",
+            "name": "Kurtosys Systems Inc.",
+            "displayName": "Kurtosys Systems Inc.",
+            "industry": "IT Services",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "NC",
+            "city": "Raleigh",
+            "seeds": [],
+            "names": [
+              "Kurtosys Systems Inc."
+            ]
+          },
+          {
+            "id": "162012",
+            "name": "Kuester Management Group, LLC",
+            "displayName": "Kuester Management Group, LLC",
+            "industry": "Real Estate Management and Development",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "SC",
+            "city": "Fort Mill",
+            "seeds": [],
+            "names": [
+              "Kuester Management Group, LLC"
+            ]
+          },
+          {
+            "id": "165824",
+            "name": "Kuda Technologies Ltd",
+            "displayName": "Kuda Technologies Ltd",
+            "industry": "Banks",
+            "region": "Europe",
+            "countryCode": "GB",
+            "stateCode": null,
+            "city": "London",
+            "seeds": [],
+            "names": [
+              "Kuda Technologies Ltd"
+            ]
+          },
+          {
+            "id": "174829",
+            "name": "Alnus Yatirim Menkul Degerler AS",
+            "displayName": "Alnus Yatirim Menkul Degerler AS",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Alnus Yatirim Menkul Degerler AS"
+            ]
+          },
+          {
+            "id": "181560",
+            "name": "University Of Tsukuba",
+            "displayName": "University Of Tsukuba",
+            "industry": "Diversified Consumer Services",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tsukuba",
+            "seeds": [],
+            "names": [
+              "University Of Tsukuba"
+            ]
+          },
+          {
+            "id": "198340",
+            "name": "Arvakur hf",
+            "displayName": "Arvakur hf",
+            "industry": "Media",
+            "region": "Europe",
+            "countryCode": "IS",
+            "stateCode": null,
+            "city": "Reykjavik",
+            "seeds": [],
+            "names": [
+              "Arvakur hf"
+            ]
+          },
+          {
+            "id": "201497",
+            "name": "Hunton Andrews Kurth LLP",
+            "displayName": "Hunton Andrews Kurth LLP",
+            "industry": "Professional Services",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "VA",
+            "city": "Richmond",
+            "seeds": [],
+            "names": [
+              "Hunton Andrews Kurth LLP"
+            ]
+          },
+          {
+            "id": "208488",
+            "name": "Kurt Geiger Ltd",
+            "displayName": "Kurt Geiger Ltd",
+            "industry": "Specialty Retail",
+            "region": "Europe",
+            "countryCode": "GB",
+            "stateCode": null,
+            "city": "London",
+            "seeds": [],
+            "names": [
+              "Kurt Geiger Ltd"
+            ]
+          },
+          {
+            "id": "208762",
+            "name": "Universit\u00E4t F\u00FCr Bodenkultur Wien",
+            "displayName": "Universit\u00E4t F\u00FCr Bodenkultur Wien",
+            "industry": "Diversified Consumer Services",
+            "region": "Europe",
+            "countryCode": "AT",
+            "stateCode": null,
+            "city": "Vienna",
+            "seeds": [],
+            "names": [
+              "Universit\u00E4t F\u00FCr Bodenkultur Wien"
+            ]
+          },
+          {
+            "id": "217383",
+            "name": "Kum \u0026 Go, L.C.",
+            "displayName": "Kum \u0026 Go, L.C.",
+            "industry": "Food and Staples Retailing",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "IA",
+            "city": "West Des Moines",
+            "seeds": [],
+            "names": [
+              "Kum \u0026 Go, L.C."
+            ]
+          },
+          {
+            "id": "218650",
+            "name": "Assuranceforeningen Skuld (Gjensidig)",
+            "displayName": "Assuranceforeningen Skuld (Gjensidig)",
+            "industry": "Insurance",
+            "region": "Europe",
+            "countryCode": "NO",
+            "stateCode": null,
+            "city": "Oslo",
+            "seeds": [],
+            "names": [
+              "Assuranceforeningen Skuld (Gjensidig)"
+            ]
+          },
+          {
+            "id": "220879",
+            "name": "Okuma America Corporation",
+            "displayName": "Okuma America Corporation",
+            "industry": "Machinery",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "NC",
+            "city": "Charlotte",
+            "seeds": [],
+            "names": [
+              "Okuma America Corporation"
+            ]
+          },
+          {
+            "id": "243613",
+            "name": "Wazoku Limited",
+            "displayName": "Wazoku Limited",
+            "industry": "Software",
+            "region": "Europe",
+            "countryCode": "GB",
+            "stateCode": null,
+            "city": "London",
+            "seeds": [],
+            "names": [
+              "Wazoku Limited"
+            ]
+          },
+          {
+            "id": "254212",
+            "name": "OwnBackup Ltd",
+            "displayName": "OwnBackup Ltd",
+            "industry": "Software",
+            "region": "Africa / Middle East",
+            "countryCode": "IL",
+            "stateCode": null,
+            "city": "Herzliya Pituach",
+            "seeds": [],
+            "names": [
+              "OwnBackup Ltd"
+            ]
+          },
+          {
+            "id": "261203",
+            "name": "Beijing Kuaishou Technology Ltd.",
+            "displayName": "Beijing Kuaishou Technology Ltd.",
+            "industry": "Software",
+            "region": "Asia / Pacific",
+            "countryCode": "CN",
+            "stateCode": null,
+            "city": "Beijing",
+            "seeds": [],
+            "names": [
+              "Beijing Kuaishou Technology Ltd."
+            ]
+          },
+          {
+            "id": "275252",
+            "name": "Kuwait Oil Tanker Co. S.A.K.",
+            "displayName": "Kuwait Oil Tanker Co. S.A.K.",
+            "industry": "Oil, Gas and Consumable Fuels",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Safat",
+            "seeds": [],
+            "names": [
+              "Kuwait Oil Tanker Co. S.A.K."
+            ]
+          },
+          {
+            "id": "280523",
+            "name": "rku.it GmbH",
+            "displayName": "rku.it GmbH",
+            "industry": "IT Services",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Herne",
+            "seeds": [],
+            "names": [
+              "rku.it GmbH"
+            ]
+          },
+          {
+            "id": "291460",
+            "name": "Gospodarczy Bank Spoldzielczy W Barlinku",
+            "displayName": "Gospodarczy Bank Spoldzielczy W Barlinku",
+            "industry": "Banks",
+            "region": "Europe",
+            "countryCode": "PL",
+            "stateCode": null,
+            "city": "Barlinek",
+            "seeds": [],
+            "names": [
+              "Gospodarczy Bank Spoldzielczy W Barlinku"
+            ]
+          },
+          {
+            "id": "297616",
+            "name": "Cukurova University",
+            "displayName": "Cukurova University",
+            "industry": "Diversified Consumer Services",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Adana",
+            "seeds": [],
+            "names": [
+              "Cukurova University"
+            ]
+          },
+          {
+            "id": "314092",
+            "name": "Tsukuba Bank, Ltd.",
+            "displayName": "Tsukuba Bank, Ltd.",
+            "industry": "Banks",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tsukuba",
+            "seeds": [],
+            "names": [
+              "Tsukuba Bank, Ltd."
+            ]
+          },
+          {
+            "id": "318415",
+            "name": "Netrisk.hu Elso Online Biztositasi Alkusz Zrt.",
+            "displayName": "Netrisk.hu Elso Online Biztositasi Alkusz Zrt.",
+            "industry": "Insurance",
+            "region": "Europe",
+            "countryCode": "HU",
+            "stateCode": null,
+            "city": "Budapest",
+            "seeds": [],
+            "names": [
+              "Netrisk.hu Elso Online Biztositasi Alkusz Zrt."
+            ]
+          },
+          {
+            "id": "336314",
+            "name": "SekureTrak Inc.",
+            "displayName": "SekureTrak Inc.",
+            "industry": "Software",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "IL",
+            "city": "Chicago",
+            "seeds": [],
+            "names": [
+              "SekureTrak Inc."
+            ]
+          },
+          {
+            "id": "339428",
+            "name": "Neta Yatirim Menkul Degerler A.S.",
+            "displayName": "Neta Yatirim Menkul Degerler A.S.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Neta Yatirim Menkul Degerler A.S."
+            ]
+          },
+          {
+            "id": "343164",
+            "name": "Kuwait Computer Services",
+            "displayName": "Kuwait Computer Services",
+            "industry": "IT Services",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Safat",
+            "seeds": [],
+            "names": [
+              "Kuwait Computer Services"
+            ]
+          },
+          {
+            "id": "352318",
+            "name": "Dokumenta AG",
+            "displayName": "Dokumenta AG",
+            "industry": "IT Services",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Hamburg",
+            "seeds": [],
+            "names": [
+              "Dokumenta AG"
+            ]
+          },
+          {
+            "id": "355190",
+            "name": "DKUUG",
+            "displayName": "DKUUG",
+            "industry": "Software",
+            "region": "Europe",
+            "countryCode": "DK",
+            "stateCode": null,
+            "city": "Copenhagen",
+            "seeds": [],
+            "names": [
+              "DKUUG"
+            ]
+          },
+          {
+            "id": "371400",
+            "name": "Kumpulan Darul Ehsan Berhad",
+            "displayName": "Kumpulan Darul Ehsan Berhad",
+            "industry": "Industrial Conglomerates",
+            "region": "Asia / Pacific",
+            "countryCode": "MY",
+            "stateCode": null,
+            "city": "Shah Alam",
+            "seeds": [],
+            "names": [
+              "Kumpulan Darul Ehsan Berhad"
+            ]
+          },
+          {
+            "id": "376193",
+            "name": "Konkuk University",
+            "displayName": "Konkuk University",
+            "industry": "Diversified Consumer Services",
+            "region": "Asia / Pacific",
+            "countryCode": "KR",
+            "stateCode": null,
+            "city": "Seoul",
+            "seeds": [],
+            "names": [
+              "Konkuk University"
+            ]
+          },
+          {
+            "id": "409703",
+            "name": "King Kullen Grocery Co., Inc.",
+            "displayName": "King Kullen Grocery Co., Inc.",
+            "industry": "Food and Staples Retailing",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "NY",
+            "city": "Bethpage",
+            "seeds": [],
+            "names": [
+              "King Kullen Grocery Co., Inc."
+            ]
+          },
+          {
+            "id": "411000",
+            "name": "TaskUs, Inc.",
+            "displayName": "TaskUs, Inc.",
+            "industry": "IT Services",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "CA",
+            "city": "Santa Monica",
+            "seeds": [],
+            "names": [
+              "TaskUs, Inc."
+            ]
+          },
+          {
+            "id": "411010",
+            "name": "Akuna Capital, LLC",
+            "displayName": "Akuna Capital, LLC",
+            "industry": "Capital Markets",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "IL",
+            "city": "Chicago",
+            "seeds": [],
+            "names": [
+              "Akuna Capital, LLC"
+            ]
+          },
+          {
+            "id": "411326",
+            "name": "Boursa Kuwait Securities Company",
+            "displayName": "Boursa Kuwait Securities Company",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait",
+            "seeds": [],
+            "names": [
+              "Boursa Kuwait Securities Company"
+            ]
+          },
+          {
+            "id": "411796",
+            "name": "Kuoni Specialists B.V.",
+            "displayName": "Kuoni Specialists B.V.",
+            "industry": "Hotels, Restaurants and Leisure",
+            "region": "Europe",
+            "countryCode": "NL",
+            "stateCode": null,
+            "city": "Amsterdam",
+            "seeds": [],
+            "names": [
+              "Kuoni Specialists B.V."
+            ]
+          },
+          {
+            "id": "426680",
+            "name": "Na Hoku, Inc.",
+            "displayName": "Na Hoku, Inc.",
+            "industry": "Textiles, Apparel and Luxury Goods",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "HI",
+            "city": "Honolulu",
+            "seeds": [],
+            "names": [
+              "Na Hoku, Inc."
+            ]
+          },
+          {
+            "id": "428041",
+            "name": "Akumina Inc.",
+            "displayName": "Akumina Inc.",
+            "industry": "Software",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "NH",
+            "city": "Nashua",
+            "seeds": [],
+            "names": [
+              "Akumina Inc."
+            ]
+          },
+          {
+            "id": "430886",
+            "name": "Kuang Chuan Dairy Co., Ltd.",
+            "displayName": "Kuang Chuan Dairy Co., Ltd.",
+            "industry": "Food Products",
+            "region": "Asia / Pacific",
+            "countryCode": "TW",
+            "stateCode": null,
+            "city": "Taipei",
+            "seeds": [],
+            "names": [
+              "Kuang Chuan Dairy Co., Ltd."
+            ]
+          },
+          {
+            "id": "443079",
+            "name": "Kuwait Flour Mills \u0026 Bakeries Co. S.A.K.",
+            "displayName": "Kuwait Flour Mills \u0026 Bakeries Co. S.A.K.",
+            "industry": "Food Products",
+            "region": "Africa / Middle East",
+            "countryCode": "AE",
+            "stateCode": null,
+            "city": "Sharjah",
+            "seeds": [],
+            "names": [
+              "Kuwait Flour Mills \u0026 Bakeries Co. S.A.K."
+            ]
+          },
+          {
+            "id": "455693",
+            "name": "Hearst Shkulev Media OOO",
+            "displayName": "Hearst Shkulev Media OOO",
+            "industry": "Media",
+            "region": "Europe",
+            "countryCode": "RU",
+            "stateCode": null,
+            "city": "Moscow",
+            "seeds": [],
+            "names": [
+              "Hearst Shkulev Media OOO"
+            ]
+          },
+          {
+            "id": "467288",
+            "name": "Ekinciler Yatirim Menkul Degerler A.S.",
+            "displayName": "Ekinciler Yatirim Menkul Degerler A.S.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Ekinciler Yatirim Menkul Degerler A.S."
+            ]
+          },
+          {
+            "id": "479642",
+            "name": "Rakuten Kobo Inc.",
+            "displayName": "Rakuten Kobo Inc.",
+            "industry": "Internet and Direct Marketing Retail",
+            "region": "United States and Canada",
+            "countryCode": "CA",
+            "stateCode": "ON",
+            "city": "Toronto",
+            "seeds": [],
+            "names": [
+              "Rakuten Kobo Inc."
+            ]
+          },
+          {
+            "id": "487347",
+            "name": "National Cheng Kung University",
+            "displayName": "National Cheng Kung University",
+            "industry": "Diversified Consumer Services",
+            "region": "Asia / Pacific",
+            "countryCode": "TW",
+            "stateCode": null,
+            "city": "Tainan City",
+            "seeds": [],
+            "names": [
+              "National Cheng Kung University"
+            ]
+          },
+          {
+            "id": "494130",
+            "name": "Al Ahli Bank of Kuwait K.S.C.P.",
+            "displayName": "Al Ahli Bank of Kuwait K.S.C.P.",
+            "industry": "Banks",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait City",
+            "seeds": [],
+            "names": [
+              "Al Ahli Bank of Kuwait K.S.C.P."
+            ]
+          },
+          {
+            "id": "526828",
+            "name": "P\u00F6ppelmann GmbH \u0026 Co. KG Kunststoffwerk-Werkzeugbau",
+            "displayName": "P\u00F6ppelmann GmbH \u0026 Co. KG Kunststoffwerk-Werkzeugbau",
+            "industry": "Chemicals",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Lohne",
+            "seeds": [],
+            "names": [
+              "P\u00F6ppelmann GmbH \u0026 Co. KG Kunststoffwerk-Werkzeugbau"
+            ]
+          },
+          {
+            "id": "537885",
+            "name": "Tietokeskus Finland Oy",
+            "displayName": "Tietokeskus Finland Oy",
+            "industry": "IT Services",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Turku",
+            "seeds": [],
+            "names": [
+              "Tietokeskus Finland Oy"
+            ]
+          },
+          {
+            "id": "547278",
+            "name": "Yukon-Kuskokwim Health Corporation",
+            "displayName": "Yukon-Kuskokwim Health Corporation",
+            "industry": "Healthcare Providers and Services",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "AK",
+            "city": "Bethel",
+            "seeds": [],
+            "names": [
+              "Yukon-Kuskokwim Health Corporation"
+            ]
+          },
+          {
+            "id": "552769",
+            "name": "Kuwait Projects Company Holding K.S.C.P.",
+            "displayName": "Kuwait Projects Company Holding K.S.C.P.",
+            "industry": "Banks",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait City",
+            "seeds": [],
+            "names": [
+              "Kuwait Projects Company Holding K.S.C.P."
+            ]
+          },
+          {
+            "id": "552785",
+            "name": "National Bank of Kuwait S.A.K.P.",
+            "displayName": "National Bank of Kuwait S.A.K.P.",
+            "industry": "Banks",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait City",
+            "seeds": [],
+            "names": [
+              "National Bank of Kuwait S.A.K.P."
+            ]
+          },
+          {
+            "id": "552994",
+            "name": "Tera Yatirim Menkul Degerler A.S.",
+            "displayName": "Tera Yatirim Menkul Degerler A.S.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Tera Yatirim Menkul Degerler A.S."
+            ]
+          },
+          {
+            "id": "553198",
+            "name": "Ankura Consulting Group, LLC",
+            "displayName": "Ankura Consulting Group, LLC",
+            "industry": "Professional Services",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "DC",
+            "city": "Washington",
+            "seeds": [],
+            "names": [
+              "Ankura Consulting Group, LLC"
+            ]
+          },
+          {
+            "id": "553422",
+            "name": "Yapi Kredi Yatirim Menkul Degerler A.S.",
+            "displayName": "Yapi Kredi Yatirim Menkul Degerler A.S.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Yapi Kredi Yatirim Menkul Degerler A.S."
+            ]
+          },
+          {
+            "id": "553486",
+            "name": "Tacirler Yatirim Menkul Degerler A.S.",
+            "displayName": "Tacirler Yatirim Menkul Degerler A.S.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Tacirler Yatirim Menkul Degerler A.S."
+            ]
+          },
+          {
+            "id": "553646",
+            "name": "Kuwait University",
+            "displayName": "Kuwait University",
+            "industry": "Diversified Consumer Services",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait",
+            "seeds": [],
+            "names": [
+              "Kuwait University"
+            ]
+          },
+          {
+            "id": "553885",
+            "name": "Oyak Yatirim Menkul Degerler A.S.",
+            "displayName": "Oyak Yatirim Menkul Degerler A.S.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Oyak Yatirim Menkul Degerler A.S."
+            ]
+          },
+          {
+            "id": "554365",
+            "name": "Merkur Interactive Italia S.p.A.",
+            "displayName": "Merkur Interactive Italia S.p.A.",
+            "industry": "Hotels, Restaurants and Leisure",
+            "region": "Europe",
+            "countryCode": "IT",
+            "stateCode": "MI",
+            "city": "Cinisello Balsamo",
+            "seeds": [],
+            "names": [
+              "Merkur Interactive Italia S.p.A."
+            ]
+          },
+          {
+            "id": "554412",
+            "name": "Kurort Telecom Ltd.",
+            "displayName": "Kurort Telecom Ltd.",
+            "industry": "Diversified Telecommunication Services",
+            "region": "Europe",
+            "countryCode": "RU",
+            "stateCode": null,
+            "city": "Saint Petersburg",
+            "seeds": [],
+            "names": [
+              "Kurort Telecom Ltd."
+            ]
+          },
+          {
+            "id": "554505",
+            "name": "Gedik Yatirim Menkul Degerler A.S.",
+            "displayName": "Gedik Yatirim Menkul Degerler A.S.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Gedik Yatirim Menkul Degerler A.S."
+            ]
+          },
+          {
+            "id": "554686",
+            "name": "Halk Yatirim Menkul Degerler A.S.",
+            "displayName": "Halk Yatirim Menkul Degerler A.S.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Halk Yatirim Menkul Degerler A.S."
+            ]
+          },
+          {
+            "id": "554974",
+            "name": "Dataiku Inc",
+            "displayName": "Dataiku Inc",
+            "industry": null,
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "NY",
+            "city": "New York City",
+            "seeds": [],
+            "names": [
+              "Dataiku Inc"
+            ]
+          },
+          {
+            "id": "555029",
+            "name": "KTH Kungliga Tekniska H\u00F6gskolan",
+            "displayName": "KTH Kungliga Tekniska H\u00F6gskolan",
+            "industry": "Diversified Consumer Services",
+            "region": "Europe",
+            "countryCode": "SE",
+            "stateCode": null,
+            "city": "Stockholm",
+            "seeds": [],
+            "names": [
+              "KTH Kungliga Tekniska H\u00F6gskolan"
+            ]
+          },
+          {
+            "id": "555672",
+            "name": "Kuubix Energy",
+            "displayName": "Kuubix Energy",
+            "industry": "Independent Power and Renewable Electricity Producers",
+            "region": null,
+            "countryCode": "US",
+            "stateCode": "CA",
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kuubix Energy"
+            ]
+          },
+          {
+            "id": "556218",
+            "name": "Rakuten Marketing LLC",
+            "displayName": "Rakuten Marketing LLC",
+            "industry": "Media",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "NY",
+            "city": "New York",
+            "seeds": [],
+            "names": [
+              "Rakuten Marketing LLC"
+            ]
+          },
+          {
+            "id": "558405",
+            "name": "Kubernetes",
+            "displayName": "Kubernetes",
+            "industry": "Software",
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kubernetes"
+            ]
+          },
+          {
+            "id": "559574",
+            "name": "CMT Technologies (Kuwait)",
+            "displayName": "CMT Technologies (Kuwait)",
+            "industry": "Technology Hardware, Storage and Peripherals",
+            "region": null,
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "CMT Technologies (Kuwait)"
+            ]
+          },
+          {
+            "id": "559817",
+            "name": "NK Rosneft - Kurgannefteprodukt OAO",
+            "displayName": "NK Rosneft - Kurgannefteprodukt OAO",
+            "industry": "Oil, Gas and Consumable Fuels",
+            "region": "Europe",
+            "countryCode": "RU",
+            "stateCode": null,
+            "city": "Kurgan",
+            "seeds": [],
+            "names": [
+              "NK Rosneft - Kurgannefteprodukt OAO"
+            ]
+          },
+          {
+            "id": "559970",
+            "name": "Ellis \u0026 Makus LLP",
+            "displayName": "Ellis \u0026 Makus LLP",
+            "industry": null,
+            "region": null,
+            "countryCode": "US",
+            "stateCode": "CA",
+            "city": "Sacramento",
+            "seeds": [],
+            "names": [
+              "Ellis \u0026 Makus LLP"
+            ]
+          },
+          {
+            "id": "560055",
+            "name": "El\u00E4keturvakeskus (ETK)",
+            "displayName": "El\u00E4keturvakeskus (ETK)",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Helsinki",
+            "seeds": [],
+            "names": [
+              "El\u00E4keturvakeskus (ETK)"
+            ]
+          },
+          {
+            "id": "560069",
+            "name": "SpeakUp Nederland BV",
+            "displayName": "SpeakUp Nederland BV",
+            "industry": "Diversified Telecommunication Services",
+            "region": "Europe",
+            "countryCode": "NL",
+            "stateCode": null,
+            "city": "Enschede",
+            "seeds": [],
+            "names": [
+              "SpeakUp Nederland BV"
+            ]
+          },
+          {
+            "id": "560198",
+            "name": "City Of Ekurhuleni",
+            "displayName": "City Of Ekurhuleni",
+            "industry": "Commercial Services and Supplies",
+            "region": "Africa / Middle East",
+            "countryCode": "ZA",
+            "stateCode": null,
+            "city": "Ekurhuleni",
+            "seeds": [],
+            "names": [
+              "City Of Ekurhuleni"
+            ]
+          },
+          {
+            "id": "560289",
+            "name": "Ministry of Finance, Kuwait",
+            "displayName": "Ministry of Finance, Kuwait",
+            "industry": null,
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait",
+            "seeds": [],
+            "names": [
+              "Ministry of Finance, Kuwait"
+            ]
+          },
+          {
+            "id": "560328",
+            "name": "Kuwait Airways Corporation K.S.C.",
+            "displayName": "Kuwait Airways Corporation K.S.C.",
+            "industry": "Airlines",
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait",
+            "seeds": [],
+            "names": [
+              "Kuwait Airways Corporation K.S.C."
+            ]
+          },
+          {
+            "id": "560439",
+            "name": "Kota Payakumbuh",
+            "displayName": "Kota Payakumbuh",
+            "industry": null,
+            "region": "Asia / Pacific",
+            "countryCode": "ID",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kota Payakumbuh"
+            ]
+          },
+          {
+            "id": "560454",
+            "name": "Vakif Yatirim Menkul Degerler A.S.",
+            "displayName": "Vakif Yatirim Menkul Degerler A.S.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Vakif Yatirim Menkul Degerler A.S."
+            ]
+          },
+          {
+            "id": "560600",
+            "name": "ALB Menkul Degerler A.S",
+            "displayName": "ALB Menkul Degerler A.S",
+            "industry": null,
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "ALB Menkul Degerler A.S"
+            ]
+          },
+          {
+            "id": "560645",
+            "name": "Merkezi Kayit Kurulusu A.S.",
+            "displayName": "Merkezi Kayit Kurulusu A.S.",
+            "industry": null,
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": " Istanbul",
+            "seeds": [],
+            "names": [
+              "Merkezi Kayit Kurulusu A.S."
+            ]
+          },
+          {
+            "id": "560885",
+            "name": "Reykjavikurborg",
+            "displayName": "Reykjavikurborg",
+            "industry": "Commercial Services and Supplies",
+            "region": "Europe",
+            "countryCode": "IS",
+            "stateCode": null,
+            "city": "Reykjavik",
+            "seeds": [],
+            "names": [
+              "Reykjavikurborg"
+            ]
+          },
+          {
+            "id": "560902",
+            "name": "King Mongkut\u2019s Institute of Technology, Ladkrabang",
+            "displayName": "King Mongkut\u2019s Institute of Technology, Ladkrabang",
+            "industry": "Diversified Consumer Services",
+            "region": "Asia / Pacific",
+            "countryCode": "TH",
+            "stateCode": null,
+            "city": "Bangkok",
+            "seeds": [],
+            "names": [
+              "King Mongkut\u2019s Institute of Technology, Ladkrabang"
+            ]
+          },
+          {
+            "id": "560948",
+            "name": "Kuwait National Guard",
+            "displayName": "Kuwait National Guard",
+            "industry": null,
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Kuwait",
+            "seeds": [],
+            "names": [
+              "Kuwait National Guard"
+            ]
+          },
+          {
+            "id": "560998",
+            "name": "Helsingin Ja Uudenmaan Sairaanhoitopiirin Kuntayhtym\u00E4",
+            "displayName": "Helsingin Ja Uudenmaan Sairaanhoitopiirin Kuntayhtym\u00E4",
+            "industry": "Health Care Providers and Services",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Helsinki",
+            "seeds": [],
+            "names": [
+              "Helsingin Ja Uudenmaan Sairaanhoitopiirin Kuntayhtym\u00E4"
+            ]
+          },
+          {
+            "id": "561001",
+            "name": "Pohjois-Pohjanmaan Sairaanhoitopiirin Kuntayhtym\u00E4",
+            "displayName": "Pohjois-Pohjanmaan Sairaanhoitopiirin Kuntayhtym\u00E4",
+            "industry": "Healthcare Providers and Services",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Oulu",
+            "seeds": [],
+            "names": [
+              "Pohjois-Pohjanmaan Sairaanhoitopiirin Kuntayhtym\u00E4"
+            ]
+          },
+          {
+            "id": "561002",
+            "name": "Etel\u00E4-Pohjanmaan Sairaanhoitopiirin Kuntayhtym\u00E4",
+            "displayName": "Etel\u00E4-Pohjanmaan Sairaanhoitopiirin Kuntayhtym\u00E4",
+            "industry": "Healthcare Providers and Services",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Sein\u00E4joki",
+            "seeds": [],
+            "names": [
+              "Etel\u00E4-Pohjanmaan Sairaanhoitopiirin Kuntayhtym\u00E4"
+            ]
+          },
+          {
+            "id": "561252",
+            "name": "MERKUR trgovina doo",
+            "displayName": "MERKUR trgovina doo",
+            "industry": "Trading Companies and Distributors",
+            "region": "Europe",
+            "countryCode": "SI",
+            "stateCode": null,
+            "city": "Naklo",
+            "seeds": [],
+            "names": [
+              "MERKUR trgovina doo"
+            ]
+          },
+          {
+            "id": "561541",
+            "name": "Konkuk University Medical Center",
+            "displayName": "Konkuk University Medical Center",
+            "industry": null,
+            "region": "Asia / Pacific",
+            "countryCode": "KR",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Konkuk University Medical Center"
+            ]
+          },
+          {
+            "id": "561556",
+            "name": "Pemerintah Kabupaten Klungkung",
+            "displayName": "Pemerintah Kabupaten Klungkung",
+            "industry": null,
+            "region": "Asia / Pacific",
+            "countryCode": "ID",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Pemerintah Kabupaten Klungkung"
+            ]
+          },
+          {
+            "id": "561786",
+            "name": "Pemerintah Kabupaten Kulon Progo",
+            "displayName": "Pemerintah Kabupaten Kulon Progo",
+            "industry": null,
+            "region": "Asia / Pacific",
+            "countryCode": "ID",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Pemerintah Kabupaten Kulon Progo"
+            ]
+          },
+          {
+            "id": "561875",
+            "name": "PT Mirae Asset Sekuritas Indonesia",
+            "displayName": "PT Mirae Asset Sekuritas Indonesia",
+            "industry": "Capital Markets",
+            "region": "Asia / Pacific",
+            "countryCode": "ID",
+            "stateCode": null,
+            "city": "Jakarta",
+            "seeds": [],
+            "names": [
+              "PT Mirae Asset Sekuritas Indonesia"
+            ]
+          },
+          {
+            "id": "561955",
+            "name": "Info Yatirim Menkul Degerler A.S.",
+            "displayName": "Info Yatirim Menkul Degerler A.S.",
+            "industry": "Capital Markets",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Info Yatirim Menkul Degerler A.S."
+            ]
+          },
+          {
+            "id": "562441",
+            "name": "MCG Jakub Skorek",
+            "displayName": "MCG Jakub Skorek",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "PL",
+            "stateCode": null,
+            "city": "Krak\u00F3w",
+            "seeds": [],
+            "names": [
+              "MCG Jakub Skorek"
+            ]
+          },
+          {
+            "id": "562472",
+            "name": "Kukui Corporation",
+            "displayName": "Kukui Corporation",
+            "industry": "Software",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "CA",
+            "city": "Roseville",
+            "seeds": [],
+            "names": [
+              "Kukui Corporation"
+            ]
+          },
+          {
+            "id": "562486",
+            "name": "KuanHui Data Solutions(Shanghai) Co.,Ltd",
+            "displayName": "KuanHui Data Solutions(Shanghai) Co.,Ltd",
+            "industry": "IT Services",
+            "region": "Asia / Pacific",
+            "countryCode": "CN",
+            "stateCode": null,
+            "city": "Shanghai",
+            "seeds": [],
+            "names": [
+              "KuanHui Data Solutions(Shanghai) Co.,Ltd"
+            ]
+          },
+          {
+            "id": "562488",
+            "name": "Hebei KunShi network technology co.LTD.",
+            "displayName": "Hebei KunShi network technology co.LTD.",
+            "industry": "Diversified Telecommunication Services",
+            "region": "Asia / Pacific",
+            "countryCode": "CN",
+            "stateCode": null,
+            "city": "Shijiazhuang",
+            "seeds": [],
+            "names": [
+              "Hebei KunShi network technology co.LTD."
+            ]
+          },
+          {
+            "id": "562742",
+            "name": "Kutztown Pennsylvania Area School District",
+            "displayName": "Kutztown Pennsylvania Area School District",
+            "industry": null,
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "PA",
+            "city": "Kutztown",
+            "seeds": [],
+            "names": [
+              "Kutztown Pennsylvania Area School District"
+            ]
+          },
+          {
+            "id": "562900",
+            "name": "Limingan Kunta",
+            "displayName": "Limingan Kunta",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Liminka",
+            "seeds": [],
+            "names": [
+              "Limingan Kunta"
+            ]
+          },
+          {
+            "id": "562905",
+            "name": "Muhoksen Kunta",
+            "displayName": "Muhoksen Kunta",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Muhos",
+            "seeds": [],
+            "names": [
+              "Muhoksen Kunta"
+            ]
+          },
+          {
+            "id": "562987",
+            "name": "Datikum",
+            "displayName": "Datikum",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "BG",
+            "stateCode": null,
+            "city": "Sofia",
+            "seeds": [],
+            "names": [
+              "Datikum"
+            ]
+          },
+          {
+            "id": "563066",
+            "name": "University of Applied Sciences Technikum Wien",
+            "displayName": "University of Applied Sciences Technikum Wien",
+            "industry": "Diversified Consumer Services",
+            "region": "Europe",
+            "countryCode": "AT",
+            "stateCode": null,
+            "city": "Vienna",
+            "seeds": [],
+            "names": [
+              "University of Applied Sciences Technikum Wien"
+            ]
+          },
+          {
+            "id": "563086",
+            "name": "Kwame Nkrumah University of Science and Technology, Kumasi",
+            "displayName": "Kwame Nkrumah University of Science and Technology, Kumasi",
+            "industry": "Diversified Consumer Services",
+            "region": "Africa / Middle East",
+            "countryCode": "GH",
+            "stateCode": null,
+            "city": "Kumasi",
+            "seeds": [],
+            "names": [
+              "Kwame Nkrumah University of Science and Technology, Kumasi"
+            ]
+          },
+          {
+            "id": "563268",
+            "name": "Wekudata Aktiebolag",
+            "displayName": "Wekudata Aktiebolag",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "SE",
+            "stateCode": null,
+            "city": "Laholm",
+            "seeds": [],
+            "names": [
+              "Wekudata Aktiebolag"
+            ]
+          },
+          {
+            "id": "563411",
+            "name": "Hankuk University of Foreign Studies (HUFS)",
+            "displayName": "Hankuk University of Foreign Studies (HUFS)",
+            "industry": "Diversified Consumer Services",
+            "region": "Asia / Pacific",
+            "countryCode": "KR",
+            "stateCode": null,
+            "city": "Seoul",
+            "seeds": [],
+            "names": [
+              "Hankuk University of Foreign Studies (HUFS)"
+            ]
+          },
+          {
+            "id": "563413",
+            "name": "Kunsan National University",
+            "displayName": "Kunsan National University",
+            "industry": "Diversified Consumer Services",
+            "region": "Asia / Pacific",
+            "countryCode": "KR",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kunsan National University"
+            ]
+          },
+          {
+            "id": "563990",
+            "name": "Kutztown University Of Pennsylvania",
+            "displayName": "Kutztown University Of Pennsylvania",
+            "industry": null,
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "PA",
+            "city": "Kutztown",
+            "seeds": [],
+            "names": [
+              "Kutztown University Of Pennsylvania"
+            ]
+          },
+          {
+            "id": "564056",
+            "name": "Coop Eesti Keskuhistu Tuh",
+            "displayName": "Coop Eesti Keskuhistu Tuh",
+            "industry": "Food and Staples Retailing",
+            "region": "Europe",
+            "countryCode": "EE",
+            "stateCode": null,
+            "city": "Soodevahe",
+            "seeds": [],
+            "names": [
+              "Coop Eesti Keskuhistu Tuh"
+            ]
+          },
+          {
+            "id": "564067",
+            "name": "Kuno Frick Familienstiftung",
+            "displayName": "Kuno Frick Familienstiftung",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "LI",
+            "stateCode": null,
+            "city": "Balzers",
+            "seeds": [],
+            "names": [
+              "Kuno Frick Familienstiftung"
+            ]
+          },
+          {
+            "id": "564281",
+            "name": "Baku Telephone Network Production Association",
+            "displayName": "Baku Telephone Network Production Association",
+            "industry": "Diversified Telecommunication Services",
+            "region": "Asia / Pacific",
+            "countryCode": "AZ",
+            "stateCode": null,
+            "city": "Baku",
+            "seeds": [],
+            "names": [
+              "Baku Telephone Network Production Association"
+            ]
+          },
+          {
+            "id": "564360",
+            "name": "Klinikum Ingolstadt Gmbh",
+            "displayName": "Klinikum Ingolstadt Gmbh",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Ingolstadt",
+            "seeds": [],
+            "names": [
+              "Klinikum Ingolstadt Gmbh"
+            ]
+          },
+          {
+            "id": "564421",
+            "name": "Hansemerkur Krankenversicherung Auf Gegenseitigkeit",
+            "displayName": "Hansemerkur Krankenversicherung Auf Gegenseitigkeit",
+            "industry": "Insurance",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Hamburg",
+            "seeds": [],
+            "names": [
+              "Hansemerkur Krankenversicherung Auf Gegenseitigkeit"
+            ]
+          },
+          {
+            "id": "564594",
+            "name": "Kudoboard",
+            "displayName": "Kudoboard",
+            "industry": null,
+            "region": null,
+            "countryCode": "US",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kudoboard"
+            ]
+          },
+          {
+            "id": "565274",
+            "name": "Evangelische Kirche Von Kurhessen Waldeck",
+            "displayName": "Evangelische Kirche Von Kurhessen Waldeck",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Kassel",
+            "seeds": [],
+            "names": [
+              "Evangelische Kirche Von Kurhessen Waldeck"
+            ]
+          },
+          {
+            "id": "565456",
+            "name": "National Bank Of Kuwait",
+            "displayName": "National Bank Of Kuwait",
+            "industry": null,
+            "region": "Africa / Middle East",
+            "countryCode": "SA",
+            "stateCode": null,
+            "city": "Jeddah",
+            "seeds": [],
+            "names": [
+              "National Bank Of Kuwait"
+            ]
+          },
+          {
+            "id": "565595",
+            "name": "Kuk Electronic Ag",
+            "displayName": "Kuk Electronic Ag",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "CH",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kuk Electronic Ag"
+            ]
+          },
+          {
+            "id": "565916",
+            "name": "Kuwait Foundation for the Advancement of Sciences",
+            "displayName": "Kuwait Foundation for the Advancement of Sciences",
+            "industry": null,
+            "region": "Africa / Middle East",
+            "countryCode": "KW",
+            "stateCode": null,
+            "city": "Safat",
+            "seeds": [],
+            "names": [
+              "Kuwait Foundation for the Advancement of Sciences"
+            ]
+          },
+          {
+            "id": "566391",
+            "name": "Hotel Okura Amsterdam B.V.",
+            "displayName": "Hotel Okura Amsterdam B.V.",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "NL",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Hotel Okura Amsterdam B.V."
+            ]
+          },
+          {
+            "id": "566450",
+            "name": "Mckula Inc",
+            "displayName": "Mckula Inc",
+            "industry": null,
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "PA",
+            "city": "Mount Pleasant",
+            "seeds": [],
+            "names": [
+              "Mckula Inc"
+            ]
+          },
+          {
+            "id": "566567",
+            "name": "Kunz Leigh, \u0026 Associates",
+            "displayName": "Kunz Leigh, \u0026 Associates",
+            "industry": null,
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "MI",
+            "city": "Lathrup Village",
+            "seeds": [],
+            "names": [
+              "Kunz Leigh, \u0026 Associates"
+            ]
+          },
+          {
+            "id": "566846",
+            "name": "Kuusakoski Group Oy",
+            "displayName": "Kuusakoski Group Oy",
+            "industry": "Commercial Services and Supplies",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Espoo",
+            "seeds": [],
+            "names": [
+              "Kuusakoski Group Oy"
+            ]
+          },
+          {
+            "id": "566983",
+            "name": "Kirkon Keskusrahasto",
+            "displayName": "Kirkon Keskusrahasto",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Helsinki",
+            "seeds": [],
+            "names": [
+              "Kirkon Keskusrahasto"
+            ]
+          },
+          {
+            "id": "567269",
+            "name": "Suomen mets\u00E4keskus",
+            "displayName": "Suomen mets\u00E4keskus",
+            "industry": "Commercial Services and Supplies",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Espoo",
+            "seeds": [],
+            "names": [
+              "Suomen mets\u00E4keskus"
+            ]
+          },
+          {
+            "id": "567512",
+            "name": "KUKBUK Sp. z o.o",
+            "displayName": "KUKBUK Sp. z o.o",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "PL",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "KUKBUK Sp. z o.o"
+            ]
+          },
+          {
+            "id": "567522",
+            "name": "Klinikum Schlo\u00DF Winnenden",
+            "displayName": "Klinikum Schlo\u00DF Winnenden",
+            "industry": "Healthcare Providers and Services",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Winnenden",
+            "seeds": [],
+            "names": [
+              "Klinikum Schlo\u00DF Winnenden"
+            ]
+          },
+          {
+            "id": "567699",
+            "name": "Kurtz \u0026 Revness, P.C",
+            "displayName": "Kurtz \u0026 Revness, P.C",
+            "industry": null,
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kurtz \u0026 Revness, P.C"
+            ]
+          },
+          {
+            "id": "568232",
+            "name": "Fukushima Information Processing Center Co.,Ltd.",
+            "displayName": "Fukushima Information Processing Center Co.,Ltd.",
+            "industry": "IT Services",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Koriyama",
+            "seeds": [],
+            "names": [
+              "Fukushima Information Processing Center Co.,Ltd."
+            ]
+          },
+          {
+            "id": "569392",
+            "name": "Cku AG",
+            "displayName": "Cku AG",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "CH",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Cku AG"
+            ]
+          },
+          {
+            "id": "569404",
+            "name": "\u00C7ukurova Holding A.S.",
+            "displayName": "\u00C7ukurova Holding A.S.",
+            "industry": "Industrial Conglomerates",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "\u00C7ukurova Holding A.S."
+            ]
+          },
+          {
+            "id": "569416",
+            "name": "DIBkunnskap AS",
+            "displayName": "DIBkunnskap AS",
+            "industry": "Software",
+            "region": "Europe",
+            "countryCode": "NO",
+            "stateCode": null,
+            "city": "Lysaker",
+            "seeds": [],
+            "names": [
+              "DIBkunnskap AS"
+            ]
+          },
+          {
+            "id": "569827",
+            "name": "Beijing Kunlun Medical Cloud Technology Co., Ltd.",
+            "displayName": "Beijing Kunlun Medical Cloud Technology Co., Ltd.",
+            "industry": "Health Care Technology",
+            "region": "Asia / Pacific",
+            "countryCode": "CN",
+            "stateCode": null,
+            "city": "Grand Cayman",
+            "seeds": [],
+            "names": [
+              "Beijing Kunlun Medical Cloud Technology Co., Ltd."
+            ]
+          },
+          {
+            "id": "570045",
+            "name": "DVA - Deutsche Verkehrs-Assekuranz-Vermittlungs GmbH",
+            "displayName": "DVA - Deutsche Verkehrs-Assekuranz-Vermittlungs GmbH",
+            "industry": "Insurance",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Bad Homburg vor der H\u00F6he",
+            "seeds": [],
+            "names": [
+              "DVA - Deutsche Verkehrs-Assekuranz-Vermittlungs GmbH"
+            ]
+          },
+          {
+            "id": "570075",
+            "name": "Coskunoz Metal Form Makina Endustri Ve Ticaret Anonim Sirketi",
+            "displayName": "Coskunoz Metal Form Makina Endustri Ve Ticaret Anonim Sirketi",
+            "industry": "Metals and Mining",
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Bursa",
+            "seeds": [],
+            "names": [
+              "Coskunoz Metal Form Makina Endustri Ve Ticaret Anonim Sirketi"
+            ]
+          },
+          {
+            "id": "570239",
+            "name": "BITZER K\u00FChlmaschinenbau GmbH",
+            "displayName": "BITZER K\u00FChlmaschinenbau GmbH",
+            "industry": "Machinery",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Sindelfingen",
+            "seeds": [],
+            "names": [
+              "BITZER K\u00FChlmaschinenbau GmbH"
+            ]
+          },
+          {
+            "id": "570355",
+            "name": "Bitkub Online Co., Ltd.",
+            "displayName": "Bitkub Online Co., Ltd.",
+            "industry": "IT Services",
+            "region": "Asia / Pacific",
+            "countryCode": "TH",
+            "stateCode": null,
+            "city": "Bangkok",
+            "seeds": [],
+            "names": [
+              "Bitkub Online Co., Ltd."
+            ]
+          },
+          {
+            "id": "571010",
+            "name": "Akumyn Pty Limited ",
+            "displayName": "Akumyn Pty Limited ",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Akumyn Pty Limited "
+            ]
+          },
+          {
+            "id": "571120",
+            "name": "Attekus",
+            "displayName": "Attekus",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Attekus"
+            ]
+          },
+          {
+            "id": "571166",
+            "name": "Baku International Tobacco",
+            "displayName": "Baku International Tobacco",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Baku International Tobacco"
+            ]
+          },
+          {
+            "id": "571592",
+            "name": "Eduskunta",
+            "displayName": "Eduskunta",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Eduskunta"
+            ]
+          },
+          {
+            "id": "572039",
+            "name": "Sanju Fukushikai Social Welfare Corp.",
+            "displayName": "Sanju Fukushikai Social Welfare Corp.",
+            "industry": "Commercial Services and Supplies",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Gojo",
+            "seeds": [],
+            "names": [
+              "Sanju Fukushikai Social Welfare Corp."
+            ]
+          },
+          {
+            "id": "572228",
+            "name": "Otsuka Shokai Kenko Hoken Kumiai",
+            "displayName": "Otsuka Shokai Kenko Hoken Kumiai",
+            "industry": null,
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Chiyoda-Ku",
+            "seeds": [],
+            "names": [
+              "Otsuka Shokai Kenko Hoken Kumiai"
+            ]
+          },
+          {
+            "id": "573526",
+            "name": "Sekure",
+            "displayName": "Sekure",
+            "industry": null,
+            "region": "Latin America and Caribbean",
+            "countryCode": "CO",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Sekure"
+            ]
+          },
+          {
+            "id": "573777",
+            "name": "Uku, S.A.P.I. De C.V.",
+            "displayName": "Uku, S.A.P.I. De C.V.",
+            "industry": "IT Services",
+            "region": "Latin America and Caribbean",
+            "countryCode": "MX",
+            "stateCode": "DF",
+            "city": "Mexico City",
+            "seeds": [],
+            "names": [
+              "Uku, S.A.P.I. De C.V."
+            ]
+          },
+          {
+            "id": "573930",
+            "name": "Kubion Holding B.V.",
+            "displayName": "Kubion Holding B.V.",
+            "industry": "Diversified Financial Services",
+            "region": "Europe",
+            "countryCode": "NL",
+            "stateCode": null,
+            "city": "Utrecht",
+            "seeds": [],
+            "names": [
+              "Kubion Holding B.V."
+            ]
+          },
+          {
+            "id": "573956",
+            "name": "Hong Kong Sheng Kung Hui Welfare Council",
+            "displayName": "Hong Kong Sheng Kung Hui Welfare Council",
+            "industry": "Commercial Services and Supplies",
+            "region": "Asia / Pacific",
+            "countryCode": "HK",
+            "stateCode": null,
+            "city": "Wan Chai",
+            "seeds": [],
+            "names": [
+              "Hong Kong Sheng Kung Hui Welfare Council"
+            ]
+          },
+          {
+            "id": "574025",
+            "name": "Kubrick Group Limited",
+            "displayName": "Kubrick Group Limited",
+            "industry": "Professional Services",
+            "region": "Europe",
+            "countryCode": "GB",
+            "stateCode": null,
+            "city": "London",
+            "seeds": [],
+            "names": [
+              "Kubrick Group Limited"
+            ]
+          },
+          {
+            "id": "574066",
+            "name": "Grad Beograd-Skupstina Grada Bgd",
+            "displayName": "Grad Beograd-Skupstina Grada Bgd",
+            "industry": "Commercial Services and Supplies",
+            "region": "Europe",
+            "countryCode": "RS",
+            "stateCode": null,
+            "city": "Beograd (stari Grad)",
+            "seeds": [],
+            "names": [
+              "Grad Beograd-Skupstina Grada Bgd"
+            ]
+          },
+          {
+            "id": "574274",
+            "name": "Jyv\u00E4skyl\u00E4n koulutuskuntayhtym\u00E4",
+            "displayName": "Jyv\u00E4skyl\u00E4n koulutuskuntayhtym\u00E4",
+            "industry": "Diversified Consumer Services",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Jyv\u00E4skyl\u00E4",
+            "seeds": [],
+            "names": [
+              "Jyv\u00E4skyl\u00E4n koulutuskuntayhtym\u00E4"
+            ]
+          },
+          {
+            "id": "574411",
+            "name": "Mjolkursamsalan Ehf.",
+            "displayName": "Mjolkursamsalan Ehf.",
+            "industry": "Food Products",
+            "region": "Europe",
+            "countryCode": "IS",
+            "stateCode": null,
+            "city": "Reykjavik",
+            "seeds": [],
+            "names": [
+              "Mjolkursamsalan Ehf."
+            ]
+          },
+          {
+            "id": "574428",
+            "name": "Kumulus Servicos Em Cloud Computing E Database Ltda",
+            "displayName": "Kumulus Servicos Em Cloud Computing E Database Ltda",
+            "industry": "IT Services",
+            "region": "Latin America and Caribbean",
+            "countryCode": "BR",
+            "stateCode": "SP",
+            "city": "Campinas",
+            "seeds": [],
+            "names": [
+              "Kumulus Servicos Em Cloud Computing E Database Ltda"
+            ]
+          },
+          {
+            "id": "574449",
+            "name": "Markus Schmidt Gmbh",
+            "displayName": "Markus Schmidt Gmbh",
+            "industry": "Textiles, Apparel and Luxury Goods",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Ratingen",
+            "seeds": [],
+            "names": [
+              "Markus Schmidt Gmbh"
+            ]
+          },
+          {
+            "id": "575523",
+            "name": "Kuspit Casa De Bolsa, S.A. De C.V.",
+            "displayName": "Kuspit Casa De Bolsa, S.A. De C.V.",
+            "industry": null,
+            "region": "Latin America and Caribbean",
+            "countryCode": "MX",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kuspit Casa De Bolsa, S.A. De C.V."
+            ]
+          },
+          {
+            "id": "575792",
+            "name": "iEye -PT Belyna Kurnia Abadi",
+            "displayName": "iEye -PT Belyna Kurnia Abadi",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "iEye -PT Belyna Kurnia Abadi"
+            ]
+          },
+          {
+            "id": "575827",
+            "name": "Kuhn O\u0027Toole \u0026 Maietta, LLP",
+            "displayName": "Kuhn O\u0027Toole \u0026 Maietta, LLP",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kuhn O\u0027Toole \u0026 Maietta, LLP"
+            ]
+          },
+          {
+            "id": "576001",
+            "name": "Kultera Inc",
+            "displayName": "Kultera Inc",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kultera Inc"
+            ]
+          },
+          {
+            "id": "576231",
+            "name": "Kanto Gakuin University",
+            "displayName": "Kanto Gakuin University",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kanto Gakuin University"
+            ]
+          },
+          {
+            "id": "576478",
+            "name": "Markus Group LTD",
+            "displayName": "Markus Group LTD",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Markus Group LTD"
+            ]
+          },
+          {
+            "id": "577020",
+            "name": "Opetus- Ja Kulttuuriministerio",
+            "displayName": "Opetus- Ja Kulttuuriministerio",
+            "industry": "Commercial Services and Supplies",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Helsinki",
+            "seeds": [],
+            "names": [
+              "Opetus- Ja Kulttuuriministerio"
+            ]
+          },
+          {
+            "id": "577148",
+            "name": "Sri Selvakumar Mills Private Limited",
+            "displayName": "Sri Selvakumar Mills Private Limited",
+            "industry": null,
+            "region": "Asia / Pacific",
+            "countryCode": "IN",
+            "stateCode": null,
+            "city": "Coimbatore",
+            "seeds": [],
+            "names": [
+              "Sri Selvakumar Mills Private Limited"
+            ]
+          },
+          {
+            "id": "577295",
+            "name": "Universit\u00E4tsklinikum Aachen, A\u00F6R",
+            "displayName": "Universit\u00E4tsklinikum Aachen, A\u00F6R",
+            "industry": "Health Care Providers and Services",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Aachen",
+            "seeds": [],
+            "names": [
+              "Universit\u00E4tsklinikum Aachen, A\u00F6R"
+            ]
+          },
+          {
+            "id": "577705",
+            "name": "Sekure Merchant Solutions",
+            "displayName": "Sekure Merchant Solutions",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Sekure Merchant Solutions"
+            ]
+          },
+          {
+            "id": "577741",
+            "name": "Y\u00DCKSEK \u00D6\u011ERET\u0130M KURULU BA\u015EKANLI\u011EI",
+            "displayName": "Y\u00DCKSEK \u00D6\u011ERET\u0130M KURULU BA\u015EKANLI\u011EI",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Y\u00DCKSEK \u00D6\u011ERET\u0130M KURULU BA\u015EKANLI\u011EI"
+            ]
+          },
+          {
+            "id": "578279",
+            "name": "Fugang Electronic (Kunshan) Co., Ltd.",
+            "displayName": "Fugang Electronic (Kunshan) Co., Ltd.",
+            "industry": "Electronic Equipment, Instruments and Components",
+            "region": "Asia / Pacific",
+            "countryCode": "CN",
+            "stateCode": null,
+            "city": "Kunshan",
+            "seeds": [],
+            "names": [
+              "Fugang Electronic (Kunshan) Co., Ltd."
+            ]
+          },
+          {
+            "id": "578543",
+            "name": "S. Nileshkumar And Co.",
+            "displayName": "S. Nileshkumar And Co.",
+            "industry": null,
+            "region": "Asia / Pacific",
+            "countryCode": "IN",
+            "stateCode": null,
+            "city": "Surat",
+            "seeds": [],
+            "names": [
+              "S. Nileshkumar And Co."
+            ]
+          },
+          {
+            "id": "578765",
+            "name": "KuppingerCole Analysts AG",
+            "displayName": "KuppingerCole Analysts AG",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "KuppingerCole Analysts AG"
+            ]
+          },
+          {
+            "id": "578929",
+            "name": "Qvalitas Arstikeskus AS",
+            "displayName": "Qvalitas Arstikeskus AS",
+            "industry": "Health Care Providers and Services",
+            "region": "Europe",
+            "countryCode": "EE",
+            "stateCode": null,
+            "city": "Tallinn",
+            "seeds": [],
+            "names": [
+              "Qvalitas Arstikeskus AS"
+            ]
+          },
+          {
+            "id": "579349",
+            "name": "Tsann Kuen Enterprise Co.,Ltd",
+            "displayName": "Tsann Kuen Enterprise Co.,Ltd",
+            "industry": "Specialty Retail",
+            "region": "Asia / Pacific",
+            "countryCode": "TW",
+            "stateCode": null,
+            "city": "Taipei",
+            "seeds": [],
+            "names": [
+              "Tsann Kuen Enterprise Co.,Ltd"
+            ]
+          },
+          {
+            "id": "580008",
+            "name": "Kokku",
+            "displayName": "Kokku",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Kokku"
+            ]
+          },
+          {
+            "id": "580072",
+            "name": "Nousu Yritysliikuntapalvelut Oy",
+            "displayName": "Nousu Yritysliikuntapalvelut Oy",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Nousu Yritysliikuntapalvelut Oy"
+            ]
+          },
+          {
+            "id": "580132",
+            "name": "Hemkunt Foundation",
+            "displayName": "Hemkunt Foundation",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Hemkunt Foundation"
+            ]
+          },
+          {
+            "id": "580496",
+            "name": "The Kugler Company, LLC",
+            "displayName": "The Kugler Company, LLC",
+            "industry": null,
+            "region": null,
+            "countryCode": null,
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "The Kugler Company, LLC"
+            ]
+          },
+          {
+            "id": "580777",
+            "name": "FOKUS TARGET SOLUSI",
+            "displayName": "FOKUS TARGET SOLUSI",
+            "industry": "Media",
+            "region": "Asia / Pacific",
+            "countryCode": "ID",
+            "stateCode": null,
+            "city": "Jakarta Pusat",
+            "seeds": [],
+            "names": [
+              "FOKUS TARGET SOLUSI"
+            ]
+          },
+          {
+            "id": "580902",
+            "name": "Tokusaku Consulting",
+            "displayName": "Tokusaku Consulting",
+            "industry": null,
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "WA",
+            "city": "Seattle",
+            "seeds": [],
+            "names": [
+              "Tokusaku Consulting"
+            ]
+          },
+          {
+            "id": "580932",
+            "name": "Analytikus",
+            "displayName": "Analytikus",
+            "industry": "Professional Services",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": null,
+            "city": null,
+            "seeds": [],
+            "names": [
+              "Analytikus"
+            ]
+          },
+          {
+            "id": "581073",
+            "name": "Kikagaku Co., Ltd.",
+            "displayName": "Kikagaku Co., Ltd.",
+            "industry": "Diversified Consumer Services",
+            "region": "Asia / Pacific",
+            "countryCode": "JP",
+            "stateCode": null,
+            "city": "Tokyo",
+            "seeds": [],
+            "names": [
+              "Kikagaku Co., Ltd."
+            ]
+          },
+          {
+            "id": "581343",
+            "name": "Beckwith \u0026 Kuffel, Inc.",
+            "displayName": "Beckwith \u0026 Kuffel, Inc.",
+            "industry": "Trading Companies and Distributors",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "WA",
+            "city": "Seattle",
+            "seeds": [],
+            "names": [
+              "Beckwith \u0026 Kuffel, Inc."
+            ]
+          },
+          {
+            "id": "581638",
+            "name": "Footprintku Inc.",
+            "displayName": "Footprintku Inc.",
+            "industry": "Software",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "CA",
+            "city": "Milpitas",
+            "seeds": [],
+            "names": [
+              "Footprintku Inc."
+            ]
+          },
+          {
+            "id": "581819",
+            "name": "Kurt Swensson, Inc.",
+            "displayName": "Kurt Swensson, Inc.",
+            "industry": "Consumer Staples Distribution and Retail",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "GA",
+            "city": "Atlanta",
+            "seeds": [],
+            "names": [
+              "Kurt Swensson, Inc."
+            ]
+          },
+          {
+            "id": "581822",
+            "name": "KUDO, Inc.",
+            "displayName": "KUDO, Inc.",
+            "industry": "Software",
+            "region": "United States and Canada",
+            "countryCode": "US",
+            "stateCode": "NY",
+            "city": "New York",
+            "seeds": [],
+            "names": [
+              "KUDO, Inc."
+            ]
+          },
+          {
+            "id": "581823",
+            "name": "Kumpany",
+            "displayName": "Kumpany",
+            "industry": "Media",
+            "region": "Europe",
+            "countryCode": "NL",
+            "stateCode": null,
+            "city": "Amsterdam",
+            "seeds": [],
+            "names": [
+              "Kumpany"
+            ]
+          },
+          {
+            "id": "581824",
+            "name": "Kuuki Marketing Lab Oy",
+            "displayName": "Kuuki Marketing Lab Oy",
+            "industry": "Media",
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Lahti",
+            "seeds": [],
+            "names": [
+              "Kuuki Marketing Lab Oy"
+            ]
+          },
+          {
+            "id": "582996",
+            "name": "Tau On-line d.o.o. za informatiku",
+            "displayName": "Tau On-line d.o.o. za informatiku",
+            "industry": "IT Services",
+            "region": "Europe",
+            "countryCode": "HR",
+            "stateCode": null,
+            "city": "Zagreb",
+            "seeds": [],
+            "names": [
+              "Tau On-line d.o.o. za informatiku"
+            ]
+          },
+          {
+            "id": "583013",
+            "name": "REISSWOLF Budapest Adat-es Dokumentumkezelo Kft.",
+            "displayName": "REISSWOLF Budapest Adat-es Dokumentumkezelo Kft.",
+            "industry": "Commercial Services and Supplies",
+            "region": "Europe",
+            "countryCode": "HU",
+            "stateCode": null,
+            "city": "Budapest",
+            "seeds": [],
+            "names": [
+              "REISSWOLF Budapest Adat-es Dokumentumkezelo Kft."
+            ]
+          },
+          {
+            "id": "583078",
+            "name": "Peakup Ltd",
+            "displayName": "Peakup Ltd",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "GB",
+            "stateCode": null,
+            "city": "London",
+            "seeds": [],
+            "names": [
+              "Peakup Ltd"
+            ]
+          },
+          {
+            "id": "583257",
+            "name": "Akukon Oy",
+            "displayName": "Akukon Oy",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Helsinki",
+            "seeds": [],
+            "names": [
+              "Akukon Oy"
+            ]
+          },
+          {
+            "id": "583413",
+            "name": "Vku Service Gmbh",
+            "displayName": "Vku Service Gmbh",
+            "industry": "Professional Services",
+            "region": "Europe",
+            "countryCode": "DE",
+            "stateCode": null,
+            "city": "Berlin",
+            "seeds": [],
+            "names": [
+              "Vku Service Gmbh"
+            ]
+          },
+          {
+            "id": "583825",
+            "name": "Marsann It, S.R.O. V Konkurze",
+            "displayName": "Marsann It, S.R.O. V Konkurze",
+            "industry": "Professional Services",
+            "region": "Europe",
+            "countryCode": "SK",
+            "stateCode": null,
+            "city": "Bratislava-Petrzalka",
+            "seeds": [],
+            "names": [
+              "Marsann It, S.R.O. V Konkurze"
+            ]
+          },
+          {
+            "id": "583836",
+            "name": "Tietoliikenteen Ja Tietotekniikan Keskusliitto Ficom Ry",
+            "displayName": "Tietoliikenteen Ja Tietotekniikan Keskusliitto Ficom Ry",
+            "industry": null,
+            "region": "Europe",
+            "countryCode": "FI",
+            "stateCode": null,
+            "city": "Helsinki",
+            "seeds": [],
+            "names": [
+              "Tietoliikenteen Ja Tietotekniikan Keskusliitto Ficom Ry"
+            ]
+          },
+          {
+            "id": "584002",
+            "name": "Somay Hukuk Burosu",
+            "displayName": "Somay Hukuk Burosu",
+            "industry": null,
+            "region": "Africa / Middle East",
+            "countryCode": "TR",
+            "stateCode": null,
+            "city": "Istanbul",
+            "seeds": [],
+            "names": [
+              "Somay Hukuk Burosu"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "1416881108",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

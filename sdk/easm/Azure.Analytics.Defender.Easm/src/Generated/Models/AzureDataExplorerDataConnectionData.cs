@@ -16,7 +16,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <summary> Initializes a new instance of AzureDataExplorerDataConnectionData. </summary>
         /// <param name="properties"> properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        internal AzureDataExplorerDataConnectionData(AzureDataExplorerDataConnectionProperties properties)
+        public AzureDataExplorerDataConnectionData(AzureDataExplorerDataConnectionProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -37,6 +37,6 @@ namespace Azure.Analytics.Defender.Easm.Models
         }
 
         /// <summary> properties. </summary>
-        public AzureDataExplorerDataConnectionProperties Properties { get; }
+        public AzureDataExplorerDataConnectionProperties Properties { get; set; }
     }
 }

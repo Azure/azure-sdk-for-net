@@ -18,7 +18,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         internal WebComponent()
         {
             RuleId = new ChangeTrackingList<string>();
-            Cve = new ChangeTrackingList<Cve>();
+            Cve = new ChangeTrackingList<AssociatedCve>();
             Ports = new ChangeTrackingList<Port>();
             Sources = new ChangeTrackingList<Source>();
         }
@@ -37,7 +37,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="ports"></param>
         /// <param name="sources"></param>
         /// <param name="service"></param>
-        internal WebComponent(string name, string type, string version, IReadOnlyList<string> ruleId, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<Cve> cve, long? endOfLife, bool? recent, IReadOnlyList<Port> ports, IReadOnlyList<Source> sources, string service)
+        internal WebComponent(string name, string type, string version, IReadOnlyList<string> ruleId, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<AssociatedCve> cve, long? endOfLife, bool? recent, IReadOnlyList<Port> ports, IReadOnlyList<Source> sources, string service)
         {
             Name = name;
             Type = type;
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <summary> Gets the count. </summary>
         public long? Count { get; }
         /// <summary> Gets the cve. </summary>
-        public IReadOnlyList<Cve> Cve { get; }
+        public IReadOnlyList<AssociatedCve> Cve { get; }
         /// <summary> Gets the end of life. </summary>
         public long? EndOfLife { get; }
         /// <summary> Gets the recent. </summary>

@@ -14,17 +14,17 @@ namespace Azure.Analytics.Defender.Easm.Models
     /// <summary> Model factory for models. </summary>
     public static partial class AnalyticsDefenderEasmModelFactory
     {
-        /// <summary> Initializes a new instance of AssetPageResponse. </summary>
+        /// <summary> Initializes a new instance of AssetPageResult. </summary>
         /// <param name="totalElements"> The total number of items available in the full result set. </param>
         /// <param name="mark"> The cursor mark to be used on the next request.  Not set if using paging. </param>
         /// <param name="nextLink"> The link to access the next page of results.  Not set if at the end of the result set. </param>
         /// <param name="value"> The items in the current page of results. </param>
-        /// <returns> A new <see cref="Models.AssetPageResponse"/> instance for mocking. </returns>
-        public static AssetPageResponse AssetPageResponse(long? totalElements = null, string mark = null, string nextLink = null, IEnumerable<AssetResource> value = null)
+        /// <returns> A new <see cref="Models.AssetPageResult"/> instance for mocking. </returns>
+        public static AssetPageResult AssetPageResult(long? totalElements = null, string mark = null, string nextLink = null, IEnumerable<AssetResource> value = null)
         {
             value ??= new List<AssetResource>();
 
-            return new AssetPageResponse(totalElements, mark, nextLink, value?.ToList());
+            return new AssetPageResult(totalElements, mark, nextLink, value?.ToList());
         }
 
         /// <summary> Initializes a new instance of AssetResource. </summary>
@@ -428,13 +428,13 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
         /// <returns> A new <see cref="Models.HostAsset"/> instance for mocking. </returns>
-        public static HostAsset HostAsset(string host = null, string domain = null, IEnumerable<ObservedString> ipAddresses = null, IEnumerable<WebComponent> webComponents = null, IEnumerable<ObservedHeader> headers = null, IEnumerable<Attribute> attributes = null, IEnumerable<Cookie> cookies = null, IEnumerable<SslCertAsset> sslCerts = null, IEnumerable<ObservedString> parentHosts = null, IEnumerable<ObservedString> childHosts = null, HostCore hostCore = null, IEnumerable<Service> services = null, IEnumerable<ObservedString> cnames = null, IEnumerable<Source> sources = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, IEnumerable<ResourceUrl> resourceUrls = null, IEnumerable<ScanMetadata> scanMetadata = null, IEnumerable<ObservedLong> asns = null, IEnumerable<IpBlock> ipBlocks = null, IEnumerable<ObservedString> responseBodies = null, DomainAsset domainAsset = null, IEnumerable<ObservedBoolean> nsRecord = null, IEnumerable<ObservedBoolean> mxRecord = null, IEnumerable<ObservedBoolean> webserver = null, IEnumerable<ObservedLocation> location = null, IEnumerable<ObservedBoolean> nxdomain = null, IEnumerable<SslServerConfig> sslServerConfig = null, IEnumerable<ObservedBoolean> isWildcard = null, IEnumerable<Banner> banners = null, IEnumerable<ObservedBoolean> ipv4 = null, IEnumerable<ObservedBoolean> ipv6 = null)
+        public static HostAsset HostAsset(string host = null, string domain = null, IEnumerable<ObservedString> ipAddresses = null, IEnumerable<WebComponent> webComponents = null, IEnumerable<ObservedHeader> headers = null, IEnumerable<Attribute> attributes = null, IEnumerable<AssociatedCookie> cookies = null, IEnumerable<SslCertAsset> sslCerts = null, IEnumerable<ObservedString> parentHosts = null, IEnumerable<ObservedString> childHosts = null, HostCore hostCore = null, IEnumerable<Service> services = null, IEnumerable<ObservedString> cnames = null, IEnumerable<Source> sources = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, IEnumerable<ResourceUrl> resourceUrls = null, IEnumerable<ScanMetadata> scanMetadata = null, IEnumerable<ObservedLong> asns = null, IEnumerable<IpBlock> ipBlocks = null, IEnumerable<ObservedString> responseBodies = null, DomainAsset domainAsset = null, IEnumerable<ObservedBoolean> nsRecord = null, IEnumerable<ObservedBoolean> mxRecord = null, IEnumerable<ObservedBoolean> webserver = null, IEnumerable<ObservedLocation> location = null, IEnumerable<ObservedBoolean> nxdomain = null, IEnumerable<SslServerConfig> sslServerConfig = null, IEnumerable<ObservedBoolean> isWildcard = null, IEnumerable<Banner> banners = null, IEnumerable<ObservedBoolean> ipv4 = null, IEnumerable<ObservedBoolean> ipv6 = null)
         {
             ipAddresses ??= new List<ObservedString>();
             webComponents ??= new List<WebComponent>();
             headers ??= new List<ObservedHeader>();
             attributes ??= new List<Attribute>();
-            cookies ??= new List<Cookie>();
+            cookies ??= new List<AssociatedCookie>();
             sslCerts ??= new List<SslCertAsset>();
             parentHosts ??= new List<ObservedString>();
             childHosts ??= new List<ObservedString>();
@@ -475,10 +475,10 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="sources"></param>
         /// <param name="service"></param>
         /// <returns> A new <see cref="Models.WebComponent"/> instance for mocking. </returns>
-        public static WebComponent WebComponent(string name = null, string type = null, string version = null, IEnumerable<string> ruleId = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, IEnumerable<Cve> cve = null, long? endOfLife = null, bool? recent = null, IEnumerable<Port> ports = null, IEnumerable<Source> sources = null, string service = null)
+        public static WebComponent WebComponent(string name = null, string type = null, string version = null, IEnumerable<string> ruleId = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, IEnumerable<AssociatedCve> cve = null, long? endOfLife = null, bool? recent = null, IEnumerable<Port> ports = null, IEnumerable<Source> sources = null, string service = null)
         {
             ruleId ??= new List<string>();
-            cve ??= new List<Cve>();
+            cve ??= new List<AssociatedCve>();
             ports ??= new List<Port>();
             sources ??= new List<Source>();
 
@@ -490,10 +490,10 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="cweId"></param>
         /// <param name="cvssScore"></param>
         /// <param name="cvss3Summary"></param>
-        /// <returns> A new <see cref="Models.Cve"/> instance for mocking. </returns>
-        public static Cve Cve(string name = null, string cweId = null, float? cvssScore = null, CVSS3Summary cvss3Summary = null)
+        /// <returns> A new <see cref="Models.AssociatedCve"/> instance for mocking. </returns>
+        public static AssociatedCve Cve(string name = null, string cweId = null, float? cvssScore = null, CVSS3Summary cvss3Summary = null)
         {
-            return new Cve(name, cweId, cvssScore, cvss3Summary);
+            return new AssociatedCve(name, cweId, cvssScore, cvss3Summary);
         }
 
         /// <summary> Initializes a new instance of CVSS3Summary. </summary>
@@ -568,10 +568,10 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="cookieExpiryDate"></param>
-        /// <returns> A new <see cref="Models.Cookie"/> instance for mocking. </returns>
-        public static Cookie Cookie(string cookieName = null, string cookieDomain = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, DateTimeOffset? cookieExpiryDate = null)
+        /// <returns> A new <see cref="Models.AssociatedCookie"/> instance for mocking. </returns>
+        public static AssociatedCookie Cookie(string cookieName = null, string cookieDomain = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, bool? recent = null, DateTimeOffset? cookieExpiryDate = null)
         {
-            return new Cookie(cookieName, cookieDomain, firstSeen, lastSeen, count, recent, cookieExpiryDate);
+            return new AssociatedCookie(cookieName, cookieDomain, firstSeen, lastSeen, count, recent, cookieExpiryDate);
         }
 
         /// <summary> Initializes a new instance of SslCertAsset. </summary>
@@ -925,7 +925,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
         /// <returns> A new <see cref="Models.IpAddressAsset"/> instance for mocking. </returns>
-        public static IpAddressAsset IpAddressAsset(string ipAddress = null, IEnumerable<ObservedLong> asns = null, IEnumerable<Reputation> reputations = null, IEnumerable<WebComponent> webComponents = null, IEnumerable<ObservedString> netRanges = null, IEnumerable<ObservedHeader> headers = null, IEnumerable<Attribute> attributes = null, IEnumerable<Cookie> cookies = null, IEnumerable<SslCertAsset> sslCerts = null, IEnumerable<Service> services = null, IEnumerable<IpBlock> ipBlocks = null, IEnumerable<Source> sources = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, IEnumerable<Banner> banners = null, IEnumerable<ScanMetadata> scanMetadata = null, IEnumerable<ObservedBoolean> nsRecord = null, IEnumerable<ObservedBoolean> mxRecord = null, IEnumerable<ObservedLocation> location = null, IEnumerable<ObservedString> hosts = null, IEnumerable<ObservedBoolean> nxdomain = null, IEnumerable<SslServerConfig> sslServerConfig = null, bool? ipv4 = null, bool? ipv6 = null)
+        public static IpAddressAsset IpAddressAsset(string ipAddress = null, IEnumerable<ObservedLong> asns = null, IEnumerable<Reputation> reputations = null, IEnumerable<WebComponent> webComponents = null, IEnumerable<ObservedString> netRanges = null, IEnumerable<ObservedHeader> headers = null, IEnumerable<Attribute> attributes = null, IEnumerable<AssociatedCookie> cookies = null, IEnumerable<SslCertAsset> sslCerts = null, IEnumerable<Service> services = null, IEnumerable<IpBlock> ipBlocks = null, IEnumerable<Source> sources = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, IEnumerable<Banner> banners = null, IEnumerable<ScanMetadata> scanMetadata = null, IEnumerable<ObservedBoolean> nsRecord = null, IEnumerable<ObservedBoolean> mxRecord = null, IEnumerable<ObservedLocation> location = null, IEnumerable<ObservedString> hosts = null, IEnumerable<ObservedBoolean> nxdomain = null, IEnumerable<SslServerConfig> sslServerConfig = null, bool? ipv4 = null, bool? ipv6 = null)
         {
             asns ??= new List<ObservedLong>();
             reputations ??= new List<Reputation>();
@@ -933,7 +933,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             netRanges ??= new List<ObservedString>();
             headers ??= new List<ObservedHeader>();
             attributes ??= new List<Attribute>();
-            cookies ??= new List<Cookie>();
+            cookies ??= new List<AssociatedCookie>();
             sslCerts ??= new List<SslCertAsset>();
             services ??= new List<Service>();
             ipBlocks ??= new List<IpBlock>();
@@ -1080,8 +1080,8 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="service"></param>
         /// <param name="ipAddresses"></param>
         /// <param name="successful"></param>
-        /// <param name="httpResponseCodes"></param>
-        /// <param name="httpResponseMessages"></param>
+        /// <param name="httpResultCodes"></param>
+        /// <param name="httpResultMessages"></param>
         /// <param name="responseTimes"></param>
         /// <param name="frames"></param>
         /// <param name="windows"></param>
@@ -1112,7 +1112,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="redirectUrls"></param>
         /// <param name="redirectType"></param>
         /// <param name="finalUrls"></param>
-        /// <param name="finalResponseCodes"></param>
+        /// <param name="finalResultCodes"></param>
         /// <param name="parkedPage"></param>
         /// <param name="resourceUrls"></param>
         /// <param name="guids"></param>
@@ -1137,12 +1137,12 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
         /// <returns> A new <see cref="Models.PageAsset"/> instance for mocking. </returns>
-        public static PageAsset PageAsset(Uri url = null, string httpMethod = null, string service = null, IEnumerable<ObservedString> ipAddresses = null, IEnumerable<ObservedBoolean> successful = null, IEnumerable<ObservedInteger> httpResponseCodes = null, IEnumerable<ObservedString> httpResponseMessages = null, IEnumerable<ObservedLong> responseTimes = null, IEnumerable<ObservedBoolean> frames = null, IEnumerable<ObservedBoolean> windows = null, IEnumerable<ObservedBoolean> nonHtmlFrames = null, IEnumerable<ObservedBoolean> undirectedContent = null, IEnumerable<ObservedString> contentTypes = null, IEnumerable<ObservedLong> contentLengths = null, IEnumerable<ObservedString> windowNames = null, IEnumerable<ObservedString> charsets = null, IEnumerable<ObservedString> titles = null, IEnumerable<ObservedString> languages = null, IEnumerable<ObservedHeader> responseHeaders = null, IEnumerable<Cookie> cookies = null, IEnumerable<WebComponent> webComponents = null, IEnumerable<Attribute> attributes = null, IEnumerable<AssetSecurityPolicy> assetSecurityPolicies = null, IEnumerable<ObservedIntegers> responseBodyMinhashSignatures = null, IEnumerable<ObservedIntegers> fullDomMinhashSignatures = null, IEnumerable<ObservedString> responseBodyHashSignatures = null, IEnumerable<ObservedString> errors = null, IEnumerable<SslCertAsset> sslCerts = null, IEnumerable<Source> sources = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, PageCause cause = null, string referrer = null, IEnumerable<ObservedString> redirectUrls = null, PageAssetRedirectType? redirectType = null, IEnumerable<ObservedString> finalUrls = null, IEnumerable<ObservedInteger> finalResponseCodes = null, IEnumerable<ObservedBoolean> parkedPage = null, IEnumerable<ResourceUrl> resourceUrls = null, IEnumerable<GuidPair> guids = null, IEnumerable<ObservedString> finalIpAddresses = null, IEnumerable<ObservedLong> asns = null, IEnumerable<IpBlock> ipBlocks = null, IEnumerable<ObservedLong> finalAsns = null, IEnumerable<IpBlock> finalIpBlocks = null, IEnumerable<ObservedString> responseBodies = null, DomainAsset domainAsset = null, ObservedBoolean rootUrl = null, bool? isRootUrl = null, IEnumerable<ObservedLocation> location = null, IEnumerable<Service> services = null, string siteStatus = null, IEnumerable<ObservedString> cnames = null, IEnumerable<ObservedString> cdns = null, string host = null, string domain = null, IEnumerable<SslServerConfig> sslServerConfig = null, IEnumerable<AssetSecurityPolicy> gdprAssetSecurityPolicies = null, IEnumerable<ObservedBoolean> ipv4 = null, IEnumerable<ObservedBoolean> ipv6 = null)
+        public static PageAsset PageAsset(Uri url = null, string httpMethod = null, string service = null, IEnumerable<ObservedString> ipAddresses = null, IEnumerable<ObservedBoolean> successful = null, IEnumerable<ObservedInteger> httpResultCodes = null, IEnumerable<ObservedString> httpResultMessages = null, IEnumerable<ObservedLong> responseTimes = null, IEnumerable<ObservedBoolean> frames = null, IEnumerable<ObservedBoolean> windows = null, IEnumerable<ObservedBoolean> nonHtmlFrames = null, IEnumerable<ObservedBoolean> undirectedContent = null, IEnumerable<ObservedString> contentTypes = null, IEnumerable<ObservedLong> contentLengths = null, IEnumerable<ObservedString> windowNames = null, IEnumerable<ObservedString> charsets = null, IEnumerable<ObservedString> titles = null, IEnumerable<ObservedString> languages = null, IEnumerable<ObservedHeader> responseHeaders = null, IEnumerable<AssociatedCookie> cookies = null, IEnumerable<WebComponent> webComponents = null, IEnumerable<Attribute> attributes = null, IEnumerable<AssetSecurityPolicy> assetSecurityPolicies = null, IEnumerable<ObservedIntegers> responseBodyMinhashSignatures = null, IEnumerable<ObservedIntegers> fullDomMinhashSignatures = null, IEnumerable<ObservedString> responseBodyHashSignatures = null, IEnumerable<ObservedString> errors = null, IEnumerable<SslCertAsset> sslCerts = null, IEnumerable<Source> sources = null, DateTimeOffset? firstSeen = null, DateTimeOffset? lastSeen = null, long? count = null, PageCause cause = null, string referrer = null, IEnumerable<ObservedString> redirectUrls = null, PageAssetRedirectType? redirectType = null, IEnumerable<ObservedString> finalUrls = null, IEnumerable<ObservedInteger> finalResultCodes = null, IEnumerable<ObservedBoolean> parkedPage = null, IEnumerable<ResourceUrl> resourceUrls = null, IEnumerable<GuidPair> guids = null, IEnumerable<ObservedString> finalIpAddresses = null, IEnumerable<ObservedLong> asns = null, IEnumerable<IpBlock> ipBlocks = null, IEnumerable<ObservedLong> finalAsns = null, IEnumerable<IpBlock> finalIpBlocks = null, IEnumerable<ObservedString> responseBodies = null, DomainAsset domainAsset = null, ObservedBoolean rootUrl = null, bool? isRootUrl = null, IEnumerable<ObservedLocation> location = null, IEnumerable<Service> services = null, string siteStatus = null, IEnumerable<ObservedString> cnames = null, IEnumerable<ObservedString> cdns = null, string host = null, string domain = null, IEnumerable<SslServerConfig> sslServerConfig = null, IEnumerable<AssetSecurityPolicy> gdprAssetSecurityPolicies = null, IEnumerable<ObservedBoolean> ipv4 = null, IEnumerable<ObservedBoolean> ipv6 = null)
         {
             ipAddresses ??= new List<ObservedString>();
             successful ??= new List<ObservedBoolean>();
-            httpResponseCodes ??= new List<ObservedInteger>();
-            httpResponseMessages ??= new List<ObservedString>();
+            httpResultCodes ??= new List<ObservedInteger>();
+            httpResultMessages ??= new List<ObservedString>();
             responseTimes ??= new List<ObservedLong>();
             frames ??= new List<ObservedBoolean>();
             windows ??= new List<ObservedBoolean>();
@@ -1155,7 +1155,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             titles ??= new List<ObservedString>();
             languages ??= new List<ObservedString>();
             responseHeaders ??= new List<ObservedHeader>();
-            cookies ??= new List<Cookie>();
+            cookies ??= new List<AssociatedCookie>();
             webComponents ??= new List<WebComponent>();
             attributes ??= new List<Attribute>();
             assetSecurityPolicies ??= new List<AssetSecurityPolicy>();
@@ -1167,7 +1167,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             sources ??= new List<Source>();
             redirectUrls ??= new List<ObservedString>();
             finalUrls ??= new List<ObservedString>();
-            finalResponseCodes ??= new List<ObservedInteger>();
+            finalResultCodes ??= new List<ObservedInteger>();
             parkedPage ??= new List<ObservedBoolean>();
             resourceUrls ??= new List<ResourceUrl>();
             guids ??= new List<GuidPair>();
@@ -1186,7 +1186,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             ipv4 ??= new List<ObservedBoolean>();
             ipv6 ??= new List<ObservedBoolean>();
 
-            return new PageAsset(url, httpMethod, service, ipAddresses?.ToList(), successful?.ToList(), httpResponseCodes?.ToList(), httpResponseMessages?.ToList(), responseTimes?.ToList(), frames?.ToList(), windows?.ToList(), nonHtmlFrames?.ToList(), undirectedContent?.ToList(), contentTypes?.ToList(), contentLengths?.ToList(), windowNames?.ToList(), charsets?.ToList(), titles?.ToList(), languages?.ToList(), responseHeaders?.ToList(), cookies?.ToList(), webComponents?.ToList(), attributes?.ToList(), assetSecurityPolicies?.ToList(), responseBodyMinhashSignatures?.ToList(), fullDomMinhashSignatures?.ToList(), responseBodyHashSignatures?.ToList(), errors?.ToList(), sslCerts?.ToList(), sources?.ToList(), firstSeen, lastSeen, count, cause, referrer, redirectUrls?.ToList(), redirectType, finalUrls?.ToList(), finalResponseCodes?.ToList(), parkedPage?.ToList(), resourceUrls?.ToList(), guids?.ToList(), finalIpAddresses?.ToList(), asns?.ToList(), ipBlocks?.ToList(), finalAsns?.ToList(), finalIpBlocks?.ToList(), responseBodies?.ToList(), domainAsset, rootUrl, isRootUrl, location?.ToList(), services?.ToList(), siteStatus, cnames?.ToList(), cdns?.ToList(), host, domain, sslServerConfig?.ToList(), gdprAssetSecurityPolicies?.ToList(), ipv4?.ToList(), ipv6?.ToList());
+            return new PageAsset(url, httpMethod, service, ipAddresses?.ToList(), successful?.ToList(), httpResultCodes?.ToList(), httpResultMessages?.ToList(), responseTimes?.ToList(), frames?.ToList(), windows?.ToList(), nonHtmlFrames?.ToList(), undirectedContent?.ToList(), contentTypes?.ToList(), contentLengths?.ToList(), windowNames?.ToList(), charsets?.ToList(), titles?.ToList(), languages?.ToList(), responseHeaders?.ToList(), cookies?.ToList(), webComponents?.ToList(), attributes?.ToList(), assetSecurityPolicies?.ToList(), responseBodyMinhashSignatures?.ToList(), fullDomMinhashSignatures?.ToList(), responseBodyHashSignatures?.ToList(), errors?.ToList(), sslCerts?.ToList(), sources?.ToList(), firstSeen, lastSeen, count, cause, referrer, redirectUrls?.ToList(), redirectType, finalUrls?.ToList(), finalResultCodes?.ToList(), parkedPage?.ToList(), resourceUrls?.ToList(), guids?.ToList(), finalIpAddresses?.ToList(), asns?.ToList(), ipBlocks?.ToList(), finalAsns?.ToList(), finalIpBlocks?.ToList(), responseBodies?.ToList(), domainAsset, rootUrl, isRootUrl, location?.ToList(), services?.ToList(), siteStatus, cnames?.ToList(), cdns?.ToList(), host, domain, sslServerConfig?.ToList(), gdprAssetSecurityPolicies?.ToList(), ipv4?.ToList(), ipv6?.ToList());
         }
 
         /// <summary> Initializes a new instance of AssetSecurityPolicy. </summary>
@@ -1280,24 +1280,24 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="phase"> The phase the task is in. </param>
         /// <param name="reason"> The reason the task was moved into its current state, if the task wasn't completed. </param>
         /// <param name="metadata"> Attributes unique to the task.  This differs by task type. </param>
-        /// <returns> A new <see cref="Models.Task"/> instance for mocking. </returns>
-        public static Task Task(string id = null, DateTimeOffset? startedAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? lastPolledAt = null, TaskState? state = null, TaskPhase? phase = null, string reason = null, IReadOnlyDictionary<string, BinaryData> metadata = null)
+        /// <returns> A new <see cref="Models.TaskResource"/> instance for mocking. </returns>
+        public static TaskResource Task(string id = null, DateTimeOffset? startedAt = null, DateTimeOffset? completedAt = null, DateTimeOffset? lastPolledAt = null, TaskState? state = null, TaskPhase? phase = null, string reason = null, IReadOnlyDictionary<string, BinaryData> metadata = null)
         {
             metadata ??= new Dictionary<string, BinaryData>();
 
-            return new Task(id, startedAt, completedAt, lastPolledAt, state, phase, reason, metadata);
+            return new TaskResource(id, startedAt, completedAt, lastPolledAt, state, phase, reason, metadata);
         }
 
-        /// <summary> Initializes a new instance of DataConnectionPageResponse. </summary>
+        /// <summary> Initializes a new instance of DataConnectionPageResult. </summary>
         /// <param name="totalElements"> The total number of items available in the full result set. </param>
         /// <param name="nextLink"> The link to access the next page of results.  Not set if at the end of the result set. </param>
         /// <param name="value"> The items in the current page of results. </param>
-        /// <returns> A new <see cref="Models.DataConnectionPageResponse"/> instance for mocking. </returns>
-        public static DataConnectionPageResponse DataConnectionPageResponse(long? totalElements = null, string nextLink = null, IEnumerable<DataConnection> value = null)
+        /// <returns> A new <see cref="Models.DataConnectionPageResult"/> instance for mocking. </returns>
+        public static DataConnectionPageResult DataConnectionPageResult(long? totalElements = null, string nextLink = null, IEnumerable<DataConnection> value = null)
         {
             value ??= new List<DataConnection>();
 
-            return new DataConnectionPageResponse(totalElements, nextLink, value?.ToList());
+            return new DataConnectionPageResult(totalElements, nextLink, value?.ToList());
         }
 
         /// <summary> Initializes a new instance of DataConnection. </summary>
@@ -1376,12 +1376,12 @@ namespace Azure.Analytics.Defender.Easm.Models
             return new AzureDataExplorerDataConnectionProperties(clusterName, region, databaseName);
         }
 
-        /// <summary> Initializes a new instance of ValidateResponse. </summary>
+        /// <summary> Initializes a new instance of ValidateResult. </summary>
         /// <param name="error"> This is the top-level error object whose code matches the x-ms-error-code response header. </param>
-        /// <returns> A new <see cref="Models.ValidateResponse"/> instance for mocking. </returns>
-        public static ValidateResponse ValidateResponse(ErrorDetail error = null)
+        /// <returns> A new <see cref="Models.ValidateResult"/> instance for mocking. </returns>
+        public static ValidateResult ValidateResult(ErrorDetail error = null)
         {
-            return new ValidateResponse(error);
+            return new ValidateResult(error);
         }
 
         /// <summary> Initializes a new instance of ErrorDetail. </summary>
@@ -1407,16 +1407,16 @@ namespace Azure.Analytics.Defender.Easm.Models
             return new InnerError(code, value);
         }
 
-        /// <summary> Initializes a new instance of DiscoGroupPageResponse. </summary>
+        /// <summary> Initializes a new instance of DiscoGroupPageResult. </summary>
         /// <param name="totalElements"> The total number of items available in the full result set. </param>
         /// <param name="nextLink"> The link to access the next page of results.  Not set if at the end of the result set. </param>
         /// <param name="value"> The items in the current page of results. </param>
-        /// <returns> A new <see cref="Models.DiscoGroupPageResponse"/> instance for mocking. </returns>
-        public static DiscoGroupPageResponse DiscoGroupPageResponse(long? totalElements = null, string nextLink = null, IEnumerable<DiscoGroup> value = null)
+        /// <returns> A new <see cref="Models.DiscoGroupPageResult"/> instance for mocking. </returns>
+        public static DiscoGroupPageResult DiscoGroupPageResult(long? totalElements = null, string nextLink = null, IEnumerable<DiscoGroup> value = null)
         {
             value ??= new List<DiscoGroup>();
 
-            return new DiscoGroupPageResponse(totalElements, nextLink, value?.ToList());
+            return new DiscoGroupPageResult(totalElements, nextLink, value?.ToList());
         }
 
         /// <summary> Initializes a new instance of DiscoGroup. </summary>
@@ -1433,7 +1433,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="createdDate"> The date for the disco group was created. </param>
         /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
         /// <returns> A new <see cref="Models.DiscoGroup"/> instance for mocking. </returns>
-        public static DiscoGroup DiscoGroup(string id = null, string name = null, string displayName = null, string description = null, string tier = null, long? frequencyMilliseconds = null, IEnumerable<DiscoSource> seeds = null, IEnumerable<string> names = null, IEnumerable<DiscoSource> excludes = null, DiscoRunResponse latestRun = null, DateTimeOffset? createdDate = null, string templateId = null)
+        public static DiscoGroup DiscoGroup(string id = null, string name = null, string displayName = null, string description = null, string tier = null, long? frequencyMilliseconds = null, IEnumerable<DiscoSource> seeds = null, IEnumerable<string> names = null, IEnumerable<DiscoSource> excludes = null, DiscoRunResult latestRun = null, DateTimeOffset? createdDate = null, string templateId = null)
         {
             seeds ??= new List<DiscoSource>();
             names ??= new List<string>();
@@ -1442,7 +1442,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             return new DiscoGroup(id, name, displayName, description, tier, frequencyMilliseconds, seeds?.ToList(), names?.ToList(), excludes?.ToList(), latestRun, createdDate, templateId);
         }
 
-        /// <summary> Initializes a new instance of DiscoRunResponse. </summary>
+        /// <summary> Initializes a new instance of DiscoRunResult. </summary>
         /// <param name="submittedDate"> The date for when the disco run was created in the system. </param>
         /// <param name="startedDate"> The date for when the disco run was actually started by the system. </param>
         /// <param name="completedDate"> The date for when the disco run was completed by the system. </param>
@@ -1452,38 +1452,38 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="seeds"> The list of seeds used for the disco run. </param>
         /// <param name="excludes"> The list of excludes used for the disco run, aka assets to exclude from the discovery algorithm. </param>
         /// <param name="names"> The list of names used for the disco run. </param>
-        /// <returns> A new <see cref="Models.DiscoRunResponse"/> instance for mocking. </returns>
-        public static DiscoRunResponse DiscoRunResponse(DateTimeOffset? submittedDate = null, DateTimeOffset? startedDate = null, DateTimeOffset? completedDate = null, string tier = null, DiscoRunState? state = null, long? totalAssetsFoundCount = null, IEnumerable<DiscoSource> seeds = null, IEnumerable<DiscoSource> excludes = null, IEnumerable<string> names = null)
+        /// <returns> A new <see cref="Models.DiscoRunResult"/> instance for mocking. </returns>
+        public static DiscoRunResult DiscoRunResult(DateTimeOffset? submittedDate = null, DateTimeOffset? startedDate = null, DateTimeOffset? completedDate = null, string tier = null, DiscoRunState? state = null, long? totalAssetsFoundCount = null, IEnumerable<DiscoSource> seeds = null, IEnumerable<DiscoSource> excludes = null, IEnumerable<string> names = null)
         {
             seeds ??= new List<DiscoSource>();
             excludes ??= new List<DiscoSource>();
             names ??= new List<string>();
 
-            return new DiscoRunResponse(submittedDate, startedDate, completedDate, tier, state, totalAssetsFoundCount, seeds?.ToList(), excludes?.ToList(), names?.ToList());
+            return new DiscoRunResult(submittedDate, startedDate, completedDate, tier, state, totalAssetsFoundCount, seeds?.ToList(), excludes?.ToList(), names?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DiscoRunPageResponse. </summary>
+        /// <summary> Initializes a new instance of DiscoRunPageResult. </summary>
         /// <param name="totalElements"> The total number of items available in the full result set. </param>
         /// <param name="nextLink"> The link to access the next page of results.  Not set if at the end of the result set. </param>
         /// <param name="value"> The items in the current page of results. </param>
-        /// <returns> A new <see cref="Models.DiscoRunPageResponse"/> instance for mocking. </returns>
-        public static DiscoRunPageResponse DiscoRunPageResponse(long? totalElements = null, string nextLink = null, IEnumerable<DiscoRunResponse> value = null)
+        /// <returns> A new <see cref="Models.DiscoRunPageResult"/> instance for mocking. </returns>
+        public static DiscoRunPageResult DiscoRunPageResult(long? totalElements = null, string nextLink = null, IEnumerable<DiscoRunResult> value = null)
         {
-            value ??= new List<DiscoRunResponse>();
+            value ??= new List<DiscoRunResult>();
 
-            return new DiscoRunPageResponse(totalElements, nextLink, value?.ToList());
+            return new DiscoRunPageResult(totalElements, nextLink, value?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DiscoTemplatePageResponse. </summary>
+        /// <summary> Initializes a new instance of DiscoTemplatePageResult. </summary>
         /// <param name="totalElements"> The total number of items available in the full result set. </param>
         /// <param name="nextLink"> The link to access the next page of results.  Not set if at the end of the result set. </param>
         /// <param name="value"> The items in the current page of results. </param>
-        /// <returns> A new <see cref="Models.DiscoTemplatePageResponse"/> instance for mocking. </returns>
-        public static DiscoTemplatePageResponse DiscoTemplatePageResponse(long? totalElements = null, string nextLink = null, IEnumerable<DiscoTemplate> value = null)
+        /// <returns> A new <see cref="Models.DiscoTemplatePageResult"/> instance for mocking. </returns>
+        public static DiscoTemplatePageResult DiscoTemplatePageResult(long? totalElements = null, string nextLink = null, IEnumerable<DiscoTemplate> value = null)
         {
             value ??= new List<DiscoTemplate>();
 
-            return new DiscoTemplatePageResponse(totalElements, nextLink, value?.ToList());
+            return new DiscoTemplatePageResult(totalElements, nextLink, value?.ToList());
         }
 
         /// <summary> Initializes a new instance of DiscoTemplate. </summary>
@@ -1506,26 +1506,26 @@ namespace Azure.Analytics.Defender.Easm.Models
             return new DiscoTemplate(id, name, displayName, industry, region, countryCode, stateCode, city, seeds?.ToList(), names?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReportBillableAssetSummaryResponse. </summary>
+        /// <summary> Initializes a new instance of ReportBillableAssetSummaryResult. </summary>
         /// <param name="assetSummaries"></param>
-        /// <returns> A new <see cref="Models.ReportBillableAssetSummaryResponse"/> instance for mocking. </returns>
-        public static ReportBillableAssetSummaryResponse ReportBillableAssetSummaryResponse(IEnumerable<ReportBillableAssetSnapshotResponse> assetSummaries = null)
+        /// <returns> A new <see cref="Models.ReportBillableAssetSummaryResult"/> instance for mocking. </returns>
+        public static ReportBillableAssetSummaryResult ReportBillableAssetSummaryResult(IEnumerable<ReportBillableAssetSnapshotResult> assetSummaries = null)
         {
-            assetSummaries ??= new List<ReportBillableAssetSnapshotResponse>();
+            assetSummaries ??= new List<ReportBillableAssetSnapshotResult>();
 
-            return new ReportBillableAssetSummaryResponse(assetSummaries?.ToList());
+            return new ReportBillableAssetSummaryResult(assetSummaries?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ReportBillableAssetSnapshotResponse. </summary>
+        /// <summary> Initializes a new instance of ReportBillableAssetSnapshotResult. </summary>
         /// <param name="date"> The date these assets were billed on. </param>
         /// <param name="total"> The total number of billable assets for this date. </param>
         /// <param name="assetBreakdown"> The breakdown of billable asset counts for each asset type. </param>
-        /// <returns> A new <see cref="Models.ReportBillableAssetSnapshotResponse"/> instance for mocking. </returns>
-        public static ReportBillableAssetSnapshotResponse ReportBillableAssetSnapshotResponse(DateTimeOffset? date = null, long? total = null, IEnumerable<ReportBillableAssetBreakdown> assetBreakdown = null)
+        /// <returns> A new <see cref="Models.ReportBillableAssetSnapshotResult"/> instance for mocking. </returns>
+        public static ReportBillableAssetSnapshotResult ReportBillableAssetSnapshotResult(DateTimeOffset? date = null, long? total = null, IEnumerable<ReportBillableAssetBreakdown> assetBreakdown = null)
         {
             assetBreakdown ??= new List<ReportBillableAssetBreakdown>();
 
-            return new ReportBillableAssetSnapshotResponse(date, total, assetBreakdown?.ToList());
+            return new ReportBillableAssetSnapshotResult(date, total, assetBreakdown?.ToList());
         }
 
         /// <summary> Initializes a new instance of ReportBillableAssetBreakdown. </summary>
@@ -1537,30 +1537,30 @@ namespace Azure.Analytics.Defender.Easm.Models
             return new ReportBillableAssetBreakdown(kind, count);
         }
 
-        /// <summary> Initializes a new instance of ReportAssetSnapshotResponse. </summary>
+        /// <summary> Initializes a new instance of ReportAssetSnapshotResult. </summary>
         /// <param name="displayName"> The name of the metric. </param>
         /// <param name="metric"> The unique metric name. </param>
         /// <param name="labelName"> The customer label that was filtered on, if one was provided. </param>
         /// <param name="updatedAt"> The last time this asset data was updated on this metric. </param>
         /// <param name="description"> A description of what the metric represents. </param>
         /// <param name="assets"> The page of assets that match the provided metric. </param>
-        /// <returns> A new <see cref="Models.ReportAssetSnapshotResponse"/> instance for mocking. </returns>
-        public static ReportAssetSnapshotResponse ReportAssetSnapshotResponse(string displayName = null, string metric = null, string labelName = null, DateTimeOffset? updatedAt = null, string description = null, AssetPageResponse assets = null)
+        /// <returns> A new <see cref="Models.ReportAssetSnapshotResult"/> instance for mocking. </returns>
+        public static ReportAssetSnapshotResult ReportAssetSnapshotResult(string displayName = null, string metric = null, string labelName = null, DateTimeOffset? updatedAt = null, string description = null, AssetPageResult assets = null)
         {
-            return new ReportAssetSnapshotResponse(displayName, metric, labelName, updatedAt, description, assets);
+            return new ReportAssetSnapshotResult(displayName, metric, labelName, updatedAt, description, assets);
         }
 
-        /// <summary> Initializes a new instance of ReportAssetSummaryResponse. </summary>
+        /// <summary> Initializes a new instance of ReportAssetSummaryResult. </summary>
         /// <param name="assetSummaries"> The collection of asset summaries. </param>
-        /// <returns> A new <see cref="Models.ReportAssetSummaryResponse"/> instance for mocking. </returns>
-        public static ReportAssetSummaryResponse ReportAssetSummaryResponse(IEnumerable<AssetSummaryResponse> assetSummaries = null)
+        /// <returns> A new <see cref="Models.ReportAssetSummaryResult"/> instance for mocking. </returns>
+        public static ReportAssetSummaryResult ReportAssetSummaryResult(IEnumerable<AssetSummaryResult> assetSummaries = null)
         {
-            assetSummaries ??= new List<AssetSummaryResponse>();
+            assetSummaries ??= new List<AssetSummaryResult>();
 
-            return new ReportAssetSummaryResponse(assetSummaries?.ToList());
+            return new ReportAssetSummaryResult(assetSummaries?.ToList());
         }
 
-        /// <summary> Initializes a new instance of AssetSummaryResponse. </summary>
+        /// <summary> Initializes a new instance of AssetSummaryResult. </summary>
         /// <param name="displayName"> The name of the summary response.  Depending on the request time this will either be the asset filter, risk category, or risk metric. </param>
         /// <param name="description"> The description of the summary response.  Filters don't have a description. </param>
         /// <param name="updatedAt"> The last time risk categories or risk metrics were captured. Set to the current time for asset filter requests, which always pull the live asset data. </param>
@@ -1571,24 +1571,24 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="count"> The count of assets matching the request parameters. </param>
         /// <param name="link"> The link to the corresponding asset details. </param>
         /// <param name="children"> The corresponding child entities.  For metric categories this will contain metrics.  For filters with groupBy and segmentBy this will contain facets. </param>
-        /// <returns> A new <see cref="Models.AssetSummaryResponse"/> instance for mocking. </returns>
-        public static AssetSummaryResponse AssetSummaryResponse(string displayName = null, string description = null, DateTimeOffset? updatedAt = null, string metricCategory = null, string metric = null, string filter = null, string labelName = null, long? count = null, string link = null, IEnumerable<AssetSummaryResponse> children = null)
+        /// <returns> A new <see cref="Models.AssetSummaryResult"/> instance for mocking. </returns>
+        public static AssetSummaryResult AssetSummaryResult(string displayName = null, string description = null, DateTimeOffset? updatedAt = null, string metricCategory = null, string metric = null, string filter = null, string labelName = null, long? count = null, string link = null, IEnumerable<AssetSummaryResult> children = null)
         {
-            children ??= new List<AssetSummaryResponse>();
+            children ??= new List<AssetSummaryResult>();
 
-            return new AssetSummaryResponse(displayName, description, updatedAt, metricCategory, metric, filter, labelName, count, link, children?.ToList());
+            return new AssetSummaryResult(displayName, description, updatedAt, metricCategory, metric, filter, labelName, count, link, children?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SavedFilterPageResponse. </summary>
+        /// <summary> Initializes a new instance of SavedFilterPageResult. </summary>
         /// <param name="totalElements"> The total number of items available in the full result set. </param>
         /// <param name="nextLink"> The link to access the next page of results.  Not set if at the end of the result set. </param>
         /// <param name="value"> The items in the current page of results. </param>
-        /// <returns> A new <see cref="Models.SavedFilterPageResponse"/> instance for mocking. </returns>
-        public static SavedFilterPageResponse SavedFilterPageResponse(long? totalElements = null, string nextLink = null, IEnumerable<SavedFilter> value = null)
+        /// <returns> A new <see cref="Models.SavedFilterPageResult"/> instance for mocking. </returns>
+        public static SavedFilterPageResult SavedFilterPageResult(long? totalElements = null, string nextLink = null, IEnumerable<SavedFilter> value = null)
         {
             value ??= new List<SavedFilter>();
 
-            return new SavedFilterPageResponse(totalElements, nextLink, value?.ToList());
+            return new SavedFilterPageResult(totalElements, nextLink, value?.ToList());
         }
 
         /// <summary> Initializes a new instance of SavedFilter. </summary>
@@ -1603,16 +1603,16 @@ namespace Azure.Analytics.Defender.Easm.Models
             return new SavedFilter(id, name, displayName, filter, description);
         }
 
-        /// <summary> Initializes a new instance of TaskPageResponse. </summary>
+        /// <summary> Initializes a new instance of TaskPageResult. </summary>
         /// <param name="totalElements"> The total number of items available in the full result set. </param>
         /// <param name="nextLink"> The link to access the next page of results.  Not set if at the end of the result set. </param>
         /// <param name="value"> The items in the current page of results. </param>
-        /// <returns> A new <see cref="Models.TaskPageResponse"/> instance for mocking. </returns>
-        public static TaskPageResponse TaskPageResponse(long? totalElements = null, string nextLink = null, IEnumerable<Task> value = null)
+        /// <returns> A new <see cref="Models.TaskPageResult"/> instance for mocking. </returns>
+        public static TaskPageResult TaskPageResult(long? totalElements = null, string nextLink = null, IEnumerable<TaskResource> value = null)
         {
-            value ??= new List<Task>();
+            value ??= new List<TaskResource>();
 
-            return new TaskPageResponse(totalElements, nextLink, value?.ToList());
+            return new TaskPageResult(totalElements, nextLink, value?.ToList());
         }
     }
 }

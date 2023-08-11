@@ -1,0 +1,149 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/dataConnections?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-0992affc50999ce8874d29a0b485c80f-2747995124d8da84-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "64f2cb52bdbb44a8b3d092aa44e0237f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:25:10 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "42033d9a-10dc-482a-806c-c5dfad3ce005",
+        "x-ms-request-id": "8f15b042-39f5-47c7-80db-e74a69b028c5",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "totalElements": 5,
+        "value": [
+          {
+            "id": "a",
+            "name": "a",
+            "displayName": "a",
+            "kind": "azureDataExplorer",
+            "content": "assets",
+            "properties": {
+              "clusterName": "e",
+              "region": "eastus",
+              "databaseName": "sda"
+            },
+            "createdDate": "2023-08-11T17:04:30\u002B0000",
+            "frequency": "daily",
+            "frequencyOffset": 0,
+            "updatedDate": "2023-08-11T17:10:16\u002B0000",
+            "userUpdatedAt": "2023-08-11T17:04:30\u002B0000",
+            "active": false,
+            "inactiveMessage": "Failed to connect to service. Ensure your connection parameters are valid and in the right format."
+          },
+          {
+            "id": "atest",
+            "name": "atest",
+            "displayName": "atest",
+            "kind": "azureDataExplorer",
+            "content": "assets",
+            "properties": {
+              "clusterName": "test",
+              "region": "eastus",
+              "databaseName": "eastdb"
+            },
+            "createdDate": "2023-07-28T20:46:19\u002B0000",
+            "frequency": "daily",
+            "frequencyOffset": 0,
+            "updatedDate": "2023-07-28T20:51:56\u002B0000",
+            "userUpdatedAt": "2023-07-28T20:46:19\u002B0000",
+            "active": false,
+            "inactiveMessage": "Failed to connect to service. Ensure your connection parameters are valid and in the right format."
+          },
+          {
+            "id": "dfsdfsd",
+            "name": "dfsdfsd",
+            "displayName": "dfsdfsd",
+            "kind": "azureDataExplorer",
+            "content": "assets",
+            "properties": {
+              "clusterName": "fasafs",
+              "region": "centralindia",
+              "databaseName": "asdasd"
+            },
+            "createdDate": "2023-08-03T15:57:55\u002B0000",
+            "frequency": "daily",
+            "frequencyOffset": 0,
+            "updatedDate": "2023-08-03T16:03:50\u002B0000",
+            "userUpdatedAt": "2023-08-03T15:57:55\u002B0000",
+            "active": false,
+            "inactiveMessage": "Failed to connect to service. Ensure your connection parameters are valid and in the right format."
+          },
+          {
+            "id": "sample-dc",
+            "name": "sample-dc",
+            "displayName": "sample-dc",
+            "kind": "azureDataExplorer",
+            "content": "assets",
+            "properties": {
+              "clusterName": "sample-cluster",
+              "region": "eastus",
+              "databaseName": "sample-db"
+            },
+            "createdDate": "2023-08-03T16:07:21\u002B0000",
+            "frequency": "daily",
+            "frequencyOffset": 0,
+            "updatedDate": "2023-08-11T17:25:09\u002B0000",
+            "userUpdatedAt": "2023-08-11T17:25:09\u002B0000",
+            "active": true,
+            "inactiveMessage": null
+          },
+          {
+            "id": "test2",
+            "name": "test2",
+            "displayName": "test2",
+            "kind": "azureDataExplorer",
+            "content": "assets",
+            "properties": {
+              "clusterName": "testcluster",
+              "region": "eastus2",
+              "databaseName": "dbtest"
+            },
+            "createdDate": "2023-07-28T20:46:42\u002B0000",
+            "frequency": "daily",
+            "frequencyOffset": 0,
+            "updatedDate": "2023-07-28T20:52:00\u002B0000",
+            "userUpdatedAt": "2023-07-28T20:46:42\u002B0000",
+            "active": false,
+            "inactiveMessage": "Failed to connect to service. Ensure your connection parameters are valid and in the right format."
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "97406520",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

@@ -1,0 +1,739 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/assets/domain%24%24kumc.edu?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-83683fc8671cce80225534c6f4381c2e-8e9e6d50aa2a4071-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "aa357418980b99f98689dc4e538da989",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Disposition": "inline; filename=f.txt",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:25:00 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Set-Cookie": "df=ODEzYWQyNTEtZDIxNi00NjExLWJlZGYtYTdjZGY0N2ExNGVi; Path=/; Secure; HttpOnly; SameSite=Lax",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "4ee0a021-f643-478d-97e1-d759b74623c1",
+        "x-ms-request-id": "faad8a77-7069-417e-a741-70cbebab5433",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "domain$$kumc.edu",
+        "name": "kumc.edu",
+        "displayName": "kumc.edu",
+        "kind": "domain",
+        "uuid": "b14b785d-4d00-a4b4-f742-96c8ff0a3147",
+        "asset": {
+          "domain": "kumc.edu",
+          "whoisId": 7078986969262629803,
+          "registrarIanaIds": [],
+          "registrantContacts": [
+            {
+              "value": "",
+              "firstSeen": "2021-07-30T00:15:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-07-30T00:15:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 16
+                }
+              ],
+              "recent": true
+            }
+          ],
+          "registrantOrgs": [
+            {
+              "value": "",
+              "firstSeen": "2021-07-30T00:15:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-07-30T00:15:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 16
+                }
+              ],
+              "recent": true
+            }
+          ],
+          "adminContacts": [
+            {
+              "value": "dns-administration@kumc.edu",
+              "firstSeen": "2018-10-18T13:05:33\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 207
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "",
+              "firstSeen": "2023-06-26T03:43:05\u002B0000",
+              "lastSeen": "2023-06-26T06:46:54\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T03:43:05\u002B0000",
+                  "lastSeen": "2023-06-26T06:46:54\u002B0000",
+                  "count": 2
+                }
+              ],
+              "recent": true
+            }
+          ],
+          "technicalContacts": [
+            {
+              "value": "dns-technical@kumc.edu",
+              "firstSeen": "2018-10-18T13:05:33\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 207
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "",
+              "firstSeen": "2023-06-26T03:43:05\u002B0000",
+              "lastSeen": "2023-06-26T06:46:54\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T03:43:05\u002B0000",
+                  "lastSeen": "2023-06-26T06:46:54\u002B0000",
+                  "count": 2
+                }
+              ],
+              "recent": true
+            }
+          ],
+          "alexaInfos": [
+            {
+              "alexaRank": 34619,
+              "firstSeen": "2023-08-11T01:11:13\u002B0000",
+              "lastSeen": "2023-08-11T16:11:20\u002B0000",
+              "recent": true
+            },
+            {
+              "alexaRank": 34603,
+              "firstSeen": "2023-08-10T01:29:25\u002B0000",
+              "lastSeen": "2023-08-11T00:10:58\u002B0000"
+            },
+            {
+              "alexaRank": 34917,
+              "firstSeen": "2023-08-09T01:17:57\u002B0000",
+              "lastSeen": "2023-08-10T00:16:26\u002B0000"
+            },
+            {
+              "alexaRank": 34901,
+              "firstSeen": "2023-08-08T01:16:13\u002B0000",
+              "lastSeen": "2023-08-09T00:20:56\u002B0000"
+            },
+            {
+              "alexaRank": 34911,
+              "firstSeen": "2023-08-07T05:48:54\u002B0000",
+              "lastSeen": "2023-08-08T00:17:31\u002B0000"
+            },
+            {
+              "alexaRank": 34898,
+              "firstSeen": "2023-08-06T01:15:27\u002B0000",
+              "lastSeen": "2023-08-07T16:51:21\u002B0000"
+            },
+            {
+              "alexaRank": 34989,
+              "firstSeen": "2023-08-05T01:16:04\u002B0000",
+              "lastSeen": "2023-08-06T00:15:11\u002B0000"
+            },
+            {
+              "alexaRank": 34949,
+              "firstSeen": "2023-08-04T01:17:30\u002B0000",
+              "lastSeen": "2023-08-05T00:14:04\u002B0000"
+            },
+            {
+              "alexaRank": 35009,
+              "firstSeen": "2023-08-03T01:15:50\u002B0000",
+              "lastSeen": "2023-08-04T00:14:08\u002B0000"
+            },
+            {
+              "alexaRank": 35138,
+              "firstSeen": "2023-08-02T01:18:35\u002B0000",
+              "lastSeen": "2023-08-03T00:14:12\u002B0000"
+            }
+          ],
+          "nameServers": [
+            {
+              "value": "ns3.kumc.edu",
+              "firstSeen": "2010-06-24T03:33:11\u002B0000",
+              "lastSeen": "2023-08-10T21:39:02\u002B0000",
+              "sources": [
+                {
+                  "source": "pdns.NS",
+                  "firstSeen": "2021-07-19T19:52:07\u002B0000",
+                  "lastSeen": "2023-08-10T21:39:02\u002B0000",
+                  "count": 127811
+                },
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 208
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "ns4.kumc.edu",
+              "firstSeen": "2010-06-24T03:33:11\u002B0000",
+              "lastSeen": "2023-08-10T21:39:02\u002B0000",
+              "sources": [
+                {
+                  "source": "pdns.NS",
+                  "firstSeen": "2021-07-19T19:52:07\u002B0000",
+                  "lastSeen": "2023-08-10T21:39:02\u002B0000",
+                  "count": 127811
+                },
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 208
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "dmzdns01.kumcdmzdns.edu",
+              "firstSeen": "2020-01-16T21:40:24\u002B0000",
+              "lastSeen": "2023-08-10T14:55:58\u002B0000",
+              "sources": [
+                {
+                  "source": "pdns.NS",
+                  "firstSeen": "2021-07-19T11:37:27\u002B0000",
+                  "lastSeen": "2023-08-10T14:55:58\u002B0000",
+                  "count": 20269
+                },
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T03:43:05\u002B0000",
+                  "lastSeen": "2023-06-26T06:46:54\u002B0000",
+                  "count": 2
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "dmzdns02.kumcdmzdns.edu",
+              "firstSeen": "2020-01-16T21:40:24\u002B0000",
+              "lastSeen": "2023-08-10T14:55:58\u002B0000",
+              "sources": [
+                {
+                  "source": "pdns.NS",
+                  "firstSeen": "2021-07-19T11:37:27\u002B0000",
+                  "lastSeen": "2023-08-10T14:55:58\u002B0000",
+                  "count": 20235
+                },
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T03:43:05\u002B0000",
+                  "lastSeen": "2023-06-26T06:46:54\u002B0000",
+                  "count": 2
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "dmzdns.kumcdmzdns.edu",
+              "firstSeen": "2013-08-21T12:43:41\u002B0000",
+              "lastSeen": "2021-03-22T17:10:43\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2020-03-28T00:16:06\u002B0000",
+                  "lastSeen": "2021-03-22T17:10:43\u002B0000",
+                  "count": 33
+                }
+              ]
+            },
+            {
+              "value": "dmzdns2.kumcdmzdns.edu",
+              "firstSeen": "2013-08-21T12:43:41\u002B0000",
+              "lastSeen": "2021-03-22T17:10:43\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2020-03-28T00:16:06\u002B0000",
+                  "lastSeen": "2021-03-22T17:10:43\u002B0000",
+                  "count": 33
+                }
+              ]
+            }
+          ],
+          "mailServers": [
+            {
+              "value": "us-smtp-inbound-1.mimecast.com",
+              "firstSeen": "2019-07-08T23:23:36\u002B0000",
+              "lastSeen": "2023-08-10T14:55:58\u002B0000",
+              "sources": [
+                {
+                  "source": "pdns.MX",
+                  "firstSeen": "2021-07-19T00:11:56\u002B0000",
+                  "lastSeen": "2023-08-10T14:55:58\u002B0000",
+                  "count": 85468
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "us-smtp-inbound-2.mimecast.com",
+              "firstSeen": "2019-07-08T23:23:36\u002B0000",
+              "lastSeen": "2023-08-10T14:55:58\u002B0000",
+              "sources": [
+                {
+                  "source": "pdns.MX",
+                  "firstSeen": "2021-07-19T00:11:56\u002B0000",
+                  "lastSeen": "2023-08-10T14:55:58\u002B0000",
+                  "count": 85356
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "d72881a.ess.barracudanetworks.com",
+              "firstSeen": "2015-07-27T20:21:50\u002B0000",
+              "lastSeen": "2019-07-15T16:26:57\u002B0000",
+              "sources": []
+            },
+            {
+              "value": "d72881b.ess.barracudanetworks.com",
+              "firstSeen": "2015-07-27T20:21:50\u002B0000",
+              "lastSeen": "2019-07-15T16:26:57\u002B0000",
+              "sources": []
+            }
+          ],
+          "whoisServers": [
+            {
+              "value": "whois.educause.net",
+              "firstSeen": "2018-04-07T04:01:48\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 209
+                }
+              ],
+              "recent": true
+            }
+          ],
+          "domainStatuses": [],
+          "registrarCreatedAt": [
+            {
+              "value": 784944000000,
+              "firstSeen": "2019-07-10T07:02:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T06:46:54\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 1
+                }
+              ],
+              "recent": true
+            }
+          ],
+          "registrarUpdatedAt": [
+            {
+              "value": 1625097600000,
+              "firstSeen": "2021-07-30T00:15:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T06:46:54\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 1
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": 1608940800000,
+              "firstSeen": "2021-03-22T17:10:43\u002B0000",
+              "lastSeen": "2021-07-30T00:15:43\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2021-07-30T00:15:43\u002B0000",
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "value": 1538611200000,
+              "firstSeen": "2019-07-10T07:02:43\u002B0000",
+              "lastSeen": "2020-03-28T00:16:06\u002B0000",
+              "sources": []
+            }
+          ],
+          "registrarExpiresAt": [
+            {
+              "value": 1722384000000,
+              "firstSeen": "2021-07-30T00:15:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T06:46:54\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 1
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": 1627689600000,
+              "firstSeen": "2019-07-10T07:02:43\u002B0000",
+              "lastSeen": "2021-07-30T00:15:43\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2021-07-30T00:15:43\u002B0000",
+                  "count": 1
+                }
+              ]
+            }
+          ],
+          "soaRecords": [
+            {
+              "nameServer": "dmzdns02.kumcdmzdns.edu",
+              "email": "dns-technical@kumc.edu",
+              "firstSeen": "2020-01-17T03:22:13\u002B0000",
+              "lastSeen": "2023-08-10T21:40:00\u002B0000",
+              "serialNumber": 2019021998,
+              "recent": true
+            },
+            {
+              "nameServer": "dmzdns01.kumcdmzdns.edu",
+              "email": "dns-technical@kumc.edu",
+              "firstSeen": "2020-01-17T03:51:49\u002B0000",
+              "lastSeen": "2023-08-10T21:39:59\u002B0000",
+              "serialNumber": 2019021998,
+              "recent": true
+            },
+            {
+              "nameServer": "dmzdns2.kumcdmzdns.edu",
+              "email": "dns-technical@kumc.edu",
+              "firstSeen": "2017-10-23T20:01:30\u002B0000",
+              "lastSeen": "2020-01-17T02:29:08\u002B0000",
+              "serialNumber": 2019021530
+            },
+            {
+              "nameServer": "dmzdns.kumcdmzdns.edu",
+              "email": "dns-technical@kumc.edu",
+              "firstSeen": "2017-10-23T21:59:16\u002B0000",
+              "lastSeen": "2020-01-17T01:24:11\u002B0000",
+              "serialNumber": 2019021530
+            }
+          ],
+          "detailedFromWhoisAt": "2023-07-31T21:22:58\u002B0000",
+          "registrarNames": [],
+          "sources": [
+            {
+              "source": "alexa",
+              "firstSeen": "2018-10-08T17:00:28\u002B0000",
+              "lastSeen": "2023-08-11T16:11:20\u002B0000",
+              "count": 183755
+            },
+            {
+              "source": "pdns",
+              "firstSeen": "2010-06-24T03:33:11\u002B0000",
+              "lastSeen": "2023-08-10T21:40:00\u002B0000",
+              "count": 1282720
+            },
+            {
+              "source": "whois",
+              "firstSeen": "2018-04-07T04:01:48\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "count": 311
+            },
+            {
+              "source": "minicrawl",
+              "firstSeen": "2021-03-23T02:48:04\u002B0000",
+              "lastSeen": "2023-07-16T13:07:02\u002B0000",
+              "count": 11044
+            }
+          ],
+          "firstSeen": "2010-06-24T03:33:11\u002B0000",
+          "lastSeen": "2023-08-11T16:11:20\u002B0000",
+          "count": 1477830,
+          "parkedDomain": [
+            {
+              "value": false,
+              "firstSeen": "2021-03-23T02:48:04\u002B0000",
+              "lastSeen": "2023-07-16T13:07:02\u002B0000",
+              "sources": [],
+              "recent": true
+            }
+          ],
+          "registrantNames": [
+            {
+              "value": "University of Kansas Medical Center",
+              "firstSeen": "2021-03-22T17:10:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 207
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "",
+              "firstSeen": "2023-06-26T03:43:05\u002B0000",
+              "lastSeen": "2023-06-26T06:46:54\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T03:43:05\u002B0000",
+                  "lastSeen": "2023-06-26T06:46:54\u002B0000",
+                  "count": 2
+                }
+              ]
+            }
+          ],
+          "adminNames": [
+            {
+              "value": "Domain Admin\nKU Medical Center",
+              "firstSeen": "2021-03-22T17:10:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 207
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "",
+              "firstSeen": "2023-06-26T03:43:05\u002B0000",
+              "lastSeen": "2023-06-26T06:46:54\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T03:43:05\u002B0000",
+                  "lastSeen": "2023-06-26T06:46:54\u002B0000",
+                  "count": 2
+                }
+              ]
+            }
+          ],
+          "technicalNames": [
+            {
+              "value": "KU Medical Center",
+              "firstSeen": "2021-03-22T17:10:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 207
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "",
+              "firstSeen": "2023-06-26T03:43:05\u002B0000",
+              "lastSeen": "2023-06-26T06:46:54\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T03:43:05\u002B0000",
+                  "lastSeen": "2023-06-26T06:46:54\u002B0000",
+                  "count": 2
+                }
+              ]
+            }
+          ],
+          "adminOrgs": [
+            {
+              "value": "",
+              "firstSeen": "2021-07-30T00:15:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-07-30T00:15:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 16
+                }
+              ],
+              "recent": true
+            }
+          ],
+          "technicalOrgs": [
+            {
+              "value": "",
+              "firstSeen": "2021-07-30T00:15:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-07-30T00:15:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 16
+                }
+              ],
+              "recent": true
+            }
+          ],
+          "registrantPhones": [
+            {
+              "value": "",
+              "firstSeen": "2021-07-30T00:15:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-07-30T00:15:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 16
+                }
+              ],
+              "recent": true
+            }
+          ],
+          "adminPhones": [
+            {
+              "value": "19135887995",
+              "firstSeen": "2021-03-22T17:10:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 207
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "",
+              "firstSeen": "2023-06-26T03:43:05\u002B0000",
+              "lastSeen": "2023-06-26T06:46:54\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T03:43:05\u002B0000",
+                  "lastSeen": "2023-06-26T06:46:54\u002B0000",
+                  "count": 2
+                }
+              ]
+            }
+          ],
+          "technicalPhones": [
+            {
+              "value": "19135887995",
+              "firstSeen": "2021-03-22T17:10:43\u002B0000",
+              "lastSeen": "2023-07-31T21:22:58\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2021-03-22T17:10:43\u002B0000",
+                  "lastSeen": "2023-07-31T21:22:58\u002B0000",
+                  "count": 207
+                }
+              ],
+              "recent": true
+            },
+            {
+              "value": "",
+              "firstSeen": "2023-06-26T03:43:05\u002B0000",
+              "lastSeen": "2023-06-26T06:46:54\u002B0000",
+              "sources": [
+                {
+                  "source": "whois",
+                  "firstSeen": "2023-06-26T03:43:05\u002B0000",
+                  "lastSeen": "2023-06-26T06:46:54\u002B0000",
+                  "count": 2
+                }
+              ]
+            }
+          ]
+        },
+        "createdDate": "2023-07-28T16:42:22\u002B0000",
+        "updatedDate": "2023-07-28T16:42:22\u002B0000",
+        "state": "confirmed",
+        "externalId": null,
+        "labels": [],
+        "wildcard": false,
+        "discoGroupName": "University of Kansas",
+        "auditTrail": [],
+        "history": [
+          {
+            "property": "state",
+            "user": null,
+            "reason": "discovery",
+            "updatedDate": "2023-07-28T16:42:57\u002B0000",
+            "oldValue": null,
+            "newValue": "CONFIRMED"
+          }
+        ],
+        "reason": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "232744100",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

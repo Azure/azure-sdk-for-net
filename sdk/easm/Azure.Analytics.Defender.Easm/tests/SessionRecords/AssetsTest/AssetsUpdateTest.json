@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/assets?filter=name%20%3D%20ku.edu%20and%20type%20%3D%20domain\u0026api-version=2023-03-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "32",
+        "Content-Type": "application/json",
+        "traceparent": "00-366903c4c83737980f082bbf7e543f4d-3c20aeda94b86b15-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "48863c9761a1f361bbe678f9d18f577d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "externalId": "new_external_id"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:25:05 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "4333d752-4c69-40cb-b41b-e4c71026514c",
+        "x-ms-request-id": "79785133-e0a9-4bb6-835e-7a66f5c6b53a",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "51be80e9-4ae3-4948-ac62-07f292d5545c",
+        "startedAt": "2023-08-11T17:25:03\u002B0000",
+        "completedAt": "2023-08-11T17:25:05\u002B0000",
+        "lastPolledAt": null,
+        "state": "complete",
+        "phase": "complete",
+        "reason": null,
+        "metadata": {
+          "filter": "name = ku.edu and type = domain",
+          "kind": "GlobalInventoryUpdateTask",
+          "assetUpdateRequest": {
+            "state": null,
+            "externalId": "new_external_id",
+            "labels": null,
+            "transfers": null
+          },
+          "estimated": 1,
+          "progress": 100,
+          "username": ""
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "1155459440",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

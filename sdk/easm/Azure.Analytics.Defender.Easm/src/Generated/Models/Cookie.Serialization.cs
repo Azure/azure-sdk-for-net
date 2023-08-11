@@ -12,11 +12,9 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm.Models
 {
-#pragma warning disable AZC0012 // Avoid single word type names
-    public partial class Cookie
-#pragma warning restore AZC0012 // Avoid single word type names
+    public partial class AssociatedCookie
     {
-        internal static Cookie DeserializeCookie(JsonElement element)
+        internal static AssociatedCookie DeserializeCookie(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -87,12 +85,12 @@ namespace Azure.Analytics.Defender.Easm.Models
                     continue;
                 }
             }
-            return new Cookie(cookieName.Value, cookieDomain.Value, Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(recent), Optional.ToNullable(cookieExpiryDate));
+            return new AssociatedCookie(cookieName.Value, cookieDomain.Value, Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), Optional.ToNullable(recent), Optional.ToNullable(cookieExpiryDate));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Cookie FromResponse(Response response)
+        internal static AssociatedCookie FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeCookie(document.RootElement);

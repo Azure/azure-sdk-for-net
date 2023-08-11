@@ -1,0 +1,81 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/discoGroups/New%20disco%20group%20Name%20CS?api-version=2023-03-01-preview",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "173",
+        "Content-Type": "application/json",
+        "traceparent": "00-f849478cb9f6ee07b6e43e4496ed2dab-b06548e648053b7d-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "b29394e06b0c16dd9cd4d334bc7ec771",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "name": "New disco group Name CS",
+        "description": "This is a description",
+        "tier": "advanced",
+        "frequencyMilliseconds": 604800000,
+        "seeds": [
+          {
+            "kind": "domain",
+            "name": "example.org"
+          }
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:25:33 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "3926bccd-febe-40aa-9b5f-2b63b8c95112",
+        "x-ms-request-id": "48c2e9b1-846d-4d65-ae51-bac34079ac20",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "New disco group Name CS",
+        "name": "New disco group Name CS",
+        "displayName": "New disco group Name CS",
+        "description": "This is a description",
+        "tier": "advanced",
+        "frequencyMilliseconds": 604800000,
+        "seeds": [
+          {
+            "kind": "domain",
+            "name": "example.org"
+          }
+        ],
+        "names": null,
+        "excludes": null,
+        "latestRun": null,
+        "createdDate": "2023-08-11T17:25:33\u002B0000",
+        "templateId": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "1160389114",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

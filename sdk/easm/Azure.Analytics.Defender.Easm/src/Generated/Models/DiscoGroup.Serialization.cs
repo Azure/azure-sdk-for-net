@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             Optional<IReadOnlyList<DiscoSource>> seeds = default;
             Optional<IReadOnlyList<string>> names = default;
             Optional<IReadOnlyList<DiscoSource>> excludes = default;
-            Optional<DiscoRunResponse> latestRun = default;
+            Optional<DiscoRunResult> latestRun = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<string> templateId = default;
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.Analytics.Defender.Easm.Models
                     {
                         continue;
                     }
-                    latestRun = DiscoRunResponse.DeserializeDiscoRunResponse(property.Value);
+                    latestRun = DiscoRunResult.DeserializeDiscoRunResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("createdDate"u8))

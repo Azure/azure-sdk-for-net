@@ -35,7 +35,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="latestRun"> The latest run of this disco group with some limited information, null if the group has never been run. </param>
         /// <param name="createdDate"> The date for the disco group was created. </param>
         /// <param name="templateId"> The unique identifier for the disco template used for the disco group creation. </param>
-        internal DiscoGroup(string id, string name, string displayName, string description, string tier, long? frequencyMilliseconds, IReadOnlyList<DiscoSource> seeds, IReadOnlyList<string> names, IReadOnlyList<DiscoSource> excludes, DiscoRunResponse latestRun, DateTimeOffset? createdDate, string templateId)
+        internal DiscoGroup(string id, string name, string displayName, string description, string tier, long? frequencyMilliseconds, IReadOnlyList<DiscoSource> seeds, IReadOnlyList<string> names, IReadOnlyList<DiscoSource> excludes, DiscoRunResult latestRun, DateTimeOffset? createdDate, string templateId)
         {
             Id = id;
             Name = name;
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <summary> The list of excludes used for the disco group runs, aka assets to exclude from the discovery algorithm. </summary>
         public IReadOnlyList<DiscoSource> Excludes { get; }
         /// <summary> The latest run of this disco group with some limited information, null if the group has never been run. </summary>
-        public DiscoRunResponse LatestRun { get; }
+        public DiscoRunResult LatestRun { get; }
         /// <summary> The date for the disco group was created. </summary>
         public DateTimeOffset? CreatedDate { get; }
         /// <summary> The unique identifier for the disco template used for the disco group creation. </summary>

@@ -19,8 +19,8 @@ namespace Azure.Analytics.Defender.Easm.Models
         {
             IpAddresses = new ChangeTrackingList<ObservedString>();
             Successful = new ChangeTrackingList<ObservedBoolean>();
-            HttpResponseCodes = new ChangeTrackingList<ObservedInteger>();
-            HttpResponseMessages = new ChangeTrackingList<ObservedString>();
+            HttpResultCodes = new ChangeTrackingList<ObservedInteger>();
+            HttpResultMessages = new ChangeTrackingList<ObservedString>();
             ResponseTimes = new ChangeTrackingList<ObservedLong>();
             Frames = new ChangeTrackingList<ObservedBoolean>();
             Windows = new ChangeTrackingList<ObservedBoolean>();
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             Titles = new ChangeTrackingList<ObservedString>();
             Languages = new ChangeTrackingList<ObservedString>();
             ResponseHeaders = new ChangeTrackingList<ObservedHeader>();
-            Cookies = new ChangeTrackingList<Cookie>();
+            Cookies = new ChangeTrackingList<AssociatedCookie>();
             WebComponents = new ChangeTrackingList<WebComponent>();
             Attributes = new ChangeTrackingList<Attribute>();
             AssetSecurityPolicies = new ChangeTrackingList<AssetSecurityPolicy>();
@@ -45,7 +45,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             Sources = new ChangeTrackingList<Source>();
             RedirectUrls = new ChangeTrackingList<ObservedString>();
             FinalUrls = new ChangeTrackingList<ObservedString>();
-            FinalResponseCodes = new ChangeTrackingList<ObservedInteger>();
+            FinalResultCodes = new ChangeTrackingList<ObservedInteger>();
             ParkedPage = new ChangeTrackingList<ObservedBoolean>();
             ResourceUrls = new ChangeTrackingList<ResourceUrl>();
             Guids = new ChangeTrackingList<GuidPair>();
@@ -71,8 +71,8 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="service"></param>
         /// <param name="ipAddresses"></param>
         /// <param name="successful"></param>
-        /// <param name="httpResponseCodes"></param>
-        /// <param name="httpResponseMessages"></param>
+        /// <param name="httpResultCodes"></param>
+        /// <param name="httpResultMessages"></param>
         /// <param name="responseTimes"></param>
         /// <param name="frames"></param>
         /// <param name="windows"></param>
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="redirectUrls"></param>
         /// <param name="redirectType"></param>
         /// <param name="finalUrls"></param>
-        /// <param name="finalResponseCodes"></param>
+        /// <param name="finalResultCodes"></param>
         /// <param name="parkedPage"></param>
         /// <param name="resourceUrls"></param>
         /// <param name="guids"></param>
@@ -127,15 +127,15 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="gdprAssetSecurityPolicies"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal PageAsset(Uri url, string httpMethod, string service, IReadOnlyList<ObservedString> ipAddresses, IReadOnlyList<ObservedBoolean> successful, IReadOnlyList<ObservedInteger> httpResponseCodes, IReadOnlyList<ObservedString> httpResponseMessages, IReadOnlyList<ObservedLong> responseTimes, IReadOnlyList<ObservedBoolean> frames, IReadOnlyList<ObservedBoolean> windows, IReadOnlyList<ObservedBoolean> nonHtmlFrames, IReadOnlyList<ObservedBoolean> undirectedContent, IReadOnlyList<ObservedString> contentTypes, IReadOnlyList<ObservedLong> contentLengths, IReadOnlyList<ObservedString> windowNames, IReadOnlyList<ObservedString> charsets, IReadOnlyList<ObservedString> titles, IReadOnlyList<ObservedString> languages, IReadOnlyList<ObservedHeader> responseHeaders, IReadOnlyList<Cookie> cookies, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<Attribute> attributes, IReadOnlyList<AssetSecurityPolicy> assetSecurityPolicies, IReadOnlyList<ObservedIntegers> responseBodyMinhashSignatures, IReadOnlyList<ObservedIntegers> fullDomMinhashSignatures, IReadOnlyList<ObservedString> responseBodyHashSignatures, IReadOnlyList<ObservedString> errors, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, PageCause cause, string referrer, IReadOnlyList<ObservedString> redirectUrls, PageAssetRedirectType? redirectType, IReadOnlyList<ObservedString> finalUrls, IReadOnlyList<ObservedInteger> finalResponseCodes, IReadOnlyList<ObservedBoolean> parkedPage, IReadOnlyList<ResourceUrl> resourceUrls, IReadOnlyList<GuidPair> guids, IReadOnlyList<ObservedString> finalIpAddresses, IReadOnlyList<ObservedLong> asns, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<ObservedLong> finalAsns, IReadOnlyList<IpBlock> finalIpBlocks, IReadOnlyList<ObservedString> responseBodies, DomainAsset domainAsset, ObservedBoolean rootUrl, bool? isRootUrl, IReadOnlyList<ObservedLocation> location, IReadOnlyList<Service> services, string siteStatus, IReadOnlyList<ObservedString> cnames, IReadOnlyList<ObservedString> cdns, string host, string domain, IReadOnlyList<SslServerConfig> sslServerConfig, IReadOnlyList<AssetSecurityPolicy> gdprAssetSecurityPolicies, IReadOnlyList<ObservedBoolean> ipv4, IReadOnlyList<ObservedBoolean> ipv6)
+        internal PageAsset(Uri url, string httpMethod, string service, IReadOnlyList<ObservedString> ipAddresses, IReadOnlyList<ObservedBoolean> successful, IReadOnlyList<ObservedInteger> httpResultCodes, IReadOnlyList<ObservedString> httpResultMessages, IReadOnlyList<ObservedLong> responseTimes, IReadOnlyList<ObservedBoolean> frames, IReadOnlyList<ObservedBoolean> windows, IReadOnlyList<ObservedBoolean> nonHtmlFrames, IReadOnlyList<ObservedBoolean> undirectedContent, IReadOnlyList<ObservedString> contentTypes, IReadOnlyList<ObservedLong> contentLengths, IReadOnlyList<ObservedString> windowNames, IReadOnlyList<ObservedString> charsets, IReadOnlyList<ObservedString> titles, IReadOnlyList<ObservedString> languages, IReadOnlyList<ObservedHeader> responseHeaders, IReadOnlyList<AssociatedCookie> cookies, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<Attribute> attributes, IReadOnlyList<AssetSecurityPolicy> assetSecurityPolicies, IReadOnlyList<ObservedIntegers> responseBodyMinhashSignatures, IReadOnlyList<ObservedIntegers> fullDomMinhashSignatures, IReadOnlyList<ObservedString> responseBodyHashSignatures, IReadOnlyList<ObservedString> errors, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, PageCause cause, string referrer, IReadOnlyList<ObservedString> redirectUrls, PageAssetRedirectType? redirectType, IReadOnlyList<ObservedString> finalUrls, IReadOnlyList<ObservedInteger> finalResultCodes, IReadOnlyList<ObservedBoolean> parkedPage, IReadOnlyList<ResourceUrl> resourceUrls, IReadOnlyList<GuidPair> guids, IReadOnlyList<ObservedString> finalIpAddresses, IReadOnlyList<ObservedLong> asns, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<ObservedLong> finalAsns, IReadOnlyList<IpBlock> finalIpBlocks, IReadOnlyList<ObservedString> responseBodies, DomainAsset domainAsset, ObservedBoolean rootUrl, bool? isRootUrl, IReadOnlyList<ObservedLocation> location, IReadOnlyList<Service> services, string siteStatus, IReadOnlyList<ObservedString> cnames, IReadOnlyList<ObservedString> cdns, string host, string domain, IReadOnlyList<SslServerConfig> sslServerConfig, IReadOnlyList<AssetSecurityPolicy> gdprAssetSecurityPolicies, IReadOnlyList<ObservedBoolean> ipv4, IReadOnlyList<ObservedBoolean> ipv6)
         {
             Url = url;
             HttpMethod = httpMethod;
             Service = service;
             IpAddresses = ipAddresses;
             Successful = successful;
-            HttpResponseCodes = httpResponseCodes;
-            HttpResponseMessages = httpResponseMessages;
+            HttpResultCodes = httpResultCodes;
+            HttpResultMessages = httpResultMessages;
             ResponseTimes = responseTimes;
             Frames = frames;
             Windows = windows;
@@ -166,7 +166,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             RedirectUrls = redirectUrls;
             RedirectType = redirectType;
             FinalUrls = finalUrls;
-            FinalResponseCodes = finalResponseCodes;
+            FinalResultCodes = finalResultCodes;
             ParkedPage = parkedPage;
             ResourceUrls = resourceUrls;
             Guids = guids;
@@ -202,10 +202,10 @@ namespace Azure.Analytics.Defender.Easm.Models
         public IReadOnlyList<ObservedString> IpAddresses { get; }
         /// <summary> Gets the successful. </summary>
         public IReadOnlyList<ObservedBoolean> Successful { get; }
-        /// <summary> Gets the http response codes. </summary>
-        public IReadOnlyList<ObservedInteger> HttpResponseCodes { get; }
-        /// <summary> Gets the http response messages. </summary>
-        public IReadOnlyList<ObservedString> HttpResponseMessages { get; }
+        /// <summary> Gets the http result codes. </summary>
+        public IReadOnlyList<ObservedInteger> HttpResultCodes { get; }
+        /// <summary> Gets the http result messages. </summary>
+        public IReadOnlyList<ObservedString> HttpResultMessages { get; }
         /// <summary> Gets the response times. </summary>
         public IReadOnlyList<ObservedLong> ResponseTimes { get; }
         /// <summary> Gets the frames. </summary>
@@ -231,7 +231,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <summary> Gets the response headers. </summary>
         public IReadOnlyList<ObservedHeader> ResponseHeaders { get; }
         /// <summary> Gets the cookies. </summary>
-        public IReadOnlyList<Cookie> Cookies { get; }
+        public IReadOnlyList<AssociatedCookie> Cookies { get; }
         /// <summary> Gets the web components. </summary>
         public IReadOnlyList<WebComponent> WebComponents { get; }
         /// <summary> Gets the attributes. </summary>
@@ -266,8 +266,8 @@ namespace Azure.Analytics.Defender.Easm.Models
         public PageAssetRedirectType? RedirectType { get; }
         /// <summary> Gets the final urls. </summary>
         public IReadOnlyList<ObservedString> FinalUrls { get; }
-        /// <summary> Gets the final response codes. </summary>
-        public IReadOnlyList<ObservedInteger> FinalResponseCodes { get; }
+        /// <summary> Gets the final result codes. </summary>
+        public IReadOnlyList<ObservedInteger> FinalResultCodes { get; }
         /// <summary> Gets the parked page. </summary>
         public IReadOnlyList<ObservedBoolean> ParkedPage { get; }
         /// <summary> Gets the resource urls. </summary>

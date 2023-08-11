@@ -21,7 +21,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             WebComponents = new ChangeTrackingList<WebComponent>();
             Headers = new ChangeTrackingList<ObservedHeader>();
             Attributes = new ChangeTrackingList<Attribute>();
-            Cookies = new ChangeTrackingList<Cookie>();
+            Cookies = new ChangeTrackingList<AssociatedCookie>();
             SslCerts = new ChangeTrackingList<SslCertAsset>();
             ParentHosts = new ChangeTrackingList<ObservedString>();
             ChildHosts = new ChangeTrackingList<ObservedString>();
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="banners"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal HostAsset(string host, string domain, IReadOnlyList<ObservedString> ipAddresses, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<ObservedHeader> headers, IReadOnlyList<Attribute> attributes, IReadOnlyList<Cookie> cookies, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<ObservedString> parentHosts, IReadOnlyList<ObservedString> childHosts, HostCore hostCore, IReadOnlyList<Service> services, IReadOnlyList<ObservedString> cnames, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ResourceUrl> resourceUrls, IReadOnlyList<ScanMetadata> scanMetadata, IReadOnlyList<ObservedLong> asns, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<ObservedString> responseBodies, DomainAsset domainAsset, IReadOnlyList<ObservedBoolean> nsRecord, IReadOnlyList<ObservedBoolean> mxRecord, IReadOnlyList<ObservedBoolean> webserver, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedBoolean> nxdomain, IReadOnlyList<SslServerConfig> sslServerConfig, IReadOnlyList<ObservedBoolean> isWildcard, IReadOnlyList<Banner> banners, IReadOnlyList<ObservedBoolean> ipv4, IReadOnlyList<ObservedBoolean> ipv6)
+        internal HostAsset(string host, string domain, IReadOnlyList<ObservedString> ipAddresses, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<ObservedHeader> headers, IReadOnlyList<Attribute> attributes, IReadOnlyList<AssociatedCookie> cookies, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<ObservedString> parentHosts, IReadOnlyList<ObservedString> childHosts, HostCore hostCore, IReadOnlyList<Service> services, IReadOnlyList<ObservedString> cnames, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ResourceUrl> resourceUrls, IReadOnlyList<ScanMetadata> scanMetadata, IReadOnlyList<ObservedLong> asns, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<ObservedString> responseBodies, DomainAsset domainAsset, IReadOnlyList<ObservedBoolean> nsRecord, IReadOnlyList<ObservedBoolean> mxRecord, IReadOnlyList<ObservedBoolean> webserver, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedBoolean> nxdomain, IReadOnlyList<SslServerConfig> sslServerConfig, IReadOnlyList<ObservedBoolean> isWildcard, IReadOnlyList<Banner> banners, IReadOnlyList<ObservedBoolean> ipv4, IReadOnlyList<ObservedBoolean> ipv6)
         {
             Host = host;
             Domain = domain;
@@ -129,7 +129,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <summary> Gets the attributes. </summary>
         public IReadOnlyList<Attribute> Attributes { get; }
         /// <summary> Gets the cookies. </summary>
-        public IReadOnlyList<Cookie> Cookies { get; }
+        public IReadOnlyList<AssociatedCookie> Cookies { get; }
         /// <summary> Gets the ssl certs. </summary>
         public IReadOnlyList<SslCertAsset> SslCerts { get; }
         /// <summary> Gets the parent hosts. </summary>

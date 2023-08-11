@@ -59,7 +59,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         }
 
         /// <summary> Discriminator. </summary>
-        internal string Kind { get; set; }
+        public string Kind { get; set; }
         /// <summary> The system generated unique id for the resource. </summary>
         public string Id { get; }
         /// <summary> The caller provided unique name for the resource. </summary>

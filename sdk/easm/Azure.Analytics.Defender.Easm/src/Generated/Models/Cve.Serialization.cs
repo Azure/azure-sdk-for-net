@@ -11,11 +11,9 @@ using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm.Models
 {
-#pragma warning disable AZC0012 // Avoid single word type names
-    public partial class Cve
-#pragma warning restore AZC0012 // Avoid single word type names
+    public partial class AssociatedCve
     {
-        internal static Cve DeserializeCve(JsonElement element)
+        internal static AssociatedCve DeserializeCve(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -56,12 +54,12 @@ namespace Azure.Analytics.Defender.Easm.Models
                     continue;
                 }
             }
-            return new Cve(name.Value, cweId.Value, Optional.ToNullable(cvssScore), cvss3Summary.Value);
+            return new AssociatedCve(name.Value, cweId.Value, Optional.ToNullable(cvssScore), cvss3Summary.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Cve FromResponse(Response response)
+        internal static AssociatedCve FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeCve(document.RootElement);

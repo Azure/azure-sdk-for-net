@@ -28,7 +28,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
-            Optional<IReadOnlyList<Cve>> cve = default;
+            Optional<IReadOnlyList<AssociatedCve>> cve = default;
             Optional<long> endOfLife = default;
             Optional<bool> recent = default;
             Optional<IReadOnlyList<Port>> ports = default;
@@ -98,10 +98,10 @@ namespace Azure.Analytics.Defender.Easm.Models
                     {
                         continue;
                     }
-                    List<Cve> array = new List<Cve>();
+                    List<AssociatedCve> array = new List<AssociatedCve>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.Cve.DeserializeCve(item));
+                        array.Add(Models.AssociatedCve.DeserializeCve(item));
                     }
                     cve = array;
                     continue;

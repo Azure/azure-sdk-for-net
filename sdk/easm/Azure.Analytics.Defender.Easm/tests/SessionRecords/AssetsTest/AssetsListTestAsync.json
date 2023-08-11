@@ -1,0 +1,832 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/assets?api-version=2023-03-01-preview\u0026filter=name%20%3D%20ku.edu%20and%20type%20%3D%20domain",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-940dc405fb19efa82aeeb9b4c775e853-97a3a1bb717a446b-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "a9a07a741504f089da147c3bc06e5f17",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:25:06 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "3c039781-44e0-4100-8d7d-31371ff41ef7",
+        "x-ms-request-id": "6640bf91-704b-4674-8f26-a1973350529b",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "totalElements": 1,
+        "mark": null,
+        "value": [
+          {
+            "id": "domain$$ku.edu",
+            "name": "ku.edu",
+            "displayName": "ku.edu",
+            "kind": "domain",
+            "uuid": "446665cb-c782-038b-ee16-4068ec0fe1bf",
+            "asset": {
+              "domain": "ku.edu",
+              "whoisId": 7081649620358645849,
+              "registrarIanaIds": [],
+              "registrantContacts": [
+                {
+                  "value": "",
+                  "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 27
+                    }
+                  ],
+                  "recent": true
+                }
+              ],
+              "registrantOrgs": [
+                {
+                  "value": "",
+                  "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 27
+                    }
+                  ],
+                  "recent": true
+                }
+              ],
+              "adminContacts": [
+                {
+                  "value": "mattg@ku.edu",
+                  "firstSeen": "2019-07-10T07:00:48\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 337
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": "rlytle@ku.edu",
+                  "firstSeen": "2018-08-01T00:42:22\u002B0000",
+                  "lastSeen": "2018-08-01T00:42:22\u002B0000",
+                  "sources": []
+                }
+              ],
+              "technicalContacts": [
+                {
+                  "value": "raycole@ku.edu",
+                  "firstSeen": "2022-06-05T17:22:06\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-06-05T17:22:06\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 36
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": "mattg@ku.edu",
+                  "firstSeen": "2018-08-01T00:42:22\u002B0000",
+                  "lastSeen": "2022-06-05T17:22:06\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                      "lastSeen": "2022-06-05T17:22:06\u002B0000",
+                      "count": 301
+                    }
+                  ]
+                }
+              ],
+              "alexaInfos": [
+                {
+                  "alexaRank": 5746,
+                  "firstSeen": "2023-08-11T01:11:13\u002B0000",
+                  "lastSeen": "2023-08-11T16:11:20\u002B0000",
+                  "recent": true
+                },
+                {
+                  "alexaRank": 5697,
+                  "firstSeen": "2023-08-10T01:29:25\u002B0000",
+                  "lastSeen": "2023-08-11T00:10:58\u002B0000"
+                },
+                {
+                  "alexaRank": 5694,
+                  "firstSeen": "2023-08-09T01:17:57\u002B0000",
+                  "lastSeen": "2023-08-10T00:16:26\u002B0000"
+                },
+                {
+                  "alexaRank": 5698,
+                  "firstSeen": "2023-08-08T01:16:13\u002B0000",
+                  "lastSeen": "2023-08-09T00:20:56\u002B0000"
+                },
+                {
+                  "alexaRank": 5736,
+                  "firstSeen": "2023-08-03T01:15:50\u002B0000",
+                  "lastSeen": "2023-08-08T00:17:31\u002B0000"
+                },
+                {
+                  "alexaRank": 5721,
+                  "firstSeen": "2023-08-06T01:15:27\u002B0000",
+                  "lastSeen": "2023-08-07T16:51:21\u002B0000"
+                },
+                {
+                  "alexaRank": 5723,
+                  "firstSeen": "2023-08-05T01:16:04\u002B0000",
+                  "lastSeen": "2023-08-06T00:15:11\u002B0000"
+                },
+                {
+                  "alexaRank": 5734,
+                  "firstSeen": "2023-08-04T01:17:30\u002B0000",
+                  "lastSeen": "2023-08-05T00:14:04\u002B0000"
+                },
+                {
+                  "alexaRank": 5754,
+                  "firstSeen": "2023-08-02T01:18:35\u002B0000",
+                  "lastSeen": "2023-08-03T00:14:12\u002B0000"
+                },
+                {
+                  "alexaRank": 4122,
+                  "firstSeen": "2023-08-01T01:15:27\u002B0000",
+                  "lastSeen": "2023-08-02T00:14:09\u002B0000"
+                }
+              ],
+              "nameServers": [
+                {
+                  "value": "ns1.ku.edu",
+                  "firstSeen": "2012-10-19T18:41:24\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-03-22T17:10:44\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 304
+                    },
+                    {
+                      "source": "pdns.NS",
+                      "firstSeen": "2021-07-19T19:40:35\u002B0000",
+                      "lastSeen": "2023-08-10T21:39:14\u002B0000",
+                      "count": 127946
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": "ns2.ku.edu",
+                  "firstSeen": "2012-10-19T18:41:24\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-03-22T17:10:44\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 304
+                    },
+                    {
+                      "source": "pdns.NS",
+                      "firstSeen": "2021-07-19T19:40:35\u002B0000",
+                      "lastSeen": "2023-08-10T21:39:14\u002B0000",
+                      "count": 127950
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": "ns3.ku.edu",
+                  "firstSeen": "2023-06-27T21:14:04\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2023-07-03T15:07:20\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 10
+                    },
+                    {
+                      "source": "pdns.NS",
+                      "firstSeen": "2023-06-27T21:14:04\u002B0000",
+                      "lastSeen": "2023-08-10T21:38:09\u002B0000",
+                      "count": 1059
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": "ns4.ku.edu",
+                  "firstSeen": "2023-05-20T15:20:10\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2023-07-03T15:07:20\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 10
+                    },
+                    {
+                      "source": "pdns.NS",
+                      "firstSeen": "2023-05-20T15:20:10\u002B0000",
+                      "lastSeen": "2023-08-10T21:39:14\u002B0000",
+                      "count": 1970
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": "bddsext-pd04.cc.ku.edu",
+                  "firstSeen": "2023-03-15T17:01:43\u002B0000",
+                  "lastSeen": "2023-05-20T15:20:17\u002B0000",
+                  "sources": [
+                    {
+                      "source": "pdns.NS",
+                      "firstSeen": "2023-03-15T17:01:43\u002B0000",
+                      "lastSeen": "2023-05-20T15:20:17\u002B0000",
+                      "count": 1582
+                    }
+                  ],
+                  "recent": true
+                }
+              ],
+              "mailServers": [
+                {
+                  "value": "ku-edu.mail.protection.outlook.com",
+                  "firstSeen": "2023-03-22T22:07:53\u002B0000",
+                  "lastSeen": "2023-08-10T20:28:55\u002B0000",
+                  "sources": [
+                    {
+                      "source": "pdns.MX",
+                      "firstSeen": "2023-03-22T22:07:53\u002B0000",
+                      "lastSeen": "2023-08-10T20:28:55\u002B0000",
+                      "count": 126706
+                    }
+                  ],
+                  "recent": true
+                }
+              ],
+              "whoisServers": [
+                {
+                  "value": "whois.educause.net",
+                  "firstSeen": "2018-08-01T00:42:22\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 337
+                    }
+                  ],
+                  "recent": true
+                }
+              ],
+              "domainStatuses": [],
+              "registrarCreatedAt": [
+                {
+                  "value": 851299200000,
+                  "firstSeen": "2018-08-01T00:42:22\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2023-07-03T15:07:20\u002B0000",
+                      "lastSeen": "2023-08-01T00:27:59\u002B0000",
+                      "count": 1
+                    }
+                  ],
+                  "recent": true
+                }
+              ],
+              "registrarUpdatedAt": [
+                {
+                  "value": 1688083200000,
+                  "firstSeen": "2023-07-03T15:07:20\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2023-07-03T15:07:20\u002B0000",
+                      "lastSeen": "2023-08-01T00:27:59\u002B0000",
+                      "count": 1
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": 1687478400000,
+                  "firstSeen": "2023-06-23T20:58:04\u002B0000",
+                  "lastSeen": "2023-07-03T15:07:20\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2023-06-23T20:58:04\u002B0000",
+                      "lastSeen": "2023-07-03T15:07:20\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1684454400000,
+                  "firstSeen": "2023-05-23T16:23:24\u002B0000",
+                  "lastSeen": "2023-06-23T20:58:04\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2023-05-23T16:23:24\u002B0000",
+                      "lastSeen": "2023-06-23T20:58:04\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1679616000000,
+                  "firstSeen": "2023-04-03T17:13:11\u002B0000",
+                  "lastSeen": "2023-05-23T16:23:24\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2023-04-03T17:13:11\u002B0000",
+                      "lastSeen": "2023-05-23T16:23:24\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1678838400000,
+                  "firstSeen": "2023-03-17T22:53:30\u002B0000",
+                  "lastSeen": "2023-04-03T17:13:11\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2023-03-17T22:53:30\u002B0000",
+                      "lastSeen": "2023-04-03T17:13:11\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1657584000000,
+                  "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                  "lastSeen": "2023-03-17T22:53:30\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                      "lastSeen": "2023-03-17T22:53:30\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1655942400000,
+                  "firstSeen": "2022-07-07T01:27:54\u002B0000",
+                  "lastSeen": "2022-07-31T13:43:45\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-07-07T01:27:54\u002B0000",
+                      "lastSeen": "2022-07-31T13:43:45\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1654128000000,
+                  "firstSeen": "2022-06-05T17:22:06\u002B0000",
+                  "lastSeen": "2022-07-07T01:27:54\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-06-05T17:22:06\u002B0000",
+                      "lastSeen": "2022-07-07T01:27:54\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1651449600000,
+                  "firstSeen": "2022-05-04T21:25:42\u002B0000",
+                  "lastSeen": "2022-06-05T17:22:06\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-05-04T21:25:42\u002B0000",
+                      "lastSeen": "2022-06-05T17:22:06\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1649808000000,
+                  "firstSeen": "2022-04-18T10:28:51\u002B0000",
+                  "lastSeen": "2022-05-04T21:25:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-04-18T10:28:51\u002B0000",
+                      "lastSeen": "2022-05-04T21:25:42\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1640476800000,
+                  "firstSeen": "2021-12-31T02:24:33\u002B0000",
+                  "lastSeen": "2022-04-18T10:28:51\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-12-31T02:24:33\u002B0000",
+                      "lastSeen": "2022-04-18T10:28:51\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1635724800000,
+                  "firstSeen": "2021-11-15T13:58:43\u002B0000",
+                  "lastSeen": "2021-12-31T02:24:33\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-11-15T13:58:43\u002B0000",
+                      "lastSeen": "2021-12-31T02:24:33\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1632614400000,
+                  "firstSeen": "2021-09-30T21:46:26\u002B0000",
+                  "lastSeen": "2021-11-15T13:58:43\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-09-30T21:46:26\u002B0000",
+                      "lastSeen": "2021-11-15T13:58:43\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1615334400000,
+                  "firstSeen": "2021-03-22T17:10:44\u002B0000",
+                  "lastSeen": "2021-09-30T21:46:26\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-03-22T17:10:44\u002B0000",
+                      "lastSeen": "2021-09-30T21:46:26\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1571097600000,
+                  "firstSeen": "2020-02-29T23:54:04\u002B0000",
+                  "lastSeen": "2021-03-22T17:10:44\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                      "lastSeen": "2021-03-22T17:10:44\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1552435200000,
+                  "firstSeen": "2019-07-10T07:00:48\u002B0000",
+                  "lastSeen": "2020-02-29T23:54:04\u002B0000",
+                  "sources": []
+                },
+                {
+                  "value": 1529971200000,
+                  "firstSeen": "2018-08-01T00:42:22\u002B0000",
+                  "lastSeen": "2018-08-01T00:42:22\u002B0000",
+                  "sources": []
+                }
+              ],
+              "registrarExpiresAt": [
+                {
+                  "value": 1753920000000,
+                  "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2023-07-03T15:07:20\u002B0000",
+                      "lastSeen": "2023-08-01T00:27:59\u002B0000",
+                      "count": 1
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": 1659225600000,
+                  "firstSeen": "2020-02-29T23:54:04\u002B0000",
+                  "lastSeen": "2022-07-31T13:43:45\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-07-07T01:27:54\u002B0000",
+                      "lastSeen": "2022-07-31T13:43:45\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                },
+                {
+                  "value": 1564531200000,
+                  "firstSeen": "2018-08-01T00:42:22\u002B0000",
+                  "lastSeen": "2020-02-29T23:54:04\u002B0000",
+                  "sources": []
+                }
+              ],
+              "soaRecords": [
+                {
+                  "nameServer": "ns1.ku.edu",
+                  "email": "itcsc@ku.edu",
+                  "firstSeen": "2017-11-01T19:32:20\u002B0000",
+                  "lastSeen": "2023-08-10T21:38:14\u002B0000",
+                  "serialNumber": 703589015,
+                  "recent": true
+                }
+              ],
+              "detailedFromWhoisAt": "2023-08-11T00:43:42\u002B0000",
+              "registrarNames": [],
+              "sources": [
+                {
+                  "source": "alexa",
+                  "firstSeen": "2018-10-08T17:00:28\u002B0000",
+                  "lastSeen": "2023-08-11T16:11:20\u002B0000",
+                  "count": 262537
+                },
+                {
+                  "source": "whois",
+                  "firstSeen": "2018-08-01T00:42:22\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "count": 404
+                },
+                {
+                  "source": "pdns",
+                  "firstSeen": "2023-03-22T12:37:35\u002B0000",
+                  "lastSeen": "2023-08-10T21:39:14\u002B0000",
+                  "count": 1059880
+                },
+                {
+                  "source": "minicrawl",
+                  "firstSeen": "2019-05-30T03:49:10\u002B0000",
+                  "lastSeen": "2023-06-10T10:19:43\u002B0000",
+                  "count": 3332
+                }
+              ],
+              "firstSeen": "2023-03-17T22:53:30\u002B0000",
+              "lastSeen": "2023-08-11T16:11:20\u002B0000",
+              "count": 1326153,
+              "parkedDomain": [
+                {
+                  "value": false,
+                  "firstSeen": "2019-05-30T03:49:10\u002B0000",
+                  "lastSeen": "2023-06-10T10:19:43\u002B0000",
+                  "sources": []
+                }
+              ],
+              "registrantNames": [
+                {
+                  "value": "University of Kansas\n1 University of Kansas",
+                  "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 337
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": "University of Kansas|1 University of Kansas",
+                  "firstSeen": "2020-12-10T22:11:13\u002B0000",
+                  "lastSeen": "2021-02-10T18:48:06\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2020-12-10T22:11:13\u002B0000",
+                      "lastSeen": "2021-02-10T18:48:06\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                }
+              ],
+              "adminNames": [
+                {
+                  "value": "Domain Admin\nUniversity of Kansas\n1 University of Kansas",
+                  "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 337
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": "Domain Admin|University of Kansas|1 University of Kansas",
+                  "firstSeen": "2020-12-10T22:11:13\u002B0000",
+                  "lastSeen": "2021-02-10T18:48:06\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2020-12-10T22:11:13\u002B0000",
+                      "lastSeen": "2021-02-10T18:48:06\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                }
+              ],
+              "technicalNames": [
+                {
+                  "value": "Ray Cole\nUniversity of Kansas\nInformation Technology",
+                  "firstSeen": "2022-06-05T17:22:06\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-06-05T17:22:06\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 36
+                    }
+                  ],
+                  "recent": true
+                },
+                {
+                  "value": "Matt Garrett\nUniversity of Kansas\nInformation Technology",
+                  "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                  "lastSeen": "2022-06-05T17:22:06\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                      "lastSeen": "2022-06-05T17:22:06\u002B0000",
+                      "count": 301
+                    }
+                  ]
+                },
+                {
+                  "value": "Matt Garrett|University of Kansas|Information Technology",
+                  "firstSeen": "2020-12-10T22:11:13\u002B0000",
+                  "lastSeen": "2021-02-10T18:48:06\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2020-12-10T22:11:13\u002B0000",
+                      "lastSeen": "2021-02-10T18:48:06\u002B0000",
+                      "count": 1
+                    }
+                  ]
+                }
+              ],
+              "adminOrgs": [
+                {
+                  "value": "",
+                  "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 27
+                    }
+                  ],
+                  "recent": true
+                }
+              ],
+              "technicalOrgs": [
+                {
+                  "value": "",
+                  "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 27
+                    }
+                  ],
+                  "recent": true
+                }
+              ],
+              "registrantPhones": [
+                {
+                  "value": "",
+                  "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2022-07-31T13:43:45\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 27
+                    }
+                  ],
+                  "recent": true
+                }
+              ],
+              "adminPhones": [
+                {
+                  "value": "17858640469",
+                  "firstSeen": "2020-12-10T22:11:13\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 337
+                    }
+                  ],
+                  "recent": true
+                }
+              ],
+              "technicalPhones": [
+                {
+                  "value": "17858640469",
+                  "firstSeen": "2020-12-10T22:11:13\u002B0000",
+                  "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                  "sources": [
+                    {
+                      "source": "whois",
+                      "firstSeen": "2021-02-10T18:48:06\u002B0000",
+                      "lastSeen": "2023-08-11T00:43:42\u002B0000",
+                      "count": 337
+                    }
+                  ],
+                  "recent": true
+                }
+              ]
+            },
+            "createdDate": "2023-07-28T16:42:22\u002B0000",
+            "updatedDate": "2023-08-03T16:23:24\u002B0000",
+            "state": "confirmed",
+            "externalId": "new_external_id",
+            "labels": [],
+            "wildcard": false,
+            "discoGroupName": "University of Kansas",
+            "auditTrail": [],
+            "history": null,
+            "reason": null
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "1217628304",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

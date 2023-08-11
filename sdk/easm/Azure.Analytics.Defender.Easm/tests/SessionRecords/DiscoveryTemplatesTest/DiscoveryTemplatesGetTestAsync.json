@@ -1,0 +1,79 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/discoTemplates/43488?api-version=2023-03-01-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-2dd90616bd6656c219af5bbb900a15f4-a89ea7276090c394-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "0c833938830ae777a8b2cdcf1dc88e5a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:25:51 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "4925b070-e8f8-4cab-9e6c-366cbf32d0ce",
+        "x-ms-request-id": "81d873d0-c97e-4db3-9464-70d813c77420",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "id": "43488",
+        "name": "Rigaku Corporation",
+        "displayName": "Rigaku Corporation",
+        "industry": "Electronic Equipment, Instruments and Components",
+        "region": "Asia / Pacific",
+        "countryCode": "JP",
+        "stateCode": null,
+        "city": "Tokyo",
+        "seeds": [
+          {
+            "kind": "as",
+            "name": "22960"
+          },
+          {
+            "kind": "domain",
+            "name": "xwinsys.com"
+          },
+          {
+            "kind": "domain",
+            "name": "rigaku.com"
+          }
+        ],
+        "names": [
+          "Rigaku Corporation",
+          "Rigaku Americas Corporation",
+          "Xwinsys Technology Development Ltd.",
+          "Rigaku Europe"
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "14520415",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}

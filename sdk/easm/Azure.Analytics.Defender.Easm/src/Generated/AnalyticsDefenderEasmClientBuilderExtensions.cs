@@ -11,25 +11,28 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="EasmDefenderClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="EasmClient"/> to client builder. </summary>
     public static partial class AnalyticsDefenderEasmClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="EasmDefenderClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="EasmClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The endpoint hosting the requested resource. For example, https://{region}.easm.defender.microsoft.com. </param>
-        public static IAzureClientBuilder<EasmDefenderClient, EasmDefenderClientOptions> AddEasmDefenderClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the Resource Group. </param>
+        /// <param name="workspaceName"> The name of the Workspace. </param>
+        public static IAzureClientBuilder<EasmClient, EasmClientOptions> AddEasmClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId, string resourceGroupName, string workspaceName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<EasmDefenderClient, EasmDefenderClientOptions>((options, cred) => new EasmDefenderClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<EasmClient, EasmClientOptions>((options, cred) => new EasmClient(endpoint, subscriptionId, resourceGroupName, workspaceName, cred, options));
         }
 
-        /// <summary> Registers a <see cref="EasmDefenderClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="EasmClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<EasmDefenderClient, EasmDefenderClientOptions> AddEasmDefenderClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<EasmClient, EasmClientOptions> AddEasmClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<EasmDefenderClient, EasmDefenderClientOptions>(configuration);
+            return builder.RegisterClientFactory<EasmClient, EasmClientOptions>(configuration);
         }
     }
 }

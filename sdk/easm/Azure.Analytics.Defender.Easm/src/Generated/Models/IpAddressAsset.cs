@@ -23,7 +23,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             NetRanges = new ChangeTrackingList<ObservedString>();
             Headers = new ChangeTrackingList<ObservedHeader>();
             Attributes = new ChangeTrackingList<Attribute>();
-            Cookies = new ChangeTrackingList<Cookie>();
+            Cookies = new ChangeTrackingList<AssociatedCookie>();
             SslCerts = new ChangeTrackingList<SslCertAsset>();
             Services = new ChangeTrackingList<Service>();
             IpBlocks = new ChangeTrackingList<IpBlock>();
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <param name="sslServerConfig"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal IpAddressAsset(string ipAddress, IReadOnlyList<ObservedLong> asns, IReadOnlyList<Reputation> reputations, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<ObservedString> netRanges, IReadOnlyList<ObservedHeader> headers, IReadOnlyList<Attribute> attributes, IReadOnlyList<Cookie> cookies, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<Service> services, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<Banner> banners, IReadOnlyList<ScanMetadata> scanMetadata, IReadOnlyList<ObservedBoolean> nsRecord, IReadOnlyList<ObservedBoolean> mxRecord, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedString> hosts, IReadOnlyList<ObservedBoolean> nxdomain, IReadOnlyList<SslServerConfig> sslServerConfig, bool? ipv4, bool? ipv6)
+        internal IpAddressAsset(string ipAddress, IReadOnlyList<ObservedLong> asns, IReadOnlyList<Reputation> reputations, IReadOnlyList<WebComponent> webComponents, IReadOnlyList<ObservedString> netRanges, IReadOnlyList<ObservedHeader> headers, IReadOnlyList<Attribute> attributes, IReadOnlyList<AssociatedCookie> cookies, IReadOnlyList<SslCertAsset> sslCerts, IReadOnlyList<Service> services, IReadOnlyList<IpBlock> ipBlocks, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<Banner> banners, IReadOnlyList<ScanMetadata> scanMetadata, IReadOnlyList<ObservedBoolean> nsRecord, IReadOnlyList<ObservedBoolean> mxRecord, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedString> hosts, IReadOnlyList<ObservedBoolean> nxdomain, IReadOnlyList<SslServerConfig> sslServerConfig, bool? ipv4, bool? ipv6)
         {
             IpAddress = ipAddress;
             Asns = asns;
@@ -108,7 +108,7 @@ namespace Azure.Analytics.Defender.Easm.Models
         /// <summary> Gets the attributes. </summary>
         public IReadOnlyList<Attribute> Attributes { get; }
         /// <summary> Gets the cookies. </summary>
-        public IReadOnlyList<Cookie> Cookies { get; }
+        public IReadOnlyList<AssociatedCookie> Cookies { get; }
         /// <summary> Gets the ssl certs. </summary>
         public IReadOnlyList<SslCertAsset> SslCerts { get; }
         /// <summary> Gets the services. </summary>

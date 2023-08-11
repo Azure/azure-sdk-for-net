@@ -26,8 +26,8 @@ namespace Azure.Analytics.Defender.Easm.Models
             Optional<string> service = default;
             Optional<IReadOnlyList<ObservedString>> ipAddresses = default;
             Optional<IReadOnlyList<ObservedBoolean>> successful = default;
-            Optional<IReadOnlyList<ObservedInteger>> httpResponseCodes = default;
-            Optional<IReadOnlyList<ObservedString>> httpResponseMessages = default;
+            Optional<IReadOnlyList<ObservedInteger>> httpResultCodes = default;
+            Optional<IReadOnlyList<ObservedString>> httpResultMessages = default;
             Optional<IReadOnlyList<ObservedLong>> responseTimes = default;
             Optional<IReadOnlyList<ObservedBoolean>> frames = default;
             Optional<IReadOnlyList<ObservedBoolean>> windows = default;
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             Optional<IReadOnlyList<ObservedString>> titles = default;
             Optional<IReadOnlyList<ObservedString>> languages = default;
             Optional<IReadOnlyList<ObservedHeader>> responseHeaders = default;
-            Optional<IReadOnlyList<Cookie>> cookies = default;
+            Optional<IReadOnlyList<AssociatedCookie>> cookies = default;
             Optional<IReadOnlyList<WebComponent>> webComponents = default;
             Optional<IReadOnlyList<Attribute>> attributes = default;
             Optional<IReadOnlyList<AssetSecurityPolicy>> assetSecurityPolicies = default;
@@ -58,7 +58,7 @@ namespace Azure.Analytics.Defender.Easm.Models
             Optional<IReadOnlyList<ObservedString>> redirectUrls = default;
             Optional<PageAssetRedirectType> redirectType = default;
             Optional<IReadOnlyList<ObservedString>> finalUrls = default;
-            Optional<IReadOnlyList<ObservedInteger>> finalResponseCodes = default;
+            Optional<IReadOnlyList<ObservedInteger>> finalResultCodes = default;
             Optional<IReadOnlyList<ObservedBoolean>> parkedPage = default;
             Optional<IReadOnlyList<ResourceUrl>> resourceUrls = default;
             Optional<IReadOnlyList<GuidPair>> guids = default;
@@ -131,7 +131,7 @@ namespace Azure.Analytics.Defender.Easm.Models
                     successful = array;
                     continue;
                 }
-                if (property.NameEquals("httpResponseCodes"u8))
+                if (property.NameEquals("httpResultCodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -142,10 +142,10 @@ namespace Azure.Analytics.Defender.Easm.Models
                     {
                         array.Add(ObservedInteger.DeserializeObservedInteger(item));
                     }
-                    httpResponseCodes = array;
+                    httpResultCodes = array;
                     continue;
                 }
-                if (property.NameEquals("httpResponseMessages"u8))
+                if (property.NameEquals("httpResultMessages"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -156,7 +156,7 @@ namespace Azure.Analytics.Defender.Easm.Models
                     {
                         array.Add(ObservedString.DeserializeObservedString(item));
                     }
-                    httpResponseMessages = array;
+                    httpResultMessages = array;
                     continue;
                 }
                 if (property.NameEquals("responseTimes"u8))
@@ -333,10 +333,10 @@ namespace Azure.Analytics.Defender.Easm.Models
                     {
                         continue;
                     }
-                    List<Cookie> array = new List<Cookie>();
+                    List<AssociatedCookie> array = new List<AssociatedCookie>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Cookie.DeserializeCookie(item));
+                        array.Add(AssociatedCookie.DeserializeCookie(item));
                     }
                     cookies = array;
                     continue;
@@ -545,7 +545,7 @@ namespace Azure.Analytics.Defender.Easm.Models
                     finalUrls = array;
                     continue;
                 }
-                if (property.NameEquals("finalResponseCodes"u8))
+                if (property.NameEquals("finalResultCodes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -556,7 +556,7 @@ namespace Azure.Analytics.Defender.Easm.Models
                     {
                         array.Add(ObservedInteger.DeserializeObservedInteger(item));
                     }
-                    finalResponseCodes = array;
+                    finalResultCodes = array;
                     continue;
                 }
                 if (property.NameEquals("parkedPage"u8))
@@ -840,7 +840,7 @@ namespace Azure.Analytics.Defender.Easm.Models
                     continue;
                 }
             }
-            return new PageAsset(url.Value, httpMethod.Value, service.Value, Optional.ToList(ipAddresses), Optional.ToList(successful), Optional.ToList(httpResponseCodes), Optional.ToList(httpResponseMessages), Optional.ToList(responseTimes), Optional.ToList(frames), Optional.ToList(windows), Optional.ToList(nonHtmlFrames), Optional.ToList(undirectedContent), Optional.ToList(contentTypes), Optional.ToList(contentLengths), Optional.ToList(windowNames), Optional.ToList(charsets), Optional.ToList(titles), Optional.ToList(languages), Optional.ToList(responseHeaders), Optional.ToList(cookies), Optional.ToList(webComponents), Optional.ToList(attributes), Optional.ToList(assetSecurityPolicies), Optional.ToList(responseBodyMinhashSignatures), Optional.ToList(fullDomMinhashSignatures), Optional.ToList(responseBodyHashSignatures), Optional.ToList(errors), Optional.ToList(sslCerts), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), cause.Value, referrer.Value, Optional.ToList(redirectUrls), Optional.ToNullable(redirectType), Optional.ToList(finalUrls), Optional.ToList(finalResponseCodes), Optional.ToList(parkedPage), Optional.ToList(resourceUrls), Optional.ToList(guids), Optional.ToList(finalIpAddresses), Optional.ToList(asns), Optional.ToList(ipBlocks), Optional.ToList(finalAsns), Optional.ToList(finalIpBlocks), Optional.ToList(responseBodies), domainAsset.Value, rootUrl.Value, Optional.ToNullable(isRootUrl), Optional.ToList(location), Optional.ToList(services), siteStatus.Value, Optional.ToList(cnames), Optional.ToList(cdns), host.Value, domain.Value, Optional.ToList(sslServerConfig), Optional.ToList(gdprAssetSecurityPolicies), Optional.ToList(ipv4), Optional.ToList(ipv6));
+            return new PageAsset(url.Value, httpMethod.Value, service.Value, Optional.ToList(ipAddresses), Optional.ToList(successful), Optional.ToList(httpResultCodes), Optional.ToList(httpResultMessages), Optional.ToList(responseTimes), Optional.ToList(frames), Optional.ToList(windows), Optional.ToList(nonHtmlFrames), Optional.ToList(undirectedContent), Optional.ToList(contentTypes), Optional.ToList(contentLengths), Optional.ToList(windowNames), Optional.ToList(charsets), Optional.ToList(titles), Optional.ToList(languages), Optional.ToList(responseHeaders), Optional.ToList(cookies), Optional.ToList(webComponents), Optional.ToList(attributes), Optional.ToList(assetSecurityPolicies), Optional.ToList(responseBodyMinhashSignatures), Optional.ToList(fullDomMinhashSignatures), Optional.ToList(responseBodyHashSignatures), Optional.ToList(errors), Optional.ToList(sslCerts), Optional.ToList(sources), Optional.ToNullable(firstSeen), Optional.ToNullable(lastSeen), Optional.ToNullable(count), cause.Value, referrer.Value, Optional.ToList(redirectUrls), Optional.ToNullable(redirectType), Optional.ToList(finalUrls), Optional.ToList(finalResultCodes), Optional.ToList(parkedPage), Optional.ToList(resourceUrls), Optional.ToList(guids), Optional.ToList(finalIpAddresses), Optional.ToList(asns), Optional.ToList(ipBlocks), Optional.ToList(finalAsns), Optional.ToList(finalIpBlocks), Optional.ToList(responseBodies), domainAsset.Value, rootUrl.Value, Optional.ToNullable(isRootUrl), Optional.ToList(location), Optional.ToList(services), siteStatus.Value, Optional.ToList(cnames), Optional.ToList(cdns), host.Value, domain.Value, Optional.ToList(sslServerConfig), Optional.ToList(gdprAssetSecurityPolicies), Optional.ToList(ipv4), Optional.ToList(ipv6));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.Analytics.Defender.Easm.Models;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -18,11 +19,18 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         [AsyncOnly]
         public async Task ScenarioAsync()
         {
-            #region Snippet:Azure_Analytics_Defender_Easm_ScenarioAsync
-            Console.WriteLine("Hello, world!");
-            #endregion
+            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com";
+            EasmClient client = new EasmClient(new System.Uri(endpoint),
+                            TestEnvironment.SubscriptionId,
+                            TestEnvironment.ResourceGroupName,
+                            TestEnvironment.WorkspaceName,
+                            TestEnvironment.Credential);
 
-            await Task.Yield();
+            Response<AssetPageResult> response = await client.GetAssetResourcesAsync();
+            foreach (AssetResource asset in response.Value.Value)
+            {
+                Console.WriteLine($"{asset.Kind}: {asset.Name}");
+            }
         }
     }
 }

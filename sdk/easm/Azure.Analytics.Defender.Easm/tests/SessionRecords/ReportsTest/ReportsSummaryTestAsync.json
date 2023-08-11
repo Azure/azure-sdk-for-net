@@ -1,0 +1,71 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eastus.easm.defender.microsoft.com/subscriptions/59af3bf1-d118-4916-808e-923509b34a94/resourceGroups/shad-rg/workspaces/sdktest/reports/assets:getSummary?api-version=2023-03-01-preview",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "40",
+        "Content-Type": "application/json",
+        "traceparent": "00-93ec669bdcd898b1729839731862c72a-9117806186acec3d-00",
+        "User-Agent": "azsdk-net-Analytics.Defender.Easm/1.0.0-alpha.20230811.1 (.NET 6.0.21; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "4284ce9c11677072e422d3b941e7c017",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "metrics": [
+          "savedfilter_metric_51126"
+        ]
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-store, must-revalidate, no-cache, max-age=0",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Fri, 11 Aug 2023 17:26:43 GMT",
+        "Expires": "0",
+        "Pragma": "no-cache",
+        "Server": "digitalfootprint-web",
+        "Strict-Transport-Security": "max-age=31536000 ; includeSubDomains",
+        "Transfer-Encoding": "chunked",
+        "Vary": [
+          "origin",
+          "access-control-request-method",
+          "access-control-request-headers",
+          "accept-encoding"
+        ],
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "DENY",
+        "x-ms-correlation-request-id": "82941f24-400b-4318-87e8-c3bc99965141",
+        "x-ms-request-id": "437b3bdd-af00-4210-9059-280446e2a3a9",
+        "x-ms-ui-version": "sdk",
+        "X-XSS-Protection": "1; mode=block"
+      },
+      "ResponseBody": {
+        "assetSummaries": [
+          {
+            "displayName": "ASI: WordPress Core Multiple CVEs for SQLi and Stored XSS",
+            "description": "##### Description\n\nThis impacts all versions of WordPress major release branches from 3.7 to 5.8 and consists of the following CVEs:\n-   CVE-2022-21664: SQL injection due to improper sanitization in WP_Meta_Query  \n    Due to lack of proper sanitization in WP_Meta_Query, there\u2019s potential for blind SQL Injection\n-   CVE-2022-21661: SQL Injection through WP_Query  \n    Due to improper sanitization in WP_Query, there can be cases where SQL injection is possible through plugins or themes that use it in a certain way.\n-   CVE-2022-21663: Authenticated Object Injection in Multisites  \n    On a multisite, users with Super Admin role can bypass explicit/additional hardening under certain conditions through object injection.\n-   CVE-2022-21662: Stored XSS through authenticated users  \n    Low-privileged authenticated users (like author) in WordPress core are able to execute JavaScript/perform stored XSS attack, which can affect high-privileged users.\n\n##### Related Intelligence\nCVE: [CVE-2022-21661](https://nvd.nist.gov/vuln/detail/CVE-2022-21661)\nCVE: [CVE-2022-21662](https://nvd.nist.gov/vuln/detail/CVE-2022-21662)\nCVE: [CVE-2022-21663](https://nvd.nist.gov/vuln/detail/CVE-2022-21663)\nCVE: [CVE-2022-21664](https://nvd.nist.gov/vuln/detail/CVE-2022-21664)\nSecurity Advisory: [WordPress.org](https://wordpress.org/news/2022/01/wordpress-5-8-3-security-release/)\nPoC: [Exploit-DB](https://www.exploit-db.com/exploits/50663)\nWriteup: [Zero Day Initiative](https://www.zerodayinitiative.com/blog/2022/1/18/cve-2021-21661-exposing-database-info-via-wordpress-sql-injection)\nWriteup: [Medium article - written in Vietnamese](https://cognn.medium.com/sql-injection-in-wordpress-core-zdi-can-15541-a451c492897)\n\n##### Remediation\n\nUpdate to the latest minor release of your WordPress instance by logging in to the admin dashboard and clicking Update WordPress under the Updates screen. See [this page](https://wordpress.org/support/article/updating-wordpress/) if you run into issues. The makers of WordPress also strongly recommend enabling auto-update by following [these instructions.](https://wordpress.org/support/article/configuring-automatic-background-updates/)\n\nThe [WordPress_Versions](https://codex.wordpress.org/WordPress_Versions) page is a great resource to find the latest minor version for specific release branches.  Ensure the version you are running has a release date of January 6, 2022 or greater. ",
+            "updatedAt": "2023-08-10T09:44:19\u002B0000",
+            "metricCategory": null,
+            "metric": "savedfilter_metric_51126",
+            "filter": null,
+            "labelName": null,
+            "count": 9,
+            "link": null,
+            "children": null
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT": "Sanitized",
+    "RandomSeed": "1962449197",
+    "RESOURCEGROUPNAME": "Sanitized",
+    "SUBSCRIPTION_ID": "59af3bf1-d118-4916-808e-923509b34a94",
+    "WORKSPACENAME": "Sanitized"
+  }
+}
