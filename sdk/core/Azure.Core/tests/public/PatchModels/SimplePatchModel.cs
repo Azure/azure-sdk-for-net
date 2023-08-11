@@ -37,7 +37,7 @@ namespace Azure.Core.Tests.PatchModels
             set => _element.SetProperty("name", value);
         }
 
-        /// <summary> Optional int property corresponding to JSON """{"count": "abc"}""". </summary>
+        /// <summary> Optional int property corresponding to JSON """{"count": 1}""". </summary>
         public int? Count
         {
             get
@@ -51,17 +51,18 @@ namespace Azure.Core.Tests.PatchModels
             set => _element.SetProperty("count", value);
         }
 
-        /// <summary> Readonly DateTimeOffset property corresponding to JSON """{"createdOn": "2020-06-25T17:44:37.6830000Z"}""". </summary>
-        public DateTimeOffset? CreatedOn
+        /// <summary> Optional DateTimeOffset property corresponding to JSON """{"updatedOn": "2020-06-25T17:44:37.6830000Z"}""". </summary>
+        public DateTimeOffset? UpdatedOn
         {
             get
             {
-                if (_element.TryGetProperty("createdOn", out MutableJsonElement value))
+                if (_element.TryGetProperty("updatedOn", out MutableJsonElement value))
                 {
                     return value.GetDateTimeOffset();
                 }
                 return null;
             }
+            set => _element.SetProperty("updatedOn", value);
         }
     }
 }

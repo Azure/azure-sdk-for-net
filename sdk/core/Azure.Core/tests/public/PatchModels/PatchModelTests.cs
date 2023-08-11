@@ -31,6 +31,17 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
+        public void CanPatchDateTimeProperty()
+        {
+            DateTimeOffset updateTime = DateTimeOffset.Now;
+
+            SimplePatchModel model = new SimplePatchModel();
+            model.UpdatedOn = updateTime;
+
+            ValidatePatch($"{{\"updatedOn\":\"{updateTime:O}\"}}", model);
+        }
+
+        [Test]
         public void CanRoundTripSimpleModel()
         {
             BinaryData json = BinaryData.FromString("""
