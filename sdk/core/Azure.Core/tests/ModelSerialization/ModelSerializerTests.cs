@@ -4,12 +4,32 @@
 using System;
 using System.Text.Json;
 using Azure.Core.Serialization;
+using Azure.Core.Tests.ModelSerializationTests.Models;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.ModelSerialization
 {
     public class ModelSerializerTests
     {
+        [Test]
+        public void ArgumentExceptions()
+        {
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.Deserialize<BaseWithNoUnknown>(null));
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.Deserialize(null, typeof(BaseWithNoUnknown)));
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.Deserialize(new BinaryData(new byte[] { }), null));
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.Serialize<BaseWithNoUnknown>(null));
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.Serialize(null));
+
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.Deserialize<BaseWithNoUnknown>(null, ModelSerializerFormat.Wire));
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.Deserialize(null, typeof(BaseWithNoUnknown), ModelSerializerFormat.Wire));
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.Deserialize(new BinaryData(new byte[] { }), null, ModelSerializerFormat.Wire));
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.Serialize<BaseWithNoUnknown>(null, ModelSerializerFormat.Wire));
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.Serialize(null, ModelSerializerFormat.Wire));
+
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.SerializeCore(null, new ModelSerializerOptions()));
+            Assert.Throws<ArgumentNullException>(() => ModelSerializer.SerializeCore(new ModelX(), null));
+        }
+
         [Test]
         public void ValidateErrorIfUnknownDoesntExist()
         {
