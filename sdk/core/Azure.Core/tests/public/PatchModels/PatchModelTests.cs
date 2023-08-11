@@ -83,27 +83,6 @@ namespace Azure.Core.Tests.Public
             ValidatePatch("""{"child": {"a": "aa"}}""", model);
         }
 
-        [Test]
-        public void CanPatchChildModelAssignNew()
-        {
-            ParentPatchModel model = new();
-            model.Child = new() { A = "aa" };
-
-            ValidatePatch("""{"child": {"a": "aa"}}""", model);
-        }
-
-        [Test]
-        public void CanPatchChildModelAssignNewAndChangeLater()
-        {
-            ParentPatchModel model = new();
-            model.Child = new() { A = "aa" };
-
-            ValidatePatch("""{"child": {"a": "aa"}}""", model);
-
-            model.Child.B = "bb";
-            ValidatePatch("""{"child": {"a": "aa", "b": "bb"}}""", model);
-        }
-
         #region Helpers
         private static void ValidatePatch<T>(string expected, IModelJsonSerializable<T> model)
         {

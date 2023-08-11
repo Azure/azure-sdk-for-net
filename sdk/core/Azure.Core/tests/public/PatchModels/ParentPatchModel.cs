@@ -77,13 +77,6 @@ namespace Azure.Core.Tests.PatchModels
 
                 return _child;
             }
-
-            set
-            {
-                // Wire the child's element into the parent's element.
-                _element.SetProperty("child", value.Element);
-                _child = value;
-            }
         }
 #pragma warning restore AZC0020 // Avoid using banned types in libraries
     }

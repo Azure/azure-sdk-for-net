@@ -13,16 +13,10 @@ namespace Azure.Core.Tests.PatchModels
 #pragma warning disable AZC0020 // Avoid using banned types in libraries
         private readonly MutableJsonElement _element;
 
-        // Make the element available to the parent
-        internal MutableJsonElement Element => _element;
-
-        /// <summary>
-        /// Public constructor.
-        /// </summary>
-        public ChildPatchModel()
-        {
-            _element = MutableJsonDocument.Parse(MutableJsonDocument.EmptyJson).RootElement;
-        }
+        // A child patch model doesn't have a public constructor.
+        //
+        // TODO: we will need to revisit this later when we find child models
+        // that are used in a standalone way as well.
 
         /// <summary> Serialization constructor. </summary>
         /// <param name="element"></param>
