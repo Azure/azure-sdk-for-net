@@ -7,7 +7,7 @@ namespace Azure.ResourceManager.DefenderEasm.Tests
 {
     public class DefenderEasmManagementTestEnvironment : TestEnvironment
     {
-        public string ResourceGroupName => GetRecordedVariable("RESOURCEGROUPNAME", options => options.IsSecret());
-        public string WorkspaceName => GetRecordedVariable("WORKSPACENAME", options => options.IsSecret());
+        public string ResourceGroupName => GetRecordedVariable("RESOURCEGROUPNAME");
+        public string WorkspaceName => GetRecordedVariable("WORKSPACENAME");
     }
 }
