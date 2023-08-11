@@ -6,6 +6,7 @@ param (
     [ValidateNotNullOrEmpty()]
     [string] $ProjectDirectory,
     [string] $TypespecAdditionalOptions = $null, ## addtional typespec emitter options, separated by semicolon if more than one, e.g. option1=value1;option2=value2
+    [string] $NpmrcPath = $null, ## path to a preauthenticated .npmrc file to use for npm install
     [switch] $SaveInputs = $false ## saves the temporary files during execution, default false
 )
 
@@ -48,9 +49,14 @@ function NpmInstallForProject([string]$workingDirectory) {
 
         $useAlphaNpmRegistry = (Get-Content $replacementPackageJson -Raw).Contains("-alpha.")
 
-        if($useAlphaNpmRegistry) {
+        if ($useAlphaNpmRegistry) {
+          if ($NpmrcPath) {
+            Copy-Item -Path $NpmrcPath -Destination ".npmrc" -Force
+          }
+          else {
             Write-Host "Package.json contains '-alpha.' in the version, Creating .npmrc using public/azure-sdk-for-js-test-autorest feed."
             "registry=https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-js-test-autorest/npm/registry/ `n`nalways-auth=true" | Out-File '.npmrc'
+          }
         }
 
         npm install --no-lock-file
