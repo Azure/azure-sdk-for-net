@@ -27,10 +27,9 @@ namespace Azure.AI.OpenAI
         ///   extension being configured.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="parameters"/> is null. </exception>
-        public AzureChatExtensionConfiguration(string type, BinaryData parameters)
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public AzureChatExtensionConfiguration(AzureChatExtensionType type, BinaryData parameters)
         {
-            Argument.AssertNotNull(type, nameof(type));
             Argument.AssertNotNull(parameters, nameof(parameters));
 
             Type = type;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Microsoft.Extensions.Azure;
 using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests;
@@ -18,14 +19,47 @@ public class AzureChatExtensionsTests : OpenAITestBase
     {
     }
 
+    public enum ExtensionObjectStrategy
+    {
+        WithGenericParentType,
+        WithScenarioSpecificHelperType
+    }
+
     [RecordedTest]
-    [TestCase(OpenAIClientServiceTarget.Azure)]
-    public async Task BasicSearchExtensionWorks(OpenAIClientServiceTarget serviceTarget)
+    [TestCase(OpenAIClientServiceTarget.Azure, ExtensionObjectStrategy.WithGenericParentType)]
+    [TestCase(OpenAIClientServiceTarget.Azure, ExtensionObjectStrategy.WithScenarioSpecificHelperType)]
+    public async Task BasicSearchExtensionWorks(
+        OpenAIClientServiceTarget serviceTarget,
+        ExtensionObjectStrategy extensionStrategy)
     {
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
             serviceTarget,
             OpenAIClientScenario.ChatCompletions);
+
+        AzureChatExtensionsOptions extensionsOptions = new();
+        extensionsOptions.Extensions.Add(extensionStrategy switch
+        {
+            ExtensionObjectStrategy.WithGenericParentType => new AzureChatExtensionConfiguration()
+            {
+                Type = "AzureCognitiveSearch",
+                Parameters = BinaryData.FromObjectAsJson(new
+                {
+                    Endpoint = "https://openaisdktestsearch.search.windows.net",
+                    IndexName = "openai-test-index-carbon-wiki",
+                    Key = GetCognitiveSearchApiKey().Key,
+                },
+                new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
+            },
+            ExtensionObjectStrategy.WithScenarioSpecificHelperType
+                => new AzureCognitiveSearchChatExtensionConfiguration()
+                {
+                    SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
+                    IndexName = "openai-test-index-carbon-wiki",
+                    SearchKey = GetCognitiveSearchApiKey(),
+                },
+            _ => throw new NotImplementedException("Don't know how to add the extension config!"),
+        });
 
         var requestOptions = new ChatCompletionsOptions()
         {
@@ -34,23 +68,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
                 new ChatMessage(ChatRole.User, "What does PR complete mean?"),
             },
             MaxTokens = 512,
-            AzureExtensionsOptions = new()
-            {
-                Extensions =
-                {
-                    new AzureChatExtensionConfiguration()
-                    {
-                        Type = "AzureCognitiveSearch",
-                        Parameters = BinaryData.FromObjectAsJson(new
-                        {
-                            Endpoint = "https://openaisdktestsearch.search.windows.net",
-                            IndexName = "openai-test-index-carbon-wiki",
-                            Key = GetCognitiveSearchApiKey(),
-                        },
-                        new JsonSerializerOptions() {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
-                    },
-                }
-            },
+            AzureExtensionsOptions = extensionsOptions,
         };
 
         Response<ChatCompletions> response = await client.GetChatCompletionsAsync(deploymentOrModelName, requestOptions);

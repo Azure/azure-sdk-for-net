@@ -3,9 +3,9 @@ namespace Azure.AI.OpenAI
     public partial class AzureChatExtensionConfiguration
     {
         public AzureChatExtensionConfiguration() { }
-        public AzureChatExtensionConfiguration(string type, System.BinaryData parameters) { }
+        public AzureChatExtensionConfiguration(Azure.AI.OpenAI.AzureChatExtensionType type, System.BinaryData parameters) { }
         public System.BinaryData Parameters { get { throw null; } set { } }
-        public string Type { get { throw null; } set { } }
+        public virtual Azure.AI.OpenAI.AzureChatExtensionType Type { get { throw null; } set { } }
     }
     public partial class AzureChatExtensionsMessageContext
     {
@@ -16,6 +16,70 @@ namespace Azure.AI.OpenAI
     {
         public AzureChatExtensionsOptions() { }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.AzureChatExtensionConfiguration> Extensions { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureChatExtensionType : System.IEquatable<Azure.AI.OpenAI.AzureChatExtensionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureChatExtensionType(string value) { throw null; }
+        public static Azure.AI.OpenAI.AzureChatExtensionType AzureCognitiveSearch { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.AzureChatExtensionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.AzureChatExtensionType left, Azure.AI.OpenAI.AzureChatExtensionType right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.AzureChatExtensionType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.AzureChatExtensionType left, Azure.AI.OpenAI.AzureChatExtensionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AzureCognitiveSearchChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration
+    {
+        public AzureCognitiveSearchChatExtensionConfiguration() { }
+        public AzureCognitiveSearchChatExtensionConfiguration(Azure.AI.OpenAI.AzureChatExtensionType type, System.Uri searchEndpoint, Azure.AzureKeyCredential searchKey, string indexName) { }
+        public int? DocumentCount { get { throw null; } set { } }
+        public System.Uri EmbeddingEndpoint { get { throw null; } set { } }
+        public Azure.AzureKeyCredential EmbeddingKey { get { throw null; } set { } }
+        public Azure.AI.OpenAI.AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get { throw null; } set { } }
+        public string IndexName { get { throw null; } set { } }
+        public Azure.AI.OpenAI.AzureCognitiveSearchQueryType? QueryType { get { throw null; } set { } }
+        public System.Uri SearchEndpoint { get { throw null; } set { } }
+        public Azure.AzureKeyCredential SearchKey { get { throw null; } set { } }
+        public string SemanticConfiguration { get { throw null; } set { } }
+        public bool? ShouldRestrictResultScope { get { throw null; } set { } }
+        public override Azure.AI.OpenAI.AzureChatExtensionType Type { get { throw null; } set { } }
+    }
+    public partial class AzureCognitiveSearchIndexFieldMappingOptions
+    {
+        public AzureCognitiveSearchIndexFieldMappingOptions() { }
+        public System.Collections.Generic.IList<string> ContentFieldNames { get { throw null; } }
+        public string ContentFieldSeparator { get { throw null; } set { } }
+        public string FilepathFieldName { get { throw null; } set { } }
+        public string TitleFieldName { get { throw null; } set { } }
+        public string UrlFieldName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> VectorFieldNames { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AzureCognitiveSearchQueryType : System.IEquatable<Azure.AI.OpenAI.AzureCognitiveSearchQueryType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AzureCognitiveSearchQueryType(string value) { throw null; }
+        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType Semantic { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType Simple { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType Vector { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType VectorSemanticHybrid { get { throw null; } }
+        public static Azure.AI.OpenAI.AzureCognitiveSearchQueryType VectorSimpleHybrid { get { throw null; } }
+        public bool Equals(Azure.AI.OpenAI.AzureCognitiveSearchQueryType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.OpenAI.AzureCognitiveSearchQueryType left, Azure.AI.OpenAI.AzureCognitiveSearchQueryType right) { throw null; }
+        public static implicit operator Azure.AI.OpenAI.AzureCognitiveSearchQueryType (string value) { throw null; }
+        public static bool operator !=(Azure.AI.OpenAI.AzureCognitiveSearchQueryType left, Azure.AI.OpenAI.AzureCognitiveSearchQueryType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public static partial class AzureOpenAIModelFactory
     {

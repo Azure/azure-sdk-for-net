@@ -64,15 +64,15 @@ namespace Azure.AI.OpenAI.Tests
         protected AzureKeyCredential GetAzureApiKey() => _azureApiKey ?? new AzureKeyCredential("placeholder");
         protected string GetNonAzureApiKey() => string.IsNullOrEmpty(_nonAzureApiKey) ? "placeholder" : _nonAzureApiKey;
 
-        protected string GetCognitiveSearchApiKey()
+        protected AzureKeyCredential GetCognitiveSearchApiKey()
         {
             if (Mode == RecordedTestMode.Playback)
             {
-                return "placeholder";
+                return new AzureKeyCredential("placeholder");
             }
             else if (!string.IsNullOrEmpty(_azureCognitiveSearchApiKey))
             {
-                return _azureCognitiveSearchApiKey;
+                return new AzureKeyCredential(_azureCognitiveSearchApiKey);
             }
             else
             {

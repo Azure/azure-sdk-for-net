@@ -10,13 +10,10 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary>
-    ///   A representation of configuration data for a single Azure OpenAI chat extension as used by a corresponding chat
-    ///   completions request that should use Azure OpenAI chat extensions to augment its behavior.
-    ///   The use of this configuration is compatible only with Azure OpenAI.
-    /// </summary>
     public partial class AzureChatExtensionConfiguration
     {
+        // CUSTOM CODE NOTE: required properties are moved here to support an init-only default constructor pattern.
+
         /// <summary> Initializes a new instance of AzureChatExtensionConfiguration. </summary>
         public AzureChatExtensionConfiguration()
         {
@@ -26,7 +23,7 @@ namespace Azure.AI.OpenAI
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
         /// </summary>
-        public string Type { get; set; }
+        public virtual AzureChatExtensionType Type { get; set; }
         /// <summary>
         ///   The configuration payload used for the Azure chat extension. The structure payload details are specific to the
         ///   extension being configured.
