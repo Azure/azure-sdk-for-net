@@ -90,7 +90,7 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.FromResult(new StorageResourceReadStreamResult(_readStream));
         }
 
-        protected internal override async Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long position = 0, long completeLength = 0, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
+        protected internal override async Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
         {
             await stream.CopyToAsync(Stream.Null);
         }

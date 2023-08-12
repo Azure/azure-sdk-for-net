@@ -47,16 +47,33 @@ namespace Azure.Core.Json
         /// <param name="format">A format string indicating the format to use when writing the document.</param>
         /// <exception cref="ArgumentNullException">The <paramref name="stream"/> parameter is <see langword="null"/>.</exception>
         /// <exception cref="FormatException">Thrown if an unsupported value is passed for format.</exception>
-        /// <remarks>The value of <paramref name="format"/> can be default or 'J' to write the document as JSON.</remarks>
-        public void WriteTo(Stream stream, StandardFormat format = default)
+        /// <remarks>The value of <paramref name="format"/> can be default or "J" to write the document as JSON, or "P" to write the changes as JSON Merge Patch.</remarks>
+        public void WriteTo(Stream stream, string? format = default)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            if (format != default && format.Symbol != 'J')
+            switch (format)
             {
-                throw new FormatException($"Unsupported format {format.Symbol}. Supported formats are: 'J' - JSON.");
+                case "J":
+                case null:
+                    WriteJson(stream);
+                    break;
+                case "P":
+                    WritePatch(stream);
+                    break;
+                default:
+                    AssertInvalidFormat(format);
+                    break;
             }
+        }
 
+        internal void AssertInvalidFormat(string? format)
+        {
+            throw new FormatException($"Unsupported format {format}. Supported formats are: \"J\" - JSON, \"P\" - JSON Merge Patch.");
+        }
+
+        private void WriteJson(Stream stream)
+        {
             if (!Changes.HasChanges)
             {
                 Write(stream, _original.Span);
@@ -65,6 +82,17 @@ namespace Azure.Core.Json
 
             using Utf8JsonWriter writer = new(stream);
             RootElement.WriteTo(writer);
+        }
+
+        private void WritePatch(Stream stream)
+        {
+            if (!Changes.HasChanges)
+            {
+                return;
+            }
+
+            using Utf8JsonWriter writer = new(stream);
+            RootElement.WritePatch(writer);
         }
 
         /// <summary>
@@ -110,7 +138,7 @@ namespace Azure.Core.Json
         /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static MutableJsonDocument Parse(ReadOnlyMemory<byte> utf8Json, JsonSerializerOptions? serializerOptions = default)
         {
-            var doc = JsonDocument.Parse(utf8Json);
+            JsonDocument doc = JsonDocument.Parse(utf8Json);
             return new MutableJsonDocument(doc, utf8Json, serializerOptions);
         }
 
@@ -123,7 +151,7 @@ namespace Azure.Core.Json
         /// <exception cref="JsonException"><paramref name="utf8Json"/> does not represent a valid single JSON value.</exception>
         public static MutableJsonDocument Parse(BinaryData utf8Json, JsonSerializerOptions? serializerOptions = default)
         {
-            var doc = JsonDocument.Parse(utf8Json);
+            JsonDocument doc = JsonDocument.Parse(utf8Json);
             return new MutableJsonDocument(doc, utf8Json.ToMemory(), serializerOptions);
         }
 

@@ -31,12 +31,6 @@ namespace Azure.Storage.DataMovement
         public long? InitialTransferSize { get; set; }
 
         /// <summary>
-        /// Optional. An <see cref="IProgress{StorageTransferProgress}"/> for tracking progress of the transfer.
-        /// See <see cref="DataTransferProgress"/> for details on what is tracked.
-        /// </summary>
-        public IProgress<DataTransferProgress> ProgressHandler { get; set; }
-
-        /// <summary>
         /// Optional. Options for changing behavior of the ProgressHandler.
         /// </summary>
         public ProgressHandlerOptions ProgressHandlerOptions { get; set; }
