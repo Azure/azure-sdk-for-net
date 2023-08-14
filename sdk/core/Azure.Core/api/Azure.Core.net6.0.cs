@@ -216,7 +216,7 @@ namespace Azure
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
         public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
-        public static implicit operator Azure.RequestContext(Azure.ErrorOptions options) { throw null; }
+        public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.Exception, System.Runtime.Serialization.ISerializable
     {
@@ -272,7 +272,7 @@ namespace Azure
         public override bool Equals(object? obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static implicit operator T(Azure.Response<T> response) { throw null; }
+        public static implicit operator T (Azure.Response<T> response) { throw null; }
     }
     public partial class SyncAsyncEventArgs : System.EventArgs
     {
@@ -370,8 +370,8 @@ namespace Azure.Core
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
-        public static implicit operator string(Azure.Core.AzureLocation location) { throw null; }
-        public static implicit operator Azure.Core.AzureLocation(string location) { throw null; }
+        public static implicit operator string (Azure.Core.AzureLocation location) { throw null; }
+        public static implicit operator Azure.Core.AzureLocation (string location) { throw null; }
         public static bool operator !=(Azure.Core.AzureLocation left, Azure.Core.AzureLocation right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -406,7 +406,7 @@ namespace Azure.Core
         public bool Equals(string? other) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
-        public static implicit operator Azure.Core.ContentType(string contentType) { throw null; }
+        public static implicit operator Azure.Core.ContentType (string contentType) { throw null; }
         public static bool operator !=(Azure.Core.ContentType left, Azure.Core.ContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -546,15 +546,18 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
         public abstract void Dispose();
-        public static implicit operator Azure.Core.RequestContent(Azure.Core.Serialization.DynamicData content) { throw null; }
-        public static implicit operator Azure.Core.RequestContent(System.BinaryData content) { throw null; }
-        public static implicit operator Azure.Core.RequestContent(string content) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Core.Serialization.DynamicData content) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (System.BinaryData content) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (string content) { throw null; }
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellation);
@@ -647,7 +650,7 @@ namespace Azure.Core
         public static bool operator ==(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
         public static bool operator >(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
         public static bool operator >=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
-        public static implicit operator string(Azure.Core.ResourceIdentifier id) { throw null; }
+        public static implicit operator string (Azure.Core.ResourceIdentifier id) { throw null; }
         public static bool operator !=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
         public static bool operator <(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
         public static bool operator <=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
@@ -671,8 +674,8 @@ namespace Azure.Core
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string GetLastType() { throw null; }
         public static bool operator ==(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
-        public static implicit operator string(Azure.Core.ResourceType resourceType) { throw null; }
-        public static implicit operator Azure.Core.ResourceType(string resourceType) { throw null; }
+        public static implicit operator string (Azure.Core.ResourceType resourceType) { throw null; }
+        public static implicit operator Azure.Core.ResourceType (string resourceType) { throw null; }
         public static bool operator !=(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -972,7 +975,7 @@ namespace Azure.Core.Pipeline
     }
     public sealed partial class DisposableHttpPipeline : Azure.Core.Pipeline.HttpPipeline, System.IDisposable
     {
-        internal DisposableHttpPipeline() : base(default(Azure.Core.Pipeline.HttpPipelineTransport), default(Azure.Core.Pipeline.HttpPipelinePolicy[]), default(Azure.Core.ResponseClassifier)) { }
+        internal DisposableHttpPipeline() : base (default(Azure.Core.Pipeline.HttpPipelineTransport), default(Azure.Core.Pipeline.HttpPipelinePolicy[]), default(Azure.Core.ResponseClassifier)) { }
         public void Dispose() { }
     }
     public partial class HttpClientTransport : Azure.Core.Pipeline.HttpPipelineTransport, System.IDisposable
@@ -1026,6 +1029,7 @@ namespace Azure.Core.Pipeline
         protected static void ProcessNext(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         protected static System.Threading.Tasks.ValueTask ProcessNextAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicMethods)]
     public abstract partial class HttpPipelineSynchronousPolicy : Azure.Core.Pipeline.HttpPipelinePolicy
     {
         protected HttpPipelineSynchronousPolicy() { }
@@ -1084,6 +1088,7 @@ namespace Azure.Core.Serialization
         [System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembersAttribute(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.NonPublicConstructors | System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.PublicConstructors)]
         public System.Type TypeToActivate { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -1094,22 +1099,22 @@ namespace Azure.Core.Serialization
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Core.Serialization.DynamicData? left, object? right) { throw null; }
-        public static explicit operator System.DateTime(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static explicit operator System.DateTimeOffset(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static explicit operator System.Guid(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator bool(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator byte(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator decimal(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator double(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator short(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator int(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator long(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator sbyte(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator float(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator string(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator ushort(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator uint(Azure.Core.Serialization.DynamicData value) { throw null; }
-        public static implicit operator ulong(Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static explicit operator System.DateTime (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static explicit operator System.DateTimeOffset (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static explicit operator System.Guid (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator bool (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator byte (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator decimal (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator double (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator short (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator int (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator long (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator sbyte (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator float (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator string (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator ushort (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator uint (Azure.Core.Serialization.DynamicData value) { throw null; }
+        public static implicit operator ulong (Azure.Core.Serialization.DynamicData value) { throw null; }
         public static bool operator !=(Azure.Core.Serialization.DynamicData? left, object? right) { throw null; }
         System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         public override string ToString() { throw null; }
@@ -1128,6 +1133,7 @@ namespace Azure.Core.Serialization
         T Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options);
         System.BinaryData Serialize(Azure.Core.Serialization.ModelSerializerOptions options);
     }
+    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
         public JsonObjectSerializer() { }
