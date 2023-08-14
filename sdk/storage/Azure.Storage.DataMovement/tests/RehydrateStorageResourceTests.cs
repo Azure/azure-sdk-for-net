@@ -166,8 +166,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
-            string sourcePath = GetNewString(20);
-            string destinationPath = GetNewString(15);
+            string sourcePath = string.Concat("/", GetNewString(20));
+            string destinationPath = string.Concat("/", GetNewString(15));
             string originalPath = isSource ? sourcePath : destinationPath;
 
             StorageResourceType sourceType = !isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
@@ -200,7 +200,7 @@ namespace Azure.Storage.DataMovement.Tests
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
-            Assert.AreEqual(originalPath, storageResource.Path);
+            Assert.AreEqual(originalPath, storageResource.Uri.LocalPath);
         }
 
         [Test]
@@ -212,9 +212,9 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
             TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
-            string sourceParentPath = GetNewString(20);
+            string sourceParentPath = string.Concat("/", GetNewString(20));
             List<string> sourcePaths = new List<string>();
-            string destinationParentPath = GetNewString(15);
+            string destinationParentPath = string.Concat("/", GetNewString(15));
             List<string> destinationPaths = new List<string>();
             int jobPartCount = 10;
             for (int i = 0; i< jobPartCount; i++)
@@ -256,7 +256,7 @@ namespace Azure.Storage.DataMovement.Tests
                 _ => throw new ArgumentException("Unrecognized test parameter"),
             };
 
-            Assert.AreEqual(originalPath, storageResource.Path);
+            Assert.AreEqual(originalPath, storageResource.Uri.LocalPath);
         }
     }
 }

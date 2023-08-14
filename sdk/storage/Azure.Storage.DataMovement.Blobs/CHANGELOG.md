@@ -3,7 +3,6 @@
 ## 12.0.0-beta.4 (Unreleased)
 
 ### Features Added
-- Added support for `StorageResource.TryGetUri`
 
 ### Breaking Changes
 - [BREAKING CHANGE] Made the following members `public` to `protected` members (including all derived classes):
@@ -27,8 +26,8 @@
 - [BREAKING CHANGE] Moved `BlobContainerClientTransferOptions` to the `Azure.Storage.DataMovement.Blobs` namespace
 - [BREAKING CHANGE] Removed `position` parameter from `*BlobStorageResource.WriteFromStreamAsync`. Use `StorageResourceWriteToOffsetOptions.Position` instead.
 - [BREAKING CHANGE] Made parameter `completeLength` from `*BlobStorageResource.CopyBlockFromUriAsync` mandatory.
-- [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` and `StorageResource.Uri` (including it's derived classes). Use `StorageResource.TryGetUri` instead.
-
+- [BREAKING CHANGE] Removed `StorageResource.CanProduceUri` (including it's derived classes).
+- [BREAKING CHANGE] Removed `StorageResource.Path`, use `StorageResource.Uri` instead.
 ### Bugs Fixed
 
 ### Other Changes

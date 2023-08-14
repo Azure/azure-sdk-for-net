@@ -26,6 +26,11 @@ namespace Azure.Storage.DataMovement.Blobs
         private bool IsDirectory => _directoryPrefix != null;
 
         /// <summary>
+        /// Gets Uri of the Storage Resource.
+        /// </summary>
+        public override Uri Uri => _uri;
+
+        /// <summary>
         /// The constructor to create an instance of the BlobStorageResourceContainer.
         /// </summary>
         /// <param name="blobContainerClient">
@@ -45,28 +50,6 @@ namespace Azure.Storage.DataMovement.Blobs
                     BlobName = _directoryPrefix,
                 }.ToUri()
                 : _blobContainerClient.Uri;
-        }
-
-        /// <summary>
-        /// Gets the path of the storage resource.
-        /// Return empty string since we are using the root of the container.
-        /// </summary>
-        public override string Path => _directoryPrefix ?? string.Empty;
-
-        /// <summary>
-        /// Blob Storage Resource has a Uri.
-        /// This method will return true and return the Uri of the blob.
-        /// </summary>
-        /// <param name="uri">
-        /// This value will return the Uri of the storage resource.
-        /// </param>
-        /// <returns>
-        /// Returns true.
-        /// </returns>
-        public override bool TryGetUri(out Uri uri)
-        {
-            uri = _uri;
-            return true;
         }
 
         /// <summary>

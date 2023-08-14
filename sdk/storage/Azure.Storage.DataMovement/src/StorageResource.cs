@@ -18,24 +18,13 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Gets the path.
-        /// </summary>
-        public abstract string Path { get; }
-
-        /// <summary>
         /// Defines whether the storage resource is a container.
         /// </summary>
         protected internal abstract bool IsContainer { get; }
 
         /// <summary>
-        /// Attempts to get the Uri of the Storage Resource.
+        /// Gets the Uri of the Storage Resource.
         /// </summary>
-        /// <param name="uri">
-        /// The <see cref="Uri"/> of the Storage Resource if the Storage Resource has one.
-        /// </param>
-        /// <returns>
-        /// Returns true if retrieving the <see cref="Uri"/> was successful. Returns false if not.
-        /// </returns>
-        public abstract bool TryGetUri(out Uri uri);
+        public abstract Uri Uri { get; }
     }
 }

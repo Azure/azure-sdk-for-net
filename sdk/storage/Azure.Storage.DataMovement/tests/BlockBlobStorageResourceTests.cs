@@ -32,12 +32,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource storageResource = new BlockBlobStorageResource(blobClient);
 
             // Assert
-            if (!storageResource.TryGetUri(out Uri storageUri))
-            {
-                throw Errors.ResourceUriInvalid(nameof(storageResource));
-            }
-            Assert.AreEqual(uri, storageUri.AbsoluteUri);
-            Assert.AreEqual(blobClient.Name, storageResource.Path);
+            Assert.AreEqual(uri, storageResource.Uri.AbsoluteUri);
         }
 
         [RecordedTest]

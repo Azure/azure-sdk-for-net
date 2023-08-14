@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class LocalFileStorageResource : StorageResourceItem
     {
-        private string _path;
+        private Uri _uri;
 
         /// <summary>
         /// The identifier for the type of storage resource.
@@ -22,25 +22,9 @@ namespace Azure.Storage.DataMovement
         protected internal override string ResourceId => "LocalFile";
 
         /// <summary>
-        /// Local File Storage Resource does not have a Uri.
-        /// This method will return false and set the uri to default.
+        /// Gets the Uri of the resource.
         /// </summary>
-        /// <param name="uri">
-        /// This value will be set to default as the Storage Resource does not produce a Uri.
-        /// </param>
-        /// <returns>
-        /// Returns false.
-        /// </returns>
-        public override bool TryGetUri(out Uri uri)
-        {
-            uri = default;
-            return false;
-        }
-
-        /// <summary>
-        /// Gets the path of the resource.
-        /// </summary>
-        public override string Path => _path;
+        public override Uri Uri => _uri;
 
         /// <summary>
         /// Defines the recommended Transfer Type of the resource
@@ -67,7 +51,23 @@ namespace Azure.Storage.DataMovement
         public LocalFileStorageResource(string path)
         {
             Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
-            _path = path;
+            UriBuilder uriBuilder = new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Host = "",
+                Path = path,
+            };
+            _uri = uriBuilder.Uri;
+        }
+
+        /// <summary>
+        /// Intenral Constructor for uri
+        /// </summary>
+        /// <param name="uri"></param>
+        internal LocalFileStorageResource(Uri uri)
+        {
+            Argument.AssertNotNullOrWhiteSpace(uri.AbsoluteUri, nameof(uri));
+            _uri = uri;
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Azure.Storage.DataMovement
             long? length = default,
             CancellationToken cancellationToken = default)
         {
-            FileStream stream = new FileStream(_path, FileMode.Open, FileAccess.Read);
+            FileStream stream = new FileStream(_uri.LocalPath, FileMode.Open, FileAccess.Read);
             stream.Position = position;
             return Task.FromResult(new StorageResourceReadStreamResult(stream));
         }
@@ -98,15 +98,15 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         internal Task CreateAsync(bool overwrite)
         {
-            if (overwrite || !File.Exists(_path))
+            if (overwrite || !File.Exists(_uri.LocalPath))
             {
-                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_path));
-                File.Create(_path).Close();
-                FileAttributes attributes = File.GetAttributes(_path);
-                File.SetAttributes(_path, attributes | FileAttributes.Temporary);
+                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(_uri.LocalPath));
+                File.Create(_uri.LocalPath).Close();
+                FileAttributes attributes = File.GetAttributes(_uri.LocalPath);
+                File.SetAttributes(_uri.LocalPath, attributes | FileAttributes.Temporary);
                 return Task.CompletedTask;
             }
-            throw Errors.LocalFileAlreadyExists(_path);
+            throw Errors.LocalFileAlreadyExists(_uri.LocalPath);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.Storage.DataMovement
             {
                 // Appends incoming stream to the local file resource
                 using (FileStream fileStream = new FileStream(
-                        _path,
+                        _uri.LocalPath,
                         FileMode.OpenOrCreate,
                         FileAccess.Write))
                 {
@@ -217,7 +217,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>Returns the properties of the Local File Storage Resource. See <see cref="StorageResourceProperties"/></returns>
         protected internal override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            FileInfo fileInfo = new FileInfo(_path);
+            FileInfo fileInfo = new FileInfo(_uri.LocalPath);
             if (fileInfo.Exists)
             {
                 return Task.FromResult(fileInfo.ToStorageResourceProperties());
@@ -249,11 +249,11 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
         {
-            if (File.Exists(_path))
+            if (File.Exists(_uri.LocalPath))
             {
                 // Make file visible
-                FileAttributes attributes = File.GetAttributes(_path);
-                File.SetAttributes(_path, attributes | FileAttributes.Normal);
+                FileAttributes attributes = File.GetAttributes(_uri.LocalPath);
+                File.SetAttributes(_uri.LocalPath, attributes | FileAttributes.Normal);
             }
             return Task.CompletedTask;
         }
@@ -271,9 +271,9 @@ namespace Azure.Storage.DataMovement
         /// </returns>
         protected internal override Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
-            if (File.Exists(_path))
+            if (File.Exists(_uri.LocalPath))
             {
-                File.Delete(_path);
+                File.Delete(_uri.LocalPath);
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);

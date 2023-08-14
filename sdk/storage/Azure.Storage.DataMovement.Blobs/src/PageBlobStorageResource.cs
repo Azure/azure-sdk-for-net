@@ -28,25 +28,9 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override string ResourceId => "PageBlob";
 
         /// <summary>
-        /// Blob Storage Resource has a Uri.
-        /// This method will return true and return the Uri of the blob.
+        /// Gets the Uri of the Storage Resource
         /// </summary>
-        /// <param name="uri">
-        /// This value will return the Uri of the storage resource.
-        /// </param>
-        /// <returns>
-        /// Returns true.
-        /// </returns>
-        public override bool TryGetUri(out Uri uri)
-        {
-            uri = BlobClient.Uri;
-            return true;
-        }
-
-        /// <summary>
-        /// Gets the path of the resource.
-        /// </summary>
-        public override string Path => BlobClient.Name;
+        public override Uri Uri => BlobClient.Uri;
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
@@ -193,11 +177,6 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            if (!sourceResource.TryGetUri(out Uri sourceUri))
-            {
-                throw Errors.ResourceUriInvalid(nameof(sourceResource));
-            }
-
             await BlobClient.CreateAsync(
                 size: completeLength,
                 options: _options.ToCreateOptions(overwrite),
@@ -209,7 +188,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpRange range = new HttpRange(0, completeLength);
                 await BlobClient.UploadPagesFromUriAsync(
-                    sourceUri,
+                    sourceResource.Uri,
                     sourceRange: range,
                     range: range,
                     options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),
@@ -243,11 +222,6 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceCopyFromUriOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            if (!sourceResource.TryGetUri(out Uri sourceUri))
-            {
-                throw Errors.ResourceUriInvalid(nameof(sourceResource));
-            }
-
             // Create the blob first before uploading the pages
             if (range.Offset == 0)
             {
@@ -258,7 +232,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             await BlobClient.UploadPagesFromUriAsync(
-                sourceUri,
+                sourceResource.Uri,
                 sourceRange: range,
                 range: range,
                 options: _options.ToUploadPagesFromUriOptions(overwrite, options?.SourceAuthentication),

@@ -106,16 +106,11 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            if (!destinationResource.TryGetUri(out Uri destinationUri))
-            {
-                throw Errors.ResourceUriInvalid(nameof(destinationResource));
-            }
-
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
-            string childSourceName = childSourcePath.Substring(sourceResource.Path.Length + 1);
+            string childSourceName = childSourcePath.Substring(sourceResource.Uri.GetPath().Length + 1);
             string childDestinationPath = header.DestinationPath;
-            string childDestinationName = childDestinationPath.Substring(destinationUri.AbsoluteUri.Length + 1);
+            string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
             DataTransferStatus jobPartStatus = header.AtomicJobStatus;
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
                 job: baseJob,
@@ -141,15 +136,6 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            if (!sourceResource.TryGetUri(out Uri sourceUri))
-            {
-                throw Errors.ResourceUriInvalid(nameof(sourceResource));
-            }
-            if (!destinationResource.TryGetUri(out Uri destinationUri))
-            {
-                throw Errors.ResourceUriInvalid(nameof(destinationResource));
-            }
-
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
             string childDestinationPath = header.DestinationPath;
@@ -158,8 +144,8 @@ namespace Azure.Storage.DataMovement
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
                 jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceUri.AbsoluteUri.Length + 1)),
-                destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationUri.AbsoluteUri.Length + 1)),
+                sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
                 partPlanFileExists: true,
                 isFinalPart: header.IsFinalPart).ConfigureAwait(false);
 
@@ -178,16 +164,11 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            if (!sourceResource.TryGetUri(out Uri sourceUri))
-            {
-                throw Errors.ResourceUriInvalid(nameof(sourceResource));
-            }
-
             // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
-            string childSourceName = childSourcePath.Substring(sourceUri.AbsoluteUri.Length + 1);
+            string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
-            string childDestinationName = childDestinationPath.Substring(destinationResource.Path.Length + 1);
+            string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.GetPath().Length + 1);
             DataTransferStatus jobPartStatus = header.AtomicJobStatus;
             UriToStreamJobPart jobPart = await UriToStreamJobPart.CreateJobPartAsync(
                 job: baseJob,
@@ -233,41 +214,15 @@ namespace Azure.Storage.DataMovement
                 checksumVerificationOption: 0); // TODO: update when supported
 
             // Create the source Path
-            string sourcePath;
-            if (!jobPart._sourceResource.IsLocalResource())
-            {
-                if (!jobPart._sourceResource.TryGetUri(out Uri sourceUri))
-                {
-                    throw Errors.ResourceUriInvalid(nameof(jobPart._sourceResource));
-                }
+            // Remove any query or SAS that could be attach to the Uri
+            UriBuilder sourceUriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
+            sourceUriBuilder.Query = "";
+            string sourcePath = sourceUriBuilder.Uri.AbsoluteUri;
 
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(sourceUri.AbsoluteUri);
-                uriBuilder.Query = "";
-                sourcePath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                sourcePath = jobPart._sourceResource.Path;
-            }
-
-            string destinationPath;
-            if (!jobPart._destinationResource.IsLocalResource())
-            {
-                if (!jobPart._destinationResource.TryGetUri(out Uri destinationUri))
-                {
-                    throw Errors.ResourceUriInvalid(nameof(jobPart._destinationResource));
-                }
-
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(destinationUri.AbsoluteUri);
-                uriBuilder.Query = "";
-                destinationPath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                destinationPath = jobPart._destinationResource.Path;
-            }
+            // Remove any query or SAS that could be attach to the Uri
+            UriBuilder destinationUriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
+            destinationUriBuilder.Query = "";
+            string destinationPath = destinationUriBuilder.Uri.AbsoluteUri;
 
             return new JobPartPlanHeader(
                 version: DataMovementConstants.PlanFile.SchemaVersion,
@@ -318,24 +273,12 @@ namespace Azure.Storage.DataMovement
                 throw Errors.MismatchTransferId(jobPart._dataTransfer.Id, header.TransferId);
             }
 
-            // Check source path
-            string passedSourcePath;
-            if (!jobPart._sourceResource.IsLocalResource())
-            {
-                if (!jobPart._sourceResource.TryGetUri(out Uri sourceUri))
-                {
-                    throw Errors.ResourceUriInvalid(nameof(jobPart._sourceResource));
-                }
+            // Check source path'
+            // Remove any query or SAS that could be attach to the Uri
+            UriBuilder sourceUriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
+            sourceUriBuilder.Query = "";
+            string passedSourcePath = sourceUriBuilder.Uri.AbsoluteUri;
 
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(sourceUri.AbsoluteUri);
-                uriBuilder.Query = "";
-                passedSourcePath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                passedSourcePath = jobPart._sourceResource.Path;
-            }
             // We only check if it starts with the path because if we're passed a container
             // then we only need to check if the prefix matches
             if (!header.SourcePath.StartsWith(passedSourcePath))
@@ -344,23 +287,11 @@ namespace Azure.Storage.DataMovement
             }
 
             // Check destination path
-            string passedDestinationPath;
-            if (!jobPart._destinationResource.IsLocalResource())
-            {
-                if (!jobPart._destinationResource.TryGetUri(out Uri destinationUri))
-                {
-                    throw Errors.ResourceUriInvalid(nameof(jobPart._destinationResource));
-                }
+            // Remove any query or SAS that could be attach to the Uri
+            UriBuilder destinationUriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
+            destinationUriBuilder.Query = "";
+            string passedDestinationPath = destinationUriBuilder.Uri.AbsoluteUri;
 
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(destinationUri.AbsoluteUri);
-                uriBuilder.Query = "";
-                passedDestinationPath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                passedDestinationPath = jobPart._destinationResource.Path;
-            }
             // We only check if it starts with the path because if we're passed a container
             // then we only need to check if the prefix matches
             if (!header.DestinationPath.StartsWith(passedDestinationPath))

@@ -442,7 +442,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     using (StreamWriter logStream = File.AppendText(logFile))
                     {
-                        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Path}");
+                        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Uri.AbsoluteUri}");
                     }
                     return Task.CompletedTask;
                 };
@@ -543,8 +543,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         // Specifying specific resources that failed, since its a directory transfer
                         // maybe only one file failed out of many
                         logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
-                            $"Source Resource: {args.SourceResource.Path}, +" +
-                            $"Destination Resource: {args.DestinationResource.Path}," +
+                            $"Source Resource: {args.SourceResource.Uri.AbsoluteUri}, +" +
+                            $"Destination Resource: {args.DestinationResource.Uri.AbsoluteUri}," +
                             $"Exception Message: {args.Exception.Message}");
                     }
                     return Task.CompletedTask;

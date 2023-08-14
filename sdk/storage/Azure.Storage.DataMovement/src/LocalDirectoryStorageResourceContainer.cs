@@ -16,28 +16,12 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public class LocalDirectoryStorageResourceContainer : StorageResourceContainer
     {
-        private string _path;
+        private Uri _uri;
 
         /// <summary>
         /// Gets the path
         /// </summary>
-        public override string Path => _path;
-
-        /// <summary>
-        /// Local Directory Storage Resource does not have a Uri.
-        /// This method will return false and set the uri to default.
-        /// </summary>
-        /// <param name="uri">
-        /// This value will be set to default as the Storage Resource does not produce a Uri.
-        /// </param>
-        /// <returns>
-        /// Returns false.
-        /// </returns>
-        public override bool TryGetUri(out Uri uri)
-        {
-            uri = default;
-            return false;
-        }
+        public override Uri Uri => _uri;
 
         /// <summary>
         /// Constructor
@@ -46,7 +30,13 @@ namespace Azure.Storage.DataMovement
         public LocalDirectoryStorageResourceContainer(string path)
         {
             Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
-            _path = path;
+            UriBuilder uriBuilder= new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Host = "",
+                Path = path,
+            };
+            _uri = uriBuilder.Uri;
         }
 
         /// <summary>
@@ -56,7 +46,7 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         protected internal override StorageResourceItem GetStorageResourceReference(string childPath)
         {
-            string concatPath = System.IO.Path.Combine(Path, childPath);
+            Uri concatPath = _uri.AppendToPath(childPath);
             return new LocalFileStorageResource(concatPath);
         }
 
@@ -70,7 +60,7 @@ namespace Azure.Storage.DataMovement
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
-            PathScanner scanner = new PathScanner(_path);
+            PathScanner scanner = new PathScanner(_uri.LocalPath);
             foreach (FileSystemInfo fileSystemInfo in scanner.Scan(false))
             {
                 // Skip over directories for now since directory creation is unnecessary.

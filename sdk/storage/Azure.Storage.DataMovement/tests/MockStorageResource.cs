@@ -12,6 +12,7 @@ namespace Azure.Storage.DataMovement.Tests
     internal class MockStorageResource : StorageResourceItem
     {
         private readonly Stream _readStream;
+        private readonly Uri _uri = new Uri("https://example.com");
 
         protected internal override string ResourceId => "Mock";
 
@@ -20,13 +21,7 @@ namespace Azure.Storage.DataMovement.Tests
         private readonly long _maxChunkSize;
         protected internal override long MaxChunkSize => _maxChunkSize;
 
-        public override bool TryGetUri(out Uri uri)
-        {
-            uri = new Uri("https://example.com");
-            return true;
-        }
-
-        public override string Path => "random";
+        public override Uri Uri => _uri;
 
         protected internal override long? Length { get; }
 
