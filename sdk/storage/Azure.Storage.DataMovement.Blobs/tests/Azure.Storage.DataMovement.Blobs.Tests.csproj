@@ -17,6 +17,10 @@
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferUtility.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)SharedAccessSignatureCredentials.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageConnectionString.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StorageVersionExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)UriQueryParamsCollection.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageDataMovementSharedSources)..\JobPlan\*.cs" LinkBase="Shared\DataMovement\JobPlanModels" />
   </ItemGroup>
   <ItemGroup>
