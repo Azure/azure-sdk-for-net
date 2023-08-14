@@ -458,7 +458,10 @@ namespace Azure.Core.TestFramework
                 }
             }
 
-            _proxy?.CheckForErrors();
+            if (_proxy != null)
+            {
+                await _proxy.CheckProxyOutputAsync();
+            }
         }
 
         protected internal override object InstrumentClient(Type clientType, object client, IEnumerable<IInterceptor> preInterceptors)

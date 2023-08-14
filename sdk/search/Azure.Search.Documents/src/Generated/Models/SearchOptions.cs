@@ -19,6 +19,7 @@ namespace Azure.Search.Documents
         {
             Facets = new ChangeTrackingList<string>();
             ScoringParameters = new ChangeTrackingList<string>();
+            Vectors = new ChangeTrackingList<SearchQueryVector>();
         }
 
         /// <summary> Initializes a new instance of SearchOptions. </summary>
@@ -50,8 +51,8 @@ namespace Azure.Search.Documents
         /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
         /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
         /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic search. </param>
-        /// <param name="vector"> The query parameters for vector and hybrid search queries. </param>
-        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfigurationName, SemanticErrorHandling? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, SearchQueryVector vector)
+        /// <param name="vectors"> The query parameters for multi-vector search queries. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticConfigurationName, SemanticErrorHandling? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, IList<SearchQueryVector> vectors)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
@@ -81,7 +82,7 @@ namespace Azure.Search.Documents
             Size = size;
             QueryCaptionRaw = queryCaptionRaw;
             SemanticFieldsRaw = semanticFieldsRaw;
-            Vector = vector;
+            Vectors = vectors;
         }
         /// <summary> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &lt;/em&gt;. </summary>
         public string HighlightPostTag { get; set; }
@@ -107,7 +108,5 @@ namespace Azure.Search.Documents
         public SearchMode? SearchMode { get; set; }
         /// <summary> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </summary>
         public int? Skip { get; set; }
-        /// <summary> The query parameters for vector and hybrid search queries. </summary>
-        public SearchQueryVector Vector { get; set; }
     }
 }

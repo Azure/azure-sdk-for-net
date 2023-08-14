@@ -5,7 +5,7 @@ namespace Azure.Core.Json
 {
     internal enum MutableJsonChangeKind
     {
-        PropertyValue,
+        PropertyUpdate,
         PropertyAddition,
         PropertyRemoval,
     }

@@ -69,6 +69,6 @@ namespace Azure.Identity
         /// <summary>
         /// The options for customizing the browser for interactive authentication.
         /// </summary>
-        public BrowserCustomizationOptions BrowserCustomizedOptions { get; set; }
+        public BrowserCustomizationOptions BrowserCustomization { get; set; }
     }
 }

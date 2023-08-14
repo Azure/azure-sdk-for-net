@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<L3NetworkConfigurationIpamEnabled> ipamEnabled = default;
-            string networkId = default;
+            ResourceIdentifier networkId = default;
             Optional<KubernetesPluginType> pluginType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("networkId"u8))
                 {
-                    networkId = property.Value.GetString();
+                    networkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("pluginType"u8))

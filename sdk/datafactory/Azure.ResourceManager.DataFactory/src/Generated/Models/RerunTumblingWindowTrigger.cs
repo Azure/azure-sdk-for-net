@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time. </summary>
-    public partial class RerunTumblingWindowTrigger : DataFactoryTriggerDefinition
+    public partial class RerunTumblingWindowTrigger : DataFactoryTriggerProperties
     {
         /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
         /// <param name="parentTrigger"> The parent trigger reference. </param>

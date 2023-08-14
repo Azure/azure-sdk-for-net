@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2023-08-10)
+
+### Features Added
+
+- Support for binding to library types is now generally available.
 
 ## 1.2.0-beta.1 (2023-05-23)
 

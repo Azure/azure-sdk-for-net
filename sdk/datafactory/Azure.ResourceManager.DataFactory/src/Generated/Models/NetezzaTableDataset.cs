@@ -13,7 +13,7 @@ using Azure.Core.Expressions.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Netezza dataset. </summary>
-    public partial class NetezzaTableDataset : DataFactoryDatasetDefinition
+    public partial class NetezzaTableDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of NetezzaTableDataset. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>

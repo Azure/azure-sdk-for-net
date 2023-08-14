@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Sql.Samples
                 VCores = 8,
                 StorageSizeInGB = 1024,
                 Collation = "SQL_Latin1_General_CP1_CI_AS",
-                DnsZonePartner = "/subscriptions/20D7082A-0FC7-4468-82BD-542694D5042B/resourceGroups/testrg/providers/Microsoft.Sql/managedInstances/testinstance",
+                ManagedDnsZonePartner = new ResourceIdentifier("/subscriptions/20D7082A-0FC7-4468-82BD-542694D5042B/resourceGroups/testrg/providers/Microsoft.Sql/managedInstances/testinstance"),
                 IsPublicDataEndpointEnabled = false,
                 ProxyOverride = ManagedInstanceProxyOverride.Redirect,
                 TimezoneId = "UTC",

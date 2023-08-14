@@ -31,7 +31,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>
         /// The <see cref="StorageResource"/> this provider is configured for.
         /// </returns>
-        public StorageResource MakeResource()
+        public StorageResource CreateResource()
         {
             if (_isFolder)
             {
