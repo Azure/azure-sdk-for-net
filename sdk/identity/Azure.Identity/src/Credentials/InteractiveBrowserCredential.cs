@@ -21,7 +21,7 @@ namespace Azure.Identity
         internal string[] AdditionallyAllowedTenantIds { get; }
         internal string ClientId { get; }
         internal string LoginHint { get; }
-        internal BrowserCustomizationOptions BrowserCustomizedOptions { get; }
+        internal BrowserCustomizationOptions BrowserCustomization { get; }
         internal MsalPublicClient Client { get; }
         internal CredentialPipeline Pipeline { get; }
         internal bool DisableAutomaticAuthentication { get; }
@@ -91,7 +91,7 @@ namespace Azure.Identity
             Client = client ?? new MsalPublicClient(Pipeline, tenantId, clientId, redirectUrl, options);
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             Record = (options as InteractiveBrowserCredentialOptions)?.AuthenticationRecord;
-            BrowserCustomizedOptions = (options as InteractiveBrowserCredentialOptions)?.BrowserCustomizedOptions;
+            BrowserCustomization = (options as InteractiveBrowserCredentialOptions)?.BrowserCustomization;
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.Identity
 
             var tenantId = TenantIdResolver.Resolve(TenantId ?? Record?.TenantId, context, AdditionallyAllowedTenantIds);
             AuthenticationResult result = await Client
-                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, context.IsCaeEnabled, BrowserCustomizedOptions, async, cancellationToken)
+                .AcquireTokenInteractiveAsync(context.Scopes, context.Claims, prompt, LoginHint, tenantId, context.IsCaeEnabled, BrowserCustomization, async, cancellationToken)
                 .ConfigureAwait(false);
 
             Record = new AuthenticationRecord(result, ClientId);
