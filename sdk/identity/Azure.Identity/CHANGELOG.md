@@ -1,6 +1,6 @@
 # Release History
 
-## 1.10.0-beta.2 (Unreleased)
+## 1.10.0 (2023-08-14)
 
 ### Features Added
 - Added `BrowserCustomization` property to `InteractiveBrowserCredential` to enable web view customization for interactive authentication.
@@ -18,7 +18,7 @@
 
 ### Features Added
 - Continuous Access Evaluation (CAE) is now configurable per-request by setting the `IsCaeEnabled` property of `TokenRequestContext` via its constructor.
-- Added `IsSupportLoggingEnabled` property to `TokenCredentialOptions` which equates to passing 'true' for the `enablePiiLogging` parameter to the 'WithLogging' method on the MSAL client builder.
+- Added `IsUnsafeSupportLoggingEnabled` property to `TokenCredentialOptions` which equates to passing 'true' for the `enablePiiLogging` parameter to the 'WithLogging' method on the MSAL client builder.
 
 ### Bugs Fixed
 - Fixed an issue with `TokenCachePersistenceOptions` where credentials in the same process would share the same cache, even if they had different configured names.
