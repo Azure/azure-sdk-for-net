@@ -10,6 +10,7 @@
 ### Bugs Fixed
 
 - ManagedIdentityCredential will no longer attempt to parse invalid json payloads on responses from the managed identity endpoint.
+- Fixed an issue where AzurePowerShellCredential fails to parse the token response from Azure PowerShell. [#22638](https://github.com/Azure/azure-sdk-for-net/issues/22638)
 
 ### Other Changes
 
