@@ -37,7 +37,7 @@ namespace Azure.Identity.Tests
                 TokenCachePersistenceOptions = tokenCacheOptions,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, null) { _isCaeDisabledRequestCached = true, _isCaeEnabledRequestCached = true });
