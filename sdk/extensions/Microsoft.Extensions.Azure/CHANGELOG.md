@@ -14,7 +14,7 @@
 
 ### Features Added
 
-- Added support for creating `WorkloadIdentityCredential` objects from the configuration using the `"credential": "workloadidentity"`. Users must provide values for the `tenentId`, `clientId`, and newly added `tokenFilePath` keys in the configuration, or they must set the environment variables `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, and `AZURE_FEDERATED_TOKEN_FILE`.
+- Added support for creating `WorkloadIdentityCredential` objects from the configuration using the `"credential": "workloadidentity"`. Users must provide values for the `tenantId`, `clientId`, and newly added `tokenFilePath` keys in the configuration, or they must set the environment variables `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, and `AZURE_FEDERATED_TOKEN_FILE`.
 
 ### Other Changes
 

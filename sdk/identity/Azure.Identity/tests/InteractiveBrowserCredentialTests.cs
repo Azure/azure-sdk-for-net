@@ -37,7 +37,7 @@ namespace Azure.Identity.Tests
                 TokenCachePersistenceOptions = tokenCacheOptions,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 AuthenticationRecord = new AuthenticationRecord(ExpectedUsername, "login.windows.net", $"{ObjectId}.{resolvedTenantId}", resolvedTenantId, ClientId),
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new InteractiveBrowserCredential(config.TenantId, ClientId, options, pipeline, null) { _isCaeDisabledRequestCached = true, _isCaeEnabledRequestCached = true });
@@ -294,25 +294,25 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task BrowserCustomizedOptionsHtmlMessage([Values(null, "<p> Login Successfully.</p>")] string htmlMessageSuccess, [Values(null, "<p> An error occured: {0}. Details {1}</p>")] string htmlMessageError)
+        public async Task BrowserCustomizationsHtmlMessage([Values(null, "<p> Login Successfully.</p>")] string htmlMessageSuccess, [Values(null, "<p> An error occured: {0}. Details {1}</p>")] string htmlMessageError)
         {
             var mockMsalClient = new MockMsalPublicClient
             {
                 InteractiveAuthFactory = (_, _, _, _, _, _, browserOptions, _) =>
                 {
                     Assert.AreEqual(false, browserOptions.UseEmbeddedWebView);
-                    Assert.AreEqual(htmlMessageSuccess, browserOptions.HtmlMessageSuccess);
-                    Assert.AreEqual(htmlMessageError, browserOptions.HtmlMessageError);
+                    Assert.AreEqual(htmlMessageSuccess, browserOptions.SuccessMessage);
+                    Assert.AreEqual(htmlMessageError, browserOptions.ErrorMessage);
                     return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
                 }
             };
             var options = new InteractiveBrowserCredentialOptions()
             {
-                BrowserCustomizedOptions = new BrowserCustomizationOptions()
+                BrowserCustomization = new BrowserCustomizationOptions()
                 {
                     UseEmbeddedWebView = false,
-                    HtmlMessageSuccess = htmlMessageSuccess,
-                    HtmlMessageError = htmlMessageError
+                    SuccessMessage = htmlMessageSuccess,
+                    ErrorMessage = htmlMessageError
                 }
             };
 
@@ -329,16 +329,16 @@ namespace Azure.Identity.Tests
                 InteractiveAuthFactory = (_, _, _, _, _, _, browserOptions, _) =>
                 {
                     Assert.AreEqual(useEmbeddedWebView, browserOptions.UseEmbeddedWebView);
-                    Assert.AreEqual(htmlMessageError, browserOptions.HtmlMessageError);
+                    Assert.AreEqual(htmlMessageError, browserOptions.ErrorMessage);
                     return AuthenticationResultFactory.Create(Guid.NewGuid().ToString(), expiresOn: DateTimeOffset.UtcNow.AddMinutes(5));
                 }
             };
             var options = new InteractiveBrowserCredentialOptions()
             {
-                BrowserCustomizedOptions = new BrowserCustomizationOptions()
+                BrowserCustomization = new BrowserCustomizationOptions()
                 {
                     UseEmbeddedWebView = useEmbeddedWebView,
-                    HtmlMessageError = htmlMessageError
+                    ErrorMessage = htmlMessageError
                 }
             };
 
