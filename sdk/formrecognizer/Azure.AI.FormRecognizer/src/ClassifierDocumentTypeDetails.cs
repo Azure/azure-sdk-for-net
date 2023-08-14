@@ -11,14 +11,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassifierDocumentTypeDetails"/> class.
         /// </summary>
-        /// <param name="trainingDataContentSource">The location containing the training data. See <see cref="ContentSource"/> for more details.</param>
-        public ClassifierDocumentTypeDetails(ContentSource trainingDataContentSource)
+        /// <param name="trainingDataSource">The location containing the training data. See <see cref="DocumentContentSource"/> for more details.</param>
+        public ClassifierDocumentTypeDetails(DocumentContentSource trainingDataSource)
         {
-            Argument.AssertNotNull(trainingDataContentSource, nameof(trainingDataContentSource));
+            Argument.AssertNotNull(trainingDataSource, nameof(trainingDataSource));
 
-            TrainingDataContentSource = trainingDataContentSource;
+            TrainingDataSource = trainingDataSource;
 
-            switch (trainingDataContentSource)
+            switch (trainingDataSource)
             {
                 case BlobContentSource blobSource:
                     AzureBlobSource = blobSource;
@@ -27,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     AzureBlobFileListSource = blobFileListSource;
                     break;
                 default:
-                    throw new ArgumentException("Unsupported training data content source.", nameof(trainingDataContentSource));
+                    throw new ArgumentException("Unsupported training data source.", nameof(trainingDataSource));
             }
         }
 
@@ -38,7 +38,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             AzureBlobSource = azureBlobSource;
             AzureBlobFileListSource = azureBlobFileListSource;
-            TrainingDataContentSource = (ContentSource) azureBlobSource ?? azureBlobFileListSource;
+            TrainingDataSource = (DocumentContentSource) azureBlobSource ?? azureBlobFileListSource;
         }
 
         private ClassifierDocumentTypeDetails()
@@ -48,7 +48,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <summary>
         /// The location containing the training data.
         /// </summary>
-        public ContentSource TrainingDataContentSource { get; }
+        public DocumentContentSource TrainingDataSource { get; }
 
         /// <summary>
         /// The Azure Blob Storage location containing the training data.
