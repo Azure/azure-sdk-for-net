@@ -106,7 +106,7 @@ namespace Microsoft.Extensions.Hosting
             return builder;
         }
 
-        internal static IWebJobsBuilder AddServiceBusScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
+        public static IWebJobsBuilder AddServiceBusScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
             IServiceProvider serviceProvider = null;
             Lazy<ServiceBusScalerProvider> scalerProvider = new Lazy<ServiceBusScalerProvider>(() => new ServiceBusScalerProvider(serviceProvider, triggerMetadata));
