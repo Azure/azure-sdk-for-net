@@ -115,7 +115,7 @@ namespace Azure.Identity.Tests
             {
                 Transport = mockTransport,
                 TenantId = TenantId,
-                IsSupportLoggingEnabled = isSupportLoggingEnabled
+                IsUnsafeSupportLoggingEnabled = isSupportLoggingEnabled
             };
             var credential = GetTokenCredential(config);
             if (!CredentialTestHelpers.IsMsalCredential(credential))
