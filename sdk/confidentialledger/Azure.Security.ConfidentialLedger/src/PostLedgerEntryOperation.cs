@@ -55,37 +55,12 @@ namespace Azure.Security.ConfidentialLedger
 
         async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            int retryCount = 0;
-            Azure.Response statusResponse = null;
-            while (retryCount < 3)
-            {
-                 statusResponse = async
-                    ? await _client.GetTransactionStatusAsync(
-                            Id,
-                            new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow })
-                        .ConfigureAwait(false)
-                    : _client.GetTransactionStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
-
-                // The transaction may not be found due to unexpected loss of session stickiness.
-                // This may occur when the connected node changes and transactions have not been fully replicated.
-                // We will perform retry logic to ensure that we have waited for the transactions to fully replicate before throwing an error.
-                if (statusResponse.Status == (int)HttpStatusCode.NotFound)
-                {
-                    ++retryCount;
-                }
-                else
-                {
-                    break;
-                }
-
-                // Add a 0.5 second delay between retries.
-                int delayTimeMs = 500;
-                if (async) {
-                    await Task.Delay(delayTimeMs).ConfigureAwait(false);
-                } else {
-                    Thread.Sleep(delayTimeMs);
-                }
-            }
+            var statusResponse = async
+                ? await _client.GetTransactionStatusAsync(
+                        Id,
+                        new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow })
+                    .ConfigureAwait(false)
+                : _client.GetTransactionStatus(Id, new RequestContext { CancellationToken = cancellationToken, ErrorOptions = ErrorOptions.NoThrow });
 
             if (statusResponse.Status != (int)HttpStatusCode.OK)
             {
