@@ -13,8 +13,7 @@ namespace Azure.Core.Tests.PatchModels
     {
         ChildPatchModel IModelJsonSerializable<ChildPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            MutableJsonDocument mdoc = new(doc, new JsonSerializerOptions());
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
             return new ChildPatchModel(mdoc.RootElement);
         }
 
