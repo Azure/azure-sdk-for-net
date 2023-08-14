@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.Kusto
 
         private readonly ClientDiagnostics _kustoDatabaseDatabasesClientDiagnostics;
         private readonly DatabasesRestOperations _kustoDatabaseDatabasesRestClient;
+        private readonly ClientDiagnostics _databaseClientDiagnostics;
+        private readonly DatabaseRestOperations _databaseRestClient;
         private readonly ClientDiagnostics _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics;
         private readonly DatabasePrincipalAssignmentsRestOperations _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient;
         private readonly ClientDiagnostics _kustoScriptScriptsClientDiagnostics;
@@ -64,6 +66,8 @@ namespace Azure.ResourceManager.Kusto
             _kustoDatabaseDatabasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string kustoDatabaseDatabasesApiVersion);
             _kustoDatabaseDatabasesRestClient = new DatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabaseDatabasesApiVersion);
+            _databaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _databaseRestClient = new DatabaseRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoDatabasePrincipalAssignmentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(KustoDatabasePrincipalAssignmentResource.ResourceType, out string kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsApiVersion);
             _kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsRestClient = new DatabasePrincipalAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, kustoDatabasePrincipalAssignmentDatabasePrincipalAssignmentsApiVersion);
@@ -611,6 +615,74 @@ namespace Azure.ResourceManager.Kusto
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoDatabaseDatabasesRestClient.CreateRemovePrincipalsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, databasePrincipalsToRemove);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, KustoDatabasePrincipal.DeserializeKustoDatabasePrincipal, _kustoDatabaseDatabasesClientDiagnostics, Pipeline, "KustoDatabaseResource.RemovePrincipals", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Generates an invitation token that allows attaching a follower database to this database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/inviteFollower</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Database_InviteFollower</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The follower invitation request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<DatabaseInviteFollowerResult>> InviteFollowerDatabaseAsync(DatabaseInviteFollowerContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _databaseClientDiagnostics.CreateScope("KustoDatabaseResource.InviteFollowerDatabase");
+            scope.Start();
+            try
+            {
+                var response = await _databaseRestClient.InviteFollowerAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Generates an invitation token that allows attaching a follower database to this database.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}/inviteFollower</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Database_InviteFollower</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The follower invitation request parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<DatabaseInviteFollowerResult> InviteFollowerDatabase(DatabaseInviteFollowerContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _databaseClientDiagnostics.CreateScope("KustoDatabaseResource.InviteFollowerDatabase");
+            scope.Start();
+            try
+            {
+                var response = _databaseRestClient.InviteFollower(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Dimension description. </param>
-        /// <param name="filterEnabled"> Filter enabled. </param>
-        /// <param name="groupingEnabled"> Grouping enabled. </param>
+        /// <param name="isFilterEnabled"> Filter enabled. </param>
+        /// <param name="isGroupingEnabled"> Grouping enabled. </param>
         /// <param name="data"> Dimension data. </param>
         /// <param name="total"> Total number of data for the dimension. </param>
         /// <param name="category"> Dimension category. </param>
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="sku"> SKU of the resource. </param>
         /// <param name="eTag"> ETag of the resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        internal CostManagementDimension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, bool? filterEnabled, bool? groupingEnabled, IReadOnlyList<string> data, int? total, string category, DateTimeOffset? usageStart, DateTimeOffset? usageEnd, string nextLink, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal CostManagementDimension(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, bool? isFilterEnabled, bool? isGroupingEnabled, IReadOnlyList<string> data, int? total, string category, DateTimeOffset? usageStart, DateTimeOffset? usageEnd, string nextLink, AzureLocation? location, string sku, ETag? eTag, IReadOnlyDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Description = description;
-            FilterEnabled = filterEnabled;
-            GroupingEnabled = groupingEnabled;
+            IsFilterEnabled = isFilterEnabled;
+            IsGroupingEnabled = isGroupingEnabled;
             Data = data;
             Total = total;
             Category = category;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <summary> Dimension description. </summary>
         public string Description { get; }
         /// <summary> Filter enabled. </summary>
-        public bool? FilterEnabled { get; }
+        public bool? IsFilterEnabled { get; }
         /// <summary> Grouping enabled. </summary>
-        public bool? GroupingEnabled { get; }
+        public bool? IsGroupingEnabled { get; }
         /// <summary> Dimension data. </summary>
         public IReadOnlyList<string> Data { get; }
         /// <summary> Total number of data for the dimension. </summary>

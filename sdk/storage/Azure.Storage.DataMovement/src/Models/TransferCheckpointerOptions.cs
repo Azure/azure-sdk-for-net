@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement.Models
     public class TransferCheckpointerOptions
     {
         /// <summary>
-        /// stub
+        /// The local folder where the checkpoint information will be stored.
         /// </summary>
         public string CheckpointerPath { get; private set; }
 
@@ -24,6 +24,11 @@ namespace Azure.Storage.DataMovement.Models
         public TransferCheckpointerOptions(string localCheckpointerPath)
         {
             CheckpointerPath = localCheckpointerPath;
+        }
+
+        internal TransferCheckpointerOptions(TransferCheckpointerOptions other)
+        {
+            CheckpointerPath = other.CheckpointerPath;
         }
     }
 }

@@ -326,15 +326,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CheckNameAvailabilityResponse>> CheckNameAvailabilityByScopeScheduledActionAsync(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityByScopeScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope.Start();
             try
             {
-                var response = await ScheduledActionsRestClient.CheckNameAvailabilityByScopeAsync(Id, checkNameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+                var response = await ScheduledActionsRestClient.CheckNameAvailabilityByScopeAsync(Id, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -357,15 +357,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="checkNameAvailabilityRequest"> Scheduled action to be created or updated. </param>
+        /// <param name="content"> Scheduled action to be created or updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CheckNameAvailabilityResponse> CheckNameAvailabilityByScopeScheduledAction(CheckNameAvailabilityRequest checkNameAvailabilityRequest, CancellationToken cancellationToken = default)
+        public virtual Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckNameAvailabilityByScopeScheduledAction");
+            using var scope = ScheduledActionsClientDiagnostics.CreateScope("ArmResourceExtensionClient.CheckCostManagementNameAvailabilityByScopeScheduledAction");
             scope.Start();
             try
             {
-                var response = ScheduledActionsRestClient.CheckNameAvailabilityByScope(Id, checkNameAvailabilityRequest, cancellationToken);
+                var response = ScheduledActionsRestClient.CheckNameAvailabilityByScope(Id, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

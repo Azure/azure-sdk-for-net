@@ -132,9 +132,10 @@ namespace Azure.Storage.DataMovement.Tests
 
         private BlockBlobStorageResource CreateBlobDestinationResource(
             BlobContainerClient container,
+            string blobName = default,
             BlockBlobStorageResourceOptions options = default)
         {
-            string blobName = GetNewBlobName();
+            blobName ??= GetNewBlobName();
             BlockBlobClient destinationClient = container.GetBlockBlobClient(blobName);
             return new BlockBlobStorageResource(destinationClient, options);
         }
@@ -144,23 +145,26 @@ namespace Azure.Storage.DataMovement.Tests
             long size,
             string localDirectory,
             BlobContainerClient sourceContainer,
-            BlobContainerClient destinationContainer)
+            BlobContainerClient destinationContainer,
+            string storagePath = default)
         {
+            storagePath ??= GetNewBlobName();
+
             StorageResourceSingle SourceResource = default;
             StorageResourceSingle DestinationResource = default;
             if (transferType == TransferType.Download)
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNullOrEmpty(localDirectory, nameof(localDirectory));
-                SourceResource ??= await CreateBlobSourceResourceAsync(size, GetNewBlobName(), sourceContainer);
-                DestinationResource ??= new LocalFileStorageResource(Path.Combine(localDirectory, GetNewBlobName()));
+                SourceResource ??= await CreateBlobSourceResourceAsync(size, storagePath, sourceContainer);
+                DestinationResource ??= new LocalFileStorageResource(Path.Combine(localDirectory, storagePath));
             }
             else if (transferType == TransferType.Copy)
             {
                 Argument.AssertNotNull(sourceContainer, nameof(sourceContainer));
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
-                SourceResource ??= await CreateBlobSourceResourceAsync(size, GetNewBlobName(), sourceContainer);
-                DestinationResource ??= CreateBlobDestinationResource(destinationContainer);
+                SourceResource ??= await CreateBlobSourceResourceAsync(size, storagePath, sourceContainer);
+                DestinationResource ??= CreateBlobDestinationResource(destinationContainer, storagePath);
             }
             else
             {
@@ -168,7 +172,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Argument.AssertNotNullOrEmpty(localDirectory, nameof(localDirectory));
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
                 SourceResource ??= await CreateLocalFileSourceResourceAsync(size, localDirectory);
-                DestinationResource ??= CreateBlobDestinationResource(destinationContainer);
+                DestinationResource ??= CreateBlobDestinationResource(destinationContainer, storagePath);
             }
             return (SourceResource, DestinationResource);
         }
@@ -442,7 +446,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
             // Assert
-            await testEventRaised2.AssertContainerCompletedCheck(1);
+            await testEventRaised2.AssertSingleCompletedCheck();
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -451,6 +455,78 @@ namespace Azure.Storage.DataMovement.Tests
                 transferType: transferType,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container);
+        }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
+        [TestCase(TransferType.Upload)]
+        [TestCase(TransferType.Download)]
+        [TestCase(TransferType.Copy)]
+        public async Task ResumeTransferAsync(TransferType transferType)
+        {
+            // Arrange
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory localDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure
+            };
+            TransferOptions transferOptions = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+            TransferManager transferManager = new TransferManager(options);
+            long size = Constants.KB * 100;
+
+            (StorageResourceSingle sResource, StorageResourceSingle dResource) = await CreateStorageResourcesAsync(
+                transferType: transferType,
+                size: size,
+                localDirectory: localDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container);
+
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            DataTransfer transfer = await CreateSingleLongTransferAsync(
+                manager: transferManager,
+                sourceResource: sResource,
+                destinationResource: dResource,
+                transferOptions: transferOptions);
+
+            // Act - Pause Job
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+
+            // Assert - Confirm we've paused
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            await testEventsRaised.AssertPausedCheck();
+
+            // Act - Resume Job
+            TransferOptions resumeOptions = new();
+            TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
+            DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
+                transfer.Id,
+                sResource,
+                dResource,
+                resumeOptions);
+
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
+            await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
+
+            // Assert
+            await testEventRaised2.AssertSingleCompletedCheck();
+            Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
+            Assert.IsTrue(resumeTransfer.HasCompleted);
+
+            // Verify transfer
+            await AssertSourceAndDestinationAsync(
+                transferType: transferType,
+                sourceResource: sResource,
+                destinationResource: dResource,
                 sourceContainer: sourceContainer.Container,
                 destinationContainer: destinationContainer.Container);
         }
@@ -794,13 +870,90 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
                 transferOptions: resumeOptions,
-                transferCount: 100);
+                transferCount: partCount);
 
             CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
             await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
 
             // Assert
-            await testEventsRaised2.AssertContainerCompletedCheck(100);
+            await testEventsRaised2.AssertContainerCompletedCheck(partCount);
+            Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
+            Assert.IsTrue(resumeTransfer.HasCompleted);
+
+            // Verify transfer
+            await AssertDirectorySourceAndDestinationAsync(
+                transferType: transferType,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container);
+        }
+
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
+        [TestCase(TransferType.Upload)]
+        [TestCase(TransferType.Download)]
+        [TestCase(TransferType.Copy)]
+        public async Task ResumeTransferAsync_Directory(TransferType transferType)
+        {
+            // Arrange
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointerOptions = new TransferCheckpointerOptions(checkpointerDirectory.DirectoryPath),
+                ErrorHandling = ErrorHandlingOptions.ContinueOnFailure,
+            };
+            TransferManager transferManager = new TransferManager(options);
+            TransferOptions transferOptions = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+            long size = Constants.KB * 4;
+            int partCount = 4;
+
+            (StorageResourceContainer sResource, StorageResourceContainer dResource) = await CreateStorageResourceContainersAsync(
+                transferType: transferType,
+                size: size,
+                transferCount: partCount,
+                sourceDirectoryPath: sourceDirectory.DirectoryPath,
+                destinationDirectoryPath: destinationDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container);
+            StorageResourceContainer sourceResource = sResource;
+            StorageResourceContainer destinationResource = dResource;
+
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            DataTransfer transfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource,
+                transferOptions: transferOptions);
+
+            // Act - Pause Job
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
+            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+
+            // Assert - Confirm we've paused
+            Assert.AreEqual(StorageTransferStatus.Paused, transfer.TransferStatus);
+            await testEventsRaised.AssertPausedCheck();
+
+            // Act - Resume Job
+            TransferOptions resumeOptions = new();
+            TestEventsRaised testEventsRaised2 = new TestEventsRaised(resumeOptions);
+            DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
+                transfer.Id,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource,
+                transferOptions: resumeOptions);
+
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
+            await resumeTransfer.AwaitCompletion(waitTransferCompletion.Token);
+
+            // Assert
+            await testEventsRaised2.AssertContainerCompletedCheck(partCount);
             Assert.AreEqual(StorageTransferStatus.Completed, resumeTransfer.TransferStatus);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 

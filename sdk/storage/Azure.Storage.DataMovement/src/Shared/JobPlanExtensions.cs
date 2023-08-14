@@ -46,81 +46,133 @@ namespace Azure.Storage.DataMovement
             return result;
         }
 
-        /// <summary>
-        /// Rehydrates from Checkpointer.
-        /// </summary>
-        /// <param name="checkpointer">
-        /// The checkpointer where the transfer state was saved to.
-        /// </param>
-        /// <param name="transferId">
-        /// Transfer Id where we want to rehydrate the resource from the job from.
-        /// </param>
-        /// /// <param name="isSource">
-        /// Whether or not we are rehydrating the source or destination. True if the source, false if the destination.
-        /// </param>
-        /// <param name="cancellationToken">
-        /// Whether or not to cancel the operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Task"/> to rehdyrate a <see cref="LocalFileStorageResource"/> from
-        /// a stored checkpointed transfer state.
-        /// </returns>
-        internal static async Task<string> GetResourcePathAsync(
+        internal static async Task<(string Source, string Destination)> GetResourcePathsAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
-            bool isSource,
             CancellationToken cancellationToken)
         {
-            int startPathIndex = isSource ?
-                DataMovementConstants.PlanFile.SourcePathLengthIndex :
-                DataMovementConstants.PlanFile.DestinationPathLengthIndex;
-            int readLength = isSource ?
-                (DataMovementConstants.PlanFile.SourceExtraQueryLengthIndex - startPathIndex) :
-                (DataMovementConstants.PlanFile.DestinationExtraQueryLengthIndex - startPathIndex);
+            int startIndex = DataMovementConstants.PlanFile.SourcePathLengthIndex;
+            int readLength = DataMovementConstants.PlanFile.DestinationExtraQueryLengthIndex - startIndex;
 
             int partCount = await checkpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
-            string storedPath = default;
+            string storedSourcePath = default;
+            string storedDestPath = default;
             for (int i = 0; i < partCount; i++)
             {
                 using (Stream stream = await checkpointer.ReadableStreamAsync(
                     transferId: transferId,
                     partNumber: i,
-                    offset: startPathIndex,
+                    offset: startIndex,
                     readSize: readLength,
                     cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
                     BinaryReader reader = new BinaryReader(stream);
 
-                    // Read Path Length
+                    // Read Source Path Length
                     byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
                     ushort pathLength = pathLengthBuffer.ToUShort();
 
-                    // Read Path
+                    // Read Source Path
                     byte[] pathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrNumBytes);
-                    string path = pathBuffer.ToString(pathLength);
+                    string sourcePath = pathBuffer.ToString(pathLength);
 
-                    if (string.IsNullOrEmpty(storedPath))
+                    // Set the stream position to the start of the destination path
+                    reader.BaseStream.Position = DataMovementConstants.PlanFile.DestinationPathLengthIndex - startIndex;
+
+                    // Read Destination Path Length
+                    pathLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+                    pathLength = pathLengthBuffer.ToUShort();
+
+                    // Read Destination Path
+                    pathBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.PathStrNumBytes);
+                    string destPath = pathBuffer.ToString(pathLength);
+
+                    if (string.IsNullOrEmpty(storedSourcePath))
                     {
                         // If we currently don't have a path
-                        storedPath = path;
+                        storedSourcePath = sourcePath;
+                        storedDestPath = destPath;
                     }
                     else
                     {
-                        // if there's already an existing path, let's compare the two paths
+                        // If there's already an existing path, let's compare the two paths
                         // and find the common parent path.
-                        int length = Math.Min(storedPath.Length, path.Length);
-                        int index = 0;
-
-                        while (index < length && storedPath[index] == path[index])
-                        {
-                            index++;
-                        }
-
-                        storedPath = storedPath.Substring(0, index);
+                        storedSourcePath = GetLongestCommonString(storedSourcePath, sourcePath);
+                        storedDestPath = GetLongestCommonString(storedDestPath, destPath);
                     }
                 }
             }
-            return storedPath.TrimEnd('\\', '/');
+
+            if (partCount == 1)
+            {
+                return (storedSourcePath, storedDestPath);
+            }
+            else
+            {
+                // The resulting stored paths are just longest common string, trim to last / to get a path
+                return (TrimStringToPath(storedSourcePath), TrimStringToPath(storedDestPath));
+            }
+        }
+
+        private static string GetLongestCommonString(string path1, string path2)
+        {
+            int length = Math.Min(path1.Length, path2.Length);
+            int index = 0;
+
+            while (index < length && path1[index] == path2[index])
+            {
+                index++;
+            }
+
+            return path1.Substring(0, index);
+        }
+
+        private static string TrimStringToPath(string path)
+        {
+            int lastSlash = path.Replace('\\', '/').LastIndexOf('/');
+            return path.Substring(0, lastSlash);
+        }
+
+        internal static async Task<(string Source, string Destination)> GetResourceIdsAsync(
+            this TransferCheckpointer checkpointer,
+            string transferId,
+            CancellationToken cancellationToken)
+        {
+            int startIndex = DataMovementConstants.PlanFile.SourceResourceIdLengthIndex;
+            int readLength = DataMovementConstants.PlanFile.DestinationPathLengthIndex - startIndex;
+
+            string sourceResourceId;
+            string destinationResourceId;
+            using (Stream stream = await checkpointer.ReadableStreamAsync(
+                transferId: transferId,
+                partNumber: 0,
+                offset: startIndex,
+                readSize: readLength,
+                cancellationToken: cancellationToken).ConfigureAwait(false))
+            {
+                BinaryReader reader = new BinaryReader(stream);
+
+                // Read Source Length
+                byte[] sourceLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+                ushort sourceLength = sourceLengthBuffer.ToUShort();
+
+                // Read Source
+                byte[] sourceBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ResourceIdNumBytes);
+                sourceResourceId = sourceBuffer.ToString(sourceLength);
+
+                // Set the stream position to the start of the destination resource id
+                reader.BaseStream.Position = DataMovementConstants.PlanFile.DestinationResourceIdLengthIndex - startIndex;
+
+                // Read Destination Length
+                byte[] destLengthBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.UShortSizeInBytes);
+                ushort destLength = destLengthBuffer.ToUShort();
+
+                // Read Destination
+                byte[] destBuffer = reader.ReadBytes(DataMovementConstants.PlanFile.ResourceIdNumBytes);
+                destinationResourceId = destBuffer.ToString(destLength);
+            }
+
+            return (sourceResourceId, destinationResourceId);
         }
 
         internal static IDictionary<string, string> ToDictionary(this string str, string elementName)

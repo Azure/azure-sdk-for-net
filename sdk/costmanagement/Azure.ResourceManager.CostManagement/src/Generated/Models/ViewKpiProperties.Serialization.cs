@@ -10,37 +10,37 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class KpiProperties : IUtf8JsonSerializable
+    public partial class ViewKpiProperties : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ViewKpiType))
+            if (Optional.IsDefined(KpiType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ViewKpiType.Value.ToString());
+                writer.WriteStringValue(KpiType.Value.ToString());
             }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
         }
 
-        internal static KpiProperties DeserializeKpiProperties(JsonElement element)
+        internal static ViewKpiProperties DeserializeViewKpiProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ViewKpiType> type = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,7 +55,11 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enabled"u8))
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     continue;
                 }
             }
-            return new KpiProperties(Optional.ToNullable(type), id.Value, Optional.ToNullable(enabled));
+            return new ViewKpiProperties(Optional.ToNullable(type), id.Value, Optional.ToNullable(enabled));
         }
     }
 }

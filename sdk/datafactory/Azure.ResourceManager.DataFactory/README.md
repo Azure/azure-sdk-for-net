@@ -103,15 +103,18 @@ var service = new AmazonRdsForOracleLinkedService(DataFactoryElement<string>.Fro
 ```C# Snippet:Readme_DataFactoryElementFromMaskedString
 var service = new AmazonS3CompatibleLinkedService()
 {
-    ServiceUri = DataFactoryElement<string>.FromMaskedString("some/secret/path"),
+    ServiceUri = DataFactoryElement<string>.FromSecretString("some/secret/path"),
 };
 ```
 
 #### Assign `DataFactoryElement` from KeyVault secret reference
 ```C# Snippet:Readme_DataFactoryElementFromKeyVaultSecretReference
+var store = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,
+    "referenceName");
+var keyVaultReference = new DataFactoryKeyVaultSecretReference(store, "secretName");
 var service = new AmazonS3CompatibleLinkedService()
 {
-    AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecretReference("@Microsoft.KeyVault(SecretUri=https://myvault.vault.azure.net/secrets/mysecret/)"),
+    AccessKeyId = DataFactoryElement<string>.FromKeyVaultSecretReference(keyVaultReference),
 };
 ```
 
