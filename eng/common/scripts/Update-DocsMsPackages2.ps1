@@ -74,7 +74,7 @@ foreach ($moniker in $MONIKERS) {
 
     # Sort the metadata entries by package name so that the output is
     # deterministic (more simple diffs)
-    $sortedMetadata = $metadata | Sort-Object -Property Name
+    $sortedMetadata = $metadata | Sort-Object -Property '_DocsOnboardingOrdinal', 'Name'
 
     $outputPackages = @()
     foreach ($package in $sortedMetadata) {
