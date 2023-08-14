@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.MobileNetwork
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AttachedDataNetworkResources in the PacketCoreDataPlane. </summary>
-        /// <returns> An object representing collection of AttachedDataNetworkResources and their operations over a AttachedDataNetworkResource. </returns>
-        public virtual AttachedDataNetworkCollection GetAttachedDataNetworks()
+        /// <summary> Gets a collection of MobileAttachedDataNetworkResources in the PacketCoreDataPlane. </summary>
+        /// <returns> An object representing collection of MobileAttachedDataNetworkResources and their operations over a MobileAttachedDataNetworkResource. </returns>
+        public virtual MobileAttachedDataNetworkCollection GetMobileAttachedDataNetworks()
         {
-            return GetCachedClient(Client => new AttachedDataNetworkCollection(Client, Id));
+            return GetCachedClient(Client => new MobileAttachedDataNetworkCollection(Client, Id));
         }
 
         /// <summary>
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AttachedDataNetworkResource>> GetAttachedDataNetworkAsync(string attachedDataNetworkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MobileAttachedDataNetworkResource>> GetMobileAttachedDataNetworkAsync(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            return await GetAttachedDataNetworks().GetAsync(attachedDataNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetMobileAttachedDataNetworks().GetAsync(attachedDataNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AttachedDataNetworkResource> GetAttachedDataNetwork(string attachedDataNetworkName, CancellationToken cancellationToken = default)
+        public virtual Response<MobileAttachedDataNetworkResource> GetMobileAttachedDataNetwork(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetAttachedDataNetworks().Get(attachedDataNetworkName, cancellationToken);
+            return GetMobileAttachedDataNetworks().Get(attachedDataNetworkName, cancellationToken);
         }
 
         /// <summary>

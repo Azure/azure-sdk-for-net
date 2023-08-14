@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SimPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<MobileNetworkSimPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -158,13 +158,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        SimPolicyData value = default;
+                        MobileNetworkSimPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SimPolicyData.DeserializeSimPolicyData(document.RootElement);
+                        value = MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SimPolicyData)null, message.Response);
+                    return Response.FromValue((MobileNetworkSimPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SimPolicyData> Get(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, CancellationToken cancellationToken = default)
+        public Response<MobileNetworkSimPolicyData> Get(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -191,19 +191,19 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        SimPolicyData value = default;
+                        MobileNetworkSimPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SimPolicyData.DeserializeSimPolicyData(document.RootElement);
+                        value = MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SimPolicyData)null, message.Response);
+                    return Response.FromValue((MobileNetworkSimPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, SimPolicyData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, MobileNetworkSimPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="simPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, SimPolicyData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, MobileNetworkSimPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="simPolicyName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, SimPolicyData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, MobileNetworkSimPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="simPolicyName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SimPolicyData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<MobileNetworkSimPolicyData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        SimPolicyData value = default;
+                        MobileNetworkSimPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SimPolicyData.DeserializeSimPolicyData(document.RootElement);
+                        value = MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="simPolicyName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SimPolicyData> UpdateTags(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
+        public Response<MobileNetworkSimPolicyData> UpdateTags(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -369,9 +369,9 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        SimPolicyData value = default;
+                        MobileNetworkSimPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SimPolicyData.DeserializeSimPolicyData(document.RootElement);
+                        value = MobileNetworkSimPolicyData.DeserializeMobileNetworkSimPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MobileNetwork
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, PacketCaptureData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, MobileNetworkPacketCaptureData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCaptureName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, PacketCaptureData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, MobileNetworkPacketCaptureData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/>, <paramref name="packetCaptureName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, PacketCaptureData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, MobileNetworkPacketCaptureData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PacketCaptureData>> GetAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, CancellationToken cancellationToken = default)
+        public async Task<Response<MobileNetworkPacketCaptureData>> GetAsync(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -164,13 +164,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        PacketCaptureData value = default;
+                        MobileNetworkPacketCaptureData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PacketCaptureData.DeserializePacketCaptureData(document.RootElement);
+                        value = MobileNetworkPacketCaptureData.DeserializeMobileNetworkPacketCaptureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PacketCaptureData)null, message.Response);
+                    return Response.FromValue((MobileNetworkPacketCaptureData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="packetCoreControlPlaneName"/> or <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PacketCaptureData> Get(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, CancellationToken cancellationToken = default)
+        public Response<MobileNetworkPacketCaptureData> Get(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName, string packetCaptureName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -197,13 +197,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        PacketCaptureData value = default;
+                        MobileNetworkPacketCaptureData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PacketCaptureData.DeserializePacketCaptureData(document.RootElement);
+                        value = MobileNetworkPacketCaptureData.DeserializeMobileNetworkPacketCaptureData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((PacketCaptureData)null, message.Response);
+                    return Response.FromValue((MobileNetworkPacketCaptureData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

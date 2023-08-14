@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of PacketCaptureListResult. </summary>
         internal PacketCaptureListResult()
         {
-            Value = new ChangeTrackingList<PacketCaptureData>();
+            Value = new ChangeTrackingList<MobileNetworkPacketCaptureData>();
         }
 
         /// <summary> Initializes a new instance of PacketCaptureListResult. </summary>
         /// <param name="value"> A list of packet capture sessions under a packet core control plane. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal PacketCaptureListResult(IReadOnlyList<PacketCaptureData> value, string nextLink)
+        internal PacketCaptureListResult(IReadOnlyList<MobileNetworkPacketCaptureData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of packet capture sessions under a packet core control plane. </summary>
-        public IReadOnlyList<PacketCaptureData> Value { get; }
+        public IReadOnlyList<MobileNetworkPacketCaptureData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

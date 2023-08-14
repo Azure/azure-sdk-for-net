@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.MobileNetwork
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DiagnosticsPackageResources in the PacketCoreControlPlane. </summary>
-        /// <returns> An object representing collection of DiagnosticsPackageResources and their operations over a DiagnosticsPackageResource. </returns>
-        public virtual DiagnosticsPackageCollection GetDiagnosticsPackages()
+        /// <summary> Gets a collection of MobileNetworkDiagnosticsPackageResources in the PacketCoreControlPlane. </summary>
+        /// <returns> An object representing collection of MobileNetworkDiagnosticsPackageResources and their operations over a MobileNetworkDiagnosticsPackageResource. </returns>
+        public virtual MobileNetworkDiagnosticsPackageCollection GetMobileNetworkDiagnosticsPackages()
         {
-            return GetCachedClient(Client => new DiagnosticsPackageCollection(Client, Id));
+            return GetCachedClient(Client => new MobileNetworkDiagnosticsPackageCollection(Client, Id));
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DiagnosticsPackageResource>> GetDiagnosticsPackageAsync(string diagnosticsPackageName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MobileNetworkDiagnosticsPackageResource>> GetMobileNetworkDiagnosticsPackageAsync(string diagnosticsPackageName, CancellationToken cancellationToken = default)
         {
-            return await GetDiagnosticsPackages().GetAsync(diagnosticsPackageName, cancellationToken).ConfigureAwait(false);
+            return await GetMobileNetworkDiagnosticsPackages().GetAsync(diagnosticsPackageName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,39 +137,16 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="diagnosticsPackageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsPackageName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DiagnosticsPackageResource> GetDiagnosticsPackage(string diagnosticsPackageName, CancellationToken cancellationToken = default)
+        public virtual Response<MobileNetworkDiagnosticsPackageResource> GetMobileNetworkDiagnosticsPackage(string diagnosticsPackageName, CancellationToken cancellationToken = default)
         {
-            return GetDiagnosticsPackages().Get(diagnosticsPackageName, cancellationToken);
+            return GetMobileNetworkDiagnosticsPackages().Get(diagnosticsPackageName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PacketCaptureResources in the PacketCoreControlPlane. </summary>
-        /// <returns> An object representing collection of PacketCaptureResources and their operations over a PacketCaptureResource. </returns>
-        public virtual PacketCaptureCollection GetPacketCaptures()
+        /// <summary> Gets a collection of MobileNetworkPacketCaptureResources in the PacketCoreControlPlane. </summary>
+        /// <returns> An object representing collection of MobileNetworkPacketCaptureResources and their operations over a MobileNetworkPacketCaptureResource. </returns>
+        public virtual MobileNetworkPacketCaptureCollection GetMobileNetworkPacketCaptures()
         {
-            return GetCachedClient(Client => new PacketCaptureCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets information about the specified packet capture session.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PacketCaptures_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PacketCaptureResource>> GetPacketCaptureAsync(string packetCaptureName, CancellationToken cancellationToken = default)
-        {
-            return await GetPacketCaptures().GetAsync(packetCaptureName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new MobileNetworkPacketCaptureCollection(Client, Id));
         }
 
         /// <summary>
@@ -190,9 +167,32 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PacketCaptureResource> GetPacketCapture(string packetCaptureName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MobileNetworkPacketCaptureResource>> GetMobileNetworkPacketCaptureAsync(string packetCaptureName, CancellationToken cancellationToken = default)
         {
-            return GetPacketCaptures().Get(packetCaptureName, cancellationToken);
+            return await GetMobileNetworkPacketCaptures().GetAsync(packetCaptureName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about the specified packet capture session.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}/packetCaptures/{packetCaptureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCaptures_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MobileNetworkPacketCaptureResource> GetMobileNetworkPacketCapture(string packetCaptureName, CancellationToken cancellationToken = default)
+        {
+            return GetMobileNetworkPacketCaptures().Get(packetCaptureName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PacketCoreDataPlaneResources in the PacketCoreControlPlane. </summary>

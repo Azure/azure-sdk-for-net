@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SliceData>> GetAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, CancellationToken cancellationToken = default)
+        public async Task<Response<MobileNetworkSliceData>> GetAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -158,13 +158,13 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        SliceData value = default;
+                        MobileNetworkSliceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SliceData.DeserializeSliceData(document.RootElement);
+                        value = MobileNetworkSliceData.DeserializeMobileNetworkSliceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SliceData)null, message.Response);
+                    return Response.FromValue((MobileNetworkSliceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SliceData> Get(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, CancellationToken cancellationToken = default)
+        public Response<MobileNetworkSliceData> Get(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -191,19 +191,19 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        SliceData value = default;
+                        MobileNetworkSliceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SliceData.DeserializeSliceData(document.RootElement);
+                        value = MobileNetworkSliceData.DeserializeMobileNetworkSliceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SliceData)null, message.Response);
+                    return Response.FromValue((MobileNetworkSliceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, SliceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, MobileNetworkSliceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, SliceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, MobileNetworkSliceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, SliceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, MobileNetworkSliceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SliceData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<MobileNetworkSliceData>> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        SliceData value = default;
+                        MobileNetworkSliceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SliceData.DeserializeSliceData(document.RootElement);
+                        value = MobileNetworkSliceData.DeserializeMobileNetworkSliceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/>, <paramref name="sliceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="mobileNetworkName"/> or <paramref name="sliceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SliceData> UpdateTags(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
+        public Response<MobileNetworkSliceData> UpdateTags(string subscriptionId, string resourceGroupName, string mobileNetworkName, string sliceName, MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -369,9 +369,9 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case 200:
                     {
-                        SliceData value = default;
+                        MobileNetworkSliceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SliceData.DeserializeSliceData(document.RootElement);
+                        value = MobileNetworkSliceData.DeserializeMobileNetworkSliceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

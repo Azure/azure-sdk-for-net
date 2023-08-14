@@ -97,16 +97,16 @@ rename-mapping:
   CertificateProvisioning: MobileNetworkCertificateProvisioning
   BillingSku: MobileNetworkBillingSku
   AuthenticationType: MobileNetworkAuthenticationType
-  SliceData: MobileNetworkSliceData
-  SiteData: MobileNetworkSiteData
-  SimPolicyData: MobileNetworkSimPolicyData
-  SimGroupData: MobileNetworkSimGroupData
-  SimData: MobileNetworkSimData
-  ServiceData: MobileNetworkServiceData
-  PacketCaptureData: MobileNetworkPacketCaptureData
-  DiagnosticsPackageData: MobileNetworkDiagnosticsPackageData
-  DataNetworkData: MobileDataNetworkData
-  AttachedDataNetworkData: MobileAttachedDataNetworkData
+  Slice: MobileNetworkSlice
+  Site: MobileNetworkSite
+  SimPolicy: MobileNetworkSimPolicy
+  SimGroup: MobileNetworkSimGroup
+  Sim: MobileNetworkSim
+  Service: MobileNetworkService
+  PacketCapture: MobileNetworkPacketCapture
+  DiagnosticsPackage: MobileNetworkDiagnosticsPackage
+  DataNetwork: MobileDataNetwork
+  AttachedDataNetwork: MobileAttachedDataNetwork
   
 
 directive:
