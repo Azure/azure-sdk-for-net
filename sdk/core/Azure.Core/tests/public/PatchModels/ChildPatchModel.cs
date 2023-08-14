@@ -15,10 +15,11 @@ namespace Azure.Core.Tests.PatchModels
 
         // Note: A child patch model doesn't have a public constructor.
         //
-        // TODO: we may need to revisit this later when we find child models
-        // that are used in a standalone way as well.  Although it may be
-        // sufficient to make a nested model not settable on the parent to
-        // achieve the desired linking behavior.
+        // When a nested model is also an input to a service method, it will
+        // need to have a public constructor.  When this happens, the parent
+        // model it is also part of will not allow it to be set, to ensure the
+        // MutableJsonElements point to the same root MutableJsonDocument when
+        // they are part of the same input, so the Patch JSON will be correct.
 
         /// <summary> Serialization constructor. </summary>
         /// <param name="element"></param>

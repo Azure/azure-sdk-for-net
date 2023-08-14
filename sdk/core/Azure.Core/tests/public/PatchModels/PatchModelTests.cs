@@ -63,18 +63,21 @@ namespace Azure.Core.Tests.Public
         }
 
         [Test]
-        public void CanPatchChildModel()
+        public void CanPatchNestedModel()
         {
             ParentPatchModel model = new();
 
             model.Child.B = "bb";
+
+            ValidatePatch("""{"child": {"b": "bb"}}""", model);
+
             model.Child.A = "aa";
 
             ValidatePatch("""{"child": {"a": "aa", "b": "bb"}}""", model);
         }
 
         [Test]
-        public void CanPatchChildModelOneProperty()
+        public void CanPatchNestedModelOneProperty()
         {
             ParentPatchModel model = new();
 
@@ -83,7 +86,85 @@ namespace Azure.Core.Tests.Public
             ValidatePatch("""{"child": {"a": "aa"}}""", model);
         }
 
+        [Test]
+        public void CanPatchNestedModelOnePropertyAndChangeIt()
+        {
+            ParentPatchModel model = new();
+
+            model.Child.A = "a1";
+
+            ValidatePatch("""{"child": {"a": "a1"}}""", model);
+
+            model.Child.A = "a2";
+
+            ValidatePatch("""{"child": {"a": "a2"}}""", model);
+        }
+
+        [Test]
+        public void CanPatchNestedModelInterleaveChanges()
+        {
+            ParentPatchModel model = new();
+
+            model.Id = "id1";
+            model.Child.B = "b1";
+            model.Child.A = "a1";
+
+            ValidatePatch("""{"child": {"a": "a1", "b": "b1"}, "id": "id1"}""", model);
+
+            model.Child.A = "a2";
+            model.Id = "id2";
+
+            ValidatePatch("""{"child": {"a": "a2", "b": "b1"}, "id": "id2"}""", model);
+
+            model.Child.A = null;
+            model.Child.B = null;
+
+            ValidatePatch("""{"child": {"a": null, "b": null}, "id": "id2"}""", model);
+        }
+
+        [Test]
+        public void CanRoundTripNestedModel()
+        {
+            BinaryData json = BinaryData.FromString("""
+                {
+                    "id": "123",
+                    "child": {
+                        "a": "aa",
+                        "b": "bb"
+                    }
+                }
+                """);
+
+            ParentPatchModel model = ModelSerializer.Deserialize<ParentPatchModel>(json);
+
+            Assert.AreEqual("123", model.Id);
+            Assert.AreEqual("aa", model.Child.A);
+            Assert.AreEqual("bb", model.Child.B);
+
+            ValidateSerialize("""{"id": "123", "child": {"a": "aa", "b": "bb"}}""", model);
+            ValidatePatch(string.Empty, model);
+
+            model.Child.A = "a2";
+            model.Child.B = null;
+
+            ValidateSerialize("""{"id": "123", "child": {"a": "a2", "b": null}}""", model);
+            ValidatePatch("""{"child": {"a": "a2", "b": null}}""", model);
+        }
+
         #region Helpers
+        private static void ValidateSerialize<T>(string expected, IModelJsonSerializable<T> model)
+        {
+            using Stream stream = new MemoryStream();
+            using Utf8JsonWriter writer = new(stream);
+            model.Serialize(writer, new ModelSerializerOptions("J"));
+            writer.Flush();
+            stream.Position = 0;
+
+            string actual = BinaryData.FromStream(stream).ToString();
+
+            AreEqualJson(expected, actual);
+        }
+
         private static void ValidatePatch<T>(string expected, IModelJsonSerializable<T> model)
         {
             using Stream stream = new MemoryStream();
@@ -93,6 +174,12 @@ namespace Azure.Core.Tests.Public
             stream.Position = 0;
 
             string actual = BinaryData.FromStream(stream).ToString();
+
+            if (expected.Length == 0)
+            {
+                Assert.AreEqual(expected, actual);
+                return;
+            }
 
             AreEqualJson(expected, actual);
         }
