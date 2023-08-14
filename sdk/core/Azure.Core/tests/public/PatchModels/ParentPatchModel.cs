@@ -28,11 +28,6 @@ namespace Azure.Core.Tests.PatchModels
         internal ParentPatchModel(MutableJsonElement element)
         {
             _element = element;
-
-            if (_element.TryGetProperty("child", out MutableJsonElement childElement))
-            {
-                _child = new ChildPatchModel(childElement);
-            }
         }
 
         /// <summary>
@@ -61,18 +56,13 @@ namespace Azure.Core.Tests.PatchModels
             {
                 if (_child == null)
                 {
-                    // This means we came in through the serialization constructor
-                    if (_element.TryGetProperty("child", out MutableJsonElement childElement))
+                    if (!_element.TryGetProperty("child", out MutableJsonElement element))
                     {
-                        _child = new ChildPatchModel(childElement);
-                    }
-                    else
-                    {
-                        // We came in through the public constructor and don't have a child element
-                        // Need to create that.
                         _element.SetProperty("child", new { });
-                        _child = new ChildPatchModel(_element.GetProperty("child"));
+                        element = _element.GetProperty("child");
                     }
+
+                    _child = new ChildPatchModel(element);
                 }
 
                 return _child;
