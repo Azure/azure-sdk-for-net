@@ -85,10 +85,9 @@ namespace Azure.Storage.DataMovement
     public partial class LocalDirectoryStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
         public LocalDirectoryStorageResourceContainer(string path) { }
-        public override string Path { get { throw null; } }
+        public override System.Uri Uri { get { throw null; } }
         protected internal override Azure.Storage.DataMovement.StorageResourceItem GetStorageResourceReference(string childPath) { throw null; }
         protected internal override System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResource> GetStorageResourcesAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override bool TryGetUri(out System.Uri uri) { throw null; }
     }
     public partial class LocalFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
@@ -103,9 +102,9 @@ namespace Azure.Storage.DataMovement
         public LocalFileStorageResource(string path) { }
         protected internal override long? Length { get { throw null; } }
         protected internal override long MaxChunkSize { get { throw null; } }
-        public override string Path { get { throw null; } }
         protected internal override string ResourceId { get { throw null; } }
         protected internal override Azure.Storage.DataMovement.DataTransferOrder TransferType { get { throw null; } }
+        public override System.Uri Uri { get { throw null; } }
         protected internal override System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal override System.Threading.Tasks.Task CopyBlockFromUriAsync(Azure.Storage.DataMovement.StorageResourceItem sourceResource, Azure.HttpRange range, bool overwrite, long completeLength, Azure.Storage.DataMovement.StorageResourceCopyFromUriOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal override System.Threading.Tasks.Task CopyFromStreamAsync(System.IO.Stream stream, long streamLength, bool overwrite, long completeLength, Azure.Storage.DataMovement.StorageResourceWriteToOffsetOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -114,7 +113,6 @@ namespace Azure.Storage.DataMovement
         protected internal override System.Threading.Tasks.Task<Azure.HttpAuthorization> GetCopyAuthorizationHeaderAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResourceProperties> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResourceReadStreamResult> ReadStreamAsync(long position = (long)0, long? length = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override bool TryGetUri(out System.Uri uri) { throw null; }
     }
     public partial class LocalStorageResourceProvider
     {
@@ -135,8 +133,7 @@ namespace Azure.Storage.DataMovement
     {
         protected StorageResource() { }
         protected internal abstract bool IsContainer { get; }
-        public abstract string Path { get; }
-        public abstract bool TryGetUri(out System.Uri uri);
+        public abstract System.Uri Uri { get; }
     }
     public abstract partial class StorageResourceContainer : Azure.Storage.DataMovement.StorageResource
     {
