@@ -23,8 +23,8 @@ namespace Azure.AI.OpenAI
             }
             string id = default;
             DateTimeOffset created = default;
-            IReadOnlyList<ChatChoice> choices = default;
             Optional<IReadOnlyList<PromptFilterResult>> promptAnnotations = default;
+            IReadOnlyList<ChatChoice> choices = default;
             CompletionsUsage usage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,16 +36,6 @@ namespace Azure.AI.OpenAI
                 if (property.NameEquals("created"u8))
                 {
                     created = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
-                    continue;
-                }
-                if (property.NameEquals("choices"u8))
-                {
-                    List<ChatChoice> array = new List<ChatChoice>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ChatChoice.DeserializeChatChoice(item));
-                    }
-                    choices = array;
                     continue;
                 }
                 if (property.NameEquals("prompt_annotations"u8))
@@ -62,13 +52,28 @@ namespace Azure.AI.OpenAI
                     promptAnnotations = array;
                     continue;
                 }
+                if (property.NameEquals("choices"u8))
+                {
+                    List<ChatChoice> array = new List<ChatChoice>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChatChoice.DeserializeChatChoice(item));
+                    }
+                    choices = array;
+                    continue;
+                }
                 if (property.NameEquals("usage"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        usage = null;
+                        continue;
+                    }
                     usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value);
                     continue;
                 }
             }
-            return new ChatCompletions(id, created, choices, Optional.ToList(promptAnnotations), usage);
+            return new ChatCompletions(id, created, Optional.ToList(promptAnnotations), choices, usage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

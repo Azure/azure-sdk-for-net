@@ -31,12 +31,11 @@ namespace Azure.AI.OpenAI
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="choices"/> or <paramref name="usage"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="choices"/> is null. </exception>
         internal Completions(string id, DateTimeOffset created, IEnumerable<Choice> choices, CompletionsUsage usage)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(choices, nameof(choices));
-            Argument.AssertNotNull(usage, nameof(usage));
 
             Id = id;
             Created = created;

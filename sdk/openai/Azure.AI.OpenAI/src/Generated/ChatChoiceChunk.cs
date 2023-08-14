@@ -10,41 +10,37 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary>
-    /// The representation of a single prompt completion as part of an overall chat completions request.
-    /// Generally, `n` choices are generated per provided prompt with a default value of 1.
-    /// Token limits and other settings may limit the number of choices generated.
-    /// </summary>
-    public partial class ChatChoice
+    /// <summary> The representation of a single prompt completion as part of an overall streaming chat completions request. </summary>
+    public partial class ChatChoiceChunk
     {
-        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <summary> Initializes a new instance of ChatChoiceChunk. </summary>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
-        /// <param name="message"> The chat message for a given chat completions prompt. </param>
+        /// <param name="delta"> The delta message content for a streaming response. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
-        internal ChatChoice(int index, ChatMessage message, CompletionsFinishReason? finishReason)
+        /// <exception cref="ArgumentNullException"> <paramref name="delta"/> is null. </exception>
+        internal ChatChoiceChunk(int index, ChatMessageDelta delta, CompletionsFinishReason? finishReason)
         {
-            Argument.AssertNotNull(message, nameof(message));
+            Argument.AssertNotNull(delta, nameof(delta));
 
             Index = index;
-            Message = message;
+            Delta = delta;
             FinishReason = finishReason;
         }
 
-        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <summary> Initializes a new instance of ChatChoiceChunk. </summary>
         /// <param name="index"> The ordered index associated with this chat completions choice. </param>
         /// <param name="contentFilterResults">
         /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
         /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
         /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
         /// </param>
-        /// <param name="message"> The chat message for a given chat completions prompt. </param>
+        /// <param name="delta"> The delta message content for a streaming response. </param>
         /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
-        internal ChatChoice(int index, ContentFilterResults contentFilterResults, ChatMessage message, CompletionsFinishReason? finishReason)
+        internal ChatChoiceChunk(int index, ContentFilterResults contentFilterResults, ChatMessageDelta delta, CompletionsFinishReason? finishReason)
         {
             Index = index;
             ContentFilterResults = contentFilterResults;
-            Message = message;
+            Delta = delta;
             FinishReason = finishReason;
         }
 
@@ -56,8 +52,8 @@ namespace Azure.AI.OpenAI
         /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
         /// </summary>
         public ContentFilterResults ContentFilterResults { get; }
-        /// <summary> The chat message for a given chat completions prompt. </summary>
-        public ChatMessage Message { get; }
+        /// <summary> The delta message content for a streaming response. </summary>
+        public ChatMessageDelta Delta { get; }
         /// <summary> The reason that this chat completions choice completed its generated. </summary>
         public CompletionsFinishReason? FinishReason { get; }
     }

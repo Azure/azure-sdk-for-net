@@ -11,59 +11,63 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatChoice
+    public partial class ChatMessageDelta
     {
-        internal static ChatChoice DeserializeChatChoice(JsonElement element)
+        internal static ChatMessageDelta DeserializeChatMessageDelta(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int index = default;
-            Optional<ContentFilterResults> contentFilterResults = default;
-            ChatMessage message = default;
-            CompletionsFinishReason? finishReason = default;
+            Optional<ChatRole> role = default;
+            Optional<string> content = default;
+            Optional<string> name = default;
+            Optional<FunctionCall> functionCall = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("index"u8))
-                {
-                    index = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("content_filter_results"u8))
+                if (property.NameEquals("role"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    contentFilterResults = ContentFilterResults.DeserializeContentFilterResults(property.Value);
+                    role = new ChatRole(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("message"u8))
-                {
-                    message = ChatMessage.DeserializeChatMessage(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("finish_reason"u8))
+                if (property.NameEquals("content"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        finishReason = null;
+                        content = null;
                         continue;
                     }
-                    finishReason = new CompletionsFinishReason(property.Value.GetString());
+                    content = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("function_call"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    functionCall = FunctionCall.DeserializeFunctionCall(property.Value);
                     continue;
                 }
             }
-            return new ChatChoice(index, contentFilterResults.Value, message, finishReason);
+            return new ChatMessageDelta(Optional.ToNullable(role), content.Value, name.Value, functionCall.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ChatChoice FromResponse(Response response)
+        internal static ChatMessageDelta FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeChatChoice(document.RootElement);
+            return DeserializeChatMessageDelta(document.RootElement);
         }
     }
 }

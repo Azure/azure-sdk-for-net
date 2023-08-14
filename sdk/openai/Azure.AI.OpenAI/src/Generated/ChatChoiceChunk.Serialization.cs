@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatChoice
+    public partial class ChatChoiceChunk
     {
-        internal static ChatChoice DeserializeChatChoice(JsonElement element)
+        internal static ChatChoiceChunk DeserializeChatChoiceChunk(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -21,7 +21,7 @@ namespace Azure.AI.OpenAI
             }
             int index = default;
             Optional<ContentFilterResults> contentFilterResults = default;
-            ChatMessage message = default;
+            ChatMessageDelta delta = default;
             CompletionsFinishReason? finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,9 +39,9 @@ namespace Azure.AI.OpenAI
                     contentFilterResults = ContentFilterResults.DeserializeContentFilterResults(property.Value);
                     continue;
                 }
-                if (property.NameEquals("message"u8))
+                if (property.NameEquals("delta"u8))
                 {
-                    message = ChatMessage.DeserializeChatMessage(property.Value);
+                    delta = ChatMessageDelta.DeserializeChatMessageDelta(property.Value);
                     continue;
                 }
                 if (property.NameEquals("finish_reason"u8))
@@ -55,15 +55,15 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new ChatChoice(index, contentFilterResults.Value, message, finishReason);
+            return new ChatChoiceChunk(index, contentFilterResults.Value, delta, finishReason);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ChatChoice FromResponse(Response response)
+        internal static ChatChoiceChunk FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeChatChoice(document.RootElement);
+            return DeserializeChatChoiceChunk(document.RootElement);
         }
     }
 }

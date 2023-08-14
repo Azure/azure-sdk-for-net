@@ -39,6 +39,14 @@ var result = client.GetEmbeddings("<deploymentId>", embeddingsOptions);
     </member>
     <member name="GetEmbeddings(string,RequestContent,RequestContext)">
     </member>
+    <member name="GetCompletionsStreamingAsync(string,CompletionsOptions,CancellationToken)">
+    </member>
+    <member name="GetCompletionsStreaming(string,CompletionsOptions,CancellationToken)">
+    </member>
+    <member name="GetCompletionsStreamingAsync(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetCompletionsStreaming(string,RequestContent,RequestContext)">
+    </member>
     <member name="GetCompletionsAsync(string,CompletionsOptions,CancellationToken)">
 <example>
 This sample shows how to call GetCompletionsAsync with required parameters.
@@ -102,6 +110,14 @@ var result = client.GetCompletions("<deploymentId>", completionsOptions);
     <member name="GetCompletionsAsync(string,RequestContent,RequestContext)">
     </member>
     <member name="GetCompletions(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetChatCompletionsStreamingAsync(string,ChatCompletionsOptions,CancellationToken)">
+    </member>
+    <member name="GetChatCompletionsStreaming(string,ChatCompletionsOptions,CancellationToken)">
+    </member>
+    <member name="GetChatCompletionsStreamingAsync(string,RequestContent,RequestContext)">
+    </member>
+    <member name="GetChatCompletionsStreaming(string,RequestContent,RequestContext)">
     </member>
     <member name="GetChatCompletionsAsync(string,ChatCompletionsOptions,CancellationToken)">
 <example>

@@ -13,9 +13,9 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class Completions
+    public partial class CompletionsChunk
     {
-        internal static Completions DeserializeCompletions(JsonElement element)
+        internal static CompletionsChunk DeserializeCompletionsChunk(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -24,7 +24,7 @@ namespace Azure.AI.OpenAI
             string id = default;
             DateTimeOffset created = default;
             Optional<IReadOnlyList<PromptFilterResult>> promptAnnotations = default;
-            IReadOnlyList<Choice> choices = default;
+            IReadOnlyList<ChoiceChunk> choices = default;
             CompletionsUsage usage = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,10 +54,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("choices"u8))
                 {
-                    List<Choice> array = new List<Choice>();
+                    List<ChoiceChunk> array = new List<ChoiceChunk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Choice.DeserializeChoice(item));
+                        array.Add(ChoiceChunk.DeserializeChoiceChunk(item));
                     }
                     choices = array;
                     continue;
@@ -73,15 +73,15 @@ namespace Azure.AI.OpenAI
                     continue;
                 }
             }
-            return new Completions(id, created, Optional.ToList(promptAnnotations), choices, usage);
+            return new CompletionsChunk(id, created, Optional.ToList(promptAnnotations), choices, usage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static Completions FromResponse(Response response)
+        internal static CompletionsChunk FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCompletions(document.RootElement);
+            return DeserializeCompletionsChunk(document.RootElement);
         }
     }
 }

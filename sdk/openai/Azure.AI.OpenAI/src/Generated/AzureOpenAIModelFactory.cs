@@ -49,7 +49,7 @@ namespace Azure.AI.OpenAI
             return new EmbeddingsUsage(promptTokens, totalTokens);
         }
 
-        /// <summary> Initializes a new instance of Completions. </summary>
+        /// <summary> Initializes a new instance of CompletionsChunk. </summary>
         /// <param name="id"> A unique identifier associated with this completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -65,13 +65,13 @@ namespace Azure.AI.OpenAI
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        /// <returns> A new <see cref="OpenAI.Completions"/> instance for mocking. </returns>
-        public static Completions Completions(string id = null, DateTimeOffset created = default, IEnumerable<PromptFilterResult> promptFilterResults = null, IEnumerable<Choice> choices = null, CompletionsUsage usage = null)
+        /// <returns> A new <see cref="OpenAI.CompletionsChunk"/> instance for mocking. </returns>
+        public static CompletionsChunk CompletionsChunk(string id = null, DateTimeOffset created = default, IEnumerable<PromptFilterResult> promptFilterResults = null, IEnumerable<ChoiceChunk> choices = null, CompletionsUsage usage = null)
         {
             promptFilterResults ??= new List<PromptFilterResult>();
-            choices ??= new List<Choice>();
+            choices ??= new List<ChoiceChunk>();
 
-            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
+            return new CompletionsChunk(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
         }
 
         /// <summary> Initializes a new instance of PromptFilterResult. </summary>
@@ -120,7 +120,7 @@ namespace Azure.AI.OpenAI
             return new ContentFilterResult(severity, filtered);
         }
 
-        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <summary> Initializes a new instance of ChoiceChunk. </summary>
         /// <param name="text"> The generated text for a given completions prompt. </param>
         /// <param name="index"> The ordered index associated with this completions choice. </param>
         /// <param name="contentFilterResults">
@@ -130,10 +130,10 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
         /// <param name="finishReason"> Reason for finishing. </param>
-        /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
-        public static Choice Choice(string text = null, int index = default, ContentFilterResults contentFilterResults = null, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
+        /// <returns> A new <see cref="OpenAI.ChoiceChunk"/> instance for mocking. </returns>
+        public static ChoiceChunk ChoiceChunk(string text = null, int index = default, ContentFilterResults contentFilterResults = null, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
         {
-            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason);
+            return new ChoiceChunk(text, index, contentFilterResults, logProbabilityModel, finishReason);
         }
 
         /// <summary> Initializes a new instance of CompletionsLogProbabilityModel. </summary>
@@ -162,29 +162,140 @@ namespace Azure.AI.OpenAI
             return new CompletionsUsage(completionTokens, promptTokens, totalTokens);
         }
 
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
-        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
+        /// <summary> Initializes a new instance of Completions. </summary>
+        /// <param name="id"> A unique identifier associated with this completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
         /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
+        /// </param>
+        /// <param name="promptFilterResults">
+        /// Content filtering results for zero or more prompts in the request. In a streaming request,
+        /// results for different prompts may arrive at different times or in different orders.
         /// </param>
         /// <param name="choices">
         /// The collection of completions choices associated with this completions response.
         /// Generally, `n` choices are generated per provided prompt with a default value of 1.
         /// Token limits and other settings may limit the number of choices generated.
         /// </param>
+        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
+        /// <returns> A new <see cref="OpenAI.Completions"/> instance for mocking. </returns>
+        public static Completions Completions(string id = null, DateTimeOffset created = default, IEnumerable<PromptFilterResult> promptFilterResults = null, IEnumerable<Choice> choices = null, CompletionsUsage usage = null)
+        {
+            promptFilterResults ??= new List<PromptFilterResult>();
+            choices ??= new List<Choice>();
+
+            return new Completions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
+        }
+
+        /// <summary> Initializes a new instance of Choice. </summary>
+        /// <param name="text"> The generated text for a given completions prompt. </param>
+        /// <param name="index"> The ordered index associated with this completions choice. </param>
+        /// <param name="contentFilterResults">
+        /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
+        /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
+        /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
+        /// </param>
+        /// <param name="logProbabilityModel"> The log probabilities model for tokens associated with this completions choice. </param>
+        /// <param name="finishReason"> Reason for finishing. </param>
+        /// <returns> A new <see cref="OpenAI.Choice"/> instance for mocking. </returns>
+        public static Choice Choice(string text = null, int index = default, ContentFilterResults contentFilterResults = null, CompletionsLogProbabilityModel logProbabilityModel = null, CompletionsFinishReason? finishReason = null)
+        {
+            return new Choice(text, index, contentFilterResults, logProbabilityModel, finishReason);
+        }
+
+        /// <summary> Initializes a new instance of ChatCompletionsChunk. </summary>
+        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
+        /// <param name="created">
+        /// The first timestamp associated with generation activity for this completions response,
+        /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
+        /// </param>
         /// <param name="promptFilterResults">
         /// Content filtering results for zero or more prompts in the request. In a streaming request,
         /// results for different prompts may arrive at different times or in different orders.
         /// </param>
+        /// <param name="choices">
+        /// The collection of completions choices associated with this completions response.
+        /// Generally, `n` choices are generated per provided prompt with a default value of 1.
+        /// Token limits and other settings may limit the number of choices generated.
+        /// </param>
+        /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
+        /// <returns> A new <see cref="OpenAI.ChatCompletionsChunk"/> instance for mocking. </returns>
+        public static ChatCompletionsChunk ChatCompletionsChunk(string id = null, DateTimeOffset created = default, IEnumerable<PromptFilterResult> promptFilterResults = null, IEnumerable<ChatChoiceChunk> choices = null, CompletionsUsage usage = null)
+        {
+            promptFilterResults ??= new List<PromptFilterResult>();
+            choices ??= new List<ChatChoiceChunk>();
+
+            return new ChatCompletionsChunk(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
+        }
+
+        /// <summary> Initializes a new instance of ChatChoiceChunk. </summary>
+        /// <param name="index"> The ordered index associated with this chat completions choice. </param>
+        /// <param name="contentFilterResults">
+        /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
+        /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
+        /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
+        /// </param>
+        /// <param name="delta"> The delta message content for a streaming response. </param>
+        /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        /// <returns> A new <see cref="OpenAI.ChatChoiceChunk"/> instance for mocking. </returns>
+        public static ChatChoiceChunk ChatChoiceChunk(int index = default, ContentFilterResults contentFilterResults = null, ChatMessageDelta delta = null, CompletionsFinishReason? finishReason = null)
+        {
+            return new ChatChoiceChunk(index, contentFilterResults, delta, finishReason);
+        }
+
+        /// <summary> Initializes a new instance of ChatMessageDelta. </summary>
+        /// <param name="role"> The role associated with this message payload. </param>
+        /// <param name="content"> The text associated with this message payload. </param>
+        /// <param name="name">
+        /// The name of the author of this message. `name` is required if role is `function`, and it should be the name of the
+        /// function whose response is in the `content`. May contain a-z, A-Z, 0-9, and underscores, with a maximum length of
+        /// 64 characters.
+        /// </param>
+        /// <param name="functionCall"> The name and arguments of a function that should be called, as generated by the model. </param>
+        /// <returns> A new <see cref="OpenAI.ChatMessageDelta"/> instance for mocking. </returns>
+        public static ChatMessageDelta ChatMessageDelta(ChatRole? role = null, string content = null, string name = null, FunctionCall functionCall = null)
+        {
+            return new ChatMessageDelta(role, content, name, functionCall);
+        }
+
+        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <param name="id"> A unique identifier associated with this chat completions response. </param>
+        /// <param name="created">
+        /// The first timestamp associated with generation activity for this completions response,
+        /// represented as seconds since the beginning of the Unix epoch of 00:00 on 1 Jan 1970.
+        /// </param>
+        /// <param name="promptFilterResults">
+        /// Content filtering results for zero or more prompts in the request. In a streaming request,
+        /// results for different prompts may arrive at different times or in different orders.
+        /// </param>
+        /// <param name="choices">
+        /// The collection of completions choices associated with this completions response.
+        /// Generally, `n` choices are generated per provided prompt with a default value of 1.
+        /// Token limits and other settings may limit the number of choices generated.
+        /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
         /// <returns> A new <see cref="OpenAI.ChatCompletions"/> instance for mocking. </returns>
-        public static ChatCompletions ChatCompletions(string id = null, DateTimeOffset created = default, IEnumerable<ChatChoice> choices = null, IEnumerable<PromptFilterResult> promptFilterResults = null, CompletionsUsage usage = null)
+        public static ChatCompletions ChatCompletions(string id = null, DateTimeOffset created = default, IEnumerable<PromptFilterResult> promptFilterResults = null, IEnumerable<ChatChoice> choices = null, CompletionsUsage usage = null)
         {
-            choices ??= new List<ChatChoice>();
             promptFilterResults ??= new List<PromptFilterResult>();
+            choices ??= new List<ChatChoice>();
 
-            return new ChatCompletions(id, created, choices?.ToList(), promptFilterResults?.ToList(), usage);
+            return new ChatCompletions(id, created, promptFilterResults?.ToList(), choices?.ToList(), usage);
+        }
+
+        /// <summary> Initializes a new instance of ChatChoice. </summary>
+        /// <param name="index"> The ordered index associated with this chat completions choice. </param>
+        /// <param name="contentFilterResults">
+        /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
+        /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
+        /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
+        /// </param>
+        /// <param name="message"> The chat message for a given chat completions prompt. </param>
+        /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        /// <returns> A new <see cref="OpenAI.ChatChoice"/> instance for mocking. </returns>
+        public static ChatChoice ChatChoice(int index = default, ContentFilterResults contentFilterResults = null, ChatMessage message = null, CompletionsFinishReason? finishReason = null)
+        {
+            return new ChatChoice(index, contentFilterResults, message, finishReason);
         }
 
         /// <summary> Initializes a new instance of ImageGenerations. </summary>
