@@ -14,8 +14,13 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Save(string filepath) { }
     }
+    public partial class PropertyBag : System.Collections.Generic.Dictionary<string, Azure.Value>, System.Dynamic.IDynamicMetaObjectProvider
+    {
+        public PropertyBag() { }
+        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Value
+    public readonly partial struct Value : System.Dynamic.IDynamicMetaObjectProvider
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
@@ -55,7 +60,6 @@ namespace Azure
         public static Azure.Value Create<T>(T value) { throw null; }
         public static explicit operator System.ArraySegment<byte> (in Azure.Value value) { throw null; }
         public static explicit operator System.ArraySegment<char> (in Azure.Value value) { throw null; }
-        public static explicit operator bool (in Azure.Value value) { throw null; }
         public static explicit operator byte (in Azure.Value value) { throw null; }
         public static explicit operator char (in Azure.Value value) { throw null; }
         public static explicit operator System.DateTime (in Azure.Value value) { throw null; }
@@ -63,9 +67,6 @@ namespace Azure
         public static explicit operator decimal (in Azure.Value value) { throw null; }
         public static explicit operator double (in Azure.Value value) { throw null; }
         public static explicit operator short (in Azure.Value value) { throw null; }
-        public static explicit operator int (in Azure.Value value) { throw null; }
-        public static explicit operator long (in Azure.Value value) { throw null; }
-        public static explicit operator bool? (in Azure.Value value) { throw null; }
         public static explicit operator byte? (in Azure.Value value) { throw null; }
         public static explicit operator char? (in Azure.Value value) { throw null; }
         public static explicit operator System.DateTimeOffset? (in Azure.Value value) { throw null; }
@@ -73,8 +74,6 @@ namespace Azure
         public static explicit operator decimal? (in Azure.Value value) { throw null; }
         public static explicit operator double? (in Azure.Value value) { throw null; }
         public static explicit operator short? (in Azure.Value value) { throw null; }
-        public static explicit operator int? (in Azure.Value value) { throw null; }
-        public static explicit operator long? (in Azure.Value value) { throw null; }
         public static explicit operator sbyte? (in Azure.Value value) { throw null; }
         public static explicit operator float? (in Azure.Value value) { throw null; }
         public static explicit operator ushort? (in Azure.Value value) { throw null; }
@@ -85,6 +84,13 @@ namespace Azure
         public static explicit operator ushort (in Azure.Value value) { throw null; }
         public static explicit operator uint (in Azure.Value value) { throw null; }
         public static explicit operator ulong (in Azure.Value value) { throw null; }
+        public static implicit operator bool (in Azure.Value value) { throw null; }
+        public static implicit operator int (in Azure.Value value) { throw null; }
+        public static implicit operator long (in Azure.Value value) { throw null; }
+        public static implicit operator bool? (in Azure.Value value) { throw null; }
+        public static implicit operator int? (in Azure.Value value) { throw null; }
+        public static implicit operator long? (in Azure.Value value) { throw null; }
+        public static implicit operator string? (in Azure.Value value) { throw null; }
         public static implicit operator Azure.Value (System.ArraySegment<byte> value) { throw null; }
         public static implicit operator Azure.Value (System.ArraySegment<char> value) { throw null; }
         public static implicit operator Azure.Value (bool value) { throw null; }
@@ -114,9 +120,11 @@ namespace Azure
         public static implicit operator Azure.Value (ulong? value) { throw null; }
         public static implicit operator Azure.Value (sbyte value) { throw null; }
         public static implicit operator Azure.Value (float value) { throw null; }
+        public static implicit operator Azure.Value (string? value) { throw null; }
         public static implicit operator Azure.Value (ushort value) { throw null; }
         public static implicit operator Azure.Value (uint value) { throw null; }
         public static implicit operator Azure.Value (ulong value) { throw null; }
+        System.Dynamic.DynamicMetaObject System.Dynamic.IDynamicMetaObjectProvider.GetMetaObject(System.Linq.Expressions.Expression parameter) { throw null; }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool TryGetValue<T>(out T value) { throw null; }
     }
 }

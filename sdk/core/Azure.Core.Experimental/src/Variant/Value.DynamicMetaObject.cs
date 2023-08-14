@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Azure
 {
@@ -35,6 +33,25 @@ namespace Azure
 
                 MethodCallExpression asMethod = Expression.Call(this_, nameof(As), new Type[] { binder.Type });
                 return new DynamicMetaObject(asMethod, restrictions);
+            }
+
+            public override DynamicMetaObject BindBinaryOperation(BinaryOperationBinder binder, DynamicMetaObject arg)
+            {
+                Expression this_ = Expression.Convert(Expression, LimitType);
+                BindingRestrictions restrictions = BindingRestrictions.GetTypeRestriction(Expression, LimitType);
+
+                if (binder.Operation == ExpressionType.Equal)
+                {
+                    MethodCallExpression valueAsArgType = Expression.Call(this_, nameof(As), new Type[] { arg.LimitType });
+                    UnaryExpression arg_ = Expression.Convert(arg.Expression, arg.LimitType);
+                    BinaryExpression equals = Expression.Equal(valueAsArgType, arg_);
+                    UnaryExpression equalsAsObject = Expression.Convert(equals, typeof(object));
+
+                    restrictions.Merge(BindingRestrictions.GetTypeRestriction(arg.Expression, arg.LimitType));
+                    return new DynamicMetaObject(equalsAsObject, restrictions);
+                }
+
+                return base.BindBinaryOperation(binder, arg);
             }
         }
     }

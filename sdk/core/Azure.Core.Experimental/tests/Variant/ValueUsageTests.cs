@@ -71,11 +71,25 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanSetValuePropertyToNull()
+        public void CanChangeType_SetValueAsIntAndGetAsLong()
+        {
+            // TODO: Do we want to do this, or no?
+            ValueModel model = new ValueModel();
+
+            model.Value = 1;
+
+            // TODO: This fails
+            // TODO: we will want to do the equals without a cast
+            Assert.IsTrue(1L == model.Value);
+            Assert.AreEqual(1L, (long)model.Value);
+        }
+
+        [Test]
+        public void CanHandleNull_SetValuePropertyToNull()
         {
             ValueModel model = new ValueModel();
 
-            // TODO: we will want a simpler API for this
+            // TODO: will we want a simpler API for this?
             model.Value = new((object)null);
 
             // TODO: this results in an ambiguous call site, but I think
@@ -101,21 +115,7 @@ namespace Azure.Core.Experimental.Tests
         }
 
         [Test]
-        public void CanSetValueAsIntAndGetAsLong()
-        {
-            // TODO: Do we want to do this, or no?
-            ValueModel model = new ValueModel();
-
-            model.Value = 1;
-
-            // TODO: This fails
-            // TODO: we will want to do the equals without a cast
-            Assert.IsTrue(1L == model.Value);
-            Assert.AreEqual(1L, (long)model.Value);
-        }
-
-        [Test]
-        public void CanSetValuesInDictionaryToNull()
+        public void CanHandleNull_SetValuesInDictionaryToNull()
         {
             Dictionary<string, Value> d = new Dictionary<string, Value>();
 
@@ -124,9 +124,11 @@ namespace Azure.Core.Experimental.Tests
 
             Assert.IsNull((int?)d["a"]);
 
+            // TODO: This fails.  Should it work?
             Assert.IsTrue(null == (object)d["a"]);
 
-            // TODO: should this work?
+            // TODO: This fails.  Should this work?
+            // Note: this throws invalid cast exception
             Assert.IsTrue(null == (string)d["a"]);
 
             // TODO: This fails.  Should it work?
@@ -157,24 +159,16 @@ namespace Azure.Core.Experimental.Tests
         [Test]
         public void CanUseValueInPropertyBagDynamic()
         {
-            //dynamic dj = BinaryData.FromString("""{"foo": "a"}""").ToDynamicFromJson();
-            //dj.foo = 5;
-            //int a = dj.foo;
-
             dynamic d = new PropertyBag();
             d.foo = 5;
             d.bar = 6;
 
-            // Note: these both work now, with Value implementing IDynamicMetaObject provider.
             Value x = d.foo;
             int b = x;
 
             int y = d.foo;
             int z = d.bar;
 
-            // TODO: this still fails because the DLR can't apply `==` to int and Value.
-            //   Microsoft.CSharp.RuntimeBinder.RuntimeBinderException : Operator '==' cannot be applied to operands of type 'Azure.Value' and 'int'
-            //   Idea: can we add an `==` operator?  We will hit ambiguous overloads if we enable nullability, but maybe we can box nullable primitives in this context.
             int w = d.foo == 5 ? d.bar : 0;
             Assert.AreEqual(6, w);
         }
