@@ -86,15 +86,14 @@ namespace Azure.Core.Json
 
         private void WriteOriginal(Stream stream)
         {
-            using Utf8JsonWriter writer = new(stream);
             if (_original.Length == 0)
             {
+                using Utf8JsonWriter writer = new(stream);
                 _originalDocument.WriteTo(writer);
+                return;
             }
-            else
-            {
-                Write(stream, _original.Span);
-            }
+
+            Write(stream, _original.Span);
         }
 
         private void WritePatch(Stream stream)
@@ -164,7 +163,7 @@ namespace Azure.Core.Json
         public static MutableJsonDocument Parse(ref Utf8JsonReader reader, JsonSerializerOptions? serializerOptions = default)
         {
             JsonDocument doc = JsonDocument.ParseValue(ref reader);
-            return new MutableJsonDocument(doc, null, serializerOptions);
+            return new MutableJsonDocument(doc, default, serializerOptions);
         }
 
         /// <summary>
@@ -200,14 +199,10 @@ namespace Azure.Core.Json
             _originalDocument.Dispose();
         }
 
-        private MutableJsonDocument(JsonDocument document, JsonSerializerOptions? serializerOptions) : this(document, null, serializerOptions)
-        {
-        }
-
         private MutableJsonDocument(JsonDocument document, ReadOnlyMemory<byte> utf8Json, JsonSerializerOptions? serializerOptions)
         {
-            _original = utf8Json;
             _originalDocument = document;
+            _original = utf8Json;
             _serializerOptions = serializerOptions ?? new JsonSerializerOptions();
         }
 
@@ -215,8 +210,7 @@ namespace Azure.Core.Json
         {
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new MutableJsonDocument(document, options);
+                return Parse(ref reader);
             }
 
             public override void Write(Utf8JsonWriter writer, MutableJsonDocument value, JsonSerializerOptions options)
