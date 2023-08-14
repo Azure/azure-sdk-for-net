@@ -5,14 +5,10 @@
 ### Features Added
 - Added `BrowserCustomization` property to `InteractiveBrowserCredential` to enable web view customization for interactive authentication.
 
-### Breaking Changes
-
 ### Bugs Fixed
 
 - ManagedIdentityCredential will no longer attempt to parse invalid json payloads on responses from the managed identity endpoint.
 - Fixed an issue where AzurePowerShellCredential fails to parse the token response from Azure PowerShell. [#22638](https://github.com/Azure/azure-sdk-for-net/issues/22638)
-
-### Other Changes
 
 ## 1.10.0-beta.1 (2023-07-17)
 
