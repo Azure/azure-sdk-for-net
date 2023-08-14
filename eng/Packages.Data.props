@@ -105,7 +105,7 @@
     <PackageReference Update="Azure.ResourceManager" Version="1.7.0" />
 
     <!-- Other approved packages -->
-    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.2" />
+    <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.3" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.2.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.54.1" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="2.31.0" />
