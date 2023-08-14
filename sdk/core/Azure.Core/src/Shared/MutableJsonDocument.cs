@@ -18,7 +18,7 @@ namespace Azure.Core.Json
     [JsonConverter(typeof(MutableJsonDocumentConverter))]
     internal sealed partial class MutableJsonDocument : IDisposable
     {
-        private static ReadOnlyMemory<byte> _emptyJson = "{}"u8.ToArray();
+        private static readonly ReadOnlyMemory<byte> _emptyJson = "{}"u8.ToArray();
         public static ReadOnlyMemory<byte> EmptyJson => _emptyJson;
 
         private readonly ReadOnlyMemory<byte> _original;
