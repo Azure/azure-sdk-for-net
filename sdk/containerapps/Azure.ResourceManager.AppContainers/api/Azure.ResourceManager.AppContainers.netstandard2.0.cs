@@ -1805,7 +1805,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public partial class ContainerAppJobConfiguration
     {
         public ContainerAppJobConfiguration(Azure.ResourceManager.AppContainers.Models.ContainerAppJobTriggerType triggerType, int replicaTimeout) { }
-        public Azure.ResourceManager.AppContainers.Models.JobConfigurationEventTriggerConfig EventTriggerConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.EventTriggerConfiguration EventTriggerConfig { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.JobConfigurationManualTriggerConfig ManualTriggerConfig { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppRegistryCredentials> Registries { get { throw null; } }
         public int? ReplicaRetryLimit { get { throw null; } set { } }
@@ -1868,6 +1868,22 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static implicit operator Azure.ResourceManager.AppContainers.Models.ContainerAppJobProvisioningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppContainers.Models.ContainerAppJobProvisioningState left, Azure.ResourceManager.AppContainers.Models.ContainerAppJobProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ContainerAppJobScale
+    {
+        public ContainerAppJobScale() { }
+        public int? MaxExecutions { get { throw null; } set { } }
+        public int? MinExecutions { get { throw null; } set { } }
+        public int? PollingIntervalInSeconds { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppJobScaleRule> Rules { get { throw null; } }
+    }
+    public partial class ContainerAppJobScaleRule
+    {
+        public ContainerAppJobScaleRule() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppScaleRuleAuth> Auth { get { throw null; } }
+        public string JobScaleRuleType { get { throw null; } set { } }
+        public System.BinaryData Metadata { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
     }
     public partial class ContainerAppJobTemplate
     {
@@ -2247,6 +2263,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
     }
+    public partial class ContainerAppServiceBind
+    {
+        public ContainerAppServiceBind() { }
+        public string Name { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ServiceId { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerAppSourceControlOperationState : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ContainerAppSourceControlOperationState>
     {
@@ -2305,7 +2327,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppInitContainer> InitContainers { get { throw null; } }
         public string RevisionSuffix { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppScale Scale { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ServiceBind> ServiceBinds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppServiceBind> ServiceBinds { get { throw null; } }
         public long? TerminationGracePeriodSeconds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppVolume> Volumes { get { throw null; } }
     }
@@ -2392,12 +2414,12 @@ namespace Azure.ResourceManager.AppContainers.Models
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
-    public partial class JobConfigurationEventTriggerConfig
+    public partial class EventTriggerConfiguration
     {
-        public JobConfigurationEventTriggerConfig() { }
+        public EventTriggerConfiguration() { }
         public int? Parallelism { get { throw null; } set { } }
         public int? ReplicaCompletionCount { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.JobScale Scale { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppJobScale Scale { get { throw null; } set { } }
     }
     public partial class JobConfigurationManualTriggerConfig
     {
@@ -2444,22 +2466,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static implicit operator Azure.ResourceManager.AppContainers.Models.JobExecutionRunningState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.AppContainers.Models.JobExecutionRunningState left, Azure.ResourceManager.AppContainers.Models.JobExecutionRunningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class JobScale
-    {
-        public JobScale() { }
-        public int? MaxExecutions { get { throw null; } set { } }
-        public int? MinExecutions { get { throw null; } set { } }
-        public int? PollingInterval { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.JobScaleRule> Rules { get { throw null; } }
-    }
-    public partial class JobScaleRule
-    {
-        public JobScaleRule() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppContainers.Models.ContainerAppScaleRuleAuth> Auth { get { throw null; } }
-        public string JobScaleRuleType { get { throw null; } set { } }
-        public System.BinaryData Metadata { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedCertificateDomainControlValidation : System.IEquatable<Azure.ResourceManager.AppContainers.Models.ManagedCertificateDomainControlValidation>
@@ -2516,11 +2522,5 @@ namespace Azure.ResourceManager.AppContainers.Models
         public SecretVolumeItem() { }
         public string Path { get { throw null; } set { } }
         public string SecretRef { get { throw null; } set { } }
-    }
-    public partial class ServiceBind
-    {
-        public ServiceBind() { }
-        public string Name { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ServiceId { get { throw null; } set { } }
     }
 }
