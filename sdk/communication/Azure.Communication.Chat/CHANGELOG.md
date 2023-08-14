@@ -1,14 +1,11 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2023-08-15)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add `metadata` property to `ChatParticipant` and `ChatThreadProperties`.
+- Add apis to add `ChatParticipant` metadata and `ChatThreadProperties` metadata.
+- Add api to update `ChatThreadProperties` including metadata.
 
 ## 1.1.2 (2023-06-19)
 
