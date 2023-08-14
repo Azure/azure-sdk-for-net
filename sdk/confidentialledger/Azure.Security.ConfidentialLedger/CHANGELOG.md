@@ -4,7 +4,7 @@
 
 ### Bugs Fixed
 
-- Create a custom ResponseClassifier to allow `HttpStatusCode.NotFound` to be retriable. These errors may occur in the `PostLedgerEntryOperation` due to unexpected loss of session stickiness when the connected node changes and transactions have not been fully replicated.
+- Create a custom ResponseClassifier to allow `HttpStatusCode.NotFound` to be retriable. These errors may occur in scenarios where there is an unexpected loss of session stickiness when the connected node changes and transactions have not been fully replicated.
 
 ## 1.2.0-beta.1 (2022-11-09)
 
