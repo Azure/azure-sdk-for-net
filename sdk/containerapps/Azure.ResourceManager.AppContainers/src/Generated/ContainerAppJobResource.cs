@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.AppContainers
 
         private readonly ClientDiagnostics _containerAppJobJobsClientDiagnostics;
         private readonly JobsRestOperations _containerAppJobJobsRestClient;
-        private readonly ClientDiagnostics _jobsExecutionsClientDiagnostics;
-        private readonly JobsExecutionsRestOperations _jobsExecutionsRestClient;
         private readonly ContainerAppJobData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ContainerAppJobResource"/> class for mocking. </summary>
@@ -62,8 +60,6 @@ namespace Azure.ResourceManager.AppContainers
             _containerAppJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string containerAppJobJobsApiVersion);
             _containerAppJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobJobsApiVersion);
-            _jobsExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _jobsExecutionsRestClient = new JobsExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -91,6 +87,59 @@ namespace Azure.ResourceManager.AppContainers
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of ContainerAppJobExecutionResources in the ContainerAppJob. </summary>
+        /// <returns> An object representing collection of ContainerAppJobExecutionResources and their operations over a ContainerAppJobExecutionResource. </returns>
+        public virtual ContainerAppJobExecutionCollection GetContainerAppJobExecutions()
+        {
+            return GetCachedClient(Client => new ContainerAppJobExecutionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get details of a single job execution
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions/{jobExecutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobExecution</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobExecutionName"> Job execution name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppJobExecutionResource>> GetContainerAppJobExecutionAsync(string jobExecutionName, CancellationToken cancellationToken = default)
+        {
+            return await GetContainerAppJobExecutions().GetAsync(jobExecutionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get details of a single job execution
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions/{jobExecutionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>JobExecution</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobExecutionName"> Job execution name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppJobExecutionResource> GetContainerAppJobExecution(string jobExecutionName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerAppJobExecutions().Get(jobExecutionName, cancellationToken);
         }
 
         /// <summary>
@@ -315,13 +364,10 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="template"> Properties used to start a job instance. </param>
+        /// <param name="template"> Properties used to start a job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerAppJobExecutionBase>> StartAsync(WaitUntil waitUntil, ContainerAppJobExecutionTemplate template, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppJobExecutionBase>> StartAsync(WaitUntil waitUntil, ContainerAppJobExecutionTemplate template = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(template, nameof(template));
-
             using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Start");
             scope.Start();
             try
@@ -353,13 +399,10 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="template"> Properties used to start a job instance. </param>
+        /// <param name="template"> Properties used to start a job execution. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
-        public virtual ArmOperation<ContainerAppJobExecutionBase> Start(WaitUntil waitUntil, ContainerAppJobExecutionTemplate template, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppJobExecutionBase> Start(WaitUntil waitUntil, ContainerAppJobExecutionTemplate template = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(template, nameof(template));
-
             using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.Start");
             scope.Start();
             try
@@ -368,84 +411,6 @@ namespace Azure.ResourceManager.AppContainers
                 var operation = new AppContainersArmOperation<ContainerAppJobExecutionBase>(new ContainerAppJobExecutionBaseOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, template).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Terminates execution of a running container apps job
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions/{jobExecutionName}/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_StopExecution</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="jobExecutionName"> Job execution name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
-        public virtual async Task<ArmOperation> StopExecutionAsync(WaitUntil waitUntil, string jobExecutionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
-
-            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.StopExecution");
-            scope.Start();
-            try
-            {
-                var response = await _containerAppJobJobsRestClient.StopExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Terminates execution of a running container apps job
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions/{jobExecutionName}/stop</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Jobs_StopExecution</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="jobExecutionName"> Job execution name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobExecutionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
-        public virtual ArmOperation StopExecution(WaitUntil waitUntil, string jobExecutionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(jobExecutionName, nameof(jobExecutionName));
-
-            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.StopExecution");
-            scope.Start();
-            try
-            {
-                var response = _containerAppJobJobsRestClient.StopExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken);
-                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -469,19 +434,15 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="jobExecutionName"> List of all job executions that should be stopped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerAppJobExecutions>> StopMultipleExecutionsAsync(WaitUntil waitUntil, JobExecutionNamesCollection jobExecutionName, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerAppJobExecutions>> StopMultipleExecutionsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(jobExecutionName, nameof(jobExecutionName));
-
             using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.StopMultipleExecutions");
             scope.Start();
             try
             {
-                var response = await _containerAppJobJobsRestClient.StopMultipleExecutionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
+                var response = await _containerAppJobJobsRestClient.StopMultipleExecutionsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -507,19 +468,15 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="jobExecutionName"> List of all job executions that should be stopped. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobExecutionName"/> is null. </exception>
-        public virtual ArmOperation<ContainerAppJobExecutions> StopMultipleExecutions(WaitUntil waitUntil, JobExecutionNamesCollection jobExecutionName, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerAppJobExecutions> StopMultipleExecutions(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(jobExecutionName, nameof(jobExecutionName));
-
             using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobResource.StopMultipleExecutions");
             scope.Start();
             try
             {
-                var response = _containerAppJobJobsRestClient.StopMultipleExecutions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName, cancellationToken);
-                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobExecutionName).Request, response, OperationFinalStateVia.Location);
+                var response = _containerAppJobJobsRestClient.StopMultipleExecutions(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new AppContainersArmOperation<ContainerAppJobExecutions>(new ContainerAppJobExecutionsOperationSource(), _containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopMultipleExecutionsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -571,52 +528,6 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppJobJobsRestClient.CreateListSecretsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppWritableSecret.DeserializeContainerAppWritableSecret, _containerAppJobJobsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetSecrets", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a Container Apps Job's executions
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobsExecutions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppJobExecution" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerAppJobExecution> GetJobsExecutionsAsync(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobsExecutionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppJobExecution.DeserializeContainerAppJobExecution, _jobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetJobsExecutions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a Container Apps Job's executions
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/executions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobsExecutions_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppJobExecution" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerAppJobExecution> GetJobsExecutions(string filter = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _jobsExecutionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _jobsExecutionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppJobExecution.DeserializeContainerAppJobExecution, _jobsExecutionsClientDiagnostics, Pipeline, "ContainerAppJobResource.GetJobsExecutions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
