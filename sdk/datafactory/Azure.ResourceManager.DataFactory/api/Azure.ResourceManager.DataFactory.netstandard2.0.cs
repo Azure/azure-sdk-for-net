@@ -6409,9 +6409,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataFactory.Models.SelfHostedIntegrationRuntimeNode> Nodes { get { throw null; } }
         public string PushedVersion { get { throw null; } }
         public System.DateTimeOffset? ScheduledUpdateOn { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
-        public System.Collections.Generic.IReadOnlyList<System.Uri> ServiceUris { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ServiceUriStringList { get { throw null; } }
         public System.Guid? TaskQueueId { get { throw null; } }
         public System.TimeSpan? UpdateDelayOffset { get { throw null; } }

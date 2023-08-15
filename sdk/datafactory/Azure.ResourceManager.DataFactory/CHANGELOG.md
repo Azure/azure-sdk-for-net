@@ -7,6 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix the issue: https://github.com/Azure/azure-rest-api-specs-examples/issues/3219
+    - Change the name of ServiceUris to ServiceUriStringList and change the type it contains from Uri to string
 
 ### Other Changes
 
