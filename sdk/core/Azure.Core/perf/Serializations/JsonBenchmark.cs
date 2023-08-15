@@ -123,9 +123,21 @@ namespace Azure.Core.Perf.Serializations
 
         [Benchmark]
         [BenchmarkCategory("Internal")]
-        public T Deserialize_Internal()
+        public T Deserialize_Internal_JsonElement()
         {
             return Deserialize(_jsonDocument.RootElement);
+        }
+
+        protected virtual T Deserialize(BinaryData data)
+        {
+            return Deserialize(JsonDocument.Parse(data).RootElement);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("Internal")]
+        public T Deserialize_Internal_BinaryData()
+        {
+            return Deserialize(_data);
         }
 
         [Benchmark]
