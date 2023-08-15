@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0 (2023-08-15)
 
 ### Features Added
 - Updated to support ANF api-version 2022-09-01
@@ -11,12 +11,6 @@
 - Added `IsSnapshotDirectoryVisible` to `NetAppVolumePatch`, if enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots
 - Added `AcrossT2Value` to `NetAppVolumeStorageToNetworkProximity`, standard AcrossT2 storage to network connectivity.
 - Added `AcrossT2Value`, `T1AndAcrossT2Value`, `T2AndAcrossT2Value`, `T1AndT2AndAcrossT2Value` to `RegionStorageToNetworkProximity` enum
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.2.0-beta.1 (2023-05-30)
 
