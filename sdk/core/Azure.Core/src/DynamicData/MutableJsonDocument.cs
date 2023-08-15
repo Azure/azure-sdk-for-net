@@ -14,7 +14,9 @@ namespace Azure.Core.Json
     /// <summary>
     /// A mutable representation of a JSON value.
     /// </summary>
+#if !NET5_0
     [RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
+#endif
     [JsonConverter(typeof(MutableJsonDocumentConverter))]
     internal sealed partial class MutableJsonDocument : IDisposable
     {
@@ -199,7 +201,9 @@ namespace Azure.Core.Json
             return new ReadOnlyMemory<byte>(stream.GetBuffer(), 0, (int)stream.Position);
         }
 
+#if !NET5_0
         [RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
+#endif
         private class MutableJsonDocumentConverter : JsonConverter<MutableJsonDocument>
         {
             public override MutableJsonDocument Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

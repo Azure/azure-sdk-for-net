@@ -16,7 +16,9 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// An <see cref="ObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> for serialization/deserialization.
     /// </summary>
+#if !NET5_0
     [RequiresUnreferencedCode("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
+#endif
     public class JsonObjectSerializer : ObjectSerializer, IMemberNameConverter
     {
         private const int JsonIgnoreConditionAlways = 1;

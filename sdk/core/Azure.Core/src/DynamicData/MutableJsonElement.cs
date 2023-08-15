@@ -1222,7 +1222,9 @@ namespace Azure.Core.Json
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         internal string DebuggerDisplay => $"ValueKind = {ValueKind} : \"{ToString()}\"";
 
+#if !NET5_0
         [RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
+#endif
         private class MutableJsonElementConverter : JsonConverter<MutableJsonElement>
         {
             public override MutableJsonElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

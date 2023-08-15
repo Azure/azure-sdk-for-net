@@ -18,6 +18,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
+    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" />
   </ItemGroup>
   
 </Project>
