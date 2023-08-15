@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Identity;
 using NUnit.Framework;
@@ -34,13 +35,30 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 chatCompletionsOptions);
             using StreamingChatCompletions streamingChatCompletions = response.Value;
 
-            await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
+            Dictionary<int, StringBuilder> choices = new();
+
+            await foreach (ChatCompletionsChunk chunk in streamingChatCompletions.GetChatCompletionsChunks())
             {
-                await foreach (ChatMessage message in choice.GetMessageStreaming())
+                foreach (ChatChoiceChunk choice in chunk.Choices)
                 {
-                    Console.Write(message.Content);
+                    if (!choices.ContainsKey(choice.Index))
+                    {
+                        choices[choice.Index] = new();
+                    }
+                    var builder = choices[choice.Index];
+                    ChatMessageDelta delta = choice.Delta;
+
+                    if (delta.Content != null)
+                    {
+                        builder.Append(delta.Content);
+                    }
+                    if (choice.FinishReason.HasValue)
+                    {
+                        Console.WriteLine($"Choice[{choice.Index}]");
+                        Console.Write(builder.ToString());
+                        Console.WriteLine($"Finish Reason: ${choice.FinishReason.Value}");
+                    }
                 }
-                Console.WriteLine();
             }
             #endregion
         }

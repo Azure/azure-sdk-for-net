@@ -112,20 +112,21 @@ public class ChatFunctionsTests : OpenAITestBase
         string functionName = default;
         StringBuilder argumentsBuilder = new();
 
-        await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
+        await foreach (ChatCompletionsChunk chunk in streamingChatCompletions.GetChatCompletionsChunks())
         {
-            await foreach (ChatMessage message in choice.GetMessageStreaming())
+            foreach (ChatChoiceChunk choice in chunk.Choices)
             {
-                if (message.Role != default)
+                ChatMessageDelta delta = choice.Delta;
+                if (delta.Role.HasValue)
                 {
-                    streamedRole = message.Role;
+                    streamedRole = delta.Role.Value;
                 }
-                if (message.FunctionCall?.Name != null)
+                if (delta.FunctionCall?.Name != null)
                 {
                     Assert.That(functionName, Is.Null.Or.Empty);
-                    functionName = message.FunctionCall.Name;
+                    functionName = delta.FunctionCall.Name;
                 }
-                argumentsBuilder.Append(message.FunctionCall?.Arguments ?? string.Empty);
+                argumentsBuilder.Append(delta.FunctionCall?.Arguments ?? string.Empty);
             }
         }
 

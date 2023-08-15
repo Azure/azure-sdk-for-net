@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -290,15 +291,23 @@ namespace Azure.AI.OpenAI.Tests
 
             int totalMessages = 0;
 
-            await foreach (StreamingChatChoice streamingChoice in streamingChatCompletions.GetChoicesStreaming())
+            ChatRole? chatRole = null;
+
+            await foreach (ChatCompletionsChunk chunk in streamingChatCompletions.GetChatCompletionsChunks())
             {
-                Assert.That(streamingChoice, Is.Not.Null);
-                await foreach (ChatMessage streamingMessage in streamingChoice.GetMessageStreaming())
+                Assert.That(chunk, Is.Not.Null);
+                foreach (ChatChoiceChunk choice in chunk.Choices)
                 {
-                    Assert.That(streamingMessage.Role, Is.EqualTo(ChatRole.Assistant));
+                    var delta = choice.Delta;
+                    if (delta.Role.HasValue)
+                    {
+                        chatRole = delta.Role;
+                    }
                     totalMessages++;
                 }
             }
+            Assert.That(chatRole, Is.Not.Null);
+            Assert.That(chatRole, Is.EqualTo(ChatRole.Assistant));
 
             Assert.That(totalMessages, Is.GreaterThan(1));
 
@@ -432,22 +441,34 @@ namespace Azure.AI.OpenAI.Tests
             // implement IDisposable or otherwise ensure that an `IDisposable` underlying `.Value` is disposed.
             using StreamingCompletions responseValue = response.Value;
 
-            int originallyEnumeratedChoices = 0;
-            var originallyEnumeratedTextParts = new List<List<string>>();
-
-            await foreach (StreamingChoice choice in responseValue.GetChoicesStreaming())
+            Dictionary<int, (List<string> TextParts, StringBuilder TextBuilder)> choicesInfo = new();
+            await foreach (CompletionsChunk chunk in responseValue.GetCompletionsChunks())
             {
-                List<string> textPartsForChoice = new();
-                StringBuilder choiceTextBuilder = new();
-                await foreach (string choiceTextPart in choice.GetTextStreaming())
+                foreach (ChoiceChunk choice in chunk.Choices)
                 {
-                    choiceTextBuilder.Append(choiceTextPart);
-                    textPartsForChoice.Add(choiceTextPart);
+                    var index = choice.Index;
+                    if (!choicesInfo.ContainsKey(index))
+                    {
+                        choicesInfo[index] = new()
+                        {
+                            TextBuilder = new(),
+                            TextParts = new()
+                        };
+                    }
+                    if (choice.Text != null)
+                    {
+                        choicesInfo[index].TextBuilder.Append(choice.Text);
+                        choicesInfo[index].TextParts.Add(choice.Text);
+                    }
+                    Assert.That(choice.LogProbabilityModel, Is.Not.Null);
                 }
-                Assert.That(choiceTextBuilder.ToString(), Is.Not.Null.Or.Empty);
-                Assert.That(choice.LogProbabilityModel, Is.Not.Null);
-                originallyEnumeratedChoices++;
-                originallyEnumeratedTextParts.Add(textPartsForChoice);
+            }
+            var originallyEnumeratedChoices = choicesInfo.Count;
+            var originallyEnumeratedTextParts = choicesInfo.Values.Select(item => item.TextParts).ToList();
+
+            foreach (var choiceInfo in choicesInfo.Values)
+            {
+                Assert.That(choiceInfo.TextBuilder.ToString(), Is.Not.Null.Or.Empty);
             }
 
             // Note: these top-level values *are likely not yet populated* until *after* at least one streaming
@@ -458,17 +479,41 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(responseValue.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
 
             // Validate stability of enumeration (non-cancelled case)
-            IReadOnlyList<StreamingChoice> secondPassChoices = await GetBlockingListFromIAsyncEnumerable(
-                responseValue.GetChoicesStreaming());
-            Assert.AreEqual(originallyEnumeratedChoices, secondPassChoices.Count);
-            for (int i = 0; i < secondPassChoices.Count; i++)
+            IReadOnlyList<CompletionsChunk> secondPassChunks = await GetBlockingListFromIAsyncEnumerable(
+                responseValue.GetCompletionsChunks());
+
+            Dictionary<int, (List<string> TextParts, StringBuilder TextBuilder)> secondPassChoicesInfo = new();
+
+            foreach (var chunk in secondPassChunks)
             {
-                IReadOnlyList<string> secondPassTextParts = await GetBlockingListFromIAsyncEnumerable(
-                    secondPassChoices[i].GetTextStreaming());
-                Assert.AreEqual(originallyEnumeratedTextParts[i].Count, secondPassTextParts.Count);
-                for (int j = 0; j < originallyEnumeratedTextParts[i].Count; j++)
+                foreach (ChoiceChunk choice in chunk.Choices)
                 {
-                    Assert.AreEqual(originallyEnumeratedTextParts[i][j], secondPassTextParts[j]);
+                    var index = choice.Index;
+                    if (!secondPassChoicesInfo.ContainsKey(index))
+                    {
+                        secondPassChoicesInfo[index] = new()
+                        {
+                            TextBuilder = new(),
+                            TextParts = new()
+                        };
+                    }
+                    if (choice.Text != null)
+                    {
+                        secondPassChoicesInfo[index].TextBuilder.Append(choice.Text);
+                        secondPassChoicesInfo[index].TextParts.Add(choice.Text);
+                    }
+                }
+            }
+            Assert.AreEqual(originallyEnumeratedChoices, secondPassChoicesInfo.Count);
+
+            for (int i = 0; i < choicesInfo.Count; i++)
+            {
+                var original = choicesInfo[i];
+                var secondPass = secondPassChoicesInfo[i];
+                Assert.AreEqual(original.TextParts.Count, secondPass.TextParts.Count);
+                for (int j = 0; j <  original.TextParts.Count; j++)
+                {
+                    Assert.AreEqual(original.TextParts[j], secondPass.TextParts[j]);
                 }
             }
         }

@@ -40,8 +40,9 @@ namespace Azure.AI.OpenAI.Tests
 
             ChatChoice[] chatChoices = expectedChoices
                 .Select(e => AzureOpenAIModelFactory.ChatChoice(
-                    new ChatMessage(e.role, e.text),
                     e.index,
+                    null,
+                    new ChatMessage(e.role, e.text),
                     e.reason))
                 .ToArray();
             Assert.That(chatChoices, Is.All.Not.Null);
@@ -74,8 +75,9 @@ namespace Azure.AI.OpenAI.Tests
 
             ChatChoice[] chatChoices = expectedChoices
                 .Select(e => AzureOpenAIModelFactory.ChatChoice(
-                    new ChatMessage(e.role, e.text),
                     e.index,
+                    null,
+                    new ChatMessage(e.role, e.text),
                     e.reason))
                 .ToArray();
 
@@ -92,8 +94,8 @@ namespace Azure.AI.OpenAI.Tests
             ChatCompletions chatCompletions = AzureOpenAIModelFactory.ChatCompletions(
                 expectedId,
                 expectedCreationTime,
-                chatChoices,
                 promptFilterResults,
+                chatChoices,
                 AzureOpenAIModelFactory.CompletionsUsage(2, 5, 7));
 
             Assert.That(chatCompletions, Is.Not.Null);
