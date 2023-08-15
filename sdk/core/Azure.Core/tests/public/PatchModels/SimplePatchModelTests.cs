@@ -20,7 +20,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         protected override string WirePayload => JsonPayload;
 
-        protected override Func<SimplePatchModel, RequestContent> ToRequestContent => m => m == null ? RequestContent.Create(m, ModelSerializerOptions.DefaultWireOptions) : null;
+        protected override Func<SimplePatchModel, RequestContent> ToRequestContent => m => m == null ? null:  RequestContent.Create(m, ModelSerializerOptions.DefaultWireOptions);
 
         protected override Func<Response, SimplePatchModel> FromResponse => r => (SimplePatchModel)r;
 
@@ -33,7 +33,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
 
         protected override string GetExpectedResult(ModelSerializerFormat format)
         {
-            return JsonPayload;
+            return RemoveWhitespace(JsonPayload);
         }
 
         protected override void VerifyModel(SimplePatchModel model, ModelSerializerFormat format)
@@ -42,5 +42,7 @@ namespace Azure.Core.Tests.Public.ModelSerializationTests
             Assert.AreEqual(1, model.Count);
             Assert.AreEqual(DateTimeOffset.Parse("2023-10-19T10:19:10.0190001Z"), model.UpdatedOn);
         }
+
+        private static string RemoveWhitespace(string value) => value.Replace("\r", "").Replace("\n", "").Replace(" ", "");
     }
 }

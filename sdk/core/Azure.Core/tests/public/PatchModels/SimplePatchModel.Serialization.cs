@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Text.Json;
 using Azure.Core.Json;
 using Azure.Core.Serialization;
@@ -12,7 +11,11 @@ namespace Azure.Core.Tests.PatchModels
     public partial class SimplePatchModel : IModelJsonSerializable<SimplePatchModel>
     {
         SimplePatchModel IModelJsonSerializable<SimplePatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
-            => Deserialize(ref reader, options);
+        {
+            ValidateFormat(this, options.Format);
+
+            return Deserialize(ref reader, options);
+        }
 
         private static SimplePatchModel Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
@@ -21,7 +24,11 @@ namespace Azure.Core.Tests.PatchModels
         }
 
         SimplePatchModel IModelSerializable<SimplePatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
-            => Deserialize(data, options);
+        {
+            ValidateFormat(this, options.Format);
+
+            return Deserialize(data, options);
+        }
 
         private static SimplePatchModel Deserialize(BinaryData data, ModelSerializerOptions options)
         {
@@ -31,26 +38,28 @@ namespace Azure.Core.Tests.PatchModels
 
         void IModelJsonSerializable<SimplePatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
+            ValidateFormat(this, options.Format);
+
             switch (options.Format.ToString())
             {
                 case "J":
                 case "W":
-                    _element.WriteTo(writer, options.Format.ToString());
+                    _element.WriteTo(writer, "J");
                     break;
                 case "P":
-                    _element.WriteTo(writer, options.Format.ToString());
+                    _element.WriteTo(writer, "P");
+                    break;
+                default:
+                    // Exception was thrown by ValidateFormat.
                     break;
             }
         }
 
         BinaryData IModelSerializable<SimplePatchModel>.Serialize(ModelSerializerOptions options)
         {
-            using MemoryStream stream = new();
-            using Utf8JsonWriter writer = new(stream);
-            _element.WriteTo(writer, options.Format.ToString());
-            writer.Flush();
-            stream.Position = 0;
-            return BinaryData.FromStream(stream);
+            ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
         }
 
         public static explicit operator SimplePatchModel(Response response)
@@ -58,6 +67,16 @@ namespace Azure.Core.Tests.PatchModels
             Argument.AssertNotNull(response, nameof(response));
 
             return Deserialize(response.Content, ModelSerializerOptions.DefaultWireOptions);
+        }
+
+        // TODO: Move this into the public interface as a separate PR
+        public static void ValidateFormat<T>(IModelSerializable<T> model, ModelSerializerFormat format)
+        {
+            bool isValidPatchFormat = model is IModelJsonSerializable<T> && format == "P";
+            if (!isValidPatchFormat)
+            {
+                ModelSerializerHelper.ValidateFormat(model, format);
+            }
         }
     }
 }
