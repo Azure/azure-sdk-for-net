@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Text.Json;
 using Azure.Core.Json;
 using Azure.Core.Serialization;
@@ -13,11 +12,25 @@ namespace Azure.Core.Tests.PatchModels
     {
         ParentPatchModel IModelJsonSerializable<ParentPatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
+            PatchModelHelper.ValidateFormat(this, options.Format);
+
+            return Deserialize(ref reader, options);
+        }
+
+        private static ParentPatchModel Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        {
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
             return new ParentPatchModel(mdoc.RootElement);
         }
 
         ParentPatchModel IModelSerializable<ParentPatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+        {
+            PatchModelHelper.ValidateFormat(this, options.Format);
+
+            return Deserialize(data, options);
+        }
+
+        private static ParentPatchModel Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(data);
             return new ParentPatchModel(mdoc.RootElement);
@@ -25,17 +38,35 @@ namespace Azure.Core.Tests.PatchModels
 
         void IModelJsonSerializable<ParentPatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            _element.WriteTo(writer, options.Format.ToString());
+            PatchModelHelper.ValidateFormat(this, options.Format);
+
+            switch (options.Format.ToString())
+            {
+                case "J":
+                case "W":
+                    _element.WriteTo(writer, "J");
+                    break;
+                case "P":
+                    _element.WriteTo(writer, "P");
+                    break;
+                default:
+                    // Exception was thrown by ValidateFormat.
+                    break;
+            }
         }
 
         BinaryData IModelSerializable<ParentPatchModel>.Serialize(ModelSerializerOptions options)
         {
-            using MemoryStream stream = new();
-            using Utf8JsonWriter writer = new(stream);
-            _element.WriteTo(writer, options.Format.ToString());
-            writer.Flush();
-            stream.Position = 0;
-            return BinaryData.FromStream(stream);
+            PatchModelHelper.ValidateFormat(this, options.Format);
+
+            return ModelSerializer.SerializeCore(this, options);
+        }
+
+        public static explicit operator ParentPatchModel(Response response)
+        {
+            Argument.AssertNotNull(response, nameof(response));
+
+            return Deserialize(response.Content, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }

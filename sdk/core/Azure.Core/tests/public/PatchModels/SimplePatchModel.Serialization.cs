@@ -12,7 +12,7 @@ namespace Azure.Core.Tests.PatchModels
     {
         SimplePatchModel IModelJsonSerializable<SimplePatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
-            ValidateFormat(this, options.Format);
+            PatchModelHelper.ValidateFormat(this, options.Format);
 
             return Deserialize(ref reader, options);
         }
@@ -25,7 +25,7 @@ namespace Azure.Core.Tests.PatchModels
 
         SimplePatchModel IModelSerializable<SimplePatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
         {
-            ValidateFormat(this, options.Format);
+            PatchModelHelper.ValidateFormat(this, options.Format);
 
             return Deserialize(data, options);
         }
@@ -38,7 +38,7 @@ namespace Azure.Core.Tests.PatchModels
 
         void IModelJsonSerializable<SimplePatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            ValidateFormat(this, options.Format);
+            PatchModelHelper.ValidateFormat(this, options.Format);
 
             switch (options.Format.ToString())
             {
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests.PatchModels
 
         BinaryData IModelSerializable<SimplePatchModel>.Serialize(ModelSerializerOptions options)
         {
-            ValidateFormat(this, options.Format);
+            PatchModelHelper.ValidateFormat(this, options.Format);
 
             return ModelSerializer.SerializeCore(this, options);
         }
@@ -67,16 +67,6 @@ namespace Azure.Core.Tests.PatchModels
             Argument.AssertNotNull(response, nameof(response));
 
             return Deserialize(response.Content, ModelSerializerOptions.DefaultWireOptions);
-        }
-
-        // TODO: Move this into the public interface as a separate PR
-        public static void ValidateFormat<T>(IModelSerializable<T> model, ModelSerializerFormat format)
-        {
-            bool isValidPatchFormat = model is IModelJsonSerializable<T> && format == "P";
-            if (!isValidPatchFormat)
-            {
-                ModelSerializerHelper.ValidateFormat(model, format);
-            }
         }
     }
 }
