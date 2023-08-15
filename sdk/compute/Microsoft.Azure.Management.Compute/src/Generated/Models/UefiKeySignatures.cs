@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the UefiKeySignatures class.
         /// </summary>
+        /// <param name="pk">The Platform Key of this image version.</param>
         /// <param name="kek">The Key Encryption Keys of this image
         /// version.</param>
         /// <param name="db">The database of UEFI keys for this image
@@ -53,6 +54,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the Platform Key of this image version.
         /// </summary>
         [JsonProperty(PropertyName = "pk")]
         public UefiKey Pk { get; set; }

@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Contains UEFI settings for the image version.
+    /// </summary>
     public partial class GalleryImageVersionUefiSettings
     {
         /// <summary>

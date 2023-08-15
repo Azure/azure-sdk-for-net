@@ -43,15 +43,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="provisioningState">Possible values include:
         /// 'Creating', 'Updating', 'Failed', 'Succeeded', 'Deleting',
         /// 'Migrating'</param>
-        public GalleryImageVersion(string location, GalleryImageVersionStorageProfile storageProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), GalleryImageVersionSafetyProfile safetyProfile = default(GalleryImageVersionSafetyProfile), ImageVersionSecurityProfile securityProfile = default(ImageVersionSecurityProfile), ReplicationStatus replicationStatus = default(ReplicationStatus))
+        public GalleryImageVersion(string location, GalleryImageVersionStorageProfile storageProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryImageVersionPublishingProfile publishingProfile = default(GalleryImageVersionPublishingProfile), string provisioningState = default(string), GalleryImageVersionSafetyProfile safetyProfile = default(GalleryImageVersionSafetyProfile), ReplicationStatus replicationStatus = default(ReplicationStatus), ImageVersionSecurityProfile securityProfile = default(ImageVersionSecurityProfile))
             : base(location, id, name, type, tags)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
             StorageProfile = storageProfile;
             SafetyProfile = safetyProfile;
-            SecurityProfile = securityProfile;
             ReplicationStatus = replicationStatus;
+            SecurityProfile = securityProfile;
             CustomInit();
         }
 
@@ -84,13 +84,13 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.securityProfile")]
-        public ImageVersionSecurityProfile SecurityProfile { get; set; }
+        [JsonProperty(PropertyName = "properties.replicationStatus")]
+        public ReplicationStatus ReplicationStatus { get; private set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.replicationStatus")]
-        public ReplicationStatus ReplicationStatus { get; private set; }
+        [JsonProperty(PropertyName = "properties.securityProfile")]
+        public ImageVersionSecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
         /// Validate the object.
