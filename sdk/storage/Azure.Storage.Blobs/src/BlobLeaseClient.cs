@@ -824,12 +824,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseInternal(
             RequestConditions conditions,
 #pragma warning disable AZC0105 // DO NOT add 'async' parameter to public methods. This method is published, so it can't be modified.
             bool async,
 #pragma warning restore AZC0105 // DO NOT add 'async' parameter to public methods.
             CancellationToken cancellationToken)
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         {
             EnsureClient();
             using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
