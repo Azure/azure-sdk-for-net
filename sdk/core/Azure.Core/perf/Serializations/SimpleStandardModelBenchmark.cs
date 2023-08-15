@@ -16,12 +16,7 @@ namespace Azure.Core.Perf.Serializations
 
         protected override SimpleStandardModel Deserialize(JsonElement jsonElement)
         {
-            using Stream stream = new MemoryStream();
-            using Utf8JsonWriter writer = new(stream);
-            jsonElement.WriteTo(writer);
-            writer.Flush();
-            stream.Position = 0;
-            return Deserialize(BinaryData.FromStream(stream));
+            return SimpleStandardModel.DeserializeSimpleStandardModel(jsonElement, new("J"));
         }
 
         protected override void Serialize(Utf8JsonWriter writer) => _model.Serialize(writer);

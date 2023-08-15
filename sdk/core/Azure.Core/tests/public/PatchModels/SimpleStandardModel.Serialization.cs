@@ -9,7 +9,7 @@ namespace Azure.Core.Tests.PatchModels
 {
     public partial class SimpleStandardModel : IModelJsonSerializable<SimpleStandardModel>, IUtf8JsonSerializable
     {
-        internal static SimpleStandardModel DeserializeSimpleStandardModel(JsonElement element, ModelSerializerOptions options)
+        public static SimpleStandardModel DeserializeSimpleStandardModel(JsonElement element, ModelSerializerOptions options)
         {
             options ??= ModelSerializerOptions.DefaultWireOptions;
 
