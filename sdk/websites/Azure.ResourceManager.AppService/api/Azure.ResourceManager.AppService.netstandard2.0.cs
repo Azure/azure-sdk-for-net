@@ -5167,10 +5167,12 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServiceTableStorageApplicationLogsConfig
     {
         public AppServiceTableStorageApplicationLogsConfig(string sasUriString) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property has been replaced by ResourceUriString")]
         public AppServiceTableStorageApplicationLogsConfig(System.Uri SasUri) { }
         public Azure.ResourceManager.AppService.Models.WebAppLogLevel? Level { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This property has been replaced by ResourceUriString", false)]
+        [System.ObsoleteAttribute("This property has been replaced by ResourceUriString")]
         public System.Uri SasUri { get { throw null; } set { } }
         public string SasUriString { get { throw null; } set { } }
     }
