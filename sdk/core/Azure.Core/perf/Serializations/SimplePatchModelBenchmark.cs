@@ -10,8 +10,6 @@ namespace Azure.Core.Perf.Serializations
 {
     public class SimplePatchModelBenchmark : JsonBenchmark<SimplePatchModel>
     {
-        protected override string JsonFileName => throw new System.NotImplementedException();
-
         protected override SimplePatchModel CastFromResponse() => (SimplePatchModel)_response;
 
         protected override RequestContent CastToRequestContent() => _model;
@@ -29,5 +27,7 @@ namespace Azure.Core.Perf.Serializations
         protected override SimplePatchModel Deserialize(BinaryData data) => SimplePatchModel.Deserialize(data);
 
         protected override void Serialize(Utf8JsonWriter writer) => _model.Serialize(writer);
+
+        protected override string JsonFileName => "SimplePatchModel.json";
     }
 }

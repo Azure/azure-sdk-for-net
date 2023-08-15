@@ -8,7 +8,7 @@ using Azure.Core.Serialization;
 
 namespace Azure.Core.Tests.PatchModels
 {
-    public partial class SimplePatchModel : IModelJsonSerializable<SimplePatchModel>
+    public partial class SimplePatchModel : IModelJsonSerializable<SimplePatchModel>, IUtf8JsonSerializable
     {
         SimplePatchModel IModelJsonSerializable<SimplePatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
@@ -71,6 +71,8 @@ namespace Azure.Core.Tests.PatchModels
 
             return Deserialize(response.Content, ModelSerializerOptions.DefaultWireOptions);
         }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IModelJsonSerializable<SimplePatchModel>)this).Serialize(writer, ModelSerializerOptions.DefaultWireOptions);
 
         // TODO: Temp for pef tests
         public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonSerializable)this).Write(writer);
