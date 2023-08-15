@@ -1229,8 +1229,8 @@ namespace Azure.Core.Json
         {
             public override MutableJsonElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new MutableJsonDocument(document, options).RootElement;
+                MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
+                return mdoc.RootElement;
             }
 
             public override void Write(Utf8JsonWriter writer, MutableJsonElement value, JsonSerializerOptions options)

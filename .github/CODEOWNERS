@@ -53,7 +53,7 @@
 /sdk/core/                                                         @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                                     @schaabs @christothes @Azure/azsdk-identity
+/sdk/identity/                                                     @schaabs @christothes @Azure/azure-sdk-write-identity
 
 # Extensions
 /sdk/extensions/                                                   @jsquire

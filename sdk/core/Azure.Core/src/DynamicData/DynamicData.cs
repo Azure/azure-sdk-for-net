@@ -355,8 +355,8 @@ namespace Azure.Core.Serialization
         {
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataOptions.FromSerializerOptions(options));
+                MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
+                return new DynamicData(mdoc.RootElement, DynamicDataOptions.FromSerializerOptions(options));
             }
 
             public override void Write(Utf8JsonWriter writer, DynamicData value, JsonSerializerOptions options)

@@ -18,7 +18,7 @@ namespace Azure.Identity.Tests
     public class AzurePowerShellCredentialsTests : CredentialTestBase<AzurePowerShellCredentialOptions>
     {
         private string tokenXML =
-            "<Object Type=\"Microsoft.Azure.Commands.Profile.Models.PSAccessToken\"><Property Name=\"Token\" Type=\"System.String\">Kg==</Property><Property Name=\"ExpiresOn\" Type=\"System.DateTimeOffset\">5/11/2021 8:20:03 PM +00:00</Property><Property Name=\"TenantId\" Type=\"System.String\">72f988bf-86f1-41af-91ab-2d7cd011db47</Property><Property Name=\"UserId\" Type=\"System.String\">chriss@microsoft.com</Property><Property Name=\"Type\" Type=\"System.String\">Bearer</Property></Object>";
+            @"<Object Type=""System.Management.Automation.PSCustomObject""><Property Name=""Token"" Type=""System.String"">Kg==</Property><Property Name=""ExpiresOn"" Type=""System.Int64"">1692035272</Property></Object>";
 
         public AzurePowerShellCredentialsTests(bool isAsync) : base(isAsync)
         { }
@@ -41,7 +41,7 @@ namespace Azure.Identity.Tests
             {
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 TenantId = config.TenantId,
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
             var testProcess = new TestProcess { Output = processOutput };
