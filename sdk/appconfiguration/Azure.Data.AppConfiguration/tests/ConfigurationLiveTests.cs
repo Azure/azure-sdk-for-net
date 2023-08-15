@@ -1729,7 +1729,7 @@ namespace Azure.Data.AppConfiguration.Tests
                         ValidateCompletedOperation(operation);
                         break;
                     }
-                    await Task.Delay(125);
+                    await Delay(125);
                 }
                 var createdSnapshot = operation.Value;
 
