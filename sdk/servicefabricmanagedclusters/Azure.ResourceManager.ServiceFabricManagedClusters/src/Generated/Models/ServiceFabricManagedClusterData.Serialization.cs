@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("id"u8) || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("publicIPPrefixId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null  || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }

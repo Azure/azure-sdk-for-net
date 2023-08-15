@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("id"u8) || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("vmImageResourceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("subnetId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("vmSharedGalleryImageId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("natGatewayId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }

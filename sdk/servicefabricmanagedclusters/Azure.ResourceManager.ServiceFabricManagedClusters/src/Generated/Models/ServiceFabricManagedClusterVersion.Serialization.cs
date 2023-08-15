@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<ServiceFabricManagedClusterOSType> osType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("id"u8) || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;

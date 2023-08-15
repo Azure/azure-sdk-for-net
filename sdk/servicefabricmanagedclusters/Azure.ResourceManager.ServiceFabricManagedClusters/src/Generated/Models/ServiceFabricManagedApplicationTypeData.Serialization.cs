@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (property.NameEquals("id"u8) || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
