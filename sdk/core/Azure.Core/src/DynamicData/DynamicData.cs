@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
@@ -20,9 +21,7 @@ namespace Azure.Core.Serialization
     /// This and related types are not intended to be mocked.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
-#if NET6_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
-#endif
+    [RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
     [JsonConverter(typeof(DynamicDataJsonConverter))]
     public sealed partial class DynamicData : IDisposable
     {
@@ -347,9 +346,7 @@ namespace Azure.Core.Serialization
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => _element.DebuggerDisplay;
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
-#endif
+        [RequiresUnreferencedCode("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
         private class DynamicDataJsonConverter : JsonConverter<DynamicData>
         {
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

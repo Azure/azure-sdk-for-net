@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.Core.Json
@@ -50,18 +51,14 @@ namespace Azure.Core.Json
 
         public JsonValueKind ValueKind
         {
-#if NET6_0_OR_GREATER
-            [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
+            [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
             get
             {
                 return GetSerializedValue().ValueKind;
             }
         }
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         internal JsonElement GetSerializedValue()
         {
             if (_serializedValue != null)
@@ -121,9 +118,7 @@ namespace Azure.Core.Json
             return Path.AsSpan().SequenceCompareTo(otherPath) > 0;
         }
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         internal string AsString()
         {
             return GetSerializedValue().ToString() ?? "null";

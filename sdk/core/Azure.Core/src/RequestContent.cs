@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -85,9 +86,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         public static RequestContent Create(object serializable) => Create(serializable, JsonObjectSerializer.Default);
 
         /// <summary>
@@ -112,9 +111,7 @@ namespace Azure.Core
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>
         /// <param name="serializer">The <see cref="ObjectSerializer"/> to use to convert the object to bytes. If not provided, <see cref="JsonObjectSerializer"/> is used.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         public static RequestContent Create(object serializable, ObjectSerializer? serializer) => Create((serializer ?? JsonObjectSerializer.Default).Serialize(serializable));
 
         /// <summary>
@@ -124,9 +121,7 @@ namespace Azure.Core
         /// <param name="propertyNameFormat">The format to use for property names in the serialized content.</param>
         /// <param name="dateTimeFormat">The format to use for DateTime and DateTimeOffset values in the serialized content.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the object.</returns>
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         public static RequestContent Create(object serializable, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
         {
             DynamicDataOptions options = new()

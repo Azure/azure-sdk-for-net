@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Text.Json;
@@ -15,9 +16,7 @@ namespace Azure.Core.Serialization
     /// <summary>
     /// An <see cref="ObjectSerializer"/> implementation that uses <see cref="JsonSerializer"/> for serialization/deserialization.
     /// </summary>
-#if NET6_0_OR_GREATER
-    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
-#endif
+    [RequiresUnreferencedCode("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
     public class JsonObjectSerializer : ObjectSerializer, IMemberNameConverter
     {
         private const int JsonIgnoreConditionAlways = 1;

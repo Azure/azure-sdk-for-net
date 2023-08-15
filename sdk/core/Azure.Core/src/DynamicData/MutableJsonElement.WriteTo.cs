@@ -3,15 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.Core.Json
 {
     internal partial struct MutableJsonElement
     {
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         internal void WriteTo(Utf8JsonWriter writer)
         {
             WriteElement(_path, _highWaterMark, _element, writer);
@@ -33,9 +32,7 @@ namespace Azure.Core.Json
             }
         }
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         private void WriteElement(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             if (Changes.TryGetChange(path, highWaterMark, out MutableJsonChange change))
@@ -90,9 +87,7 @@ namespace Azure.Core.Json
             element.WriteTo(writer);
         }
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         private void WriteObject(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
@@ -120,9 +115,7 @@ namespace Azure.Core.Json
             writer.WriteEndObject();
         }
 
-#if NET6_0_OR_GREATER
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
-#endif
+        [RequiresUnreferencedCode(SerializationRequiresUnreferencedCode)]
         private void WriteArray(string path, int highWaterMark, JsonElement element, Utf8JsonWriter writer)
         {
             writer.WriteStartArray();

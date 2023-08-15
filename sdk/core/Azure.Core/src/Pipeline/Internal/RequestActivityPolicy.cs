@@ -57,11 +57,8 @@ namespace Azure.Core.Pipeline
             }
         }
 
-#if NET6_0_OR_GREATER
         [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(HttpMessage))]
         [DynamicDependency(DynamicallyAccessedMemberTypes.PublicProperties, typeof(Exception))]
-#else
-#endif
         private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             using var scope = CreateDiagnosticScope(message);
@@ -138,9 +135,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-#if NET6_0_OR_GREATER
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency.")]
-#endif
         private void ScopeFailed(DiagnosticScope scope, Exception? ex = default)
         {
             if (ex == null)
@@ -150,9 +145,7 @@ namespace Azure.Core.Pipeline
             scope.Failed(ex);
         }
 
-#if NET6_0_OR_GREATER
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The values being passed into Write have the commonly used properties being preserved with DynamicDependency.")]
-#endif
         private DiagnosticScope CreateDiagnosticScope(HttpMessage message)
         {
 #if NETCOREAPP2_1

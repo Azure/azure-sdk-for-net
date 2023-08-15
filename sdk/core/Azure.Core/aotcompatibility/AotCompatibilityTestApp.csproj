@@ -4,13 +4,17 @@
     <TargetFramework>net7.0</TargetFramework>
     <PublishAot>true</PublishAot>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
-    <SelfContained>true</SelfContained>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="...\..\..\..\src\Azure.Core.csproj" />
-    <TrimmerRootAssembly Include="Azure.Core" />
+    <ProjectReference Include="..\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\..\..\monitor\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+
+    <TrimmerRootAssembly Include="Azure.Monitor.OpenTelemetry.Exporter" />
+
+    <!-- Update this dependency to its latest, which has all the annotations -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="8.0.0-preview.7.23375.6" />
   </ItemGroup>
 
 </Project>

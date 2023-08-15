@@ -232,9 +232,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [Event(RequestRetryingEvent, Level = EventLevel.Informational, Message = "Request [{0}] attempt number {1} took {2:00.0}s")]
-#if NET6_0_OR_GREATER
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "WriteEvent is used with primitive types.")]
-#endif
         public void RequestRetrying(string requestId, int retryNumber, double seconds)
         {
             WriteEvent(RequestRetryingEvent, requestId, retryNumber, seconds);
