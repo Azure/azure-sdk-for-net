@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.MobileNetwork
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of PacketCoreControlPlaneVersionResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of PacketCoreControlPlaneVersionResources and their operations over a PacketCoreControlPlaneVersionResource. </returns>
-        public virtual PacketCoreControlPlaneVersionCollection GetPacketCoreControlPlaneVersions()
+        /// <summary> Gets a collection of TenantPacketCoreControlPlaneVersionResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantPacketCoreControlPlaneVersionResources and their operations over a TenantPacketCoreControlPlaneVersionResource. </returns>
+        public virtual TenantPacketCoreControlPlaneVersionCollection GetTenantPacketCoreControlPlaneVersions()
         {
-            return GetCachedClient(Client => new PacketCoreControlPlaneVersionCollection(Client, Id));
+            return GetCachedClient(Client => new TenantPacketCoreControlPlaneVersionCollection(Client, Id));
         }
     }
 }
