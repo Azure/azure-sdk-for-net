@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         public void ClassifierDocumentTypeDetailsConstructorValidatesArguments()
         {
-            Assert.Throws<ArgumentNullException>(() => new ClassifierDocumentTypeDetails(trainingDataContentSource: null));
+            Assert.Throws<ArgumentNullException>(() => new ClassifierDocumentTypeDetails(trainingDataSource: null));
         }
 
         [Test]
