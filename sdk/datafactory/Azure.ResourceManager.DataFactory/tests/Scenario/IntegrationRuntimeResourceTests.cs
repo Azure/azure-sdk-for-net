@@ -61,6 +61,16 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
+        public async Task GetStatus()
+        {
+            string integrationRuntimeName = Recording.GenerateAssetName("intergration");
+            var integrationRuntime = await CreateDefaultIntegrationRuntime(integrationRuntimeName);
+            var result = await integrationRuntime.GetStatusAsync();
+            Assert.IsNotNull(result);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task Exist()
         {
             string integrationRuntimeName = Recording.GenerateAssetName("intergration");

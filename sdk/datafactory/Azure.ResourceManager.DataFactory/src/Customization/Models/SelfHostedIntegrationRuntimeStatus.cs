@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     public partial class SelfHostedIntegrationRuntimeStatus
     {
+        /// <summary> Uris of the resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property has been replaced by ResourceUriString", false)]
         public IReadOnlyList<Uri> ServiceUris { get; }
