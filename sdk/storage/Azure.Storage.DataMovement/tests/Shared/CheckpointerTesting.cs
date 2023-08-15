@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System;
 using Azure.Storage.DataMovement.JobPlan;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -43,8 +44,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartDeleteSnapshotsOption DefaultDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
         internal const JobPartPermanentDeleteOption DefaultPermanentDeleteOption = JobPartPermanentDeleteOption.None;
         internal const JobPartPlanRehydratePriorityType DefaultRehydratePriorityType = JobPartPlanRehydratePriorityType.None;
-        internal const StorageTransferStatus DefaultJobStatus = StorageTransferStatus.Queued;
-        internal const StorageTransferStatus DefaultPartStatus = StorageTransferStatus.Queued;
+        internal const DataTransferStatus DefaultJobStatus = DataTransferStatus.Queued;
+        internal const DataTransferStatus DefaultPartStatus = DataTransferStatus.Queued;
 
         internal static JobPartPlanHeader CreateDefaultJobPartHeader(
             string version = DataMovementConstants.PlanFile.SchemaVersion,
@@ -92,8 +93,8 @@ namespace Azure.Storage.DataMovement.Tests
             JobPartDeleteSnapshotsOption deleteSnapshotsOption = DefaultDeleteSnapshotsOption,
             JobPartPermanentDeleteOption permanentDeleteOption = DefaultPermanentDeleteOption,
             JobPartPlanRehydratePriorityType rehydratePriorityType = DefaultRehydratePriorityType,
-            StorageTransferStatus atomicJobStatus = DefaultJobStatus,
-            StorageTransferStatus atomicPartStatus = DefaultPartStatus)
+            DataTransferStatus atomicJobStatus = DefaultJobStatus,
+            DataTransferStatus atomicPartStatus = DefaultPartStatus)
         {
             if (startTime == default)
             {
@@ -182,7 +183,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await stream.ReadAsync(buffer, 0, count);
                 await originalHeaderStream.ReadAsync(actual, 0, count);
 
-                TestHelper.AssertSequenceEqual(
+                CollectionAssert.AreEqual(
                     actual,
                     buffer);
             }

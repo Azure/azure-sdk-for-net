@@ -61,6 +61,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     assetTypes = new[] {
             "<String>"
         },
+                    facet = new
+                    {
+                        count = 1234,
+                        facet = "<facet>",
+                        sort = new { },
+                    },
                 },
             };
 
@@ -148,6 +154,12 @@ namespace Azure.Analytics.Purview.Catalog.Samples
                     assetTypes = new[] {
             "<String>"
         },
+                    facet = new
+                    {
+                        count = 1234,
+                        facet = "<facet>",
+                        sort = new { },
+                    },
                 },
             };
 

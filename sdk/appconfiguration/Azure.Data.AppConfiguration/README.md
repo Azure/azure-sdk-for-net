@@ -233,7 +233,7 @@ Several App Configuration client library samples are available to you in this Gi
 * [Get a setting if changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample5_GetSettingIfChanged.md): Save bandwidth by using a conditional request to retrieve a setting only if it is different from your local copy.
 * [Update a setting if it hasn't changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md): Prevent lost updates by using optimistic concurrency to update a setting only if your local updates were applied to the same version as the resource in the configuration store.
 * [Configuration settings snapshot](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample11_SettingsSnapshot.md): Create, retrieve and update status of a configuration settings snapshot.
-* [Create a mock client](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample7_MockClient.md): Mock a client for testing using the [Moq library][moq].
+* [Create a mock client](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking): Mock a client for testing.
 
  For more details see the [samples README][samples_readme].
 
@@ -270,7 +270,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Azure.Data.AppConfiguration/
 [samples_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md
-[moq]: https://github.com/Moq/moq4/
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

@@ -61,7 +61,7 @@ namespace Azure.Identity
         internal AzurePowerShellCredential(AzurePowerShellCredentialOptions options, CredentialPipeline pipeline, IProcessService processService)
         {
             UseLegacyPowerShell = false;
-            _logPII = options?.IsSupportLoggingEnabled ?? false;
+            _logPII = options?.IsUnsafeSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
             TenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
@@ -202,7 +202,7 @@ namespace Azure.Identity
 
         private static void ValidateResult(string output)
         {
-            if (output.IndexOf("Microsoft.Azure.Commands.Profile.Models.PSAccessToken", StringComparison.OrdinalIgnoreCase) < 0)
+            if (output.IndexOf(@"<Property Name=""Token"" Type=""System.String"">", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 throw new CredentialUnavailableException("PowerShell did not return a valid response.");
             }
@@ -246,8 +246,11 @@ if (! $m) {{
 }}
 
 $token = Get-AzAccessToken -ResourceUrl '{resource}'{tenantIdArg}
+$customToken = New-Object -TypeName psobject
+$customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
+$customToken | Add-Member -MemberType NoteProperty -Name ExpiresOn -Value $token.ExpiresOn.ToUnixTimeSeconds()
 
-$x = $token | ConvertTo-Xml
+$x = $customToken | ConvertTo-Xml
 return $x.Objects.FirstChild.OuterXml
 ";
 
@@ -285,7 +288,7 @@ return $x.Objects.FirstChild.OuterXml
                         break;
 
                     case "ExpiresOn":
-                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.CurrentCulture).ToUniversalTime();
+                        expiresOn = DateTimeOffset.FromUnixTimeSeconds(long.Parse(e.Value));
                         break;
                 }
 

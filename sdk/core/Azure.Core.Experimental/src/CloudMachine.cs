@@ -56,10 +56,12 @@ namespace Azure
         /// <summary>
         /// Loads CloudMachine settings from configurationFile
         /// </summary>
-        /// <param name="configurationFile"></param>
+        /// <param name="configurationFile">Default value is .azure\cloudmachine.json</param>
         /// <exception cref="InvalidCloudMachineConfigurationException"></exception>
-        public CloudMachine(string configurationFile = "cloudconfig.json")
+        public CloudMachine(string? configurationFile = default)
         {
+            configurationFile ??= Path.Combine(".azure", "cloudmachine.json");
+
             try
             {
                 byte[] configurationContent = File.ReadAllBytes(configurationFile);
@@ -145,7 +147,9 @@ namespace Azure
         [EditorBrowsable(EditorBrowsableState.Never)]
         public void Save(string filepath)
         {
-            using var stream = File.OpenWrite(filepath);
+            string? directory = Path.GetDirectoryName(filepath);
+            if (directory != null && !Directory.Exists(directory)) Directory.CreateDirectory(directory);
+            using FileStream stream = File.OpenWrite(filepath);
             Save(stream);
         }
 
