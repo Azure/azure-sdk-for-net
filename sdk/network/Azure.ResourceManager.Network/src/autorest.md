@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/f5cb37608399dd19760b9ef985a707294e32fbda/specification/network/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/1671d2db822c68a800edddd1e20fe65db1624216/specification/network/resource-manager/readme.md
 # tag: package-2023-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -18,6 +18,8 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
+csharpgen:
+  attach: true
 #mgmt-debug: 
 #  show-serialized-names: true
 
@@ -260,8 +262,8 @@ request-path-is-non-resource:
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}
 
 partial-resources:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}: VirtualMachineScaleSet
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}: VirtualMachineScaleSetVm
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}: VirtualMachineScaleSet
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/virtualMachines/{virtualmachineIndex}: VirtualMachineScaleSetVm
   # /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}: CloudService
   # /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roleInstances/{roleInstanceName}: CloudServiceRoleInstance
 
@@ -278,14 +280,6 @@ override-operation-name:
   VirtualHubs_GetOutboundRoutes: GetVirtualHubOutboundRoutes
   VirtualHubs_GetInboundRoutes: GetVirtualHubInboundRoutes
   generatevirtualwanvpnserverconfigurationvpnprofile: GenerateVirtualWanVpnServerConfigurationVpnProfile
-  NetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces: VirtualMachineScaleSetVMs_ListNetworkInterfaces
-  NetworkInterfaces_ListVirtualMachineScaleSetNetworkInterfaces: VirtualMachineScaleSets_ListNetworkInterfaces
-  NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface: VirtualMachineScaleSets_GetNetworkInterface
-  NetworkInterfaces_ListVirtualMachineScaleSetIpConfigurations: VirtualMachineScaleSets_ListIpConfigurations
-  NetworkInterfaces_GetVirtualMachineScaleSetIpConfiguration: VirtualMachineScaleSets_GetIpConfiguration
-  PublicIPAddresses_ListVirtualMachineScaleSetPublicIPAddresses: VirtualMachineScaleSets_ListPublicIPAddresses
-  PublicIPAddresses_ListVirtualMachineScaleSetVMPublicIPAddresses: VirtualMachineScaleSetVMs_ListPublicIPAddresses
-  PublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress: VirtualMachineScaleSets_GetPublicIPAddress
 
 directive:
   - remove-operation: 'PutBastionShareableLink'
@@ -294,6 +288,31 @@ directive:
   - remove-operation: 'GetActiveSessions'
   - remove-operation: 'DisconnectActiveSessions'
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
+    # these operations are renamed because their api-versions are different from others in the same operation group
+  - rename-operation:
+      from: NetworkInterfaces_ListVirtualMachineScaleSetVMNetworkInterfaces
+      to: VirtualMachineScaleSetVMs_ListNetworkInterfaces
+  - rename-operation:
+      from: NetworkInterfaces_ListVirtualMachineScaleSetNetworkInterfaces
+      to: VirtualMachineScaleSets_ListNetworkInterfaces
+  - rename-operation:
+      from: NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface
+      to: VirtualMachineScaleSets_GetNetworkInterface
+  - rename-operation:
+      from: NetworkInterfaces_ListVirtualMachineScaleSetIpConfigurations
+      to: VirtualMachineScaleSets_ListIpConfigurations
+  - rename-operation:
+      from: NetworkInterfaces_GetVirtualMachineScaleSetIpConfiguration
+      to: VirtualMachineScaleSets_GetIpConfiguration
+  - rename-operation:
+      from: PublicIPAddresses_ListVirtualMachineScaleSetPublicIPAddresses
+      to: VirtualMachineScaleSets_ListPublicIPAddresses
+  - rename-operation:
+      from: PublicIPAddresses_ListVirtualMachineScaleSetVMPublicIPAddresses
+      to: VirtualMachineScaleSetVMs_ListPublicIPAddresses
+  - rename-operation:
+      from: PublicIPAddresses_GetVirtualMachineScaleSetPublicIPAddress
+      to: VirtualMachineScaleSets_GetPublicIPAddress
   - from: serviceEndpointPolicy.json
     where: $.definitions
     transform: >
