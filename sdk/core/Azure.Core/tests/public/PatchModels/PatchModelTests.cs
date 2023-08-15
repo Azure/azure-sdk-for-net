@@ -62,6 +62,98 @@ namespace Azure.Core.Tests.Public
             ValidatePatch("""{"count":2, "name":"xyz"}""", model);
         }
 
+        #region Standard model
+
+        [Test]
+        public void CanSetIntProperty()
+        {
+            JsonDocument doc = JsonDocument.Parse("""
+                {
+                    "name": "abc",
+                    "count": 1,
+                    "updatedOn": "2023-10-19T10:19:10.0190001Z"
+                }
+                """);
+            SimpleStandardModel model = SimpleStandardModel.DeserializeSimpleStandardModel(doc.RootElement, new ModelSerializerOptions("J"));
+            model.Count = 2;
+
+            ValidateSerialize("""
+                {
+                    "name": "abc",
+                    "count": 2,
+                    "updatedOn": "2023-10-19T10:19:10.0190001Z"
+                }
+                """, model);
+        }
+
+        [Test]
+        public void CanSetStringProperty()
+        {
+            JsonDocument doc = JsonDocument.Parse("""
+                {
+                    "name": "abc",
+                    "count": 1,
+                    "updatedOn": "2023-10-19T10:19:10.0190001Z"
+                }
+                """);
+            SimpleStandardModel model = SimpleStandardModel.DeserializeSimpleStandardModel(doc.RootElement, new ModelSerializerOptions("J"));
+            model.Name = "xyz";
+
+            ValidateSerialize("""
+                {
+                    "name": "xyz",
+                    "count": 1,
+                    "updatedOn": "2023-10-19T10:19:10.0190001Z"
+                }
+                """, model);
+        }
+
+        [Test]
+        public void CanSetDateTimeProperty()
+        {
+            DateTimeOffset updateTime = DateTimeOffset.Parse("2023-10-20T10:20:10.0190001Z");
+            JsonDocument doc = JsonDocument.Parse("""
+                {
+                    "name": "abc",
+                    "count": 1,
+                    "updatedOn": "2023-10-19T10:19:10.0190001Z"
+                }
+                """);
+
+            SimpleStandardModel model = SimpleStandardModel.DeserializeSimpleStandardModel(doc.RootElement, new ModelSerializerOptions("J"));
+            model.UpdatedOn = updateTime;
+
+            ValidateSerialize("""
+                {
+                    "name": "abc",
+                    "count": 1,
+                    "updatedOn": "2023-10-20T10:20:10.0190001Z"
+                }
+                """, model);
+        }
+
+        [Test]
+        public void CanRoundTripSimpleStandardModel()
+        {
+            BinaryData json = BinaryData.FromString("""
+                {
+                    "name": "abc",
+                    "count": 1
+                }
+                """);
+
+            SimplePatchModel model = ModelSerializer.Deserialize<SimplePatchModel>(json);
+
+            Assert.AreEqual(1, model.Count);
+            Assert.AreEqual("abc", model.Name);
+
+            model.Name = "xyz";
+            model.Count = 2;
+
+            ValidatePatch("""{"count":2, "name":"xyz"}""", model);
+        }
+        #endregion standard model
+
         [Test]
         public void CanPatchNestedModel()
         {
