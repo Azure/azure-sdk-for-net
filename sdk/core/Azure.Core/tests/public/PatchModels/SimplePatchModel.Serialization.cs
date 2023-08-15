@@ -12,12 +12,18 @@ namespace Azure.Core.Tests.PatchModels
     public partial class SimplePatchModel : IModelJsonSerializable<SimplePatchModel>
     {
         SimplePatchModel IModelJsonSerializable<SimplePatchModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+            => Deserialize(ref reader, options);
+
+        private static SimplePatchModel Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
         {
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
             return new SimplePatchModel(mdoc.RootElement);
         }
 
         SimplePatchModel IModelSerializable<SimplePatchModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            => Deserialize(data, options);
+
+        private static SimplePatchModel Deserialize(BinaryData data, ModelSerializerOptions options)
         {
             MutableJsonDocument mdoc = MutableJsonDocument.Parse(data);
             return new SimplePatchModel(mdoc.RootElement);
@@ -25,7 +31,16 @@ namespace Azure.Core.Tests.PatchModels
 
         void IModelJsonSerializable<SimplePatchModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options)
         {
-            _element.WriteTo(writer, options.Format.ToString());
+            switch (options.Format.ToString())
+            {
+                case "J":
+                case "W":
+                    _element.WriteTo(writer, options.Format.ToString());
+                    break;
+                case "P":
+                    _element.WriteTo(writer, options.Format.ToString());
+                    break;
+            }
         }
 
         BinaryData IModelSerializable<SimplePatchModel>.Serialize(ModelSerializerOptions options)
@@ -36,6 +51,13 @@ namespace Azure.Core.Tests.PatchModels
             writer.Flush();
             stream.Position = 0;
             return BinaryData.FromStream(stream);
+        }
+
+        public static explicit operator SimplePatchModel(Response response)
+        {
+            Argument.AssertNotNull(response, nameof(response));
+
+            return Deserialize(response.Content, ModelSerializerOptions.DefaultWireOptions);
         }
     }
 }
