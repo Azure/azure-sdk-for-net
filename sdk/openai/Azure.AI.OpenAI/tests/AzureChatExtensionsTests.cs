@@ -90,7 +90,6 @@ public class AzureChatExtensionsTests : OpenAITestBase
     }
 
     [RecordedTest]
-    [Ignore("pending service update")]
     [TestCase(OpenAIClientServiceTarget.Azure)]
     public async Task StreamingSearchExtensionWorks(OpenAIClientServiceTarget serviceTarget)
     {
