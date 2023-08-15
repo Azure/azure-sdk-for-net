@@ -204,11 +204,12 @@ namespace Azure.Core.Json
             _originalDocument.Dispose();
         }
 
+        private static JsonSerializerOptions DefaultSerializerOptions = new JsonSerializerOptions();
         private MutableJsonDocument(JsonDocument document, ReadOnlyMemory<byte> utf8Json, JsonSerializerOptions? serializerOptions)
         {
             _originalDocument = document;
             _original = utf8Json;
-            _serializerOptions = serializerOptions ?? new JsonSerializerOptions();
+            _serializerOptions = serializerOptions ?? DefaultSerializerOptions;
         }
 
         private class MutableJsonDocumentConverter : JsonConverter<MutableJsonDocument>
