@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServiceTableStorageApplicationLogsConfig
     {
         /// <summary> Uri of the resource. </summary>
-        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
-        [ObsoleteAttribute("This property has been replaced by ResourceUriString")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property has been replaced by ResourceUriString",false)]
         public System.Uri SasUri { get; set; }
 
-        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
-        [ObsoleteAttribute("This property has been replaced by ResourceUriString")]
-        public AppServiceTableStorageApplicationLogsConfig(System.Uri SasUri)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property has been replaced by ResourceUriString", false)]
+        public AppServiceTableStorageApplicationLogsConfig(Uri SasUri)
         {
             Argument.AssertNotNull(SasUri, nameof(SasUri));
         }
