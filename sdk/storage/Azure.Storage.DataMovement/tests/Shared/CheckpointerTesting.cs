@@ -13,6 +13,8 @@ namespace Azure.Storage.DataMovement.Tests
 {
     internal class CheckpointerTesting
     {
+        private const int KB = 1024;
+        private const int MB = 1024 * KB;
         internal const string DefaultTransferId =
             "c591bacc-5552-4c5c-b068-552685ec5cd5";
         internal const long DefaultPartNumber = 5;
@@ -38,7 +40,7 @@ namespace Azure.Storage.DataMovement.Tests
         internal const JobPartPlanBlockBlobTier DefaultBlockBlobTier = JobPartPlanBlockBlobTier.None;
         internal const JobPartPlanPageBlobTier DefaultPageBlobTier = JobPartPlanPageBlobTier.None;
         internal const string DefaultCpkScopeInfo = "cpk-scope-info";
-        internal const long DefaultBlockSize = 4 * Constants.KB;
+        internal const long DefaultBlockSize = 4 * KB;
         internal const byte DefaultS2sInvalidMetadataHandleOption = 0;
         internal const byte DefaultChecksumVerificationOption = 0;
         internal const JobPartDeleteSnapshotsOption DefaultDeleteSnapshotsOption = JobPartDeleteSnapshotsOption.None;
@@ -171,10 +173,10 @@ namespace Azure.Storage.DataMovement.Tests
             originalHeaderStream.Seek(0, SeekOrigin.Begin);
             stream.Seek(0, SeekOrigin.Begin);
 
-            for (var i = 0; i < headerSize; i += Constants.DefaultBufferSize * 5 / 2)
+            for (var i = 0; i < headerSize; i += (int)DefaultBlockSize * 5 / 2)
             {
                 var startIndex = i;
-                var count = Math.Min(Constants.DefaultBufferSize, (int)(headerSize - startIndex));
+                var count = Math.Min((int)DefaultBlockSize, (int)(headerSize - startIndex));
 
                 var buffer = new byte[count];
                 var actual = new byte[count];
