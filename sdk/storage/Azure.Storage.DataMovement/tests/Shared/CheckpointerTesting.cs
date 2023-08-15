@@ -7,6 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System;
 using Azure.Storage.DataMovement.JobPlan;
+using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -182,7 +183,7 @@ namespace Azure.Storage.DataMovement.Tests
                 await stream.ReadAsync(buffer, 0, count);
                 await originalHeaderStream.ReadAsync(actual, 0, count);
 
-                TestHelper.AssertSequenceEqual(
+                CollectionAssert.AreEqual(
                     actual,
                     buffer);
             }
