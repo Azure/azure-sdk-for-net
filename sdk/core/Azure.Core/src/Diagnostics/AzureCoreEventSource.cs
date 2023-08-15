@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
-using System.Diagnostics.CodeAnalysis; // Needed for NET6.0 attributes
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Azure.Core.Diagnostics
