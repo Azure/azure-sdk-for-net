@@ -344,8 +344,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Resume transfer
             DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(
                 transfer.Id,
-                sourceResource,
-                destinationResource,
                 transferOptions);
 
             tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
