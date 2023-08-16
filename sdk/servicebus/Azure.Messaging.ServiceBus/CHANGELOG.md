@@ -1,14 +1,10 @@
 # Release History
 
-## 7.17.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 7.16.1 (2023-08-15)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed race condition that could lead to an `ObjectDisposedException` when using the `ServiceBusSessionProcessor`.
 
 ## 7.16.0 (2023-08-07)
 
