@@ -7,7 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fix the issue: https://github.com/Azure/azure-rest-api-specs-examples/issues/3219
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `SelfHostedIntegrationRuntimeStatus`.
     - Change the name of ServiceUris to ServiceUriStringList and change the type it contains from Uri to string
 
 ### Other Changes
