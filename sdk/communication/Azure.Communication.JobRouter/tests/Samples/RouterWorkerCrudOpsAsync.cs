@@ -44,15 +44,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     },
                     Labels =
                     {
-                        ["Location"] = new LabelValue("NA"),
-                        ["English"] = new LabelValue(7),
-                        ["O365"] = new LabelValue(true),
-                        ["Xbox_Support"] = new LabelValue(false)
+                        ["Location"] = new Value("NA"),
+                        ["English"] = new Value(7),
+                        ["O365"] = new Value(true),
+                        ["Xbox_Support"] = new Value(false)
                     },
                     Tags =
                     {
-                        ["Name"] = new LabelValue("John Doe"),
-                        ["Department"] = new LabelValue("IT_HelpDesk")
+                        ["Name"] = new Value("John Doe"),
+                        ["Department"] = new Value("IT_HelpDesk")
                     }
                 }
             );
@@ -86,9 +86,9 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     ChannelConfigurations = { ["WebChatEscalated"] = new ChannelConfiguration(50), },
                     Labels =
                     {
-                        ["O365"] = new LabelValue("Supported"),
-                        ["Xbox_Support"] = new LabelValue(null),
-                        ["Xbox_Support_EN"] = new LabelValue(true),
+                        ["O365"] = new Value("Supported"),
+                        ["Xbox_Support"] = null,
+                        ["Xbox_Support_EN"] = new Value(true),
                     }
                 });
 

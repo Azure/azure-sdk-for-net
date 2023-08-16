@@ -15,7 +15,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
+                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.As<object>())
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -24,7 +24,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value);
+                        Labels[label.Key] = new Value(label.Value);
                     }
                 }
             }
@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, Value> Labels { get; } = new Dictionary<string, Value>();
 
         /// <summary> The name of this queue. </summary>
         public string Name { get; internal set; }

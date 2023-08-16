@@ -350,12 +350,12 @@ using Azure.Core.Pipeline;
 
                 foreach (var label in options.Labels)
                 {
-                    request.Labels[label.Key] = label.Value;
+                    request.Labels[label.Key] = label.Value ?? new Value((int?)null); // todo: this will throw eventually
                 }
 
                 foreach (var tag in options.Tags)
                 {
-                    request.Tags[tag.Key] = tag.Value;
+                    request.Tags[tag.Key] = tag.Value ?? new Value((int?)null); // todo: this will throw eventually
                 }
 
                 foreach (var workerSelector in options.RequestedWorkerSelectors)
@@ -406,12 +406,12 @@ using Azure.Core.Pipeline;
 
                 foreach (var label in options.Labels)
                 {
-                    request.Labels[label.Key] = label.Value;
+                    request.Labels[label.Key] = label.Value ?? new Value((int?)null); // todo: this will throw eventually
                 }
 
                 foreach (var tag in options.Tags)
                 {
-                    request.Tags[tag.Key] = tag.Value;
+                    request.Tags[tag.Key] = tag.Value ?? new Value((int?)null); // todo: this will throw eventually
                 }
 
                 foreach (var workerSelector in options.RequestedWorkerSelectors)
@@ -1275,12 +1275,12 @@ using Azure.Core.Pipeline;
 
                 foreach (var label in options.Labels)
                 {
-                    request.Labels[label.Key] = label.Value;
+                    request.Labels[label.Key] = label.Value ?? new Value((int?)null); // todo: this will throw eventually
                 }
 
                 foreach (var tag in options.Tags)
                 {
-                    request.Tags[tag.Key] = tag.Value;
+                    request.Tags[tag.Key] = tag.Value ?? new Value((int?)null); // todo: this will throw eventually
                 }
 
                 foreach (var channel in options.ChannelConfigurations)
@@ -1327,12 +1327,12 @@ using Azure.Core.Pipeline;
 
                 foreach (var label in options.Labels)
                 {
-                    request.Labels[label.Key] = label.Value;
+                    request.Labels[label.Key] = label.Value ?? new Value((int?)null); // todo: this will throw eventually
                 }
 
                 foreach (var tag in options.Tags)
                 {
-                    request.Tags[tag.Key] = tag.Value;
+                    request.Tags[tag.Key] = tag.Value ?? new Value((int?)null); // todo: this will throw eventually
                 }
 
                 foreach (var channel in options.ChannelConfigurations)

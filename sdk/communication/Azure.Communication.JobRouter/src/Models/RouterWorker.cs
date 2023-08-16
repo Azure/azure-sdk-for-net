@@ -25,12 +25,12 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, Value> Labels { get; } = new Dictionary<string, Value>();
 
         /// <summary>
         /// A set of non-identifying attributes attached to this worker.
         /// </summary>
-        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, Value> Tags { get; } = new Dictionary<string, Value>();
 
         /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
         public IDictionary<string, ChannelConfiguration> ChannelConfigurations { get; } = new Dictionary<string, ChannelConfiguration>();
@@ -50,7 +50,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
+                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.As<object>())
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -59,7 +59,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value);
+                        Labels[label.Key] = new Value(label.Value);
                     }
                 }
             }
@@ -71,7 +71,7 @@ namespace Azure.Communication.JobRouter.Models
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key, x => x.Value?.Value)
+                    ? Tags?.ToDictionary(x => x.Key, x => x.Value.As<object>())
                     : new ChangeTrackingDictionary<string, object>();
             }
             set
@@ -80,7 +80,7 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     foreach (var tag in value)
                     {
-                        Tags[tag.Key] = new LabelValue(tag.Value);
+                        Tags[tag.Key] = new Value(tag.Value);
                     }
                 }
             }

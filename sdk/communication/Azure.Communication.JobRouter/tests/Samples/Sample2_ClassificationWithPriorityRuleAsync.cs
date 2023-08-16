@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<ClassificationPolicy> classificationPolicy = await routerAdministration.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId: classificationPolicyId)
                 {
-                    PrioritizationRule = new StaticRouterRule(new LabelValue(10))
+                    PrioritizationRule = new StaticRouterRule(new Value(10))
                 });
 
             Console.WriteLine($"Classification policy successfully created with id: {classificationPolicy.Value.Id} and priority rule of type: {classificationPolicy.Value.PrioritizationRule.Kind}");
@@ -145,7 +145,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueId = jobQueueId,
                     Labels =
                     {
-                        ["Escalated"] = new LabelValue(false)
+                        ["Escalated"] = new Value(false)
                     }
                 });
 
@@ -160,7 +160,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueId = jobQueueId,
                     Labels =
                     {
-                        ["Escalated"] = new LabelValue(true)
+                        ["Escalated"] = new Value(true)
                     }
                 });
 
@@ -249,7 +249,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueId = jobQueueId,
                     Labels =
                     {
-                        ["Escalated"] = new LabelValue(false)
+                        ["Escalated"] = new Value(false)
                     }
                 });
 
@@ -264,7 +264,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     QueueId = jobQueueId,
                     Labels =
                     {
-                        ["Escalated"] = new LabelValue(true)
+                        ["Escalated"] = new Value(true)
                     }
                 });
 

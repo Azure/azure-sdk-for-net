@@ -1298,7 +1298,7 @@ namespace Azure.Communication.JobRouter
 
                 foreach (var label in options.Labels)
                 {
-                    request.Labels[label.Key] = label.Value;
+                    request.Labels[label.Key] = label.Value!.Value;
                 }
 
                 return await RestClient.UpsertQueueAsync(
@@ -1336,7 +1336,7 @@ namespace Azure.Communication.JobRouter
 
                 foreach (var label in options.Labels)
                 {
-                    request.Labels[label.Key] = label.Value;
+                    request.Labels[label.Key] = label.Value!.Value;
                 }
 
                 return RestClient.UpsertQueue(

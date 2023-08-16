@@ -118,7 +118,7 @@ Response<RouterJob> job = await routerClient.CreateJobAsync(
         Priority = 1,
         RequestedWorkerSelectors =
         {
-            new RouterWorkerSelector("Some-Skill", LabelOperator.GreaterThan, new LabelValue(10))
+            new RouterWorkerSelector("Some-Skill", LabelOperator.GreaterThan, new Value(10))
         }
     });
 ```
@@ -130,7 +130,7 @@ Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
     new CreateWorkerOptions(workerId: "worker-1", totalCapacity: 1)
     {
         QueueAssignments = { [queue.Value.Id] = new RouterQueueAssignment() },
-        Labels = { ["Some-Skill"] = new LabelValue(11) },
+        Labels = { ["Some-Skill"] = new Value(11) },
         ChannelConfigurations = { ["my-channel"] = new ChannelConfiguration(1) },
         AvailableForOffers = true,
     }

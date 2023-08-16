@@ -38,10 +38,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // define exception actions that needs to be executed when trigger condition is satisfied
             ReclassifyExceptionAction escalateJobOnQueueOverFlow = new ReclassifyExceptionAction(
                 classificationPolicyId: "escalation-on-q-over-flow",
-                labelsToUpsert: new Dictionary<string, LabelValue>()
+                labelsToUpsert: new Dictionary<string, Value>()
                 {
-                    ["EscalateJob"] = new LabelValue(true),
-                    ["EscalationReasonCode"] = new LabelValue("QueueOverFlow")
+                    ["EscalateJob"] = new Value(true),
+                    ["EscalationReasonCode"] = new Value("QueueOverFlow")
                 });
 
             // define second exception trigger for wait time
@@ -51,10 +51,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             ReclassifyExceptionAction escalateJobOnWaitTimeExceeded = new ReclassifyExceptionAction(
                 classificationPolicyId: "escalation-on-wait-time-exceeded",
-                labelsToUpsert: new Dictionary<string, LabelValue>()
+                labelsToUpsert: new Dictionary<string, Value>()
                 {
-                    ["EscalateJob"] = new LabelValue(true),
-                    ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded")
+                    ["EscalateJob"] = new Value(true),
+                    ["EscalationReasonCode"] = new Value("WaitTimeExceeded")
                 });
 
             // define exception rule
@@ -122,10 +122,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // define exception action
             ReclassifyExceptionAction escalateJobOnWaitTimeExceeded2 = new ReclassifyExceptionAction(
                 classificationPolicyId: "escalation-on-wait-time-exceeded",
-                labelsToUpsert: new Dictionary<string, LabelValue>()
+                labelsToUpsert: new Dictionary<string, Value>()
                 {
-                    ["EscalateJob"] = new LabelValue(true),
-                    ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded2Min")
+                    ["EscalateJob"] = new Value(true),
+                    ["EscalationReasonCode"] = new Value("WaitTimeExceeded2Min")
                 });
 
             Response<ExceptionPolicy> updateExceptionPolicy = await routerClient.UpdateExceptionPolicyAsync(
