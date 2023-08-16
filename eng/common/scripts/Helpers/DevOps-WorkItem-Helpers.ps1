@@ -513,7 +513,7 @@ function FindOrCreatePackageGroupParent($serviceName, $packageDisplayName, $outp
   $fields = @()
   $fields += "`"PackageDisplayName=${packageDisplayName}`""
   $fields += "`"ServiceName=${serviceName}`""
-  $fields += "`"EpicType=Product`""
+  $fields += "`"Custom.EpicType=Product`""
   $serviceParentItem = FindOrCreateServiceParent $serviceName -outputCommand $outputCommand
   $workItem = CreateWorkItem $packageDisplayName "Epic" "Release" "Release" $fields $null $serviceParentItem.id
 
@@ -533,7 +533,7 @@ function FindOrCreateServiceParent($serviceName, $outputCommand = $true)
   $fields = @()
   $fields += "`"PackageDisplayName=`""
   $fields += "`"ServiceName=${serviceName}`""
-  $fields += "`"EpicType=Service`""
+  $fields += "`"Custom.EpicType=Service`""
   $parentId = $null
   $workItem = CreateWorkItem $serviceName "Epic" "Release" "Release" $fields $null $parentId -outputCommand $outputCommand
 
