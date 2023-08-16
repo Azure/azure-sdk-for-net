@@ -41,20 +41,21 @@ namespace Azure.ResourceManager.TestFramework
 
             Assert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
 
+            // Verify all class end with `Resource` & `Collection`
             string[] exceptionList = ExceptionList ?? Array.Empty<string>();
             List<string> errorList = new();
-            // Verify all class end with `Resource` & Collection
+
             foreach (var type in sdkAssembly.GetTypes())
             {
                 if (type.IsClass && !exceptionList.Contains(type.Name))
                 {
-                    if (type.Name.EndsWith("Resouces")
+                    if (type.Name.EndsWith("Resource")
                         && !type.Name.Equals("ArmResource")
                         && !type.Name.Equals("WritableSubResource")
                         && !type.Name.Equals("SubResource")
                         && !type.BaseType.Name.Equals("ArmResource"))
                     {
-                            errorList.Add(type.Name);
+                        errorList.Add(type.Name);
                     }
 
                     if (type.Name.EndsWith("Collection")
@@ -65,6 +66,7 @@ namespace Azure.ResourceManager.TestFramework
                     }
                 }
             }
+
             Assert.IsEmpty(errorList, "InherentCheck failed with Type: " + string.Join(",", errorList));
         }
     }
