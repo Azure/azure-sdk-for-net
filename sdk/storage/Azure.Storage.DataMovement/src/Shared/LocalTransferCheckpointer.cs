@@ -306,7 +306,7 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken = default)
         {
             long length = DataMovementConstants.PlanFile.OneByte;
-            int offset = DataMovementConstants.PlanFile.AtomicJobStatusIndex;
+            int offset = DataMovementConstants.PlanFile.AtomicJobStatusStateIndex;
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             if (_transferStates.TryGetValue(transferId, out Dictionary<int, JobPartPlanFile> jobPartFiles))

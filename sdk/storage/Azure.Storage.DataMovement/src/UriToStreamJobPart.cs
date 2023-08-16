@@ -340,7 +340,7 @@ namespace Azure.Storage.DataMovement
                 await DisposeHandlers().ConfigureAwait(false);
 
                 // Update the transfer status
-                await OnTransferStatusChanged(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChanged(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

@@ -211,7 +211,7 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 ReportBytesWritten(completeLength);
-                await OnTransferStatusChanged(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChanged(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreationPreference.SkipIfExists
@@ -307,7 +307,7 @@ namespace Azure.Storage.DataMovement
                 await DisposeHandlers().ConfigureAwait(false);
 
                 // Set completion status to completed
-                await OnTransferStatusChanged(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChanged(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

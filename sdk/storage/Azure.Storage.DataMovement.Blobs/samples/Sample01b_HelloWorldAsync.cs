@@ -527,7 +527,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 DataTransferOptions transferOptions = new DataTransferOptions();
                 transferOptions.TransferStatusChanged += (TransferStatusEventArgs args) =>
                 {
-                    if (args.StorageTransferStatus == DataTransferStatus.TransferState.Completed)
+                    if (args.StorageTransferStatus.HasCompletedSuccessfully)
                     {
                         using (StreamWriter logStream = File.AppendText(logFile))
                         {

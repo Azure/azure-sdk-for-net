@@ -294,13 +294,13 @@ namespace Azure.Storage.DataMovement
             List<string> storedTransfers = await _checkpointer.GetStoredTransfersAsync().ConfigureAwait(false);
             foreach (string transferId in storedTransfers)
             {
-                DataTransferStatus jobStatus = (DataTransferStatus) await _checkpointer.GetByteValue(
+                DataTransferStatus.TransferState jobStatus = (DataTransferStatus.TransferState) await _checkpointer.GetByteValue(
                     transferId,
-                    DataMovementConstants.PlanFile.AtomicJobStatusIndex,
+                    DataMovementConstants.PlanFile.AtomicJobStatusStateIndex,
                     _cancellationToken).ConfigureAwait(false);
 
                 // Transfers marked as fully completed are not resumable
-                if (jobStatus.State == DataTransferStatus.TransferState.Completed)
+                if (jobStatus == DataTransferStatus.TransferState.Completed)
                 {
                     continue;
                 }

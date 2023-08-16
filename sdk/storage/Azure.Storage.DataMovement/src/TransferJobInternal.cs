@@ -342,7 +342,7 @@ namespace Azure.Storage.DataMovement
                 _jobPartPaused = true;
             }
             else if (jobPartStatus.State == DataTransferStatus.TransferState.Completed
-                && jobPartStatus.HasFailureItems)
+                && jobPartStatus.HasFailedItems)
             {
                 _jobPartFailed = true;
             }

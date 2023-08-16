@@ -19,17 +19,17 @@ namespace Azure.Storage.DataMovement
             /// <summary>
             /// Default value.
             /// </summary>
-            None,
+            None = 0,
 
             /// <summary>
             /// The transfer has been queued up but has not yet started.
             /// </summary>
-            Queued,
+            Queued = 1,
 
             /// <summary>
             /// The transfer has started, but has not yet completed.
             /// </summary>
-            InProgress,
+            InProgress = 2,
 
             /// <summary>
             /// The transfer has started and is in the process of being paused.
@@ -37,7 +37,7 @@ namespace Azure.Storage.DataMovement
             /// Transfer can be stopped if  <see cref="TransferManager.PauseTransferIfRunningAsync(string, System.Threading.CancellationToken)"/>
             /// or <see cref="DataTransfer.PauseAsync(CancellationToken)"/> is called.
             /// </summary>
-            Pausing, // (Used to be PauseInProgress)
+            Pausing = 3,
 
             /// <summary>
             /// The transfer has started and is in the process of being stopped.
@@ -45,21 +45,34 @@ namespace Azure.Storage.DataMovement
             /// Transfer can be stopped if <see cref="DataTransferErrorMode.StopOnAnyFailure"/> is
             /// enabled in the <see cref="TransferManagerOptions.ErrorHandling"/>.
             /// </summary>
-            Stopping, // (Used to be CancellationInProgress)
+            Stopping = 4,
 
             /// <summary>
             /// The transfer has been paused. When transfer is paused
             /// (e.g. see <see cref="TransferManager.PauseTransferIfRunningAsync(string, System.Threading.CancellationToken)"/>)
             /// during the transfer, this will be the value.
             /// </summary>
-            Paused,
+            Paused = 5,
 
             /// <summary>
             /// The transfer has come to a completed state. If the transfer has started and
             /// has fully stopped will also come to this state.
             /// </summary>
-            Completed
+            Completed = 6
         }
+
+        /// <summary>
+        /// Defines the state of the transfer.
+        /// </summary>
+        public TransferState State { get; internal set; }
+
+        /// <summary>
+        /// Represents if the transfer has completed successfully without any failure or skipped items.
+        /// </summary>
+        public bool HasCompletedSuccessfully =>
+            (State == TransferState.Completed) &&
+            !HasFailedItems &&
+            !HasSkippedItems;
 
         /// <summary>
         /// Represents if transfer has any failure items.
@@ -67,7 +80,7 @@ namespace Azure.Storage.DataMovement
         /// If set to `true`, the transfer has at least one failure item.
         /// If set to `false`, the transfer currently has no failures.
         /// </summary>
-        public bool HasFailureItems { get; internal set; }
+        public bool HasFailedItems { get; internal set; }
 
         /// <summary>
         /// Represents if transfer has any skipped items.
@@ -81,17 +94,12 @@ namespace Azure.Storage.DataMovement
         public bool HasSkippedItems { get; internal set; }
 
         /// <summary>
-        /// Defines the state of the transfer.
-        /// </summary>
-        public TransferState State { get; internal set; }
-
-        /// <summary>
         /// Constructor to set the initial state to <see cref="TransferState.Queued"/> with no failures or skipped items.
         /// </summary>
         protected internal DataTransferStatus()
         {
             State = TransferState.Queued;
-            HasFailureItems = false;
+            HasFailedItems = false;
             HasSkippedItems = false;
         }
 
@@ -101,11 +109,11 @@ namespace Azure.Storage.DataMovement
         protected internal DataTransferStatus(TransferState state, bool hasFailureItems, bool hasSkippedItems)
         {
             State = state;
-            HasFailureItems = hasFailureItems;
+            HasFailedItems = hasFailureItems;
             HasSkippedItems = hasSkippedItems;
         }
 
-        internal bool IsCompletedWithFailedItems => State.Equals(TransferState.Completed) && HasFailureItems;
+        internal bool IsCompletedWithFailedItems => State.Equals(TransferState.Completed) && HasFailedItems;
         internal bool IsCompletedWithSkippedItems => State.Equals(TransferState.Completed) && HasSkippedItems;
     }
 }

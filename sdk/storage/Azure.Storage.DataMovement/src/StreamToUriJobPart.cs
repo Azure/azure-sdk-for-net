@@ -250,7 +250,7 @@ namespace Azure.Storage.DataMovement
                     ReportBytesWritten(blockSize);
 
                     // Set completion status to completed
-                    await OnTransferStatusChanged(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+                    await OnTransferStateChanged(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
                 }
                 else
                 {
@@ -395,7 +395,7 @@ namespace Azure.Storage.DataMovement
             await DisposeHandlers().ConfigureAwait(false);
 
             // Set completion status to completed
-            await OnTransferStatusChanged(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
+            await OnTransferStateChanged(DataTransferStatus.TransferState.Completed).ConfigureAwait(false);
         }
 
         private async Task QueueStageBlockRequests(List<(long Offset, long Size)> rangeList, long completeLength)

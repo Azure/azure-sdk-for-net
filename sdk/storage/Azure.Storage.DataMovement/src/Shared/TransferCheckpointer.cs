@@ -143,15 +143,15 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
         /// <param name="partNumber">The job part number.</param>
-        /// <param name="status">The <see cref="DataTransferStatus"/> of the job part.</param>
+        /// <param name="state">The <see cref="DataTransferStatus"/> of the job part.</param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be canceled.
         /// </param>
-        public abstract Task SetJobPartTransferStatusAsync(
+        public abstract Task SetJobPartTransferStateAsync(
             string transferId,
             int partNumber,
-            DataTransferStatus status,
+            DataTransferStatus.TransferState state,
             CancellationToken cancellationToken = default);
 
         /// <summary>
