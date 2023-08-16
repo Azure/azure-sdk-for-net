@@ -25,16 +25,6 @@ namespace Azure.Storage.DataMovement.Tests
             ResourceStaticApi,
 
             /// <summary>
-            /// Instance of the provider the user is given to invoke rehydration on.
-            /// </summary>
-            ProviderInstanceOLD,
-
-            /// <summary>
-            /// The public, package-wide static API for rehydrating.
-            /// </summary>
-            PublicStaticApiOLD,
-
-            /// <summary>
             /// New provider system for creating resources.
             /// </summary>
             Provider
@@ -148,21 +138,6 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        /// <summary>
-        /// Inlines the tryget to allow for switch expressions in tests.
-        /// </summary>
-        private StorageResource LocalStorageResourcesInlineTryGet(DataTransferProperties info, bool getSource)
-        {
-            if (!LocalStorageResources.TryGetResourceProviders(
-                info,
-                out LocalStorageResourceProvider sourceProvider,
-                out LocalStorageResourceProvider destinationProvider))
-            {
-                return null;
-            }
-            return getSource ? sourceProvider.CreateResource() : destinationProvider.CreateResource();
-        }
-
         [Test]
         [Combinatorial]
         public async Task RehydrateLocalFile(
@@ -200,10 +175,6 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => LocalFileStorageResource.RehydrateResource(transferProperties, isSource),
-                RehydrateApi.ProviderInstanceOLD => new LocalStorageResourceProvider(
-                    transferProperties, isSource, isFolder: false).CreateResource(),
-                RehydrateApi.PublicStaticApiOLD => LocalStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
                 RehydrateApi.Provider => isSource
                     ? await new LocalFilesStorageResourceProvider().FromSourceAsync(transferProperties, CancellationToken.None)
                     : await new LocalFilesStorageResourceProvider().FromDestinationAsync(transferProperties, CancellationToken.None),
@@ -261,10 +232,6 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResource storageResource = api switch
             {
                 RehydrateApi.ResourceStaticApi => LocalDirectoryStorageResourceContainer.RehydrateResource(transferProperties, isSource),
-                RehydrateApi.ProviderInstanceOLD => new LocalStorageResourceProvider(
-                    transferProperties, isSource, isFolder: true).CreateResource(),
-                RehydrateApi.PublicStaticApiOLD => LocalStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
                 RehydrateApi.Provider => isSource
                     ? await new LocalFilesStorageResourceProvider().FromSourceAsync(transferProperties, CancellationToken.None)
                     : await new LocalFilesStorageResourceProvider().FromDestinationAsync(transferProperties, CancellationToken.None),
