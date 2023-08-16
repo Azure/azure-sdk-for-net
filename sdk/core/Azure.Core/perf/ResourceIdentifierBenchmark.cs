@@ -6,7 +6,6 @@ using BenchmarkDotNet.Attributes;
 namespace Azure.Core.Perf
 {
     [InProcess]
-    [MemoryDiagnoser]
     public class ResourceIdentifierBenchmark
     {
         [Benchmark]
