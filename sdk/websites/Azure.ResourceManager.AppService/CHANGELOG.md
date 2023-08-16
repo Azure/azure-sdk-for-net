@@ -10,7 +10,7 @@
 
 - Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebAppBackupData`.
 - Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebSiteInstanceStatusData`.
-- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `AppServiceTableStorageApplicationLogsConfig`. Issue link:https://github.com/Azure/azure-sdk-for-net/issues/37833
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `AppServiceTableStorageApplicationLogsConfig`.
 
 ### Other Changes
 
