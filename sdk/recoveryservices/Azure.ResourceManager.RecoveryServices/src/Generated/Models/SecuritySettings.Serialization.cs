@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    internal partial class SecuritySettings : IUtf8JsonSerializable
+    public partial class SecuritySettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
                 writer.WriteObjectValue(ImmutabilitySettings);
+            }
+            if (Optional.IsDefined(SoftDeleteSettings))
+            {
+                writer.WritePropertyName("softDeleteSettings"u8);
+                writer.WriteObjectValue(SoftDeleteSettings);
             }
             writer.WriteEndObject();
         }
@@ -30,6 +35,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             Optional<ImmutabilitySettings> immutabilitySettings = default;
+            Optional<SoftDeleteSettings> softDeleteSettings = default;
+            Optional<MultiUserAuthorization> multiUserAuthorization = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("immutabilitySettings"u8))
@@ -41,8 +48,26 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("softDeleteSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    softDeleteSettings = SoftDeleteSettings.DeserializeSoftDeleteSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("multiUserAuthorization"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    multiUserAuthorization = new MultiUserAuthorization(property.Value.GetString());
+                    continue;
+                }
             }
-            return new SecuritySettings(immutabilitySettings.Value);
+            return new SecuritySettings(immutabilitySettings.Value, softDeleteSettings.Value, Optional.ToNullable(multiUserAuthorization));
         }
     }
 }
