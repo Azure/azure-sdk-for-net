@@ -201,5 +201,21 @@ namespace Azure.Core.Perf.Serializations
         {
             using var doc = JsonDocument.Parse(_data);
         }
+
+        protected virtual void ModifyValues(T model) { }
+
+        [Benchmark]
+        [BenchmarkCategory("Usage")]
+        public void EndToEndUseCase()
+        {
+            // Instantiate an input model
+            T model = ModelSerializer.Deserialize<T>(_data);
+
+            // Set properties on it
+            ModifyValues(model);
+
+            // Send it over the wire - serialize
+            RequestContent content = CastToRequestContent();
+        }
     }
 }
