@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-tag: 2022-12-15-preview
+tag: package-preview-2022-12-15
 require: https://github.com/Azure/azure-rest-api-specs/blob/d99f18b18405cd446f7abc2c9e6b3884f5c549f8/specification/azurestackhci/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
