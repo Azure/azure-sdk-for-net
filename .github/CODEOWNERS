@@ -53,7 +53,7 @@
 /sdk/core/                                                         @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                                     @schaabs @christothes @Azure/azsdk-identity
+/sdk/identity/                                                     @schaabs @christothes @Azure/azure-sdk-write-identity
 
 # Extensions
 /sdk/extensions/                                                   @jsquire
@@ -563,14 +563,13 @@
 
 # ServiceLabel: %Monitor %Service Attention
 /sdk/monitor/                                                      @SameergMS @dadunl
+/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor - Ingestion
-/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @pallavit
-/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
+/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit
-/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
+/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
