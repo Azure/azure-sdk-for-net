@@ -12,6 +12,7 @@ namespace Azure.Core.Tests.Public
 {
     public class PatchModelTests
     {
+        #region SimplePatchModel
         [Test]
         public void CanPatchIntProperty()
         {
@@ -61,7 +62,9 @@ namespace Azure.Core.Tests.Public
 
             ValidatePatch("""{"count":2, "name":"xyz"}""", model);
         }
+        #endregion
 
+        #region NestedPatchModel
         [Test]
         public void CanPatchNestedModel()
         {
@@ -150,6 +153,45 @@ namespace Azure.Core.Tests.Public
             ValidateSerialize("""{"id": "123", "child": {"a": "a2", "b": null}}""", model);
             ValidatePatch("""{"child": {"a": "a2", "b": null}}""", model);
         }
+        #endregion
+
+        #region RoundTripPatchModel
+        [Test]
+        public void CanPatchInputOutputPatchProperty()
+        {
+            RoundTripPatchModel model = new("abc");
+            model.Value = 1;
+
+            Assert.AreEqual("abc", model.Id);
+            Assert.AreEqual(1, model.Value);
+
+            ValidatePatch("""{"value":1}""", model);
+        }
+
+        [Test]
+        public void CanRoundTripInputOutputPatchModel()
+        {
+            BinaryData json = BinaryData.FromString("""
+                {
+                    "id": "abc",
+                    "value": 1
+                }
+                """);
+
+            RoundTripPatchModel model = ModelSerializer.Deserialize<RoundTripPatchModel>(json);
+
+            Assert.AreEqual("abc", model.Id);
+            Assert.AreEqual(1, model.Value);
+
+            ValidateSerialize("""{"id": "abc", "value": 1}""", model);
+            ValidatePatch(string.Empty, model);
+
+            model.Value = 2;
+
+            ValidateSerialize("""{"id": "abc", "value": 2}""", model);
+            ValidatePatch("""{"value": 2}""", model);
+        }
+        #endregion
 
         #region Helpers
         private static void ValidateSerialize<T>(string expected, IModelJsonSerializable<T> model)
