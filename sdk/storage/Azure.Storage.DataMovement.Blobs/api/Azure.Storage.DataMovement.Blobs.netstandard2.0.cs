@@ -44,6 +44,12 @@ namespace Azure.Storage.DataMovement.Blobs
     public partial class BlobsStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
         public BlobsStorageResourceProvider() { }
+        public BlobsStorageResourceProvider(Azure.AzureSasCredential credential) { }
+        public BlobsStorageResourceProvider(Azure.Core.TokenCredential credential) { }
+        public BlobsStorageResourceProvider(Azure.Storage.DataMovement.Blobs.BlobsStorageResourceProvider.GetAzureSasCredential getAzureSasCredentialAsync) { }
+        public BlobsStorageResourceProvider(Azure.Storage.DataMovement.Blobs.BlobsStorageResourceProvider.GetStorageSharedKeyCredential getStorageSharedKeyCredentialAsync) { }
+        public BlobsStorageResourceProvider(Azure.Storage.DataMovement.Blobs.BlobsStorageResourceProvider.GetTokenCredential getTokenCredentialAsync) { }
+        public BlobsStorageResourceProvider(Azure.Storage.StorageSharedKeyCredential credential) { }
         protected override string TypeId { get { throw null; } }
         public Azure.Storage.DataMovement.StorageResource FromBlob(string blobUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions options = null) { throw null; }
         public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.BlobContainerClient client, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { throw null; }
@@ -53,6 +59,9 @@ namespace Azure.Storage.DataMovement.Blobs
         public Azure.Storage.DataMovement.StorageResource FromContainer(string containerUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.DataTransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public delegate Azure.AzureSasCredential GetAzureSasCredential(string uri, bool readOnly);
+        public delegate Azure.Storage.StorageSharedKeyCredential GetStorageSharedKeyCredential(string uri, bool readOnly);
+        public delegate Azure.Core.TokenCredential GetTokenCredential(string uri, bool readOnly);
     }
     public partial class BlobStorageResourceContainer : Azure.Storage.DataMovement.StorageResourceContainer
     {
