@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -20,7 +21,6 @@ namespace Azure.ResourceManager.TestFramework
 
         private const string TestFrameworkAssembly = "Azure.ResourceManager.TestFramework";
         private const string AssemblyPrefix = "Azure.ResourceManager.";
-        //private const string ResourceManagerAssemblyName = "Azure.ResourceManager";
         private const string TestAssemblySuffix = ".Tests";
 
         [Test]
@@ -47,32 +47,31 @@ namespace Azure.ResourceManager.TestFramework
 
             Assert.IsNotNull(sdkAssembly, $"The SDK assembly {rpNamespace} not found");
 
+            string[] exceptionList = ExceptionList ?? Array.Empty<string>();
+            List<string> errorList = new();
             // Verify all class end with `Resource` & Collection
             foreach (var type in sdkAssembly.GetTypes())
             {
-                if (type.IsClass)
+                if (type.IsClass && !exceptionList.Contains(type.Name))
                 {
                     if (type.Name.EndsWith("Resouces")
                         && !type.Name.Equals("ArmResource")
                         && !type.Name.Equals("WritableSubResource")
-                        && !type.Name.Equals("SubResource"))
+                        && !type.Name.Equals("SubResource")
+                        && !type.BaseType.Name.Equals("ArmResource"))
                     {
-                        if (ExceptionList != null && !ExceptionList.Contains(type.Name))
-                        {
-                            Assert.AreEqual("ArmResource", type.BaseType.Name);
-                        }
+                            errorList.Add(type.Name);
                     }
 
                     if (type.Name.EndsWith("Collection")
-                        && !type.Name.Equals("ArmCollection"))
+                        && !type.Name.Equals("ArmCollection")
+                        && !type.BaseType.Name.Equals("ArmCollection"))
                     {
-                        if (ExceptionList != null && !ExceptionList.Contains(type.Name))
-                        {
-                            Assert.AreEqual("ArmCollection", type.BaseType.Name);
-                        }
+                        errorList.Add(type.Name);
                     }
                 }
             }
+            Assert.IsEmpty(errorList, "InherentCheck failed with Type: " + string.Join(",", errorList));
         }
     }
 }
