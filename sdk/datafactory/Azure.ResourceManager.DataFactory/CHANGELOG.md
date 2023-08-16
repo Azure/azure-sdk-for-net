@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+
 - Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `SelfHostedIntegrationRuntimeStatus`.
 
 ### Other Changes
