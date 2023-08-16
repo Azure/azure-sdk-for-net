@@ -563,14 +563,13 @@
 
 # ServiceLabel: %Monitor %Service Attention
 /sdk/monitor/                                                      @SameergMS @dadunl
+/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor - Ingestion
-/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @pallavit
-/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
+/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit
-/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit
+/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
