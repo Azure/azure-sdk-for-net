@@ -15,7 +15,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-# mgmt-debug: 
+# mgmt-debug:
 #   show-serialized-names: true
 
 override-operation-name:
